@@ -49,6 +49,8 @@ desktop.ini
 /resources/\[douane\]/
 /resources/\[textures\]/
 
+/resources/\[admin\]/vMenu/*.json
+
 /resources/[local]/
 /resources/[douane]/
 /resources/[textures]/
