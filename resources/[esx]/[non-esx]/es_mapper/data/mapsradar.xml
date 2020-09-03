@@ -19,20 +19,20 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>331.76782226562</X>
-        <Y>3436.8474121094</Y>
-        <Z>29.06647491455</Z>
+        <X>-411.19821166992</X>
+        <Y>5939.8110351562</Y>
+        <Z>25.006469726562</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.0</Z>
+        <Z>18.5</Z>
       </Rotation>
       <Quaternion>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.0</Z>
-        <W>1.0</W>
+        <Z>0.16074256560382</Z>
+        <W>0.98699636656024</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -42,20 +42,20 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>2080.7758789062</X>
-        <Y>4691.6767578125</Y>
-        <Z>34.132230377198</Z>
+        <X>240.12603759766</X>
+        <Y>6580.01171875</Y>
+        <Z>24.398462295532</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>11.0</Z>
+        <Z>-205.5</Z>
       </Rotation>
       <Quaternion>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.095845752520224</Z>
-        <W>0.99539619836718</W>
+        <Z>0.97534232050852</Z>
+        <W>0.2206974350215</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -65,89 +65,20 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>371.32873535156</X>
-        <Y>6586.9145507812</Y>
-        <Z>21.017322158814</Z>
+        <X>409.38137817382</X>
+        <Y>-543.03485107422</Y>
+        <Z>21.666830062866</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>135.5</Z>
-      </Rotation>
-      <Quaternion>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>0.92554050401756</Z>
-        <W>0.37864861735244</W>
-      </Quaternion>
-    </MapObject>
-    <MapObject>
-      <Type>Prop</Type>
-      <Hash>1927491455</Hash>
-      <Name>prop_cctv_pole_01a</Name>
-      <Dynamic>false</Dynamic>
-      <Door>false</Door>
-      <Position>
-        <X>-411.5108947754</X>
-        <Y>5940.0170898438</Y>
-        <Z>25.10785446167</Z>
-      </Position>
-      <Rotation>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>11.5</Z>
-      </Rotation>
-      <Quaternion>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>0.10018806161208</Z>
-        <W>0.99496851825092</W>
-      </Quaternion>
-    </MapObject>
-    <MapObject>
-      <Type>Prop</Type>
-      <Hash>1927491455</Hash>
-      <Name>prop_cctv_pole_01a</Name>
-      <Dynamic>false</Dynamic>
-      <Door>false</Door>
-      <Position>
-        <X>-1585.0220947266</X>
-        <Y>1356.1452636718</Y>
-        <Z>123.61834716796</Z>
-      </Position>
-      <Rotation>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>12.5</Z>
-      </Rotation>
-      <Quaternion>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>0.10886687485196</Z>
-        <W>0.99405633822232</W>
-      </Quaternion>
-    </MapObject>
-    <MapObject>
-      <Type>Prop</Type>
-      <Hash>1927491455</Hash>
-      <Name>prop_cctv_pole_01a</Name>
-      <Dynamic>false</Dynamic>
-      <Door>false</Door>
-      <Position>
-        <X>435.19491577148</X>
-        <Y>-535.40234375</Y>
-        <Z>22.824279403686</Z>
-      </Position>
-      <Rotation>
-        <X>0.0</X>
-        <Y>0.0</Y>
-        <Z>-132.5</Z>
+        <Z>202.5</Z>
       </Rotation>
       <Quaternion>
         <X>-0.0</X>
         <Y>0.0</Y>
-        <Z>0.91531147911944</Z>
-        <W>-0.40274668985874</W>
+        <Z>0.98078528040324</Z>
+        <W>-0.19509032201612</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -157,20 +88,20 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>87.744636535644</X>
-        <Y>-1041.5821533204</Y>
-        <Z>22.450672149658</Z>
+        <X>-520.48229980468</X>
+        <Y>-279.28158569336</Y>
+        <Z>28.536122894288</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>-120.0</Z>
+        <Z>183.0</Z>
       </Rotation>
       <Quaternion>
         <X>-0.0</X>
         <Y>0.0</Y>
-        <Z>0.86602540378444</Z>
-        <W>-0.5</W>
+        <Z>0.99965732497556</Z>
+        <W>-0.026176948307874</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -180,20 +111,89 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>-231.91017150878</X>
-        <Y>-874.97814941406</Y>
-        <Z>23.417155456542</Z>
+        <X>87.927047729492</X>
+        <Y>-1040.639038086</Y>
+        <Z>22.552337265014</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>155.5</Z>
+        <Z>-131.0</Z>
+      </Rotation>
+      <Quaternion>
+        <X>-0.0</X>
+        <Y>0.0</Y>
+        <Z>0.90996127087654</Z>
+        <W>-0.41469324265624</W>
+      </Quaternion>
+    </MapObject>
+    <MapObject>
+      <Type>Prop</Type>
+      <Hash>1927491455</Hash>
+      <Name>prop_cctv_pole_01a</Name>
+      <Dynamic>false</Dynamic>
+      <Door>false</Door>
+      <Position>
+        <X>156.2154083252</X>
+        <Y>-1020.6486816406</Y>
+        <Z>22.388753890992</Z>
+      </Position>
+      <Rotation>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>-36.5</Z>
+      </Rotation>
+      <Quaternion>
+        <X>-0.0</X>
+        <Y>0.0</Y>
+        <Z>0.31316380648374</Z>
+        <W>-0.94969912620188</W>
+      </Quaternion>
+    </MapObject>
+    <MapObject>
+      <Type>Prop</Type>
+      <Hash>1927491455</Hash>
+      <Name>prop_cctv_pole_01a</Name>
+      <Dynamic>false</Dynamic>
+      <Door>false</Door>
+      <Position>
+        <X>587.06359863282</X>
+        <Y>-1027.1536865234</Y>
+        <Z>30.101863861084</Z>
+      </Position>
+      <Rotation>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>171.0</Z>
       </Rotation>
       <Quaternion>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.97723110646268</Z>
-        <W>0.21217767215644</W>
+        <Z>0.99691733373312</Z>
+        <W>0.078459095727844</W>
+      </Quaternion>
+    </MapObject>
+    <MapObject>
+      <Type>Prop</Type>
+      <Hash>1927491455</Hash>
+      <Name>prop_cctv_pole_01a</Name>
+      <Dynamic>false</Dynamic>
+      <Door>false</Door>
+      <Position>
+        <X>-117.30964660644</X>
+        <Y>-93.856628417968</Y>
+        <Z>50.00182723999</Z>
+      </Position>
+      <Rotation>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>-213.0</Z>
+      </Rotation>
+      <Quaternion>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>0.9588197348682</Z>
+        <W>0.28401534470392</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -226,20 +226,20 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>-2474.8107910156</X>
-        <Y>-215.81192016602</Y>
-        <Z>10.903215408326</Z>
+        <X>334.89553833008</X>
+        <Y>3454.3435058594</Y>
+        <Z>29.00385055542</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>-24.0</Z>
+        <Z>170.5</Z>
       </Rotation>
       <Quaternion>
-        <X>-0.0</X>
+        <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.20791169081776</Z>
-        <W>-0.9781476007338</W>
+        <Z>0.99656550249776</Z>
+        <W>0.082808207512204</W>
       </Quaternion>
     </MapObject>
     <MapObject>
@@ -249,20 +249,66 @@
       <Dynamic>false</Dynamic>
       <Door>false</Door>
       <Position>
-        <X>-194.86602783204</X>
-        <Y>-446.03219604492</Y>
-        <Z>26.777324676514</Z>
+        <X>1832.8627929688</X>
+        <Y>3284.1108398438</Y>
+        <Z>36.631776428222</Z>
       </Position>
       <Rotation>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>55.0</Z>
+        <Z>92.5</Z>
       </Rotation>
       <Quaternion>
         <X>0.0</X>
         <Y>0.0</Y>
-        <Z>0.46174861323504</Z>
-        <W>0.88701083317822</W>
+        <Z>0.72236396205976</Z>
+        <W>0.69151305578226</W>
+      </Quaternion>
+    </MapObject>
+    <MapObject>
+      <Type>Prop</Type>
+      <Hash>1927491455</Hash>
+      <Name>prop_cctv_pole_01a</Name>
+      <Dynamic>false</Dynamic>
+      <Door>false</Door>
+      <Position>
+        <X>2248.8181152344</X>
+        <Y>2776.8852539062</Y>
+        <Z>36.995582580566</Z>
+      </Position>
+      <Rotation>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>19.5</Z>
+      </Rotation>
+      <Quaternion>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>0.16934950384902</Z>
+        <W>0.98555605905808</W>
+      </Quaternion>
+    </MapObject>
+    <MapObject>
+      <Type>Prop</Type>
+      <Hash>1927491455</Hash>
+      <Name>prop_cctv_pole_01a</Name>
+      <Dynamic>false</Dynamic>
+      <Door>false</Door>
+      <Position>
+        <X>2317.8278808594</X>
+        <Y>1114.1065673828</Y>
+        <Z>72.262094116212</Z>
+      </Position>
+      <Rotation>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>117.5</Z>
+      </Rotation>
+      <Quaternion>
+        <X>0.0</X>
+        <Y>0.0</Y>
+        <Z>0.85491187067294</Z>
+        <W>0.51877325816052</W>
       </Quaternion>
     </MapObject>
   </Objects>
