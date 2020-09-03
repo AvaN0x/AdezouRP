@@ -2,7 +2,7 @@ MODE_MPH = 1
 MODE_KMH = 2
 
 Config = {
-    Key = 168, -- F7
+    Key = 288, -- F1
     ToggleWithKey = true, -- if you want to control CC with event yourself
                           -- disable toggle with key
     Mode = MODE_KMH,
