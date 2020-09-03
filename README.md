@@ -1,6 +1,6 @@
 # AdezouRP
-![Repo Size](https://img.shields.io/github/repo-size/avan0x/adezourp?logo=github)
-![License](https://img.shields.io/github/license/avan0x/adezourp?logo=github)
+![Repo Size](https://img.shields.io/github/repo-size/AvaN0x/AdezouRP?logo=github)
+![License](https://img.shields.io/github/license/AvaN0x/AdezouRP?logo=github)
 
 AdezouRP is a FiveM server.
 
