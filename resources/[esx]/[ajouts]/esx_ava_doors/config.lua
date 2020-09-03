@@ -831,188 +831,63 @@ Config.DoorList = {
 
 
 	-- GOUV
-	-- {
-	-- 	textCoords = vector3(-545.52, -203.53, 38.22), -- entrée
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = -150.0,
-	-- 			objCoords  = vector3( -545.97, -203.69, 38.22)
-	-- 		},
+	{
+		textCoords = vector3(-545.52, -203.53, 38.22), -- entrée
+		authorizedJobs = { 'state' },
+		locked = true,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'ball_prop_citydoor',
+				objYaw = -150.0,
+				objCoords  = vector3( -545.97, -203.69, 38.22)
+			},
 			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = 30.0,
-	-- 			objCoords  = vector3( -544.96, -203.13, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- porte bureau gouv
-	-- 	objName = 'v_ilev_ra_door2',
-	-- 	objYaw = -60.0,
-	-- 	objCoords  = vector3(-555.93, -191.12, 69.8),
-	-- 	textCoords = vector3(-555.83, -192.1, 70.15),
-	-- 	authorizedJobs = { 'state' },
-	-- 	distance = 1.5,
-	-- 	locked = true
-	-- },
-	-- { -- entrée principale a droite
-	-- 	textCoords = vector3(-556.33, -196.52, 38.22),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door2',
-	-- 			objYaw = -60.0,
-	-- 			objCoords  = vector3( -555.87, -197.12, 38.22)
-	-- 		},
+			{
+				objName = 'ball_prop_citydoor',
+				objYaw = 30.0,
+				objCoords  = vector3( -544.96, -203.13, 38.22)
+			}
+		}
+	},
+	{ -- porte arrière vers garage OUEST
+		textCoords = vector3(-582.67, -195.17, 38.22), 
+		authorizedJobs = { 'state' },
+		locked = true,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'ball_prop_citydoor2',
+				objYaw = -150.0,
+				objCoords  = vector3( -583.11, -195.59, 38.22)
+			},
 			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door2',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -556.77, -195.98, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- entrée principale a gauche
-	-- 	textCoords = vector3(-546.12, -190.55, 38.22),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door2',
-	-- 			objYaw = -60.0,
-	-- 			objCoords  = vector3( -545.92, -191.32, 38.22)
-	-- 		},
+			{
+				objName = 'ball_prop_citydoor2',
+				objYaw = 30.0,
+				objCoords  = vector3( -582.15, -195.02, 38.22)
+			}
+		}
+	},
+	{ -- porte du bureau du gouverneur
+		textCoords = vector3(-549.59, -196.21, 47.4), -- entrée
+		authorizedJobs = { 'state' },
+		locked = true,
+		distance = 2.5,
+		doors = {
+			{
+				objName = 'hei_prop_hei_bankdoor_new',
+				objYaw = -150.0,
+				objCoords  = vector3( -548.72, -196.32, 47.41)
+			},
 			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door2',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -546.42, -190.04, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-
-	-- { -- porte arrière vers garage OUEST
-	-- 	textCoords = vector3(-582.67, -195.17, 38.22), 
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = -150.0,
-	-- 			objCoords  = vector3( -583.11, -195.59, 38.22)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = 30.0,
-	-- 			objCoords  = vector3( -582.15, -195.02, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- porte arrière vers garage EST
-	-- 	textCoords = vector3(-534.01, -167.11, 38.22), 
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = -150.0,
-	-- 			objCoords  = vector3( -534.56, -167.29, 38.22)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = 30.0,
-	-- 			objCoords  = vector3( -533.44, -166.97, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- entrée aile droite centre
-	-- 	textCoords = vector3(-516.0, -210.55, 38.22),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = -60.0,
-	-- 			objCoords  = vector3( -515.7, -210.97, 38.22)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -516.27, -210.05, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- entrée aile droite exterieur
-	-- 	textCoords = vector3(-506.65, -199.83, 34.25),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'v_ilev_ra_door4r',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -506.39, -200.32, 34.25)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'v_ilev_ra_door4l',
-	-- 			objYaw = 300.0,
-	-- 			objCoords  = vector3( -506.8, -199.51, 34.25)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- entrée aile gauche centre
-	-- 	textCoords = vector3(-556.44, -228.68, 38.22),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = -60.0,
-	-- 			objCoords  = vector3( -556.22, -229.08, 38.22)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door1',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -556.53, -228.17, 38.22)
-	-- 		}
-	-- 	}
-	-- },
-	-- { -- entrée aile gauche exterieur
-	-- 	textCoords = vector3(-567.79, -235.24, 34.25),
-	-- 	authorizedJobs = { 'state' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'cls_cityhall_door3',
-	-- 			objYaw = 120.0,
-	-- 			objCoords  = vector3( -568.13, -234.8, 34.25)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'cls_cityhall_door3',
-	-- 			objYaw = 300.0,
-	-- 			objCoords  = vector3( -567.82, -235.86, 34.25)
-	-- 		}
-	-- 	}
-	-- },
-
+			{
+				objName = 'hei_prop_hei_bankdoor_new',
+				objYaw = 30.0,
+				objCoords  = vector3( -549.88, -196.99, 47.41)
+			}
+		}
+	},
 
 
 
