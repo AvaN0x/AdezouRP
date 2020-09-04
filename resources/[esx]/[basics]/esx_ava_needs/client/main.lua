@@ -56,6 +56,12 @@ AddEventHandler('esx_status:loaded', function(status)
         return false
     end, function(status)
       status.remove(1500)
+	end)
+	
+	TriggerEvent('esx_status:registerStatus', 'drugged', 0, '#15A517', function(status)
+        return false
+    end, function(status)
+      status.remove(1500)
     end)
 
 	Citizen.CreateThread(function()
@@ -113,6 +119,24 @@ AddEventHandler('esx_status:loaded', function(status)
 					end
 					IsAlreadyDrunk = false
 					DrunkLevel     = -1
+				end
+			end)
+
+			TriggerEvent('esx_status:getStatus', 'drugged', function(status)
+				if status.val > 0 then
+					local start = true
+					if IsAlreadyDrugged then
+						start = false
+					end
+					
+					Drugged(start)
+					IsAlreadyDrugged = true
+				end
+				if status.val == 0 then
+					if IsAlreadyDrugged then
+						Reality()
+					end
+					IsAlreadyDrugged = false
 				end
 			end)
 
@@ -219,6 +243,27 @@ function Drunk(level, start)
 
 	  if start then
 		DoScreenFadeIn(800)
+	  end
+	end)
+end
+
+-- drugged effect
+
+function Drugged(start)
+	Citizen.CreateThread(function()
+	  local playerPed = GetPlayerPed(-1)
+
+	  if start then
+		DoScreenFadeOut(1000)
+		Wait(1000)
+	  end
+
+	  --Anim goes here
+	  Citizen.Wait(0)
+	  SetTimecycleModifier("DRUG_gas_huffin")
+
+	  if start then
+		DoScreenFadeIn(2000)
 	  end
 	end)
 end
