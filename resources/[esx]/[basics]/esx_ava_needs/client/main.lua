@@ -20,6 +20,7 @@ AddEventHandler('esx_basicneeds:healPlayer', function()
 	TriggerEvent('esx_status:set', 'hunger', 1000000)
 	TriggerEvent('esx_status:set', 'thirst', 1000000)
 	TriggerEvent('esx_status:set', 'drunk', 0)
+	TriggerEvent('esx_status:set', 'drugged', 0)
 
 	-- restore hp
 	local playerPed = PlayerPedId()
