@@ -669,7 +669,7 @@ ESX.RegisterUsableItem('bagcoke', function(source)
 
 	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
 	-- TriggerClientEvent('esx_basicneeds:onDrink', source)
-	TriggerClientEvent('esx_optionalneeds:onDrink', source)
+	TriggerClientEvent('esx_optionalneeds:onDrink', source) --maybe it's not a drink
 	TriggerClientEvent('esx:showNotification', source, _U('used_bagcoke'))
 
 end)
@@ -682,7 +682,7 @@ ESX.RegisterUsableItem('bagexta', function(source)
 
 	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
 	-- TriggerClientEvent('esx_basicneeds:onDrink', source)
-	TriggerClientEvent('esx_optionalneeds:onDrink', source)
+	TriggerClientEvent('esx_optionalneeds:onDrink', source) --maybe it's not a drink
 	TriggerClientEvent('esx:showNotification', source, _U('used_bagexta'))
 
 end)
@@ -695,7 +695,7 @@ ESX.RegisterUsableItem('bagweed', function(source)
 
 	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
 	-- TriggerClientEvent('esx_basicneeds:onDrink', source)
-	TriggerClientEvent('esx_optionalneeds:onDrink', source)
+	TriggerClientEvent('esx_optionalneeds:onDrink', source) --maybe it's not a drink
 	TriggerClientEvent('esx:showNotification', source, _U('used_bagweed'))
 
 end)
