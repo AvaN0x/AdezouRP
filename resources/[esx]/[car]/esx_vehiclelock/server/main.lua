@@ -192,7 +192,6 @@ end)
 
 RegisterServerEvent('esx_vehiclelock:registerkeycardealer')
 AddEventHandler('esx_vehiclelock:registerkeycardealer', function(plate, target)
-	print("JE SUIS LA ")
 local _source = source
 local xPlayer = nil
 if target == 'no' then

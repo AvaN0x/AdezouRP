@@ -16,9 +16,9 @@ ESX.TriggerServerCallback('esx_vehiclelock:allkey', function(mykey)
 		for i=1, #mykey, 1 do
 			if mykey[i].got == 'true' then
 				if 	mykey[i].NB == 1 then
-						table.insert(elements, {label = 'Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
-					elseif mykey[i].NB == 2 then
-						table.insert(elements, {label = '[DOUBLE] Véhicule : '.. ' [' .. mykey[i].plate .. ']', value = nil})
+					table.insert(elements, {label = 'Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate, double = false})
+				elseif mykey[i].NB == 2 then
+						table.insert(elements, {label = '[DOUBLE] Véhicule : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate, double = true})
 					end
 				end
 			end
@@ -30,19 +30,22 @@ ESX.UI.Menu.Open(
 		align = 'right',
 		elements = elements
 	  },
-        function(data2, menu2) --Submit Cb
-
-        if data2.current.value ~= nil then
+		function(data2, menu2) --Submit Cb
+			local myElements
+			myElements = {
+				{label = 'Préter ses clés', value = 'preterkey'}, -- Préter les clés
+			}
+			if data2.current.double == false then
+				table.insert(myElements, 1, {label = 'Changer de propriétaire', value = 'donnerkey'}) -- Donner les clés
+			end
+		if data2.current.value ~= nil then
         ESX.UI.Menu.CloseAll()
   			ESX.UI.Menu.Open(
 				'default', GetCurrentResourceName(), 'mykey',
 				{
 				title = 'Voulez vous ?',
 				align = 'right',
-				elements = {
-						{label = 'Changer de propriétaire', value = 'donnerkey'}, -- Donné les clés
-						{label = 'Préter ses clés', value = 'preterkey'}, -- Donné les clés
-			  		},
+				elements = myElements,
 	  			},
         		function(data3, menu3) --Submit Cb
  					local player, distance = ESX.Game.GetClosestPlayer()
@@ -88,68 +91,69 @@ ESX.UI.Menu.Open(
 end)
 
 -- Menu Mes clés --
-RegisterNetEvent('esx_menu:key')
-AddEventHandler('esx_menu:key', function()
-ESX.TriggerServerCallback('esx_vehiclelock:allkey', function(mykey)
-	local elements = {}
-		for i=1, #mykey, 1 do
-			if mykey[i].got == 'true' then
-				if 	mykey[i].NB == 1 then
-						table.insert(elements, {label = 'Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
-					elseif mykey[i].NB == 2 then
-						table.insert(elements, {label = '[DOUBLE] Véhicule : '.. ' [' .. mykey[i].plate .. ']', value = nil})
-					end
-				end
-			end
+-- RegisterNetEvent('esx_menu:key')
+-- AddEventHandler('esx_menu:key', function()
+-- ESX.TriggerServerCallback('esx_vehiclelock:allkey', function(mykey)
+-- 	local elements = {}
+-- 		for i=1, #mykey, 1 do
+-- 			if mykey[i].got == 'true' then
+-- 				if 	mykey[i].NB == 1 then
+-- 						table.insert(elements, {label = 'Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
+-- 					elseif mykey[i].NB == 2 then
+-- 						table.insert(elements, {label = '[DOUBLE] Véhicule : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
+-- 					end
+-- 				end
+-- 			end
 
-ESX.UI.Menu.Open(
-	'default', GetCurrentResourceName(), 'mykey',
-	{
-		title = 'Mes clés',
-		align = 'right',
-		elements = elements
-	  },
-        function(data2, menu2) --Submit Cb
+-- ESX.UI.Menu.Open(
+-- 	'default', GetCurrentResourceName(), 'mykey',
+-- 	{
+-- 		title = 'Mes clés',
+-- 		align = 'right',
+-- 		elements = elements
+-- 	  },
+--         function(data2, menu2) --Submit Cb
 
-        if data2.current.value ~= nil then
-        ESX.UI.Menu.CloseAll()
-  			ESX.UI.Menu.Open(
-				'default', GetCurrentResourceName(), 'mykey',
-				{
-				title = 'Voulez vous ?',
-				align = 'right',
-				elements = {
-						{label = 'Préter', value = data2.current.value}, -- Donné les clés
-			  		},
-	  			},
-        		function(data3, menu3) --Submit Cb
- 					local player, distance = ESX.Game.GetClosestPlayer()
+-- 		if data2.current.value ~= nil then
+-- 		print("[DEBUG - 1] Clé : " .. data2.current.value)
+--         ESX.UI.Menu.CloseAll()
+--   			ESX.UI.Menu.Open(
+-- 				'default', GetCurrentResourceName(), 'mykey',
+-- 				{
+-- 				title = 'Voulez vous ?',
+-- 				align = 'right',
+-- 				elements = {
+-- 						{label = 'Préter', value = data2.current.value}, -- Donné les clés
+-- 			  		},
+-- 	  			},
+--         		function(data3, menu3) --Submit Cb
+--  					local player, distance = ESX.Game.GetClosestPlayer()
 
-       				 if data3.current.value ~= nil then
-       					 ESX.UI.Menu.CloseAll()
-       					if distance ~= -1 and distance <= 3.0 then
-       					  TriggerServerEvent('esx_vehiclelock:givekey', GetPlayerServerId(player), data2.current.value)
-       					end
-      				 end
-       			 end,
-       			 function(data3, menu3) --Cancel Cb
-           		     menu3.close()
-       			 end,
-       			 function(data3, menu3) --Change Cb
+--        				 if data3.current.value ~= nil then
+--        					 ESX.UI.Menu.CloseAll()
+--        					if distance ~= -1 and distance <= 3.0 then
+--        					  TriggerServerEvent('esx_vehiclelock:givekey', GetPlayerServerId(player), data2.current.value)
+--        					end
+--       				 end
+--        			 end,
+--        			 function(data3, menu3) --Cancel Cb
+--            		     menu3.close()
+--        			 end,
+--        			 function(data3, menu3) --Change Cb
 
-        		 end
-   			 )
-        end
-        end,
+--         		 end
+--    			 )
+--         end
+--         end,
 
-        function(data2, men2) --Cancel Cb
-                men2.close()
-        end,
-        function(dat2, men2) --Change Cb
-        end
-      )
-  end)
-end)
+--         function(data2, men2) --Cancel Cb
+--                 men2.close()
+--         end,
+--         function(dat2, men2) --Change Cb
+--         end
+--       )
+--   end)
+-- end)
 
 AddEventHandler('esx_vehiclelock:hasEnteredMarker', function(zone)
 
