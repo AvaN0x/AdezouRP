@@ -61,7 +61,8 @@ Locales['fr'] = {
 	['used_vine'] = 'Tu as bu 1x ~y~Vin~s~',
 	['used_jus'] = 'Vous avez bu du jus de raisin',
 	['used_grand_cru'] = 'Vous avez bu une bouteille de grand cru',
-
+	
+	
 	['used_bagcoke'] = 'Vous avez utilisé un ~y~Pochon de cocaïne~s~',
 	['used_bagexta'] = 'Vous avez utilisé un ~y~Pochon d\'extasy~s~',
 	['used_bagweed'] = 'Vous avez utilisé un ~y~Pochon de cannabis~s~',
