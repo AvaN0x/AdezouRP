@@ -1,21 +1,21 @@
 Config                            = {}
 
 Config.Teleporters = {
-	-- ['ToitHopital'] = {
-	-- 	['Job'] = 'none',
-	-- 	['Enter'] = { 
-	-- 		['x'] = 340.45, 
-	-- 		['y'] = -595.33, 
-	-- 		['z'] = 27.81,
-	-- 		['Information'] = '[E] Monter sur le toit',
-	-- 	},
-	-- 	['Exit'] = {
-	-- 		['x'] = 339.02, 
-	-- 		['y'] = -584.04, 
-	-- 		['z'] = 73.18, 
-	-- 		['Information'] = '[E] Descendre' 
-	-- 	}
-	-- },
+	['ToitHopital'] = {
+		['Job'] = 'none',
+		['Enter'] = { 
+			['x'] = 329.78, 
+			['y'] = -600.99, 
+			['z'] = 42.3,
+			['Information'] = '[E] Monter sur le toit',
+		},
+		['Exit'] = {
+			['x'] = 339.02, 
+			['y'] = -584.04, 
+			['z'] = 73.18, 
+			['Information'] = '[E] Descendre' 
+		}
+	},
 
 	-- ['Biker'] = {
 	-- 	['Job'] = 'none',
