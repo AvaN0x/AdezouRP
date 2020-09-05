@@ -4,7 +4,7 @@ desktop.ini
 *.sh
 /cache/
 /resources/\[local\]/
-/resources/\[douane\]/
+/resources/\[douane\]/discord_perms/config.lua
 /resources/\[textures\]/
 
 /resources/\[admin\]/vMenu/*.json
