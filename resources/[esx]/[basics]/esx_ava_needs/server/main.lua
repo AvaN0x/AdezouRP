@@ -654,7 +654,7 @@ ESX.RegisterUsableItem('vine', function(source)
 
 	xPlayer.removeInventoryItem('vine', 1)
 
-	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
+	TriggerClientEvent('esx_status:add', source, 'drunk', 400000)
 	-- TriggerClientEvent('esx_basicneeds:onDrink', source)
 	TriggerClientEvent('esx_optionalneeds:onDrink', source)
 	TriggerClientEvent('esx:showNotification', source, _U('used_vine'))
