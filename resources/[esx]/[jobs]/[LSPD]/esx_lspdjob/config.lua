@@ -43,53 +43,74 @@ Config.PoliceStations = {
 			vector3(481.35, -990.29, 24.91)
 		},
 
-		Vehicles = {
-			{
-				Spawner = vector3(454.6, -1017.4, 28.4),
-				InsideShop = vector3(228.5, -993.5, -99.5),
-				SpawnPoints = {
-					{ coords = vector3(438.4, -1018.3, 27.7), heading = 90.0, radius = 6.0 },
-					{ coords = vector3(441.0, -1024.2, 28.3), heading = 90.0, radius = 6.0 },
-					{ coords = vector3(453.5, -1022.2, 28.0), heading = 90.0, radius = 6.0 },
-					{ coords = vector3(450.9, -1016.5, 28.1), heading = 90.0, radius = 6.0 }
-				}
-			},
+		-- Vehicles = {
+		-- 	{
+		-- 		Spawner = vector3(454.6, -1017.4, 28.4),
+		-- 		InsideShop = vector3(228.5, -993.5, -99.5),
+		-- 		SpawnPoints = {
+		-- 			{ coords = vector3(438.4, -1018.3, 27.7), heading = 90.0, radius = 6.0 },
+		-- 			{ coords = vector3(441.0, -1024.2, 28.3), heading = 90.0, radius = 6.0 },
+		-- 			{ coords = vector3(453.5, -1022.2, 28.0), heading = 90.0, radius = 6.0 },
+		-- 			{ coords = vector3(450.9, -1016.5, 28.1), heading = 90.0, radius = 6.0 }
+		-- 		}
+		-- 	},
 
-			-- {
-			-- 	Spawner = vector3(473.3, -1018.8, -128.0),
-			-- 	InsideShop = vector3(228.5, -993.5, -99.0),
-			-- 	SpawnPoints = {
-			-- 		{ coords = vector3(475.9, -1021.6, 28.0), heading = 276.1, radius = 6.0 },
-			-- 		{ coords = vector3(484.1, -1023.1, 27.5), heading = 302.5, radius = 6.0 }
-			-- 	}
-			-- }
-		},
+		-- 	-- {
+		-- 	-- 	Spawner = vector3(473.3, -1018.8, -128.0),
+		-- 	-- 	InsideShop = vector3(228.5, -993.5, -99.0),
+		-- 	-- 	SpawnPoints = {
+		-- 	-- 		{ coords = vector3(475.9, -1021.6, 28.0), heading = 276.1, radius = 6.0 },
+		-- 	-- 		{ coords = vector3(484.1, -1023.1, 27.5), heading = 302.5, radius = 6.0 }
+		-- 	-- 	}
+		-- 	-- }
+		-- },
 
-		VehiclesDelete = {
-			vector3(462.8, -1019.68, 28.11)
-		},
+		-- VehiclesDelete = {
+		-- 	vector3(462.8, -1019.68, 28.11)
+		-- },
 
-		Helicopters = {
-			{
-				Spawner = vector3(461.1, -981.5, -1443.6),
-				InsideShop = vector3(477.0, -1106.4, 43.0),
-				SpawnPoints = {
-					{ coords = vector3(449.5, -981.2, 43.6), heading = 92.6, radius = 10.0 }
-				}
+		-- Helicopters = {
+		-- 	{
+		-- 		Spawner = vector3(461.1, -981.5, -1443.6),
+		-- 		InsideShop = vector3(477.0, -1106.4, 43.0),
+		-- 		SpawnPoints = {
+		-- 			{ coords = vector3(449.5, -981.2, 43.6), heading = 92.6, radius = 10.0 }
+		-- 		}
+		-- 	}
+		-- },
+
+		SocietyGarage = {	
+			Name  = "Garage véhicule",
+			Spawner = vector3(454.6, -1017.4, 28.4),
+			Type = "car",
+			SpawnPoint = {
+				Pos = {x = 454.6,  y = -1017.4, z = 28.4},
+				Heading = 97.0
 			}
 		},
+	
+		SocietyHeliGarage = {	
+			Name  = "Héliport",
+			Spawner = vector3(449.57, -981.17, 43.69),
+			Type = "heli",
+			SpawnPoint = {
+				Pos = {x = 449.57, y = -981.17, z = 43.69},
+				Heading = 90.0
+			}
+		},
+
 
 		BossActions = {
 			vector3(462.27, -1007.53, 35.93)
 		},
 
-		SocietyGarage = {	
-			Name = "society_police",
-			SpawnPoint = {
-				Pos = {x = 453.63,  y = -1017.6, z = 28.45},
-				Heading = 202.91
-			}
-		}
+		-- SocietyGarage = {	
+		-- 	Name = "society_police",
+		-- 	SpawnPoint = {
+		-- 		Pos = {x = 453.63,  y = -1017.6, z = 28.45},
+		-- 		Heading = 202.91
+		-- 	}
+		-- }
 
 	}
 

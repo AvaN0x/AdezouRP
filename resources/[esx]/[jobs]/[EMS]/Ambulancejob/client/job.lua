@@ -272,47 +272,47 @@ Citizen.CreateThread(function()
 			end
 
 			-- Vehicle Spawners
-			for k,v in ipairs(hospital.Vehicles) do
-				local distance = GetDistanceBetweenCoords(playerCoords, v.Spawner, true)
+			-- for k,v in ipairs(hospital.SocietyGarage) do
+			if hospital.SocietyGarage then
+				local distance = GetDistanceBetweenCoords(playerCoords, hospital.SocietyGarage.Spawner, true)
 
 				if distance < Config.DrawDistance then
-					DrawMarker(v.Marker.type, v.Spawner, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.Marker.x, v.Marker.y, v.Marker.z, v.Marker.r, v.Marker.g, v.Marker.b, v.Marker.a, false, false, 2, v.Marker.rotate, nil, nil, false)
+					DrawMarker(hospital.SocietyGarage.Marker.type, hospital.SocietyGarage.Spawner, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, hospital.SocietyGarage.Marker.x, hospital.SocietyGarage.Marker.y, hospital.SocietyGarage.Marker.z, hospital.SocietyGarage.Marker.r, hospital.SocietyGarage.Marker.g, hospital.SocietyGarage.Marker.b, hospital.SocietyGarage.Marker.a, false, false, 2, hospital.SocietyGarage.Marker.rotate, nil, nil, false)
 					letSleep = false
 				end
 
-				if distance < v.Marker.x then
-					isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'Vehicles', k
+				if distance < hospital.SocietyGarage.Marker.x then
+					isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'SocietyGarage', k
 				end
 			end
 
-			for k,v in ipairs(hospital.VehiclesDelete) do
-				local distance = GetDistanceBetweenCoords(playerCoords, v, true)
+			-- for k,v in ipairs(hospital.VehiclesDelete) do
+			-- 	local distance = GetDistanceBetweenCoords(playerCoords, v, true)
 
-				if distance < Config.DrawDistance then
-					DrawMarker(20, v, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 255, 17, Config.Marker.a, true, true, 2, Config.Marker.rotate, nil, nil, false)
-					letSleep = false
-				end
+			-- 	if distance < Config.DrawDistance then
+			-- 		DrawMarker(20, v, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 255, 17, Config.Marker.a, true, true, 2, Config.Marker.rotate, nil, nil, false)
+			-- 		letSleep = false
+			-- 	end
 
-				if distance < Config.Marker.x then
-					isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'delete_vehicle', k
-				end
-			end
+			-- 	if distance < Config.Marker.x then
+			-- 		isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'delete_vehicle', k
+			-- 	end
+			-- end
 
 
 			-- Helicopter Spawners
-			for k,v in ipairs(hospital.Helicopters) do
-				local distance = GetDistanceBetweenCoords(playerCoords, v.Spawner, true)
+			if hospital.SocietyHeliGarage then
+				local distance = GetDistanceBetweenCoords(playerCoords, hospital.SocietyHeliGarage.Spawner, true)
 
 				if distance < Config.DrawDistance then
-					DrawMarker(v.Marker.type, v.Spawner, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.Marker.x, v.Marker.y, v.Marker.z, v.Marker.r, v.Marker.g, v.Marker.b, v.Marker.a, false, false, 2, v.Marker.rotate, nil, nil, false)
+					DrawMarker(hospital.SocietyHeliGarage.Marker.type, hospital.SocietyHeliGarage.Spawner, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, hospital.SocietyHeliGarage.Marker.x, hospital.SocietyHeliGarage.Marker.y, hospital.SocietyHeliGarage.Marker.z, hospital.SocietyHeliGarage.Marker.r, hospital.SocietyHeliGarage.Marker.g, hospital.SocietyHeliGarage.Marker.b, hospital.SocietyHeliGarage.Marker.a, false, false, 2, hospital.SocietyHeliGarage.Marker.rotate, nil, nil, false)
 					letSleep = false
 				end
 
-				if distance < v.Marker.x then
-					isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'Helicopters', k
+				if distance < hospital.SocietyHeliGarage.Marker.x then
+					isInMarker, currentHospital, currentPart, currentPartNum = true, hospitalNum, 'SocietyHeliGarage', k
 				end
 			end
-
 --			-- Fast Travels
 --			for k,v in ipairs(hospital.FastTravels) do
 --				local distance = GetDistanceBetweenCoords(playerCoords, v.From, true)
@@ -383,24 +383,28 @@ AddEventHandler('esx_ambulancejob:hasEnteredMarker', function(hospital, part, pa
 			CurrentAction = part
 			CurrentActionMsg = _U('open_pharmacy')
 			CurrentActionData = {}
-		elseif part == 'Vehicles' then
+		elseif part == 'SocietyGarage' then
 			CurrentAction = part
 			CurrentActionMsg = _U('garage_prompt')
 			CurrentActionData = {hospital = hospital, partNum = partNum}
-		elseif part == 'delete_vehicle' then
+		elseif part == 'SocietyHeliGarage' then
 			CurrentAction = part
 			CurrentActionMsg = _U('garage_prompt')
 			CurrentActionData = {hospital = hospital, partNum = partNum}
-		elseif part == 'Helicopters' then
-			CurrentAction = part
-			CurrentActionMsg = _U('helicopter_prompt')
-			CurrentActionData = {hospital = hospital, partNum = partNum}
-		elseif part == 'FastTravelsPrompt' then
-			local travelItem = Config.Hospitals[hospital][part][partNum]
+		-- elseif part == 'delete_vehicle' then
+		-- 	CurrentAction = part
+		-- 	CurrentActionMsg = _U('garage_prompt')
+		-- 	CurrentActionData = {hospital = hospital, partNum = partNum}
+		-- elseif part == 'Helicopters' then
+		-- 	CurrentAction = part
+		-- 	CurrentActionMsg = _U('helicopter_prompt')
+		-- 	CurrentActionData = {hospital = hospital, partNum = partNum}
+		-- elseif part == 'FastTravelsPrompt' then
+		-- 	local travelItem = Config.Hospitals[hospital][part][partNum]
 
-			CurrentAction = part
-			CurrentActionMsg = travelItem.Prompt
-			CurrentActionData = {to = travelItem.To.coords, heading = travelItem.To.heading}
+		-- 	CurrentAction = part
+		-- 	CurrentActionMsg = travelItem.Prompt
+		-- 	CurrentActionData = {to = travelItem.To.coords, heading = travelItem.To.heading}
 		end
 	end
 end)
@@ -427,15 +431,19 @@ Citizen.CreateThread(function()
 					OpenAmbulanceActionsMenu()
 				elseif CurrentAction == 'Pharmacy' then
 					OpenPharmacyMenu()
-				elseif CurrentAction == 'Vehicles' then
+				elseif CurrentAction == 'SocietyGarage' then
 					-- OpenVehicleSpawnerMenu(CurrentActionData.hospital, CurrentActionData.partNum)
-					TriggerEvent('eden_garage:ListSocietyVehiclesMenu', "society_ambulance", Config.Hospitals[CurrentActionData.hospital].SocietyGarage)
-				elseif CurrentAction == 'delete_vehicle' then
-					TriggerEvent('eden_garage:StockSocietyVehicleMenu', "society_ambulance")
-				elseif CurrentAction == 'Helicopters' then
-					OpenHelicopterSpawnerMenu(CurrentActionData.hospital, CurrentActionData.partNum)
-				elseif CurrentAction == 'FastTravelsPrompt' then
-					FastTravel(CurrentActionData.to, CurrentActionData.heading)
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ambulance", Config.Hospitals[CurrentActionData.hospital].SocietyGarage)
+				-- elseif CurrentAction == 'delete_vehicle' then
+				-- 	TriggerEvent('eden_garage:StockSocietyVehicleMenu', "society_ambulance")
+				-- elseif CurrentAction == 'Helicopters' then
+				-- 	OpenHelicopterSpawnerMenu(CurrentActionData.hospital, CurrentActionData.partNum)
+				-- elseif CurrentAction == 'FastTravelsPrompt' then
+				-- 	FastTravel(CurrentActionData.to, CurrentActionData.heading)
+				elseif CurrentAction == 'SocietyHeliGarage' then
+					-- OpenVehicleSpawnerMenu(CurrentActionData.hospital, CurrentActionData.partNum)
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ambulance", Config.Hospitals[CurrentActionData.hospital].SocietyHeliGarage)
+
 				end
 
 				CurrentAction = nil
@@ -523,287 +531,287 @@ function OpenCloakroomMenu()
 	end)
 end
 
-function OpenVehicleSpawnerMenu(hospital, partNum)
-	local playerCoords = GetEntityCoords(PlayerPedId())
-	local elements = {
-		{label = _U('garage_storeditem'), action = 'garage'},
-		{label = _U('garage_storeitem'), action = 'store_garage'},
-		{label = _U('garage_buyitem'), action = 'buy_vehicle'}
-	}
+-- function OpenVehicleSpawnerMenu(hospital, partNum)
+-- 	local playerCoords = GetEntityCoords(PlayerPedId())
+-- 	local elements = {
+-- 		{label = _U('garage_storeditem'), action = 'garage'},
+-- 		{label = _U('garage_storeitem'), action = 'store_garage'},
+-- 		{label = _U('garage_buyitem'), action = 'buy_vehicle'}
+-- 	}
 
-	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle', {
-		title    = _U('garage_title'),
-		align    = 'top-left',
-		elements = elements
-	}, function(data, menu)
+-- 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle', {
+-- 		title    = _U('garage_title'),
+-- 		align    = 'top-left',
+-- 		elements = elements
+-- 	}, function(data, menu)
 
-		if data.current.action == 'buy_vehicle' then
-			local shopCoords = Config.Hospitals[hospital].Vehicles[partNum].InsideShop
-			local shopElements = {}
+-- 		if data.current.action == 'buy_vehicle' then
+-- 			local shopCoords = Config.Hospitals[hospital].Vehicles[partNum].InsideShop
+-- 			local shopElements = {}
 
-			local authorizedVehicles = Config.AuthorizedVehicles[ESX.PlayerData.job.grade_name]
+-- 			local authorizedVehicles = Config.AuthorizedVehicles[ESX.PlayerData.job.grade_name]
 
-			if #authorizedVehicles > 0 then
-				for k,vehicle in ipairs(authorizedVehicles) do
-					table.insert(shopElements, {
-						label = ('%s - <span style="color:green;">%s</span>'):format(vehicle.label, _U('shop_item', ESX.Math.GroupDigits(vehicle.price))),
-						name  = vehicle.label,
-						model = vehicle.model,
-						price = vehicle.price,
-						type  = 'car'
-					})
-				end
-			else
-				return
-			end
+-- 			if #authorizedVehicles > 0 then
+-- 				for k,vehicle in ipairs(authorizedVehicles) do
+-- 					table.insert(shopElements, {
+-- 						label = ('%s - <span style="color:green;">%s</span>'):format(vehicle.label, _U('shop_item', ESX.Math.GroupDigits(vehicle.price))),
+-- 						name  = vehicle.label,
+-- 						model = vehicle.model,
+-- 						price = vehicle.price,
+-- 						type  = 'car'
+-- 					})
+-- 				end
+-- 			else
+-- 				return
+-- 			end
 
-			OpenShopMenu(shopElements, playerCoords, shopCoords)
-		elseif data.current.action == 'garage' then
-			local garage = {}
+-- 			OpenShopMenu(shopElements, playerCoords, shopCoords)
+-- 		elseif data.current.action == 'garage' then
+-- 			local garage = {}
 
-			ESX.TriggerServerCallback('esx_vehicleshop:retrieveJobVehicles', function(jobVehicles)
-				if #jobVehicles > 0 then
-					for k,v in ipairs(jobVehicles) do
-						local props = json.decode(v.vehicle)
-						local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(props.model))
-						local label = ('%s - <span style="color:darkgoldenrod;">%s</span>: '):format(vehicleName, props.plate)
+-- 			ESX.TriggerServerCallback('esx_vehicleshop:retrieveJobVehicles', function(jobVehicles)
+-- 				if #jobVehicles > 0 then
+-- 					for k,v in ipairs(jobVehicles) do
+-- 						local props = json.decode(v.vehicle)
+-- 						local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(props.model))
+-- 						local label = ('%s - <span style="color:darkgoldenrod;">%s</span>: '):format(vehicleName, props.plate)
 
-						if v.stored then
-							label = label .. ('<span style="color:green;">%s</span>'):format(_U('garage_stored'))
-						else
-							label = label .. ('<span style="color:darkred;">%s</span>'):format(_U('garage_notstored'))
-						end
+-- 						if v.stored then
+-- 							label = label .. ('<span style="color:green;">%s</span>'):format(_U('garage_stored'))
+-- 						else
+-- 							label = label .. ('<span style="color:darkred;">%s</span>'):format(_U('garage_notstored'))
+-- 						end
 
-						table.insert(garage, {
-							label = label,
-							stored = v.stored,
-							model = props.model,
-							vehicleProps = props
-						})
-					end
+-- 						table.insert(garage, {
+-- 							label = label,
+-- 							stored = v.stored,
+-- 							model = props.model,
+-- 							vehicleProps = props
+-- 						})
+-- 					end
 
-					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_garage', {
-						title    = _U('garage_title'),
-						align    = 'top-left',
-						elements = garage
-					}, function(data2, menu2)
-						if data2.current.stored then
-							local foundSpawn, spawnPoint = GetAvailableVehicleSpawnPoint(hospital, 'Vehicles', partNum)
+-- 					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_garage', {
+-- 						title    = _U('garage_title'),
+-- 						align    = 'top-left',
+-- 						elements = garage
+-- 					}, function(data2, menu2)
+-- 						if data2.current.stored then
+-- 							local foundSpawn, spawnPoint = GetAvailableVehicleSpawnPoint(hospital, 'Vehicles', partNum)
 
-							if foundSpawn then
-								menu2.close()
+-- 							if foundSpawn then
+-- 								menu2.close()
 
-								ESX.Game.SpawnVehicle(data2.current.model, spawnPoint.coords, spawnPoint.heading, function(vehicle)
-									ESX.Game.SetVehicleProperties(vehicle, data2.current.vehicleProps)
-									SetVehicleEnginePowerMultiplier(vehicle, 2.0 * 9.0)
+-- 								ESX.Game.SpawnVehicle(data2.current.model, spawnPoint.coords, spawnPoint.heading, function(vehicle)
+-- 									ESX.Game.SetVehicleProperties(vehicle, data2.current.vehicleProps)
+-- 									SetVehicleEnginePowerMultiplier(vehicle, 2.0 * 9.0)
 
-									TriggerServerEvent('esx_vehicleshop:setJobVehicleState', data2.current.vehicleProps.plate, false)
-									ESX.ShowNotification(_U('garage_released'))
-								end)
-							end
-						else
-							ESX.ShowNotification(_U('garage_notavailable'))
-						end
-					end, function(data2, menu2)
-						menu2.close()
-					end)
+-- 									TriggerServerEvent('esx_vehicleshop:setJobVehicleState', data2.current.vehicleProps.plate, false)
+-- 									ESX.ShowNotification(_U('garage_released'))
+-- 								end)
+-- 							end
+-- 						else
+-- 							ESX.ShowNotification(_U('garage_notavailable'))
+-- 						end
+-- 					end, function(data2, menu2)
+-- 						menu2.close()
+-- 					end)
 
-				else
-					ESX.ShowNotification(_U('garage_empty'))
-				end
-			end, 'car')
+-- 				else
+-- 					ESX.ShowNotification(_U('garage_empty'))
+-- 				end
+-- 			end, 'car')
 
-		elseif data.current.action == 'store_garage' then
-			StoreNearbyVehicle(playerCoords)
-		end
+-- 		elseif data.current.action == 'store_garage' then
+-- 			StoreNearbyVehicle(playerCoords)
+-- 		end
 
-	end, function(data, menu)
-		menu.close()
-	end)
+-- 	end, function(data, menu)
+-- 		menu.close()
+-- 	end)
 
-end
+-- end
 
-function StoreNearbyVehicle(playerCoords)
-	local vehicles, vehiclePlates = ESX.Game.GetVehiclesInArea(playerCoords, 30.0), {}
+-- function StoreNearbyVehicle(playerCoords)
+-- 	local vehicles, vehiclePlates = ESX.Game.GetVehiclesInArea(playerCoords, 30.0), {}
 
-	if #vehicles > 0 then
-		for k,v in ipairs(vehicles) do
+-- 	if #vehicles > 0 then
+-- 		for k,v in ipairs(vehicles) do
 
-			-- Make sure the vehicle we're saving is empty, or else it wont be deleted
-			if GetVehicleNumberOfPassengers(v) == 0 and IsVehicleSeatFree(v, -1) then
-				table.insert(vehiclePlates, {
-					vehicle = v,
-					plate = ESX.Math.Trim(GetVehicleNumberPlateText(v))
-				})
-			end
-		end
-	else
-		ESX.ShowNotification(_U('garage_store_nearby'))
-		return
-	end
+-- 			-- Make sure the vehicle we're saving is empty, or else it wont be deleted
+-- 			if GetVehicleNumberOfPassengers(v) == 0 and IsVehicleSeatFree(v, -1) then
+-- 				table.insert(vehiclePlates, {
+-- 					vehicle = v,
+-- 					plate = ESX.Math.Trim(GetVehicleNumberPlateText(v))
+-- 				})
+-- 			end
+-- 		end
+-- 	else
+-- 		ESX.ShowNotification(_U('garage_store_nearby'))
+-- 		return
+-- 	end
 
-	ESX.TriggerServerCallback('esx_ambulancejob:storeNearbyVehicle', function(storeSuccess, foundNum)
-		if storeSuccess then
-			local vehicleId = vehiclePlates[foundNum]
-			local attempts = 0
-			ESX.Game.DeleteVehicle(vehicleId.vehicle)
-			IsBusy = true
+-- 	ESX.TriggerServerCallback('esx_ambulancejob:storeNearbyVehicle', function(storeSuccess, foundNum)
+-- 		if storeSuccess then
+-- 			local vehicleId = vehiclePlates[foundNum]
+-- 			local attempts = 0
+-- 			ESX.Game.DeleteVehicle(vehicleId.vehicle)
+-- 			IsBusy = true
 
-			Citizen.CreateThread(function()
-				while IsBusy do
-					Citizen.Wait(0)
-					drawLoadingText(_U('garage_storing'), 255, 255, 255, 255)
-				end
-			end)
+-- 			Citizen.CreateThread(function()
+-- 				while IsBusy do
+-- 					Citizen.Wait(0)
+-- 					drawLoadingText(_U('garage_storing'), 255, 255, 255, 255)
+-- 				end
+-- 			end)
 
-			-- Workaround for vehicle not deleting when other players are near it.
-			while DoesEntityExist(vehicleId.vehicle) do
-				Citizen.Wait(500)
-				attempts = attempts + 1
+-- 			-- Workaround for vehicle not deleting when other players are near it.
+-- 			while DoesEntityExist(vehicleId.vehicle) do
+-- 				Citizen.Wait(500)
+-- 				attempts = attempts + 1
 
-				-- Give up
-				if attempts > 30 then
-					break
-				end
+-- 				-- Give up
+-- 				if attempts > 30 then
+-- 					break
+-- 				end
 
-				vehicles = ESX.Game.GetVehiclesInArea(playerCoords, 30.0)
-				if #vehicles > 0 then
-					for k,v in ipairs(vehicles) do
-						if ESX.Math.Trim(GetVehicleNumberPlateText(v)) == vehicleId.plate then
-							ESX.Game.DeleteVehicle(v)
-							break
-						end
-					end
-				end
-			end
+-- 				vehicles = ESX.Game.GetVehiclesInArea(playerCoords, 30.0)
+-- 				if #vehicles > 0 then
+-- 					for k,v in ipairs(vehicles) do
+-- 						if ESX.Math.Trim(GetVehicleNumberPlateText(v)) == vehicleId.plate then
+-- 							ESX.Game.DeleteVehicle(v)
+-- 							break
+-- 						end
+-- 					end
+-- 				end
+-- 			end
 
-			IsBusy = false
-			ESX.ShowNotification(_U('garage_has_stored'))
-		else
-			ESX.ShowNotification(_U('garage_has_notstored'))
-		end
-	end, vehiclePlates)
-end
+-- 			IsBusy = false
+-- 			ESX.ShowNotification(_U('garage_has_stored'))
+-- 		else
+-- 			ESX.ShowNotification(_U('garage_has_notstored'))
+-- 		end
+-- 	end, vehiclePlates)
+-- end
 
-function GetAvailableVehicleSpawnPoint(hospital, part, partNum)
-	local spawnPoints = Config.Hospitals[hospital][part][partNum].SpawnPoints
-	local found, foundSpawnPoint = false, nil
+-- function GetAvailableVehicleSpawnPoint(hospital, part, partNum)
+-- 	local spawnPoints = Config.Hospitals[hospital][part][partNum].SpawnPoints
+-- 	local found, foundSpawnPoint = false, nil
 
-	for i=1, #spawnPoints, 1 do
-		if ESX.Game.IsSpawnPointClear(spawnPoints[i].coords, spawnPoints[i].radius) then
-			found, foundSpawnPoint = true, spawnPoints[i]
-			break
-		end
-	end
+-- 	for i=1, #spawnPoints, 1 do
+-- 		if ESX.Game.IsSpawnPointClear(spawnPoints[i].coords, spawnPoints[i].radius) then
+-- 			found, foundSpawnPoint = true, spawnPoints[i]
+-- 			break
+-- 		end
+-- 	end
 
-	if found then
-		return true, foundSpawnPoint
-	else
-		ESX.ShowNotification(_U('garage_blocked'))
-		return false
-	end
-end
+-- 	if found then
+-- 		return true, foundSpawnPoint
+-- 	else
+-- 		ESX.ShowNotification(_U('garage_blocked'))
+-- 		return false
+-- 	end
+-- end
 
-function OpenHelicopterSpawnerMenu(hospital, partNum)
-	local playerCoords = GetEntityCoords(PlayerPedId())
-	ESX.PlayerData = ESX.GetPlayerData()
-	local elements = {
-		{label = _U('helicopter_garage'), action = 'garage'},
-		{label = _U('helicopter_store'), action = 'store_garage'},
-		{label = _U('helicopter_buy'), action = 'buy_helicopter'}
-	}
+-- function OpenHelicopterSpawnerMenu(hospital, partNum)
+-- 	local playerCoords = GetEntityCoords(PlayerPedId())
+-- 	ESX.PlayerData = ESX.GetPlayerData()
+-- 	local elements = {
+-- 		{label = _U('helicopter_garage'), action = 'garage'},
+-- 		{label = _U('helicopter_store'), action = 'store_garage'},
+-- 		{label = _U('helicopter_buy'), action = 'buy_helicopter'}
+-- 	}
 
-	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helicopter_spawner', {
-		title    = _U('helicopter_title'),
-		align    = 'top-left',
-		elements = elements
-	}, function(data, menu)
+-- 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helicopter_spawner', {
+-- 		title    = _U('helicopter_title'),
+-- 		align    = 'top-left',
+-- 		elements = elements
+-- 	}, function(data, menu)
 
-		if data.current.action == 'buy_helicopter' then
-			local shopCoords = Config.Hospitals[hospital].Helicopters[partNum].InsideShop
-			local shopElements = {}
+-- 		if data.current.action == 'buy_helicopter' then
+-- 			local shopCoords = Config.Hospitals[hospital].Helicopters[partNum].InsideShop
+-- 			local shopElements = {}
 
-			local authorizedHelicopters = Config.AuthorizedHelicopters[ESX.PlayerData.job.grade_name]
+-- 			local authorizedHelicopters = Config.AuthorizedHelicopters[ESX.PlayerData.job.grade_name]
 
-			if #authorizedHelicopters > 0 then
-				for k,helicopter in ipairs(authorizedHelicopters) do
-					table.insert(shopElements, {
-						label = ('%s - <span style="color:green;">%s</span>'):format(helicopter.label, _U('shop_item', ESX.Math.GroupDigits(helicopter.price))),
-						name  = helicopter.label,
-						model = helicopter.model,
-						price = helicopter.price,
-						type  = 'helicopter'
-					})
-				end
-			else
-				ESX.ShowNotification(_U('helicopter_notauthorized'))
-				return
-			end
+-- 			if #authorizedHelicopters > 0 then
+-- 				for k,helicopter in ipairs(authorizedHelicopters) do
+-- 					table.insert(shopElements, {
+-- 						label = ('%s - <span style="color:green;">%s</span>'):format(helicopter.label, _U('shop_item', ESX.Math.GroupDigits(helicopter.price))),
+-- 						name  = helicopter.label,
+-- 						model = helicopter.model,
+-- 						price = helicopter.price,
+-- 						type  = 'helicopter'
+-- 					})
+-- 				end
+-- 			else
+-- 				ESX.ShowNotification(_U('helicopter_notauthorized'))
+-- 				return
+-- 			end
 
-			OpenShopMenu(shopElements, playerCoords, shopCoords)
-		elseif data.current.action == 'garage' then
-			local garage = {}
+-- 			OpenShopMenu(shopElements, playerCoords, shopCoords)
+-- 		elseif data.current.action == 'garage' then
+-- 			local garage = {}
 
-			ESX.TriggerServerCallback('esx_vehicleshop:retrieveJobVehicles', function(jobVehicles)
-				if #jobVehicles > 0 then
-					for k,v in ipairs(jobVehicles) do
-						local props = json.decode(v.vehicle)
-						local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(props.model))
-						local label = ('%s - <span style="color:darkgoldenrod;">%s</span>: '):format(vehicleName, props.plate)
+-- 			ESX.TriggerServerCallback('esx_vehicleshop:retrieveJobVehicles', function(jobVehicles)
+-- 				if #jobVehicles > 0 then
+-- 					for k,v in ipairs(jobVehicles) do
+-- 						local props = json.decode(v.vehicle)
+-- 						local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(props.model))
+-- 						local label = ('%s - <span style="color:darkgoldenrod;">%s</span>: '):format(vehicleName, props.plate)
 
-						if v.stored then
-							label = label .. ('<span style="color:green;">%s</span>'):format(_U('garage_stored'))
-						else
-							label = label .. ('<span style="color:darkred;">%s</span>'):format(_U('garage_notstored'))
-						end
+-- 						if v.stored then
+-- 							label = label .. ('<span style="color:green;">%s</span>'):format(_U('garage_stored'))
+-- 						else
+-- 							label = label .. ('<span style="color:darkred;">%s</span>'):format(_U('garage_notstored'))
+-- 						end
 
-						table.insert(garage, {
-							label = label,
-							stored = v.stored,
-							model = props.model,
-							vehicleProps = props
-						})
-					end
+-- 						table.insert(garage, {
+-- 							label = label,
+-- 							stored = v.stored,
+-- 							model = props.model,
+-- 							vehicleProps = props
+-- 						})
+-- 					end
 
-					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helicopter_garage', {
-						title    = _U('helicopter_garage_title'),
-						align    = 'top-left',
-						elements = garage
-					}, function(data2, menu2)
-						if data2.current.stored then
-							local foundSpawn, spawnPoint = GetAvailableVehicleSpawnPoint(hospital, 'Helicopters', partNum)
+-- 					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helicopter_garage', {
+-- 						title    = _U('helicopter_garage_title'),
+-- 						align    = 'top-left',
+-- 						elements = garage
+-- 					}, function(data2, menu2)
+-- 						if data2.current.stored then
+-- 							local foundSpawn, spawnPoint = GetAvailableVehicleSpawnPoint(hospital, 'Helicopters', partNum)
 
-							if foundSpawn then
-								menu2.close()
+-- 							if foundSpawn then
+-- 								menu2.close()
 
-								ESX.Game.SpawnVehicle(data2.current.model, spawnPoint.coords, spawnPoint.heading, function(vehicle)
-									ESX.Game.SetVehicleProperties(vehicle, data2.current.vehicleProps)
+-- 								ESX.Game.SpawnVehicle(data2.current.model, spawnPoint.coords, spawnPoint.heading, function(vehicle)
+-- 									ESX.Game.SetVehicleProperties(vehicle, data2.current.vehicleProps)
 
-									TriggerServerEvent('esx_vehicleshop:setJobVehicleState', data2.current.vehicleProps.plate, false)
-									ESX.ShowNotification(_U('garage_released'))
-								end)
-							end
-						else
-							ESX.ShowNotification(_U('garage_notavailable'))
-						end
-					end, function(data2, menu2)
-						menu2.close()
-					end)
+-- 									TriggerServerEvent('esx_vehicleshop:setJobVehicleState', data2.current.vehicleProps.plate, false)
+-- 									ESX.ShowNotification(_U('garage_released'))
+-- 								end)
+-- 							end
+-- 						else
+-- 							ESX.ShowNotification(_U('garage_notavailable'))
+-- 						end
+-- 					end, function(data2, menu2)
+-- 						menu2.close()
+-- 					end)
 
-				else
-					ESX.ShowNotification(_U('garage_empty'))
-				end
-			end, 'helicopter')
+-- 				else
+-- 					ESX.ShowNotification(_U('garage_empty'))
+-- 				end
+-- 			end, 'helicopter')
 
-		elseif data.current.action == 'store_garage' then
-			StoreNearbyVehicle(playerCoords)
-		end
+-- 		elseif data.current.action == 'store_garage' then
+-- 			StoreNearbyVehicle(playerCoords)
+-- 		end
 
-	end, function(data, menu)
-		menu.close()
-	end)
+-- 	end, function(data, menu)
+-- 		menu.close()
+-- 	end)
 
-end
+-- end
 
 function OpenShopMenu(elements, restoreCoords, shopCoords)
 	local playerPed = PlayerPedId()

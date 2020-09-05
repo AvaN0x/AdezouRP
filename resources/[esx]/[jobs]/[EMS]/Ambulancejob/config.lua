@@ -49,42 +49,65 @@ Config.Hospitals = {
 			vector3(311.59, -563.91, 42.3)
 		},
 
-		Vehicles = {
-			{
-				Spawner = vector3(291.73, -594.12, 42.8),
-				InsideShop = vector3(342.181, -558.66, -28.7),
-				Marker = { type = 36, x = 1.0, y = 1.0, z = 1.0, r = 100, g = 50, b = 200, a = 100, rotate = true },
-				SpawnPoints = {
-					{ coords = vector3(329.05, -548.94, 28.74), heading = 268, radius = 4.0 }
-				}
-			}
-		},
+		-- Vehicles = {
+		-- 	{
+		-- 		Spawner = vector3(291.73, -594.12, 42.8),
+		-- 		InsideShop = vector3(342.181, -558.66, -28.7),
+		-- 		Marker = { type = 36, x = 1.0, y = 1.0, z = 1.0, r = 100, g = 50, b = 200, a = 100, rotate = true },
+		-- 		SpawnPoints = {
+		-- 			{ coords = vector3(329.05, -548.94, 28.74), heading = 268, radius = 4.0 }
+		-- 		}
+		-- 	}
+		-- },
 
-		VehiclesDelete = {
-			vector3(296.41, -576.63, 43.0)
-		},
+		-- VehiclesDelete = {
+		-- 	vector3(296.41, -576.63, 43.0)
+		-- },
 
-		-- a fix
-		Helicopters = {
-			{
-				Spawner = vector3(341.87, -591.567, -74.165),
-				InsideShop = vector3(349.51, -593.86, -74.16),
-				Marker = { type = 34, x = 1.5, y = 1.5, z = 1.5, r = 100, g = 150, b = 150, a = 100, rotate = true },
-				SpawnPoints = {
-					--{ coords = vector3(313.5, -1465.1, 46.5), heading = 142.7, radius = 10.0 },
-					{ coords = vector3(351.457, -588.64, 74.165), heading = 142.7, radius = 10.0 }
-				}
-			}
-		},
+		-- -- a fix
+		-- Helicopters = {
+		-- 	{
+		-- 		Spawner = vector3(341.87, -591.567, -74.165),
+		-- 		InsideShop = vector3(349.51, -593.86, -74.16),
+		-- 		Marker = { type = 34, x = 1.5, y = 1.5, z = 1.5, r = 100, g = 150, b = 150, a = 100, rotate = true },
+		-- 		SpawnPoints = {
+		-- 			--{ coords = vector3(313.5, -1465.1, 46.5), heading = 142.7, radius = 10.0 },
+		-- 			{ coords = vector3(351.457, -588.64, 74.165), heading = 142.7, radius = 10.0 }
+		-- 		}
+		-- 	}
+		-- },
+
+		-- SocietyGarage = {	
+		-- 	Name = "society_ambulance",
+		-- 	SpawnPoint = {
+		-- 		Pos = {x = 291.73,  y = -594.12, z = 42.3},
+		-- 		Heading = 345.0
+		-- 	}
+		-- }
 
 		SocietyGarage = {	
-			Name = "society_ambulance",
+			Name  = "Garage véhicule",
+			Spawner = vector3(291.73, -594.12, 43.3),
+			Marker = { type = 36, x = 1.5, y = 1.5, z = 1.5, r = 0, g = 255, b = 0, a = 100, rotate = true },
+			Type = "car",
 			SpawnPoint = {
 				Pos = {x = 291.73,  y = -594.12, z = 42.3},
 				Heading = 345.0
 			}
-		}
+		},
+	
+		SocietyHeliGarage = {	
+			Name  = "Héliport",
+			Spawner = vector3(351.05, -588.07, 74.17),
+			Marker = { type = 34, x = 2.0, y = 2.0, z = 2.0, r = 0, g = 255, b = 0, a = 100, rotate = true },
+			Type = "heli",
+			SpawnPoint = {
+				Pos = {x = 351.05, y = -588.07, z = 74.17},
+				Heading = 245.0
+			}
+		},
 
+	
 
 
 		-- FastTravels = {

@@ -22,42 +22,30 @@ Config.Zones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 136, g = 243, b = 216},
 		Name  = "Point d'action",
-		Type  = 27
+		Marker = 27
 	},
 	Dressing = {
 		Pos   = {x = 708.91, y = -959.63, z = 29.42},
 		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 136, g = 243, b = 216},
 		Name  = "Dressing",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	},
-	VehicleMenu = {
-		Pos   = {x = 713.87, y = -977.48, z = 23.14},
-		Size = {x = 1.5, y = 1.5, z = 1.0},
-		Color = {r = 136, g = 243, b = 216},
+	SocietyGarage = {	
 		Name  = "Garage véhicule",
-		Type  = 27,
+		Pos = {x = 719.11, y = -989.22, z = 24.12},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 0, g = 255, b = 0},
+		Marker = 36,
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = 719.11, y = -989.22, z = 23.12},
+			Heading = 279.0
+		},
 		Blip = true
 	},
-	VehicleStock = {
-		Pos   = {x = 724.84, y = -979.64, z = 23.16},
-		Size  = {x = 3.0, y = 3.0, z = 1.0},
-		Color = {r = 255, g = 0, b = 0},
-		Name  = "Ranger son véhicule",
-		Type  = 27,
-		Blip = false
-	}
 
-
-}
-
-Config.SocietyGarage = {	
-	Name = Config.SocietyName,
-	SpawnPoint = {
-		Pos = {x = 719.11, y = -989.22, z = 23.12},
-		Heading = 279.8
-	}
 }
 
 Config.FieldZones = {
@@ -69,7 +57,7 @@ Config.FieldZones = {
 		Pos   = {x = 1887.45, y = 4630.05, z = 37.12},
 		GroundCheckHeights = {36, 37, 38, 39, 40, 41},
 		Name  = "1. Récolte",
-		Type  = -1,
+		Marker = -1,
 		Blip = true
 	},
 	-- PlusField = {
@@ -80,7 +68,7 @@ Config.FieldZones = {
 	-- 	Pos   = {x = -1844.67, y = 2202.9, z = 94.93},
 	-- 	GroundCheckHeights = {87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0},
 	-- 	Name  = "Récolte",
-	-- 	Type  = -1,
+	-- 	Marker = -1,
 	-- 	Blip = true
 	-- }
 
@@ -100,7 +88,7 @@ Config.ProcessZones = {
 		Size  = {x = 2.5, y = 2.5, z = 1.5},
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "2. Traitement laine",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	},
 	ClotheProcess = {
@@ -117,7 +105,7 @@ Config.ProcessZones = {
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "3. Traitement du tissu",
 		NoInterim = false,
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	},
 	ClothesBoxProcess = {
@@ -135,7 +123,7 @@ Config.ProcessZones = {
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "5. Mise en caisse des vetements",
 		NoInterim = false,
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 
@@ -199,7 +187,7 @@ Config.ProcessMenuZones = {
 	-- 	Size  = {x = 2.5, y = 2.5, z = 1.5},
 	-- 	Color = {r = 252, g = 186, b = 3},
 	-- 	Name  = "4. Traitement en caisses",
-	-- 	Type  = 27,
+	-- 	Marker = 27,
 	-- 	Blip = true
 
 
@@ -216,7 +204,7 @@ Config.SellZones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
 		Color = {r = 136, g = 232, b = 9},
 		Name  = "6. Vente des produits",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 }
@@ -230,7 +218,7 @@ Config.BuyZones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
 		Color = {r = 136, g = 232, b = 9},
 		Name  = "4. Achat de cartons",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 }

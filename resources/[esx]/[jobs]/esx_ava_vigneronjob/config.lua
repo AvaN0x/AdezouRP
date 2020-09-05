@@ -22,43 +22,31 @@ Config.Zones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 136, g = 243, b = 216},
 		Name  = "Point d'action",
-		Type  = 27
+		Marker = 27
 	},
 	Dressing = {
 		Pos   = {x = -1870.68, y = 2056.32, z = 140.0},
 		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 136, g = 243, b = 216},
 		Name  = "Dressing",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	},
-	VehicleMenu = {
-		Pos   = {x = -1889.653, y = 2050.071, z = 140.0},
-		Size = {x = 1.5, y = 1.5, z = 1.0},
-		Color = {r = 136, g = 243, b = 216},
+	SocietyGarage = {	
 		Name  = "Garage véhicule",
-		Type  = 27,
+		Pos = {x = -1888.97, y = 2045.06, z = 140.87},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 0, g = 255, b = 0},
+		Marker = 36,
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = -1898.16, y = 2048.77, z = 139.89},
+			Heading = 70.0
+		},
 		Blip = true
 	},
-	VehicleStock = {
-		Pos   = {x = -1913.550, y = 2030.590, z = 139.82},
-		Size  = {x = 3.0, y = 3.0, z = 1.0},
-		Color = {r = 255, g = 0, b = 0},
-		Name  = "Ranger son véhicule",
-		Type  = 27,
-		Blip = false
-	}
-
-
 }
 
-Config.SocietyGarage = {	
-	Name = Config.SocietyName,
-	SpawnPoint = {
-		Pos = {x = -1903.01, y = 2044.02, z = 139.89},
-		Heading = 161.0
-	}
-}
 
 Config.FieldZones = {
 	RaisinField = {
@@ -69,7 +57,7 @@ Config.FieldZones = {
 		Pos   = {x = -1809.662, y = 2210.119, z = 90.681},
 		GroundCheckHeights = {88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0},
 		Name  = "1. Récolte",
-		Type  = -1,
+		Marker = -1,
 		Blip = true
 	},
 	-- PlusField = {
@@ -80,7 +68,7 @@ Config.FieldZones = {
 	-- 	Pos   = {x = -1844.67, y = 2202.9, z = 94.93},
 	-- 	GroundCheckHeights = {87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0},
 	-- 	Name  = "Récolte",
-	-- 	Type  = -1,
+	-- 	Marker = -1,
 	-- 	Blip = true
 	-- }
 
@@ -101,7 +89,7 @@ Config.ProcessZones = {
 		Size  = {x = 2.5, y = 2.5, z = 1.5},
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "2. Traitement vin",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	},
 	ChampagneProcess = {
@@ -119,7 +107,7 @@ Config.ProcessZones = {
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "Traitement champagne et grand cru",
 		NoInterim = true,
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 
@@ -183,7 +171,7 @@ Config.ProcessMenuZones = {
 		Size  = {x = 2.5, y = 2.5, z = 1.5},
 		Color = {r = 252, g = 186, b = 3},
 		Name  = "4. Traitement en caisses",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 
 
@@ -201,7 +189,7 @@ Config.SellZones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
 		Color = {r = 136, g = 232, b = 9},
 		Name  = "5. Vente des produits",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 }
@@ -215,7 +203,7 @@ Config.BuyZones = {
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
 		Color = {r = 136, g = 232, b = 9},
 		Name  = "3. Achat de caisses",
-		Type  = 27,
+		Marker = 27,
 		Blip = true
 	}
 }

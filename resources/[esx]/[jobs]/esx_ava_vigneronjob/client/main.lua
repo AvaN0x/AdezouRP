@@ -357,14 +357,9 @@ AddEventHandler('esx_ava_vigneronjob:hasEnteredMarker', function(zone)
 			CurrentActionMsg  = _U('press_to_open')
 			CurrentActionData = {}
 
-		elseif zone == 'VehicleMenu' then
+		elseif zone == 'SocietyGarage' then
 			CurrentAction     = 'vehicle_spawner_menu'
 			CurrentActionMsg  = _U('spawn_veh')
-			CurrentActionData = {}
-			
-		elseif zone == 'VehicleStock' then
-			CurrentAction     = 'delete_vehicle'
-			CurrentActionMsg  = _U('store_veh')
 			CurrentActionData = {}
 		end
 	end
@@ -475,30 +470,30 @@ Citizen.CreateThread(function()
 
 		if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
 			for k,v in pairs(Config.Zones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
 					if (k ~= 'JobActions' or (PlayerData.job == nil or PlayerData.job.name ~= Config.JobName or PlayerData.job.grade_name ~= 'interim') and (PlayerData.job2 == nil or PlayerData.job2.name ~= Config.JobName or PlayerData.job.grade_name ~= 'interim')) then
-						DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+						DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 					end
 				end
 			end
 			for k,v in pairs(Config.ProcessZones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 			for k,v in pairs(Config.ProcessMenuZones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 			for k,v in pairs(Config.SellZones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 			for k,v in pairs(Config.BuyZones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 
@@ -561,10 +556,7 @@ Citizen.CreateThread(function()
 				elseif CurrentAction == 'dressing' then
 					OpenCloakroomMenu()
 				elseif CurrentAction == 'vehicle_spawner_menu' then
-					TriggerEvent('eden_garage:ListSocietyVehiclesMenu', Config.SocietyName, Config.SocietyGarage)
-				elseif CurrentAction == 'delete_vehicle' then
-					TriggerEvent('eden_garage:StockSocietyVehicleMenu', Config.SocietyName)
-	
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', Config.SocietyName, Config.Zones.SocietyGarage)
 				end
 
 				CurrentAction = nil

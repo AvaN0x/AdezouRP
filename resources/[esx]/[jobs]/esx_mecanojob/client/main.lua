@@ -91,7 +91,7 @@ end
 function OpenMecanoActionsMenu()
 
 	local elements = {
-		{label = _U('vehicle_list'),   value = 'vehicle_list'},
+		-- {label = _U('vehicle_list'),   value = 'vehicle_list'},
 		{label = _U('work_wear'),      value = 'cloakroom'},
 		{label = _U('civ_wear'),       value = 'cloakroom2'},
 		{label = _U('deposit_stock'),  value = 'put_stock'},
@@ -110,7 +110,7 @@ function OpenMecanoActionsMenu()
 		align    = 'left',
 		elements = elements
 	}, function(data, menu)
-		if data.current.value == 'vehicle_list' then
+		-- if data.current.value == 'vehicle_list' then
 
 			-- if Config.EnableSocietyOwnedVehicles then
 
@@ -201,9 +201,9 @@ function OpenMecanoActionsMenu()
 			-- 	end)
 
 			-- end
-			TriggerEvent('eden_garage:ListSocietyVehiclesMenu', "society_mecano", Config.SocietyGarage)
+			-- TriggerEvent('eden_garage:ListSocietyVehiclesMenu', "society_mecano", Config.SocietyGarage)
 
-		elseif data.current.value == 'cloakroom' then
+		if data.current.value == 'cloakroom' then
 
 			menu.close()
 			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
@@ -838,16 +838,21 @@ AddEventHandler('esx_mecanojob:hasEnteredMarker', function(zone)
 		CurrentAction     = 'mecano_craft_menu'
 		CurrentActionMsg  = _U('craft_menu')
 		CurrentActionData = {}
-	elseif zone == 'VehicleDeleter' then
-		local playerPed = PlayerPedId()
+	elseif zone == 'SocietyGarage' then
+		CurrentAction     = 'mecano_garage_menu'
+		CurrentActionMsg  = _U('harvest_menu')
+		CurrentActionData = {}
 
-		if IsPedInAnyVehicle(playerPed, false) then
-			local vehicle = GetVehiclePedIsIn(playerPed,  false)
+	-- elseif zone == 'VehicleDeleter' then
+	-- 	local playerPed = PlayerPedId()
 
-			CurrentAction     = 'delete_vehicle'
-			CurrentActionMsg  = _U('veh_stored')
-			CurrentActionData = {vehicle = vehicle}
-		end
+	-- 	if IsPedInAnyVehicle(playerPed, false) then
+	-- 		local vehicle = GetVehiclePedIsIn(playerPed,  false)
+
+	-- 		CurrentAction     = 'delete_vehicle'
+	-- 		CurrentActionMsg  = _U('veh_stored')
+	-- 		CurrentActionData = {vehicle = vehicle}
+	-- 	end
 
 	end
 end)
@@ -953,8 +958,8 @@ Citizen.CreateThread(function()
 			local coords = GetEntityCoords(PlayerPedId())
 
 			for k,v in pairs(Config.Zones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 		end
@@ -1053,7 +1058,10 @@ Citizen.CreateThread(function()
 					OpenMecanoHarvestMenu()
 				elseif CurrentAction == 'mecano_craft_menu' then
 					OpenMecanoCraftMenu()
-				elseif CurrentAction == 'delete_vehicle' then
+				elseif CurrentAction == 'mecano_garage_menu' then
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_mecano", Config.Zones.SocietyGarage)
+
+				-- elseif CurrentAction == 'delete_vehicle' then
 
 					-- if Config.EnableSocietyOwnedVehicles then
 
@@ -1073,7 +1081,6 @@ Citizen.CreateThread(function()
 					-- end
 
 					-- ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
-					TriggerEvent('eden_garage:StockSocietyVehicleMenu', "society_mecano")
 
 
 				elseif CurrentAction == 'remove_entity' then

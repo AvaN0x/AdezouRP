@@ -19,7 +19,7 @@ Config.Zones = {
 
 	MecanoBlip = {
 		Pos   = { x = -350.28, y = -127.41, z = 38.03 },
-		Type  = -1,
+		Marker = -1,
 	},
 
 	MecanoActions = {
@@ -27,14 +27,14 @@ Config.Zones = {
 		Pos   = { x = -305.89, y = -119.07, z = 38.03 },
 		Size  = { x = 1.5, y = 1.5, z = 1.0 },
 		Color = { r = 204, g = 204, b = 0 },
-		Type  = 25,
+		Marker = 25,
 	},
 
 	--Garage = {
 	--	Pos   = { x = -97.5797576904297, y = 6496.11376953125, z = 30.4909038543701 },
 	--	Size  = { x = 1.5, y = 1.5, z = 1.0 },
 	--	Color = { r = 204, g = 204, b = 0 },
-	--	Type  = 1,
+	--	Marker = 1,
 	--},
 
 	Craft = {
@@ -42,24 +42,37 @@ Config.Zones = {
 		Pos   = { x = -346.09, y = -112.33, z = 38.03 },
 		Size  = { x = 1.5, y = 1.5, z = 1.0 },
 		Color = { r = 204, g = 204, b = 0 },
-		Type  = 25,
+		Marker = 25,
 	},
 
-	VehicleSpawnPoint = {
-		-- Pos   = { x = -188.13, y = -1290.27, z = 31.02 },
-		Pos   = { x = -353.29, y = -95.43, z = 44.68 },
-		Size  = { x = 1.5, y = 1.5, z = 1.0 },
-		Type  = -1,
-		-- Heading = 90.0,
-		Heading = 38.0
-	},
+	-- VehicleSpawnPoint = {
+	-- 	-- Pos   = { x = -188.13, y = -1290.27, z = 31.02 },
+	-- 	Pos   = { x = -353.29, y = -95.43, z = 45.68 },
+	-- 	Size  = { x = 1.5, y = 1.5, z = 1.0 },
+	-- 	Color = { r = 0, g = 255, b = 0 },
+	-- 	Marker = 36,
+	-- 	Heading = 38.0
+	-- },
 
-	VehicleDeleter = {
-		-- Pos   = { x = -181.13, y = -1291.27, z = 30.55 },
-		Pos   = { x = -360.48, y = -76.6, z = 44.68 },
-		Size  = { x = 3.0, y = 3.0, z = 3.0 },
-		Color = { r = 255, g = 0, b = 0 },
-		Type  = 25,
+	-- VehicleDeleter = {
+	-- 	-- Pos   = { x = -181.13, y = -1291.27, z = 30.55 },
+	-- 	Pos   = { x = -360.48, y = -76.6, z = 44.68 },
+	-- 	Size  = { x = 3.0, y = 3.0, z = 3.0 },
+	-- 	Color = { r = 255, g = 0, b = 0 },
+	-- 	Marker = 25,
+	-- },
+
+	SocietyGarage = {	
+		Name = "society_mecano",
+		Pos   = { x = -353.29, y = -95.43, z = 45.68 },
+		Size  = { x = 1.5, y = 1.5, z = 1.5 },
+		Color = { r = 0, g = 255, b = 0 },
+		Marker = 36,
+		Type = 'car',
+		SpawnPoint = {
+			Pos = {x = -353.29, y = -95.43, z = 44.68},
+			Heading = 50.0
+		}
 	},
 
 	VehicleDelivery = {
@@ -67,18 +80,18 @@ Config.Zones = {
 		Pos   = { x = -370.25, y = -109.21, z = 37.7 },
 		Size  = { x = 20.0, y = 20.0, z = 3.0 },
 		Color = { r = 204, g = 204, b = 0 },
-		Type  = -1,
+		Marker = -1,
 	}
 
 }
 
-Config.SocietyGarage = {	
-	Name = "society_mecano",
-	SpawnPoint = {
-		Pos = {x = -353.29, y = -95.43, z = 44.68},
-		Heading = 202.91
-	}
-}
+-- Config.SocietyGarage = {	
+-- 	Name = "society_mecano",
+-- 	SpawnPoint = {
+-- 		Pos = {x = -353.29, y = -95.43, z = 44.68},
+-- 		Heading = 202.91
+-- 	}
+-- }
 
 
 Config.Towables = {
@@ -129,7 +142,7 @@ for i=1, #Config.Towables, 1 do
 		Pos   = Config.Towables[i],
 		Size  = { x = 1.5, y = 1.5, z = 1.0 },
 		Color = { r = 204, g = 204, b = 0 },
-		Type  = -1
+		Marker = -1
 	}
 end
 

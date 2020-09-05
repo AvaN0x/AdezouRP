@@ -15,47 +15,47 @@ Config.AuthorizedVehicles = {
 
 }
 
-Config.SocietyGarage = {	
-	Name = "society_taxi",
-	SpawnPoint = {
-		Pos = {x = 902.59, y = -144.05, z = 76.20},
-		Heading = 202.91
-	}
-}
+-- Config.SocietyGarage = {	
+-- 	Name = "society_taxi",
+-- 	SpawnPoint = {
+-- 		Pos = {x = 902.59, y = -144.05, z = 76.20},
+-- 		Heading = 202.91
+-- 	}
+-- }
 
 Config.Zones = {
 
-	VehicleSpawner = {
-		-- Pos   = {x = 915.039, y = -162.187, z = 73.684},
-		Pos   = {x = 897.91, y = -144.83, z = 75.72},
-		Size  = {x = 1.5, y = 1.5, z = 0.2},
-		Color = {r = 204, g = 204, b = 0},
-		Type  = 1
-	},
+	-- VehicleSpawner = {
+	-- 	-- Pos   = {x = 915.039, y = -162.187, z = 73.684},
+	-- 	Pos   = {x = 897.91, y = -144.83, z = 75.72},
+	-- 	Size  = {x = 1.5, y = 1.5, z = 0.2},
+	-- 	Color = {r = 204, g = 204, b = 0},
+	-- 	Type  = 1
+	-- },
 
-	VehicleSpawnPoint = {
-		-- Pos     = {x = 911.108, y = -177.867, z = 74.283},
-		Pos     = {x = 902.59, y = -144.05, z = 76.20},
-		Size    = {x = 1.5, y = 1.5, z = 0.2},
-		Type    = -1,
-		-- Heading = 225.0
-		Heading = 328.7
-	},
+	-- VehicleSpawnPoint = {
+	-- 	-- Pos     = {x = 911.108, y = -177.867, z = 74.283},
+	-- 	Pos     = {x = 902.59, y = -144.05, z = 76.20},
+	-- 	Size    = {x = 1.5, y = 1.5, z = 0.2},
+	-- 	Type    = -1,
+	-- 	-- Heading = 225.0
+	-- 	Heading = 328.7
+	-- },
 
-	VehicleDeleter = {
-		-- Pos   = {x = 908.317, y = -183.070, z = 73.201},
-		Pos     = {x = 897.33, y = -153.11, z = 75.569},
-		Size  = {x = 3.0, y = 3.0, z = 0.2},
-		Color = {r = 255, g = 0, b = 0},
-		Type  = 1
-	},
+	-- VehicleDeleter = {
+	-- 	-- Pos   = {x = 908.317, y = -183.070, z = 73.201},
+	-- 	Pos     = {x = 897.33, y = -153.11, z = 75.569},
+	-- 	Size  = {x = 3.0, y = 3.0, z = 0.2},
+	-- 	Color = {r = 255, g = 0, b = 0},
+	-- 	Type  = 1
+	-- },
 
 	TaxiActions = {
 		-- Pos   = {x = 903.32, y = -170.55, z = 73.00},
 		Pos   = {x = 898.9, y = -169.07, z = 73.168},
 		Size  = {x = 1.5, y = 1.5, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
-		Type  = 1
+		Marker  = 1
 	},
 
 	Cloakroom = {
@@ -63,7 +63,20 @@ Config.Zones = {
 		Pos     = {x = 892.95, y = -162.50, z = 75.89},
 		Size    = {x = 1.5, y = 1.5, z = 0.2},
 		Color   = {r = 204, g = 204, b = 0},
-		Type    = 1
+		Marker    = 1
+	},
+
+	SocietyGarage = {	
+		Name = "society_taxi",
+		Pos   = {x = 902.04, y = -144.28, z = 76.62},
+		Size  = { x = 1.5, y = 1.5, z = 1.5 },
+		Color = { r = 0, g = 255, b = 0 },
+		Marker = 36,
+		Type = 'car',
+		SpawnPoint = {
+			Pos = {x = 902.04, y = -144.28, z = 76.62},
+			Heading = 326.91
+		}
 	}
 
 }

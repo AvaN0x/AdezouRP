@@ -175,188 +175,6 @@ function OpenPutWeaponMenu()
   
 end
 
--- function OpenVehicleSpawnerMenu()
--- 	ESX.UI.Menu.CloseAll()
-
--- 	local elements = {}
-
--- 	if Config.EnableSocietyOwnedVehicles then
-
--- 		ESX.TriggerServerCallback('esx_society:getVehiclesInGarage', function(vehicles)
-
--- 			for i=1, #vehicles, 1 do
--- 				table.insert(elements, {
--- 					label = GetDisplayNameFromVehicleModel(vehicles[i].model) .. ' [' .. vehicles[i].plate .. ']',
--- 					value = vehicles[i]
--- 				})
--- 			end
-
--- 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_spawner',
--- 			{
--- 				title    = _U('spawn_veh'),
--- 				align    = 'left',
--- 				elements = elements
--- 			}, function(data, menu)
--- 				if not ESX.Game.IsSpawnPointClear(Config.Zones.VehicleSpawnPoint.Pos, 5.0) then
--- 					ESX.ShowNotification(_U('spawnpoint_blocked'))
--- 					return
--- 				end
-
--- 				menu.close()
-
--- 				local vehicleProps = data.current.value
--- 				ESX.Game.SpawnVehicle(vehicleProps.model, Config.Zones.VehicleSpawnPoint.Pos, Config.Zones.VehicleSpawnPoint.Heading, function(vehicle)
--- 					local playerPed = GetPlayerPed(-1)
--- 					SetVehicleColours(vehicle, 12, 12)
--- 					SetVehicleWindowTint(vehicle, 1)
--- 					local plate = exports['esx_vehicleshop']:GeneratePlate()
--- 					TriggerServerEvent('esx_vehiclelock:givekey', 'no', plate) -- vehicle lock
--- 					SetVehicleNumberPlateText(vehicle, plate)
--- 					TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
--- 				end)
-	
--- 				TriggerServerEvent('esx_society:removeVehicleFromGarage', 'state', vehicleProps)
-
--- 			end, function(data, menu)
--- 				CurrentAction     = 'vehicle_spawner'
--- 				CurrentActionMsg  = _U('spawner_prompt')
--- 				CurrentActionData = {}
-
--- 				menu.close()
--- 			end)
--- 		end, 'state')
-
--- 	else -- not society vehicles
-
--- 		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_spawner',
--- 		{
--- 			title		= _U('spawn_veh'),
--- 			align		= 'top-left',
--- 			elements	= Config.AuthorizedVehicles
--- 		}, function(data, menu)
--- 			if not ESX.Game.IsSpawnPointClear(Config.Zones.VehicleSpawnPoint.Pos, 5.0) then
--- 				ESX.ShowNotification(_U('spawnpoint_blocked'))
--- 				return
--- 			end
-
--- 			menu.close()
--- 			ESX.Game.SpawnVehicle(data.current.model, Config.Zones.VehicleSpawnPoint.Pos, Config.Zones.VehicleSpawnPoint.Heading, function(vehicle)
--- 				local playerPed = GetPlayerPed(-1)
--- 				SetVehicleColours(vehicle, 12, 12)
--- 				SetVehicleWindowTint(vehicle, 1)
--- 				local plate = exports['esx_vehicleshop']:GeneratePlate()
--- 				TriggerServerEvent('esx_vehiclelock:givekey', 'no', plate) -- vehicle lock
--- 				SetVehicleNumberPlateText(vehicle, plate)
--- 				TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
--- 			end)
--- 		end, function(data, menu)
--- 			CurrentAction     = 'vehicle_spawner'
--- 			CurrentActionMsg  = _U('spawner_prompt')
--- 			CurrentActionData = {}
-
--- 			menu.close()
--- 		end)
--- 	end
--- end
-
-function OpenHelicoSpawnerMenu()
-	ESX.UI.Menu.CloseAll()
-
-	local elements = {}
-
-	if Config.EnableSocietyOwnedVehicles then
-
-		ESX.TriggerServerCallback('esx_society:getVehiclesInGarage', function(vehicles)
-
-			for i=1, #vehicles, 1 do
-				table.insert(elements, {
-					label = GetDisplayNameFromVehicleModel(vehicles[i].model) .. ' [' .. vehicles[i].plate .. ']',
-					value = vehicles[i]
-				})
-			end
-
-			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helico_spawner_menu',
-			{
-				title    = _U('spawn_veh'),
-				align    = 'left',
-				elements = elements
-			}, function(data, menu)
-				if not ESX.Game.IsSpawnPointClear(Config.Zones.VehicleSpawnPoint.Pos, 5.0) then
-					ESX.ShowNotification(_U('spawnpoint_blocked'))
-					return
-				end
-
-				menu.close()
-
-				local vehicleProps = data.current.value
-				ESX.Game.SpawnVehicle(vehicleProps.model, Config.Zones.VehicleSpawnPoint.Pos, Config.Zones.VehicleSpawnPoint.Heading, function(vehicle)
-					local playerPed = GetPlayerPed(-1)
-					SetVehicleColours(vehicle, 12, 12)
-					SetVehicleWindowTint(vehicle, 1)
-					-- TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
-				end)
-	
-				TriggerServerEvent('esx_society:removeVehicleFromGarage', 'state', vehicleProps)
-
-			end, function(data, menu)
-				CurrentAction     = 'helico_spawner_menu'
-				CurrentActionMsg  = _U('spawner_prompt')
-				CurrentActionData = {}
-
-				menu.close()
-			end)
-		end, 'state')
-
-	else -- not society vehicles
-
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'helico_spawner_menu',
-		{
-			title    	= 'Hélico',
-			align		= 'top-left',
-			elements	= Config.AuthorizedHelico
-		}, function(data, menu)
-			if not ESX.Game.IsSpawnPointClear(Config.Zones.HelicoSpawnPoint.Pos, 5.0) then
-				ESX.ShowNotification(_U('spawnpoint_blocked'))
-				return
-			end
-
-			menu.close()
-			ESX.Game.SpawnVehicle(data.current.model, Config.Zones.HelicoSpawnPoint.Pos, Config.Zones.HelicoSpawnPoint.Heading, function(vehicle)
-				local playerPed = GetPlayerPed(-1)
-				SetVehicleColours(vehicle, 12, 12)
-				SetVehicleWindowTint(vehicle, 1)
-				-- TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
-			end)
-		end, function(data, menu)
-			CurrentAction     = 'helico_spawner_menu'
-			CurrentActionMsg  = _U('spawner_prompt')
-			CurrentActionData = {}
-
-			menu.close()
-		end)
-	end
-end
-
-
-function DeleteJobVehicle()
-	local playerPed = PlayerPedId()
-
-	if Config.EnableSocietyOwnedVehicles then
-		local vehicleProps = ESX.Game.GetVehicleProperties(CurrentActionData.vehicle)
-		TriggerServerEvent('esx_society:putVehicleInGarage', 'state', vehicleProps)
-		ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
-	else
-		if IsInAuthorizedVehicle() or IsInAuthorizedHelico() then
-			ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
-
-			if Config.MaxInService ~= -1 then
-				TriggerServerEvent('esx_service:disableService', 'state')
-			end
-		else
-			ESX.ShowNotification(_U('only_state'))
-		end
-	end
-end
 
 function OpenstateActionsMenu()
 	local elements = {
@@ -722,32 +540,14 @@ AddEventHandler('esx_ava_statejob:hasEnteredMarker', function(zone)
 		CurrentAction     = 'armurerie'
 		CurrentActionMsg  = _U('armurerie_prompt')
 		CurrentActionData = {}
-	elseif zone == 'VehicleSpawner' then
+	elseif zone == 'SocietyGarage' then
 		CurrentAction     = 'vehicle_spawner'
 		CurrentActionMsg  = _U('spawner_prompt')
 		CurrentActionData = {}
-	elseif zone == 'VehicleDeleter' then
-		local playerPed = PlayerPedId()
-		local vehicle   = GetVehiclePedIsIn(playerPed, false)
-
-		if IsPedInAnyVehicle(playerPed, false) and GetPedInVehicleSeat(vehicle, -1) == playerPed then
-			CurrentAction     = 'delete_vehicle'
-			CurrentActionMsg  = _U('store_veh')
-			CurrentActionData = { vehicle = vehicle }
-		end
-	elseif zone == 'HelicoSpawner' then
-		CurrentAction     = 'helico_spawner_menu'
-		CurrentActionMsg  = _U('helico_spawn')
+	elseif zone == 'SocietyHeliGarage' then
+		CurrentAction     = 'heli_spawner'
+		CurrentActionMsg  = _U('spawner_prompt')
 		CurrentActionData = {}
-	elseif zone == 'HelicoDeleter' then
-		local playerPed = PlayerPedId()
-		local vehicle   = GetVehiclePedIsIn(playerPed, false)
-		
-		if IsPedInAnyVehicle(playerPed,  false) and GetPedInVehicleSeat(vehicle, -1) == playerPed then
-			CurrentAction     = 'delete_helico'
-			CurrentActionMsg  = _U('helico_delete')
-			CurrentActionData = {vehicle = vehicle}
-		end
 	end
 
 end)
@@ -792,8 +592,8 @@ Citizen.CreateThread(function()
 			local coords = GetEntityCoords(PlayerPedId())
 
 			for k,v in pairs(Config.Zones) do
-				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				end
 			end
 		else
@@ -801,8 +601,8 @@ Citizen.CreateThread(function()
 			local v = Config.Zones.Doorbell
 			local coords = GetEntityCoords(PlayerPedId())
 
-			if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+			if(v.Marker ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 			end
 
 		end
@@ -866,15 +666,9 @@ Citizen.CreateThread(function()
 					elseif CurrentAction == 'armurerie' then
 						OpenArmurerie()
 					elseif CurrentAction == 'vehicle_spawner' then
-						-- OpenVehicleSpawnerMenu()
-						TriggerEvent('eden_garage:ListSocietyVehiclesMenu', "society_state", Config.SocietyGarage)
-					elseif CurrentAction == 'helico_spawner_menu' then
-						OpenHelicoSpawnerMenu()
-					elseif CurrentAction == 'delete_vehicle' then
-						-- DeleteJobVehicle()
-						TriggerEvent('eden_garage:StockSocietyVehicleMenu', "society_state")
-					elseif CurrentAction == 'delete_helico' then
-						DeleteJobVehicle()
+						TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_state", Config.Zones.SocietyGarage)
+					elseif CurrentAction == "heli_spawner" then
+						TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_state", Config.Zones.SocietyHeliGarage)
 					end
 				end
 				CurrentAction = nil
