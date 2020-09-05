@@ -9,13 +9,13 @@ Citizen.CreateThread(function()
 	end
 end)
 
-AddEventHandler('esx_basicneeds:resetStatus', function()
+AddEventHandler('esx_ava_needs:resetStatus', function()
 	TriggerEvent('esx_status:set', 'hunger', 500000)
 	TriggerEvent('esx_status:set', 'thirst', 500000)
 end)
 
-RegisterNetEvent('esx_basicneeds:healPlayer')
-AddEventHandler('esx_basicneeds:healPlayer', function()
+RegisterNetEvent('esx_ava_needs:healPlayer')
+AddEventHandler('esx_ava_needs:healPlayer', function()
 	-- restore hunger & thirst
 	TriggerEvent('esx_status:set', 'hunger', 1000000)
 	TriggerEvent('esx_status:set', 'thirst', 1000000)
@@ -33,7 +33,7 @@ end)
 
 AddEventHandler('playerSpawned', function(spawn)
 	if IsDead then
-		TriggerEvent('esx_basicneeds:resetStatus')
+		TriggerEvent('esx_ava_needs:resetStatus')
 	end
 
 	IsDead = false
@@ -148,12 +148,12 @@ AddEventHandler('esx_status:loaded', function(status)
 	end)
 end)
 
-AddEventHandler('esx_basicneeds:isEating', function(cb)
+AddEventHandler('esx_ava_needs:isEating', function(cb)
 	cb(IsAnimated)
 end)
 
-RegisterNetEvent('esx_basicneeds:onEat')
-AddEventHandler('esx_basicneeds:onEat', function(prop_name)
+RegisterNetEvent('esx_ava_needs:onEat')
+AddEventHandler('esx_ava_needs:onEat', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_cs_burger_01'
 		IsAnimated = true
@@ -178,8 +178,8 @@ AddEventHandler('esx_basicneeds:onEat', function(prop_name)
 	end
 end)
 
-RegisterNetEvent('esx_basicneeds:onDrink')
-AddEventHandler('esx_basicneeds:onDrink', function(prop_name)
+RegisterNetEvent('esx_ava_needs:onDrink')
+AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_ld_flow_bottle'
 		IsAnimated = true
@@ -288,12 +288,20 @@ function Reality()
 	end)
 end
 
-RegisterNetEvent('esx_optionalneeds:onDrink')
-AddEventHandler('esx_optionalneeds:onDrink', function()
-  
+RegisterNetEvent('esx_ava_needs:onDrinkAlcohol')
+AddEventHandler('esx_ava_needs:onDrinkAlcohol', function()
   local playerPed = GetPlayerPed(-1)
   
   TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_DRINKING", 0, 1)
   Citizen.Wait(1000)
+  ClearPedTasksImmediately(playerPed)
+end)
+
+RegisterNetEvent('esx_ava_needs:onSmokeDrug')
+AddEventHandler('esx_ava_needs:onSmokeDrug', function()
+  local playerPed = GetPlayerPed(-1)
+  
+  TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
+  Citizen.Wait(3000)
   ClearPedTasksImmediately(playerPed)
 end)
