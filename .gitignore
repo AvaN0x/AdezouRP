@@ -8,4 +8,5 @@ desktop.ini
 /resources/\[textures\]/
 
 /resources/\[admin\]/vMenu/*.json
-/resources/\[esx\]/\[non-esx\]/es_mapper/data/mapsRadar.xml
+/resources/\[esx\]/\[non-esx\]/es_mapper/data/mapsradar.xml
+
