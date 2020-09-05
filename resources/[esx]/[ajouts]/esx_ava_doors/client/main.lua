@@ -1,4 +1,5 @@
 ESX = nil
+PlayerData = nil
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -10,7 +11,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 
-	ESX.PlayerData = ESX.GetPlayerData()
+	PlayerData = ESX.GetPlayerData()
 
 	-- Update the door list
 	ESX.TriggerServerCallback('esx_ava_doors:getDoorInfo', function(doorInfo)
@@ -22,12 +23,12 @@ end)
 
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
-	ESX.PlayerData.job = job
+	PlayerData.job = job
 end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
-	ESX.PlayerData.job2 = job2
+	PlayerData.job2 = job2
 end)
 
 -- Get objects every second, instead of every frame
@@ -128,12 +129,12 @@ Citizen.CreateThread(function()
 end)
 
 function IsAuthorized(doorID)
-	if ESX.PlayerData.job == nil or ESX.PlayerData.job2 == nil then
+	if PlayerData.job == nil or PlayerData.job2 == nil then
 		return false
 	end
 
 	for _,job in pairs(doorID.authorizedJobs) do
-		if job == ESX.PlayerData.job.name or job == ESX.PlayerData.job2.name then
+		if job == PlayerData.job.name or job == PlayerData.job2.name then
 			return true
 		end
 	end
