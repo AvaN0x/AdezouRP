@@ -817,15 +817,15 @@ function AddMenuWalletMenu(menu)
 
 	walletmenu = _menuPool:AddSubMenu(menu, _U('wallet_title'))
 
-	local walletJob = NativeUI.CreateItem(_U('wallet_job_button', ESX.PlayerData.job.label, ESX.PlayerData.job.grade_label), "")
-	walletmenu.SubMenu:AddItem(walletJob)
+	-- local walletJob = NativeUI.CreateItem(_U('wallet_job_button', ESX.PlayerData.job.label, ESX.PlayerData.job.grade_label), "")
+	-- walletmenu.SubMenu:AddItem(walletJob)
 
-	local walletJob2 = nil
+	-- local walletJob2 = nil
 
-	if Config.doublejob then
-		walletJob2 = NativeUI.CreateItem(_U('wallet_job2_button', ESX.PlayerData.job2.label, ESX.PlayerData.job2.grade_label), "")
-		walletmenu.SubMenu:AddItem(walletJob2)
-	end
+	-- if Config.doublejob then
+	-- 	walletJob2 = NativeUI.CreateItem(_U('wallet_job2_button', ESX.PlayerData.job2.label, ESX.PlayerData.job2.grade_label), "")
+	-- 	walletmenu.SubMenu:AddItem(walletJob2)
+	-- end
 
 	-- local walletMoney = NativeUI.CreateListItem(_U('wallet_money_button', ESX.Math.GroupDigits(ESX.PlayerData.money)), personalmenu.moneyOption, 1)
 	-- walletmenu.SubMenu:AddItem(walletMoney)
