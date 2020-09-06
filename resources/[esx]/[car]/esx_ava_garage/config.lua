@@ -128,7 +128,19 @@ Config.Garages = {
 			Heading = 258.71
 		}
 	},
-
+	Garage_CLUCKIN = {	
+		Name = "hide",
+		Pos = {x = -479.99,y = -604.52,z = 31.17},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Type = "car",
+		Job = 'cluckin',
+		SpawnPoint = {
+			Pos = {x = -479.99,y = -604.52,z = 31.17},
+			Heading = 180.0
+		}
+	},
 
 
 
