@@ -10,7 +10,6 @@ Config = {
         50,
         90,
         130,
-        530, -- test for speed ( and a commit test for my setup)
     },
     Text = {
         CruiseControl = 'Cruise Control',
