@@ -28,13 +28,14 @@ $(function(){
 				$('.huds').fadeIn();
 				setProgressSpeed(event.data.speed,'.progress-speed');
 				setProgressFuel(event.data.fuel,'.progress-fuel');
-				if (event.data.belt){
-					$('.belt').fadeOut();
-				} else{
-					$('.belt').fadeIn();
-				}
 			} else{
 				$('.huds').fadeOut();
+			}
+		} else if (event.data.action == "setbelt"){
+			if (!event.data.isAccepted || event.data.belt) {
+				$('.belt').fadeOut();
+			} else{
+				$('.belt').fadeIn();
 			}
 		}
 	});

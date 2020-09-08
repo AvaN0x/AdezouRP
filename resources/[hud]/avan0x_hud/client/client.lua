@@ -1,19 +1,4 @@
--- local Keys = {
--- 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
--- 	["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177, 
--- 	["TAB"] = 37, ["Q"] = 44, ["W"] = 32, ["E"] = 38, ["R"] = 45, ["T"] = 245, ["Y"] = 246, ["U"] = 303, ["P"] = 199, ["["] = 39, ["]"] = 40, ["ENTER"] = 18,
--- 	["CAPS"] = 137, ["A"] = 34, ["S"] = 8, ["D"] = 9, ["F"] = 23, ["G"] = 47, ["H"] = 74, ["K"] = 311, ["L"] = 182,
--- 	["LEFTSHIFT"] = 21, ["Z"] = 20, ["X"] = 73, ["C"] = 26, ["V"] = 0, ["B"] = 29, ["N"] = 249, ["M"] = 244, [","] = 82, ["."] = 81,
--- 	["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70, 
--- 	["HOME"] = 213, ["PAGEUP"] = 10, ["PAGEDOWN"] = 11, ["DELETE"] = 178,
--- 	["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
--- 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
--- }
-
 ESX = nil
-Cfg             = {}
-Cfg.Strings     = { belt_on = 'Belt ^5 on^0.', belt_off = 'Belt ^1 off^0.' }
-
 local vehiclesCars = {1,2,3,4,5,6,7,9,10,11,12,17,18,20}; 
 -- 0 is on foot
 -- 7 is super
@@ -60,7 +45,7 @@ end)
 Citizen.CreateThread(function()
     local isPauseMenu = false
 	while true do
-		Citizen.Wait(200)
+		Citizen.Wait(0)
 
 		if IsPauseMenuActive() then -- ESC Key
 			if not isPauseMenu then
@@ -71,6 +56,23 @@ Citizen.CreateThread(function()
 			if isPauseMenu then
 				isPauseMenu = not isPauseMenu
 				SendNUIMessage({ action = 'toggle', show = true })
+			end
+		end
+
+
+		if IsControlJustReleased(0, 73) then -- X
+			local ped = GetPlayerPed(-1)
+			if(IsPedInAnyVehicle(ped)) then	
+				local car = GetVehiclePedIsIn(ped, false)
+				local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
+				if car and isAccepted then
+					beltOn = not beltOn
+					SendNUIMessage({
+						action = 'setbelt', 
+						isAccepted = isAccepted,
+						belt = beltOn
+					})
+				end
 			end
 		end
 	end
@@ -106,7 +108,12 @@ Citizen.CreateThread(function()
 					action = 'showcarhud', 
 					showhud = true,
 					speed = carSpeed,
-					fuel = fuel,
+					fuel = fuel
+				})
+
+				SendNUIMessage({
+					action = 'setbelt',
+					isAccepted = has_value(vehiclesCars, GetVehicleClass(PedCar)),
 					belt = beltOn
 				})
 			else
@@ -124,16 +131,6 @@ Citizen.CreateThread(function()
 
 	end
 end)
-
-
-
-Fwv = function (entity)
-	local hr = GetEntityHeading(entity) + 90.0
-	if hr < 0.0 then hr = 360.0 + hr end
-	hr = hr * 0.0174533
-	return { x = math.cos(hr) * 2.0, y = math.sin(hr) * 2.0 }
-end
-
 
 
 Citizen.CreateThread(function()
@@ -155,12 +152,10 @@ Citizen.CreateThread(function()
 			if speedBuffer[2] ~= nil 
 			and speedBuffer[2] > (MinSpeed / 3.5)
 			and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
-				
 				if not beltOn 
 				and GetEntitySpeedVector(car, true).y > 1.0  then
 					local co = GetEntityCoords(ped)
-					local fw = Fwv(ped)
-					SetEntityCoords(ped, co.x + fw.x, co.y + fw.y, co.z - 0.47, true, true, true)
+					SetEntityCoords(ped, co.x, co.y, co.z - 0.47, true, true, true)
 					SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
 					Citizen.Wait(1)
 					SetPedToRagdoll(ped, 1000, 1000, 0, 0, 0, 0)
@@ -174,10 +169,6 @@ Citizen.CreateThread(function()
 				
 			velBuffer[2] = velBuffer[1]
 			velBuffer[1] = GetEntityVelocity(car)
-				
-			if IsControlJustReleased(0, 73) then -- X
-				beltOn = not beltOn
-			end
 			
 		elseif wasInCar then
 			wasInCar = false
