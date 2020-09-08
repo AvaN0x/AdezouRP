@@ -13,10 +13,8 @@ server_scripts {
 }
 
 files {
-	-- Main Images
 	'html/ui.html',
 	'html/style.css',
-	'html/grid.css',
 	'html/main.js',
 	'html/img/*.png',
 	'html/img/jobs/*.png',
