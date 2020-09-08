@@ -57,23 +57,33 @@ Citizen.CreateThread(function()
 				isPauseMenu = not isPauseMenu
 				SendNUIMessage({ action = 'toggle', show = true })
 			end
-		end
 
-
-		if IsControlJustReleased(0, 73) then -- X
-			local ped = GetPlayerPed(-1)
-			if(IsPedInAnyVehicle(ped)) then	
-				local car = GetVehiclePedIsIn(ped, false)
-				local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
-				if car and isAccepted then
-					beltOn = not beltOn
-					SendNUIMessage({
-						action = 'setbelt', 
-						isAccepted = isAccepted,
-						belt = beltOn
-					})
+			if IsControlJustReleased(0, 73) then -- X
+				local ped = GetPlayerPed(-1)
+				if(IsPedInAnyVehicle(ped)) then	
+					local car = GetVehiclePedIsIn(ped, false)
+					local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
+					if car and isAccepted then
+						beltOn = not beltOn
+						SendNUIMessage({
+							action = 'setbelt', 
+							isAccepted = isAccepted,
+							belt = beltOn
+						})
+					end
 				end
 			end
+			HideHudComponentThisFrame(1)  -- Wanted Stars
+			HideHudComponentThisFrame(2)  -- Weapon Icon
+			HideHudComponentThisFrame(3)  -- Cash
+			HideHudComponentThisFrame(4)  -- MP Cash
+			HideHudComponentThisFrame(6)  -- Vehicle Name
+			HideHudComponentThisFrame(7)  -- Area Name
+			HideHudComponentThisFrame(8)  -- Vehicle Class
+			-- HideHudComponentThisFrame(9)  -- Street Name
+			HideHudComponentThisFrame(13) -- Cash Change
+			HideHudComponentThisFrame(17) -- Save Game
+			HideHudComponentThisFrame(20) -- Weapon Stats
 		end
 	end
 end)
