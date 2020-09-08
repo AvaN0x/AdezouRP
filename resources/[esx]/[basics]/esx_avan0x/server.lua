@@ -55,7 +55,7 @@ RegisterCommand('sendskin', function(source)
 				or k == "glasses_1"
 				or k == "glasses_2"
 				then
-					table.insert(skin, k..":"..v)
+					table.insert(skin, "\""..k.."\":"..v)
 				end
 			end
 
