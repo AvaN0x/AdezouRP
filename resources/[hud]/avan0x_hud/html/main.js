@@ -6,7 +6,7 @@ $(function(){
 				setJobIcon(event.data.icon)
 			}
 			setValue(event.data.key, event.data.value)
-		}else if (event.data.action == "setValue2"){
+		} else if (event.data.action == "setValue2"){
 			if (event.data.key == "job2"){
 				setJob2Icon(event.data.icon2);
 				if (event.data.value == "État - Civil")
@@ -15,32 +15,36 @@ $(function(){
 					$("#job2").show();
 			}
 			setValue(event.data.key, event.data.value)
-		}else if (event.data.action == "updateStatus"){
+		} else if (event.data.action == "updateStatus"){
 			updateStatus(event.data.status);
-		}else if (event.data.action == "toggle"){
+		} else if (event.data.action == "toggle"){
 			if (event.data.show){
 				$('#ui').show();
 			} else{
 				$('#ui').hide();
 			}
-		}else if (event.data.action == "showcarhud"){
+		} else if (event.data.action == "showcarhud"){
 			if (event.data.showhud){
 				$('.huds').fadeIn();
 				setProgressSpeed(event.data.speed,'.progress-speed');
 				setProgressFuel(event.data.fuel,'.progress-fuel');
+				if (event.data.belt){
+					$('.belt').fadeOut();
+				} else{
+					$('.belt').fadeIn();
+				}
 			} else{
 				$('.huds').fadeOut();
 			}
 		}
-	  
 	});
 
 });
 
 
+
 function setValue(key, value){
 	$('#'+key+' span').html(value)
-
 }
 
 function setJobIcon(value){

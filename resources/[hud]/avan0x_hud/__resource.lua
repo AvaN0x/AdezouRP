@@ -1,17 +1,15 @@
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
-description 'FiveM Custom UI for ESX'
+description 'AvaN0x HUD and speedometer'
 
 ui_page 'html/ui.html'
 
-description 'AvaN0x HUD - Made from esx_customui'
-
 client_scripts {
-	'client.lua'
+	'client/client.lua'
 }
 
 server_scripts {
-	'server.lua'
+	'server/server.lua'
 }
 
 files {
