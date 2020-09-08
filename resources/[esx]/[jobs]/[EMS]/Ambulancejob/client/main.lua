@@ -110,7 +110,7 @@ function OnPlayerDeath()
 	StartDeathTimer()
 	StartDistressSignal()
 
-	StartScreenEffect('DeathFailOut', 0, false)
+	StartScreenEffect('DeathFailOut', Config.BleedoutTimer * 60 * 1000, false)
 	
 end
 
