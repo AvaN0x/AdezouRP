@@ -289,7 +289,11 @@ ESX.RegisterServerCallback('esx_society:getSocietyDirtyMoney', function(source, 
   if society ~= nil then
 
     TriggerEvent('esx_addonaccount:getSharedAccount', society.account.."_black", function(account)
-      cb(account.money)
+      if account then
+        cb(account.money)
+      else
+        cb(0)
+      end
     end)
 
   else
