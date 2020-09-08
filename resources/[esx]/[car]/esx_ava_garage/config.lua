@@ -65,15 +65,15 @@ Config.Garages = {
 	},
 	Garage_LSPD = {	
 		Name = "hide",
-		Pos = {x = 452.210,y = -996.661,z = 25.780 },
+		Pos = {x = 442.53,y = -1026.09,z = 28.71 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
 		Type = "car",
 		Job = 'police',
 		SpawnPoint = {
-			Pos = {x = 452.480,y = -996.35,z = 25.880 },
-			Heading = 180.42
+			Pos = {x = 442.53,y = -1026.09,z = 28.71 },
+			Heading = 5.0
 		}
 	},
 	Garage_TAXI = {	
