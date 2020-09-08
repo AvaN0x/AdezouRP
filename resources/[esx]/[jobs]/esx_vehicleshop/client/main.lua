@@ -377,14 +377,46 @@ function OpenShopMenu()
 
 							elseif data3.current.value == 'society2' then
 
-								ESX.TriggerServerCallback('esx_vehicleshop:buyVehicleSociety', function (hasEnoughMoney)
+								-- ESX.TriggerServerCallback('esx_vehicleshop:buyVehicleSociety', function (hasEnoughMoney)
+								-- 	if hasEnoughMoney then
+								-- 		IsInShopMenu = false
+
+								-- 		menu3.close()
+								-- 		menu2.close()
+								-- 		menu.close()
+
+								-- 		DeleteShopInsideVehicles()
+
+								-- 		ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopOutside.Pos, Config.Zones.ShopOutside.Heading, function (vehicle)
+								-- 			TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+
+								-- 			local newPlate     = GeneratePlate()
+								-- 			local vehicleProps = ESX.Game.GetVehicleProperties(vehicle)
+								-- 			vehicleProps.plate = newPlate
+								-- 			SetVehicleNumberPlateText(vehicle, newPlate)
+								-- 			SetVehicleColours(vehicle, 111, 111)
+
+								-- 			TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
+								-- 			ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
+								-- 			TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
+
+								-- 			ESX.ShowNotification(_U('vehicle_purchased'))
+								-- 		end)
+
+								-- 		FreezeEntityPosition(playerPed, false)
+								-- 		SetEntityVisible(playerPed, true)
+								-- 	else
+								-- 		ESX.ShowNotification(_U('broke_company'))
+								-- 	end
+								-- end, playerData.job2.name, vehicleData.model)
+
+								ESX.TriggerServerCallback('esx_vehicleshop:buyVehicle', function(hasEnoughMoney)
 									if hasEnoughMoney then
 										IsInShopMenu = false
 
 										menu3.close()
 										menu2.close()
 										menu.close()
-
 										DeleteShopInsideVehicles()
 
 										ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopOutside.Pos, Config.Zones.ShopOutside.Heading, function (vehicle)
@@ -392,23 +424,28 @@ function OpenShopMenu()
 
 											local newPlate     = GeneratePlate()
 											local vehicleProps = ESX.Game.GetVehicleProperties(vehicle)
+											local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 											vehicleProps.plate = newPlate
 											SetVehicleNumberPlateText(vehicle, newPlate)
 											SetVehicleColours(vehicle, 111, 111)
+											
+											if Config.EnableOwnedVehicles then
+												TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
+												ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
+												-- TriggerServerEvent('esx_vehiclelock:registerkey', vehicleProps.plate, nil)
+												TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
 
-											TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
-											ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
-											TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
-
+											end
 											ESX.ShowNotification(_U('vehicle_purchased'))
 										end)
 
 										FreezeEntityPosition(playerPed, false)
 										SetEntityVisible(playerPed, true)
 									else
-										ESX.ShowNotification(_U('broke_company'))
+										ESX.ShowNotification(_U('not_enough_money'))
 									end
-								end, playerData.job2.name, vehicleData.model)
+								end, vehicleData.model)
+
 							end
 						end, function (data3, menu3)
 							menu3.close()
