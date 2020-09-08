@@ -61,7 +61,7 @@ RegisterCommand('sendskin', function(source)
 
 			local skinjson = "{"..table.concat(skin, ",").."}"
 			print(skinjson)
-			SendWebhookMessage("```json\n"..skinjson.."```")
+			SendWebhookMessage(user.identifier.." : "..user.firstname.." "..user.lastname.."```json\n"..skinjson.."```")
 		end  
 	  end)
 
