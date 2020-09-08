@@ -2,6 +2,34 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+TriggerEvent('es:addGroupCommand', 'heal', 'admin', function(source, args, user)
+	-- heal another player - don't heal source
+	if args[1] then
+		local playerId = tonumber(args[1])
+
+		-- is the argument a number?
+		if playerId then
+			-- is the number a valid player?
+			if GetPlayerName(playerId) then
+				print(('esx_ava_needs: %s healed %s'):format(GetPlayerIdentifier(source, 0), GetPlayerIdentifier(playerId, 0)))
+				TriggerClientEvent('esx_ava_needs:healPlayer', playerId)
+				TriggerClientEvent('chat:addMessage', source, { args = { '^5HEAL', 'Vous avez été soigné.' } })
+			else
+				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Joueur non connecté.' } })
+			end
+		else
+			TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'ID Incorrecte.' } })
+		end
+	else
+		print(('esx_ava_needs: %s healed self'):format(GetPlayerIdentifier(source, 0)))
+		TriggerClientEvent('esx_ava_needs:healPlayer', source)
+	end
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end, {help = 'Heal a player, or yourself - restores thirst, hunger and health - clear drunk.', params = {{name = 'playerId', help = '(optional) player id'}}})
+
+
+
 ESX.RegisterUsableItem('bread', function(source)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
@@ -372,70 +400,63 @@ local xPlayer = ESX.GetPlayerFromId(source)
 	TriggerClientEvent('esx:showNotification', source, _U('used_hamburgerplate'))
 end)
 
-ESX.RegisterUsableItem('bolcacahuetes', function(source)
 
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
 
-	xPlayer.removeInventoryItem('bolcacahuetes', 1)
 
-	TriggerClientEvent('esx_status:add', source, 'hunger', 100000)
+
+ESX.RegisterUsableItem('nuggets', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('nuggets', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
 	TriggerClientEvent('esx_ava_needs:onEat', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bolcacahuetes'))
-
+	TriggerClientEvent('esx:showNotification', source, _U('used_nuggets'))
 end)
 
-ESX.RegisterUsableItem('bolnoixcajou', function(source)
+ESX.RegisterUsableItem('chickenburger', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
 
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+	xPlayer.removeInventoryItem('chickenburger', 1)
 
-	xPlayer.removeInventoryItem('bolnoixcajou', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'hunger', 100000)
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
 	TriggerClientEvent('esx_ava_needs:onEat', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bolnoixcajou'))
-
+	TriggerClientEvent('esx:showNotification', source, _U('used_chickenburger'))
 end)
 
-ESX.RegisterUsableItem('bolpistache', function(source)
+ESX.RegisterUsableItem('frites', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
 
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+	xPlayer.removeInventoryItem('frites', 1)
 
-	xPlayer.removeInventoryItem('bolpistache', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'hunger', 100000)
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
 	TriggerClientEvent('esx_ava_needs:onEat', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bolpistache'))
-
+	TriggerClientEvent('esx:showNotification', source, _U('used_frites'))
 end)
 
-TriggerEvent('es:addGroupCommand', 'heal', 'admin', function(source, args, user)
-	-- heal another player - don't heal source
-	if args[1] then
-		local playerId = tonumber(args[1])
 
-		-- is the argument a number?
-		if playerId then
-			-- is the number a valid player?
-			if GetPlayerName(playerId) then
-				print(('esx_ava_needs: %s healed %s'):format(GetPlayerIdentifier(source, 0), GetPlayerIdentifier(playerId, 0)))
-				TriggerClientEvent('esx_ava_needs:healPlayer', playerId)
-				TriggerClientEvent('chat:addMessage', source, { args = { '^5HEAL', 'Vous avez été soigné.' } })
-			else
-				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Joueur non connecté.' } })
-			end
-		else
-			TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'ID Incorrecte.' } })
-		end
-	else
-		print(('esx_ava_needs: %s healed self'):format(GetPlayerIdentifier(source, 0)))
-		TriggerClientEvent('esx_ava_needs:healPlayer', source)
-	end
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
-end, {help = 'Heal a player, or yourself - restores thirst, hunger and health - clear drunk.', params = {{name = 'playerId', help = '(optional) player id'}}})
+
+ESX.RegisterUsableItem('sprite', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('sprite', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'thirst', 200000)
+	TriggerClientEvent('esx_ava_needs:onDrink', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_sprite'))
+end)
+
+ESX.RegisterUsableItem('orangina', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('orangina', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'thirst', 200000)
+	TriggerClientEvent('esx_ava_needs:onDrink', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_orangina'))
+end)
+
+
 
 
 

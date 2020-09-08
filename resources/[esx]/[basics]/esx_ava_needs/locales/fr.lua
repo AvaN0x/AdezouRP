@@ -10,6 +10,8 @@ Locales['fr'] = {
 	['used_soda'] = 'Tu as bu 1 ~b~soda~s~',
 	['used_cocacola'] = 'Tu as bu 1 ~b~coca-cola~s~',
 	['used_icetea'] = 'Tu as bu 1 ~b~ice tea~s~',
+	['used_sprite'] = 'Tu as bu 1 ~b~sprite~s~',
+	['used_orangina'] = 'Tu as bu 1 ~b~orangina~s~',
 	['used_fajitas'] = 'Tu as utilisé  ~y~1~s~ ~b~Fajitas~s~',
 	['used_kebab'] = 'Tu as utilisé  ~y~1~s~ ~b~Kebab~s~',
 	['used_salade'] = 'Tu as utilisé  ~y~1~s~ ~b~Salade~s~',
@@ -42,6 +44,9 @@ Locales['fr'] = {
 	['used_drpepper'] = 'Tu as bu 1 ~y~DrPepper~s~',
 	['used_breadsaucisson'] = 'Vous en avez mangé 1 ~g~menu saucisse~s~',
 	['used_hamburgerplate'] = 'Vous en avez mangé 1 ~g~Hamburger aux boulettes de viande~s~',
+	['used_nuggets'] = 'Tu as mangé des ~g~nuggets~s~',
+	['used_chickenburger'] = 'Tu as mangé 1 ~g~chicken burger~s~',
+	['used_frites'] = 'Tu as mangé des ~g~frites~s~',
 
 
 	['used_beer'] = 'Vous avez utilisé 1x ~y~Bière~s~',
