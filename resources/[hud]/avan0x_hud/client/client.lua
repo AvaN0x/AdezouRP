@@ -170,9 +170,9 @@ Citizen.CreateThread(function()
 					Citizen.Wait(1)
 					SetPedToRagdoll(ped, 1000, 1000, 0, 0, 0, 0)
 				else
-					StartScreenEffect('DeathFailOut', 5000, false)
-					ShakeGameplayCam("DRUNK_SHAKE", 2.0)
-					Wait(5000)
+					StartScreenEffect('MP_Celeb_Lose', 2000, false)
+					ShakeGameplayCam("DRUNK_SHAKE", 3.0)
+					Wait(2000)
 					StopGameplayCamShaking(true)
 			   end
 			end
