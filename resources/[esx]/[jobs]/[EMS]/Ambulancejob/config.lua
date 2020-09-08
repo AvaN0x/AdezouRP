@@ -35,18 +35,18 @@ Config.Hospitals = {
 
 
 		Blip = {
-			coords = vector3(298.48, -584.48, 42.3),
+			coords = vector3(298.48, -584.48, 43.28),
 			sprite = 61,
 			scale  = 0.8,
 			color  = 2
 		},
 
 		AmbulanceActions = {
-			vector3(299.03, -598.51, 42.3)
+			vector3(299.03, -598.51, 43.28)
 		},
 
 		Pharmacies = {
-			vector3(311.59, -563.91, 42.3)
+			vector3(311.59, -563.91, 43.28)
 		},
 
 		-- Vehicles = {
