@@ -91,14 +91,14 @@ Config.Garages = {
 	},
 	Garage_GOUV = {	
 		Name = "hide",
-		Pos = {x = -558.79,y = -173.52,z = 38.23},
+		Pos = {x = -579.05,y = -170.05,z = 38.23},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
 		Type = "car",
 		Job = 'state',
 		SpawnPoint = {
-			Pos = {x = -558.79,y = -173.52,z = 38.2},
+			Pos = {x = -579.05,y = -170.05,z = 38.23},
 			Heading = 25.0
 		}
 	},
