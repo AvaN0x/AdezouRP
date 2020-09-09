@@ -503,20 +503,21 @@ function OpenCloakroomMenu()
 		elseif data.current.value == 'ambulance_wear' then
 			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
 				if skin.sex == 0 then
-					local clothesSkin = {
-					['bags_1'] = 0, ['bags_2'] = 0,
-					['tshirt_1'] = 15, ['tshirt_2'] = 0,
-					['torso_1'] = 249, ['torso_2'] = 1,
-					['arms'] = 90,
-					['pants_1'] = 50, ['pants_2'] = 3,
-					['shoes_1'] = 32, ['shoes_2'] = 4,
-					['mask_1'] = 0, ['mask_2'] = 0,
-					['bproof_1'] = 0,
-					['helmet_1'] = 122, ['helmet_2'] = 0,
-					["decals_1"] = 57, ["decals_2"] = 0,
-					['chain_1'] = 0, ['chain_2'] = 0
-					}
-					TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
+					-- local clothesSkin = {
+					-- ['bags_1'] = 0, ['bags_2'] = 0,
+					-- ['tshirt_1'] = 15, ['tshirt_2'] = 0,
+					-- ['torso_1'] = 249, ['torso_2'] = 1,
+					-- ['arms'] = 90,
+					-- ['pants_1'] = 50, ['pants_2'] = 3,
+					-- ['shoes_1'] = 32, ['shoes_2'] = 4,
+					-- ['mask_1'] = 0, ['mask_2'] = 0,
+					-- ['bproof_1'] = 0,
+					-- ['helmet_1'] = 122, ['helmet_2'] = 0,
+					-- ["decals_1"] = 57, ["decals_2"] = 0,
+					-- ['chain_1'] = 0, ['chain_2'] = 0
+					-- }
+					-- TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
+					TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_male)
 				else
 					TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_female)
 				end
