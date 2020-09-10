@@ -83,9 +83,19 @@
   line-height     : 105px;
   color : white;
   font-style: oblique;
-
-
 }
+.menu .head_ {
+  font-family: SignPainter;  
+  font-size: 59px;
+
+  background-image: url("../img/header/header.png");
+  text-align      : center;
+  height          : 90px;
+  line-height     : 105px;
+  color : white;
+  font-style: oblique;
+}
+
 .menu .head_tatoo {
   font-family: SignPainter;  
   font-size: 59px;
