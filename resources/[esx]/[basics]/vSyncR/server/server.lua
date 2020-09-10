@@ -301,7 +301,8 @@ function NextWeatherStage()
     if CurrentWeather == "CLEAR" or CurrentWeather == "CLOUDS" or CurrentWeather == "EXTRASUNNY"  then
         local new = math.random(1,2)
         if new == 1 then
-            CurrentWeather = "CLEARING"
+            CurrentWeather = "CLEARING" -- clearing is a kind of rain x)
+            newWeatherTimer = 1 -- shorter clearing
         else
             CurrentWeather = "OVERCAST"
         end
@@ -317,7 +318,7 @@ function NextWeatherStage()
                 else
                     CurrentWeather = "THUNDER"
                 end
-                newWeatherTimer = math.random(5,15)
+                newWeatherTimer = math.random(3,13)
                 print('Durée pluie : '..newWeatherTimer)
             end
         elseif new == 2 then
@@ -332,7 +333,8 @@ function NextWeatherStage()
             CurrentWeather = "FOGGY"
         end
     elseif CurrentWeather == "THUNDER" or CurrentWeather == "RAIN" then
-        CurrentWeather = "CLEARING"
+        CurrentWeather = "CLEARING" -- clearing is a kind of rain x)
+        newWeatherTimer = 1 -- shorter clearing
     elseif CurrentWeather == "SMOG" or CurrentWeather == "FOGGY" then
         CurrentWeather = "CLEAR"
     end
