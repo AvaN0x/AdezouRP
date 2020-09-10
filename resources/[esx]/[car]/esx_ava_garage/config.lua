@@ -29,26 +29,26 @@ Config.Garages = {
 	},
 	Garage_car_02 = {	
 		Name = "Garage",
-		Pos = {x=105.359, y=6613.586, z=31.3973},
+		Pos = {x=154.13, y=6561.41, z=31.83},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
 		Type = "car",
 		SpawnPoint = {
-			Pos = {x=105.359, y=6613.586, z=31.3973},
-			Heading = 178.74
+			Pos = {x=154.13, y=6561.41, z=31.83},
+			Heading = 345.0
 		}
 	},
 	Garage_car_03 = {	
 		Name = "Garage",
-		Pos = {x = 2241.181,y = 5130.978,z = 54.256 },
+		Pos = {x = 1709.29,y = 4799.75,z = 41.33 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
 		Type = "car",
 		SpawnPoint = {
-			Pos = {x = 2241.181,y = 5130.978,z = 54.256 },
-			Heading = 157.84
+			Pos = {x = 1709.29,y = 4799.75,z = 41.33 },
+			Heading = 11.84
 		}
 	},
 	Garage_car_04 = {	
