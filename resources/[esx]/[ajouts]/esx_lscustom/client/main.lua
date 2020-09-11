@@ -83,7 +83,7 @@ function OpenLSMenu(elems, menuName, menuTitle, parent)
 					ESX.ShowNotification(_U('already_own', data.current.label))
 					TriggerEvent('esx_lscustom:installMod')
 				else
-					local vehiclePrice = 5000
+					local vehiclePrice = 50000
 
 					for i=1, #Vehicles, 1 do
 						if GetEntityModel(vehicle) == GetHashKey(Vehicles[i].model) then
@@ -126,7 +126,9 @@ function OpenLSMenu(elems, menuName, menuTitle, parent)
 
 		end
 
-		if not found then
+		if data.current.value == "extra" then
+			OpenExtraMenu()
+		elseif not found then
 			GetAction(data.current)
 		end
 	end, function(data, menu) -- on cancel
@@ -147,6 +149,52 @@ function OpenLSMenu(elems, menuName, menuTitle, parent)
 		UpdateMods(data.current)
 	end)
 end
+
+function OpenExtraMenu()
+	local elements = {}
+	local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	for id=0, 12 do
+		if DoesExtraExist(vehicle, id) then
+			local state = IsVehicleExtraTurnedOn(vehicle, id) 
+
+			if state then
+				table.insert(elements, {
+					label = "Extra: "..id.." | "..('<span style="color:green;">%s</span>'):format("On"),
+					value = id,
+					state = not state
+				})
+			else
+				table.insert(elements, {
+					label = "Extra: "..id.." | "..('<span style="color:red;">%s</span>'):format("Off"),
+					value = id,
+					state = not state
+				})
+			end
+		end
+	end
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'extra_actions', {
+		title	= "Extra",
+		align	= 'left',
+		css		= 'lscustom',
+		elements = elements
+	}, function(data, menu)
+		SetVehicleExtra(vehicle, data.current.value, not data.current.state)
+		local newData = data.current
+		if data.current.state then
+			newData.label = "Extra: "..data.current.value.." "..('<span style="color:green;">%s</span>'):format("On")
+		else
+			newData.label = "Extra: "..data.current.value.." "..('<span style="color:red;">%s</span>'):format("Off")
+		end
+		newData.state = not data.current.state
+
+		menu.update({value = data.current.value}, newData)
+		menu.refresh()
+	end, function(data, menu)
+		menu.close()
+	end)
+end
+
+
 
 function UpdateMods(data)
 	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
@@ -350,26 +398,21 @@ function GetAction(data)
 					table.insert(elements, {label = _label, modType = k, modNum = true})
 				elseif v.modType == "modLivery" then -- LIVERY for special vehicles
 					local liveryCount = GetVehicleLiveryCount(vehicle)
-					print(liveryCount)
-			
 					for i = 1, liveryCount do
 						local state = GetVehicleLivery(vehicle)
 						local _label
-						
 						if state == i then
 							_label = _U('level', i) .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
 						else
 							price = math.floor(vehiclePrice * v.price / 100)
 							_label = _U('level', i) .. ' - <span style="color:yellow;">$' .. price .. ' </span>'
 						end
-						
 						table.insert(elements, {
 							label = _label,
 							modNum = i,
 							modType = "modLivery"
-						}) 
+						})
 					end
-
 				else
 					local modCount = GetNumVehicleMods(vehicle, v.modType) -- BODYPARTS
 					for j = 0, modCount, 1 do
@@ -417,6 +460,7 @@ function GetAction(data)
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' then
 							table.insert(elements, {label = w, value = l})
+							print(l)
 						end
 					end
 				end

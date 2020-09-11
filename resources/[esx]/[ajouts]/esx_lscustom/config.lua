@@ -456,7 +456,9 @@ Config.Menus = {
 		label		= 'LS CUSTOMS',
 		parent		= nil,
 		cosmetics	= _U('cosmetics'),
-		upgrades	= _U('upgrades')
+		upgrades	= _U('upgrades'),
+		extra		= "Extras"
+
 	},
 	upgrades = {
 		label			= _U('upgrades'),
