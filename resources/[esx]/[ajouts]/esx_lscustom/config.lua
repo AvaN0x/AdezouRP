@@ -538,7 +538,9 @@ Config.Menus = {
 		modTrimB			= _U('wings'),
 		modTank				= _U('fuel_tank'),
 		modWindows			= _U('windows'),
-		modLivery			= _U('stickers')
+		modLivery			= _U('stickers'),
+		modLivery2			= _U('stickers') -- ambulance liveries and others
+
 	},
 
 	modPlateHolder = {
@@ -677,6 +679,12 @@ Config.Menus = {
 		label = _U('stickers'),
 		parent = 'cosmetics',
 		modType = 48,
+		price = 4.13
+	},
+	modLivery2 = { -- ambulance liveries and others
+		label = _U('stickers'),
+		parent = 'cosmetics',
+		modType = "modLivery",
 		price = 4.13
 	},
 

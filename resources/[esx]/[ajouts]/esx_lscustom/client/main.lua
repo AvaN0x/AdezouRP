@@ -223,7 +223,7 @@ function GetAction(data)
 			parent    = v.parent
 
 			if v.modType ~= nil then
-				
+				print(v.modType)
 				if v.modType == 22 then
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = false})
 				elseif v.modType == 'neonColor' or v.modType == 'tyreSmokeColor' then -- disable neon
@@ -348,6 +348,28 @@ function GetAction(data)
 						_label = 'Turbo - <span style="color:red;">$' .. math.floor(vehiclePrice * v.price[1] / 100) .. ' </span>'
 					end
 					table.insert(elements, {label = _label, modType = k, modNum = true})
+				elseif v.modType == "modLivery" then -- LIVERY for special vehicles
+					local liveryCount = GetVehicleLiveryCount(vehicle)
+					print(liveryCount)
+			
+					for i = 1, liveryCount do
+						local state = GetVehicleLivery(vehicle)
+						local _label
+						
+						if state == i then
+							_label = _U('level', i) .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
+						else
+							price = math.floor(vehiclePrice * v.price / 100)
+							_label = _U('level', i) .. ' - <span style="color:yellow;">$' .. price .. ' </span>'
+						end
+						
+						table.insert(elements, {
+							label = _label,
+							modNum = i,
+							modType = "modLivery"
+						}) 
+					end
+
 				else
 					local modCount = GetNumVehicleMods(vehicle, v.modType) -- BODYPARTS
 					for j = 0, modCount, 1 do
@@ -385,6 +407,7 @@ function GetAction(data)
 							or Config.Menus[l].modType == 'windowTint'
 							or Config.Menus[l].modType == 'plateIndex'
 							or Config.Menus[l].modType == 'modXenonColour'
+							or (Config.Menus[l].modType == 'modLivery' and GetVehicleLiveryCount(vehicle) > 0)
 							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0 then
 								table.insert(elements, {label = w, value = l})
 							end
