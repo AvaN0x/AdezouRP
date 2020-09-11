@@ -22,6 +22,15 @@ Citizen.CreateThread(function()
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
+	
+	while ESX.GetPlayerData().job == nil or ESX.GetPlayerData().job2 == nil do
+		Citizen.Wait(10)
+	end
+	PlayerData = ESX.GetPlayerData()
+
+	ESX.TriggerServerCallback('esx_lscustom:getVehiclesPrices', function(vehicles)
+		Vehicles = vehicles
+	end)
 end)
 
 RegisterNetEvent('esx:playerLoaded')
@@ -259,6 +268,14 @@ function GetAction(data)
 						_label = _U('neon') .. ' - <span style="color:green;">$' .. price .. ' </span>'
 					end
 					table.insert(elements, {label = _label, modType = k, modNum = true})
+				elseif v.modType == 'modXenonColour' then -- XENONS COLOR
+					local colors = GetXenonColors()
+					for j = 1, #colors, 1 do
+						local _label = ''
+						price = math.floor(vehiclePrice * v.price / 100)
+						_label = colors[j].label .. ' - <span style="color:green;">$' .. price .. ' </span>'
+						table.insert(elements, {label = _label, modType = k, modNum = colors[j].index})
+					end
 				elseif v.modType == 'neonColor' or v.modType == 'tyreSmokeColor' then -- NEON & SMOKE COLOR
 					local neons = GetNeons()
 					price = math.floor(vehiclePrice * v.price / 100)
@@ -363,7 +380,12 @@ function GetAction(data)
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' then
-							if not Config.Menus[l].modType or Config.Menus[l].modType == 22 or Config.Menus[l].modType == 'windowTint' or Config.Menus[l].modType == 'plateIndex' or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0 then
+							if not Config.Menus[l].modType 
+							or Config.Menus[l].modType == 22 
+							or Config.Menus[l].modType == 'windowTint'
+							or Config.Menus[l].modType == 'plateIndex'
+							or Config.Menus[l].modType == 'modXenonColour'
+							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0 then
 								table.insert(elements, {label = w, value = l})
 							end
 						end

@@ -417,6 +417,26 @@ function GetNeons()
 	return neons
 end
 
+function GetXenonColors()
+	local xenons = {
+		{ index = 0, label = "Blanc"},
+		{ index = 1, label = "Bleu"},
+		{ index = 2, label = "Bleu électrique"},
+		{ index = 3, label = "Vert menthe"},
+		{ index = 4, label = "Vert lime"},
+		{ index = 5, label = "Jaune"},
+		{ index = 6, label = "Golden Shower"},
+		{ index = 7, label = "Orange"},
+		{ index = 8, label = "Red"},
+		{ index = 9, label = "Rose"},
+		{ index = 10, label = "Rose hot"},
+		{ index = 11, label = "Violet"},
+		{ index = 12, label = "Lumière noire"}
+	}
+
+	return xenons
+end
+
 function GetPlatesName(index)
 	if (index == 0) then
 		return _U('blue_on_white_1')
@@ -493,7 +513,7 @@ Config.Menus = {
 		neonColor			= _U('neons'),
 		resprays			= _U('respray'),
 		modXenon			= _U('headlights'),
-		modXenonColour   	= _U('headlights').."-  Couleur",
+		modXenonColour   	= _U('headlights').." -  Couleur",
 		plateIndex			= _U('licenseplates'),
 		wheels				= _U('wheels'),
 		modPlateHolder		= _U('modplateholder'),
@@ -811,9 +831,9 @@ Config.Menus = {
 		price = 1.65
 	},
 	modXenonColour = {
-		label = _U('headlights').."-  Couleur",
+		label = _U('headlights').." -  Couleur",
 		parent = 'cosmetics',
-		modType = 47,
+		modType = 'modXenonColour',
 		price = 4.65
 	},
 	bodyparts = {
