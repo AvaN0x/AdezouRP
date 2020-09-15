@@ -17,22 +17,22 @@ Config.Teleporters = {
 		}
 	},
 
-	-- ['Biker'] = {
-	-- 	['Job'] = 'none',
-	-- 	['Enter'] = { 
-	-- 		['x'] = 0, 
-	-- 		['y'] = 0, 
-	-- 		['z'] = 0,
-	-- 		['Information'] = '[E] Go Up' 
-	-- 	},
+	['Boite de nuit'] = {
+		['Job'] = 'none',
+		['Enter'] = { 
+			['x'] = -676.83, 
+			['y'] = -2458.72,
+			['z'] = 12.96,
+			['Information'] = '[E] Rentrer' 
+		},
 
-	-- 	['Exit'] = {
-	-- 		['x'] = 1121.01, 
-	-- 		['y'] = -3152.68, 
-	-- 		['z'] = -37.06, 
-	-- 		['Information'] = '[E] Sortir' 
-	-- 	}
-	-- }
+		['Exit'] = {
+			['x'] = -1569.3, 
+			['y'] = -3017.41, 
+			['z'] = -75.39, 
+			['Information'] = '[E] Sortir' 
+		}
+	}
 
 	--Next here
 }
