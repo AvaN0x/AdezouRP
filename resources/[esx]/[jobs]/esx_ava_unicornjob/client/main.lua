@@ -599,7 +599,6 @@ Citizen.CreateThread(function()
 										Citizen.Wait(0); 
 									end
 									TriggerServerEvent('esx_ava_unicornjob:BuyItems',data.current.name,data.current.price,count)
-									menu.close()
 									isBuying = false
 									Citizen.Wait(1500)
 								end,
