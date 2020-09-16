@@ -3,14 +3,6 @@ Config = {
 	DrawDistance = 50,
 	Price = 300,
 	DamageMultiplier = 1,
-	BlipInfos = {
-		Sprite = 290,
-		Color = 0 
-	},
-	BlipPound = {
-		Sprite = 67,
-		Color = 47 
-	}
 }
 
 Config.Garages = {
@@ -265,6 +257,10 @@ Config.Pound = {
 		Size  = {x = 3.0, y = 3.0, z = 1.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 1,
+		Blip = {
+			Sprite = 524,
+			Color = 64
+		},
 		MunicipalPoundPoint = {
 			Pos = {x = 369.82,y = -1607.76,z = 28.31 },
 			Size  = {x = 1.5, y = 1.5, z = 1.0},

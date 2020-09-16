@@ -72,10 +72,10 @@ function setBlips()
 	end
 	for k, v in pairs(Config.Pound) do
 		local blip = AddBlipForCoord(v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z)
-		SetBlipSprite (blip, Config.BlipPound.Sprite)
+		SetBlipSprite (blip, v.Blip.Sprite)
 		SetBlipDisplay(blip, 4)
 		SetBlipScale  (blip, 0.5)
-		SetBlipColour (blip, Config.BlipPound.Color)
+		SetBlipColour (blip, v.Blip.Color)
 		SetBlipAsShortRange(blip, true)
 		BeginTextCommandSetBlipName("STRING")
 		AddTextComponentString("Fourriere")
