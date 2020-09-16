@@ -6,6 +6,7 @@ desktop.ini
 /resources/\[local\]/
 /resources/\[douane\]/discord_perms/config.lua
 /resources/\[textures\]/
+!/resources/\[textures\]/avan0x_coloredhud
 
 /resources/\[admin\]/vMenu/*.json
 /resources/\[esx\]/\[non-esx\]/es_mapper/data/mapsradar.xml
