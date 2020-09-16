@@ -60,7 +60,7 @@ function setBlips()
 	for k, v in pairs(Config.Garages) do
 		if v.Name ~= "hide" then
 			local blip = AddBlipForCoord(v.Pos.x, v.Pos.y, v.Pos.z)
-			SetBlipSprite (blip, Config.BlipInfos.Sprite)
+			SetBlipSprite (blip, v.Blip.Sprite)
 			SetBlipDisplay(blip, 4)
 			SetBlipScale  (blip, 0.7)
 			SetBlipColour (blip, v.Blip.Color)
