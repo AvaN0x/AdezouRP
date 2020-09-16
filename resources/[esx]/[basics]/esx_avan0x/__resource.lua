@@ -6,10 +6,13 @@ description 'ESX AvaN0x -- random shit'
 
 client_scripts {
     'client/main.lua',
-    'client/discord.lua' -- discord activity
+    'client/discord.lua',  -- discord activity
+    'client/announce.lua'
 }
 
 server_scripts {
     "@mysql-async/lib/MySQL.lua",
     'server/main.lua',
+    'server/rpchat.lua',  -- chat commands
+    'server/announce.lua'
 }
