@@ -5,11 +5,11 @@ author 'github.com/AvaN0x'
 description 'ESX AvaN0x -- random shit'
 
 client_scripts {
-    'client/client.lua',
+    'client/main.lua',
     'client/discord.lua' -- discord activity
 }
 
 server_scripts {
     "@mysql-async/lib/MySQL.lua",
-    'server/server.lua'
+    'server/main.lua',
 }
