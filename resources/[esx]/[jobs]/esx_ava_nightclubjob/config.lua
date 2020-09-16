@@ -12,7 +12,7 @@ Config.JobName 				 	  = 'nightclub'
 -- Don't forget to change every `esx_ava_nightclubjob`
 
 Config.Blip = {
-	Sprite = 541,
+	Sprite = 614,
 	Colour = 7
 }
 
