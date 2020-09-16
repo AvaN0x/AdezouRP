@@ -38,12 +38,20 @@ Citizen.CreateThread(function()
 			if doorID.doors then
 				for k,v in ipairs(doorID.doors) do
 					if not v.object or not DoesEntityExist(v.object) then
-						v.object = GetClosestObjectOfType(v.objCoords, 1.0, GetHashKey(v.objName), false, false, false)
+						if v.objName then
+							v.object = GetClosestObjectOfType(v.objCoords, 1.0, GetHashKey(v.objName), false, false, false)
+						else
+							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
+						end
 					end
 				end
 			else
 				if not doorID.object or not DoesEntityExist(doorID.object) then
-					doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, GetHashKey(doorID.objName), false, false, false)
+					if doorID.objName then
+						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, GetHashKey(doorID.objName), false, false, false)
+					else
+						v.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
+					end
 				end
 			end
 		end

@@ -16,12 +16,16 @@ Config.DoorList = {
 		doors = {
 			{
 				objName = 'v_ilev_ph_door01',
+				-- or
+				-- objHash = -1215222675,
 				objYaw = -90.0,
 				objCoords = vector3(434.7, -980.6, 30.8)
 			},
 
 			{
 				objName = 'v_ilev_ph_door002',
+				-- or
+				-- objHash = 320433149,
 				objYaw = -90.0,
 				objCoords = vector3(434.7, -983.2, 30.8)
 			}
@@ -838,13 +842,15 @@ Config.DoorList = {
 		distance = 2.5,
 		doors = {
 			{
-				objName = 'ball_prop_citydoor',
+				-- objName = 'ball_prop_citydoor',
+				objHash = 2537604,
 				objYaw = -150.0,
 				objCoords  = vector3( -545.97, -203.69, 38.22)
 			},
 			
 			{
-				objName = 'ball_prop_citydoor',
+				-- objName = 'ball_prop_citydoor',
+				objHash = 2537604,
 				objYaw = 30.0,
 				objCoords  = vector3( -544.96, -203.13, 38.22)
 			}
