@@ -1,5 +1,5 @@
 Locales ['fr'] = {
-	['unlocked'] = '~INPUT_CONTEXT~ ~g~pour se téléporter~s~',
-	['locked'] = '~r~Fermé~s~',
-	['press_button'] = '%s~n~X pour ouvrir / fermer',
+	['unlocked'] = '~INPUT_CONTEXT~ pour se téléporter',
+	['locked'] = 'Fermé',
+	['press_button'] = '%s~n~~INPUT_VEH_DUCK~ pour ouvrir / fermer',
 }

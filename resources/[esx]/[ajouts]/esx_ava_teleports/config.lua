@@ -1,3 +1,7 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 Config = {}
 Config.Locale = 'fr'
 
@@ -5,15 +9,16 @@ Config.Locale = 'fr'
 Config.Teleporters = {
 	{
 		tpEnter = {
-			pos = vector3(449.6, -986.4, 30.6),
-			label = "[E] Monter sur le toit"
+			pos = vector3(-482.72, -246.7, 34.90),
+			label = "Monter sur le toit"
 		},
 		tpExit = {
-			pos = vector3(449.6, -986.4, 40.6),
-			label = "[E] Descendre"
+			pos = vector3(-545.02, -271.55, 34.28),
+			label = "Descendre"
 		},
-		authorizedJobs = { 'police' },
-		locked = true
+		authorizedJobs = { 'state' },
+		locked = true,
+		distance = 5
 	},
 		
 	-- ['ToitHopital'] = {
