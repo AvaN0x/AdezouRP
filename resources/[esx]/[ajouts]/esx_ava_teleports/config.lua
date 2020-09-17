@@ -5,6 +5,7 @@
 Config = {}
 Config.Locale = 'fr'
 
+Config.DrawDistance = 10
 Config.DefaultSize = {x = 1.5, y = 1.5, z = 1.0}
 Config.DefaultColor = {r = 255, g = 255, b = 255}
 

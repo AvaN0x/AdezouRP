@@ -35,45 +35,62 @@ AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
 end)
 
+Citizen.CreateThread(function()
+end)
+
 
 Citizen.CreateThread(function()
 	Citizen.Wait(5000)
+	for k,tpID in ipairs(Config.Teleporters) do
+		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+			if not tpID2.size then 
+				tpID2.size = Config.DefaultSize 
+			end
+			if not tpID2.color then 
+				tpID2.color = Config.DefaultColor 
+			end
+		end
+	end
+
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
 		for k,tpID in ipairs(Config.Teleporters) do
-			local distance = #(playerCoords - tpID.tpEnter.pos)
-			local isAuthorized = IsAuthorized(tpID)
-			local helpText = _U('unlocked')
-
-			if distance < 20 then
-				-- todo put this outside of this thread
-				if not tpID.tpEnter.size then tpID.tpEnter.size = Config.DefaultSize end
-				if not tpID.tpEnter.color then tpID.tpEnter.color = Config.DefaultColor end
-
-				DrawMarker(27, tpID.tpEnter.pos.x, tpID.tpEnter.pos.y, tpID.tpEnter.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID.tpEnter.size.x, tpID.tpEnter.size.y, tpID.tpEnter.size.z, tpID.tpEnter.color.r, tpID.tpEnter.color.g, tpID.tpEnter.color.b, 100, false, true, 2, false, false, false, false)
-			end
-
-			if distance < tpID.tpEnter.size.x then
-				if tpID.locked then	helpText = _U('locked')	end
-				if isAuthorized then helpText = _U('press_button', helpText) end
-
-				ESX.Game.Utils.DrawText3D(vector3(tpID.tpEnter.pos.x, tpID.tpEnter.pos.y, tpID.tpEnter.pos.z + 0.5), tpID.tpEnter.label, 0.5) -- draw label
-				ESX.ShowHelpNotification(helpText)
-
-				if IsControlJustReleased(0, 38) then -- E
-					if not tpID.locked then
-						print("tp here")
-					end
+			for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+				local distance = #(playerCoords - tpID2.pos)
+				
+				if distance < Config.DrawDistance then
+					DrawMarker(27, tpID2.pos.x, tpID2.pos.y, tpID2.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.size.x, tpID2.size.y, tpID2.size.z, tpID2.color.r, tpID2.color.g, tpID2.color.b, 100, false, true, 2, false, false, false, false)
 				end
-				if IsControlJustReleased(0, 73) then -- X
+				
+				if distance < tpID2.size.x then
+					local isAuthorized = IsAuthorized(tpID)
+					local helpText = _U('unlocked')
+					local label = "~g~"
+					if tpID.locked then
+						helpText = _U('locked')
+						label = "~r~"
+					end
 					if isAuthorized then
-						tpID.locked = not tpID.locked
-						TriggerServerEvent('esx_ava_teleports:updateState', k, tpID.locked) -- Broadcast new state of the door to everyone
+						helpText = _U('press_button', helpText)
+					end
+
+					ESX.Game.Utils.DrawText3D(vector3(tpID2.pos.x, tpID2.pos.y, tpID2.pos.z + 0.2), label .. tpID2.label, 0.8) -- draw label
+					ESX.ShowHelpNotification(helpText)
+
+					if IsControlJustReleased(0, 38) then -- E
+						if not tpID.locked then
+							print("tp here")
+						end
+					end
+					if IsControlJustReleased(0, 73) then -- X
+						if isAuthorized then
+							tpID.locked = not tpID.locked
+							TriggerServerEvent('esx_ava_teleports:updateState', k, tpID.locked) -- Broadcast new state of the door to everyone
+						end
 					end
 				end
-
 			end
 		end
 	end
