@@ -55,16 +55,18 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
-
 		for k,tpID in ipairs(Config.Teleporters) do
-			for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
-				local distance = #(playerCoords - tpID2.pos)
+			for k2,tpID2 in ipairs({
+				{from = tpID.tpEnter, to = tpID.tpExit},
+				{from = tpID.tpExit, to = tpID.tpEnter}
+			}) do
+				local distance = #(playerCoords - tpID2.from.pos)
 				
 				if distance < Config.DrawDistance then
-					DrawMarker(27, tpID2.pos.x, tpID2.pos.y, tpID2.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.size.x, tpID2.size.y, tpID2.size.z, tpID2.color.r, tpID2.color.g, tpID2.color.b, 100, false, true, 2, false, false, false, false)
+					DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y, tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
 				end
 				
-				if distance < tpID2.size.x then
+				if distance < tpID2.from.size.x then
 					local isAuthorized = IsAuthorized(tpID)
 					local helpText = _U('unlocked')
 					local label = "~g~"
@@ -76,12 +78,12 @@ Citizen.CreateThread(function()
 						helpText = _U('press_button', helpText)
 					end
 
-					ESX.Game.Utils.DrawText3D(vector3(tpID2.pos.x, tpID2.pos.y, tpID2.pos.z + 0.2), label .. tpID2.label, 0.8) -- draw label
+					ESX.Game.Utils.DrawText3D(vector3(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2), label .. tpID2.from.label, 0.8) -- draw label
 					ESX.ShowHelpNotification(helpText)
 
 					if IsControlJustReleased(0, 38) then -- E
 						if not tpID.locked then
-							print("tp here")
+							Teleport(tpID2.to.pos)
 						end
 					end
 					if IsControlJustReleased(0, 73) then -- X
@@ -119,28 +121,14 @@ AddEventHandler('esx_ava_teleports:setState', function(tpID, state)
 end)
 
 
+function Teleport(to)
+	local ped = GetPlayerPed(-1)
 
-
-
-
-
-
--- function Teleport(table, location)
---     if location == 'enter' then
---         DoScreenFadeOut(100)
--- 		-- FreezeEntityPosition(GetPlayerPed(-1),true)
---         Citizen.Wait(750)
-
---         ESX.Game.Teleport(PlayerPedId(), table['Exit'])
-
---         DoScreenFadeIn(100)
---     else
---         DoScreenFadeOut(100)
-
---         Citizen.Wait(750)
-
---         ESX.Game.Teleport(PlayerPedId(), table['Enter'])
-
---         DoScreenFadeIn(100)
---     end
--- end
+	DoScreenFadeOut(100)
+		Citizen.Wait(250)
+		FreezeEntityPosition(ped, true)
+	ESX.Game.Teleport(PlayerPedId(), to)
+		Citizen.Wait(500)
+		FreezeEntityPosition(ped, false)
+	DoScreenFadeIn(100)
+end
