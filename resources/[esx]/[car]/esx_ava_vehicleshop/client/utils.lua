@@ -13,11 +13,6 @@ function GeneratePlate()
 	while true do
 		Citizen.Wait(2)
 		math.randomseed(GetGameTimer())
-		-- if Config.PlateUseSpace then
-		-- 	generatedPlate = string.upper(GetRandomLetter(Config.PlateLetters) .. ' ' .. GetRandomNumber(Config.PlateNumbers))
-		-- else
-		-- 	generatedPlate = string.upper(GetRandomLetter(Config.PlateLetters) .. GetRandomNumber(Config.PlateNumbers))
-		-- end
 		generatedPlate = string.upper(GetRandomNumber(2) .. GetRandomLetter(3) .. GetRandomNumber(3))
 
 		ESX.TriggerServerCallback('esx_vehicleshop:isPlateTaken', function (isPlateTaken)

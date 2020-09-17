@@ -450,11 +450,7 @@ Citizen.CreateThread(function()
 			if IsControlJustReleased(0, Keys['E']) then
 				if CurrentAction == 'shop_menu' then
 					ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
-					if Config.LicenseEnable then
-						OpenShopMenu()
-					else
-						OpenShopMenu()
-					end
+					OpenShopMenu()
 				elseif CurrentAction == 'resell_vehicle' then
 					ESX.TriggerServerCallback('esx_vehicleshop:resellVehicle', function(vehicleSold)
 						if vehicleSold then
