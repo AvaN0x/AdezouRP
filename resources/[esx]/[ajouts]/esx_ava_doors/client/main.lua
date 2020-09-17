@@ -76,7 +76,6 @@ Citizen.CreateThread(function()
 			-- 	distance = #(playerCoords - doorID.objCoords)
 			-- end
 
-			local isAuthorized = IsAuthorized(doorID)
 			local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
 
 			if doorID.distance then
@@ -108,6 +107,7 @@ Citizen.CreateThread(function()
 			end
 
 			if distance < maxDistance then
+				local isAuthorized = IsAuthorized(doorID)
 				if doorID.size then
 					size = doorID.size
 				end
