@@ -54,7 +54,7 @@ Citizen.CreateThread(function()
 				if tpID.locked then	helpText = _U('locked')	end
 				if isAuthorized then helpText = _U('press_button', helpText) end
 
-				ESX.Game.Utils.DrawText3D(tpID.tpEnter.pos, tpID.tpEnter.label, 0.5) -- draw label
+				ESX.Game.Utils.DrawText3D(vector3(tpID.tpEnter.pos.x, tpID.tpEnter.pos.y, tpID.tpEnter.pos.z + 0.5), tpID.tpEnter.label, 0.5) -- draw label
 				ESX.ShowHelpNotification(helpText)
 
 				if IsControlJustReleased(0, 38) then -- E
