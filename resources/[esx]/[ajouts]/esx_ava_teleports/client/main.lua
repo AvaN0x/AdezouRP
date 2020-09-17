@@ -121,13 +121,14 @@ AddEventHandler('esx_ava_teleports:setState', function(tpID, state)
 end)
 
 
-function Teleport(to)
+function Teleport(coords)
+	-- TODO teleport vehicle, and players inside the vehicle
 	local ped = GetPlayerPed(-1)
 
 	DoScreenFadeOut(100)
 		Citizen.Wait(250)
 		FreezeEntityPosition(ped, true)
-	ESX.Game.Teleport(PlayerPedId(), to)
+	ESX.Game.Teleport(PlayerPedId(), coords)
 		Citizen.Wait(500)
 		FreezeEntityPosition(ped, false)
 	DoScreenFadeIn(100)
