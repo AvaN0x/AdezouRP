@@ -70,11 +70,6 @@ Citizen.CreateThread(function()
 			local distance
 
 			distance = #(playerCoords - doorID.textCoords)
-			-- if doorID.doors then
-			-- 	distance = #(playerCoords - doorID.doors[1].objCoords)
-			-- else
-			-- 	distance = #(playerCoords - doorID.objCoords)
-			-- end
 
 			local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
 
@@ -131,7 +126,6 @@ Citizen.CreateThread(function()
 					end
 				end
 
-			  
 			end
 		end
 	end
@@ -165,11 +159,6 @@ function FindClosestDoor()
 		local distance
 
 		distance = #(playerCoords - doorID.textCoords)
-		-- if doorID.doors then
-		-- 	distance = #(playerCoords - doorID.doors[1].objCoords)
-		-- else
-		-- 	distance = #(playerCoords - doorID.objCoords)
-		-- end
 
 		local isAuthorized = IsAuthorized(doorID)
 		local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
@@ -181,7 +170,7 @@ function FindClosestDoor()
 		if distance < maxDistance then
 			if doorID.locked and not isAuthorized then
 				return {name = k, door = doorID}
-			end		  
+			end
 		end
 	end
 	return nil
@@ -191,11 +180,9 @@ local closestDoor = nil
 
 RegisterNetEvent('esx_ava_lockpick:onUse')
 AddEventHandler('esx_ava_lockpick:onUse', function()
-	-- print('useitem')
 	closestDoor = nil
 	closestDoor = FindClosestDoor()
 	if closestDoor then
-		-- print('finddoor')
 		local playerPed = GetPlayerPed(-1)
 		TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
 		TriggerEvent('avan0x_lockpicking:StartLockPicking')
@@ -205,29 +192,25 @@ end)
 
 RegisterNetEvent('avan0x_lockpicking:LockpickingComplete')
 AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result) 
-  local playerPed = GetPlayerPed(-1)
-  ClearPedTasksImmediately(playerPed)
-  if result and closestDoor then
-    Citizen.CreateThread(function()
-      ThreadID = GetIdOfThisThread()
-      CurrentAction = 'lockpick'
-      
-	  if CurrentAction ~= nil then
-		closestDoor.door.locked = not closestDoor.door.locked
-
-		print(closestDoor.name..' '..tostring(closestDoor.door.locked))
-
-        TriggerServerEvent('esx_ava_doors:updateState', closestDoor.name, closestDoor.door.locked)
-      end
-      
-	  CurrentAction = nil
-	  closestDoor = nil
-      TerminateThisThread()
-	end)
-  elseif result then
-	local randi = math.random(1, 3)
-	if randi == 1 then
-		TriggerServerEvent('esx_ava_lockpick:removeKit')
+	local playerPed = GetPlayerPed(-1)
+	ClearPedTasksImmediately(playerPed)
+	if result and closestDoor then
+		Citizen.CreateThread(function()
+			ThreadID = GetIdOfThisThread()
+			CurrentAction = 'lockpick'
+			if CurrentAction ~= nil then
+				closestDoor.door.locked = not closestDoor.door.locked
+				TriggerServerEvent('esx_ava_doors:updateState', closestDoor.name, closestDoor.door.locked)
+			end
+			
+			CurrentAction = nil
+			closestDoor = nil
+			TerminateThisThread()
+		end)
+	elseif result then
+		local randi = math.random(1, 3)
+		if randi == 1 then
+			TriggerServerEvent('esx_ava_lockpick:removeKit')
+		end
 	end
-  end
 end)
