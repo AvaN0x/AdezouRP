@@ -45,12 +45,17 @@ Citizen.CreateThread(function()
 		for k,tpID in ipairs(Config.Teleporters) do
 			local distance = #(playerCoords - tpID.tpEnter.pos)
 			local isAuthorized = IsAuthorized(tpID)
-			local maxDistance = 2.5
 			local helpText = _U('unlocked')
 
-			if tpID.distance then maxDistance = tpID.distance end
+			if distance < 20 then
+				-- todo put this outside of this thread
+				if not tpID.tpEnter.size then tpID.tpEnter.size = Config.DefaultSize end
+				if not tpID.tpEnter.color then tpID.tpEnter.color = Config.DefaultColor end
 
-			if distance < maxDistance then
+				DrawMarker(27, tpID.tpEnter.pos.x, tpID.tpEnter.pos.y, tpID.tpEnter.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID.tpEnter.size.x, tpID.tpEnter.size.y, tpID.tpEnter.size.z, tpID.tpEnter.color.r, tpID.tpEnter.color.g, tpID.tpEnter.color.b, 100, false, true, 2, false, false, false, false)
+			end
+
+			if distance < tpID.tpEnter.size.x then
 				if tpID.locked then	helpText = _U('locked')	end
 				if isAuthorized then helpText = _U('press_button', helpText) end
 
