@@ -34,7 +34,7 @@
     }]
   },
 
-  "//": "REQUIRES https://github.com/citizenfx/screenshot-basic otherwise set enableTakePhoto to false. Thanks to @GLDmACK for his Upload Service!!!", 
+  "//": "REQUIRES https://github.com/citizenfx/screenshot-basic otherwise set enableTakePhoto to false. Thanks to @GLDmACK for his Upload Service!!!",
   "enableTakePhoto": true,
   "fileUploadService_Url": "https://gcphone.herokuapp.com/uploads/upload",
   "fileUploadService_Field": "image",
@@ -63,12 +63,12 @@
     "Brick Base": "base.png",
     "Transparent": "transparent.png"
   },
-  
+
   "sonido": {
     "Astronomia": "ring.ogg",
     "Crystallize": "Crystallize.ogg",
     "Iphone 11": "iphone_11.ogg",
-    "Joyca glaces":"joycaglaces.mp3",
+    "Joyca glaces": "joycaglaces.mp3",
     "Dance Monkey": "dance_monkey.ogg",
     "Don't Look Now": "dont-look-now",
     "I'm a Gummy Bear": "gummybear.ogg",
@@ -86,93 +86,76 @@
     "value": "crystallize.ogg"
   },
 
-  "serviceCall": [
-  {
-    "display": "Police",
-    "icon": "/html/static/img/icons_app/policier.png",
-    "subMenu": [{
+  "serviceCall": [{
+      "display": "Police",
+      "icon": "/html/static/img/icons_app/policier.png",
+      "subMenu": [{
+          "title": "Envoyer un message",
+          "eventName": "esx_addons_gcphone:call",
+          "type": {
+            "number": "police"
+          }
+        },
+        {
+          "title": "Call Police Station",
+          "eventName": "gcphone:autoCallNumber",
+          "type": {
+            "number": "911"
+          }
+        }
+      ]
+    },
+
+
+    {
+      "display": "Ambulance",
+      "icon": "/html/static/img/icons_app/ambulancier.png",
+      "subMenu": [{
         "title": "Envoyer un message",
         "eventName": "esx_addons_gcphone:call",
         "type": {
-          "number": "police"
+          "number": "ambulance"
         }
-      },
-      {
-        "title": "Call Police Station",
-        "eventName": "gcphone:autoCallNumber",
-        "type": {
-          "number": "911"
-        }
-      }
-    ]
-  },
-
-
-{
-    "display": "Ambulance",
-    "icon": "/html/static/img/icons_app/ambulancier.png",
-    "subMenu": [{
-      "title": "Envoyer un message",
-      "eventName": "esx_addons_gcphone:call",
-      "type": {
-        "number": "ambulance"
-      }
-    }]
-  },
-  {
-    "display": "Gouvernement",
-    "icon": "/html/static/img/icons_app/state.png",
-    "subMenu": [
-      {
+      }]
+    },
+    {
+      "display": "Gouvernement",
+      "icon": "/html/static/img/icons_app/state.png",
+      "subMenu": [{
         "title": "Envoyer un message",
         "eventName": "esx_addons_gcphone:call",
         "type": {
           "number": "state"
         }
       }]
-  },
+    },
 
-{
-    "display": "Agent immobilier",
-    "icon": "/html/static/img/icons_app/agent.png",
-    "subMenu": [
-      {
-        "title": "Envoyer un message",
-        "eventName": "esx_addons_gcphone:call",
-        "type": {
-          "number": "realestateagent"
-        }
-      }]
-  },
-  
-{
-    "display": "Mécano",
-    "icon": "/html/static/img/icons_app/mecano.png",
-    "subMenu": [
-      {
+    {
+      "display": "Mécano",
+      "icon": "/html/static/img/icons_app/mecano.png",
+      "subMenu": [{
         "title": "Envoyer un message",
         "eventName": "esx_addons_gcphone:call",
         "type": {
           "number": "mecano"
         }
       }]
-  },
+    },
 
-{
-    "display": "Taxi",
-    "icon": "/html/static/img/icons_app/taxi.png",
-    "subMenu": [{
-      "title": "Envoyer un message",
-      "eventName": "esx_addons_gcphone:call",
-      "type": {
-        "number": "taxi"
-      }
-  }]
-  }
+    {
+      "display": "Taxi",
+      "icon": "/html/static/img/icons_app/taxi.png",
+      "subMenu": [{
+        "title": "Envoyer un message",
+        "eventName": "esx_addons_gcphone:call",
+        "type": {
+          "number": "taxi"
+        }
+      }]
+    }
   ],
 
-  "defaultContacts": [
-    {
+  "defaultContacts": [{
       "number": "police",
       "display": "Police",
       "icon": "/html/static/img/icons_app/policier.png"
@@ -188,11 +171,6 @@
       "icon": "/html/static/img/icons_app/state.png"
     },
     {
-      "number": "realestateagent",
-      "display": "Agent immobilier",
-      "icon": "/html/static/img/icons_app/agent.png"
-    },
-    {
       "number": "mecano",
       "display": "Mécano",
       "icon": "/html/static/img/icons_app/mecano.png"
@@ -204,8 +182,7 @@
     }
   ],
 
-"apps": [
-    {
+  "apps": [{
       "name": "Phone",
       "menuTitle": "visible",
       "fr_FR__name": "Téléphone",
@@ -262,7 +239,7 @@
       "pt_PT__name": "Twitter",
       "icons": "/html/static/img/icons_app/twitter.png",
       "routeName": "twitter.splash",
-      "color":"#61c5ec",
+      "color": "#61c5ec",
       "inHomePage": false,
       "enabled": false
     },
@@ -361,7 +338,7 @@
   ],
   "defaultLanguage": "fr_FR",
   "language": {
-     "fr_FR": {
+    "fr_FR": {
       "NAME": "Français",
       "PHONE_WARNING_MESSAGE": "Saturation mémoires !",
       "PHONE_WARNING_MESSAGE_MESS": "messages",
@@ -1092,7 +1069,7 @@
         ["%s ano atrás", "%s anos atrás"]
       ]
     },
-     "cs_CZ": {
+    "cs_CZ": {
       "NAME": "Čeština",
       "PHONE_WARNING_MESSAGE": "připomínka",
       "PHONE_WARNING_MESSAGE_MESS": "zprávy",
