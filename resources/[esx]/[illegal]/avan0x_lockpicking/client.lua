@@ -16,7 +16,6 @@ function Win()
 	ESX.ShowNotification("Tu as cassé le verrou")
 	TriggerEvent('avan0x_lockpicking:LockpickingComplete', true)
     TriggerServerEvent('avan0x_lockpicking:LockpickingComplete', true)
-
 end
 
 function Lose()

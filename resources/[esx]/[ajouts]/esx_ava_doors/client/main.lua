@@ -207,10 +207,5 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 			closestDoor = nil
 			TerminateThisThread()
 		end)
-	elseif result then
-		local randi = math.random(1, 3)
-		if randi == 1 then
-			TriggerServerEvent('esx_ava_lockpick:removeKit')
-		end
 	end
 end)
