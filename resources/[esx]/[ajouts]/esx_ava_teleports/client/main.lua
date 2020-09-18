@@ -133,3 +133,53 @@ function Teleport(coords)
 		FreezeEntityPosition(ped, false)
 	DoScreenFadeIn(100)
 end
+
+
+
+-- LOCKPICKING TELEPORT
+function FindClosestTeleport()
+	local playerCoords = GetEntityCoords(PlayerPedId())
+	for k,tpID in ipairs(Config.Teleporters) do
+		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+			local distance = #(playerCoords - tpID2.pos)
+			if distance < tpID2.size.x then
+				local isAuthorized = IsAuthorized(tpID)
+				if tpID.locked and not isAuthorized then
+					return {name = k, teleport = tpID}
+				end
+			end
+		end
+	end
+	return nil
+end
+
+local closestTeleport = nil
+
+RegisterNetEvent('esx_ava_lockpick:onUse')
+AddEventHandler('esx_ava_lockpick:onUse', function()
+	closestTeleport = nil
+	closestTeleport = FindClosestTeleport()
+	if closestTeleport then
+		local playerPed = GetPlayerPed(-1)
+		TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+		TriggerEvent('avan0x_lockpicking:StartLockPicking')
+	end
+end)
+
+
+RegisterNetEvent('avan0x_lockpicking:LockpickingComplete')
+AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
+	local playerPed = GetPlayerPed(-1)
+	ClearPedTasksImmediately(playerPed)
+	if result and closestTeleport then
+		-- Citizen.CreateThread(function()
+		-- 	ThreadID = GetIdOfThisThread()
+
+			closestTeleport.teleport.locked = not closestTeleport.teleport.locked
+			TriggerServerEvent('esx_ava_doors:updateState', closestTeleport.name, closestTeleport.teleport.locked)
+
+			closestTeleport = nil
+		-- 	TerminateThisThread()
+		-- end)
+	end
+end)

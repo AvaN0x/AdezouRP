@@ -151,8 +151,8 @@ AddEventHandler('esx_ava_doors:setState', function(doorID, state)
 	Config.DoorList[doorID].locked = state
 end)
 
--- LOCKPICKING DOOR
 
+-- LOCKPICKING DOOR
 function FindClosestDoor()
 	local playerCoords = GetEntityCoords(PlayerPedId())
 	for k,doorID in ipairs(Config.DoorList) do
@@ -160,6 +160,7 @@ function FindClosestDoor()
 
 		distance = #(playerCoords - doorID.textCoords)
 
+		-- todo remove useless things
 		local isAuthorized = IsAuthorized(doorID)
 		local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
 
