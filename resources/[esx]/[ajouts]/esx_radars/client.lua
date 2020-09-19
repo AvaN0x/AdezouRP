@@ -31,6 +31,12 @@ AddEventHandler('esx:setJob', function(job)
     setBlips()
 end)
 
+RegisterNetEvent('esx:setJob2')
+AddEventHandler('esx:setJob2', function(job2)
+    PlayerData.job2 = job2
+end)
+
+
 local radars = {
     {x = 442.7, y = -510.11, z = 28.68-0.98, max = 130, size = 30, name = "Freeway Sud"},  --Entrée ville freeway
     {x = 1869.47, y = 3612.34, z = 34.51-0.98, max = 90, size = 30, name = "Joshua Road Est"}, -- Panneau sandy shores senora ouest
@@ -71,30 +77,32 @@ function checkSpeed(maxspeed, radarName)
 	local fineamount = nil
     local truespeed = kmphspeed
     local roundedSpeedOver = nil
-    print("Checking speed")
     if kmphspeed > (maxspeed + 5) and driver == pP then
-        print("Flash")
         Citizen.Wait(250)
 
-    	if truespeed >= (maxspeed + 5) and truespeed <= (maxspeed + 10) then
-           fineamount = Config.Fine
-           roundedSpeedOver = 5    
+        if truespeed >= (maxspeed + 5) and truespeed <= (maxspeed + 10) then
+            fineamount = Config.Fine
+            roundedSpeedOver = 5
         else
             local speedOver = truespeed - maxspeed
             roundedSpeedOver = speedOver - (speedOver % 10)
             fineamount = math.ceil(Config.Fine * ((roundedSpeedOver / 10) * (roundedSpeedOver / 10) / 3))
             if fineamount < Config.Fine then
                 fineamount = Config.Fine
-            end            
+            end
         end
-        -- local finelevel = plate..' : '..roundedSpeedOver..'km/h au dessus de la limite'
         local finelevel = plate..' : +'..roundedSpeedOver..'km/h'
         local stolen = true
 
-        ESX.TriggerServerCallback('esx_radars:getVehicleOwner', function(owner)
-            if owner then
-                if owner ~= 'society_police' and owner ~= 'society_ambulance' then
-                    TriggerServerEvent('esx_billing:sendBillWithId', owner, 'society_police', finelevel, fineamount)
+        ESX.TriggerServerCallback('esx_radars:getVehicleOwner', function(vowner)
+            if vowner then
+                if vowner ~= 'society_police' and vowner ~= 'society_ambulance' then
+                    if PlayerData.job.grade_name == "interim" and vowner == "society_"..PlayerData.job.name 
+                    or PlayerData.job2.grade_name == "interim" and vowner == "society_"..PlayerData.job2.name then
+                        TriggerServerEvent('esx_billing:sendBillWithId', PlayerData.identifier, 'society_police', finelevel, fineamount)
+                    else
+                        TriggerServerEvent('esx_billing:sendBillWithId', vowner, 'society_police', finelevel, fineamount)
+                    end
                 end
                 stolen = false
             end
@@ -118,7 +126,7 @@ function setBlips()
                 RemoveBlip(blips[i])
                 blips[i] = nil
             end
-        end    
+        end
 
         for k,v in ipairs(radars)do
             local blip = AddBlipForCoord(v.x, v.y, v.z)
