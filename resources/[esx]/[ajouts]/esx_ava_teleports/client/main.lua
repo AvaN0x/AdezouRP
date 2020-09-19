@@ -176,7 +176,7 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 		-- 	ThreadID = GetIdOfThisThread()
 
 			closestTeleport.teleport.locked = not closestTeleport.teleport.locked
-			TriggerServerEvent('esx_ava_doors:updateState', closestTeleport.name, closestTeleport.teleport.locked)
+			TriggerServerEvent('esx_ava_teleports:updateState', closestTeleport.name, closestTeleport.teleport.locked)
 
 			closestTeleport = nil
 		-- 	TerminateThisThread()
