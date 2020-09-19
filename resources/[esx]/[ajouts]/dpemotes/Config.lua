@@ -21,7 +21,7 @@ Config = {
 -- Use a 512 x 128 image!
 -- NOte this might cause an issue of the image getting stuck on peoples screens
 	CustomMenuEnabled = true,
-    MenuImage = "https://i.imgur.com/K3CxGXT.png",
+    MenuImage = "https://cdn.discordapp.com/attachments/756841114589331457/756847975203864606/banner.png",
 -- You can change the menu position here
 	MenuPosition = "right", -- (left, right)
 -- You can disable the Ragdoll keybinding here.
