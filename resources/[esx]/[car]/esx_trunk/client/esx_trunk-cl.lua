@@ -62,7 +62,7 @@ end)
 RegisterNetEvent('esx_trunk_inventory:setOwnedVehicule')
 AddEventHandler('esx_trunk_inventory:setOwnedVehicule', function(vehicle)
 		vehiclePlate = vehicle
-		print('Your vehiclePlates: ',ESX.DumpTable(vehiclePlate))
+		-- print('Your vehiclePlates: ',ESX.DumpTable(vehiclePlate))
 end)
 
 function getItemyWeight(item)
