@@ -324,7 +324,6 @@ end
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(xPlayer)
 	PlayerData = xPlayer
-	blips()
 end)
 
 RegisterNetEvent('esx:setJob')
