@@ -20,6 +20,5 @@ server_scripts {
 }
 
 dependencies {
-	'es_extended',
-	'esx_avan0x'
+	'es_extended'
 }
