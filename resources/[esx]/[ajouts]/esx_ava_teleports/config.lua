@@ -10,7 +10,12 @@ Config.DefaultSize = {x = 1.5, y = 1.5, z = 1.0}
 Config.DefaultColor = {r = 255, g = 255, b = 255}
 
 Config.Teleporters = {
+<<<<<<< HEAD
 	{ -- hospital elevator
+=======
+	-- TODO add the ability to hide the marker
+	{
+>>>>>>> 3a9da8ad4e50277ca0ff041e581327f31f2eefdc
 		tpEnter = {
 			pos = vector3(329.78, -600.99, 42.3),
 			heading = 64.0,
