@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
 
 					if IsControlJustReleased(0, 38) then -- E
 						if not tpID.locked then
-							Teleport(tpID2.to.pos)
+							Teleport(tpID2.to.pos, tpID.allowVehicles, tpID2.to.heading)
 						end
 					end
 					if IsControlJustReleased(0, 73) then -- X
@@ -121,15 +121,28 @@ AddEventHandler('esx_ava_teleports:setState', function(tpID, state)
 end)
 
 
-function Teleport(coords)
-	-- TODO teleport vehicle, and players inside the vehicle
+function Teleport(coords, allowVehicles, heading)
 	local ped = GetPlayerPed(-1)
 
 	DoScreenFadeOut(100)
 		Citizen.Wait(250)
 		FreezeEntityPosition(ped, true)
-	ESX.Game.Teleport(PlayerPedId(), coords)
+
+		local vehicle = GetVehiclePedIsIn(ped, false)
+		if allowVehicles and vehicle ~= 0 then 
+			SetEntityCoordsNoOffset(vehicle, coords.x, coords.y, coords.z, 0, 0, 1)
+			if heading then
+				SetEntityHeading(vehicle, heading)
+			end
+		else
+			ESX.Game.Teleport(ped, coords)
+			if heading then
+				SetEntityHeading(ped, heading)
+			end
+		end
 		Citizen.Wait(500)
+		
+		
 		FreezeEntityPosition(ped, false)
 	DoScreenFadeIn(100)
 end
