@@ -40,18 +40,20 @@
   "fileUploadService_Field": "image",
 
   "background": {
-    "Re-Ignited ESX": "rrp.jpg",
-    "Calvin & Hobbes": "back001.jpg",
-    "Destiny": "back002.jpg",
-    "Stormtrooper": "back003.jpg",
-    "Re-Ignited": "Reignited.jpg",
-    "Hot vs Cold Fists": "fists.jpg",
-    "Dragon": "dragon.jpg",
+    "Fond bleu": "fond_bleu.png",
+    "Fond orange": "fond_orange.png",
+    "Fond rouge": "fond_rouge.png",
+    "Fond vert": "fond_vert.png",
+    "Fond violet": "fond_violet.png",
+    "Nature nuit": "nature_night.png",
+    "Nature orange": "nature_orange.png",
+    "Nature fantaisie": "nature_fantasy.png",
+    "Voiture nuit": "radiant_vff.png",
     "Custom URL": "URL"
   },
   "background_default": {
-    "label": "Hot vs Cold Fists",
-    "value": "fists.jpg"
+    "label": "Nature nuit",
+    "value": "nature_night.png"
   },
 
   "coque": {
@@ -59,16 +61,13 @@
     "Samsung Galaxy S10": "s10.png",
     "Iphone X": "iphonex.png",
     "Iphone 11 Green": "iphone11green.png",
-    "Google Top Cam": "op.png",
-    "Brick Base": "base.png",
-    "Transparent": "transparent.png"
+    "Google Top Cam": "op.png"
   },
 
   "sonido": {
     "Astronomia": "ring.ogg",
     "Crystallize": "Crystallize.ogg",
     "Iphone 11": "iphone_11.ogg",
-    "Joyca glaces": "joycaglaces.mp3",
     "Dance Monkey": "dance_monkey.ogg",
     "Don't Look Now": "dont-look-now",
     "I'm a Gummy Bear": "gummybear.ogg",
@@ -355,8 +354,10 @@
       "APP_CONFIG_MOUSE_SUPPORT": "Controle souris",
       "APP_CONFIG_RESET": "Formater",
       "APP_CONFIG_RESET_CONFIRM": "TOUT SUPPRIMER",
+      "APP_PHONE_ADD": "Ajouter contact",
       "APP_PHONE_CALL": "Appeler",
       "APP_PHONE_CALL_ANONYMOUS": "Appeler en anomyne",
+      "APP_PHONE_CANCEL": "Annuler",
       "APP_PHONE_DELETE": "Effacer",
       "APP_PHONE_DELETE_ALL": "Effacer TOUT.",
       "APP_PHONE_TITLE": "Téléphone",
