@@ -44,7 +44,7 @@ end
 TriggerEvent('es:addGroupCommand', 'twt', 'user', function(source, args)
     if args[1] then
         local xPlayer = ESX.GetPlayerFromId(source)
-        local msg = args[1] or ""
+        local msg = table.concat(args, " ") or ""
         local name = getIdentity(xPlayer.identifier)
         fal = name.firstname .. " " .. name.lastname
         TriggerClientEvent('chat:addMessage', -1, {
@@ -69,7 +69,7 @@ end, {
 TriggerEvent('es:addGroupCommand', 'news', 'user', function(source, args)
     if args[1] then
         local xPlayer = ESX.GetPlayerFromId(source)
-        local msg = args[1] or ""
+        local msg = table.concat(args, " ") or ""
         local name = getIdentity(xPlayer.identifier)
         if xPlayer.job.name == 'mecano' 
         or xPlayer.job.name == 'ambulance' 
