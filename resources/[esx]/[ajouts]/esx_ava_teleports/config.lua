@@ -10,6 +10,7 @@ Config.DefaultSize = {x = 1.5, y = 1.5, z = 1.0}
 Config.DefaultColor = {r = 255, g = 255, b = 255}
 
 Config.Teleporters = {
+	-- TODO add the ability to hide the marker
 	{
 		tpEnter = {
 			pos = vector3(329.78, -600.99, 42.3),
