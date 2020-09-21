@@ -128,18 +128,23 @@ function Teleport(coords, allowVehicles, heading)
 		Citizen.Wait(250)
 		FreezeEntityPosition(ped, true)
 
-		local vehicle = GetVehiclePedIsIn(ped, false)
-		if allowVehicles and vehicle ~= 0 then 
-			SetEntityCoordsNoOffset(vehicle, coords.x, coords.y, coords.z, 0, 0, 1)
-			if heading then
-				SetEntityHeading(vehicle, heading)
-			end
-		else
-			ESX.Game.Teleport(ped, coords)
-			if heading then
-				SetEntityHeading(ped, heading)
-			end
+		-- local vehicle = GetVehiclePedIsIn(ped, false)
+		-- if allowVehicles and vehicle ~= 0 then 
+		-- 	SetEntityCoordsNoOffset(vehicle, coords.x, coords.y, coords.z, 0, 0, 1)
+		-- 	if heading then
+		-- 		SetEntityHeading(vehicle, heading)
+		-- 	end
+		-- else
+		-- 	ESX.Game.Teleport(ped, coords)
+		-- 	if heading then
+		-- 		SetEntityHeading(ped, heading)
+		-- 	end
+		-- end
+		SetPedCoordsKeepVehicle(ped, coords.x, coords.y, coords.z)
+		if heading then
+			SetEntityHeading(ped, heading)
 		end
+
 		Citizen.Wait(500)
 		
 		
