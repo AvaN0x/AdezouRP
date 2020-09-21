@@ -437,7 +437,7 @@ function SpawnPoundedVehicle(vehicle, target)
 		x = this_Garage.SpawnMunicipalPoundPoint.Pos.x ,
 		y = this_Garage.SpawnMunicipalPoundPoint.Pos.y,
 		z = this_Garage.SpawnMunicipalPoundPoint.Pos.z + 1											
-		},this_Garage.SpawnMunicipalPoundPoint.Heading, function(callback_vehicle)
+		}, this_Garage.SpawnMunicipalPoundPoint.Heading, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		local plate = GetVehicleNumberPlateText(callback_vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")

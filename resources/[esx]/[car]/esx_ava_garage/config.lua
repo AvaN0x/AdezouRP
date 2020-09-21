@@ -266,12 +266,12 @@ Config.Pound = {
 			Size  = {x = 1.5, y = 1.5, z = 1.0},
 			Color = {r=25,g=25,b=112},
 			Marker = 27
-		},	
+		},
 		SpawnMunicipalPoundPoint = {
-			Pos = {x = 373.02,y = -1622.01,z = 28.31 },
+			Pos = {x = 377.11,y = -1613.29, z = 28.31 },
 			Size  = {x = 3.0, y = 3.0, z = 1.0},
 			Color = {r=0,g=255,b=0},
-			Heading = 320,
+			Heading = 230.0,
 			Marker = 27
 		},
 	},
