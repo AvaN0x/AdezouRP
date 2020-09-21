@@ -158,6 +158,7 @@ function OpenShopMenu()
 			if data2.current.value == 'yes' then
 				local playerData = ESX.GetPlayerData()
 
+				-- TODO opti this
 				if playerData.job.grade_name == 'boss' and string.match(data.current.name, '^society_.*$') then
 					local elements = {
 					}
@@ -184,6 +185,7 @@ function OpenShopMenu()
 								DeleteShopInsideVehicles()
 
 								ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopSpawnCarSecond.Pos, Config.Zones.ShopSpawnCarSecond.Heading, function (vehicle)
+									SetVehicleColours(vehicle, 111, 111)
 									TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 
 									local newPlate     = GeneratePlate()
@@ -191,7 +193,6 @@ function OpenShopMenu()
 									local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 									vehicleProps.plate = newPlate
 									SetVehicleNumberPlateText(vehicle, newPlate)
-									SetVehicleColours(vehicle, 111, 111)
 									
 										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
 										ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
@@ -221,6 +222,7 @@ function OpenShopMenu()
 									DeleteShopInsideVehicles()
 
 									ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopSpawnCar.Pos, Config.Zones.ShopSpawnCar.Heading, function (vehicle)
+										SetVehicleColours(vehicle, 111, 111)
 										TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 
 										local newPlate     = GeneratePlate()
@@ -228,7 +230,6 @@ function OpenShopMenu()
 										local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 										vehicleProps.plate = newPlate
 										SetVehicleNumberPlateText(vehicle, newPlate)
-										SetVehicleColours(vehicle, 111, 111)
 
 											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps)
 											ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
