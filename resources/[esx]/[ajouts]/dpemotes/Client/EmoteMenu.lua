@@ -62,7 +62,7 @@ end)
 lang = Config.MenuLanguage
 
 function AddEmoteMenu(menu)
-    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['emotes'], "", "", Menuthing, Menuthing)
+    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['emotes'], Config.Languages[lang]['cancelemoteinfo'], "", Menuthing, Menuthing)
     local dancemenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['danceemotes'], "", "", Menuthing, Menuthing)
     local propmenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['propemotes'], "", "", Menuthing, Menuthing)
     table.insert(EmoteTable, Config.Languages[lang]['danceemotes'])
@@ -192,26 +192,26 @@ function AddEmoteMenu(menu)
   end
 end
 
-function AddCancelEmote(menu)
-    local newitem = NativeUI.CreateItem(Config.Languages[lang]['cancelemote'], Config.Languages[lang]['cancelemoteinfo'])
-    menu:AddItem(newitem)
-    menu.OnItemSelect = function(sender, item, checked_)
-        if item == newitem then
-          EmoteCancel()
-          DestroyAllProps()
-        end
-    end
-end
+-- function AddCancelEmote(menu)
+--     local newitem = NativeUI.CreateItem(Config.Languages[lang]['cancelemote'], Config.Languages[lang]['cancelemoteinfo'])
+--     menu:AddItem(newitem)
+--     menu.OnItemSelect = function(sender, item, checked_)
+--         if item == newitem then
+--           EmoteCancel()
+--           DestroyAllProps()
+--         end
+--     end
+-- end
 
-function AddCarry(menu)
-    local newitem = NativeUI.CreateItem("Porter", "Porter")
-    menu:AddItem(newitem)
-    menu.OnItemSelect = function(sender, item, checked_)
-        if item == newitem then
-          ExecuteCommand("carry")
-        end
-    end
-end
+-- function AddCarry(menu)
+--     local newitem = NativeUI.CreateItem("Porter", "Porter")
+--     menu:AddItem(newitem)
+--     menu.OnItemSelect = function(sender, item, checked_)
+--         if item == newitem then
+--           ExecuteCommand("carry")
+--         end
+--     end
+-- end
 
 function AddWalkMenu(menu)
     local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['walkingstyles'], "", "", Menuthing, Menuthing)
@@ -232,6 +232,7 @@ function AddWalkMenu(menu)
     end
 
     submenu.OnItemSelect = function(sender, item, index)
+      print("test")
       if item ~= walkreset then
         WalkMenuStart(WalkTable[index])
       else
@@ -292,8 +293,8 @@ function firstToUpper(str)
 end
 
 AddEmoteMenu(mainMenu)
-AddCancelEmote(mainMenu)
-AddCarry(mainMenu)
+-- AddCancelEmote(mainMenu)
+-- AddCarry(mainMenu)
 
 if Config.WalkingStylesEnabled then
   AddWalkMenu(mainMenu)

@@ -84,7 +84,6 @@ end)
 -----------------------------------------------------------------------------------------------------
 
 function EmoteCancel()
-
   if ChosenDict == "MaleScenario" and IsInAnimation then
     ClearPedTasksImmediately(PlayerPedId())
     IsInAnimation = false
