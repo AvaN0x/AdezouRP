@@ -158,7 +158,6 @@ function OpenShopMenu()
 			if data2.current.value == 'yes' then
 				local playerData = ESX.GetPlayerData()
 
-				-- TODO opti this
 				if playerData.job.grade_name == 'boss' and string.match(data.current.name, '^society_.*$') then
 					local elements = {
 					}
