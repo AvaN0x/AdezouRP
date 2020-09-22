@@ -26,10 +26,10 @@ RegisterCommand('sendskin', function(source)
 
 	MySQL.Async.fetchAll(
 	  'SELECT * FROM users WHERE identifier = @identifier',
-	  {
+	{
 		['@identifier'] = xPlayer.identifier
-	  },
-	  function(users)
+	},
+	function(users)
 		local user = users[1]
 		
 		if user.skin ~= nil then
@@ -63,7 +63,7 @@ RegisterCommand('sendskin', function(source)
 			print(skinjson)
 			SendWebhookMessage(user.identifier.." : "..user.firstname.." "..user.lastname.."```json\n"..skinjson.."```")
 		end  
-	  end)
+	end)
 
 end)
 
