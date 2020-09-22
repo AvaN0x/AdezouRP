@@ -35,9 +35,9 @@ AddEventHandler('adezou_items:settenuecasa', function()
 	if useTenu ~= 'casa' then
 		useTenu = 'casa'
 		TriggerEvent('skinchanger:getSkin', function(skin)
-
-    		if skin.sex == 0 then
-        		local clothesSkin = {
+			-- TODO change the way the skin is stored
+			if skin.sex == 0 then
+				local clothesSkin = {
 					['tshirt_1']  = 15, ['tshirt_2']  = 0,
 					['torso_1']   = 65, ['torso_2']   = 0,
 					['decals_1']  = 0,  ['decals_2']  = 0,
@@ -49,10 +49,10 @@ AddEventHandler('adezou_items:settenuecasa', function()
 					['bags_1']    = 44, ['bags_2']    = 0,
 					['bproof_1']  = 0,  ['bproof_2']  = 0,
 					['chain_1']	  = 0,  ['chain_2']   = 0
-        		}
-        		TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
-    		else
-        		local clothesSkin = {
+				}
+				TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
+			else
+				local clothesSkin = {
 					['tshirt_1']  = 14, ['tshirt_2']  = 0,
 					['torso_1']   = 59, ['torso_2']   = 0,
 					['decals_1']  = 0,  ['decals_2']  = 0,
@@ -64,10 +64,10 @@ AddEventHandler('adezou_items:settenuecasa', function()
 					['bags_1']    = 44, ['bags_2']  = 0,
 					['bproof_1']  = 0,  ['bproof_2']  = 0,
 					['chain_1']	  = 0,  ['chain_2']   = 0
-        		}
-        		TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
-        	end
-    	end)
+				}
+				TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
+			end
+		end)
 	else
 		useTenu = nil
 		TriggerEvent('skinchanger:getSkin', function(skin)
@@ -89,7 +89,7 @@ AddEventHandler('adezou_items:settenueprison', function()
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			local playerPed = GetPlayerPed(-1)
 			if skin.sex == 0 then
-        		local clothesSkin = {
+				local clothesSkin = {
 					['tshirt_1']  = 15, ['tshirt_2']  = 0,
 					['torso_1']   = 5, ['torso_2']   = 0,
 					['decals_1']  = 0,  ['decals_2']  = 0,
@@ -101,10 +101,10 @@ AddEventHandler('adezou_items:settenueprison', function()
 					['bags_1']    = 0, ['bags_2']    = 0,
 					['bproof_1']  = 0,  ['bproof_2']  = 0,
 					['chain_1']	  = 0,  ['chain_2']   = 0
-        		}
-        		TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
-    		else
-        		local clothesSkin = {
+				}
+				TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
+			else
+				local clothesSkin = {
 					['tshirt_1']  = 14, ['tshirt_2']  = 0,
 					['torso_1']   = 73, ['torso_2']   = 0,
 					['decals_1']  = 0,  ['decals_2']  = 0,
@@ -116,10 +116,10 @@ AddEventHandler('adezou_items:settenueprison', function()
 					['bags_1']    = 0, ['bags_2']  = 0,
 					['bproof_1']  = 0,  ['bproof_2']  = 0,
 					['chain_1']	  = 0,  ['chain_2']   = 0
-        		}
+				}
 				TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
 			end
-    	end)
+		end)
 	else
 		useTenu = nil
 		TriggerEvent('skinchanger:getSkin', function(skin)
