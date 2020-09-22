@@ -63,7 +63,6 @@ Config.Teleporters = {
 		locked = false,
 		distance = 5
 	},
-
 	{ -- arcade vehicle entry
 		tpEnter = {
 			pos = vector3(-1288.73, -275.0, 37.81),
@@ -80,6 +79,25 @@ Config.Teleporters = {
 		},
 		authorizedJobs = { '' },
 		allowVehicles = true,
+		locked = false,
+		distance = 5
+	},
+
+
+	{ -- comedy club
+		tpEnter = {
+			pos = vector3(-430.142, 261.665, 82.02),
+			heading = 175.0,
+			-- size  = {x = 1.5, y = 1.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(-458.790, 284.750, 77.54),
+			heading = 265.0,
+			label = "Sortir"
+		},
+		authorizedJobs = { '' },
 		locked = false,
 		distance = 5
 	},
