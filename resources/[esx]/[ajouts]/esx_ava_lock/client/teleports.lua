@@ -68,14 +68,14 @@ Citizen.CreateThread(function()
 				
 				if distance < tpID2.from.size.x then
 					local isAuthorized = IsAuthorized(tpID)
-					local helpText = _U('unlocked')
+					local helpText = _U('teleports_unlocked')
 					local label = "~g~"
 					if tpID.locked then
-						helpText = _U('locked')
+						helpText = _U('teleports_locked')
 						label = "~r~"
 					end
 					if isAuthorized then
-						helpText = _U('press_button', helpText)
+						helpText = _U('teleports_press_button', helpText)
 					end
 
 					ESX.Game.Utils.DrawText3D(vector3(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2), label .. tpID2.from.label, 0.8) -- draw label
@@ -134,7 +134,6 @@ function Teleport(coords, allowVehicles, heading)
 		end
 
 		Citizen.Wait(500)
-		
 		
 		FreezeEntityPosition(ped, false)
 	DoScreenFadeIn(100)

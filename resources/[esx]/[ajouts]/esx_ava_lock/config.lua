@@ -1,3 +1,8 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 Config = {}
 Config.Locale = 'fr'
 
@@ -456,19 +461,6 @@ Config.DoorList = {
 		}
 	},
 
-
-
-
-	-- MECANO
-	-- { -- benny's
-	-- 	objName = 'lr_prop_supermod_door_01',
-	-- 	objCoords  = vector3( -205.6828, -1310.683, 30.29572),
-	-- 	textCoords = vector3( -205.73, -1310.55, 32.37),
-	-- 	authorizedJobs = { 'mecano' },
-	-- 	locked = true,
-	-- 	distance = 12
-	-- },
-
 	{
 		objName = 'prop_com_ls_door_01',
 		objCoords  = vector3( -356.09, -134.81, 39.01),
@@ -511,325 +503,6 @@ Config.DoorList = {
 		locked = true,
 		distance = 6
 	},
-
-
-	-- -- Prison
-	-- --
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1798.45, 2479.15, -122.54),
-	-- 	textCoords = vector3( 1798.45, 2479.15, -122.54),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1795.29, 2479.18, -122.55),
-	-- 	textCoords = vector3( 1795.29, 2479.18, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1792.13, 2479.21, -122.55),
-	-- 	textCoords = vector3( 1792.13, 2479.21, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1788.95, 2479.18, -122.55),
-	-- 	textCoords = vector3( 1788.95, 2479.18, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1785.79, 2479.21, -122.55),
-	-- 	textCoords = vector3( 1785.79, 2479.21, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1788.96, 2487.11, -122.55),
-	-- 	textCoords = vector3( 1788.96, 2487.11, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1792.13, 2487.1, -122.55),
-	-- 	textCoords = vector3( 1792.13, 2487.1, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1795.29, 2487.12, -122.56),
-	-- 	textCoords = vector3( 1795.29, 2487.12, -122.56),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1795.3, 2487.12, -118.93),
-	-- 	textCoords = vector3( 1795.3, 2487.12, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1792.13, 2487.12, -118.91),
-	-- 	textCoords = vector3( 1792.13, 2487.12, -118.91),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1788.96, 2487.12, -118.93),
-	-- 	textCoords = vector3( 1788.96, 2487.12, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1785.79, 2479.21, -118.91), 
-	-- 	textCoords = vector3( 1785.79, 2479.21, -118.91),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1788.95, 2479.18, -118.93), 
-	-- 	textCoords = vector3( 1788.95, 2479.18, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1792.13, 2479.21, -118.93), 
-	-- 	textCoords = vector3( 1792.13, 2479.21, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1795.28, 2479.2, -118.92), 
-	-- 	textCoords = vector3( 1795.28, 2479.2, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1798.44, 2479.21, -118.92), 
-	-- 	textCoords = vector3( 1798.44, 2479.21, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1798.45, 2487.12, -118.92),
-	-- 	textCoords = vector3( 1798.45, 2487.12, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1798.45, 2487.14, -122.54),
-	-- 	textCoords = vector3( 1798.45, 2487.14, -122.54),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1790.44, 2479.185, -122.55),
-	-- 	textCoords = vector3( 1790.44, 2479.185, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1787.28, 2479.18, -122.55),
-	-- 	textCoords = vector3( 1787.28, 2479.18, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1793.63, 2479.21, -122.55),
-	-- 	textCoords = vector3( 1793.63, 2479.21, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1796.79, 2479.19, -122.55),
-	-- 	textCoords = vector3( 1796.79, 2479.19, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1799.95,  2479.19, -122.54),
-	-- 	textCoords = vector3( 1799.95,  2479.19, -122.54),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1793.63,  2487.11, -122.55),
-	-- 	textCoords = vector3( 1793.63,  2487.11, -122.55),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1796.77, 2487.11, -122.56),
-	-- 	textCoords = vector3( 1796.77, 2487.11, -122.56),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1790.44,  2479.18, -118.93),
-	-- 	textCoords = vector3( 1790.44,  2479.18, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1787.28,  2479.21, -118.91),
-	-- 	textCoords = vector3( 1787.28,  2479.21, -118.91),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1793.62,  2479.21, -118.93),
-	-- 	textCoords = vector3( 1793.62,  2479.21, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1796.78,  2479.19, -118.92),
-	-- 	textCoords = vector3( 1796.78,  2479.19, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1799.94,  2479.21, -118.92),
-	-- 	textCoords = vector3( 1799.94,  2479.21, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1790.44,  2487.12, -118.93),
-	-- 	textCoords = vector3( 1790.44,  2487.12, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1793.62,  2487.13, -118.91),
-	-- 	textCoords = vector3( 1793.62,  2487.13, -118.91),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1796.8,  2487.12, -118.93),
-	-- 	textCoords = vector3( 1796.8,  2487.12, -118.93),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1799.94,  2487.12, -118.92),
-	-- 	textCoords = vector3( 1799.94,  2487.12, -118.92),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
-	-- {
-	-- 	objName = 'prop_ld_jail_door',
-	-- 	objCoords  = vector3( 1799.95,  2487.12, -122.54),
-	-- 	textCoords = vector3( 1799.95,  2487.12, -122.54),
-	-- 	authorizedJobs = { 'police' },
-	-- 	locked = true,
-	-- 	distance = 1.8,
-	-- 	objYaw = 0
-	-- },
 
 
 
@@ -895,55 +568,132 @@ Config.DoorList = {
 		}
 	},
 
-
-
-
-
-	-- -- AGENT IMMO
-	-- {
-	-- 	textCoords = vector3(-139.79, -626.26, 168.82),
-	-- 	authorizedJobs = { 'realestateagent' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'ex_prop_exec_office_door01',
-	-- 			objYaw = 6.0,
-	-- 			objCoords = vector3(-139.57, -626.05, 168.82)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'ex_prop_exec_office_door01',
-	-- 			objYaw = -174.0,
-	-- 			objCoords = vector3(-140.25, -626.16, 168.82)
-	-- 		}
-	-- 	}
-	-- },
-
 	
-
-
-	-- -- AMMUNATION
-	-- { -- entrée 
-	-- 	textCoords = vector3(17.42, -1114.96, 29.79),
-	-- 	authorizedJobs = { 'ammunation' },
-	-- 	locked = true,
-	-- 	distance = 2.5,
-	-- 	doors = {
-	-- 		{
-	-- 			objName = 'v_ilev_gc_door04',
-	-- 			objYaw = 160.0,
-	-- 			objCoords  = vector3( 16.62, -1114.90, 29.79)
-	-- 		},
-			
-	-- 		{
-	-- 			objName = 'v_ilev_gc_door03',
-	-- 			objYaw = 340.0,
-	-- 			objCoords  = vector3( 17.91, -1115.35, 29.8)
-	-- 		}
-	-- 	}
-	-- },
-
-
 }
 
+
+
+
+-----------------------------------
+-------- ESX_AVA_TELEPORTS --------
+-----------------------------------
+
+Config.DrawDistance = 10
+Config.DefaultSize = {x = 1.5, y = 1.5, z = 1.0}
+Config.DefaultColor = {r = 255, g = 255, b = 255}
+
+Config.Teleporters = {
+	{ -- hospital elevator
+		tpEnter = {
+			pos = vector3(329.78, -600.99, 42.3),
+			heading = 64.0,
+			-- size  = {x = 1.5, y = 1.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Monter sur le toit"
+		},
+		tpExit = {
+			pos = vector3(339.02, -584.04, 73.18),
+			heading = 265.0,
+			label = "Descendre"
+		},
+		authorizedJobs = { 'ambulance' },
+		locked = true,
+		disntace = 10
+	},
+	{ -- nightclub entry
+		tpEnter = {
+			pos = vector3(-676.83, -2458.72, 12.96),
+			heading = 141.0,
+			-- size  = {x = 1.5, y = 1.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(-1569.3, -3017.41, -75.39),
+			heading = 356.0,
+			label = "Sortir"
+		},
+		authorizedJobs = { 'nightclub' },
+		locked = true,
+		disntace = 10
+	},
+
+
+	{ -- arcade entry
+		tpEnter = {
+			pos = vector3(-1270.27, -305.18, 36.01),
+			heading = 250.0,
+			-- size  = {x = 1.5, y = 1.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(2737.95, -374.35, -48.97),
+			heading = 180.0,
+			label = "Sortir"
+		},
+		authorizedJobs = { '' },
+		locked = false,
+		disntace = 10
+	},
+	{ -- arcade vehicle entry
+		tpEnter = {
+			pos = vector3(-1288.73, -275.0, 37.81),
+			heading = 30.0,
+			size  = {x = 2.5, y = 2.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(2680.36, -361.16, -56.17),
+			heading = 270.0,
+			size  = {x = 2.5, y = 2.5, z = 1.0},
+			label = "Sortir"
+		},
+		authorizedJobs = { '' },
+		allowVehicles = true,
+		locked = false,
+		disntace = 10
+	},
+
+
+	{ -- comedy club
+		tpEnter = {
+			pos = vector3(-430.142, 261.665, 82.02),
+			heading = 175.0,
+			-- size  = {x = 1.5, y = 1.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(-458.790, 284.750, 77.54),
+			heading = 265.0,
+			label = "Sortir"
+		},
+		authorizedJobs = { '' },
+		locked = false,
+		disntace = 10
+	},
+
+	-- exemple to teleport vehicle
+	-- {
+	-- 	tpEnter = {
+	-- 		pos = vector3(-1908.68, 2049.63, 139.76),
+	-- 		heading = 180.0,
+	-- 		size  = {x = 2.5, y = 2.5, z = 1.0},
+	-- 		-- color = {r = 255, g = 0, b = 255},
+	-- 		label = "Entrer"
+	-- 	},
+	-- 	tpExit = {
+	-- 		pos = vector3(-1899.85, 2018.84, 139.86),
+	-- 		heading = 0.0,
+	-- 		size  = {x = 2.5, y = 2.5, z = 1.0},
+	-- 		label = "Sortir"
+	-- 	},
+	-- 	authorizedJobs = { '' },
+	-- 	allowVehicles = true,
+	-- 	locked = false,
+	-- 	disntace = 10
+	-- },
+
+}

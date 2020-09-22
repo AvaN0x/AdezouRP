@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
 
 			distance = #(playerCoords - doorID.textCoords)
 
-			local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
+			local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
 
 			if doorID.distance then
 				maxDistance = doorID.distance
@@ -108,11 +108,11 @@ Citizen.CreateThread(function()
 				end
 
 				if doorID.locked then
-					displayText = _U('locked')
+					displayText = _U('doors_locked')
 				end
 
 				if isAuthorized then
-					displayText = _U('press_button', displayText)
+					displayText = _U('doors_press_button', displayText)
 				end
 
 				ESX.Game.Utils.DrawText3D(doorID.textCoords, displayText, size)
@@ -162,7 +162,7 @@ function FindClosestDoor()
 
 		-- todo remove useless things
 		local isAuthorized = IsAuthorized(doorID)
-		local maxDistance, size, displayText = 2.5, 0.5, _U('unlocked')
+		local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
 
 		if doorID.distance then
 			maxDistance = doorID.distance

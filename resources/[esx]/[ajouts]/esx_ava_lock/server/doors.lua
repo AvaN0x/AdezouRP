@@ -1,3 +1,8 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 ESX = nil
 local doorInfo = {}
 
@@ -22,11 +27,6 @@ AddEventHandler('esx_ava_doors:updateState', function(doorID, state)
 		return
 	end
 
-	-- if not IsAuthorized(xPlayer.job.name, xPlayer.job2.name, Config.DoorList[doorID]) then
-	-- 	print(('esx_ava_doors: %s was not authorized to open a locked door!'):format(xPlayer.identifier))
-	-- 	return
-	-- end
-
 	doorInfo[doorID] = state
 
 	TriggerClientEvent('esx_ava_doors:setState', -1, doorID, state)
@@ -36,22 +36,3 @@ ESX.RegisterServerCallback('esx_ava_doors:getDoorInfo', function(source, cb)
 	cb(doorInfo)
 end)
 
--- function IsAuthorized(jobName, job2Name, doorID)
--- 	for _,job in pairs(doorID.authorizedJobs) do
--- 		if job == jobName or job == job2Name then
--- 			return true
--- 		end
--- 	end
-
--- 	return false
--- end
-
--- function MFF:GetLockpickCount(source)
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	while not xPlayer do Citizen.Wait(0); xPlayer = ESX.GetPlayerFromId(source); end
--- 	local item = xPlayer.getInventoryItem('lockpick')
--- 	return item.count or 0
---   end
-  
--- ESX.RegisterServerCallback('MF_Fleeca:GetLockpickCount', function(source,cb) cb(MFF:GetLockpickCount(source) or 0); end)
-  
