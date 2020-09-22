@@ -1,3 +1,7 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 ESX = nil
 PlayerData = nil
 
@@ -13,10 +17,9 @@ Citizen.CreateThread(function()
 
 	PlayerData = ESX.GetPlayerData()
 
-	-- Update the door list
 	ESX.TriggerServerCallback('esx_ava_doors:getDoorInfo', function(doorInfo)
 		for doorID,state in pairs(doorInfo) do
-			Config.DoorList[doorID].locked = state
+			Config.Doors.DoorList[doorID].locked = state
 		end
 	end)
 end)
@@ -31,10 +34,9 @@ AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
 end)
 
--- Get objects every second, instead of every frame
 Citizen.CreateThread(function()
 	while true do
-		for _,doorID in ipairs(Config.DoorList) do
+		for _,doorID in ipairs(Config.Doors.DoorList) do
 			if doorID.doors then
 				for k,v in ipairs(doorID.doors) do
 					if not v.object or not DoesEntityExist(v.object) then
@@ -56,7 +58,7 @@ Citizen.CreateThread(function()
 			end
 		end
 
-		Citizen.Wait(1000)
+		Citizen.Wait(5000)
 	end
 end)
 
@@ -66,18 +68,18 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
-		for k,doorID in ipairs(Config.DoorList) do
+		for k,doorID in ipairs(Config.Doors.DoorList) do
 			local distance
 
 			distance = #(playerCoords - doorID.textCoords)
-
+			-- todo optimise as in esx_ava_teleports
 			local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
 
 			if doorID.distance then
 				maxDistance = doorID.distance
 			end
 
-			if distance < 50 then
+			if distance < 30 then
 				if doorID.doors then
 					for _,v in ipairs(doorID.doors) do
 						FreezeEntityPosition(v.object, doorID.locked)
@@ -148,14 +150,14 @@ end
 -- Set state for a door
 RegisterNetEvent('esx_ava_doors:setState')
 AddEventHandler('esx_ava_doors:setState', function(doorID, state)
-	Config.DoorList[doorID].locked = state
+	Config.Doors.DoorList[doorID].locked = state
 end)
 
 
 -- LOCKPICKING DOOR
 function FindClosestDoor()
 	local playerCoords = GetEntityCoords(PlayerPedId())
-	for k,doorID in ipairs(Config.DoorList) do
+	for k,doorID in ipairs(Config.Doors.DoorList) do
 		local distance
 
 		distance = #(playerCoords - doorID.textCoords)

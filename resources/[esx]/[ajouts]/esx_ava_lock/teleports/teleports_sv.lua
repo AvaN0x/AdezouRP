@@ -2,7 +2,6 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 ESX = nil
 local teleporterInfo = {}
 
@@ -22,7 +21,7 @@ AddEventHandler('esx_ava_teleports:updateState', function(tpID, state)
 		return
 	end
 
-	if not Config.Teleporters[tpID] then
+	if not Config.Teleports.TeleportersList[tpID] then
 		print(('esx_ava_teleports: %s attempted to update invalid door!'):format(xPlayer.identifier))
 		return
 	end

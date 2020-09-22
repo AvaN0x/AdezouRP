@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
 	-- Update the teleporters list
 	ESX.TriggerServerCallback('esx_ava_teleports:getTeleporterInfo', function(teleporterInfo)
 		for tpID,state in pairs(teleporterInfo) do
-			Config.Teleporters[tpID].locked = state
+			Config.Teleports.TeleportersList[tpID].locked = state
 		end
 	end)
 end)
@@ -41,13 +41,13 @@ end)
 
 Citizen.CreateThread(function()
 	Citizen.Wait(5000)
-	for k,tpID in ipairs(Config.Teleporters) do
+	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
 			if not tpID2.size then 
-				tpID2.size = Config.DefaultSize 
+				tpID2.size = Config.Teleports.DefaultSize 
 			end
 			if not tpID2.color then 
-				tpID2.color = Config.DefaultColor 
+				tpID2.color = Config.Teleports.DefaultColor 
 			end
 		end
 	end
@@ -55,14 +55,14 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
-		for k,tpID in ipairs(Config.Teleporters) do
+		for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 			for k2,tpID2 in ipairs({
 				{from = tpID.tpEnter, to = tpID.tpExit},
 				{from = tpID.tpExit, to = tpID.tpEnter}
 			}) do
 				local distance = #(playerCoords - tpID2.from.pos)
 				
-				if distance < Config.DrawDistance then
+				if distance < Config.Teleports.DrawDistance then
 					DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y, tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
 				end
 				
@@ -117,7 +117,7 @@ end
 -- Set state for a teleporter
 RegisterNetEvent('esx_ava_teleports:setState')
 AddEventHandler('esx_ava_teleports:setState', function(tpID, state)
-	Config.Teleporters[tpID].locked = state
+	Config.Teleports.TeleportersList[tpID].locked = state
 end)
 
 
@@ -144,7 +144,7 @@ end
 -- LOCKPICKING TELEPORT
 function FindClosestTeleport()
 	local playerCoords = GetEntityCoords(PlayerPedId())
-	for k,tpID in ipairs(Config.Teleporters) do
+	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
 			local distance = #(playerCoords - tpID2.pos)
 			if distance < tpID2.size.x then

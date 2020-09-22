@@ -2,7 +2,6 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 ESX = nil
 local doorInfo = {}
 
@@ -22,7 +21,7 @@ AddEventHandler('esx_ava_doors:updateState', function(doorID, state)
 		return
 	end
 
-	if not Config.DoorList[doorID] then
+	if not Config.Doors.DoorList[doorID] then
 		print(('esx_ava_doors: %s attempted to update invalid door!'):format(xPlayer.identifier))
 		return
 	end
