@@ -63,7 +63,7 @@ function OpenBagMenu() --This function is menu function
 
     local elements = {
           {label = 'Mettre le Sac-tête', value = 'puton'},
-          {label = 'Enlevé le Sac-tête', value = 'putoff'},
+          {label = 'Enlever le Sac-tête', value = 'putoff'},
           
         }
   
