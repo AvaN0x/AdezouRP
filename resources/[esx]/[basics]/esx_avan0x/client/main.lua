@@ -12,3 +12,15 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
+---------------------------------------
+-------- CAN'T FALL AT LOADING --------
+---------------------------------------
+Citizen.CreateThread(function()
+    local health = GetEntityHealth(PlayerPedId())
+    if health > 0 then
+        SetEntityInvincible(GetPlayerPed(-1),true)
+        Citizen.Wait(30000)
+        SetEntityInvincible(GetPlayerPed(-1),false)
+    end
+end)
