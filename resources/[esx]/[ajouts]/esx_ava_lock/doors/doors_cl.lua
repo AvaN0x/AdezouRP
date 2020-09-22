@@ -36,23 +36,34 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
+		local playerCoords = GetEntityCoords(PlayerPedId())
+
 		for _,doorID in ipairs(Config.Doors.DoorList) do
 			if doorID.doors then
 				for k,v in ipairs(doorID.doors) do
 					if not v.object or not DoesEntityExist(v.object) then
-						if v.objName then
-							v.object = GetClosestObjectOfType(v.objCoords, 1.0, GetHashKey(v.objName), false, false, false)
-						else
-							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
+						local distance = #(playerCoords - doorID.textCoords)
+
+						if distance < 30 then
+							if v.objName then
+								v.object = GetClosestObjectOfType(v.objCoords, 1.0, GetHashKey(v.objName), false, false, false)
+							else
+								v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
+							end
 						end
 					end
 				end
 			else
 				if not doorID.object or not DoesEntityExist(doorID.object) then
-					if doorID.objName then
-						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, GetHashKey(doorID.objName), false, false, false)
-					else
-						v.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
+					local distance = #(playerCoords - doorID.textCoords)
+
+					-- todo use 'or'
+					if distance < 30 then
+						if doorID.objName then
+							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, GetHashKey(doorID.objName), false, false, false)
+						else
+							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
+						end
 					end
 				end
 			end
@@ -69,9 +80,7 @@ Citizen.CreateThread(function()
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
-			local distance
-
-			distance = #(playerCoords - doorID.textCoords)
+			local distance = #(playerCoords - doorID.textCoords)
 			-- todo optimise as in esx_ava_teleports
 			local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
 
@@ -158,9 +167,7 @@ end)
 function FindClosestDoor()
 	local playerCoords = GetEntityCoords(PlayerPedId())
 	for k,doorID in ipairs(Config.Doors.DoorList) do
-		local distance
-
-		distance = #(playerCoords - doorID.textCoords)
+		local distance = #(playerCoords - doorID.textCoords)
 
 		-- todo remove useless things
 		local isAuthorized = IsAuthorized(doorID)
