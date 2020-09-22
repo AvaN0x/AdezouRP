@@ -36,18 +36,14 @@ AddEventHandler('esx:setJob2', function(job2)
 end)
 
 Citizen.CreateThread(function()
-end)
-
-
-Citizen.CreateThread(function()
 	Citizen.Wait(5000)
 	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
-			if not tpID2.size then 
-				tpID2.size = Config.Teleports.DefaultSize 
+			if not tpID2.size then
+				tpID2.size = Config.Teleports.DefaultSize
 			end
-			if not tpID2.color then 
-				tpID2.color = Config.Teleports.DefaultColor 
+			if not tpID2.color then
+				tpID2.color = Config.Teleports.DefaultColor
 			end
 		end
 	end

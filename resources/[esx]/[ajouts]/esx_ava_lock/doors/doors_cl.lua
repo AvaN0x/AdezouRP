@@ -44,12 +44,8 @@ Citizen.CreateThread(function()
 					if not v.object or not DoesEntityExist(v.object) then
 						local distance = #(playerCoords - doorID.textCoords)
 
-						if distance < 30 then
-							if v.objName then
-								v.object = GetClosestObjectOfType(v.objCoords, 1.0, GetHashKey(v.objName), false, false, false)
-							else
-								v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
-							end
+						if distance < Config.Doors.ObjectDistance then
+							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
 						end
 					end
 				end
@@ -57,13 +53,8 @@ Citizen.CreateThread(function()
 				if not doorID.object or not DoesEntityExist(doorID.object) then
 					local distance = #(playerCoords - doorID.textCoords)
 
-					-- todo use 'or'
-					if distance < 30 then
-						if doorID.objName then
-							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, GetHashKey(doorID.objName), false, false, false)
-						else
-							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
-						end
+					if distance < Config.Doors.ObjectDistance then
+						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
 					end
 				end
 			end
@@ -74,6 +65,14 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
+	for k,doorID in ipairs(Config.Doors.DoorList) do
+		if not doorID.distance then
+			doorID.distance = Config.Doors.DefaultDistance
+		end
+		if not doorID.size then
+			doorID.size = Config.Doors.DefaultSize
+		end
+	end
 	Citizen.Wait(5000)
 	while true do
 		Citizen.Wait(0)
@@ -81,18 +80,12 @@ Citizen.CreateThread(function()
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
 			local distance = #(playerCoords - doorID.textCoords)
-			-- todo optimise as in esx_ava_teleports
-			local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
-
-			if doorID.distance then
-				maxDistance = doorID.distance
-			end
-
-			if distance < 30 then
+			
+			if distance < Config.Doors.ObjectDistance then
 				if doorID.doors then
 					for _,v in ipairs(doorID.doors) do
 						FreezeEntityPosition(v.object, doorID.locked)
-
+						
 						if doorID.locked and v.objYaw and GetEntityRotation(v.object).z ~= v.objYaw then
 							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
 						elseif not v.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
@@ -102,7 +95,7 @@ Citizen.CreateThread(function()
 					end
 				else
 					FreezeEntityPosition(doorID.object, doorID.locked)
-
+					
 					if doorID.locked and doorID.objYaw and GetEntityRotation(doorID.object).z ~= doorID.objYaw then
 						SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objYaw, 2, true)
 					elseif not doorID.locked and doorID.objOpenYaw and GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
@@ -111,32 +104,26 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-
-			if distance < maxDistance then
-				local isAuthorized = IsAuthorized(doorID)
-				if doorID.size then
-					size = doorID.size
-				end
-
+			
+			if distance < doorID.distance then
+				local displayText = _U('doors_unlocked')
 				if doorID.locked then
 					displayText = _U('doors_locked')
 				end
-
+				
+				local isAuthorized = IsAuthorized(doorID)
 				if isAuthorized then
 					displayText = _U('doors_press_button', displayText)
 				end
 
-				ESX.Game.Utils.DrawText3D(doorID.textCoords, displayText, size)
+				ESX.Game.Utils.DrawText3D(doorID.textCoords, displayText, doorID.size)
 
 				if IsControlJustReleased(0, 38) then
 					if isAuthorized then
 						doorID.locked = not doorID.locked
-
-						print(k..' '..tostring(doorID.locked))
-						TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked) -- Broadcast new state of the door to everyone
+						TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
 					end
 				end
-
 			end
 		end
 	end
@@ -168,16 +155,9 @@ function FindClosestDoor()
 	local playerCoords = GetEntityCoords(PlayerPedId())
 	for k,doorID in ipairs(Config.Doors.DoorList) do
 		local distance = #(playerCoords - doorID.textCoords)
-
-		-- todo remove useless things
-		local isAuthorized = IsAuthorized(doorID)
-		local maxDistance, size, displayText = 2.5, 0.5, _U('doors_unlocked')
-
-		if doorID.distance then
-			maxDistance = doorID.distance
-		end
-
-		if distance < maxDistance then
+				
+		if distance < doorID.distance then
+			local isAuthorized = IsAuthorized(doorID)
 			if doorID.locked and not isAuthorized then
 				return {name = k, door = doorID}
 			end

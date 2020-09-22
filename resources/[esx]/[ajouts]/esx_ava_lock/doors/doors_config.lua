@@ -3,6 +3,10 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 Config.Doors = {
+	ObjectDistance = 30,
+	DefaultDistance = 2.5,
+	DefaultSize = 0.5,
+
 	DoorList = {
 		-- Mission Row
 		-- Entrance Doors
