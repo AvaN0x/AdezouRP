@@ -83,7 +83,8 @@ end)
 function OpenPersonalMenu()
 	local elements = {
 		{label = _U('orange', _U('sim_card')), value = "sim_card"},
-		{label = _U('orange', _U('my_keys')), value = "my_keys"}
+		{label = _U('orange', _U('my_keys')), value = "my_keys"},
+		{label = _U('pink', _U('wallet')), value = "wallet"}
 	}
 
 	-- if PlayerData.job ~= nil PlayerData.job.grade_name == 'boss' then
@@ -102,7 +103,7 @@ function OpenPersonalMenu()
 
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_personalmenu',
 	{
-		title    = _U('menu_header'),
+		title    = _U('wallet'),
 		align    = 'left',
 		elements = elements
 	}, function(data, menu)
@@ -111,11 +112,14 @@ function OpenPersonalMenu()
 			TriggerEvent('NB:closeAllSubMenu')
 			TriggerEvent('NB:closeAllMenu')
 			TriggerEvent('NB:closeMenuKey')
-			
 			TriggerEvent('NB:carteSIM')
 		
 		elseif data.current.value == 'my_keys' then
 			TriggerEvent("esx_menu:key")
+
+		elseif data.current.value == 'wallet' then
+			menu.close()
+			OpenWalletMenu()
 
 		end
 	end, function(data, menu)
@@ -124,3 +128,56 @@ function OpenPersonalMenu()
 end
 
 
+function OpenWalletMenu()
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_personalmenu',
+	{
+		title    = _U('menu_header'),
+		align    = 'left',
+		elements = {
+			{label = _U("wallet_show_idcard"), value = "show_idcard"},
+			{label = _U("wallet_check_idcard"), value = "check_idcard"},
+			{label = _U("wallet_show_driver_license"), value = "show_driver_license"},
+			{label = _U("wallet_check_driver_license"), value = "check_driver_license"},
+			{label = _U("wallet_show_weapon_port_license"), value = "show_weapon_port_license"},
+			{label = _U("wallet_check_weapon_port_license"), value = "check_weapon_port_license"}
+		}
+	}, function(data, menu)
+		if data.current.value == "show_idcard" then
+			closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+			if closestDistance ~= -1 and closestDistance <= 3.0 then
+				TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer))
+			else
+				ESX.ShowHelpNotification(_U('no_players_nearby'))
+			end
+		elseif data.current.value == "check_idcard" then
+			TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()))
+		elseif data.current.value == "show_driver_license" then
+			closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+			if closestDistance ~= -1 and closestDistance <= 3.0 then
+				TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer), 'driver')
+			else
+				ESX.ShowHelpNotification(_U('no_players_nearby'))
+			end
+		elseif data.current.value == "check_driver_license" then
+			TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()), 'driver')
+		elseif data.current.value == "show_weapon_port_license" then
+			closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+			if closestDistance ~= -1 and closestDistance <= 3.0 then
+				TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer), 'weapon')
+			else
+				ESX.ShowHelpNotification(_U('no_players_nearby'))
+			end
+		elseif data.current.value == "check_weapon_port_license" then
+			TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()), 'weapon')
+		end
+	end, function(data, menu)
+		menu.close()
+	end)
+
+
+
+
+
+
+
+end
