@@ -92,7 +92,9 @@ function OpenPersonalMenu()
 	-- end
 
 	if  IsPedSittingInAnyVehicle(PlayerPedId()) then
-		table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+		if GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(), false)) ~= 13 then -- remove if bike
+			table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+		end
 		-- todo speed limiter
 	end
 	
@@ -198,7 +200,7 @@ function OpenVehicleMenu()
 	if DoesVehicleHaveDoor(vehicle, 5) then
 		table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
 	end
-	if DoesVehicleHaveDoor(vehicle, 0) then
+	if DoesVehicleHaveDoor(vehicle, 0) and GetVehicleClass(vehicle) ~= 8 then -- remove if motorcycle
 		table.insert(elements, {label = _U("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
 	end
 	if DoesVehicleHaveDoor(vehicle, 1) then
