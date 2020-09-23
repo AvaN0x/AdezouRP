@@ -91,12 +91,15 @@ function OpenPersonalMenu()
 		-- table.insert(elements, {label = "", value = ""})
 	-- end
 
-	-- todo check if in vehicle
+	-- todo vehicle menu
+	-- todo job1 and job1 boss menu
+	-- todo others menu
+	-- todo bill menu
 
-	if PlayerGroup ~= nil and (PlayerGroup == 'mod' or PlayerGroup == 'admin' or PlayerGroup == 'superadmin' or PlayerGroup == 'owner') then
-		-- table.insert(elements, {label = "", value = ""})
-		print("you have access to admin menu i guess")
-	end
+	-- if PlayerGroup ~= nil and (PlayerGroup == 'mod' or PlayerGroup == 'admin' or PlayerGroup == 'superadmin' or PlayerGroup == 'owner') then
+	-- 	-- table.insert(elements, {label = "", value = ""})
+	-- 	print("you have access to admin menu i guess")
+	-- end
 
 
 	ESX.UI.Menu.CloseAll()
