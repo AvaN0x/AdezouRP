@@ -8,6 +8,9 @@ Locales["fr"] = {
 
   ["orange"] = "<span style='color: orange'>%s</span>",
   ["pink"] = "<span style='color: rgb(232, 71, 87)'>%s</span>",
+  ["blue"] = "<span style='color: #3493eb'>%s</span>",
+  ["green"] = "<span style='color: #0cc421'>%s</span>",
+  ["red"] = "<span style='color: #eb4034'>%s</span>",
 
 
   ["sim_card"] = "📲 Carte SIM",
@@ -15,13 +18,15 @@ Locales["fr"] = {
   ["wallet"] = "👛 Portefeuille",
 
 
-  ["wallet_show_idcard"] = "📇 Montrer sa carte d'identité",
-  ["wallet_check_idcard"] = "📇 Regarder sa carte d'identité",
-  ["wallet_show_driver_license"] = "📇 Montrer son permis de conduire",
-  ["wallet_check_driver_license"] = "📇 Regarder son permis de conduire",
-  ["wallet_show_weapon_port_license"] = "📇 Montrer son permis port d'armes",
-  ["wallet_check_weapon_port_license"] = "📇 Regarder son permis port d'armes",
+  ["wallet_idcard"] = "📇 Carte d'identité",
+  ["wallet_idcard"] = "📇 Carte d'identité",
+  ["wallet_driver_license"] = "📇 Permis de conduire",
+  ["wallet_driver_license"] = "📇 Permis de conduire",
+  ["wallet_weapon_port_license"] = "📇 Permis port d'armes",
+  ["wallet_weapon_port_license"] = "📇 Permis port d'armes",
 
+  ["wallet_show"] = "📇 Montrer",
+  ["wallet_check"] = "📇 Regarder",
 
   ["no_players_nearby"] = "Aucun joueur à proximité",
 
