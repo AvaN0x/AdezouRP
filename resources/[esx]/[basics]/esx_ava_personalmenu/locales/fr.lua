@@ -31,6 +31,13 @@ Locales["fr"] = {
   ["vehicle_engine"] = "Allumer/Eteindre le Moteur",
   ["vehicle_hood"] = "Ouvrir/Fermer Capot",
   ["vehicle_trunk"] = "Ouvrir/Fermer Coffre",
+  ["vehicle_door_frontleft"] = "Ouvrir/Fermer Porte AV Gauche",
+  ["vehicle_door_frontright"] = "Ouvrir/Fermer Porte AV Droite",
+  ["vehicle_door_backleft"] = "Ouvrir/Fermer Porte AR Gauche",
+  ["vehicle_door_backright"] = "Ouvrir/Fermer Porte AR Droite",
+
+
+
 
 
 

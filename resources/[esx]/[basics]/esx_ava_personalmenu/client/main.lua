@@ -179,6 +179,10 @@ end
 function OpenVehicleMenu()
 	local playerPed = PlayerPedId()
 	local vDoorsOpen = {
+		[0] = false, -- front left
+		[1] = false, -- front right
+		[2] = false, -- back left
+		[3] = false, -- back right
 		[4] = false, -- hood
 		[5] = false -- trunk
 	}
@@ -193,6 +197,18 @@ function OpenVehicleMenu()
 	end
 	if DoesVehicleHaveDoor(vehicle, 5) then
 		table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
+	end
+	if DoesVehicleHaveDoor(vehicle, 0) then
+		table.insert(elements, {label = _U("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
+	end
+	if DoesVehicleHaveDoor(vehicle, 1) then
+		table.insert(elements, {label = _U("vehicle_door_frontright"), value = "vehicle_door", door = 1})
+	end
+	if DoesVehicleHaveDoor(vehicle, 2) then
+		table.insert(elements, {label = _U("vehicle_door_backleft"), value = "vehicle_door", door = 2})
+	end
+	if DoesVehicleHaveDoor(vehicle, 3) then
+		table.insert(elements, {label = _U("vehicle_door_backright"), value = "vehicle_door", door = 3})
 	end
 
 
@@ -229,8 +245,3 @@ function OpenVehicleMenu()
 	end)
 
 end
-
--- 			end
--- 		end
--- 	end
--- end
