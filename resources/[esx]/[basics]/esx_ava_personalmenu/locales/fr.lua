@@ -29,6 +29,8 @@ Locales["fr"] = {
   ["wallet_check"] = "📇 Regarder",
 
   ["vehicle_engine"] = "Allumer/Eteindre le Moteur",
+  ["vehicle_hood"] = "Ouvrir/Fermer Capot",
+  ["vehicle_trunk"] = "Ouvrir/Fermer Coffre",
 
 
 

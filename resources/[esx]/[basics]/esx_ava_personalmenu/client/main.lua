@@ -91,9 +91,9 @@ function OpenPersonalMenu()
 		-- table.insert(elements, {label = "", value = ""})
 	-- end
 
-	-- todo vehicle menu
 	if  IsPedSittingInAnyVehicle(PlayerPedId()) then
-		table.insert(elements, {label = _U("orange", _U("vehicle_menu")), value = "vehicle_menu"})
+		table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+		-- todo speed limiter
 	end
 	
 	-- todo job1 and job1 boss menu
@@ -178,13 +178,29 @@ end
 
 function OpenVehicleMenu()
 	local playerPed = PlayerPedId()
+	local vDoorsOpen = {
+		[4] = false, -- hood
+		[5] = false -- trunk
+	}
+	
+	local elements = {
+		{label = _U("vehicle_engine"), value = "vehicle_engine"}
+	}
+	vehicle = GetVehiclePedIsIn(playerPed, false)
+
+	if DoesVehicleHaveDoor(vehicle, 4) then
+		table.insert(elements, {label = _U("vehicle_hood"), value = "vehicle_door", door = 4})
+	end
+	if DoesVehicleHaveDoor(vehicle, 5) then
+		table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
+	end
+
+
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_walled",
 	{
 		title    = _U("vehicle_menu"),
 		align    = "left",
-		elements = {
-			{label = _U("vehicle_engine"), value = "vehicle_engine"},
-		}
+		elements = elements
 	}, function(data, menu)
 		if IsPedSittingInAnyVehicle(playerPed) then
 			vehicle = GetVehiclePedIsIn(playerPed, false)
@@ -195,6 +211,13 @@ function OpenVehicleMenu()
 				elseif not GetIsVehicleEngineRunning(vehicle) then
 					SetVehicleEngineOn(vehicle, true, false, true)
 					SetVehicleUndriveable(vehicle, false)
+				end
+			elseif data.current.value == "vehicle_door" then
+				vDoorsOpen[data.current.door] = not vDoorsOpen[data.current.door]
+				if vDoorsOpen[data.current.door] then
+					SetVehicleDoorOpen(vehicle, data.current.door, false, false)
+				else
+					SetVehicleDoorShut(vehicle, data.current.door, false, false)
 				end
 			end
 		else
