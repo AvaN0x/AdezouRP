@@ -16,6 +16,7 @@ Locales["fr"] = {
   ["sim_card"] = "📲 Carte SIM",
   ["my_keys"] = "🔑 Mes Clés",
   ["wallet"] = "👛 Portefeuille",
+  ["vehicle_menu"] = "🚙 Gestion Véhicule",
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -24,11 +25,15 @@ Locales["fr"] = {
   ["wallet_driver_license"] = "📇 Permis de conduire",
   ["wallet_weapon_port_license"] = "📇 Permis port d'armes",
   ["wallet_weapon_port_license"] = "📇 Permis port d'armes",
-
   ["wallet_show"] = "📇 Montrer",
   ["wallet_check"] = "📇 Regarder",
 
+  ["vehicle_engine"] = "Allumer/Eteindre le Moteur",
+
+
+
   ["no_players_nearby"] = "Aucun joueur à proximité",
+  ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
 
 
 }
