@@ -35,7 +35,9 @@ Locales["fr"] = {
   ["vehicle_door_frontright"] = "Ouvrir/Fermer Porte AV Droite",
   ["vehicle_door_backleft"] = "Ouvrir/Fermer Porte AR Gauche",
   ["vehicle_door_backright"] = "Ouvrir/Fermer Porte AR Droite",
+  ["vehicle_move_to_driver_seat"] = "Passer conducteur",
 
+  
 
 
 
@@ -43,6 +45,7 @@ Locales["fr"] = {
 
   ["no_players_nearby"] = "Aucun joueur à proximité",
   ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
+  ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",
 
 
 }

@@ -24,3 +24,35 @@ Citizen.CreateThread(function()
         SetEntityInvincible(GetPlayerPed(-1),false)
     end
 end)
+
+
+-------------------------------------------
+-------- CAN'T MOVE TO DRIVER SEAT --------
+-------------------------------------------
+
+local disableMTDS = true -- MoveToDriverSeat
+
+Citizen.CreateThread(function()
+	while true do
+        Citizen.Wait(10)
+        local playerPed = GetPlayerPed(-1)
+		if IsPedInAnyVehicle(playerPed, false) and disableMTDS then
+			if GetPedInVehicleSeat(GetVehiclePedIsIn(playerPed, false), 0) == playerPed then
+				if GetIsTaskActive(playerPed, 165) then
+					SetPedIntoVehicle(playerPed, GetVehiclePedIsIn(playerPed, false), 0)
+				end
+			end
+		end
+	end
+end)
+
+RegisterNetEvent("esx_avan0x:moveToDriverSeat")
+AddEventHandler("esx_avan0x:moveToDriverSeat", function()
+	if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+		disableMTDS = false
+		Citizen.Wait(5000)
+		disableMTDS = true
+	else
+		CancelEvent()
+	end
+end)

@@ -6,7 +6,6 @@ client_script {
 	'NoMoreCopNPC.lua',
 	'NoMoreWeaponsOnNPC.lua',
 	'NoWeaponReward.lua',
-	'passager.lua',
 	'DamageReducer.lua'
 }
 

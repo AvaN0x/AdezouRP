@@ -141,7 +141,7 @@ end
 
 
 function OpenWalletMenu()
-	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_walled",
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_wallet",
 	{
 		title    = _U("wallet"),
 		align    = "left",
@@ -189,32 +189,36 @@ function OpenVehicleMenu()
 		[5] = false -- trunk
 	}
 	
-	local elements = {
-		{label = _U("vehicle_engine"), value = "vehicle_engine"}
-	}
+	local elements = {}
 	vehicle = GetVehiclePedIsIn(playerPed, false)
 
-	if DoesVehicleHaveDoor(vehicle, 4) then
-		table.insert(elements, {label = _U("vehicle_hood"), value = "vehicle_door", door = 4})
-	end
-	if DoesVehicleHaveDoor(vehicle, 5) then
-		table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
-	end
-	if DoesVehicleHaveDoor(vehicle, 0) and GetVehicleClass(vehicle) ~= 8 then -- remove if motorcycle
-		table.insert(elements, {label = _U("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
-	end
-	if DoesVehicleHaveDoor(vehicle, 1) then
-		table.insert(elements, {label = _U("vehicle_door_frontright"), value = "vehicle_door", door = 1})
-	end
-	if DoesVehicleHaveDoor(vehicle, 2) then
-		table.insert(elements, {label = _U("vehicle_door_backleft"), value = "vehicle_door", door = 2})
-	end
-	if DoesVehicleHaveDoor(vehicle, 3) then
-		table.insert(elements, {label = _U("vehicle_door_backright"), value = "vehicle_door", door = 3})
+	if GetPedInVehicleSeat(vehicle, -1) == playerPed then
+		table.insert(elements, {label = _U("vehicle_engine"), value = "vehicle_engine"})
+
+		if DoesVehicleHaveDoor(vehicle, 4) then
+			table.insert(elements, {label = _U("vehicle_hood"), value = "vehicle_door", door = 4})
+		end
+		if DoesVehicleHaveDoor(vehicle, 5) then
+			table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
+		end
+		if DoesVehicleHaveDoor(vehicle, 0) and GetVehicleClass(vehicle) ~= 8 then -- remove if motorcycle
+			table.insert(elements, {label = _U("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
+		end
+		if DoesVehicleHaveDoor(vehicle, 1) then
+			table.insert(elements, {label = _U("vehicle_door_frontright"), value = "vehicle_door", door = 1})
+		end
+		if DoesVehicleHaveDoor(vehicle, 2) then
+			table.insert(elements, {label = _U("vehicle_door_backleft"), value = "vehicle_door", door = 2})
+		end
+		if DoesVehicleHaveDoor(vehicle, 3) then
+			table.insert(elements, {label = _U("vehicle_door_backright"), value = "vehicle_door", door = 3})
+		end
+
+	elseif GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0 then
+		table.insert(elements, {label = _U("vehicle_move_to_driver_seat"), value = "move_to_driver_seat"})
 	end
 
-
-	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_walled",
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_vehicle_menu",
 	{
 		title    = _U("vehicle_menu"),
 		align    = "left",
@@ -236,6 +240,15 @@ function OpenVehicleMenu()
 					SetVehicleDoorOpen(vehicle, data.current.door, false, false)
 				else
 					SetVehicleDoorShut(vehicle, data.current.door, false, false)
+				end
+			elseif data.current.value == "move_to_driver_seat" then
+				if GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0 then
+					TriggerEvent("esx_avan0x:moveToDriverSeat")
+					Citizen.Wait(2000)
+					menu.refresh()
+					OpenVehicleMenu()
+				else
+					ESX.ShowNotification(_U("not_in_passenger_seat"))
 				end
 			end
 		else
