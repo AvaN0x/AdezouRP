@@ -90,8 +90,9 @@ function OpenPersonalMenu()
 	end
 	
 	-- todo job1 and job1 boss menu
-	-- todo others menu
-	
+	table.insert(elements, {label = _U("red", _U("others_menu")), value = "others_menu"})
+
+
 	-- if PlayerData.job ~= nil PlayerData.job.grade_name == "boss" then
 		-- table.insert(elements, {label = "", value = ""})
 	-- end
@@ -131,6 +132,9 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "bills" then
 			OpenBillsMenu()
+
+		elseif data.current.value == "others_menu" then
+			OpenOthersMenu()
 
 		end
 	end, function(data, menu)
@@ -308,5 +312,25 @@ function OpenSpeedMenu()
 
 end
 
-
-
+local interface = true
+function OpenOthersMenu()
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_others",
+	{
+		title    = _U("others_menu"),
+		align    = "left",
+		elements = {
+			{label = _U("others_toggle_hud"), value = "toggle_hud"},
+			{label = _U("others_toggle_drift"), value = "toggle_drift"}
+		}
+	}, function(data, menu)
+		if data.current.value == "toggle_hud" then
+			interface = not interface
+			TriggerEvent('ui:toggle', interface)
+			DisplayRadar(interface)
+		elseif data.current.value == "toggle_drift" then
+			TriggerServerEvent("drift:toggledrift", source)
+		end
+	end, function(data, menu)
+		menu.close()
+	end)
+end

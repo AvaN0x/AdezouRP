@@ -19,6 +19,8 @@ Locales["fr"] = {
   ["vehicle_menu"] = "🚙 Gestion Véhicule",
   ["speed_limiter"] = "🚙 Limiteur de vitesse",
   ["bills_menu"] = "📝 Factures",
+  ["others_menu"] = "⚙️ Divers",
+
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -43,6 +45,10 @@ Locales["fr"] = {
   ["speed_set_at"] = "Limiter à %s km/h",
 
   ["bills_item"] = "%s <span style='color: #0cc421'>$%s</span>",
+
+  ["others_toggle_hud"] = "Activer/Désactiver HUD",
+  ["others_toggle_drift"] = "Activer/Désactiver Drift Mode",
+
 
 
   ["no_players_nearby"] = "Aucun joueur à proximité",
