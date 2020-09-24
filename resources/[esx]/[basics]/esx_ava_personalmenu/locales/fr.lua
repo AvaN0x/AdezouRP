@@ -17,6 +17,7 @@ Locales["fr"] = {
   ["my_keys"] = "🔑 Mes Clés",
   ["wallet"] = "👛 Portefeuille",
   ["vehicle_menu"] = "🚙 Gestion Véhicule",
+  ["speed_limiter"] = "🚙 Limiteur de vitesse",
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -37,8 +38,8 @@ Locales["fr"] = {
   ["vehicle_door_backright"] = "Ouvrir/Fermer Porte AR Droite",
   ["vehicle_move_to_driver_seat"] = "Passer conducteur",
 
-
-
+  ["speed_disable"] = "Désactiver le limiteur",
+  ["speed_set_at"] = "Limiter à %s km/h",
 
 
 

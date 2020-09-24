@@ -1,25 +1,41 @@
+----------------------------------------------------
+------------ MADE BY GITHUB.COM/AVAN0X -------------
+------------------- AvaN0x#6348 --------------------
+-------------- TOOK INSPIRATION FROM ---------------
+---- https://github.com/hojgr/teb_speed_control ----
+----------------------------------------------------
+
+AddEventHandler("teb_speed_control:setSpeedLimiter", function(speed)
+    LimitVehicleSpeed(speed)
+end)
+
+AddEventHandler("teb_speed_control:stop", function()
+    ResetCurrentVehicleMaxSpeed()
+end)
+
 local LastSpeedLimitedVehicle = nil
 local CurrentMaxSpeedMetersPerSecond = nil
-local CurrentMaxSpeedKmh = nil
 local SpeedDiffTolerance = (2/3.6)
 local LastForcedRpm = nil
+
+function KmhToMps(kmh)
+    return kmh * (1/3.6)
+end
 
 Citizen.CreateThread(function()
     while true do
         Wait(0)
-
         if LastSpeedLimitedVehicle then
-
             local ped = PlayerPedId()
-            local pedVeh = GetVehiclePedIsIn(ped)
+            local vehicle = GetVehiclePedIsIn(ped)
             local newLastForcedRpm = nil
 
-            if pedVeh ~= LastSpeedLimitedVehicle then
+            if vehicle ~= LastSpeedLimitedVehicle then
                 ResetVehicleMaxSpeed(LastSpeedLimitedVehicle)
                 LastSpeedLimitedVehicle = nil
             else
-                local rpm = GetVehicleCurrentRpm(pedVeh)
-                local curSpeed = GetEntitySpeed(pedVeh)
+                local rpm = GetVehicleCurrentRpm(vehicle)
+                local curSpeed = GetEntitySpeed(vehicle)
 
                 local diff = CurrentMaxSpeedMetersPerSecond - curSpeed
 
@@ -32,9 +48,8 @@ Citizen.CreateThread(function()
                         newRpm = rpm - 0.03
                         LastForcedRpm = newRpm
                     end
-                    
                     if newRpm > 0.35 then
-                        SetVehicleCurrentRpm(pedVeh, newRpm)
+                        SetVehicleCurrentRpm(vehicle, newRpm)
                     end
                 end
             end
@@ -44,35 +59,29 @@ Citizen.CreateThread(function()
     end
 end)
 
-function IsLimitingSpeed()
-    return not not LastSpeedLimitedVehicle
-end
-
 function LimitVehicleSpeed(kmh)
-    UnsetCruiseControl()
+    kmh = kmh - 1 -- reduction of 1 kmh because the vehicle always go higher of 1
+    local mpsSpeed = kmh * (1/3.6) -- KmH to Mps
 
-    local mpsSpeed = KmhToMps(kmh)
+    local vehicle = GetVehiclePedIsIn(PlayerPedId())
 
-    local veh = GetVehiclePedIsIn(PlayerPedId())
-
-    LastSpeedLimitedVehicle = veh
+    LastSpeedLimitedVehicle = vehicle
     CurrentMaxSpeedMetersPerSecond = mpsSpeed
-    CurrentMaxSpeedKmh = kmh
 
-    SlowDownToLimitSpeed(veh, mpsSpeed)
+    SlowDownToLimitSpeed(vehicle, mpsSpeed)
 
-    SetVehicleMaxSpeed(veh, mpsSpeed)
+    SetVehicleMaxSpeed(vehicle, mpsSpeed)
 end
 
-function SlowDownToLimitSpeed(veh, wantedSpeed)
+function SlowDownToLimitSpeed(vehicle, wantedSpeed)
     local timeout = 4.0 -- limits the slowing down to 4 seconds at most
 
     while timeout > 0.0 do
         Wait(0)
-        
+
         timeout = timeout - GetFrameTime()
-        
-        local speed = GetEntitySpeed(veh)
+
+        local speed = GetEntitySpeed(vehicle)
         if wantedSpeed > speed then
             return
         else
@@ -90,11 +99,10 @@ function ResetCurrentVehicleMaxSpeed()
     end
 end
 
-function ResetVehicleMaxSpeed(veh)
-    local maxSpeed = GetVehicleHandlingFloat(veh,"CHandlingData","fInitialDriveMaxFlatVel")
-    SetVehicleMaxSpeed(veh, maxSpeed)
+function ResetVehicleMaxSpeed(vehicle)
+    local maxSpeed = GetVehicleHandlingFloat(vehicle,"CHandlingData","fInitialDriveMaxFlatVel")
+    SetVehicleMaxSpeed(vehicle, maxSpeed)
     LastSpeedLimitedVehicle = nil
     CurrentMaxSpeedMetersPerSecond = nil
-    CurrentMaxSpeedKmh = nil
     LastForcedRpm = nil
 end
