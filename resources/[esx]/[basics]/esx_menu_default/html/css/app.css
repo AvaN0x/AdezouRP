@@ -19,8 +19,9 @@
 
 .menu {
   font-family: vo;
-  min-width: 400px;
-  max-width: 380px;
+  width: 400px;
+  /* min-width: 400px; */
+  /* max-width: 400px; */
   color: #fff;
   left: 40;
   top: 80;
