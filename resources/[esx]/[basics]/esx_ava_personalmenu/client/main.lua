@@ -248,7 +248,7 @@ function OpenVehicleMenu()
 			elseif data.current.value == "move_to_driver_seat" then
 				if GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0 then
 					TriggerEvent("esx_avan0x:moveToDriverSeat")
-					Citizen.Wait(2000)
+					Citizen.Wait(5000)
 					menu.refresh()
 					OpenVehicleMenu()
 				else
