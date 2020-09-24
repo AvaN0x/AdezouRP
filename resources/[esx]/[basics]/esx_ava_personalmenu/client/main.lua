@@ -80,14 +80,16 @@ function OpenPersonalMenu()
 	-- end
 
 	if  IsPedSittingInAnyVehicle(playerPed) then
+		local vehicle = GetVehiclePedIsIn(playerPed, false)
+		local isDriver = (GetPedInVehicleSeat(vehicle, -1) == playerPed)
 		if GetVehicleClass(GetVehiclePedIsIn(playerPed, false)) ~= 13 then -- remove if bike
-			vehicle = GetVehiclePedIsIn(playerPed, false)
-			if GetPedInVehicleSeat(vehicle, -1) == playerPed or (GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0) then
+			if isDriver or (GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0) then
 				table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
 			end
 		end
-		-- todo speed limiter
-		table.insert(elements, {label = _U("speed_limiter"), value = "speed_limiter"})
+		if isDriver then
+			table.insert(elements, {label = _U("speed_limiter"), value = "speed_limiter"})
+		end
 	end
 	
 	-- todo job1 and job1 boss menu
