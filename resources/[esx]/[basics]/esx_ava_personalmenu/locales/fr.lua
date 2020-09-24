@@ -61,7 +61,6 @@ Locales["fr"] = {
   ["society_demote"] = "Destituer",
 
 
-
   ["no_players_nearby"] = "Aucun joueur à proximité",
   ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
   ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",

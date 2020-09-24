@@ -410,40 +410,39 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 			end, function(data2, menu2)
 				menu2.close()
 			end)
-		
+
 		elseif data.current.value == "society_second_job" then
-				ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_second_job",
-				{
-					title    = _U("society_second_job", job.label),
-					align    = "left",
-					elements = {
-						{label = _U("society_hire"), value = "society_hire"},
-						{label = _U("society_fire"), value = "society_fire"},
-						{label = _U("society_promote"), value = "society_promote"},
-						{label = _U("society_demote"), value = "society_demote"}
-					}
-				}, function(data2, menu2)
-					closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-					if closestPlayer == -1 or closestDistance > 3.0 then
-						ESX.ShowNotification(_U("no_players_nearby"))
-	
-					elseif data2.current.value == "society_hire" then
-						TriggerServerEvent("esx_ava_personalmenu:society_hire2", GetPlayerServerId(closestPlayer), job.name)
-	
-					elseif data2.current.value == "society_fire" then
-						TriggerServerEvent("esx_ava_personalmenu:society_fire2", GetPlayerServerId(closestPlayer), job.name)
-	
-					elseif data2.current.value == "society_promote" then
-						TriggerServerEvent("esx_ava_personalmenu:society_promote2", GetPlayerServerId(closestPlayer), job.name)
-	
-					elseif data2.current.value == "society_demote" then
-						TriggerServerEvent("esx_ava_personalmenu:society_demote2", GetPlayerServerId(closestPlayer), job.name)
-	
-					end
-				end, function(data2, menu2)
-					menu2.close()
-				end)
-	
+			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_second_job",
+			{
+				title    = _U("society_second_job", job.label),
+				align    = "left",
+				elements = {
+					{label = _U("society_hire"), value = "society_hire"},
+					{label = _U("society_fire"), value = "society_fire"},
+					{label = _U("society_promote"), value = "society_promote"},
+					{label = _U("society_demote"), value = "society_demote"}
+				}
+			}, function(data2, menu2)
+				closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+				if closestPlayer == -1 or closestDistance > 3.0 then
+					ESX.ShowNotification(_U("no_players_nearby"))
+
+				elseif data2.current.value == "society_hire" then
+					TriggerServerEvent("esx_ava_personalmenu:society_hire2", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_fire" then
+					TriggerServerEvent("esx_ava_personalmenu:society_fire2", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_promote" then
+					TriggerServerEvent("esx_ava_personalmenu:society_promote2", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_demote" then
+					TriggerServerEvent("esx_ava_personalmenu:society_demote2", GetPlayerServerId(closestPlayer), job.name)
+
+				end
+			end, function(data2, menu2)
+				menu2.close()
+			end)
 		end
 	end, function(data, menu)
 		menu.close()
