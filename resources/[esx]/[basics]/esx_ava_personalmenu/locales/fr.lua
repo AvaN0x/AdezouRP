@@ -20,6 +20,7 @@ Locales["fr"] = {
   ["speed_limiter"] = "🚙 Limiteur de vitesse",
   ["bills_menu"] = "📝 Factures",
   ["others_menu"] = "⚙️ Divers",
+  ["society_menu"] = "🏭 Gestion Entreprise: %s",
 
 
 
@@ -48,6 +49,16 @@ Locales["fr"] = {
 
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
   ["others_toggle_drift"] = "Activer/Désactiver Drift Mode",
+
+
+  ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
+  ["society_dirty_money"] = "Coffre Argent Sale:<span style='color: #eb4034'>$%s</span>",
+  ["society_first_job"] = "Gestion métier principal",
+  ["society_second_job"] = "Gestion métier secondaire",
+  ["society_hire"] = "Recruter",
+  ["society_fire"] = "Virer",
+  ["society_promote"] = "Promouvoir",
+  ["society_demote"] = "Destituer",
 
 
 

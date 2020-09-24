@@ -8,6 +8,8 @@ ESX = nil
 PlayerData = nil
 PlayerGroup = nil
 
+local societyMoney, societyDirtyMoney, society2Money, society2DirtyMoney = nil, nil, nil, nil
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
@@ -27,6 +29,11 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 
+	RefreshMoney()
+	RefreshDirtyMoney()
+
+	RefreshMoney2()
+	RefreshDirtyMoney2()
 end)
 
 RegisterNetEvent("esx:playerLoaded")
@@ -37,10 +44,17 @@ end)
 RegisterNetEvent("esx:setJob")
 AddEventHandler("esx:setJob", function(job)
 	PlayerData.job = job
+	RefreshMoney()
+	societyDirtyMoney = nil
+	RefreshDirtyMoney()
+
 end)
 RegisterNetEvent("esx:setJob2")
 AddEventHandler("esx:setJob2", function(job2)
 	PlayerData.job2 = job2
+	RefreshMoney2()
+	society2DirtyMoney = nil
+	RefreshDirtyMoney2()
 end)
 
 AddEventHandler("esx:onPlayerDeath", function()
@@ -56,7 +70,6 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		if IsControlJustReleased(0, Config.MenuKey) and not IsDead then
 			OpenPersonalMenu()
-			print(PlayerGroup)
 		end
 	end
 end)
@@ -89,13 +102,15 @@ function OpenPersonalMenu()
 		end
 	end
 	
-	-- todo job1 and job1 boss menu
 	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
 
+	if PlayerData.job ~= nil and PlayerData.job.grade_name == "boss" then
+		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job.label)), value = "society"})
+	end
+	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == "boss" then
+		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
+	end
 
-	-- if PlayerData.job ~= nil PlayerData.job.grade_name == "boss" then
-		-- table.insert(elements, {label = "", value = ""})
-	-- end
 	-- if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 	-- 	-- table.insert(elements, {label = "", value = ""})
 	-- 	print("you have access to admin menu i guess")
@@ -136,6 +151,11 @@ function OpenPersonalMenu()
 		elseif data.current.value == "others_menu" then
 			OpenOthersMenu()
 
+		elseif data.current.value == "society" then
+			OpenSocietyMenu(PlayerData.job, societyMoney, societyDirtyMoney)
+
+		elseif data.current.value == "society2" then
+			OpenSocietyMenu(PlayerData.job2, society2Money, society2DirtyMoney)
 		end
 	end, function(data, menu)
 		menu.close()
@@ -333,4 +353,163 @@ function OpenOthersMenu()
 	end, function(data, menu)
 		menu.close()
 	end)
+end
+
+
+
+
+
+---------------
+-- JOB MENUS --
+---------------
+
+function OpenSocietyMenu(job, money, dirtyMoney)
+	local elements = {}
+	table.insert(elements, {label = _U("society_money", money or 0)})
+	if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
+		table.insert(elements, {label = _U("society_dirty_money", dirtyMoney or 0)})
+	end
+	table.insert(elements, {label = _U("society_first_job"), value = "society_first_job"})
+	table.insert(elements, {label = _U("society_second_job"), value = "society_second_job"})
+
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society",
+	{
+		title    = _U("society_menu", job.label),
+		align    = "left",
+		elements = elements
+	}, function(data, menu)
+		if data.current.value == "society_first_job" then
+			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",
+			{
+				title    = _U("society_first_job", job.label),
+				align    = "left",
+				elements = {
+					{label = _U("society_hire"), value = "society_hire"},
+					{label = _U("society_fire"), value = "society_fire"},
+					{label = _U("society_promote"), value = "society_promote"},
+					{label = _U("society_demote"), value = "society_demote"}
+				}
+			}, function(data2, menu2)
+				closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+				if closestPlayer == -1 or closestDistance > 3.0 then
+					ESX.ShowNotification(_U("no_players_nearby"))
+
+				elseif data2.current.value == "society_hire" then
+					TriggerServerEvent("esx_ava_personalmenu:society_hire", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_fire" then
+					TriggerServerEvent("esx_ava_personalmenu:society_fire", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_promote" then
+					TriggerServerEvent("esx_ava_personalmenu:society_promote", GetPlayerServerId(closestPlayer), job.name)
+
+				elseif data2.current.value == "society_demote" then
+					TriggerServerEvent("esx_ava_personalmenu:society_demote", GetPlayerServerId(closestPlayer), job.name)
+
+				end
+			end, function(data2, menu2)
+				menu2.close()
+			end)
+		
+		elseif data.current.value == "society_second_job" then
+				ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_second_job",
+				{
+					title    = _U("society_second_job", job.label),
+					align    = "left",
+					elements = {
+						{label = _U("society_hire"), value = "society_hire"},
+						{label = _U("society_fire"), value = "society_fire"},
+						{label = _U("society_promote"), value = "society_promote"},
+						{label = _U("society_demote"), value = "society_demote"}
+					}
+				}, function(data2, menu2)
+					closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+					if closestPlayer == -1 or closestDistance > 3.0 then
+						ESX.ShowNotification(_U("no_players_nearby"))
+	
+					elseif data2.current.value == "society_hire" then
+						TriggerServerEvent("esx_ava_personalmenu:society_hire2", GetPlayerServerId(closestPlayer), job.name)
+	
+					elseif data2.current.value == "society_fire" then
+						TriggerServerEvent("esx_ava_personalmenu:society_fire2", GetPlayerServerId(closestPlayer), job.name)
+	
+					elseif data2.current.value == "society_promote" then
+						TriggerServerEvent("esx_ava_personalmenu:society_promote2", GetPlayerServerId(closestPlayer), job.name)
+	
+					elseif data2.current.value == "society_demote" then
+						TriggerServerEvent("esx_ava_personalmenu:society_demote2", GetPlayerServerId(closestPlayer), job.name)
+	
+					end
+				end, function(data2, menu2)
+					menu2.close()
+				end)
+	
+		end
+	end, function(data, menu)
+		menu.close()
+	end)
+end
+
+function RefreshMoney()
+	if PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' then
+		ESX.TriggerServerCallback('esx_society:getSocietyMoney', function(money)
+			UpdateSocietyMoney(money)
+		end, PlayerData.job.name)
+	end
+end
+
+function RefreshDirtyMoney()
+	if PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' then
+		ESX.TriggerServerCallback('esx_society:getSocietyDirtyMoney', function(money)
+			UpdateSocietyDirtyMoney(money)
+		end, PlayerData.job.name)
+	end
+end
+
+function RefreshMoney2()
+	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == 'boss' then
+		ESX.TriggerServerCallback('esx_society:getSocietyMoney', function(money)
+			UpdateSociety2Money(money)
+		end, PlayerData.job2.name)
+	end
+end
+
+function RefreshDirtyMoney2()
+	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == 'boss' then
+		ESX.TriggerServerCallback('esx_society:getSocietyDirtyMoney', function(money)
+			UpdateSociety2DirtyMoney(money)
+		end, PlayerData.job2.name)
+	end
+end
+
+
+RegisterNetEvent('esx_addonaccount:setMoney')
+AddEventHandler('esx_addonaccount:setMoney', function(society, money)
+	if PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' and 'society_' .. PlayerData.job.name == society then
+		UpdateSocietyMoney(money)
+	elseif PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' and 'society_' .. PlayerData.job.name .. "_black" == society then 
+		UpdateSocietyDirtyMoney(money)
+	end
+	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == 'boss' and 'society_' .. PlayerData.job2.name == society then
+		UpdateSociety2Money(money)
+	elseif PlayerData.job2 ~= nil and PlayerData.job2.grade_name == 'boss' and 'society_' .. PlayerData.job2.name .. "_black" == society then 
+		UpdateSociety2DirtyMoney(money)
+	end
+end)
+
+
+function UpdateSocietyMoney(money)
+	societyMoney = ESX.Math.GroupDigits(money)
+end
+
+function UpdateSocietyDirtyMoney(money)
+	societyDirtyMoney = ESX.Math.GroupDigits(money)
+end
+
+function UpdateSociety2Money(money)
+	society2Money = ESX.Math.GroupDigits(money)
+end
+
+function UpdateSociety2DirtyMoney(money)
+	society2DirtyMoney = ESX.Math.GroupDigits(money)
 end
