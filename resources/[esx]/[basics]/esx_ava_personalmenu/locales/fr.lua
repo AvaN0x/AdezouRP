@@ -18,6 +18,7 @@ Locales["fr"] = {
   ["wallet"] = "👛 Portefeuille",
   ["vehicle_menu"] = "🚙 Gestion Véhicule",
   ["speed_limiter"] = "🚙 Limiteur de vitesse",
+  ["bills_menu"] = "📝 Factures",
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -41,6 +42,7 @@ Locales["fr"] = {
   ["speed_disable"] = "Désactiver le limiteur",
   ["speed_set_at"] = "Limiter à %s km/h",
 
+  ["bills_item"] = "%s <span style='color: #0cc421'>$%s</span>",
 
 
   ["no_players_nearby"] = "Aucun joueur à proximité",

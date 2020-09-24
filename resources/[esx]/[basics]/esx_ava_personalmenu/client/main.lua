@@ -72,13 +72,10 @@ function OpenPersonalMenu()
 	local elements = {
 		{label = _U("orange", _U("sim_card")), value = "sim_card"},
 		{label = _U("orange", _U("my_keys")), value = "my_keys"},
-		{label = _U("pink", _U("wallet")), value = "wallet"}
+		{label = _U("pink", _U("wallet")), value = "wallet"},
+		{label = _U("pink", _U("bills_menu")), value = "bills"}
 	}
-
-	-- if PlayerData.job ~= nil PlayerData.job.grade_name == "boss" then
-		-- table.insert(elements, {label = "", value = ""})
-	-- end
-
+	
 	if  IsPedSittingInAnyVehicle(playerPed) then
 		local vehicle = GetVehiclePedIsIn(playerPed, false)
 		local isDriver = (GetPedInVehicleSeat(vehicle, -1) == playerPed)
@@ -94,8 +91,10 @@ function OpenPersonalMenu()
 	
 	-- todo job1 and job1 boss menu
 	-- todo others menu
-	-- todo bill menu
-
+	
+	-- if PlayerData.job ~= nil PlayerData.job.grade_name == "boss" then
+		-- table.insert(elements, {label = "", value = ""})
+	-- end
 	-- if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 	-- 	-- table.insert(elements, {label = "", value = ""})
 	-- 	print("you have access to admin menu i guess")
@@ -129,12 +128,41 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "speed_limiter" then
 			OpenSpeedMenu()
+
+		elseif data.current.value == "bills" then
+			OpenBillsMenu()
+
 		end
 	end, function(data, menu)
 		menu.close()
 	end)
 end
 
+function OpenBillsMenu()
+	local elements = {}
+	ESX.TriggerServerCallback("esx_ava_personalmenu:getBills", function(bills)
+
+		for i = 1, #bills, 1 do
+			table.insert(elements, {label = _U("bills_item", bills[i].label, bills[i].amount), value = "pay_bill", billId = bills[i].id})
+		end
+
+		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_bills",
+		{
+			title    = _U("bills_menu"),
+			align    = "left",
+			elements = elements
+		}, function(data, menu)
+			if data.current.value == "pay_bill" then
+				ESX.TriggerServerCallback("esx_billing:payBill", function()
+					menu.close()
+					OpenBillsMenu()
+				end, data.current.billId)
+			end
+		end, function(data, menu)
+			menu.close()
+		end)
+	end)
+end
 
 function OpenWalletMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_wallet",
@@ -279,3 +307,6 @@ function OpenSpeedMenu()
 	end)
 
 end
+
+
+
