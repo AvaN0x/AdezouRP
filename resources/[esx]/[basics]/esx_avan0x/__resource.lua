@@ -7,7 +7,9 @@ description 'ESX AvaN0x -- random shit'
 client_scripts {
     'client/main.lua',
     'client/discord.lua',  -- discord activity
-    'client/announce.lua'
+    'client/announce.lua',
+    'client/crouch.lua',
+    'client/pointing.lua'
 }
 
 server_scripts {
