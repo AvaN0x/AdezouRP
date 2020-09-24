@@ -90,7 +90,7 @@ function OpenPersonalMenu()
 	end
 	
 	-- todo job1 and job1 boss menu
-	table.insert(elements, {label = _U("red", _U("others_menu")), value = "others_menu"})
+	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
 
 
 	-- if PlayerData.job ~= nil PlayerData.job.grade_name == "boss" then
