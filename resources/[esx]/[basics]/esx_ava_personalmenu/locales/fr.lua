@@ -21,7 +21,7 @@ Locales["fr"] = {
   ["bills_menu"] = "📝 Factures",
   ["others_menu"] = "⚙️ Divers",
   ["society_menu"] = "🏭 Gestion Entreprise: %s",
-
+  ["admin_menu"] = "👑 Administration",
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -50,7 +50,6 @@ Locales["fr"] = {
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
   ["others_toggle_drift"] = "Activer/Désactiver Drift Mode",
 
-
   ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
   ["society_dirty_money"] = "Coffre Argent Sale:<span style='color: #eb4034'>$%s</span>",
   ["society_first_job"] = "Gestion métier principal",
@@ -60,10 +59,16 @@ Locales["fr"] = {
   ["society_promote"] = "Promouvoir",
   ["society_demote"] = "Destituer",
 
+  ["admin_tp_marker"] = "TP sur le Marqueur",
+  ["admin_goto"] = "TP sur Joueur",
+  ["admin_bring"] = "TP Joueur sur moi",
+  ["admin_noclip"] = "NoClip",
+  ["admin_repair_vehicle"] = "Réparer Véhicule",
+  ["admin_show_names"] = "Afficher/Cacher Noms des Joueurs",
+  ["admin_change_skin"] = "Changer l'Apparence",
+  ["admin_save_skin"] = "Sauvegarder l'Apparence",
 
   ["no_players_nearby"] = "Aucun joueur à proximité",
   ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
   ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",
-
-
 }

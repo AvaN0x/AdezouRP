@@ -9,6 +9,7 @@ PlayerData = nil
 PlayerGroup = nil
 
 local societyMoney, societyDirtyMoney, society2Money, society2DirtyMoney = nil, nil, nil, nil
+local noclip, showname = false, false
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -111,10 +112,9 @@ function OpenPersonalMenu()
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
-	-- if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-	-- 	-- table.insert(elements, {label = "", value = ""})
-	-- 	print("you have access to admin menu i guess")
-	-- end
+	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+		table.insert(elements, {label = _U("orange", _U("admin_menu")), value = "admin_menu"})
+	end
 
 
 	ESX.UI.Menu.CloseAll()
@@ -156,6 +156,10 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "society2" then
 			OpenSocietyMenu(PlayerData.job2, society2Money, society2DirtyMoney)
+
+		elseif data.current.value == "admin_menu" then
+			OpenAdminMenu()
+
 		end
 	end, function(data, menu)
 		menu.close()
@@ -163,8 +167,8 @@ function OpenPersonalMenu()
 end
 
 function OpenBillsMenu()
-	local elements = {}
 	ESX.TriggerServerCallback("esx_ava_personalmenu:getBills", function(bills)
+		local elements = {}
 
 		for i = 1, #bills, 1 do
 			table.insert(elements, {label = _U("bills_item", bills[i].label, bills[i].amount), value = "pay_bill", billId = bills[i].id})
@@ -511,4 +515,208 @@ end
 
 function UpdateSociety2DirtyMoney(money)
 	society2DirtyMoney = ESX.Math.GroupDigits(money)
+end
+
+
+----------------
+-- ADMIN MENU --
+----------------
+
+function OpenAdminMenu()
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin",
+	{
+		title    = _U("admin_menu"),
+		align    = "left",
+		elements = {
+			{label = _U("blue", _U("admin_tp_marker")), value = "tp_marker"},
+			{label = _U("blue", _U("admin_goto")), value = "goto"},
+			{label = _U("blue", _U("admin_bring")), value = "bring"},
+			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
+			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
+			{label = _U("orange", _U("admin_show_names")), value = "show_names"},
+			{label = _U("red", _U("admin_change_skin")), value = "change_skin"},
+			{label = _U("red", _U("admin_save_skin")), value = "save_skin"}
+		}
+	}, function(data, menu)
+		if data.current.value == "tp_marker" then
+			admin_tp_marker()
+		elseif data.current.value == "goto" then
+			admin_goto()
+		elseif data.current.value == "bring" then
+			admin_bring()
+		elseif data.current.value == "noclip" then
+			admin_noclip()
+		elseif data.current.value == "repair_vehicle" then
+			admin_vehicle_repair()
+		elseif data.current.value == "show_names" then
+			showname = not showname
+		elseif data.current.value == "change_skin" then
+			changer_skin()
+		elseif data.current.value == "save_skin" then
+			save_skin()
+		end
+	end, function(data, menu)
+		menu.close()
+	end)
+end
+
+Citizen.CreateThread(function()
+	while true do
+		plyPed = PlayerPedId()
+		if noclip then
+			local x, y, z = getPosition()
+			local dx, dy, dz = getCamDirection()
+			local speed = Config.noclip_speed
+			SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
+			if IsControlPressed(0, 32) then
+				x = x + speed * dx
+				y = y + speed * dy
+				z = z + speed * dz
+			end
+			if IsControlPressed(0, 269) then
+				x = x - speed * dx
+				y = y - speed * dy
+				z = z - speed * dz
+			end
+			SetEntityCoordsNoOffset(plyPed, x, y, z, true, true, true)
+		end
+		if showname then
+			for id = 0, 256 do
+				if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= plyPed then
+					local headId = Citizen.InvokeNative(0xBFEFE3321A3F5015, GetPlayerPed(id), (GetPlayerServerId(id) .. ' - ' .. GetPlayerName(id)), false, false, "", false)
+				end
+			end
+		end
+		Citizen.Wait(0)
+	end
+end)
+
+function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
+    AddTextEntry(entryTitle, textEntry)
+    DisplayOnscreenKeyboard(1, entryTitle, "", inputText, "", "", "", maxLength)
+	blockinput = true
+
+    while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
+        Citizen.Wait(0)
+    end
+
+    if UpdateOnscreenKeyboard() ~= 2 then
+        local result = GetOnscreenKeyboardResult()
+        Citizen.Wait(500)
+		blockinput = false
+        return result
+    else
+        Citizen.Wait(500)
+		blockinput = false
+        return nil
+    end
+end
+
+function getPosition()
+	local x, y, z = table.unpack(GetEntityCoords(plyPed, true))
+
+	return x, y, z
+end
+
+function getCamDirection()
+	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(plyPed)
+	local pitch = GetGameplayCamRelativePitch()
+
+	local x = -math.sin(heading * math.pi/180.0)
+	local y = math.cos(heading * math.pi/180.0)
+	local z = math.sin(pitch * math.pi/180.0)
+
+	local len = math.sqrt(x * x + y * y + z * z)
+
+	if len ~= 0 then
+		x = x/len
+		y = y/len
+		z = z/len
+	end
+
+	return x, y, z
+end
+
+
+function admin_tp_marker()
+	local WaypointHandle = GetFirstBlipInfoId(8)
+	if DoesBlipExist(WaypointHandle) then
+		local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
+		for height = 1, 1000 do
+			SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+			local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
+			if foundGround then
+				SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+				break
+			end
+			Citizen.Wait(0)
+		end
+		ESX.ShowNotification("Téléportation ~g~Effectuée")
+	else
+		ESX.ShowNotification("Aucun ~r~Marqueur")
+	end
+end
+
+function admin_goto()
+	local playerPed = PlayerPedId()
+	local plyId = KeyboardInput("KORIOZ_BOX_ID", _U('dialogbox_playerid'), "", 8)
+
+	if plyId ~= nil then
+		plyId = tonumber(plyId)
+		
+		if type(plyId) == 'number' then
+			local targetPlyCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(plyId)))
+			SetEntityCoords(playerPed, targetPlyCoords)
+		end
+	end
+end
+
+function admin_bring()
+	local plyId = KeyboardInput("KORIOZ_BOX_ID", _U('dialogbox_playerid'), "", 8)
+
+	if plyId ~= nil then
+		plyId = tonumber(plyId)
+
+		if type(plyId) == 'number' then
+			local plyPedCoords = GetEntityCoords(PlayerPedId())
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', plyId, plyPedCoords)
+		end
+	end
+end
+
+RegisterNetEvent('esx_ava_personalmenu:bring_cl')
+AddEventHandler('esx_ava_personalmenu:bring_cl', function(plyPedCoords)
+	SetEntityCoords(plyPed, plyPedCoords)
+end)
+
+
+function admin_noclip()
+	noclip = not noclip
+	local playerPed = PlayerPedId()
+
+	if noclip then
+		SetEntityInvincible(playerPed, true)
+		SetEntityVisible(playerPed, false, false)
+		ESX.ShowNotification("NoClip ~g~Activé")
+	else
+		SetEntityInvincible(playerPed, false)
+		SetEntityVisible(playerPed, true, false)
+		ESX.ShowNotification("NoClip ~r~Désactivé")
+	end
+end
+
+function admin_vehicle_repair()
+	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+
+	SetVehicleFixed(vehicle)
+	SetVehicleDirtLevel(vehicle, 0.0)
+end
+
+function changer_skin()
+	Citizen.Wait(100)
+	TriggerEvent('esx_skin:openSaveableMenu', source)
+end
+
+function save_skin()
+	TriggerEvent('esx_skin:requestSaveSkin', source)
 end
