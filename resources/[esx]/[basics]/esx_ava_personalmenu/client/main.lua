@@ -81,6 +81,7 @@ end)
 
 
 function OpenPersonalMenu()
+	local playerPed = PlayerPedId()
 	local elements = {
 		{label = _U("orange", _U("sim_card")), value = "sim_card"},
 		{label = _U("orange", _U("my_keys")), value = "my_keys"},
@@ -91,9 +92,12 @@ function OpenPersonalMenu()
 		-- table.insert(elements, {label = "", value = ""})
 	-- end
 
-	if  IsPedSittingInAnyVehicle(PlayerPedId()) then
-		if GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(), false)) ~= 13 then -- remove if bike
-			table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+	if  IsPedSittingInAnyVehicle(playerPed) then
+		if GetVehicleClass(GetVehiclePedIsIn(playerPed, false)) ~= 13 then -- remove if bike
+			vehicle = GetVehiclePedIsIn(playerPed, false)
+			if GetPedInVehicleSeat(vehicle, -1) == playerPed or (GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0) then
+				table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+			end
 		end
 		-- todo speed limiter
 	end

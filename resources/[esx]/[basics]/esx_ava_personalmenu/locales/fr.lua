@@ -37,7 +37,6 @@ Locales["fr"] = {
   ["vehicle_door_backright"] = "Ouvrir/Fermer Porte AR Droite",
   ["vehicle_move_to_driver_seat"] = "Passer conducteur",
 
-  
 
 
 
