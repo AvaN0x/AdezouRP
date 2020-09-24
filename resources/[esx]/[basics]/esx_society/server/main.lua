@@ -151,10 +151,10 @@ AddEventHandler('esx_society:depositMoney', function(society, amount)
 end)
 
 RegisterServerEvent('esx_society:depositMoneyDirty')
-AddEventHandler('esx_society:depositMoneyDirty', function(society, amount)
+AddEventHandler('esx_society:depositMoneyDirty', function(_society, amount)
 
   local xPlayer = ESX.GetPlayerFromId(source)
-  local society = GetSociety(society)
+  local society = GetSociety(_society)
 
   if amount > 0 and xPlayer.getAccount('black_money').money >= amount then
     TriggerEvent('esx_addonaccount:getSharedAccount', society.account.."_black", function(account)
