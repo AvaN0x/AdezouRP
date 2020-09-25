@@ -238,8 +238,8 @@ ESX.RegisterUsableItem("weapon_nightstick", function(source)
 	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_nightstick")
 end)
 
-ESX.RegisterUsableItem("weapon_parachute", function(source)
-	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_parachute")
+ESX.RegisterUsableItem("gadget_parachute", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "gadget_parachute")
 end)
 
 ESX.RegisterUsableItem("weapon_petrolcan", function(source)
