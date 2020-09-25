@@ -73,3 +73,20 @@ function SendWebhookMessage(message)
 		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
 	end
 end
+
+RegisterServerEvent('esx_avan0x:useWeaponItem')
+AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	local xItem   = xPlayer.getInventoryItem(string.lower(weaponName))
+	if xItem then
+		if xItem.limit ~= -1 and xItem.count >= xItem.limit then
+			TriggerClientEvent('esx:showNotification', source, "Vous n'avez plus de place pour cela")
+		else
+			xPlayer.addInventoryItem(string.lower(weaponName), 1)
+			xPlayer.removeWeapon(weaponName)
+		end
+	else
+		TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
+		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
+	end
+end)

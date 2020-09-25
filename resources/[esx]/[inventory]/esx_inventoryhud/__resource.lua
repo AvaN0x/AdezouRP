@@ -1,6 +1,6 @@
 resource_manifest_version "44febabe-d386-4d18-afbe-5e627f4af937"
 
-description "ESX Inventory HUD"
+description "ESX Inventory HUD - Modified by github.com/AvaN0x"
 
 version "1.1"
 

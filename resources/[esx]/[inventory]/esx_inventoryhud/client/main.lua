@@ -195,7 +195,11 @@ RegisterNUICallback(
 RegisterNUICallback(
     "UseItem",
     function(data, cb)
-        TriggerServerEvent("esx:useItem", data.item.name)
+        if data.item.type ~= "item_weapon" then
+            TriggerServerEvent("esx:useItem", data.item.name)
+        else
+            TriggerServerEvent("esx_avan0x:useWeaponItem", data.item.name)
+        end
 
         if shouldCloseInventory(data.item.name) then
             closeInventory()
@@ -357,7 +361,7 @@ function loadPlayerInventory()
                                 limit = -1,
                                 type = "item_weapon",
                                 name = weapons[key].name,
-                                usable = false,
+                                usable = true,
                                 rare = false,
                                 canRemove = true
                             }
