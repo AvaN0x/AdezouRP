@@ -11,7 +11,7 @@ RegisterServerEvent("adezou_items:giveWeapon")
 AddEventHandler('adezou_items:giveWeapon', function(weaponName)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	xPlayer.removeInventoryItem(weaponName, 1)
-	xPlayer.addWeapon(weaponName, 30)
+	xPlayer.addWeapon(weaponName, 0)
 end)
 
 ESX.RegisterUsableItem("weapon_advancedrifle", function(source)
