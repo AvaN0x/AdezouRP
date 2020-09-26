@@ -30,6 +30,8 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 
+	AdminLoop()
+
 	RefreshMoney()
 	RefreshDirtyMoney()
 
@@ -560,36 +562,40 @@ function OpenAdminMenu()
 	end)
 end
 
-Citizen.CreateThread(function()
-	while true do
-		plyPed = PlayerPedId()
-		if noclip then
-			local x, y, z = getPosition()
-			local dx, dy, dz = getCamDirection()
-			local speed = Config.noclip_speed
-			SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
-			if IsControlPressed(0, 32) then
-				x = x + speed * dx
-				y = y + speed * dy
-				z = z + speed * dz
-			end
-			if IsControlPressed(0, 269) then
-				x = x - speed * dx
-				y = y - speed * dy
-				z = z - speed * dz
-			end
-			SetEntityCoordsNoOffset(plyPed, x, y, z, true, true, true)
-		end
-		if showname then
-			for id = 0, 256 do
-				if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= plyPed then
-					local headId = Citizen.InvokeNative(0xBFEFE3321A3F5015, GetPlayerPed(id), (GetPlayerServerId(id) .. ' - ' .. GetPlayerName(id)), false, false, "", false)
+function AdminLoop()
+	Citizen.CreateThread(function()
+		if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+			while true do
+				plyPed = PlayerPedId()
+				if noclip then
+					local x, y, z = getPosition()
+					local dx, dy, dz = getCamDirection()
+					local speed = Config.noclip_speed
+					SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
+					if IsControlPressed(0, 32) then
+						x = x + speed * dx
+						y = y + speed * dy
+						z = z + speed * dz
+					end
+					if IsControlPressed(0, 269) then
+						x = x - speed * dx
+						y = y - speed * dy
+						z = z - speed * dz
+					end
+					SetEntityCoordsNoOffset(plyPed, x, y, z, true, true, true)
 				end
+				if showname then
+					for id = 0, 256 do
+						if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= plyPed then
+							local headId = Citizen.InvokeNative(0xBFEFE3321A3F5015, GetPlayerPed(id), (GetPlayerServerId(id) .. ' - ' .. GetPlayerName(id)), false, false, "", false)
+						end
+					end
+				end
+				Citizen.Wait(0)
 			end
 		end
-		Citizen.Wait(0)
-	end
-end)
+	end)
+end
 
 function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
     AddTextEntry(entryTitle, textEntry)
