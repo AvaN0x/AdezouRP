@@ -163,7 +163,7 @@ AddEventHandler('esx_ava_needs:onEat', function(prop_name)
 			local x,y,z = table.unpack(GetEntityCoords(playerPed))
 			local prop = CreateObject(GetHashKey(prop_name), x, y, z + 0.2, true, true, true)
 			local boneIndex = GetPedBoneIndex(playerPed, 18905)
-			AttachEntityToEntity(prop, playerPed, boneIndex, 0.12, 0.028, 0.001, 10.0, 175.0, 0.0, true, true, false, true, 1, true)
+			AttachEntityToEntity(prop, playerPed, boneIndex, 0.13, 0.052, 0.031, -70.0, 175.0, 90.0, true, true, false, true, 1, true)
 
 			ESX.Streaming.RequestAnimDict('mp_player_inteat@burger', function()
 				TaskPlayAnim(playerPed, 'mp_player_inteat@burger', 'mp_player_int_eat_burger_fp', 8.0, -8, -1, 49, 0, 0, 0, 0)
