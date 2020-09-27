@@ -56,13 +56,13 @@ AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'drunk', 0, '#8F15A5', function(status)
         return false
     end, function(status)
-      status.remove(1500)
+		status.remove(1500)
 	end)
 	
 	TriggerEvent('esx_status:registerStatus', 'drugged', 0, '#15A517', function(status)
         return false
     end, function(status)
-      status.remove(1500)
+		status.remove(1500)
     end)
 
 	Citizen.CreateThread(function()
@@ -189,7 +189,8 @@ AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 			local x,y,z = table.unpack(GetEntityCoords(playerPed))
 			local prop = CreateObject(GetHashKey(prop_name), x, y, z + 0.2, true, true, true)
 			local boneIndex = GetPedBoneIndex(playerPed, 18905)
-			AttachEntityToEntity(prop, playerPed, boneIndex, 0.12, 0.028, 0.001, 10.0, 175.0, 0.0, true, true, false, true, 1, true)
+			AttachEntityToEntity(prop, playerPed, boneIndex, 0.15, 0.018, 0.031, -100.0, 55.0, 350.0, true, true, false, true, 1, true)
+
 
 			ESX.Streaming.RequestAnimDict('mp_player_intdrink', function()
 				TaskPlayAnim(playerPed, 'mp_player_intdrink', 'loop_bottle', 1.0, -1.0, 2000, 0, 1, true, true, true)
@@ -212,39 +213,39 @@ end)
 
 function Drunk(level, start)
 	Citizen.CreateThread(function()
-	  local playerPed = GetPlayerPed(-1)
-	  if start then
-		DoScreenFadeOut(800)
-		Wait(1000)
-	  end
-  
-	  if level == 0 then
-		RequestAnimSet("move_m@drunk@slightlydrunk")
-		while not HasAnimSetLoaded("move_m@drunk@slightlydrunk") do
-		  Citizen.Wait(0)
+		local playerPed = GetPlayerPed(-1)
+		if start then
+			DoScreenFadeOut(800)
+			Wait(1000)
 		end
-		SetPedMovementClipset(playerPed, "move_m@drunk@slightlydrunk", true)
-	  elseif level == 1 then
-		RequestAnimSet("move_m@drunk@moderatedrunk")
-		while not HasAnimSetLoaded("move_m@drunk@moderatedrunk") do
-		  Citizen.Wait(0)
-		end
-		SetPedMovementClipset(playerPed, "move_m@drunk@moderatedrunk", true)
-	  elseif level == 2 then
-		RequestAnimSet("move_m@drunk@verydrunk")
-		while not HasAnimSetLoaded("move_m@drunk@verydrunk") do
-		  Citizen.Wait(0)
-		end
-		SetPedMovementClipset(playerPed, "move_m@drunk@verydrunk", true)
-	  end
 
-	  SetTimecycleModifier("spectator5")
-	  SetPedMotionBlur(playerPed, true)
-	  SetPedIsDrunk(playerPed, true)
+		if level == 0 then
+			RequestAnimSet("move_m@drunk@slightlydrunk")
+			while not HasAnimSetLoaded("move_m@drunk@slightlydrunk") do
+			Citizen.Wait(0)
+			end
+			SetPedMovementClipset(playerPed, "move_m@drunk@slightlydrunk", true)
+		elseif level == 1 then
+			RequestAnimSet("move_m@drunk@moderatedrunk")
+			while not HasAnimSetLoaded("move_m@drunk@moderatedrunk") do
+			Citizen.Wait(0)
+			end
+			SetPedMovementClipset(playerPed, "move_m@drunk@moderatedrunk", true)
+		elseif level == 2 then
+			RequestAnimSet("move_m@drunk@verydrunk")
+			while not HasAnimSetLoaded("move_m@drunk@verydrunk") do
+			Citizen.Wait(0)
+			end
+			SetPedMovementClipset(playerPed, "move_m@drunk@verydrunk", true)
+		end
 
-	  if start then
-		DoScreenFadeIn(800)
-	  end
+		SetTimecycleModifier("spectator5")
+		SetPedMotionBlur(playerPed, true)
+		SetPedIsDrunk(playerPed, true)
+
+		if start then
+			DoScreenFadeIn(800)
+		end
 	end)
 end
 
@@ -252,56 +253,55 @@ end
 
 function Drugged(start)
 	Citizen.CreateThread(function()
-	  local playerPed = GetPlayerPed(-1)
+		local playerPed = GetPlayerPed(-1)
 
-	  if start then
-		DoScreenFadeOut(1000)
-		Wait(1000)
-	  end
+		if start then
+			DoScreenFadeOut(1000)
+			Wait(1000)
+		end
 
-	  --Anim goes here
-	  Citizen.Wait(0)
-	  SetTimecycleModifier("DRUG_gas_huffin")
+		--Anim goes here
+		Citizen.Wait(0)
+		SetTimecycleModifier("DRUG_gas_huffin")
 
-	  if start then
-		DoScreenFadeIn(2000)
-	  end
+		if start then
+			DoScreenFadeIn(2000)
+		end
 	end)
 end
-  
+
 function Reality()
-  
 	Citizen.CreateThread(function()
-  
-	  local playerPed = GetPlayerPed(-1)
-  
-	  DoScreenFadeOut(800)
-	  Wait(1000)
-  
-	  ClearTimecycleModifier()
-	  ResetScenarioTypesEnabled()
-	  ResetPedMovementClipset(playerPed, 0)
-	  SetPedIsDrunk(playerPed, false)
-	  SetPedMotionBlur(playerPed, false)
-  
-	  DoScreenFadeIn(800)
+	
+		local playerPed = GetPlayerPed(-1)
+	
+		DoScreenFadeOut(800)
+		Wait(1000)
+	
+		ClearTimecycleModifier()
+		ResetScenarioTypesEnabled()
+		ResetPedMovementClipset(playerPed, 0)
+		SetPedIsDrunk(playerPed, false)
+		SetPedMotionBlur(playerPed, false)
+	
+		DoScreenFadeIn(800)
 	end)
 end
 
 RegisterNetEvent('esx_ava_needs:onDrinkAlcohol')
 AddEventHandler('esx_ava_needs:onDrinkAlcohol', function()
-  local playerPed = GetPlayerPed(-1)
-  
-  TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_DRINKING", 0, 1)
-  Citizen.Wait(1000)
-  ClearPedTasksImmediately(playerPed)
+	local playerPed = GetPlayerPed(-1)
+	
+	TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_DRINKING", 0, 1)
+	Citizen.Wait(1000)
+	ClearPedTasksImmediately(playerPed)
 end)
 
 RegisterNetEvent('esx_ava_needs:onSmokeDrug')
 AddEventHandler('esx_ava_needs:onSmokeDrug', function()
-  local playerPed = GetPlayerPed(-1)
-  
-  TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
-  Citizen.Wait(3000)
-  ClearPedTasksImmediately(playerPed)
+	local playerPed = GetPlayerPed(-1)
+	
+	TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
+	Citizen.Wait(3000)
+	ClearPedTasksImmediately(playerPed)
 end)
