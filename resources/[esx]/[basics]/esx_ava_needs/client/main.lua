@@ -288,15 +288,6 @@ function Reality()
 	end)
 end
 
-RegisterNetEvent('esx_ava_needs:onDrinkAlcohol')
-AddEventHandler('esx_ava_needs:onDrinkAlcohol', function()
-	local playerPed = GetPlayerPed(-1)
-	
-	TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_DRINKING", 0, 1)
-	Citizen.Wait(1000)
-	ClearPedTasksImmediately(playerPed)
-end)
-
 RegisterNetEvent('esx_ava_needs:onSmokeDrug')
 AddEventHandler('esx_ava_needs:onSmokeDrug', function()
 	local playerPed = GetPlayerPed(-1)
