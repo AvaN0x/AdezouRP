@@ -646,6 +646,42 @@ Config.Weapons = {
 		name = 'WEAPON_DOUBLEACTION',
 		label = _U('weapon_doubleaction'),
 		components = {}
+	},
+
+	{
+		name = 'WEAPON_HAZARDCAN',
+		label = _U('weapon_hazardcan'),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_CERAMICPISTOL',
+		label = _U('weapon_ceramicpistol'),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_RAYPISTOL',
+		label = _U('weapon_raypistol'),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_NAVYREVOLVER',
+		label = _U('weapon_navyrevolver'),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_RAYCARBINE',
+		label = _U('weapon_raycarbine'),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_RAYMINIGUN',
+		label = _U('weapon_rayminigun'),
+		components = {}
 	}
 
 }

@@ -169,6 +169,12 @@ Locales['fr'] = {
   ['gadget_parachute'] = 'parachute',
   ['weapon_flare'] = 'Fusée Détresse',
   ['weapon_doubleaction'] = 'double-Action Revolver',
+  ['weapon_hazardcan'] = 'Bidon de produit chimique',
+  ['weapon_ceramicpistol'] = 'Pistolet en ceramic',
+  ['weapon_raypistol'] = 'Pistolet laser',
+  ['weapon_navyrevolver'] = 'Revolver Navy',
+  ['weapon_raycarbine'] = 'Carabine laser',
+  ['weapon_rayminigun'] = 'Minigun laser',
 
   -- Weapon Components
   ['component_clip_default'] = 'default Grip',

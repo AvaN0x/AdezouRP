@@ -354,6 +354,39 @@ ESX.RegisterUsableItem("weapon_wrench", function(source)
 	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_wrench")
 end)
 
+ESX.RegisterUsableItem("weapon_hazardcan", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_hazardcan")
+end)
+
+ESX.RegisterUsableItem("weapon_ceramicpistol", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_ceramicpistol")
+end)
+
+ESX.RegisterUsableItem("weapon_raypistol", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_raypistol")
+end)
+
+ESX.RegisterUsableItem("weapon_navyrevolver", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_navyrevolver")
+end)
+
+ESX.RegisterUsableItem("weapon_raycarbine", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_raycarbine")
+end)
+
+ESX.RegisterUsableItem("weapon_rayminigun", function(source)
+	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_rayminigun")
+end)
+
+
+
+
+
+
+
+
+
+
 ------------
 -- TENUES --
 ------------
