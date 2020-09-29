@@ -164,7 +164,7 @@ Config.ProcessMenuZones = {
 Config.SellZones = {
 	ClothesSell = {
 		Items = {
-			{name = 'raw_chicken', price = 80}
+			{name = 'raw_chicken', price = 43}
 		},
 		Pos   = {x = -138.13, y = -256.69, z = 42.61},
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
