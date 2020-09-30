@@ -7,7 +7,7 @@ local vehiclesCars = {1,2,3,4,5,6,7,9,10,11,12,17,18,20};
 
 
 local DiffTrigger = 0.355 
-local MinSpeed    = 60 --kmh
+local MinSpeed    = 60.0 --kmh
 local speedBuffer  = {}
 local velBuffer    = {}
 local beltOn       = false
@@ -84,18 +84,23 @@ Citizen.CreateThread(function()
 			HideHudComponentThisFrame(13) -- Cash Change
 			HideHudComponentThisFrame(17) -- Save Game
 			HideHudComponentThisFrame(20) -- Weapon Stats
+
+			if beltOn then 
+				DisableControlAction(0, 75, true)  -- Disable exit vehicle when stop
+				DisableControlAction(27, 75, true) -- Disable exit vehicle when Driving
+			end
 		end
 	end
 end)
 
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
-  SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, icon = job.name})
+	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, icon = job.name})
 end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
-  SendNUIMessage({action = "setValue2", key = "job2", value = job2.label.." - "..job2.grade_label, icon2 = job2.name})
+	SendNUIMessage({action = "setValue2", key = "job2", value = job2.label.." - "..job2.grade_label, icon2 = job2.name})
 end)
 
 RegisterNetEvent('esx_customui:updateStatus')
@@ -154,8 +159,6 @@ Citizen.CreateThread(function()
 			
 			wasInCar = true
 			
-			if beltOn then DisableControlAction(0, 75) end
-			
 			speedBuffer[2] = speedBuffer[1]
 			speedBuffer[1] = GetEntitySpeed(car)
 			
@@ -164,6 +167,13 @@ Citizen.CreateThread(function()
 			and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
 				if not beltOn 
 				and GetEntitySpeedVector(car, true).y > 1.0  then
+
+					--! debug in production to ask people in the server help about the value of this two variables
+					print("A belt must fly as a fly when it is on")
+					print(beltOn)
+					print("If a fly is in a car, then the fly is in the car ")
+					print(wasInCar)
+
 					local co = GetEntityCoords(ped)
 					SetEntityCoords(ped, co.x, co.y, co.z - 0.47, true, true, true)
 					SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
@@ -174,7 +184,7 @@ Citizen.CreateThread(function()
 					ShakeGameplayCam("DRUNK_SHAKE", 3.0)
 					Wait(2000)
 					StopGameplayCamShaking(true)
-			   end
+				end
 			end
 				
 			velBuffer[2] = velBuffer[1]
