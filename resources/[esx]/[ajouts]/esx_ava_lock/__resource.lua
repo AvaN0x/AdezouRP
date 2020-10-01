@@ -12,7 +12,8 @@ description 'Doors and teleporters lock'
 client_scripts {
 	'@es_extended/locale.lua',
 	'locales/*.lua',
-	'config.lua'
+	'config.lua',
+	'client.lua'
 }
 
 server_scripts {

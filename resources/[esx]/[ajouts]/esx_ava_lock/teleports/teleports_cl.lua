@@ -85,6 +85,7 @@ Citizen.CreateThread(function()
 					if IsControlJustReleased(0, 73) then -- X
 						if isAuthorized then
 							tpID.locked = not tpID.locked
+							TriggerEvent("esx_ava_lock:dooranim")
 							TriggerServerEvent('esx_ava_teleports:updateState', k, tpID.locked) -- Broadcast new state of the door to everyone
 						end
 					end

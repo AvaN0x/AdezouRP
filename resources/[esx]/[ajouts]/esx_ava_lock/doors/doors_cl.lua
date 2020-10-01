@@ -121,6 +121,7 @@ Citizen.CreateThread(function()
 				if IsControlJustReleased(0, 38) then
 					if isAuthorized then
 						doorID.locked = not doorID.locked
+						TriggerEvent("esx_ava_lock:dooranim")
 						TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
 					end
 				end
