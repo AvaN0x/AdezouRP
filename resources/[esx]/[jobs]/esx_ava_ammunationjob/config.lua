@@ -12,8 +12,8 @@ Config.JobName 				 	  = 'ammunation'
 -- Don't forget to change every `esx_ava_ammunationjob`
 
 Config.Blip = {
-	Sprite = 141,
-	Colour = 46
+	Sprite = 110,
+	Colour = 1
 }
 
 Config.Zones = {
