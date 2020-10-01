@@ -692,7 +692,7 @@ end
 
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')
 AddEventHandler('esx_ava_personalmenu:bring_cl', function(plyPedCoords)
-	SetEntityCoords(plyPed, plyPedCoords)
+	SetEntityCoords(PlayerPedId(), plyPedCoords)
 end)
 
 

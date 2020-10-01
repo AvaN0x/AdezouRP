@@ -226,7 +226,7 @@ end)
 
 RegisterServerEvent("esx_ava_personalmenu:bring_sv")
 AddEventHandler("esx_ava_personalmenu:bring_sv", function(plyId, plyPedCoords)
-	TriggerClientEvent('esx_ava_personalmenu:bring_cl', plyId, plyPedCoords)
+	TriggerClientEvent("esx_ava_personalmenu:bring_cl", plyId, plyPedCoords)
 end)
 
 
