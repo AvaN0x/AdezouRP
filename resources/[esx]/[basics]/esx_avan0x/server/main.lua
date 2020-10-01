@@ -21,8 +21,9 @@ AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account
 
 end)
 
-RegisterCommand('sendskin', function(source)
+TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 	local xPlayer = ESX.GetPlayerFromId(source)
+	local msg = table.concat(args, " ") or ""
 
 	MySQL.Async.fetchAll(
 	  'SELECT * FROM users WHERE identifier = @identifier',
@@ -61,11 +62,22 @@ RegisterCommand('sendskin', function(source)
 
 			local skinjson = "{"..table.concat(skin, ",").."}"
 			print(skinjson)
-			SendWebhookMessage(user.identifier.." : "..user.firstname.." "..user.lastname.."```json\n"..skinjson.."```")
-		end  
+			SendWebhookMessage(user.firstname.." "..user.lastname.." ||"..user.identifier.."|| : \n"..msg.."```json\n"..skinjson.."```")
+		end
 	end)
+end, function(source, args)
+	TriggerClientEvent('chat:addMessage', source, {args = {'^1SYSTEM', 'Insufficient Permissions.'}})
+end, {
+	help = "Envoyer votre tenue au staff", 
+	params = {
+		{
+			name = "message", 
+			help = "Message descriptif pour la tenue"
+		}
+	}
+})
 
-end)
+
 
 function SendWebhookMessage(message)
 	webhook = GetConvar("avan0x_webhook", "none")

@@ -26,7 +26,7 @@ TriggerEvent('es:addGroupCommand', 'twt', 'user', function(source, args)
         local xPlayer = ESX.GetPlayerFromId(source)
         local msg = table.concat(args, " ") or ""
         local name = getIdentity(xPlayer.identifier)
-        fal = name.firstname .. " " .. name.lastname
+        local fal = name.firstname .. " " .. name.lastname
         TriggerClientEvent('chat:addMessage', -1, {
             template = '<div class="chat-message"><b>Twitter @{0}:</b> {1}</div>',
             args = { fal, msg }
