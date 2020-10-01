@@ -136,6 +136,39 @@ Config.ProcessMenuZones = {
 				Delay = 2000,
 				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
 			},
+			DoubleChickenBurgerProcess = {
+				Name = 'Double Chicken Burger',
+				ItemsGive = {
+					{name = 'raw_chicken', quantity = 4}
+				},
+				ItemsGet = {
+					{name = 'doublechickenburger', quantity = 1}
+				},
+				Delay = 3000,
+				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+			},
+			TendersProcess = {
+				Name = 'Tenders',
+				ItemsGive = {
+					{name = 'raw_chicken', quantity = 2}
+				},
+				ItemsGet = {
+					{name = 'tenders', quantity = 1}
+				},
+				Delay = 2000,
+				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+			},
+			ChickenWrapProcess = {
+				Name = 'Wrap au poulet',
+				ItemsGive = {
+					{name = 'raw_chicken', quantity = 2}
+				},
+				ItemsGet = {
+					{name = 'chickenwrap', quantity = 1}
+				},
+				Delay = 2000,
+				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+			},
 			FritesProcess = {
 				Name = 'Frites',
 				ItemsGive = {
@@ -143,6 +176,17 @@ Config.ProcessMenuZones = {
 				},
 				ItemsGet = {
 					{name = 'frites', quantity = 1}
+				},
+				Delay = 2000,
+				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+			},
+			PotatoesProcess = {
+				Name = 'Potatoes',
+				ItemsGive = {
+					{name = 'potato', quantity = 2}
+				},
+				ItemsGet = {
+					{name = 'potatoes', quantity = 1}
 				},
 				Delay = 2000,
 				Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
@@ -155,8 +199,6 @@ Config.ProcessMenuZones = {
 		Name  = "Cuisine",
 		Marker = 27,
 		Blip = true
-
-
 	}
 
 }

@@ -26,10 +26,16 @@ INSERT INTO `items` (`name`, `label`, `limit`) VALUES
 	('raw_chicken', 'Poulet cru', 160),
 	('nuggets', 'Boite de nuggets', 20),
 	('chickenburger', 'Chicken Burger', 20),
-	('frites', 'Frites', 20), 
-	('sprite', 'Sprite', 20), 
+	('frites', 'Frites', 20),
+	('sprite', 'Sprite', 20),
 	('orangina', 'Orangina', 20),
-	('potato', 'Patate', 20)
+	('potato', 'Patate', 20),
+
+	('doublechickenburger', 'Double Chicken Burger', 20),
+	('potatoes', 'Potatoes', 20),
+	('tenders', 'Tenders', 20),
+	('chickenwrap', 'Wrap au poulet', 20)
+
 ;
 
 INSERT INTO `vehicles_society`(`name`, `model`, `price`, `society`) VALUES 
