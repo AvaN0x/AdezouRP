@@ -304,17 +304,12 @@ function OpenstateActionsMenu()
 			
 		elseif data.current.value == 'exitPound' then
 
-
-
-
 			ESX.TriggerServerCallback('esx_ava_statejob:getPoundedSocietyVehicles', function(result)
-
 				local elements = {}
 
 				for i=1, #result, 1 do
 					table.insert(elements, {label = "Retour vehicule "..result[i].label, value = result[i].society})
 				end
-
 
 				ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'exitPound', 
 				{
@@ -323,7 +318,7 @@ function OpenstateActionsMenu()
 					elements = elements
 				}, function(data2, menu2)
 
-					TriggerEvent('eden_garage:ReturnSocietyVehicleMenuByState', data2.current.value)
+					TriggerEvent("esx_ava_garage:ReturnVehiclesMenuByState", data2.current.value)
 
 				end, function(data2, menu2)
 					menu2.close()

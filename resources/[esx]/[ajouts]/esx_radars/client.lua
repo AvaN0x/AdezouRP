@@ -109,10 +109,9 @@ function checkSpeed(maxspeed, radarName)
             StartScreenEffect('SuccessNeutral', 350, false)
 
             TriggerServerEvent('esx_radars:notifPolice', plate, truespeed, radarName, stolen)
-            
+
         end, plate)
         Citizen.Wait(10000)
-        
 
     end
 end

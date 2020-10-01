@@ -1,8 +1,6 @@
--- RegisterServerEvent('esx_ava_garage:debug')
-RegisterServerEvent('esx_ava_garage:modifySocietystate')
-RegisterServerEvent('esx_ava_garage:modifySocietyStateByState')
+-- RegisterServerEvent('esx_ava_garage:modifySocietystate')
+-- RegisterServerEvent('esx_ava_garage:modifySocietyStateByState')
 RegisterServerEvent('esx_ava_garage:payhealth1')
--- RegisterServerEvent('esx_ava_garage:logging')
 
 
 ESX = nil
@@ -11,7 +9,6 @@ local Vehicles = nil -- vehicles prices from the carshoop
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 
--- price
 ESX.RegisterServerCallback('esx_ava_garage:getVehiclesPrices', function(source, cb)
 	if Vehicles == nil then
 		MySQL.Async.fetchAll('SELECT model, price FROM vehicleshop WHERE !ISNULL(price)', {}, function(result)
@@ -87,43 +84,16 @@ ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehiclePr
 		for _,v in pairs(vehicules) do
 			if plate == v.plate and type == v.type then
 				local vehprop = json.encode(vehicleProps)
-				-- todo stocker le fuel avec getvehicleproperties
 				MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel WHERE plate=@plate",{['@vehprop'] = vehprop, ['@fuel'] = fuel, ['@plate'] = plate})
 				isFound = true
 				break
-			end		
+			end
 		end
 		cb(isFound)
 end)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
---Recupere les véhicules
--- ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb)
--- 	local _source = source
--- 	local xPlayer = ESX.GetPlayerFromId(_source)
--- 	local vehicules = {}
-
--- 	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = xPlayer.getIdentifier()}, function(data) 
--- 		for _,v in pairs(data) do
--- 			local vehicle = json.decode(v.vehicle)
--- 			table.insert(vehicules, {vehicle = vehicle, state = v.state, fuel = v.fuel})
--- 		end
--- 		cb(vehicules)
--- 	end)
--- end)
 
 
 -- TODO faire une nouvelle table avec les places de parking terrestre, marrins et aériens
@@ -150,43 +120,34 @@ end)
 
 
 
-ESX.RegisterServerCallback('esx_ava_garage:getSocietyVehicles', function(source, cb, societyname)
-	-- local _source = source
-	-- local xPlayer = ESX.GetPlayerFromId(_source)
-	local vehicules = {}
+-- ESX.RegisterServerCallback('esx_ava_garage:getSocietyVehicles', function(source, cb, societyname)
+-- 	local vehicules = {}
 
-	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = societyname}, function(data) 
-		for _,v in pairs(data) do
-			local vehicle = json.decode(v.vehicle)
-			table.insert(vehicules, {vehicle = vehicle, state = v.state, fuel = v.fuel})
-		end
-		cb(vehicules)
-	end)
-end)
+-- 	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = societyname}, function(data) 
+-- 		for _,v in pairs(data) do
+-- 			local vehicle = json.decode(v.vehicle)
+-- 			table.insert(vehicules, {vehicle = vehicle, state = v.state, fuel = v.fuel})
+-- 		end
+-- 		cb(vehicules)
+-- 	end)
+-- end)
 
 
--- Fin --Recupere les véhicules
-
---Stock les véhicules
-
-ESX.RegisterServerCallback('esx_ava_garage:stockSocietyv', function(source,cb, vehicleProps, societyname, fuel)
-	local isFound = false
-	-- local _source = source
-	-- local xPlayer = ESX.GetPlayerFromId(_source)
-	local vehicules = getPlayerVehicles(societyname)
-	local plate = vehicleProps.plate
-	print(plate)
-	
-		for _,v in pairs(vehicules) do
-			if(plate == v.plate)then
-				local vehprop = json.encode(vehicleProps)
-				MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel WHERE plate=@plate",{['@vehprop'] = vehprop, ['@fuel'] = fuel, ['@plate'] = plate})
-				isFound = true
-				break
-			end		
-		end
-		cb(isFound)
-end)
+-- ESX.RegisterServerCallback('esx_ava_garage:stockSocietyv', function(source,cb, vehicleProps, societyname, fuel)
+-- 	local isFound = false
+-- 	local vehicules = getPlayerVehicles(societyname)
+-- 	local plate = vehicleProps.plate
+-- 	print(plate)
+-- 	for _,v in pairs(vehicules) do
+-- 		if(plate == v.plate)then
+-- 			local vehprop = json.encode(vehicleProps)
+-- 			MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel WHERE plate=@plate",{['@vehprop'] = vehprop, ['@fuel'] = fuel, ['@plate'] = plate})
+-- 			isFound = true
+-- 			break
+-- 		end
+-- 	end
+-- 	cb(isFound)
+-- end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
@@ -212,25 +173,11 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, state, targ
 	end
 end)	
 
-AddEventHandler('esx_ava_garage:modifySocietystate', function(vehicleProps, state, societyname)
-	-- local _source = source
-	-- local xPlayer = ESX.GetPlayerFromId(_source)
-	local vehicules = getPlayerVehicles(societyname)
-	local plate = vehicleProps.plate
-	local state = state
-
-	for _,v in pairs(vehicules) do
-		if(tostring(plate) == tostring(v.plate))then
-			-- local idveh = v.id
-			MySQL.Sync.execute("UPDATE owned_vehicles SET state =@state WHERE plate=@plate",{['@state'] = state , ['@plate'] = plate})
-			break
-		end		
-	end
-end)	
-
--- AddEventHandler('esx_ava_garage:modifySocietyStateByState', function(vehicleProps, state, societyname)
+-- AddEventHandler('esx_ava_garage:modifySocietystate', function(vehicleProps, state, societyname)
+-- 	-- local _source = source
+-- 	-- local xPlayer = ESX.GetPlayerFromId(_source)
 -- 	local vehicules = getPlayerVehicles(societyname)
--- 	local plate = plate
+-- 	local plate = vehicleProps.plate
 -- 	local state = state
 
 -- 	for _,v in pairs(vehicules) do
@@ -242,11 +189,6 @@ end)
 -- 	end
 -- end)	
 
---Fin change le state du véhicule
-
---Fonction qui récupere les plates
-
--- Fin Fonction qui récupere les plates
 
 ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, target)	
 	local identifier = nil
@@ -270,21 +212,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, 
 		cb(vehicules)
 	end)
 end)
--- ESX.RegisterServerCallback('esx_ava_garage:getOutSocietyVehicles',function(source, cb, societyName)	
--- 	-- local _source = source
--- 	-- local xPlayer = ESX.GetPlayerFromId(_source)
--- 	local vehicules = {}
--- 	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier AND state=false",{['@identifier'] = societyName}, function(data) 
--- 		for _,v in pairs(data) do
--- 			local vehicle = json.decode(v.vehicle)
--- 			table.insert(vehicules, vehicle)
--- 		end
--- 		cb(vehicules)
--- 	end)
--- end)
 
-
---Foonction qui check l'argent
 ESX.RegisterServerCallback('esx_ava_garage:checkMoney', function(source, cb, exitPrice)
 
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -297,9 +225,8 @@ ESX.RegisterServerCallback('esx_ava_garage:checkMoney', function(source, cb, exi
 	end
 
 end)
---Fin Foonction qui check l'argent
 
---fonction qui retire argent
+
 RegisterServerEvent('esx_ava_garage:pay')
 AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	print(exitPrice)
@@ -347,99 +274,23 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 		if account ~= nil then
 			account.addMoney(toLSPD)
 		end
-    end)
+	end)
+	
+	TriggerClientEvent('esx:showNotification', source, 'L\'entreprise a payé ' .. exitPrice .. '$')
+
 end)
---Fin fonction qui retire argent
 
-
---Recupere les vehicules
---Fin Recupere les vehicules
-
---Debug
--- AddEventHandler('esx_ava_garage:debug', function(var)
--- 	print(to_string(var))
--- end)
-
--- function table_print (tt, indent, done)
---   done = done or {}
---   indent = indent or 0
---   if type(tt) == "table" then
---     local sb = {}
---     for key, value in pairs (tt) do
---       table.insert(sb, string.rep (" ", indent)) -- indent it
---       if type (value) == "table" and not done [value] then
---         done [value] = true
---         table.insert(sb, "{\n");
---         table.insert(sb, table_print (value, indent + 2, done))
---         table.insert(sb, string.rep (" ", indent)) -- indent it
---         table.insert(sb, "}\n");
---       elseif "number" == type(key) then
---         table.insert(sb, string.format("\"%s\"\n", tostring(value)))
---       else
---         table.insert(sb, string.format(
---             "%s = \"%s\"\n", tostring (key), tostring(value)))
---        end
---     end
---     return table.concat(sb)
---   else
---     return tt .. "\n"
---   end
--- end
-
--- function to_string( tbl )
---     if  "nil"       == type( tbl ) then
---         return tostring(nil)
---     elseif  "table" == type( tbl ) then
---         return table_print(tbl)
---     elseif  "string" == type( tbl ) then
---         return tbl
---     else
---         return tostring(tbl)
---     end
--- end
---Fin Debug
-
-
--- Fonction qui change les etats sorti en rentré lors d'un restart
--- AddEventHandler('onMySQLReady', function()
-
--- 	MySQL.Sync.execute("UPDATE owned_vehicles SET state=true WHERE state=false", {})
-
--- end)
--- Fin Fonction qui change les etats sorti en rentré lors d'un restart
-
-
---debut de payement pour la santé vehicule
 AddEventHandler('esx_ava_garage:payhealth1', function(price)
 
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	TriggerEvent('esx_statejob:getTaxed', 'GARAGE', price, function(toSociety)
-	end)    		
+	end)
 	xPlayer.removeMoney(price)
 
 	TriggerClientEvent('esx:showNotification', source, 'Vous avez payé ' .. price)
 
 end)
---fin de payement pour la santé vehicule
 
-
---logger dans la console
--- AddEventHandler('esx_ava_garage:logging', function(logging)
--- 	RconPrint(logging)
--- end)
-
---fin de logger dans la console
-
-
--- society garage
--- AddEventHandler('esx_ava_garage:ListSocietyVehiclesMenu', function(societyName, garage)
--- 	TriggerClientEvent("esx_ava_garage:ListSocietyVehiclesMenu", societyName, garage)
--- end)
-
-
--- AddEventHandler('esx_ava_garage:StockSocietyVehicleMenu', function(societyName)
--- 	TriggerClientEvent("esx_ava_garage:StockSocietyVehicleMenu", societyName)
--- end)
 
 

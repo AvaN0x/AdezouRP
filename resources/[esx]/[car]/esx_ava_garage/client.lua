@@ -11,12 +11,12 @@
 -- }
 
 local CurrentAction = nil
-local GUI                       = {}
-GUI.Time                        = 0
+local GUI					   = {}
+GUI.Time						= 0
 local HasAlreadyEnteredMarker   = false
-local LastZone                  = nil
-local CurrentActionMsg          = ''
-local CurrentActionData         = {}
+local LastZone				  = nil
+local CurrentActionMsg		  = ''
+local CurrentActionData		 = {}
 local times 					= 0 -- pound timer
 
 local this_Garage = {}
@@ -84,7 +84,6 @@ function setBlips()
 end
 
 function OpenMenuGarage(PointType, target)
-	print("75"..tostring(target))
 	ESX.UI.Menu.CloseAll()
 	local elements = {}
 	
@@ -111,15 +110,14 @@ function OpenMenuGarage(PointType, target)
 	ESX.UI.Menu.Open(
 		'default', GetCurrentResourceName(), 'garage_menu',
 		{
-			css      = 'garage',
-			title    = title,
-			align    = 'right',
+			css	  = 'garage',
+			title	= title,
+			align	= 'right',
 			elements = elements,
 		},
 		function(data, menu)
 			menu.close()
 			if data.current.value == 'list_vehicles' then
-				print("103"..tostring(target))
 				ListVehiclesMenu(this_Garage.Type, target)
 			elseif data.current.value == 'stock_vehicle' then
 				StockVehicleMenu(target)
@@ -137,7 +135,6 @@ end
 
 -- Afficher les listes des vehicules
 function ListVehiclesMenu(type, target)
-	print("123"..tostring(target))
 	local elements = {}
 	
 	ESX.TriggerServerCallback('esx_ava_garage:getVehicles', function(vehicles)
@@ -147,13 +144,13 @@ function ListVehiclesMenu(type, target)
 		for _,v in pairs(vehicles) do
 
 			local hashVehicule = v.vehicle.model
-    		local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
-    		local labelvehicle
-    		if v.state then
-    			labelvehicle = vehicleName..' - '.. v.vehicle.plate
-    		else
-    			labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
-    		end	
+			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
+			local labelvehicle
+			if v.state then
+				labelvehicle = vehicleName..' - '.. v.vehicle.plate
+			else
+				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+			end	
 			table.insert(elements, {label =labelvehicle , value = v})
 			count = count + 1
 		end
@@ -173,9 +170,9 @@ function ListVehiclesMenu(type, target)
 			ESX.UI.Menu.Open(
 			'default', GetCurrentResourceName(), 'spawn_vehicle',
 			{
-				css      = 'garage',
-				title    = title,
-				align    = 'right',
+				css	  = 'garage',
+				title	= title,
+				align	= 'right',
 				elements = elements,
 			},
 			function(data, menu)
@@ -192,7 +189,7 @@ function ListVehiclesMenu(type, target)
 				menu.close()
 				-- CurrentAction = 'open_garage_menu'
 				OpenMenuGarage('open_garage_menu', target)
-			end)	
+			end)
 		end)
 
 	end, type, target)
@@ -204,10 +201,10 @@ function StockVehicleMenu(target)
 	if IsPedInAnyVehicle(playerPed,  false) then
 
 		local playerPed = GetPlayerPed(-1)
-    	local coords    = GetEntityCoords(playerPed)
-    	local vehicle   = GetVehiclePedIsIn(playerPed,false)     
+		local coords	= GetEntityCoords(playerPed)
+		local vehicle   = GetVehiclePedIsIn(playerPed,false)
 		local vehicleProps  = ESX.Game.GetVehicleProperties(vehicle)
-		local current 	    = GetPlayersLastVehicle(GetPlayerPed(-1), true)
+		local current 		= GetPlayersLastVehicle(GetPlayerPed(-1), true)
 		local engineHealth  = GetVehicleEngineHealth(current)
 		TriggerEvent('esx_legacyfuel:GetFuel', vehicle, function(fuel)
 			local vfuel = tonumber(string.format("%." .. 3 .. "f", fuel))
@@ -215,7 +212,7 @@ function StockVehicleMenu(target)
 
 				if (valid) then
 					if engineHealth < 1000 then
-						local fraisRep= math.floor((1000 - engineHealth)*100)			      
+						local fraisRep= math.floor((1000 - engineHealth)*100)				  
 						reparation(fraisRep, vehicle, vehicleProps, target)
 					else
 						ranger(vehicle, vehicleProps, target)
@@ -233,52 +230,6 @@ end
 
 
 
--- -- function ListSocietyVehiclesMenu(societyName)
--- -- 	local elements = {}
--- -- 	ESX.TriggerServerCallback('esx_ava_garage:getSocietyVehicles', function(vehicles)
-
--- -- 		for _,v in pairs(vehicles) do
-
--- -- 			local hashVehicule = v.vehicle.model
--- --     		local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
--- --     		local labelvehicle
-
--- --     		if(v.state)then
--- --     			labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': Garage'
--- --     		else
--- --     			labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': Fourriere'
--- --     		end	
--- -- 			table.insert(elements, {label =labelvehicle , value = v})
-			
--- -- 		end
-
--- -- 		ESX.UI.Menu.Open(
--- -- 		'default', GetCurrentResourceName(), 'spawn_society_vehicle',
--- -- 		{
--- -- 			css      = 'garage',
--- -- 			title    = 'Garage entreprise',
--- -- 			align    = 'right',
--- -- 			elements = elements,
--- -- 		},
--- -- 		function(data, menu)
--- -- 			if(data.current.value.state)then
--- -- 				menu.close()
--- -- 				SpawnVehicle(data.current.value.vehicle, data.current.value.fuel)
--- -- 				TriggerServerEvent('esx_ava_garage:modifySocietystate', data.current.value.vehicle, false, tostring(societyName))
--- -- 				TriggerServerEvent('esx_vehiclelock:givekey', 'no', data.current.value.vehicle.plate)
--- -- 			else
--- -- 				TriggerEvent('esx:showNotification', 'Votre véhicule est à la fourriere')
--- -- 			end
--- -- 		end,
--- -- 		function(data, menu)
--- -- 			menu.close()
--- -- 			--CurrentAction = 'open_garage_menu'
--- -- 		end
--- -- 	)	
--- -- 	end, tostring(societyName))
--- -- end
--- -- -- Fin Afficher les listes des vehicules
-
 
 function reparation(prix, vehicle, vehicleProps, target)
 	
@@ -291,9 +242,9 @@ function reparation(prix, vehicle, vehicleProps, target)
 	ESX.UI.Menu.Open(
 		'default', GetCurrentResourceName(), 'delete_menu',
 		{
-			css      = 'garage',
-			title    = 'vehicule endomagé',
-			align    = 'right',
+			css	  = 'garage',
+			title	= 'vehicule endomagé',
+			align	= 'right',
 			elements = elements,
 		},
 		function(data, menu)
@@ -315,92 +266,14 @@ function reparation(prix, vehicle, vehicleProps, target)
 	)	
 end
 
--- function reparationSociety(prix,vehicle,vehicleProps, societyName)
-	
--- 	ESX.UI.Menu.CloseAll()
-
--- 	local elements = {
--- 		{label = "Rentrer le vehicule cassés", value = 'yes'},
--- 		{label = "Aller voir un mécanicien", value = 'no'},
--- 	}
--- 	ESX.UI.Menu.Open(
--- 		'default', GetCurrentResourceName(), 'delete_menu',
--- 		{
--- 			css      = 'garage',
--- 			title    = 'vehicule endomagé',
--- 			align    = 'right',
--- 			elements = elements,
--- 		},
--- 		function(data, menu)
-
--- 			menu.close()
--- 			if(data.current.value == 'yes') then
--- 				-- TriggerServerEvent('esx_ava_garage:payhealth1', prix)
--- 				rangerSociety(vehicle,vehicleProps, societyName)
--- 			end
--- 			if(data.current.value == 'no') then
--- 				ESX.ShowNotification('Passez voir le mécano')
--- 			end
-
--- 		end,
--- 		function(data, menu)
--- 			menu.close()
-			
--- 		end
--- 	)	
--- end
 
 
 function ranger(vehicle, vehicleProps, target)
-	-- ESX.Game.DeleteVehicle(vehicle)
 	DeleteEntity(vehicle)
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, true, target)
 	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans le garage')
 end
 
--- function rangerSociety(vehicle, vehicleProps, societyName)
--- 	-- ESX.Game.DeleteVehicle(vehicle)
--- 	DeleteEntity(vehicle)
--- 	TriggerServerEvent('esx_ava_garage:modifySocietystate', vehicleProps, true, societyName)
--- 	TriggerEvent('esx:showNotification', 'Votre véhicule est dans le garage')
--- end
-
--- -- Fonction qui permet de rentrer un vehicule
-
--- function StockSocietyVehicleMenu(societyName)
--- 	local playerPed  = GetPlayerPed(-1)
--- 	if IsPedInAnyVehicle(playerPed,  false) then
-
--- 		local playerPed = GetPlayerPed(-1)
---     	local coords    = GetEntityCoords(playerPed)
---     	local vehicle =GetVehiclePedIsIn(playerPed,false)     
--- 		local vehicleProps  = ESX.Game.GetVehicleProperties(vehicle)
--- 		local current 	    = GetPlayersLastVehicle(GetPlayerPed(-1), true)
--- 		local engineHealth  = GetVehicleEngineHealth(current)
--- 		TriggerEvent('esx_legacyfuel:GetFuel', vehicle, function(fuel)
--- 			local vfuel = tonumber(string.format("%." .. 3 .. "f", fuel))
--- 			ESX.TriggerServerCallback('esx_ava_garage:stockSocietyv',function(valid)
-
--- 				if (valid) then
--- 					-- TriggerServerEvent('esx_ava_garage:debug', "plaque vehicule entreprise rentree au garage: "  .. vehicleProps.plate)
--- 					-- TriggerServerEvent('esx_ava_garage:logging',"santee vehicule entreprise rentree au garage: " .. engineHealth)
--- 					if engineHealth < 950 then
--- 						local fraisRep= math.floor((1000 - engineHealth)*100)			      
--- 						reparationSociety(fraisRep,vehicle,vehicleProps, societyName)
--- 					else
--- 						rangerSociety(vehicle,vehicleProps, societyName)
--- 					end	
--- 				else
--- 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule')
--- 				end
--- 			end, vehicleProps, societyName, vfuel)
--- 		end)
-
--- 	else
--- 		TriggerEvent('esx:showNotification', 'Il n\'y a pas de vehicule à rentrer')
--- 	end
-
--- end
 
 function SpawnVehicle(vehicle, fuel, target)
 	ESX.Game.SpawnVehicle(vehicle.model,{
@@ -454,29 +327,6 @@ function SpawnPoundedVehicle(vehicle, target)
 
 end
 
--- function SpawnPoundedSocietyVehicle(vehicle, societyName)
-
--- 	ESX.Game.SpawnVehicle(vehicle.model, {
--- 		x = this_Garage.SpawnMunicipalPoundPoint.Pos.x ,
--- 		y = this_Garage.SpawnMunicipalPoundPoint.Pos.y,
--- 		z = this_Garage.SpawnMunicipalPoundPoint.Pos.z + 1											
--- 		},this_Garage.SpawnMunicipalPoundPoint.Heading, function(callback_vehicle)
--- 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
--- 		local plate = GetVehicleNumberPlateText(callback_vehicle)
--- 		SetVehRadioStation(callback_vehicle, "OFF")
--- 		TriggerEvent('esx_legacyfuel:SetFuel', callback_vehicle, 20.0)
--- 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
--- 		end)
--- 	TriggerServerEvent('esx_ava_garage:modifySocietystate', vehicle, true, societyName)
-
--- 	Citizen.Wait(10000)
--- 		TriggerServerEvent('esx_ava_garage:modifySocietystate', vehicle, false, societyName)
-
--- end
-
-
-
-
 
 
 function ReturnVehicleMenu(target, isGov)
@@ -486,14 +336,12 @@ function ReturnVehicleMenu(target, isGov)
 		for _,v in pairs(vehicles) do
 
 			local hashVehicule = v.vehicle.model
-    		local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
-    		local labelvehicle
+			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
+			local labelvehicle
 			local exitPrice = Config.Price
 
-			print(exitPrice)
 			for i=1, #VehiclesList, 1 do
 				if v.vehicle.model == GetHashKey(VehiclesList[i].model) then
-					print(VehiclesList[i].model)
 					exitPrice = math.ceil(VehiclesList[i].price * 0.07)
 					if exitPrice < Config.Price then
 						exitPrice = Config.Price
@@ -501,16 +349,16 @@ function ReturnVehicleMenu(target, isGov)
 					break
 				end
 			end
-    		labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
+			labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
 			table.insert(elements, {label = labelvehicle , value = v.vehicle, price = exitPrice, type = v.type})
 		end
 
 		ESX.UI.Menu.Open(
 		'default', GetCurrentResourceName(), 'return_vehicle',
 		{
-			css      = 'four',
-			title    = 'Fourrière',
-			align    = 'right',
+			css	  = 'four',
+			title	= 'Fourrière',
+			align	= 'right',
 			elements = elements,
 		},
 		function(data, menu)
@@ -519,13 +367,14 @@ function ReturnVehicleMenu(target, isGov)
 				if hasEnoughMoney or (not hasEnoughMoney and isGov) then
 					if times == 0 then
 						if isGov then
-							TriggerServerEvent('esx_ava_garage:payByState', data.current.price)
+							TriggerServerEvent('esx_ava_garage:payByState', target, data.current.price)
 						else
 							TriggerServerEvent('esx_ava_garage:pay', data.current.price)
 						end
 						if data.current.type == "car" and not isGov then
 							SpawnPoundedVehicle(data.current.value, target)
 						else
+							ESX.ShowNotification('Le véhicule est sorti de la fourrière')
 							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, true, target)
 						end
 						times=times+1
@@ -537,7 +386,7 @@ function ReturnVehicleMenu(target, isGov)
 							times=0
 					end
 				else
-					ESX.ShowNotification('Vous n\'avez pas assez d\'argent')						
+					ESX.ShowNotification('Vous n\'avez pas assez d\'argent')
 				end
 			end, data.current.price)
 		end,
@@ -545,124 +394,10 @@ function ReturnVehicleMenu(target, isGov)
 			menu.close()
 			--CurrentAction = 'open_garage_menu'
 		end
-		)	
+		)
 	end, target)
 end
 
--- function ReturnSocietyVehicleMenu(societyName)
-
--- 	ESX.TriggerServerCallback('esx_ava_garage:getOutSocietyVehicles', function(vehicles)
-
--- 		local elements = {}
-
--- 		for _,v in pairs(vehicles) do
-
--- 			local hashVehicule = v.model
---     		local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
---     		local labelvehicle
-
--- 			local exitPrice = Config.Price
-
--- 			for i=1, #VehiclesList, 1 do
--- 				if v.model == GetHashKey(VehiclesList[i].model) then
--- 					exitPrice = math.ceil(VehiclesList[i].price * 0.04)
--- 					if exitPrice < Config.Price then
--- 						exitPrice = Config.Price
--- 					end
--- 					break
--- 				end
--- 			end
-
---     		labelvehicle = vehicleName..' - '.. v.plate ..': $'..exitPrice
-    	
--- 			table.insert(elements, {label =labelvehicle , value = v, price = exitPrice})
-			
--- 		end
-
-
--- 		ESX.UI.Menu.Open(
--- 		'default', GetCurrentResourceName(), 'return_society_vehicle',
--- 		{
--- 			css      = 'four',
--- 			title    = 'Fourrière entreprise',
--- 			align    = 'right',
--- 			elements = elements,
--- 		},
--- 		function(data, menu)
--- 			ESX.TriggerServerCallback('esx_ava_garage:checkMoney', function(hasEnoughMoney)
--- 				menu.close()
--- 				if hasEnoughMoney then
-					
--- 					if times == 0 then
--- 						TriggerServerEvent('esx_ava_garage:pay', data.current.price)
--- 						SpawnPoundedSocietyVehicle(data.current.value, societyName)
--- 						times=times+1
--- 						Citizen.Wait(60000)
--- 							times=0
--- 					elseif times > 0 then
--- 						ESX.ShowNotification('Veuillez patienter une minute')
--- 						Citizen.Wait(60000)
--- 							times=0
--- 					end
--- 				else
--- 					ESX.ShowNotification('Vous n\'avez pas assez d\'argent')						
--- 				end
--- 			end, data.current.price)
--- 		end,
--- 		function(data, menu)
--- 			menu.close()
--- 			--CurrentAction = 'open_garage_menu'
--- 		end
--- 		)	
--- 	end, tostring(societyName))
--- end
-
--- function ReturnSocietyVehicleMenuByState(societyName)
--- 	ESX.TriggerServerCallback('esx_ava_garage:getOutSocietyVehicles', function(vehicles)
--- 		local elements = {}
-
--- 		for _,v in pairs(vehicles) do
-
--- 			local hashVehicule = v.model
---     		local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
---     		local labelvehicle
--- 			local exitPrice = Config.Price
-
--- 			for i=1, #VehiclesList, 1 do
--- 				if v.model == GetHashKey(VehiclesList[i].model) then
--- 					exitPrice = math.ceil(VehiclesList[i].price * 0.04)
--- 					if exitPrice < Config.Price then
--- 						exitPrice = Config.Price
--- 					end
--- 					break
--- 				end
--- 			end
---     		labelvehicle = vehicleName..' - '.. v.plate ..': $'..exitPrice
--- 			table.insert(elements, {label =labelvehicle , value = v, price = exitPrice})
--- 		end
-
-
--- 		ESX.UI.Menu.Open(
--- 		'default', GetCurrentResourceName(), 'return_society_vehicle',
--- 		{
--- 			css      = 'four',
--- 			title    = 'Fourrière entreprise',
--- 			align    = 'right',
--- 			elements = elements,
--- 		},
--- 		function(data, menu)
--- 			menu.close()
--- 			TriggerServerEvent('esx_ava_garage:payByState', tostring(societyName), data.current.price)
--- 			TriggerServerEvent('esx_ava_garage:modifySocietystate', data.current.value, true, societyName)
-
--- 		end,
--- 		function(data, menu)
--- 			menu.close()
--- 			--CurrentAction = 'open_garage_menu'
--- 		end
--- 		)	
--- 	end, tostring(societyName))
--- end
 
 
 Citizen.CreateThread(function()
@@ -687,11 +422,11 @@ end)
 
 AddEventHandler('esx_ava_garage:hasEnteredMarker', function(zone)
 	if zone == 'open_garage_menu' then
-		CurrentAction     = 'open_garage_menu'
+		CurrentAction	 = 'open_garage_menu'
 		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour ouvrir le garage"
 		CurrentActionData = {}
 	elseif zone == 'open_pound_menu' then
-		CurrentAction     = 'pound_action_menu'
+		CurrentAction	 = 'pound_action_menu'
 		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour acceder a la fourriere"
 		CurrentActionData = {}
 	end
@@ -707,7 +442,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(0)
-		local coords      = GetEntityCoords(GetPlayerPed(-1))
+		local coords	  = GetEntityCoords(GetPlayerPed(-1))
 		local isInMarker  = false
 
 		for _,v in pairs(Config.Garages) do
@@ -729,7 +464,7 @@ Citizen.CreateThread(function()
 
 		if isInMarker and not hasAlreadyEnteredMarker then
 			hasAlreadyEnteredMarker = true
-			LastZone                = currentZone
+			LastZone				= currentZone
 			TriggerEvent('esx_ava_garage:hasEnteredMarker', currentZone)
 		end
 		if not isInMarker and hasAlreadyEnteredMarker then
@@ -755,7 +490,7 @@ Citizen.CreateThread(function()
 					OpenMenuGarage('pound')
 				end
 				CurrentAction = nil
-				GUI.Time      = GetGameTimer()
+				GUI.Time	  = GetGameTimer()
 			end
 		end
 	end
@@ -770,4 +505,9 @@ AddEventHandler("esx_ava_garage:OpenSocietyVehiclesMenu", function(societyName, 
 		this_Garage.Type = 'car'
 	end
 	OpenMenuGarage('open_garage_menu', tostring(societyName))
+end)
+
+RegisterNetEvent("esx_ava_garage:ReturnVehiclesMenuByState")
+AddEventHandler("esx_ava_garage:ReturnVehiclesMenuByState", function(societyName)
+	ReturnVehicleMenu(societyName, true)
 end)
