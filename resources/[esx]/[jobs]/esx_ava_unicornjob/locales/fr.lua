@@ -28,7 +28,7 @@ Locales['fr'] = {
 	['added'] = 'Vous avez ajouté x',
 
 	-- A modifier selon l'entreprise
-	['unicorn_client'] = 'client unicorn',
+	['job_client'] = 'client %s',
 	['press_buy'] = 'appuyez sur ~INPUT_CONTEXT~ pour acheter des produits',
 	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',

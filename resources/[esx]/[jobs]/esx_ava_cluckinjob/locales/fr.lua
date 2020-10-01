@@ -26,9 +26,9 @@ Locales['fr'] = {
 	['inventory'] = 'Inventaire',
 	['have_withdrawn'] = 'Vous avez retiré x',
 	['added'] = 'Vous avez ajouté x',
-  
+
 	-- A modifier selon l'entreprise
-	['vigneron_client'] = 'client vigneron',
+	['job_client'] = 'client %s',
 	['process_in_progress'] = 'Traitement en cours',
 	['process_not_enough'] = 'Vous n\'avez pas assez de ~g~%s',
 	['process_society_not_enough'] = 'La société n\'a plus ce qu\'il faut dans son coffre',

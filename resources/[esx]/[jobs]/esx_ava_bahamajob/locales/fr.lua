@@ -28,7 +28,7 @@ Locales['fr'] = {
 	['added'] = 'Vous avez ajouté x',
 
 	-- A modifier selon l'entreprise
-	['bahama_client'] = 'client bahama',
+	['job_client'] = 'client %s',
 	['press_buy'] = 'appuyez sur ~INPUT_CONTEXT~ pour acheter des produits',
 	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
