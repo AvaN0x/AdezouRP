@@ -554,7 +554,7 @@ Config.Uniforms = {
 			['helmet_1'] = 74,  ['helmet_2'] = 0,
 			['mask_1'] = 56,  ['mask_2'] = 1,
 			['chain_1'] = 1,    ['chain_2'] = 0,
-			['bproof_1'] = 7,  ['bproof_2'] = 0,
+			['bproof_1'] = 11,  ['bproof_2'] = 3,
 			['ears_1'] = 2,     ['ears_2'] = 0
 		}
 	},

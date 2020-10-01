@@ -190,6 +190,7 @@ OpenPoliceArmory = function()
 			SetPedArmour(GetPlayerPed(-1), 100)
 			TriggerEvent('skinchanger:getSkin', function(skin)
 				TriggerEvent('skinchanger:loadClothes', skin, {['bproof_1'] = 12,  ['bproof_2'] = 3})
+				-- IF woman -> {['bproof_1'] = 11,  ['bproof_2'] = 3}
 			end)
 			ESX.ShowNotification("Vous avez équipé un gilet")
 
