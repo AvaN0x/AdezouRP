@@ -47,6 +47,10 @@ Locales['fr'] = {
 	['used_nuggets'] = 'Tu as mangé des ~g~nuggets~s~',
 	['used_chickenburger'] = 'Tu as mangé 1 ~g~chicken burger~s~',
 	['used_frites'] = 'Tu as mangé des ~g~frites~s~',
+	['used_potatoes'] = 'Tu as mangé des ~g~potatoes~s~',
+	['used_doublechickenburger'] = 'Tu as mangé un ~g~Double Chicken Burger~s~',
+	['used_tenders'] = 'Tu as mangé des ~g~Tenders~s~',
+	['used_chickenwrap'] = 'Tu as mangé un ~g~Wrap au poulet~s~',
 
 
 	['used_beer'] = 'Vous avez utilisé 1x ~y~Bière~s~',

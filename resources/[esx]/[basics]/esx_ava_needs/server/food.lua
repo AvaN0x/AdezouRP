@@ -120,3 +120,44 @@ ESX.RegisterUsableItem('frites', function(source)
 	TriggerClientEvent('esx_ava_needs:onEat', source)
 	TriggerClientEvent('esx:showNotification', source, _U('used_frites'))
 end)
+
+ESX.RegisterUsableItem('potatoes', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('potatoes', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
+	TriggerClientEvent('esx_ava_needs:onEat', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_potatoes'))
+end)
+
+ESX.RegisterUsableItem('doublechickenburger', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('doublechickenburger', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
+	TriggerClientEvent('esx_ava_needs:onEat', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_doublechickenburger'))
+end)
+
+ESX.RegisterUsableItem('tenders', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('tenders', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
+	TriggerClientEvent('esx_ava_needs:onEat', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_tenders'))
+end)
+
+ESX.RegisterUsableItem('chickenwrap', function(source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	xPlayer.removeInventoryItem('chickenwrap', 1)
+
+	TriggerClientEvent('esx_status:add', source, 'hunger', 400000)
+	TriggerClientEvent('esx_ava_needs:onEat', source)
+	TriggerClientEvent('esx:showNotification', source, _U('used_chickenwrap'))
+end)
+
