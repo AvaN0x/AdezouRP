@@ -1,2 +1,3 @@
 Config 			= {}
-Config.Fine 	= 80
+Config.MinFine 	= 80
+Config.MaxFine 	= 20000

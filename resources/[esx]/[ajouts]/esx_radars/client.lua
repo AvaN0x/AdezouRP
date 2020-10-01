@@ -81,14 +81,16 @@ function checkSpeed(maxspeed, radarName)
         Citizen.Wait(250)
 
         if truespeed >= (maxspeed + 5) and truespeed <= (maxspeed + 10) then
-            fineamount = Config.Fine
+            fineamount = Config.MinFine
             roundedSpeedOver = 5
         else
             local speedOver = truespeed - maxspeed
             roundedSpeedOver = speedOver - (speedOver % 10)
-            fineamount = math.ceil(Config.Fine * ((roundedSpeedOver / 10) * (roundedSpeedOver / 10) / 3))
-            if fineamount < Config.Fine then
-                fineamount = Config.Fine
+            fineamount = math.ceil(Config.MinFine * ((roundedSpeedOver / 10) * (roundedSpeedOver / 10) / 3))
+            if fineamount < Config.MinFine then
+                fineamount = Config.MinFine
+            elseif fineamount > Config.MaxFine then
+                fineamount = Config.MaxFine
             end
         end
         local finelevel = plate..' : +'..roundedSpeedOver..'km/h'
@@ -112,7 +114,6 @@ function checkSpeed(maxspeed, radarName)
 
         end, plate)
         Citizen.Wait(10000)
-
     end
 end
 
@@ -144,7 +145,7 @@ function setBlips()
                 RemoveBlip(blips[i])
                 blips[i] = nil
             end
-        end    
+        end
     end
 end
 
