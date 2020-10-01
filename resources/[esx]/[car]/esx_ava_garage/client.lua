@@ -362,8 +362,8 @@ function ReturnVehicleMenu(target, isGov)
 			elements = elements,
 		},
 		function(data, menu)
+			menu.close()
 			ESX.TriggerServerCallback('esx_ava_garage:checkMoney', function(hasEnoughMoney)
-				menu.close()
 				if hasEnoughMoney or (not hasEnoughMoney and isGov) then
 					if times == 0 then
 						if isGov then
