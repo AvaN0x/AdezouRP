@@ -338,13 +338,15 @@ function ReturnVehicleMenu(target, isGov)
 			local hashVehicule = v.vehicle.model
 			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
 			local labelvehicle
-			local exitPrice = Config.Price
+			local exitPrice = Config.MinPrice
 
 			for i=1, #VehiclesList, 1 do
 				if v.vehicle.model == GetHashKey(VehiclesList[i].model) then
 					exitPrice = math.ceil(VehiclesList[i].price * 0.07)
-					if exitPrice < Config.Price then
-						exitPrice = Config.Price
+					if exitPrice < Config.MinPrice then
+						exitPrice = Config.MinPrice
+					elseif exitPrice > Config.MaxPrice then
+						exitPrice = Config.MaxPrice
 					end
 					break
 				end

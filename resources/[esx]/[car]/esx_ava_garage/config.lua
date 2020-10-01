@@ -1,7 +1,8 @@
 
 Config = {
 	DrawDistance = 50,
-	Price = 300,
+	MinPrice = 300,
+	MaxPrice = 40000,
 	DamageMultiplier = 1,
 }
 
