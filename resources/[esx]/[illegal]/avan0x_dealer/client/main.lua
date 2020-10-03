@@ -69,7 +69,6 @@ Citizen.CreateThread(function()
 
 					local randNum = math.random(1,#Config.SalesLocations)
 					local spawnLoc = Config.SalesLocations[randNum]
-					local nearStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(spawnLoc.x,spawnLoc.y,spawnLoc.z))
 
 					MissionStarted = spawnLoc
 
@@ -79,7 +78,7 @@ Citizen.CreateThread(function()
 						SetBlipAlpha(zoneBlip,95)
 						SetBlipRoute(zoneBlip, true)
 
-					DrawMissionText("Trouve l'acheteur près de ~y~"..nearStreet.."~s~.\nTu as ~y~10~s~ minutes, ne sois pas en retard.", 5000)
+					DrawMissionText("Tu as ~y~10~s~ minutes, ne sois pas en retard.", 5000)
 					MissionStart()
 				end
 			end
