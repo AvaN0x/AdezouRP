@@ -207,7 +207,6 @@ Config.Doors = {
 			textCoords = vector3(445.92, -998.9, 30.78942),
 			authorizedJobs = { 'police', 'state' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'v_ilev_gtdoor',
@@ -234,7 +233,6 @@ Config.Doors = {
 			textCoords = vector3(468.6, -1014.4, 26.55),
 			authorizedJobs = { 'police' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'v_ilev_rc_door2',
@@ -297,7 +295,6 @@ Config.Doors = {
 			distance = 12,
 			size = 0.85
 		},
-
 		{
 			objName = 'prop_gate_prison_01',
 			objCoords  = vector3(1818.5, 2604.8, 44.6),
@@ -371,7 +368,6 @@ Config.Doors = {
 			textCoords = vector3(-1388.22, -587.12, 30.64),
 			authorizedJobs = { 'bahama' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'v_ilev_ph_gendoor006',
@@ -438,7 +434,6 @@ Config.Doors = {
 			textCoords = vector3(-545.52, -203.53, 38.22), -- entrée
 			authorizedJobs = { 'state' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					-- objName = 'ball_prop_citydoor',
@@ -458,7 +453,6 @@ Config.Doors = {
 			textCoords = vector3(-582.67, -195.17, 38.22), 
 			authorizedJobs = { 'state' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'ball_prop_citydoor2',
@@ -476,7 +470,6 @@ Config.Doors = {
 			textCoords = vector3(-549.59, -196.21, 47.4), -- entrée
 			authorizedJobs = { 'state' },
 			locked = true,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'hei_prop_hei_bankdoor_new',
@@ -490,6 +483,133 @@ Config.Doors = {
 				}
 			}
 		},
+
+
+		-- CLUCKIN
+		{
+			textCoords = vector3(-511.64, -683.79, 33.34),
+			authorizedJobs = { 'cluckin' },
+			locked = true,
+			doors = {
+				{
+					objHash = -1432609915,
+					objYaw = 180.0,
+					objCoords = vector3(-512.83, -683.73, 33.18)
+				},
+				{
+					objHash = 903328250,
+					objYaw = 180.0,
+					objCoords = vector3(-510.5, -683.72, 33.18)
+				}
+			}
+		},
+		{
+			objHash = -738011261,
+			objCoords  = vector3( -512.26, -697.28, 33.17),
+			textCoords = vector3( -512.26, -697.28, 33.17),
+			objYaw = 180.0,
+			authorizedJobs = { 'cluckin' },
+			locked = true,
+		},
+
+
+		-- TAXI
+		{ -- main door
+			textCoords = vector3(907.42, -160.26, 74.77),
+			authorizedJobs = { 'taxi' },
+			locked = true,
+			doors = {
+				{
+					objHash = 1519319655,
+					objYaw = 58.5,
+					objCoords = vector3(907.79, -159.61, 74.17)
+				},
+				{
+					objHash = 1519319655,
+					objYaw = 238.5,
+					objCoords = vector3(906.27, -161.14, 74.17)
+				}
+			}
+		},
+		{
+			textCoords = vector3(894.35, -179.26, 74.7),
+			authorizedJobs = { 'taxi' },
+			locked = true,
+			doors = {
+				{
+					objHash = -2023754432,
+					objYaw = 58.5,
+					objCoords = vector3(894.3, -180.0, 74.7)
+				},
+				{
+					objHash = -2023754432,
+					objYaw = 238.5,
+					objCoords = vector3(894.7, -178.68, 74.7)
+				}
+			}
+		},
+		{
+			objHash = -2023754432,
+			objCoords  = vector3( 896.11, -145.42, 76.89),
+			textCoords = vector3( 896.11, -145.42, 77.0),
+			objYaw = 328.0,
+			authorizedJobs = { 'taxi' },
+			locked = true
+		},
+		{
+			objHash = 2064385778,
+			objCoords  = vector3( 900.08, -147.9, 76.66),
+			textCoords = vector3( 900.08, -147.9, 76.66),
+			authorizedJobs = { 'taxi' },
+			locked = true,
+			distance = 5.0
+		},
+
+
+		-- VIGNERON
+		{ -- bedroom
+			textCoords = vector3(-1882.93, 2064.7, 145.5),
+			authorizedJobs = { 'vigneron' },
+			locked = true,
+			doors = {
+				{
+					objHash = 534758478,
+					objYaw = 340.0,
+					objCoords = vector3(-1882.16, 2064.15, 145.5)
+				},
+				{
+					objHash = 534758478,
+					objYaw = 160.0,
+					objCoords = vector3(-1883.77, 2064.75, 145.5)
+				}
+			}
+		},
+	
+		-- HOPITAL
+		{ 
+			textCoords = vector3(299.5, -584.9, 43.28),
+			authorizedJobs = { 'ambulance' },
+			locked = false,
+			doors = {
+				{
+					objHash = -487908756,
+					objCoords = vector3(299.5, -584.9, 43.28)
+				},
+				{
+					objHash = 661758796,
+					objCoords = vector3(299.5, -584.9, 43.28)
+				}
+			}
+		},
+		{
+			objHash = 854291622,
+			objCoords  = vector3( 308.31, -597.51, 43.28),
+			textCoords = vector3( 307.91, -597.31, 43.38),
+			authorizedJobs = { 'ambulance' },
+			objYaw = 160.0,
+			locked = true
+		},
+
 
 	}
 }
