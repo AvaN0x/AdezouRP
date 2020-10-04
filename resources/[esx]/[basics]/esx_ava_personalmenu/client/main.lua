@@ -114,6 +114,8 @@ function OpenPersonalMenu()
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
+
+	
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 		table.insert(elements, {label = _U("orange", _U("admin_menu")), value = "admin_menu"})
 	end
@@ -345,16 +347,16 @@ function OpenOthersMenu()
 		title    = _U("others_menu"),
 		align    = "left",
 		elements = {
-			{label = _U("others_toggle_hud"), value = "toggle_hud"},
-			{label = _U("others_toggle_drift"), value = "toggle_drift"}
+			{label = _U("others_toggle_hud"), value = "toggle_hud"}
+			-- {label = _U("others_toggle_drift"), value = "toggle_drift"}
 		}
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then
 			interface = not interface
 			TriggerEvent('ui:toggle', interface)
 			DisplayRadar(interface)
-		elseif data.current.value == "toggle_drift" then
-			TriggerServerEvent("drift:toggledrift", source)
+		-- elseif data.current.value == "toggle_drift" then
+		-- 	TriggerServerEvent("drift:toggledrift", source)
 		end
 	end, function(data, menu)
 		menu.close()
