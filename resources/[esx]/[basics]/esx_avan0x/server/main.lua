@@ -7,6 +7,32 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+
+function SendWebhookMessage(webhookName, message)
+	local webhook = GetConvar(webhookName, "none")
+	if webhook ~= "none" then
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json'})
+	end
+end
+
+function SendWebhookEmbedMessage(webhookName, title, description, color)
+	local webhook = GetConvar(webhookName, "none")
+	if webhook ~= "none" then
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode(
+			{
+				embeds = {
+					{
+						title = title,
+						description = description,
+						color = color
+					}
+				}
+			}), { ['Content-Type'] = 'application/json'})
+	end
+end
+
+
+
 RegisterServerEvent('esx_avan0x:logTransaction')
 AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account_origin, identifier_target, account_target, type, amount)
 	MySQL.Async.execute('INSERT INTO `accounts_logs` (identifier_origin, account_origin, identifier_target, account_target, type, amount) VALUES (@identifier_origin, @account_origin, @identifier_target, @account_target, @type, @amount)', {
@@ -18,7 +44,6 @@ AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account
 		['@amount'] = amount
 	}, function(rowsChanged)
 	end)
-
 end)
 
 TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
@@ -62,7 +87,7 @@ TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 
 			local skinjson = "{"..table.concat(skin, ",").."}"
 			print(skinjson)
-			SendWebhookMessage(user.firstname.." "..user.lastname.." ||"..user.identifier.."|| : \n"..msg.."```json\n"..skinjson.."```")
+			SendWebhookMessage("avan0x_wh_logs", user.firstname.." "..user.lastname.." ||"..user.identifier.."|| : \n"..msg.."```json\n"..skinjson.."```")
 		end
 	end)
 end, function(source, args)
@@ -76,15 +101,6 @@ end, {
 		}
 	}
 })
-
-
-
-function SendWebhookMessage(message)
-	webhook = GetConvar("avan0x_webhook", "none")
-	if webhook ~= "none" then
-		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
-	end
-end
 
 RegisterServerEvent('esx_avan0x:useWeaponItem')
 AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)

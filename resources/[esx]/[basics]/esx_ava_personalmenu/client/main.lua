@@ -105,6 +105,9 @@ function OpenPersonalMenu()
 		end
 	end
 	
+	-- todo, only if the user have a phone
+	table.insert(elements, {label = _U("bright_red", _U("life_invader")), value = "life_invader"})
+
 	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
 
 	if PlayerData.job ~= nil and PlayerData.job.grade_name == "boss" then
@@ -151,6 +154,9 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "bills" then
 			OpenBillsMenu()
+
+		elseif data.current.value == "life_invader" then
+			OpenLifeInvaderMenu()
 
 		elseif data.current.value == "others_menu" then
 			OpenOthersMenu()
@@ -340,6 +346,20 @@ function OpenSpeedMenu()
 
 end
 
+
+function OpenLifeInvaderMenu()
+	ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "life_invader", {
+		title = "Texte à envoyer"
+	}, function(data, menu)
+		menu.close()
+		TriggerServerEvent("esx_avan0x:lifeInvader", data.value)
+	end, function(data, menu)
+		menu.close()
+	end)
+end
+
+
+
 local interface = true
 function OpenOthersMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_others",
@@ -370,6 +390,9 @@ end
 ---------------
 -- JOB MENUS --
 ---------------
+
+-- todo this menu must be displayed for everyone except interim
+-- todo when not boss, only display /news option
 
 function OpenSocietyMenu(job, money, dirtyMoney)
 	local elements = {}

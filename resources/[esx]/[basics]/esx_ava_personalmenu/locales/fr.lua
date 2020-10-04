@@ -11,6 +11,7 @@ Locales["fr"] = {
   ["blue"] = "<span style='color: #3493eb'>%s</span>",
   ["green"] = "<span style='color: #0cc421'>%s</span>",
   ["red"] = "<span style='color: #eb4034'>%s</span>",
+  ["bright_red"] = "<span style='color: #eb4034'>%s</span>",
 
 
   ["sim_card"] = "📲 Carte SIM",
@@ -19,6 +20,7 @@ Locales["fr"] = {
   ["vehicle_menu"] = "🚙 Gestion Véhicule",
   ["speed_limiter"] = "🚙 Limiteur de vitesse",
   ["bills_menu"] = "📝 Factures",
+  ["life_invader"] = "💻 Life Invader",
   ["others_menu"] = "⚙️ Divers",
   ["society_menu"] = "🏭 Gestion Entreprise: %s",
   ["admin_menu"] = "👑 Administration",
