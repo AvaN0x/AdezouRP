@@ -404,7 +404,8 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 
 	-- todo, only if the user have a phone
 	table.insert(elements, {label = _U("life_invader"), value = "life_invader"})
-
+	-- todo add billing system
+	
 	if job.grade_name == "boss" then
 		table.insert(elements, {label = _U("society_first_job"), value = "society_first_job"})
 		table.insert(elements, {label = _U("society_second_job"), value = "society_second_job"})
