@@ -110,10 +110,12 @@ function OpenPersonalMenu()
 
 	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
 
-	if PlayerData.job ~= nil and PlayerData.job.grade_name == "boss" then
+	-- if PlayerData.job ~= nil and PlayerData.job.grade_name == "boss" then
+	if PlayerData.job ~= nil and PlayerData.job.grade_name ~= "interim" then
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job.label)), value = "society"})
 	end
-	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == "boss" then
+	-- if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == "boss" then
+	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name ~= "interim" then
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
@@ -349,7 +351,7 @@ end
 
 function OpenLifeInvaderMenu()
 	ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "life_invader", {
-		title = "Texte à envoyer"
+		title = _U("enter_message")
 	}, function(data, menu)
 		menu.close()
 		TriggerServerEvent("esx_avan0x:lifeInvader", data.value)
@@ -391,17 +393,22 @@ end
 -- JOB MENUS --
 ---------------
 
--- todo this menu must be displayed for everyone except interim
--- todo when not boss, only display /news option
-
 function OpenSocietyMenu(job, money, dirtyMoney)
 	local elements = {}
-	table.insert(elements, {label = _U("society_money", money or 0)})
-	if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
-		table.insert(elements, {label = _U("society_dirty_money", dirtyMoney or 0)})
+	if job.grade_name == "boss" then
+		table.insert(elements, {label = _U("society_money", money or 0)})
+		if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
+			table.insert(elements, {label = _U("society_dirty_money", dirtyMoney or 0)})
+		end
 	end
-	table.insert(elements, {label = _U("society_first_job"), value = "society_first_job"})
-	table.insert(elements, {label = _U("society_second_job"), value = "society_second_job"})
+
+	-- todo, only if the user have a phone
+	table.insert(elements, {label = _U("life_invader"), value = "life_invader"})
+
+	if job.grade_name == "boss" then
+		table.insert(elements, {label = _U("society_first_job"), value = "society_first_job"})
+		table.insert(elements, {label = _U("society_second_job"), value = "society_second_job"})
+	end
 
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society",
 	{
@@ -409,7 +416,17 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		align    = "left",
 		elements = elements
 	}, function(data, menu)
-		if data.current.value == "society_first_job" then
+		if data.current.value == "life_invader" then
+			ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "life_invader", {
+				title = _U("enter_message")
+			}, function(data, menu)
+				menu.close()
+				TriggerServerEvent("esx_avan0x:lifeInvader", data.value, job.label)
+			end, function(data, menu)
+				menu.close()
+			end)
+
+		elseif data.current.value == "society_first_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",
 			{
 				title    = _U("society_first_job", job.label),

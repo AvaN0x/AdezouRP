@@ -49,8 +49,10 @@ Locales["fr"] = {
 
   ["bills_item"] = "%s <span style='color: #0cc421'>$%s</span>",
 
+  ["enter_message"] = "Saisissez le message à envoyer",
+  
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
-  ["others_toggle_drift"] = "Activer/Désactiver Drift Mode",
+  -- ["others_toggle_drift"] = "Activer/Désactiver Drift Mode",
 
   ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
   ["society_dirty_money"] = "Coffre Argent Sale:<span style='color: #eb4034'>$%s</span>",
