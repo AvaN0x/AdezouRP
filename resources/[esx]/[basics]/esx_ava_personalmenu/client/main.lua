@@ -110,17 +110,14 @@ function OpenPersonalMenu()
 
 	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
 
-	-- if PlayerData.job ~= nil and PlayerData.job.grade_name == "boss" then
-	if PlayerData.job ~= nil and PlayerData.job.grade_name ~= "interim" then
+	if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" and PlayerData.job.grade_name ~= "interim" then
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job.label)), value = "society"})
 	end
-	-- if PlayerData.job2 ~= nil and PlayerData.job2.grade_name == "boss" then
-	if PlayerData.job2 ~= nil and PlayerData.job2.grade_name ~= "interim" then
+	if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" and PlayerData.job2.grade_name ~= "interim" then
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
 
-	
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 		table.insert(elements, {label = _U("orange", _U("admin_menu")), value = "admin_menu"})
 	end
