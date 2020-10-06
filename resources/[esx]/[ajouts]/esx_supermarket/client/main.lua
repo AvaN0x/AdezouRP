@@ -73,19 +73,19 @@ end)
 -- Create Blips
 Citizen.CreateThread(function()
 	for k,v in pairs(Config.Zones) do
-		if k == 'Ammunation' then
-			for i = 1, #v.Pos, 1 do
-				local blip = AddBlipForCoord(v.Pos[i].x, v.Pos[i].y, v.Pos[i].z)
-				SetBlipSprite (blip, 110)
-				SetBlipDisplay(blip, 4)
-				SetBlipScale  (blip, 0.8)
-				SetBlipColour (blip, 1)
-				SetBlipAsShortRange(blip, true)
-				BeginTextCommandSetBlipName("STRING")
-				AddTextComponentString(_U('shops'))
-				EndTextCommandSetBlipName(blip)
-			end
-		else
+		-- if k == 'Ammunation' then
+		-- 	for i = 1, #v.Pos, 1 do
+		-- 		local blip = AddBlipForCoord(v.Pos[i].x, v.Pos[i].y, v.Pos[i].z)
+		-- 		SetBlipSprite (blip, 110)
+		-- 		SetBlipDisplay(blip, 4)
+		-- 		SetBlipScale  (blip, 0.8)
+		-- 		SetBlipColour (blip, 1)
+		-- 		SetBlipAsShortRange(blip, true)
+		-- 		BeginTextCommandSetBlipName("STRING")
+		-- 		AddTextComponentString(_U('shops'))
+		-- 		EndTextCommandSetBlipName(blip)
+		-- 	end
+		-- else
 			for i = 1, #v.Pos, 1 do
 				local blip = AddBlipForCoord(v.Pos[i].x, v.Pos[i].y, v.Pos[i].z)
 				SetBlipSprite (blip, 52)
@@ -97,7 +97,7 @@ Citizen.CreateThread(function()
 				AddTextComponentString(_U('shops'))
 				EndTextCommandSetBlipName(blip)
 			end
-		end
+		-- end
 	end
 end)
 

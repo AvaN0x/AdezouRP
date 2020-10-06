@@ -50,12 +50,12 @@ Config.Zones = {
 		}
 	},
 
-	Ammunation = {
-		Name = 'Ammunation',
-		Items = {},
-		Pos = {
-			{x = 21.33,   y = -1106.91, z = 28.82},
-		}
-	}
+	-- Ammunation = {
+	-- 	Name = 'Ammunation',
+	-- 	Items = {},
+	-- 	Pos = {
+	-- 		{x = 21.33,   y = -1106.91, z = 28.82},
+	-- 	}
+	-- }
 
 }
