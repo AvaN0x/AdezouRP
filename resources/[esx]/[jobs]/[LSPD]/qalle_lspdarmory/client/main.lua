@@ -188,7 +188,7 @@ OpenPoliceArmory = function()
 			ClearPedSecondaryTask(GetPlayerPed(-1))
 
 			SetPedArmour(GetPlayerPed(-1), 100)
-			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
+			TriggerEvent('skinchanger:getSkin', function(skin)
 				if skin.sex == 0 then -- male
 					TriggerEvent('skinchanger:loadClothes', skin, {['bproof_1'] = 12,  ['bproof_2'] = 3})
 				else
