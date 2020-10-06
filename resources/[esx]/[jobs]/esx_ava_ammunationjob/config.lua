@@ -34,13 +34,13 @@ Config.Zones = {
 	},
 	SocietyGarage = {
 		Name  = "Garage véhicule",
-		Pos = {x = -8.6, y = -1112.36, z = 27.55},
+		Pos = {x = -8.6, y = -1112.36, z = 28.51},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 0, g = 255, b = 0},
 		Marker = 36,
 		Type = "car",
 		SpawnPoint = {
-			Pos = {x = -8.6, y = -1112.36, z = 27.55},
+			Pos = {x = -8.6, y = -1112.36, z = 28.51},
 			Heading = 86.0
 		},
 		Blip = true
