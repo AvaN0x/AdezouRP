@@ -587,9 +587,10 @@ Config.Doors = {
 	
 		-- HOPITAL
 		{ 
-			textCoords = vector3(299.5, -584.9, 43.28),
+			textCoords = vector3(299.5, -584.9, 44.70),
 			authorizedJobs = { 'ambulance' },
 			locked = false,
+			distance = 2.0,
 			doors = {
 				{
 					objHash = -487908756,
