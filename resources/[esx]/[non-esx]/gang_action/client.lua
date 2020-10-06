@@ -60,12 +60,29 @@ local weapons = {
 	'WEAPON_PIPEBOMB',
 	'WEAPON_DOUBLEACTION',
 	'WEAPON_STUNGUN',
-	'WEAPON_COMBATPISTOL'
+	'WEAPON_COMBATPISTOL',
+	'WEAPON_CERAMICPISTOL',
+	'WEAPON_RAYPISTOL',
+	'WEAPON_NAVYREVOLVER',
+	'WEAPON_RAYCARBINE',
+	'WEAPON_RAYMINIGUN',
+	'WEAPON_PISTOL_MK2',
+	'WEAPON_SNSPISTOL_MK2',
+	'WEAPON_REVOLVER_MK2',
+	'WEAPON_SMG_MK2',
+	'WEAPON_PUMPSHOTGUN_MK2',
+	'WEAPON_ASSAULTRIFLE_MK2',
+	'WEAPON_CARBINERIFLE_MK2',
+	'WEAPON_SPECIALCARBINE_MK2',
+	'WEAPON_BULLPUPRIFLE_MK2',
+	'WEAPON_COMBATMG_MK2',
+	'WEAPON_HEAVYSNIPER_MK2',
+	'WEAPON_MARKSMANRIFLE_MK2'
 }
 
 local holstered = true
 local canfire = true
-local currWeapon = nil
+local currWeapon = -1569615261
 
 Citizen.CreateThread(function()
 	while true do
@@ -92,6 +109,7 @@ Citizen.CreateThread(function()
 						holstered = false
 						canFire = true
 					elseif newWeap ~= currWeapon then
+						print(2)
 						canFire = false
 						TaskPlayAnimAdvanced(GetPlayerPed(-1), "reaction@intimidation@1h", "outro", GetEntityCoords(GetPlayerPed(-1), true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
 						Citizen.Wait(1600)
