@@ -182,16 +182,20 @@ OpenPoliceArmory = function()
 				ESX.Streaming.RequestAnimDict('mini@repair', function()
 					TaskPlayAnim(GetPlayerPed(-1), 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
 				end)
-			end		
+			end
 			exports['progressBars']:startUI((2000), "Mets le gilet")
 			Citizen.Wait(2000)
 			ClearPedSecondaryTask(GetPlayerPed(-1))
 
 			SetPedArmour(GetPlayerPed(-1), 100)
-			TriggerEvent('skinchanger:getSkin', function(skin)
-				TriggerEvent('skinchanger:loadClothes', skin, {['bproof_1'] = 12,  ['bproof_2'] = 3})
-				-- IF woman -> {['bproof_1'] = 11,  ['bproof_2'] = 3}
+			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin)
+				if skin.sex == 0 then -- male
+					TriggerEvent('skinchanger:loadClothes', skin, {['bproof_1'] = 12,  ['bproof_2'] = 3})
+				else
+					TriggerEvent('skinchanger:loadClothes', skin, {['bproof_1'] = 11,  ['bproof_2'] = 3})
+				end
 			end)
+
 			ESX.ShowNotification("Vous avez équipé un gilet")
 
 
