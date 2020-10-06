@@ -41,7 +41,7 @@ Config.Zones = {
 		Type = "car",
 		SpawnPoint = {
 			Pos = {x = -8.6, y = -1112.36, z = 28.51},
-			Heading = 86.0
+			Heading = 157.0
 		},
 		Blip = true
 	},
