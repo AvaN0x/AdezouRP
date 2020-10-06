@@ -682,6 +682,80 @@ Config.Weapons = {
 		name = 'WEAPON_RAYMINIGUN',
 		label = _U('weapon_rayminigun'),
 		components = {}
-	}
+	},
+
+	{
+		name = 'WEAPON_pistol_mk2',
+		label = _U('weapon_pistol_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_snspistol_mk2',
+		label = _U('weapon_snspistol_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_revolver_mk2',
+		label = _U('weapon_revolver_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_smg_mk2',
+		label = _U('weapon_smg_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_pumpshotgun_mk2',
+		label = _U('weapon_pumpshotgun_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_assaultrifle_mk2',
+		label = _U('weapon_assaultrifle_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_carbinerifle_mk2',
+		label = _U('weapon_carbinerifle_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_specialcarbine_mk2',
+		label = _U('weapon_specialcarbine_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_bullpuprifle_mk2',
+		label = _U('weapon_bullpuprifle_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_combatmg_mk2',
+		label = _U('weapon_combatmg_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_heavysniper_mk2',
+		label = _U('weapon_heavysniper_mk2'),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_marksmanrifle_mk2',
+		label = _U('weapon_marksmanrifle_mk2'),
+		components = {}
+	},
+	
+
 
 }

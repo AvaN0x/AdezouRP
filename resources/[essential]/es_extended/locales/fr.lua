@@ -175,6 +175,19 @@ Locales['fr'] = {
   ['weapon_navyrevolver'] = 'Revolver Navy',
   ['weapon_raycarbine'] = 'Carabine laser',
   ['weapon_rayminigun'] = 'Minigun laser',
+  ['weapon_pistol_mk2'] = 'Pistolet MK2',
+  ['weapon_snspistol_mk2'] = 'Pétoire MK2',
+  ['weapon_revolver_mk2'] = 'Revolver MK2',
+  ['weapon_smg_mk2'] = 'SMG MK2',
+  ['weapon_pumpshotgun_mk2'] = 'Pompe MK2',
+  ['weapon_assaultrifle_mk2'] = 'AK-47 MK2',
+  ['weapon_carbinerifle_mk2'] = 'Carabine MK2',
+  ['weapon_specialcarbine_mk2'] = 'Carabine Spéciale MK2',
+  ['weapon_bullpuprifle_mk2'] = 'Fusil Bullpup MK2',
+  ['weapon_combatmg_mk2'] = 'MG de Combat MK2',
+  ['weapon_heavysniper_mk2'] = 'Sniper lourd MK2',
+  ['weapon_marksmanrifle_mk2'] = 'Sniper Marksman MK2',
+
 
   -- Weapon Components
   ['component_clip_default'] = 'default Grip',
