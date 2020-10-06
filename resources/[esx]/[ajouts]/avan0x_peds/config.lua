@@ -5,36 +5,36 @@
 
 Config = {}
 -- ped types : 
-    -- PED_TYPE_PLAYER_0,// michael  
-    -- PED_TYPE_PLAYER_1,// franklin  
-    -- PED_TYPE_NETWORK_PLAYER,    // mp character  
-    -- PED_TYPE_PLAYER_2,// trevor  
-    -- PED_TYPE_CIVMALE,  
-    -- PED_TYPE_CIVFEMALE,  
-    -- PED_TYPE_COP,  
-    -- PED_TYPE_GANG_ALBANIAN,  
-    -- PED_TYPE_GANG_BIKER_1,  
-    -- PED_TYPE_GANG_BIKER_2,  
-    -- PED_TYPE_GANG_ITALIAN,  
-    -- PED_TYPE_GANG_RUSSIAN,  
-    -- PED_TYPE_GANG_RUSSIAN_2,  
-    -- PED_TYPE_GANG_IRISH,  
-    -- PED_TYPE_GANG_JAMAICAN,  
-    -- PED_TYPE_GANG_AFRICAN_AMERICAN,  
-    -- PED_TYPE_GANG_KOREAN,  
-    -- PED_TYPE_GANG_CHINESE_JAPANESE,  
-    -- PED_TYPE_GANG_PUERTO_RICAN,  
-    -- PED_TYPE_DEALER,  
-    -- PED_TYPE_MEDIC,  
-    -- PED_TYPE_FIREMAN,  
-    -- PED_TYPE_CRIMINAL,  
-    -- PED_TYPE_BUM,  
-    -- PED_TYPE_PROSTITUTE,  
-    -- PED_TYPE_SPECIAL,  
-    -- PED_TYPE_MISSION,  
-    -- PED_TYPE_SWAT,  
-    -- PED_TYPE_ANIMAL,  
-    -- PED_TYPE_ARMY  
+    -- PED_TYPE_PLAYER_0,// michael
+    -- PED_TYPE_PLAYER_1,// franklin
+    -- PED_TYPE_NETWORK_PLAYER,  // mp character
+    -- PED_TYPE_PLAYER_2,// trevor
+    -- PED_TYPE_CIVMALE,
+    -- PED_TYPE_CIVFEMALE,
+    -- PED_TYPE_COP,
+    -- PED_TYPE_GANG_ALBANIAN,
+    -- PED_TYPE_GANG_BIKER_1,
+    -- PED_TYPE_GANG_BIKER_2,
+    -- PED_TYPE_GANG_ITALIAN,
+    -- PED_TYPE_GANG_RUSSIAN,
+    -- PED_TYPE_GANG_RUSSIAN_2,
+    -- PED_TYPE_GANG_IRISH,
+    -- PED_TYPE_GANG_JAMAICAN,
+    -- PED_TYPE_GANG_AFRICAN_AMERICAN,
+    -- PED_TYPE_GANG_KOREAN,
+    -- PED_TYPE_GANG_CHINESE_JAPANESE,
+    -- PED_TYPE_GANG_PUERTO_RICAN,
+    -- PED_TYPE_DEALER,
+    -- PED_TYPE_MEDIC,
+    -- PED_TYPE_FIREMAN,
+    -- PED_TYPE_CRIMINAL,
+    -- PED_TYPE_BUM,
+    -- PED_TYPE_PROSTITUTE,
+    -- PED_TYPE_SPECIAL,
+    -- PED_TYPE_MISSION,
+    -- PED_TYPE_SWAT,
+    -- PED_TYPE_ANIMAL,
+    -- PED_TYPE_ARMY
 
 -- scenario list : https://pastebin.com/6mrYTdQv
 
@@ -83,13 +83,13 @@ Config.Peds = {
             {x = 243.71, y = 226.4, z = 104.97, h = 166.76, scenario = "PROP_HUMAN_SEAT_BENCH"},
         }
     },
-    Ammunation = {
-        Name = "s_m_y_ammucity_01",
-        Type= "PED_TYPE_CIVMALE",
-        PosList = {
-            {x = 22.07, y = -1104.93, z = 28.82, h = 158.97, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
-        }
-    },
+    -- Ammunation = {
+    --     Name = "s_m_y_ammucity_01",
+    --     Type= "PED_TYPE_CIVMALE",
+    --     PosList = {
+    --         {x = 22.07, y = -1104.93, z = 28.82, h = 158.97, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
+    --     }
+    -- },
     Tatoo = {
         Name = "a_m_y_ktown_01",
         Type= "PED_TYPE_CIVMALE",
