@@ -24,7 +24,7 @@ Config.Teleports = {
 			},
 			authorizedJobs = { 'ambulance' },
 			locked = true,
-			disntace = 10
+			distance = 10
 		},
 		{ -- nightclub entry
 			tpEnter = {
@@ -41,7 +41,7 @@ Config.Teleports = {
 			},
 			authorizedJobs = { 'nightclub' },
 			locked = true,
-			disntace = 10
+			distance = 10
 		},
 	
 	
@@ -60,7 +60,7 @@ Config.Teleports = {
 			},
 			authorizedJobs = { '' },
 			locked = false,
-			disntace = 10
+			distance = 10
 		},
 		{ -- arcade vehicle entry
 			tpEnter = {
@@ -79,7 +79,7 @@ Config.Teleports = {
 			authorizedJobs = { '' },
 			allowVehicles = true,
 			locked = false,
-			disntace = 10
+			distance = 10
 		},
 	
 	
@@ -98,9 +98,33 @@ Config.Teleports = {
 			},
 			authorizedJobs = { '' },
 			locked = false,
-			disntace = 10
+			distance = 10
 		},
 	
+
+		-- bunker
+		{ -- arcade vehicle entry
+			tpEnter = {
+				pos = vector3(2116.71, 3329.63, 45.58),
+				heading = 120.0,
+				size  = {x = 2.5, y = 2.5, z = 1.0},
+				-- color = {r = 255, g = 0, b = 255},
+				label = "Entrer"
+			},
+			tpExit = {
+				pos = vector3(891.13, -3245.97, -99.25),
+				heading = 85.0,
+				size  = {x = 2.5, y = 2.5, z = 1.0},
+				label = "Sortir"
+			},
+			authorizedJobs = { 'ammunation' },
+			allowVehicles = true,
+			locked = true,
+			distance = 10
+		},
+
+
+
 		-- exemple to teleport vehicle
 		-- {
 		-- 	tpEnter = {

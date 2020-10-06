@@ -20,7 +20,13 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 
 
 INSERT INTO `items` (`name`, `label`, `limit`) VALUES
-	('acier', 'Acier', 50);
+	('steel', 'Acier', 150),
+	('plastic', 'Plastique', 150),
+	-- ('cutted_wood', 'Bois coupé', 150),
+	('gunpowder', 'Poudre à canon', 150),
+	-- ('gold', 'Or', 50),
+
+	;
 
 -- INSERT INTO `vehicles_society`(`name`, `model`, `price`, `society`) VALUES 
 -- ('Benson', 'benson', 200000, 'society_ammunation'),
