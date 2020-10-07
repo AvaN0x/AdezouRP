@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
 						helpText = _U('teleports_press_button', helpText)
 					end
 
-					ESX.Game.Utils.DrawText3D(vector3(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2), label .. tpID2.from.label, 0.8) -- draw label
+					DrawText3D(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2, label .. tpID2.from.label, 0.40) -- draw label
 					ESX.ShowHelpNotification(helpText)
 
 					if IsControlJustReleased(0, 38) then -- E

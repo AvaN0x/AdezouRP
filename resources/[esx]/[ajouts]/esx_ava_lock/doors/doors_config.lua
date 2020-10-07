@@ -5,7 +5,7 @@
 Config.Doors = {
 	ObjectDistance = 30,
 	DefaultDistance = 1.5,
-	DefaultSize = 0.5,
+	DefaultSize = 0.3,
 
 	DoorList = {
 		-- Mission Row
@@ -227,7 +227,7 @@ Config.Doors = {
 			authorizedJobs = { 'police', 'state' },
 			locked = true,
 			distance = 16,
-			size = 0.85
+			size = 0.4
 		},
 		{-- Back (double doors)
 			textCoords = vector3(468.6, -1014.4, 26.55),
@@ -254,7 +254,7 @@ Config.Doors = {
 			authorizedJobs = { 'police' },
 			locked = true,
 			distance = 12,
-			size = 0.85
+			size = 0.4
 		},
 		{-- Saisi
 			objName = 'prop_fnclink_02gate7',
@@ -293,7 +293,7 @@ Config.Doors = {
 			authorizedJobs = { 'police' },
 			locked = true,
 			distance = 12,
-			size = 0.85
+			size = 0.4
 		},
 		{
 			objName = 'prop_gate_prison_01',
@@ -302,7 +302,7 @@ Config.Doors = {
 			authorizedJobs = { 'police' },
 			locked = true,
 			distance = 12,
-			size = 0.85
+			size = 0.4
 		},
 
 

@@ -116,7 +116,7 @@ Citizen.CreateThread(function()
 					displayText = _U('doors_press_button', displayText)
 				end
 
-				ESX.Game.Utils.DrawText3D(doorID.textCoords, displayText, doorID.size)
+				DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
 
 				if IsControlJustReleased(0, 38) then
 					if isAuthorized then

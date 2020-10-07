@@ -14,3 +14,20 @@ AddEventHandler('esx_ava_lock:dooranim', function()
         end)
     end
 end)
+
+function DrawText3D(x, y, z, text, size)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    
+    if onScreen then
+        SetTextScale(0.35, size or 0.35)
+        SetTextFont(0)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        AddTextComponentString(text)
+        DrawText(_x, _y)
+        local factor = (string.len(text)) / 350
+        -- DrawRect(_x, _y + 0.0125, factor + 0.015, 0.03, 35, 35, 35, 150)
+    end
+end
