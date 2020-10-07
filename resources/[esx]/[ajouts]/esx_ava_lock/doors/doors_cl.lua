@@ -35,6 +35,17 @@ AddEventHandler('esx:setJob2', function(job2)
 end)
 
 Citizen.CreateThread(function()
+	for k,doorID in ipairs(Config.Doors.DoorList) do
+		if not doorID.distance then
+			doorID.distance = Config.Doors.DefaultDistance
+		end
+		if not doorID.size then
+			doorID.size = Config.Doors.DefaultSize
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
 	while true do
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
@@ -65,14 +76,6 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	for k,doorID in ipairs(Config.Doors.DoorList) do
-		if not doorID.distance then
-			doorID.distance = Config.Doors.DefaultDistance
-		end
-		if not doorID.size then
-			doorID.size = Config.Doors.DefaultSize
-		end
-	end
 	Citizen.Wait(5000)
 	while true do
 		Citizen.Wait(0)
@@ -88,7 +91,7 @@ Citizen.CreateThread(function()
 						
 						if doorID.locked and v.objYaw and GetEntityRotation(v.object).z ~= v.objYaw then
 							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
-						elseif not v.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
+						elseif not doorID.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
 							FreezeEntityPosition(v.object, not doorID.locked)
 							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
 						end

@@ -36,7 +36,6 @@ AddEventHandler('esx:setJob2', function(job2)
 end)
 
 Citizen.CreateThread(function()
-	Citizen.Wait(5000)
 	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
 			if not tpID2.size then
@@ -47,7 +46,10 @@ Citizen.CreateThread(function()
 			end
 		end
 	end
+end)
 
+Citizen.CreateThread(function()
+	Citizen.Wait(5000)
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
@@ -57,11 +59,11 @@ Citizen.CreateThread(function()
 				{from = tpID.tpExit, to = tpID.tpEnter}
 			}) do
 				local distance = #(playerCoords - tpID2.from.pos)
-				
+
 				if distance < Config.Teleports.DrawDistance then
 					DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y, tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
 				end
-				
+
 				if distance < tpID2.from.size.x then
 					local isAuthorized = IsAuthorized(tpID)
 					local helpText = _U('teleports_unlocked')
