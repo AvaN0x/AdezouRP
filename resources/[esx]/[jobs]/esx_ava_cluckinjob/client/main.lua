@@ -565,7 +565,7 @@ Citizen.CreateThread(function()
 		end
 
 		if IsControlPressed(0,  Keys['F6'])
-		and (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName and (PlayerData.job.grade_name == 'boss' or PlayerData.job.grade_name == 'chef'))  
+		and (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName)  
 		and (GetGameTimer() - GUI.Time) > 150 then
 			OpenJobMobileActionsMenu()
 			GUI.Time = GetGameTimer()
