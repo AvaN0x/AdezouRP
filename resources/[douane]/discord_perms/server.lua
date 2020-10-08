@@ -29,6 +29,7 @@ function GetRoles(user)
 		if member.code == 200 then
 			local data = json.decode(member.data)
 			local roles = data.roles
+			print("=> User nickname : " .. data.user.username.."#"..data.user.discriminator)
 			local found = true
 			return roles
 		else
