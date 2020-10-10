@@ -6,15 +6,15 @@ var cursorX = documentWidth / 2;
 var cursorY = documentHeight / 2;
 
 jQuery.noConflict();
-          jQuery(document).ready(function($) {
-            $('.form-control').keyup(function(event) {
-              var textBox = event.target;
-              var start = textBox.selectionStart;
-              var end = textBox.selectionEnd;
-              textBox.value = textBox.value.charAt(0).toUpperCase() + textBox.value.slice(1).toLowerCase();
-              textBox.setSelectionRange(start, end);
-            });
-          });
+jQuery(document).ready(function ($) {
+    $('.form-control').keyup(function (event) {
+        var textBox = event.target;
+        var start = textBox.selectionStart;
+        var end = textBox.selectionEnd;
+        textBox.value = textBox.value.charAt(0).toUpperCase() + textBox.value.slice(1).toLowerCase();
+        textBox.setSelectionRange(start, end);
+    });
+});
 
 function UpdateCursorPos() {
     cursor.style.left = cursorX;
@@ -26,8 +26,8 @@ function Click(x, y) {
     element.focus().click();
 }
 
-$(function() {
-    window.addEventListener('message', function(event) {
+$(function () {
+    window.addEventListener('message', function (event) {
         if (event.data.type == "enableui") {
             cursor.style.display = event.data.enable ? "block" : "none";
             document.body.style.display = event.data.enable ? "block" : "none";
@@ -37,7 +37,7 @@ $(function() {
         }
     });
 
-    $(document).mousemove(function(event) {
+    $(document).mousemove(function (event) {
         cursorX = event.pageX;
         cursorY = event.pageY;
         UpdateCursorPos();
@@ -48,10 +48,10 @@ $(function() {
             $.post('http://esx_identity/escape', JSON.stringify({}));
         }
     };
-	
-    $("#register").submit(function(e) {
+
+    $("#register").submit(function (e) {
         e.preventDefault(); // Prevent form from submitting
-        
+
         $.post('http://esx_identity/register', JSON.stringify({
             firstname: $("#firstname").val(),
             lastname: $("#lastname").val(),

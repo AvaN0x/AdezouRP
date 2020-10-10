@@ -1,9 +1,8 @@
---==================================================================================
---======               ESX_IDENTITY BY ARKSEYONET @Ark                        ======
---======    YOU CAN FIND ME ON MY DISCORD @Ark - https://discord.gg/cGHHxPX   ======
---======    IF YOU ALTER THIS VERSION OF THE SCRIPT, PLEASE GIVE ME CREDIT    ======
---======     Special Thanks To Alphakush and CMD.Telhada For Help Testing     ======
---==================================================================================
+--=========================================
+--==== ESX_IDENTITY BY ARKSEYONET @Ark ====
+--========== MODIFIED BY AvaN0x ===========
+--========== github.com/AvaN0x ============
+--=========================================
 
 --===============================================
 --==                 VARIABLES                 ==
@@ -25,7 +24,7 @@ function EnableGui(enable)
 end
 
 function openRegistry()
-  TriggerEvent('esx_identity:showRegisterIdentity')
+    TriggerEvent('esx_identity:showRegisterIdentity')
 end
 
 --===============================================
@@ -33,7 +32,7 @@ end
 --===============================================
 RegisterNetEvent("esx_identity:showRegisterIdentity")
 AddEventHandler("esx_identity:showRegisterIdentity", function()
-  EnableGui(true)
+    EnableGui(true)
 end)
 
 --===============================================
@@ -47,11 +46,11 @@ end)
 --==           Register Callback               ==
 --===============================================
 RegisterNUICallback('register', function(data, cb)
-  myIdentity = data
-  TriggerServerEvent('esx_identity:setIdentity', data)
-  EnableGui(false)
-  Wait (500)
-  TriggerEvent('esx_skin:openSaveableMenu')
+    myIdentity = data
+    TriggerServerEvent('esx_identity:setIdentity', data)
+    EnableGui(false)
+    Wait (500)
+    TriggerEvent('esx_skin:openSaveableMenu')
 end)
 
 
