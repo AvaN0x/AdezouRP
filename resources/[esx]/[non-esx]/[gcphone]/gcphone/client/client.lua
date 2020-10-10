@@ -134,6 +134,7 @@ end)
 -- GPS Blips
 --====================================================================================
 function styleBlip(blip, type, number, player)
+  print(type)
   local blipLabel = '#' .. number
   local blipLabelPrefix = 'Phone GPS Location: '
 
@@ -148,7 +149,6 @@ function styleBlip(blip, type, number, player)
       end
     end
 
-    ShowCrewIndicatorOnBlip(blip, true)
     if (isContact == true) then
       SetBlipColour(blip, 2)
     else
@@ -156,10 +156,11 @@ function styleBlip(blip, type, number, player)
     end
   end
 
-  -- [[ type 1 ]] --
-  if (type == 1) then
+  -- [[ type 1 or 2]] --
+  if (type == 1 or type == 2) then
     blipLabelPrefix = 'Emergency SMS Sender Location: '
-    ShowCrewIndicatorOnBlip(blip, true)
+    ShowOutlineIndicatorOnBlip(blip, true)
+    SetBlipSecondaryColour(blip, 255, 0, s0)
     SetBlipColour(blip, 5)
   end
 
@@ -167,7 +168,6 @@ function styleBlip(blip, type, number, player)
   AddTextComponentString(blipLabelPrefix .. blipLabel)
   EndTextCommandSetBlipName(blip)
 
-  SetBlipSecondaryColour(blip, 255, 0, 0)
   SetBlipScale(blip, 0.9)
 end
 
@@ -181,7 +181,12 @@ AddEventHandler('gcPhone:receiveLivePosition', function(sourcePlayerServerId, ti
     end
     local sourcePlayer = GetPlayerFromServerId(sourcePlayerServerId)
     local sourcePed = GetPlayerPed(sourcePlayer)
-    gpsBlips[blipId] = AddBlipForEntity(sourcePed)
+    if (type == 2) then
+      local coords = GetEntityCoords(sourcePed)
+      gpsBlips[blipId] = AddBlipForCoord(coords.x, coords.y, coords.z)
+    else
+      gpsBlips[blipId] = AddBlipForEntity(sourcePed)
+    end
     styleBlip(gpsBlips[blipId], type, sourceNumber, sourcePlayer)
     Citizen.SetTimeout(timeoutInMilliseconds, function()
       SetBlipFlashes(gpsBlips[blipId], true)
