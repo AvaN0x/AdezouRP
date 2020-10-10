@@ -82,7 +82,8 @@ local weapons = {
 
 local holstered = true
 local canfire = true
-local currWeapon = -1569615261
+-- local currWeapon = -1569615261
+local currWeapon = nil
 
 Citizen.CreateThread(function()
 	while true do
