@@ -1,6 +1,7 @@
 desktop.ini
 
-*.cfg
+server.cfg
+permissions.cfg
 *.sh
 /cache/
 /resources/\[local\]/
