@@ -25,6 +25,8 @@ function DrawText3D(x, y, z, text, size)
         SetTextColour(255, 255, 255, 215)
         SetTextEntry("STRING")
         SetTextCentre(1)
+        SetTextOutline()
+
         AddTextComponentString(text)
         DrawText(_x, _y)
         local factor = (string.len(text)) / 350
