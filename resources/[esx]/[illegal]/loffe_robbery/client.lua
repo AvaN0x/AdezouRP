@@ -98,9 +98,9 @@ AddEventHandler('loffe_robbery:rob', function(i)
             RequestModel(model)
             while not HasModelLoaded(model) do Wait(0) end
             local bag = CreateObject(model, GetEntityCoords(peds[i]), false, false)
-
+                        
             AttachEntityToEntity(bag, peds[i], GetPedBoneIndex(peds[i], 60309), 0.1, -0.11, 0.08, 0.0, -75.0, -75.0, 1, 1, 0, 0, 2, 1)
-            timer = GetGameTimer() + 15000
+            timer = GetGameTimer() + 10000
             while timer >= GetGameTimer() do
                 if IsPedDeadOrDying(peds[i]) then
                     break
@@ -223,6 +223,11 @@ Citizen.CreateThread(function()
                                 Wait(0)
                             end
                             if canRob == true then
+                                Citizen.CreateThread(function()
+                                    Wait(2000)
+                                    TriggerServerEvent("esx_phone:send", "police", "Braquage de superette en cours !", true, { ["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z })
+                                end)
+
                                 robbing = true
                                 Citizen.CreateThread(function()
                                     while robbing do Wait(0) if IsPedDeadOrDying(peds[i]) then robbing = false end end
@@ -230,7 +235,7 @@ Citizen.CreateThread(function()
                                 loadDict('missheist_agency2ahands_up')
                                 TaskPlayAnim(peds[i], "missheist_agency2ahands_up", "handsup_anxious", 8.0, -8.0, -1, 1, 0, false, false, false)
 
-                                local delay = 5
+                                local delay = 20
                                 local timer = 0
                                 exports['progressBars']:startUI(delay * 1000, "Braquage en cours")
                                 while timer < delay and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 do
@@ -242,7 +247,6 @@ Citizen.CreateThread(function()
 
                                 if GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 then
                                     if not IsPedDeadOrDying(peds[i]) then
-                                        TriggerServerEvent("esx_phone:send", "police", "Braquage de superette en cours !", true, { ["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z })
                                         TriggerServerEvent('loffe_robbery:rob', i)
                                         while robbing do Wait(0) if IsPedDeadOrDying(peds[i]) then robbing = false end end
                                     end
