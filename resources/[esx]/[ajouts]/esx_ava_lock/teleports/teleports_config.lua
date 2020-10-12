@@ -43,7 +43,26 @@ Config.Teleports = {
 			locked = true,
 			distance = 10
 		},
-	
+		{ -- nightclub vehicle entry
+		tpEnter = {
+			pos = vector3(-1641.32, -2989.73, -78.07),
+			heading = 270.0,
+			size  = {x = 2.5, y = 2.5, z = 1.0},
+			-- color = {r = 255, g = 0, b = 255},
+			label = "Entrer"
+		},
+		tpExit = {
+			pos = vector3(-675.28, -2390.24, 12.88),
+			heading = 60.0,
+			size  = {x = 2.5, y = 2.5, z = 1.0},
+			label = "Sortir"
+		},
+		authorizedJobs = { 'nightclub' },
+		allowVehicles = true,
+		locked = true,
+		distance = 10
+	},
+
 	
 		{ -- arcade entry
 			tpEnter = {
