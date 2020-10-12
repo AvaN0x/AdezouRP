@@ -176,3 +176,17 @@ AddEventHandler('esx_phone:send', function(number, message, _, coords)
     -- print('esx_phone:send | Appels sur un service non enregistre => numero : ' .. number)
   end
 end)
+
+RegisterServerEvent('esx_phone:sendEmergency')
+AddEventHandler('esx_phone:sendEmergency', function(number, message, _, coords)
+  if PhoneNumbers[number] ~= nil then
+      notifyAlertSMS(number, {
+        message = message,
+        coords = coords,
+        numero = 911,
+        source = source,
+      }, PhoneNumbers[number].sources)
+  else
+    print('esx_phone:send | Appels sur un service non enregistre => numero : ' .. number)
+  end
+end)
