@@ -123,7 +123,7 @@ Config.Garages = {
 			Heading = 25.0
 		}
 	},
-	Garage_VIGNERON = {	
+	Garage_VIGNERON = {
 		Name = "hide",
 		Pos = {x = -1886.24,y = 2018.52,z = 140.84},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -140,7 +140,7 @@ Config.Garages = {
 			Heading = 169.0
 		}
 	},
-	Garage_MECANO = {	
+	Garage_MECANO = {
 		Name = "hide",
 		Pos = {x = -326.24,y = -152.57,z = 36.3},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -157,9 +157,9 @@ Config.Garages = {
 			Heading = 258.71
 		}
 	},
-	Garage_CLUCKIN = {	
+	Garage_CLUCKIN = {
 		Name = "hide",
-		Pos = {x = -479.99,y = -604.52,z = 31.17},
+		Pos = {x = -479.99,y = -604.52, z = 31.17},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -170,11 +170,27 @@ Config.Garages = {
 		Type = "car",
 		Job = 'cluckin',
 		SpawnPoint = {
-			Pos = {x = -479.99,y = -604.52,z = 31.17},
+			Pos = {x = -479.99,y = -604.52, z = 31.17},
 			Heading = 180.0
 		}
 	},
-
+	Garage_TAILOR = {
+		Name = "hide",
+		Pos = {x = 705.19,y = -991.21, z = 24.0},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		Job = 'tailor',
+		SpawnPoint = {
+			Pos = {x = 705.19,y = -991.21, z = 23.02},
+			Heading = 280.0
+		}
+	},
 
 
 
