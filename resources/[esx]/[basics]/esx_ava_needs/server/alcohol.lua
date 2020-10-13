@@ -1,128 +1,102 @@
-ESX.RegisterUsableItem('beer', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
-	xPlayer.removeInventoryItem('beer', 1)
+ESX.RegisterUsableItem("beer", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "beer")
 
-	TriggerClientEvent('esx_status:add', source, 'drunk', 250000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_beer_bottle")
-	TriggerClientEvent('esx:showNotification', source, _U('used_beer'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 250000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_beer_bottle")
 end)
 
-ESX.RegisterUsableItem('champagne', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("champagne", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "champagne")
 
-	xPlayer.removeInventoryItem('champagne', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 400000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 160000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_champagne'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 400000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 160000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('vodka', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("vodka", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "vodka")
 
-	xPlayer.removeInventoryItem('vodka', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_vodka'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('whisky', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("whisky", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "whisky")
 
-	xPlayer.removeInventoryItem('whisky', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_whisky'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('martini', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("martini", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "martini")
 
-	xPlayer.removeInventoryItem('martini', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_martini'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('martini2', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("martini2", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "martini2")
 
-	xPlayer.removeInventoryItem('martini2', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_martini2'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('tequila', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("tequila", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "tequila")
 
-	xPlayer.removeInventoryItem('tequila', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_tequila'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('rhum', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("rhum", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "rhum")
 
-	xPlayer.removeInventoryItem('rhum', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 160000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_rhum'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 160000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('mojito', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("mojito", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "mojito")
 
-	xPlayer.removeInventoryItem('mojito', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 180000)
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_mojito'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 180000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('grand_cru', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("grand_cru", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "grand_cru")
 
-	xPlayer.removeInventoryItem('grand_cru', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 400000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_grand_cru'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 400000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 
-ESX.RegisterUsableItem('vine', function(source)
+ESX.RegisterUsableItem("vine", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "vine")
 
-	local xPlayer = ESX.GetPlayerFromId(source)
-
-	xPlayer.removeInventoryItem('vine', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'drunk', 400000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source, "prop_amb_40oz_03")
-	TriggerClientEvent('esx:showNotification', source, _U('used_vine'))
+	TriggerClientEvent("esx_status:add", source, "drunk", 400000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source, "prop_amb_40oz_03")
 end)
 

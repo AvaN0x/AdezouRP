@@ -1,3 +1,8 @@
+-------------------------------------------
+------- REMADE BY GITHUB.COM/AVAN0X -------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 ESX          = nil
 local IsDead = false
 local IsAnimated = false

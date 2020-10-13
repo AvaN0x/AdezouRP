@@ -1,71 +1,61 @@
-ESX.RegisterUsableItem('water', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
-	xPlayer.removeInventoryItem('water', 1)
+ESX.RegisterUsableItem("water", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "water")
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 600000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_water'))
+	TriggerClientEvent("esx_status:add", source, "thirst", 600000)
+
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('coffee', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("coffee", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "coffee")
 
-	xPlayer.removeInventoryItem('coffee', 1)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_coffee'))
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('jus_raisin', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("jus_raisin", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "jus_raisin")
 
-	xPlayer.removeInventoryItem('jus_raisin', 1)
+	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_jusderaisin'))
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('cocacola', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("cocacola", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "cocacola")
 
-	xPlayer.removeInventoryItem('cocacola', 1)
+	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 200000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_cocacola'))
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
 
-ESX.RegisterUsableItem('icetea', function(source)
-	local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterUsableItem("icetea", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "icetea")
 
-	xPlayer.removeInventoryItem('icetea', 1)
+	TriggerClientEvent("esx_status:add", source, "thirst", 400000)
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 400000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_icetea'))
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('sprite', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("sprite", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "sprite")
 
-	xPlayer.removeInventoryItem('sprite', 1)
+	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
 
-	TriggerClientEvent('esx_status:add', source, 'thirst', 200000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_sprite'))
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
 
-ESX.RegisterUsableItem('orangina', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("orangina", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "orangina")
 
-	xPlayer.removeInventoryItem('orangina', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'thirst', 200000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_orangina'))
+	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
+	
+	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)

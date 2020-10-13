@@ -1,39 +1,36 @@
-ESX.RegisterUsableItem('bagcoke', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
-	xPlayer.removeInventoryItem('bagcoke', 1)
+ESX.RegisterUsableItem("bagcoke", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "bagcoke")
 
-	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
-	TriggerClientEvent('esx_ava_needs:onSmokeDrug', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bagcoke'))
+	TriggerClientEvent("esx_status:add", source, "drugged", 400000)
+
+	TriggerClientEvent("esx_ava_needs:onSmokeDrug", source)
 end)
 
-ESX.RegisterUsableItem('bagexta', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("bagexta", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "bagexta")
 
-	xPlayer.removeInventoryItem('bagexta', 1)
+	TriggerClientEvent("esx_status:add", source, "drugged", 300000)
 
-	TriggerClientEvent('esx_status:add', source, 'drugged', 300000)
-	TriggerClientEvent('esx_ava_needs:onSmokeDrug', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bagexta'))
+	TriggerClientEvent("esx_ava_needs:onSmokeDrug", source)
 end)
 
-ESX.RegisterUsableItem('bagweed', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("bagweed", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "bagweed")
 
-	xPlayer.removeInventoryItem('bagweed', 1)
+	TriggerClientEvent("esx_status:add", source, "drugged", 200000)
 
-	TriggerClientEvent('esx_status:add', source, 'drugged', 200000)
-	TriggerClientEvent('esx_ava_needs:onSmokeDrug', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_bagweed'))
+	TriggerClientEvent("esx_ava_needs:onSmokeDrug", source)
 end)
 
-ESX.RegisterUsableItem('methamphetamine', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
+ESX.RegisterUsableItem("methamphetamine", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "methamphetamine")
 
-	xPlayer.removeInventoryItem('methamphetamine', 1)
+	TriggerClientEvent("esx_status:add", source, "drugged", 400000)
 
-	TriggerClientEvent('esx_status:add', source, 'drugged', 400000)
-	TriggerClientEvent('esx_ava_needs:onSmokeDrug', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_methamphetamine'))
+	TriggerClientEvent("esx_ava_needs:onSmokeDrug", source)
 end)
