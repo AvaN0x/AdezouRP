@@ -28,16 +28,6 @@ ESX.RegisterUsableItem('jus_raisin', function(source)
 	TriggerClientEvent('esx:showNotification', source, _U('used_jusderaisin'))
 end)
 
-ESX.RegisterUsableItem('soda', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
-
-	xPlayer.removeInventoryItem('soda', 1)
-
-	TriggerClientEvent('esx_status:add', source, 'thirst', 100000)
-	TriggerClientEvent('esx_ava_needs:onDrink', source)
-	TriggerClientEvent('esx:showNotification', source, _U('used_soda'))
-end)
-
 ESX.RegisterUsableItem('cocacola', function(source)
 	local xPlayer = ESX.GetPlayerFromId(source)
 

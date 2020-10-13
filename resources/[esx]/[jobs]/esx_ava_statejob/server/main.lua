@@ -253,9 +253,11 @@ end)
 -- Citizen.CreateThread(function()
 -- 	Citizen.Wait(10000)
 -- 	local items = {
--- 		'mdma',
--- 		'trimmedweed',
--- 		'grapperaisin',
+-- 		'beef',
+-- 		'cupcake',
+-- 		'saucisson',
+-- 		'hotdog',
+-- 		'soda'
 -- 	}
 -- 	print('try delete')
 
