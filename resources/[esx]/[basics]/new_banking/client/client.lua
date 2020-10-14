@@ -72,11 +72,10 @@ Citizen.CreateThread(function()
 			end
 		elseif atm and not inMenu then
 			DisplayHelpText("Appuie sur ~INPUT_PICKUP~ pour accèder à compte ~b~")
-			DrawMarker(29, atm.x, atm.y, atm.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 0, 0, 100, false, true, 2, false, false, false, false)
 
-			
 			if IsControlJustPressed(1, 38) then
-				inMenu = true
+				atm = nearATM() -- update the nearest ATM to be sure to go at the closest one
+
 				local playerPed = PlayerPedId()
 				TaskGoStraightToCoord(playerPed, atm.x, atm.y, atm.z, 10.0, 10, atm.heading, 0.5)
 				Wait(2000)
@@ -92,7 +91,6 @@ Citizen.CreateThread(function()
 		
 					Citizen.Wait(1000)
 				end)
-
 
 				OpenBank()
 			end
