@@ -147,7 +147,7 @@ local function hasEnoughItems(source, items)
 	for i=1, #items, 1 do
 		local xItem = xPlayer.getInventoryItem(items[i].name)
 		if xItem.count < items[i].quantity then
-			table.insert(result, xItem.label)
+			table.insert(result, (items[i].quantity - xItem.count) .. " " .. xItem.label)
 		end
 	end
 	if result[1] then
