@@ -5,7 +5,7 @@ description 'Skin Changer'
 version '1.0.2'
 
 client_scripts {
-	'locale.lua',
+    '@es_extended/locale.lua',
 	'locales/br.lua',
 	'locales/de.lua',
 	'locales/en.lua',

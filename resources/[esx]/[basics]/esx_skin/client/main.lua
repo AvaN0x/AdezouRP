@@ -195,6 +195,7 @@ Citizen.CreateThread(function()
       DisableControlAction(2, 33, true)
       DisableControlAction(2, 34, true)
       DisableControlAction(2, 35, true)
+      DisableControlAction(0, 44, true)
 
       DisableControlAction(0, 25,   true) -- Input Aim
       DisableControlAction(0, 24,   true) -- Input Attack
@@ -243,11 +244,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     if isCameraActive then
-      if IsControlPressed(0, 108) then
-      -- if IsControlPressed(0, 34) then
+      if IsControlPressed(0, 52) then -- A
         angle = angle - 1
-      elseif IsControlPressed(0, 109) then
-      -- elseif IsControlPressed(0, 35) then
+      elseif IsControlPressed(0, 51) then -- E
         angle = angle + 1
       end
       if angle > 360 then
