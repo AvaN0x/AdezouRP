@@ -36,8 +36,8 @@ Locales['fr'] = {
   ['threw_weapon'] = 'vous avez jeté ~y~1x~s~ ~b~%s~s~',
   ['threw_weapon_ammo'] = 'vous avez jeté ~y~1x~s~ ~b~%s~s~ avec ~o~%sx~s~ balles',
   -- Salary related
-  ['received_salary'] = 'vous avez reçu votre salaire: ~g~$%s~s~',
-  ['received_salary2'] = 'vous avez reçu votre salaire: ~g~$%s~s~',
+  ['received_salary'] = 'vous avez reçu votre salaire principal: ~g~$%s~s~',
+  ['received_salary2'] = 'vous avez reçu votre salaire secondaire: ~g~$%s~s~',
   ['received_help'] = 'vous avez reçu une aide de l\'état: ~g~$%s~s~',
   ['received_help2'] = 'vous avez reçu une aide de l\'état: ~g~$%s~s~',
   ['company_nomoney'] = 'votre entreprise n\'a plus d\'argent pour vous payer!',
