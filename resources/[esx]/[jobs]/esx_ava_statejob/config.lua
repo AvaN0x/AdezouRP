@@ -54,8 +54,8 @@ Config.Zones = {
 	},
 
 	StateAction = {
-		Pos   = {x = -546.82, y = -203.21, z = 46.43},
-		Size  = {x = 1.5, y = 1.5, z = 1.0},
+		Pos   = {x = -547.14, y = -203.1, z = 46.43},
+		Size  = {x = 1.3, y = 1.3, z = 1.0},
 		Color = {r = 0, g = 204, b = 3},
 		Marker = 27
 	},
