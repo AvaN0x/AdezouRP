@@ -253,9 +253,10 @@ RegisterNUICallback(
 
             TriggerServerEvent("esx:giveInventoryItem", data.player, data.item.type, data.item.name, count)
             ESX.Streaming.RequestAnimDict("mp_common", function()
-                TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 1.0, -1.0, 2000, 0, 1, true, true, true)
+                -- TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 1.0, -1.0, 2000, 0, 1, true, true, true)
+                TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, 8, 2000, 1, 0, 0, 0, 0)
 
-                Citizen.Wait(3000)
+                Citizen.Wait(2000)
                 ClearPedSecondaryTask(playerPed)
             end)
 
