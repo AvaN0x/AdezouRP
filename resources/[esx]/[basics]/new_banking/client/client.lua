@@ -12,8 +12,8 @@ inMenu			= false
 local showblips	= true
 local atbank	= false
 
-local closestBank = nil
-local closestATM = nil
+local bank = nil
+local atm = nil
 
 local banks = {
 	{name="Pacific Standard", id=108, colour = 18, x=242.04, y=224.45, z=106.286},
