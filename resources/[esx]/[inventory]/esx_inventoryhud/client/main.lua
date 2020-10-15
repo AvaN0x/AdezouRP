@@ -257,7 +257,8 @@ RegisterNUICallback(
                 TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, 8, 2000, 1, 0, 0, 0, 0)
 
                 Citizen.Wait(2000)
-                ClearPedSecondaryTask(playerPed)
+                -- ClearPedSecondaryTask(playerPed)
+                ClearPedTasksImmediately(playerPed)
             end)
 
             Wait(250)
