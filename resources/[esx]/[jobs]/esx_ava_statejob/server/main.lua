@@ -205,7 +205,7 @@ end)
 -- factures
 
 ESX.RegisterServerCallback('esx_ava_statejob:getBillUnpaid', function (source, cb)
-	MySQL.Async.fetchAll('SELECT CONCAT(firstname, " ", lastname) AS name, billing.label AS label, amount, addon_account.label AS target, DATE_FORMAT(date,\'%d/%m/%Y\') AS date, DATEDIFF(CURRENT_DATE, date) AS jours FROM billing JOIN users ON billing.identifier = users.identifier LEFT JOIN addon_account ON target = addon_account.name WHERE target_type = "society" AND DATEDIFF(CURRENT_DATE, date) >= @nbjours', 
+	MySQL.Async.fetchAll('SELECT CONCAT(firstname, " ", lastname) AS name, billing.label AS label, amount, addon_account.label AS target, DATE_FORMAT(date,\'%d/%m/%Y\') AS date, DATEDIFF(CURRENT_DATE, date) AS jours FROM billing JOIN users ON billing.identifier = users.identifier LEFT JOIN addon_account ON target = addon_account.name WHERE target_type = "society" AND DATEDIFF(CURRENT_DATE, date) >= @nbjours UNION SELECT addon_account.label AS name, billing.label AS label, amount, addon_account2.label AS target, DATE_FORMAT(date,\'%d/%m/%Y\') AS date, DATEDIFF(CURRENT_DATE, date) AS jours FROM billing JOIN addon_account ON billing.identifier = addon_account.name LEFT JOIN addon_account AS addon_account2 ON target = addon_account2.name WHERE target_type = "society" AND DATEDIFF(CURRENT_DATE, date) >= 3 ORDER BY date, name', 
 		{
 			['@nbjours']  = Config.FacturesDays
 		}, function(result)
