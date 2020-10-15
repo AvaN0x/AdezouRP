@@ -146,15 +146,81 @@
 --     end
 -- end
 
--- function Animation(dict, anim, ped)
---     RequestAnimDict(dict)
---     while not HasAnimDictLoaded(dict) do
---         Citizen.Wait(0)
---     end
+function Animation(dict, anim, ped)
+    RequestAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(0)
+    end
     
---     TaskPlayAnim(ped, dict, anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
--- end
+    TaskPlayAnim(ped, dict, anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
+end
+
+local chair = nil
+local isSitting = false
+
+local oldCoords = nil
+
+local Props = {
+	{hash = -1531508740, offX = 0.0, offY = 0.0, offZ = -1.0, offHeading = 180.0, bed = false},
+
+    {hash = GetHashKey("v_med_bed1"), offX = 0.0, offY = 0.0, offZ = -1.4, offHeading = 0.0, bed = true},
+    {hash = GetHashKey("v_med_bed2"), offX = 0.0, offY = 0.0, offZ = -1.4, offHeading = 0.0, bed = true},
+    {hash = GetHashKey("v_med_emptybed"), offX = 0.0, offY = 0.0, offZ = -1.2, offHeading = 90.0, bed = true},
+	{hash = GetHashKey("prop_bench_01a"), offX = 0.0, offY = 0.0, offZ = -0.4, offHeading = 180.0, bed = false},
+	{hash = GetHashKey("prop_busstop_02"), offX = 0.0, offY = 0.5, offZ = -0.4, offHeading = 180.0, bed = false},
+
+}
 
 
--- todo case when user die
+
+Citizen.CreateThread(function()
+	while true do
+		Wait(500)
+        chair = getChair()
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+        Wait(0)
+        if chair and not isSitting then
+            DrawMarker(27, chair.x, chair.y, chair.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 255, 0, 100, false, true, 2, false, false, false, false)
+
+            if IsControlJustPressed(0, 38) then -- E
+				local playerPed = PlayerPedId()
+				isSitting = true
+				oldCoords = GetEntityCoords(playerPed)
+
+                    TaskStartScenarioAtPosition(playerPed, Config.objects.SitAnimation.anim, chair.x, chair.y, chair.z, chair.heading, 0, true, true)
+			end
+		elseif chair and isSitting then
+			DrawMarker(27, chair.x, chair.y, chair.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 0, 0, 100, false, true, 2, false, false, false, false)
+
+			if IsControlJustPressed(0, 38) then -- E
+				local playerPed = PlayerPedId()
+				isSitting = false
+
+				SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z - 0.98)
+			end
+
+        end
+    end
+end)
+
+
+function getChair()
+	local playerPed = PlayerPedId()
+	local coords = GetEntityCoords(playerPed)
+	for _,v in ipairs(Props) do
+		local closestProp = GetClosestObjectOfType(coords, 1.0, v.hash, false, false, false)
+
+		if DoesEntityExist(closestProp) then
+			local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
+
+			return {x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, bed = v.bed}
+		end
+	end
+	return nil
+end
+
 

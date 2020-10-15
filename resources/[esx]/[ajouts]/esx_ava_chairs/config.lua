@@ -4,3 +4,7 @@
 -------------------------------------------
 
 Config = {}
+
+Config.objects = {
+	SitAnimation = {anim='PROP_HUMAN_SEAT_CHAIR_MP_PLAYER'},
+}
