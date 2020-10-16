@@ -28,8 +28,8 @@ window.addEventListener('message', function (event) {
 	if (item.message == "show") {
 		$(".header h1").html(item.shopName);
 		shopName = item.shopName;
-		if (item.clear == true){
-			$( ".home" ).empty();
+		if (item.clear == true) {
+			$(".home").empty();
 			prices = {}
 			maxes = {}
 			zone = null
@@ -43,28 +43,28 @@ window.addEventListener('message', function (event) {
 		closeMain();
 	}
 
-	if (item.message == "add"){
-		$( ".home" ).append('<div class="card">' +
-					// '<div class="image-holder">' +
-					// 	'<img src="img/' + item.item + '.png" onerror="this.src = \'img/default.png\'" alt="' + item.label + '" style="width:100%">' +
-					// '</div>' +
-					'<div class="container">' +
-						'<h4><b>' + item.label + '<div class="price">' + item.price + '$' + '</div>' + '</b></h4> ' +
-						'<div class="quantity">' +
-							'<div class="minus-btn btnquantity" name="' + item.item + '" id="minus">' +
-								'<img src="img/minus.png" alt="" />' +
-							'</div>' +
-							'<div class="number" name="name">1</div>' +
-							'<div class="plus-btn btnquantity" name="' + item.item + '" id="plus">' +
-								'<img src="img/plus.png" alt="" />' +
-							'</div>' +
-						'</div>' +
-						'<div class="purchase">' +
+	if (item.message == "add") {
+		$(".home").append('<div class="card">' +
+			'<div class="image-holder">' +
+			'<img src="nui://esx_inventoryhud/html/img/items/' + item.item + '.png" onerror="this.src = \'img/default.png\'" alt="' + item.label + '">' +
+			'</div>' +
+			'<div class="container">' +
+			'<h4><b>' + item.label + '<div class="price">' + item.price + '$' + '</div>' + '</b></h4> ' +
+			'<div class="quantity">' +
+			'<div class="minus-btn btnquantity" name="' + item.item + '" id="minus">' +
+			'<img src="img/minus.png" alt="" />' +
+			'</div>' +
+			'<div class="number" name="name">1</div>' +
+			'<div class="plus-btn btnquantity" name="' + item.item + '" id="plus">' +
+			'<img src="img/plus.png" alt="" />' +
+			'</div>' +
+			'</div>' +
+			'<div class="purchase">' +
 
-							'<div class="buy" name="' + item.item + '">Acheter</div>' +
-						'</div>' +
-					'</div>' +
-				'</div>');
+			'<div class="buy" name="' + item.item + '">Acheter</div>' +
+			'</div>' +
+			'</div>' +
+			'</div>');
 		prices[item.item] = item.price;
 		maxes[item.item] = 99;
 		zone = item.loc;
@@ -73,19 +73,19 @@ window.addEventListener('message', function (event) {
 
 
 
-$(".home").on("click", ".btnquantity", function() {
+$(".home").on("click", ".btnquantity", function () {
 
 	var $button = $(this);
 	var $name = $button.attr('name')
 	var oldValue = $button.parent().find(".number").text();
 	if ($button.get(0).id == "plus") {
-		if (oldValue <  maxes[$name]){
+		if (oldValue < maxes[$name]) {
 			var newVal = parseFloat(oldValue) + 1;
-		}else{
+		} else {
 			var newVal = parseFloat(oldValue);
 		}
 	} else {
-	// Don't allow decrementing below zero
+		// Don't allow decrementing below zero
 		if (oldValue > 1) {
 			var newVal = parseFloat(oldValue) - 1;
 		} else {
@@ -99,7 +99,7 @@ $(".home").on("click", ".btnquantity", function() {
 
 
 
-$(".home").on("click", ".buy", function() {
+$(".home").on("click", ".buy", function () {
 	var $button = $(this);
 	var $name = $button.attr('name')
 	var $count = parseFloat($button.parent().parent().find(".number").text());

@@ -1,15 +1,19 @@
-@font-face 
-{
-    font-family: iransans;
-    src: url(./iransans.otf);
+@font-face {
+  font-family: iransans;
+  src: url(./iransans.otf);
 }
 
-*{
-	user-select: none; /* supported by Chrome and Opera */
-   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Firefox */
-   -ms-user-select: none; /* Internet Explorer/Edge */
+* {
+  user-select: none;
+  /* supported by Chrome and Opera */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
 }
 
 html {
@@ -17,49 +21,46 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-body{
-	display: none;
-	color: #a8a8aa;
+body {
+  display: none;
+  color: #a8a8aa;
 }
 
 .card {
   /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: #ffffff1c;
   transition: 0.3s;
   width: 20%;
   margin-left: 1%;
   margin-right: 1%;
   margin-top: 5px;
-  
+
   padding: 1.5%;
 }
 
 .image-holder {
   width: 80%;
+  height: 30px;
   margin: 0 10%;
-	padding-top: 100%;
-	position: relative;
+  /* padding-top: 30px; */
+  /* position: absolute; */
 }
 
 .image-holder img {
-	position: absolute;
-	max-width:100%;
-	max-height:100%;
-	top: 50%;
-	bottom: 50%;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+  position: relative;
+  height: 30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.purchase{
-	display: flex;
-	text-align:center;
-	padding: 0;
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+.purchase {
+  display: flex;
+  text-align: center;
+  padding: 0;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .buy {
@@ -73,38 +74,39 @@ body{
   padding-right: 20px;
   text-decoration: none;
   margin-top: 5px;
-	width: 100%;
+  width: 100%;
   /* margin-left: auto; */
 }
 
 .buy:hover {
-	cursor: pointer;
-	background: #50ca6c;
-	text-decoration: none;
+  cursor: pointer;
+  background: #50ca6c;
+  text-decoration: none;
 }
 
-.price{
-	/* margin: auto; */
-	font-size: 20px;
-	text-decoration: none;
-	text-align:center;
-	width: 100%;
-	/* padding-left: 20px; */
-	padding-right: 20px;
-	/* margin-top: 5px; */
-	/* margin-left: auto; */
+.price {
+  /* margin: auto; */
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+  /* padding-left: 20px; */
+  padding-right: 20px;
+  /* margin-top: 5px; */
+  /* margin-left: auto; */
 }
 
 .quantity {
   /* padding-top: 20px; */
   /* margin-right: 60px; */
   display: flex;
-  text-align:center;
+  text-align: center;
   padding: 0;
   width: 100%;
   /* background-color: rgba(255, 255, 255, 0.1);
   border-radius: 500px; */
 }
+
 .quantity .number {
   -webkit-appearance: none;
   border: none;
@@ -114,15 +116,15 @@ body{
   color: #a8a8aa;
   /* font-weight: 300; */
 }
- 
-h4{
-	text-align:center;
-	margin-top: 10px;
-	margin-bottom: 0;
+
+h4 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
- 
+
 .btnquantity {
-	text-align: center;
+  text-align: center;
   width: 30px;
   height: 30px;
   /* background-color: #E1E8EE; */
@@ -133,13 +135,12 @@ h4{
   margin-left: auto;
   margin-right: auto;
 }
+
 .minus-btn img {
   width: 100%;
 }
 
-.plus-btn{
-	 
-}
+.plus-btn {}
 
 /* .close{
 	padding: 10px;
@@ -153,15 +154,15 @@ h4{
 .plus-btn img {
   width: 100%;
 }
- 
+
 button:focus,
 input:focus {
-  outline:0;
+  outline: 0;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(100,100,100,0.1);
+  box-shadow: 0 8px 16px 0 rgba(100, 100, 100, 0.1);
 }
 
 /* Add some padding inside the card container */
@@ -172,7 +173,7 @@ input:focus {
 
 .full-screen {
   width: 100%;
-  height:100%;
+  height: 100%;
   display: flex;
   align-items: center;
 }
@@ -192,7 +193,7 @@ input:focus {
 }
 
 .header {
-  width:100%;
+  width: 100%;
   height: 52px;
   background-color: #1a1c1e;
   /* background-color: #910108; */
@@ -212,25 +213,26 @@ input:focus {
 .header h1 {
   font-size: 2em;
   text-align: center;
-  margin:auto;
+  margin: auto;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar {
+  display: none;
 }
 
 .body {
-	overflow: auto;
-	width: 100%;
-	height: 440px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	/* display: none; */
-	font-family: iransans;
+  overflow: auto;
+  width: 100%;
+  height: 440px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* display: none; */
+  font-family: iransans;
 }
-*{
-	font-family: iransans;
+
+* {
+  font-family: iransans;
 }
 
 .content {
@@ -250,7 +252,8 @@ input:focus {
   margin-bottom: 0;
 }
 
-.content h2, p {
+.content h2,
+p {
   margin: 5px;
 }
 
@@ -261,14 +264,15 @@ input:focus {
   width: auto;
   height: 15%;
   margin: auto;
-  border:none;
+  border: none;
 }
 
-.buttonspot h2, p {
+.buttonspot h2,
+p {
   margin: 5px;
 }
 
-.submit{
+.submit {
   align-items: center;
   height: 30px;
   text-align: center;
@@ -293,14 +297,14 @@ input:focus {
   padding: 0;
 }
 
-.barre-progression h2{
+.barre-progression h2 {
   width: 100%;
   height: 60%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin:0;
+  margin: 0;
   color: #6699ff;
 }
 
@@ -309,23 +313,26 @@ input:focus {
   border: 0 none;
   background: #ddd;
   border-radius: 14px;
-  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
 }
+
 .progression::-moz-progress-bar {
   background: #FFF;
   border-radius: 14px;
-  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3);
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4), 0 2px 5px 0px rgba(0, 0, 0, 0.3);
 }
+
 .progression::-webkit-progress-bar {
   background: transparent;
 }
-.progression::-webkit-progress-value {  
+
+.progression::-webkit-progress-value {
   background-image: linear-gradient(to bottom, #6699ff, #4d88ff);
   border-radius: 14px;
-  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3); 
-} 
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4), 0 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
 
-.bold-text{
+.bold-text {
   font-weight: bold;
   font-size: 1.3em;
 }
