@@ -21,7 +21,8 @@ Locales ['fr'] = {
   ['coke_processprompt2'] = 'appuyez sur ~INPUT_CONTEXT~ pour mettre la ~g~Cocaïne~s~ en sachet.',
   ['coke_processingstarted2'] = 'Mise en sachet de la ~g~Coke~s~ en cours',
   ['coke_processed2'] = 'Vous avez mis ~b~5~s~ ~g~Cocaïne~s~ en sachet',
-  
+  ['coke_processingenough2'] = 'vous devez avoir ~b~1~s~ ~g~Pochon~s~, ~b~5~s~ ~g~Coke~s~',
+
   -- meth
   ['methyla_pickupprompt'] = 'appuyez sur ~INPUT_CONTEXT~ pour récuperer de la ~g~methylamine~s~.',
   ['pseudo_pickupprompt'] = 'appuyez sur ~INPUT_CONTEXT~ pour récuperer du ~g~pseudoéphedrine~s~.',

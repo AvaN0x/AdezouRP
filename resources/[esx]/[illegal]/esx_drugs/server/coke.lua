@@ -71,6 +71,7 @@ AddEventHandler('esx_illegal:processCoca', function()
         local xKeycoke, xDopebag = xPlayer.getInventoryItem('keycoke'), xPlayer.getInventoryItem('dopebag')
         if xKeycoke.count < 1 then
             TriggerClientEvent('esx:showNotification', _source, 'Vous n\'avez pas la clé')
+            return
         elseif xDopebag.count < 1 then
             TriggerClientEvent('esx:showNotification', _source, 'Vous n\'avez pas de pochon')
             return
@@ -96,9 +97,9 @@ AddEventHandler('esx_illegal:processCoca', function()
             playersProcessingCoca[_source] = nil
         end)
     else
-         print(('esx_illegal: %s attempted to exploit coke processing!'):format(GetPlayerIdentifiers(source)[1]))
-     end
- end)
+        print(('esx_illegal: %s attempted to exploit coke processing!'):format(GetPlayerIdentifiers(source)[1]))
+    end
+end)
 
 
 AddEventHandler('esx:playerDropped', function(playerID, reason)
