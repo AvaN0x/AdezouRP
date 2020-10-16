@@ -14,7 +14,7 @@ Config.Props = {
 	{hash = GetHashKey("v_med_bed2"), offX = 0.0, offY = 0.0, offZ = -0.8, offHeading = 0.0, type = "Bed"},
 	{hash = GetHashKey("prop_bench_01a"), offX = 0.0, offY = 0.0, offZ = -0.4, offHeading = 180.0, type = "Chair"},
 	{hash = GetHashKey("prop_busstop_02"), offX = 0.0, offY = 0.5, offZ = -0.4, offHeading = 180.0, type = "Chair"},
-	{hash = GetHashKey("v_corp_offchair"), offX = 0.0, offY = 0.0, offZ = -0.4, offHeading = 180.0, type = "Chair"},
+	{hash = GetHashKey("v_corp_offchair"), offX = 0.0, offY = 0.05, offZ = -0.4, offHeading = 180.0, type = "Chair"},
 
 }
 
@@ -23,12 +23,12 @@ Config.Anims = {
 		Male = {
 			scenario = "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER",
 			-- dict = ,
-			-- anim = 
+			-- anim =
 		},
 		Female = {
 			scenario = "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER",
 			-- dict = ,
-			-- anim = 
+			-- anim =
 		}
 	},
 	Bed = {
