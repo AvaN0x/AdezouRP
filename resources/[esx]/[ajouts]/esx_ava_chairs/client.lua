@@ -111,7 +111,9 @@ function StandUp()
 end
 
 AddEventHandler("esx:onPlayerDeath", function()
-    StandUp()
+    if isSitting then
+        StandUp()
+    end
 	IsDead = true
 end)
 

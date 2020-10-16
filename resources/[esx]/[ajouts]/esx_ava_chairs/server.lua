@@ -18,6 +18,7 @@ RegisterServerEvent("esx_ava_chairs:sitDown")
 AddEventHandler("esx_ava_chairs:sitDown", function(chair)
     local _source = source
     local coord = vector3(chair.x, chair.y, chair.z)
+
     if UsedProps[coord] == nil then
         PlayerUsing[_source] = coord
         UsedProps[coord] = true
@@ -28,7 +29,8 @@ end)
 RegisterServerEvent("esx_ava_chairs:standUp")
 AddEventHandler("esx_ava_chairs:standUp", function(chair)
     local _source = source
+    local coord = vector3(chair.x, chair.y, chair.z)
 
     PlayerUsing[_source] = nil
-    UsedProps[vector3(chair.x, chair.y, chair.z)] = nil
+    UsedProps[coord] = nil
 end)
