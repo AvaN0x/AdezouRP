@@ -9,12 +9,14 @@ client_scripts {
     'client/discord.lua',  -- discord activity
     'client/announce.lua',
     'client/crouch.lua',
-    'client/pointing.lua'
+    'client/pointing.lua',
+    'items/*_cl.lua'
 }
 
 server_scripts {
     "@mysql-async/lib/MySQL.lua",
     'server/main.lua',
     'server/rpchat.lua',  -- chat commands
-    'server/announce.lua'
+    'server/announce.lua',
+    'items/*_sv.lua'
 }

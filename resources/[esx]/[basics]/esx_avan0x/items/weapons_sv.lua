@@ -3,10 +3,6 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
 RegisterServerEvent("adezou_items:giveWeapon")
 AddEventHandler('adezou_items:giveWeapon', function(weaponName)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -378,23 +374,3 @@ ESX.RegisterUsableItem("weapon_rayminigun", function(source)
 	TriggerClientEvent("adezou_items:checkGiveWeapon", source, "weapon_rayminigun")
 end)
 
-
-
-
-
-
-
-
-
-
-------------
--- TENUES --
-------------
-
-ESX.RegisterUsableItem('tenuecasa', function(source)
-    TriggerClientEvent('adezou_items:settenuecasa', source)
-end)
-
-ESX.RegisterUsableItem('tenueprison', function(source)
-    TriggerClientEvent('adezou_items:settenueprison', source)
-end)
