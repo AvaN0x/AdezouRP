@@ -125,6 +125,7 @@ local damageValues = {
 Citizen.CreateThread(function()
     while true do
         Wait(0)
+        -- TODO probably edit to only edit the actually equiped weapon
         for k, v in pairs(damageValues) do
             SetWeaponDamageModifier(GetHashKey(k), v)
         end
