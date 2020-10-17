@@ -2,7 +2,7 @@
 
 enableprice = true -- true = carwash is paid, false = carwash is free
 
-price = 100 -- you may edit this to your liking. if "enableprice = false" ignore this one
+price = 500 -- you may edit this to your liking. if "enableprice = false" ignore this one
 
 --DO-NOT-EDIT-BELLOW-THIS-LINE--
 
@@ -13,7 +13,7 @@ AddEventHandler('es_carwash:checkmoney', function ()
 			userMoney = user.getMoney()
 			if userMoney >= price then
 				TriggerEvent('esx_statejob:getTaxed', 'CARWASH', price, function(toSociety)
-				end)			
+				end)
 				user.removeMoney(price)
 				TriggerClientEvent('es_carwash:success', source, price)
 			else

@@ -1,6 +1,6 @@
 --DO-NOT-EDIT-BELLOW-THIS-LINE--
 
-Key = 201 -- ENTER
+Key = 38 -- E
 
 vehicleWashStation = {
 	{26.5906,  -1392.0261,  27.3634},
@@ -43,7 +43,7 @@ Citizen.CreateThread(function ()
 				garageCoords2 = vehicleWashStation[i]
 				DrawMarker(1, garageCoords2[1], garageCoords2[2], garageCoords2[3], 0, 0, 0, 0, 0, 0, 5.0, 5.0, 2.0, 0, 157, 0, 155, 0, 0, 2, 0, 0, 0, 0)
 				if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), garageCoords2[1], garageCoords2[2], garageCoords2[3], true ) < 5 then
-					es_carwash_DrawSubtitleTimed("Appuyez sur [~g~ENTER~s~] pour laver votre véhicule !")
+					es_carwash_DrawSubtitleTimed("Appuyez sur [~g~E~s~] pour laver votre véhicule !")
 					if IsControlJustPressed(1, Key) then
 						TriggerServerEvent('es_carwash:checkmoney')
 					end
