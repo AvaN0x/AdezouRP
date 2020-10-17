@@ -13,6 +13,15 @@ Citizen.CreateThread(function()
 end)
 
 
+
+--------------------------------------
+------------ ACTIVATE PVP ------------
+--------------------------------------
+AddEventHandler("playerSpawned", function(spawn)
+	SetCanAttackFriendly(GetPlayerPed(-1), true, false)
+	NetworkSetFriendlyFireOption(true)
+end)
+
 ---------------------------------------
 -------- CAN'T FALL AT LOADING --------
 ---------------------------------------
