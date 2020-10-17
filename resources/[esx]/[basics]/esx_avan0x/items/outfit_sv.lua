@@ -4,9 +4,9 @@
 -------------------------------------------
 
 ESX.RegisterUsableItem('tenuecasa', function(source)
-    TriggerClientEvent('adezou_items:settenuecasa', source)
+    TriggerClientEvent('esx_avan0x:settenuecasa', source)
 end)
 
 ESX.RegisterUsableItem('tenueprison', function(source)
-    TriggerClientEvent('adezou_items:settenueprison', source)
+    TriggerClientEvent('esx_avan0x:settenueprison', source)
 end)

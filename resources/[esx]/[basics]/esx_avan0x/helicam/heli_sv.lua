@@ -1,6 +1,5 @@
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+-- FiveM Heli Cam by mraes
+-- Version 1.3 2017-06-12
 
 RegisterServerEvent('heli:spotlight')
 AddEventHandler('heli:spotlight', function(state)

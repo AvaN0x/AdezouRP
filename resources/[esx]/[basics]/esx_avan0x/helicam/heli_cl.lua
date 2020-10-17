@@ -1,23 +1,5 @@
-local Keys = {
-  ["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
-  ["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
-  ["TAB"] = 37, ["Q"] = 44, ["W"] = 32, ["E"] = 38, ["R"] = 45, ["T"] = 245, ["Y"] = 246, ["U"] = 303, ["P"] = 199, ["["] = 39, ["]"] = 40, ["ENTER"] = 18,
-  ["CAPS"] = 137, ["A"] = 34, ["S"] = 8, ["D"] = 9, ["F"] = 23, ["G"] = 47, ["H"] = 74, ["K"] = 311, ["L"] = 182,
-  ["LEFTSHIFT"] = 21, ["Z"] = 20, ["X"] = 73, ["C"] = 26, ["V"] = 0, ["B"] = 29, ["N"] = 249, ["M"] = 244, [","] = 82, ["."] = 81,
-  ["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70,
-  ["HOME"] = 213, ["PAGEUP"] = 10, ["PAGEDOWN"] = 11, ["DELETE"] = 178,
-  ["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
-  ["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
-}
-
-ESX                     = nil
-
-Citizen.CreateThread(function()
-  while ESX == nil do
-    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-    Citizen.Wait(1)
-  end
-end)
+-- FiveM Heli Cam by mraes
+-- Version 1.3 2017-06-12
 
 -- config
 local fov_max = 80.0
@@ -34,13 +16,12 @@ local toggle_lock_on = 22 -- control id to lock onto a vehicle with the camera. 
 -- Script starts here
 local helicam = false
 local polmav_hash = GetHashKey("polmav")
-local swift_hash = GetHashKey("swift")
 local fov = (fov_max+fov_min)*0.5
 local vision_state = 0 -- 0 is normal, 1 is nightmode, 2 is thermal vision
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(1)
-		if IsPlayerInPolmav() or IsPlayerInSwift() then
+        Citizen.Wait(0)
+		if IsPlayerInPolmav() then
 			local lPed = GetPlayerPed(-1)
 			local heli = GetVehiclePedIsIn(lPed)
 			
@@ -77,7 +58,7 @@ Citizen.CreateThread(function()
 			SetTimecycleModifierStrength(0.3)
 			local scaleform = RequestScaleformMovie("HELI_CAM")
 			while not HasScaleformMovieLoaded(scaleform) do
-				Citizen.Wait(1)
+				Citizen.Wait(0)
 			end
 			local lPed = GetPlayerPed(-1)
 			local heli = GetVehiclePedIsIn(lPed)
@@ -140,7 +121,7 @@ Citizen.CreateThread(function()
 				PushScaleformMovieFunctionParameterFloat(GetCamRot(cam, 2).z)
 				PopScaleformMovieFunctionVoid()
 				DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
-				Citizen.Wait(1)
+				Citizen.Wait(0)
 			end
 			helicam = false
 			ClearTimecycleModifier()
@@ -165,12 +146,6 @@ function IsPlayerInPolmav()
 	local lPed = GetPlayerPed(-1)
 	local vehicle = GetVehiclePedIsIn(lPed)
 	return IsVehicleModel(vehicle, polmav_hash)
-end
-
-function IsPlayerInSwift()
-	local lPed = GetPlayerPed(-1)
-	local vehicle = GetVehiclePedIsIn(lPed)
-	return IsVehicleModel(vehicle, swift_hash)
 end
 
 function IsHeliHighEnough(heli)

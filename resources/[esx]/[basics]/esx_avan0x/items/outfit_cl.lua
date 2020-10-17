@@ -2,12 +2,13 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local useTenu = nil
 
-RegisterNetEvent('adezou_items:settenuecasa')
-AddEventHandler('adezou_items:settenuecasa', function()
-	if useTenu ~= 'casa' then
-		useTenu = 'casa'
+local usedOutfit = nil
+
+RegisterNetEvent('esx_avan0x:settenuecasa')
+AddEventHandler('esx_avan0x:settenuecasa', function()
+	if usedOutfit ~= 'casa' then
+		usedOutfit = 'casa'
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			-- TODO change the way the skin is stored
 			if skin.sex == 0 then
@@ -43,7 +44,7 @@ AddEventHandler('adezou_items:settenuecasa', function()
 			end
 		end)
 	else
-		useTenu = nil
+		usedOutfit = nil
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, hasSkin)
 				if hasSkin then
@@ -56,10 +57,10 @@ AddEventHandler('adezou_items:settenuecasa', function()
 end)
 
 
-RegisterNetEvent('adezou_items:settenueprison')
-AddEventHandler('adezou_items:settenueprison', function()
-	if useTenu ~= 'prison' then
-		useTenu = 'prison'
+RegisterNetEvent('esx_avan0x:settenueprison')
+AddEventHandler('esx_avan0x:settenueprison', function()
+	if usedOutfit ~= 'prison' then
+		usedOutfit = 'prison'
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			local playerPed = GetPlayerPed(-1)
 			if skin.sex == 0 then
@@ -95,7 +96,7 @@ AddEventHandler('adezou_items:settenueprison', function()
 			end
 		end)
 	else
-		useTenu = nil
+		usedOutfit = nil
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, hasSkin)
 				if hasSkin then

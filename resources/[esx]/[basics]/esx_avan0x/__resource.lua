@@ -10,7 +10,7 @@ client_scripts {
     'client/announce.lua',
     'client/crouch.lua',
     'client/pointing.lua',
-    'items/*_cl.lua'
+    '**/*_cl.lua'
 }
 
 server_scripts {
@@ -18,5 +18,5 @@ server_scripts {
     'server/main.lua',
     'server/rpchat.lua',  -- chat commands
     'server/announce.lua',
-    'items/*_sv.lua'
+    '**/*_sv.lua'
 }
