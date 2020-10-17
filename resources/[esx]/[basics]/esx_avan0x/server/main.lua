@@ -87,7 +87,7 @@ TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 
 			local skinjson = "{"..table.concat(skin, ",").."}"
 			print(skinjson)
-			SendWebhookMessage("avan0x_wh_logs", user.firstname.." "..user.lastname.." ||"..user.identifier.."|| : \n"..msg.."```json\n"..skinjson.."```")
+			SendWebhookEmbedMessage("avan0x_wh_staff", "", "**" .. user.firstname.." "..user.lastname.."** ||"..user.identifier.."|| : \n"..msg.."```json\n"..skinjson.."```", 16773561)
 		end
 	end)
 end, function(source, args)
