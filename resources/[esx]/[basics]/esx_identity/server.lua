@@ -40,9 +40,28 @@ function getIdentity(source, callback)
   end)
 end
 
-TriggerEvent('es:addCommand', 'register', function(source, args, user)
-  TriggerClientEvent('esx_identity:showRegisterIdentity', source, {})
-end)
+TriggerEvent("es:addGroupCommand", "register", "admin", function(source, args, user)
+	if args[1] then
+		local playerId = tonumber(args[1])
+
+		-- is the argument a number?
+		if playerId then
+			-- is the number a valid player?
+			if GetPlayerName(playerId) then
+        TriggerClientEvent('esx_identity:showRegisterIdentity', playerId, {})
+			else
+				TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "Joueur non connecté." } })
+			end
+		else
+			TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "ID Incorrect." } })
+		end
+	else
+    TriggerClientEvent('esx_identity:showRegisterIdentity', source, {})
+	end
+end, function(source, args, user)
+	TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "Insufficient Permissions." } })
+end, {help = "Allow the user to make a new registration", params = {{name = "playerId", help = "(optional) player id"}}})
+
 
 
 

@@ -23,7 +23,7 @@ TriggerEvent("es:addGroupCommand", "heal", "admin", function(source, args, user)
 				TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "Joueur non connecté." } })
 			end
 		else
-			TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "ID Incorrecte." } })
+			TriggerClientEvent("chat:addMessage", source, { args = { "^1SYSTEM", "ID Incorrect." } })
 		end
 	else
 		print(("esx_ava_needs: %s healed self"):format(GetPlayerIdentifier(source, 0)))
