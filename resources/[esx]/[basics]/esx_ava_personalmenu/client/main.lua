@@ -367,15 +367,12 @@ function OpenOthersMenu()
 		align    = "left",
 		elements = {
 			{label = _U("others_toggle_hud"), value = "toggle_hud"}
-			-- {label = _U("others_toggle_drift"), value = "toggle_drift"}
 		}
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then
 			interface = not interface
 			TriggerEvent('ui:toggle', interface)
 			DisplayRadar(interface)
-		-- elseif data.current.value == "toggle_drift" then
-		-- 	TriggerServerEvent("drift:toggledrift", source)
 		end
 	end, function(data, menu)
 		menu.close()
