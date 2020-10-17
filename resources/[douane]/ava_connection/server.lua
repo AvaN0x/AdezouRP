@@ -93,7 +93,9 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
 			end
 
 			if gotRole then
-				SendWebhookEmbedMessage("avan0x_wh_connections", "", data.user.username.."#"..data.user.discriminator .. " se connecte.", 311891)
+				name = data.user.username .. "#" .. data.user.discriminator .. " (" .. name .. ")"
+				print(name .. " se connecte.")
+				SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " se connecte.", 311891)
 				deferrals.done()
 				return
 			end
@@ -111,19 +113,18 @@ AddEventHandler('playerDropped', function(reason)
 			break
 		end
     end
+	local name = (GetPlayerName(source) or "SteamName")
 
     if discordId then
         local endpoint = ("users/%s"):format(discordId)
         local member = DiscordRequest("GET", endpoint, {})
         if member.code == 200 then
 			local data = json.decode(member.data)
-			print(data.username.."#"..data.discriminator .. " a quitté.\n\tRaison : "..reason)
-			SendWebhookEmbedMessage("avan0x_wh_connections", "", data.username.."#"..data.discriminator .. " a quitté.\n\tRaison : "..reason, 16733269)
-			return
+			name = data.username .. "#" .. data.discriminator .. " (" .. name .. ")"
 		end
 	end
-	print((GetPlayerName(source) or "An user") .. " a quitté.\n\tRaison : "..reason)
-	SendWebhookEmbedMessage("avan0x_wh_connections", "", (GetPlayerName(source) or "An user") .. " a quitté.\n\tRaison : "..reason, 16733269)
+	print(name .. " a quitté.\n\tRaison : " .. reason)
+	SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " a quitté.\n\tRaison : " .. reason, 16733269)
 end)
 
 
