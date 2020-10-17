@@ -6,10 +6,10 @@ local vehParkedDensity = 0.8
 Citizen.CreateThread(function()
 	while true do
         -- Loop forever and update every frame
-	    Citizen.Wait(0)
-        
+		Citizen.Wait(0)
+
         -- Set vehicle density
-	    SetVehicleDensityMultiplierThisFrame(vehRoadDensity)
-	    SetParkedVehicleDensityMultiplierThisFrame(vehParkedDensity)
+		SetVehicleDensityMultiplierThisFrame(vehRoadDensity)
+		SetParkedVehicleDensityMultiplierThisFrame(vehParkedDensity)
 	end
 end)
