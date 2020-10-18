@@ -54,6 +54,7 @@ Locales["fr"] = {
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
   
   ["billing"] = "Facture",
+  ["billing_amount"] = "Montant de la facture",
   ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
   ["society_dirty_money"] = "Coffre Argent Sale:<span style='color: #eb4034'>$%s</span>",
   ["society_first_job"] = "Gestion métier principal",
@@ -72,6 +73,7 @@ Locales["fr"] = {
   ["admin_change_skin"] = "Changer l'Apparence",
   ["admin_save_skin"] = "Sauvegarder l'Apparence",
 
+  ["invalid_amount"] = "Montant invalide",
   ["no_players_nearby"] = "Aucun joueur à proximité",
   ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
   ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",

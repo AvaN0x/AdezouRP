@@ -426,17 +426,17 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		elseif data.current.value == "billing" then
 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'billing',
 				{
-					title = _U('invoice_amount')
+					title = _U('billing_amount')
 				},
 				function(data, menu)
 					local amount = tonumber(data.value)
 					if amount == nil or amount <= 0 then
-						ESX.ShowNotification(_U('amount_invalid'))
+						ESX.ShowNotification(_U('invalid_amount'))
 					else
 						menu.close()
 						local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 						if closestPlayer == -1 or closestDistance > 3.0 then
-							ESX.ShowNotification(_U('no_players_near'))
+							ESX.ShowNotification(_U('no_players_nearby'))
 						else
 							local playerPed = GetPlayerPed(-1)
 
