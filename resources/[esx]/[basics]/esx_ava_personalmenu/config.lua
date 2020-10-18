@@ -8,6 +8,6 @@ Config.Locale = 'fr'
 
 Config.MenuKey = 166
 
-Config.noclip_speed = 1.0
+Config.noclip_speed = 0.6
 Config.noclip_speed_shift = 4.0
 
