@@ -21,18 +21,10 @@ function RemoveOwnedVehicle(plate)
 end
 
 MySQL.ready(function()
-	Categories = MySQL.Sync.fetchAll('SELECT vehicle_categories.name, vehicle_categories.label FROM vehicleshop JOIN vehicle_categories ON vehicleshop.category = vehicle_categories.name UNION SELECT addon_account.name, addon_account.label FROM vehicleshop JOIN addon_account ON vehicleshop.category = addon_account.name')
-	local vehicles = MySQL.Sync.fetchAll('SELECT * FROM `vehicleshop` WHERE !ISNULL(price) UNION SELECT v1.name, v1.model, v2.price, v1.category FROM `vehicleshop` AS v1 JOIN `vehicleshop` AS v2 ON v1.model = v2.model WHERE ISNULL(v1.price) AND !ISNULL(v2.price)')
-
+	Categories = MySQL.Sync.fetchAll('SELECT vehicleshop.category AS name, CASE WHEN !ISNULL(vehicle_categories.label) THEN vehicle_categories.label ELSE vehicleshop.category END AS label FROM vehicleshop LEFT JOIN vehicle_categories ON vehicleshop.category = vehicle_categories.name GROUP BY vehicleshop.category UNION SELECT addon_account.name, addon_account.label FROM vehicleshop_society JOIN addon_account ON vehicleshop_society.society = addon_account.name')
+	local vehicles = MySQL.Sync.fetchAll('SELECT name, model, price, category, NULL AS society_category FROM `vehicleshop` WHERE !ISNULL(price) UNION SELECT vehicleshop.name, vehicleshop_society.model, vehicleshop.price, vehicleshop_society.society, vehicleshop.category FROM `vehicleshop_society` JOIN `vehicleshop` ON vehicleshop_society.model = vehicleshop.model')
 	for i=1, #vehicles, 1 do
 		local vehicle = vehicles[i]
-
-		for j=1, #Categories, 1 do
-			if Categories[j].name == vehicle.category then
-				vehicle.categoryLabel = Categories[j].label
-				break
-			end
-		end
 
 		table.insert(Vehicles, vehicle)
 	end

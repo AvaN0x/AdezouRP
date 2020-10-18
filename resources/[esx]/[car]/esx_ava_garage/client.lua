@@ -34,6 +34,11 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 	PlayerData = ESX.GetPlayerData()
+
+	ESX.TriggerServerCallback('esx_ava_garage:getVehiclesPrices', function(vehicles)
+		VehiclesList = vehicles
+	end)
+
 	setBlips()
 end)
 

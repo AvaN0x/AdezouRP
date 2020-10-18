@@ -72,7 +72,7 @@ end)
 
 ESX.RegisterServerCallback('esx_lscustom:getVehiclesPrices', function(source, cb)
 	if Vehicles == nil then
-		MySQL.Async.fetchAll('SELECT model, price FROM vehicleshop WHERE !ISNULL(price)', {}, function(result)
+		MySQL.Async.fetchAll('SELECT model, price FROM vehicleshop', {}, function(result)
 			local vehicles = {}
 
 			for i=1, #result, 1 do

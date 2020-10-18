@@ -91,7 +91,7 @@ function OpenShopMenu()
 	local playerPed = PlayerPedId()
 	FreezeEntityPosition(playerPed, true)
 	SetEntityVisible(playerPed, false)
-	SetEntityCoords(playerPed, Config.Zones.ShopInside.Pos.x, Config.Zones.ShopInside.Pos.y, Config.Zones.ShopInside.Pos.z)
+	SetEntityCoords(playerPed, CurrentActionData.Zones.ShopInside.Pos.x, CurrentActionData.Zones.ShopInside.Pos.y, CurrentActionData.Zones.ShopInside.Pos.z)
 	local vehiclesByCategory = {}
 	local elements           = {}
 	local playerData = ESX.GetPlayerData()
@@ -114,9 +114,8 @@ function OpenShopMenu()
 	end
 
 	for i=1, #Categories, 1 do
-		if not string.match(Categories[i].name, '^society_.*$') or -- on récupère les catégories normales
-			(playerData.job ~= nil and playerData.job.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job.name) or
-			(playerData.job2 ~= nil and playerData.job2.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job2.name) then
+		-- if not string.match(Categories[i].name, '^society_.*$') or -- on récupère les catégories normales
+		if has_value(CurrentActionData.Categories, Categories[i].name) then
 
 			local category         = Categories[i]
 			local categoryVehicles = vehiclesByCategory[category.name]
@@ -136,6 +135,34 @@ function OpenShopMenu()
 				max     = #Categories[i],
 				options = options
 			})
+		elseif (playerData.job ~= nil and playerData.job.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job.name) or
+			(playerData.job2 ~= nil and playerData.job2.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job2.name) then
+
+			local category         = Categories[i]
+			local categoryVehicles = vehiclesByCategory[category.name]
+			local options          = {}
+
+			local foreachDiff = 0
+			for j=1, #categoryVehicles, 1 do
+				local vehicle = categoryVehicles[j - foreachDiff]
+				if vehicle.society_category == CurrentActionData.JobOthers or has_value(CurrentActionData.Categories, vehicle.society_category) then
+					table.insert(options, ('%s <span style="color:green; float:right;">%s</span>'):format(vehicle.name, _U('generic_shopitem', (vehicle.price))))
+				else
+					table.remove(vehiclesByCategory[category.name], j - foreachDiff)
+					foreachDiff = foreachDiff + 1
+				end
+			end
+
+			if #options > 0 then
+				table.insert(elements, {
+					name    = category.name,
+					label   = category.label,
+					value   = 0,
+					type    = 'slider',
+					max     = #Categories[i],
+					options = options
+				})
+			end
 		end
 	end
 
@@ -159,9 +186,8 @@ function OpenShopMenu()
 				local playerData = ESX.GetPlayerData()
 
 				if playerData.job.grade_name == 'boss' and string.match(data.current.name, '^society_.*$') then
-					local elements = {
-					}
-					
+					local elements = {}
+
 					if (playerData.job ~= nil and playerData.job.grade_name == 'boss' and data.current.name == "society_"..playerData.job.name) then
 						table.insert(elements, {label = _U('society_type'), value = 'society'})
 					end
@@ -183,7 +209,7 @@ function OpenShopMenu()
 								menu.close()
 								DeleteShopInsideVehicles()
 
-								ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopSpawnCarSecond.Pos, Config.Zones.ShopSpawnCarSecond.Heading, function (vehicle)
+								ESX.Game.SpawnVehicle(vehicleData.model, CurrentActionData.Zones.ShopSpawnCarSecond.Pos, CurrentActionData.Zones.ShopSpawnCarSecond.Heading, function (vehicle)
 									SetVehicleColours(vehicle, 111, 111)
 									TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 
@@ -192,7 +218,7 @@ function OpenShopMenu()
 									local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 									vehicleProps.plate = newPlate
 									SetVehicleNumberPlateText(vehicle, newPlate)
-									
+
 										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
 										ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 										TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
@@ -220,7 +246,7 @@ function OpenShopMenu()
 									menu.close()
 									DeleteShopInsideVehicles()
 
-									ESX.Game.SpawnVehicle(vehicleData.model, Config.Zones.ShopSpawnCar.Pos, Config.Zones.ShopSpawnCar.Heading, function (vehicle)
+									ESX.Game.SpawnVehicle(vehicleData.model, CurrentActionData.Zones.ShopSpawnCar.Pos, CurrentActionData.Zones.ShopSpawnCar.Heading, function (vehicle)
 										SetVehicleColours(vehicle, 111, 111)
 										TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 
@@ -257,13 +283,13 @@ function OpenShopMenu()
 		DeleteShopInsideVehicles()
 		local playerPed = PlayerPedId()
 
+		FreezeEntityPosition(playerPed, false)
+		SetEntityVisible(playerPed, true)
+		SetEntityCoords(playerPed, CurrentActionData.Zones.ShopMenu.Pos.x, CurrentActionData.Zones.ShopMenu.Pos.y, CurrentActionData.Zones.ShopMenu.Pos.z)
+
 		CurrentAction     = 'shop_menu'
 		CurrentActionMsg  = _U('shop_menu')
 		CurrentActionData = {}
-
-		FreezeEntityPosition(playerPed, false)
-		SetEntityVisible(playerPed, true)
-		SetEntityCoords(playerPed, Config.Zones.ShopMenu.Pos.x, Config.Zones.ShopMenu.Pos.y, Config.Zones.ShopMenu.Pos.z)
 
 		IsInShopMenu = false
 	end, function (data, menu)
@@ -272,7 +298,7 @@ function OpenShopMenu()
 		DeleteShopInsideVehicles()
 		WaitForVehicleToLoad(vehicleData.model)
 
-		ESX.Game.SpawnLocalVehicle(vehicleData.model, Config.Zones.ShopInside.Pos, Config.Zones.ShopInside.Heading, function (vehicle)
+		ESX.Game.SpawnLocalVehicle(vehicleData.model, CurrentActionData.Zones.ShopInside.Pos, CurrentActionData.Zones.ShopInside.Heading, function (vehicle)
 			table.insert(LastVehicles, vehicle)
 			SetVehicleColours(vehicle, 111, 111)
 			TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
@@ -314,11 +340,11 @@ AddEventHandler('esx:setJob2', function (job2)
 	ESX.PlayerData.job2 = job2
 end)
 
-AddEventHandler('esx_vehicleshop:hasEnteredMarker', function (zone)
+AddEventHandler('esx_vehicleshop:hasEnteredMarker', function (zone, data)
 	if zone == 'ShopMenu' then
 		CurrentAction     = 'shop_menu'
 		CurrentActionMsg  = _U('shop_menu')
-		CurrentActionData = {}
+		CurrentActionData = data
 	elseif zone == 'ResellVehicle' then
 
 		local playerPed = PlayerPedId()
@@ -348,7 +374,9 @@ AddEventHandler('esx_vehicleshop:hasEnteredMarker', function (zone)
 					label = vehicleData.name,
 					price = resellPrice,
 					model = model,
-					plate = plate
+					plate = plate,
+					category = vehicleData.category,
+					shopdata = data
 				}
 			end
 		end
@@ -373,7 +401,7 @@ AddEventHandler('onResourceStop', function(resource)
 
 			FreezeEntityPosition(playerPed, false)
 			SetEntityVisible(playerPed, true)
-			SetEntityCoords(playerPed, Config.Zones.ShopMenu.Pos.x, Config.Zones.ShopMenu.Pos.y, Config.Zones.ShopMenu.Pos.z)
+			SetEntityCoords(playerPed, CurrentActionData.Zones.ShopMenu.Pos.x, CurrentActionData.Zones.ShopMenu.Pos.y, CurrentActionData.Zones.ShopMenu.Pos.z)
 		end
 	end
 end)
@@ -381,16 +409,35 @@ end)
 
 -- Create Blips
 Citizen.CreateThread(function()
-	local blip = AddBlipForCoord(Config.Zones.ShopMenu.Pos.x, Config.Zones.ShopMenu.Pos.y, Config.Zones.ShopMenu.Pos.z)
+	for k_shop, v_shop in pairs(Config.Shops) do
+		local blip = AddBlipForCoord(v_shop.Zones.ShopMenu.Pos.x, v_shop.Zones.ShopMenu.Pos.y, v_shop.Zones.ShopMenu.Pos.z)
 
-	SetBlipSprite (blip, 326)
-	SetBlipDisplay(blip, 4)
-	SetBlipScale  (blip, 0.8)
-	SetBlipAsShortRange(blip, true)
+		SetBlipSprite(blip, v_shop.Blip.Sprite)
+		SetBlipDisplay(blip, 4)
+		SetBlipScale(blip, 0.8)
+		SetBlipColour(blip, v_shop.Blip.Color)
 
-	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentString(_U('car_dealer'))
-	EndTextCommandSetBlipName(blip)
+		SetBlipAsShortRange(blip, true)
+
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString(v_shop.Name)
+		EndTextCommandSetBlipName(blip)
+
+		if v_shop.Zones.ResellVehicle.Blip then
+			local blip2 = AddBlipForCoord(v_shop.Zones.ResellVehicle.Pos.x, v_shop.Zones.ResellVehicle.Pos.y, v_shop.Zones.ResellVehicle.Pos.z)
+
+			SetBlipSprite(blip2, v_shop.Blip.Sprite)
+			SetBlipDisplay(blip2, 4)
+			SetBlipScale(blip2, 0.6)
+			SetBlipColour(blip2, 79)
+
+			SetBlipAsShortRange(blip2, true)
+
+			BeginTextCommandSetBlipName("STRING")
+			AddTextComponentString(_U('vehicle_sell_label'))
+			EndTextCommandSetBlipName(blip2)
+		end
+	end
 end)
 
 -- Display markers
@@ -400,9 +447,11 @@ Citizen.CreateThread(function()
 
 		local coords = GetEntityCoords(PlayerPedId())
 
-		for k,v in pairs(Config.Zones) do
-			if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
+		for k_shop, v_shop in pairs(Config.Shops) do
+			for k, v in pairs(v_shop.Zones) do
+				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
+					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
+				end
 			end
 		end
 	end
@@ -415,19 +464,23 @@ Citizen.CreateThread(function ()
 
 		local coords      = GetEntityCoords(PlayerPedId())
 		local isInMarker  = false
-		local currentZone = nil
+		local currentZone, currentZoneData = nil, nil
 
-		for k,v in pairs(Config.Zones) do
-			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
-				isInMarker  = true
-				currentZone = k
+		for k_shop, v_shop in pairs(Config.Shops) do
+			for k, v in pairs(v_shop.Zones) do
+				if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
+					isInMarker  = true
+					currentZone = k
+					currentZoneData = v_shop
+					break
+				end
 			end
 		end
 
 		if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
 			HasAlreadyEnteredMarker = true
 			LastZone                = currentZone
-			TriggerEvent('esx_vehicleshop:hasEnteredMarker', currentZone)
+			TriggerEvent('esx_vehicleshop:hasEnteredMarker', currentZone, currentZoneData)
 		end
 
 		if not isInMarker and HasAlreadyEnteredMarker then
@@ -436,6 +489,7 @@ Citizen.CreateThread(function ()
 		end
 	end
 end)
+
 
 -- Key controls
 Citizen.CreateThread(function()
@@ -452,14 +506,18 @@ Citizen.CreateThread(function()
 					ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 					OpenShopMenu()
 				elseif CurrentAction == 'resell_vehicle' then
-					ESX.TriggerServerCallback('esx_vehicleshop:resellVehicle', function(vehicleSold)
-						if vehicleSold then
-							ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
-							ESX.ShowNotification(_U('vehicle_sold_for', CurrentActionData.label, ESX.Math.GroupDigits(CurrentActionData.price)))
-						else
-							ESX.ShowNotification(_U('not_yours'))
-						end
-					end, CurrentActionData.plate, CurrentActionData.model)
+					if CurrentActionData.category == CurrentActionData.shopdata.JobOthers or has_value(CurrentActionData.shopdata.Categories, CurrentActionData.category) then
+						ESX.TriggerServerCallback('esx_vehicleshop:resellVehicle', function(vehicleSold)
+							if vehicleSold then
+								ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
+								ESX.ShowNotification(_U('vehicle_sold_for', CurrentActionData.label, ESX.Math.GroupDigits(CurrentActionData.price)))
+							else
+								ESX.ShowNotification(_U('not_yours'))
+							end
+						end, CurrentActionData.plate, CurrentActionData.model)
+					else
+						ESX.ShowNotification(_U('cant_sell_here'))
+					end
 				end
 
 				CurrentAction = nil
