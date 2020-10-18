@@ -609,6 +609,9 @@ function AdminLoop()
 					local dx, dy, dz = getCamDirection()
 					local speed = Config.noclip_speed
 					SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
+					if IsControlPressed(0, 21) then
+						speed = Config.noclip_speed_shift
+					end
 					if IsControlPressed(0, 32) then
 						x = x + speed * dx
 						y = y + speed * dy
@@ -709,7 +712,7 @@ function admin_goto()
 		
 		if type(plyId) == 'number' then
 			local targetPlyCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(plyId)))
-			SetEntityCoords(playerPed, targetPlyCoords)
+			SetPedCoordsKeepVehicle(playerPed, targetPlyCoords)
 		end
 	end
 end
