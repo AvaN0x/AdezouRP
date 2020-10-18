@@ -32,6 +32,7 @@ Config.Shops = {
 			"vans"
 		},
 		JobOthers = "hide_car",
+		VehicleType = "car",
 		Zones = {
 			ShopMenu = {
 				Pos   = { x = -33.777, y = -1102.021, z = 25.54 },
@@ -73,6 +74,7 @@ Config.Shops = {
 			"planes"
 		},
 		JobOthers = "hide_plane",
+		VehicleType = "plane",
 		Zones = {
 			ShopMenu = {
 				Pos   = { x = -1242.65, y = -3392.72, z = 12.96 },
@@ -115,6 +117,7 @@ Config.Shops = {
 			"helis"
 		},
 		JobOthers = "hide_heli",
+		VehicleType = "heli",
 		Zones = {
 			ShopMenu = {
 				Pos   = { x = -1147.44, y = -2825.16, z = 12.97 },
@@ -157,6 +160,7 @@ Config.Shops = {
 			"boats"
 		},
 		JobOthers = "hide_boat",
+		VehicleType = "boat",
 		Zones = {
 			ShopMenu = {
 				Pos   = { x = -816.27, y = -1346.25, z = 4.17 },

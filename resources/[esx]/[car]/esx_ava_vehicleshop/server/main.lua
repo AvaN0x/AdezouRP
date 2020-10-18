@@ -34,7 +34,7 @@ MySQL.ready(function()
 end)
 
 RegisterServerEvent('esx_vehicleshop:setVehicleOwned')
-AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps)
+AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps, type)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
@@ -53,11 +53,12 @@ AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps)
 		end)
 
 		xPlayer.removeMoney(vehicleData.price)
-		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)',
+		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)',
 		{
 			['@owner']   = xPlayer.identifier,
 			['@plate']   = vehicleProps.plate,
-			['@vehicle'] = json.encode(vehicleProps)
+			['@vehicle'] = json.encode(vehicleProps),
+			['@type'] = type
 		}, function (rowsChanged)
 			TriggerClientEvent('esx:showNotification', _source, _U('vehicle_belongs', vehicleProps.plate))
 		end)
@@ -69,7 +70,7 @@ end)
 
 
 RegisterServerEvent('esx_vehicleshop:setVehicleOwnedSociety')
-AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, vehicleProps)
+AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, vehicleProps, type)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
@@ -88,11 +89,12 @@ AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, veh
 		end)
 
 		xPlayer.removeMoney(vehicleData.price)
-		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)',
+		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)',
 		{
-			['@owner']   = society,
-			['@plate']   = vehicleProps.plate,
-			['@vehicle'] = json.encode(vehicleProps)
+			['@owner'] = society,
+			['@plate'] = vehicleProps.plate,
+			['@vehicle'] = json.encode(vehicleProps),
+			['@type'] = type
 		}, function (rowsChanged)
 			TriggerClientEvent('esx:showNotification', _source, _U('vehicle_belongs_society', vehicleProps.plate))
 		end)

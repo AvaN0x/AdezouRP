@@ -5,6 +5,8 @@
 -------------------------------------------
 
 Locales['fr'] = {
+  ['vehicle_belongs'] = 'le véhicule avec la plaque ~y~%s~s~ est désormais à ~b~vous~s~',
+  ['vehicle_belongs_society'] = 'le véhicule avec la plaque ~y~%s~s~ est désormais à ~b~votre société~s~',
   ['purchase_type'] = 'type d\'achat',
   ['society_type'] = 'societé principale',
   ['society_type2'] = 'societé secondaire',
@@ -18,7 +20,7 @@ Locales['fr'] = {
   ['sell_menu'] = 'appuyez sur ~INPUT_CONTEXT~ pour vendre ~y~%s~s~ au prix de ~g~$%s~s~',
   ['shop_menu'] = 'appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
   ['generic_shopitem'] = '$%s',
-  ['vehicle_purchased'] = 'vous avez acheté un véhicsule',
+  ['vehicle_purchased'] = 'vous avez acheté un véhicule',
   
   ['vehicle_sell_label'] = "Vente véhicules",
   ['not_yours'] = 'ce véhicule ne vous appartient pas',

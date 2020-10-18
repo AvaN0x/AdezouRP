@@ -219,7 +219,7 @@ function OpenShopMenu()
 									vehicleProps.plate = newPlate
 									SetVehicleNumberPlateText(vehicle, newPlate)
 
-										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps)
+										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps, CurrentActionData.VehicleType)
 										ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 										TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
 
@@ -256,7 +256,7 @@ function OpenShopMenu()
 										vehicleProps.plate = newPlate
 										SetVehicleNumberPlateText(vehicle, newPlate)
 
-											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps)
+											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps, CurrentActionData.VehicleType)
 											ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 											TriggerServerEvent('esx_vehiclelock:registerkey', vehicleProps.plate, nil)
 
