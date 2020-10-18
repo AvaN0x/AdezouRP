@@ -608,6 +608,11 @@ function AdminLoop()
 					local x, y, z = getPosition()
 					local dx, dy, dz = getCamDirection()
 					local speed = Config.noclip_speed
+
+					SetTextComponentFormat('STRING')
+					AddTextComponentString("~INPUT_SPRINT~ pour accélérer")
+					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+
 					SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
 					if IsControlPressed(0, 21) then
 						speed = Config.noclip_speed_shift
@@ -709,7 +714,7 @@ function admin_goto()
 
 	if plyId ~= nil then
 		plyId = tonumber(plyId)
-		
+
 		if type(plyId) == 'number' then
 			local targetPlyCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(plyId)))
 			SetPedCoordsKeepVehicle(playerPed, targetPlyCoords)
