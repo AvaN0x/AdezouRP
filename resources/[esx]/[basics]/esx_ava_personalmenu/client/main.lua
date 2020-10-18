@@ -452,9 +452,6 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 				function(data, menu)
 					menu.close()
 				end)
-			end
-
-
 		elseif data.current.value == "society_first_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",
 			{
