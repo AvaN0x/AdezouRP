@@ -151,7 +151,7 @@ Config.Shops = {
 		}
 	},
 	Boats = {
-		Name = "Concessionnaire hélicoptère",
+		Name = "Concessionnaire bateaux",
 		Blip = {
 			Sprite = 427,
 			Color = 0
