@@ -19,10 +19,10 @@ Config.Shops = {
 			Color = 0
 		},
 		Categories = {
-			"compact",
+			"compacts",
 			"coupes",
 			"motorcycles",
-			"muscles",
+			"muscle",
 			"offroad",
 			"sedans",
 			"sports",
