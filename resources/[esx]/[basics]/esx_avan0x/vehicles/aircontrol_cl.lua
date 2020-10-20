@@ -29,7 +29,6 @@ Citizen.CreateThread(function()
         -- Get player, vehicle and vehicle class
         local playerPed = GetPlayerPed(-1)
         local vehicle = GetVehiclePedIsIn(playerPed, false)
-        local vehicleClass = GetVehicleClass(vehicle)
 
         -- Disable control if player is in the driver seat and vehicle class matches array
         if ((GetPedInVehicleSeat(vehicle, -1) == playerPed) and vehicleClassDisableControl[GetVehicleClass(vehicle)]) then
