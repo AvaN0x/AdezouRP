@@ -126,7 +126,7 @@ function openmenuvehicle()
 
   if not Config.CheckOwnership or (Config.AllowPolice and PlayerData.job.name == 'police') or (Config.CheckOwnership and myVeh) then  
     if globalplate ~= nil or globalplate ~= "" or globalplate ~= " " then
-      CloseToVehicle = true
+      -- CloseToVehicle = true
       local vehFront = VehicleInFront()
       local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
       local closecar = GetClosestVehicle(x, y, z, 4.0, 0, 71)
@@ -212,7 +212,7 @@ Citizen.CreateThread(function()
 		local vehicle = GetClosestVehicle(pos['x'], pos['y'], pos['z'], 2.0, 0, 70)
 		if DoesEntityExist(vehicle) then
 			CloseToVehicle = true
-		else
+    else
 			CloseToVehicle = false
 			lastOpen = false
 			ESX.UI.Menu.CloseAll()
