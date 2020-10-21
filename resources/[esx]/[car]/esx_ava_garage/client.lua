@@ -288,6 +288,7 @@ function SpawnVehicle(vehicle, fuel, target)
 		},this_Garage.SpawnPoint.Heading, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
+		SetEntityAsMissionEntity(callback_vehicle)
 		TaskWarpPedIntoVehicle(GetPlayerPed(-1), callback_vehicle, -1)
 		TriggerEvent('esx_legacyfuel:SetFuel', callback_vehicle, fuel)
 		local vhealth = vehicle.health
@@ -314,11 +315,12 @@ function SpawnPoundedVehicle(vehicle, target)
 	ESX.Game.SpawnVehicle(vehicle.model, {
 		x = this_Garage.SpawnMunicipalPoundPoint.Pos.x ,
 		y = this_Garage.SpawnMunicipalPoundPoint.Pos.y,
-		z = this_Garage.SpawnMunicipalPoundPoint.Pos.z + 1											
+		z = this_Garage.SpawnMunicipalPoundPoint.Pos.z + 1
 		}, this_Garage.SpawnMunicipalPoundPoint.Heading, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		local plate = GetVehicleNumberPlateText(callback_vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
+		SetEntityAsMissionEntity(callback_vehicle)
 		TriggerEvent('esx_legacyfuel:SetFuel', callback_vehicle, 20.0)
 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
 	end)
