@@ -11,7 +11,7 @@ TriggerEvent('es:addGroupCommand', 'report', 'user', function(source, args)
     local msg = table.concat(args, " ") or ""
 
 	if msg ~= "" then
-		SendWebhookEmbedMessage("avan0x_wh_staff", "", "**" .. name .. "** :\n"..msg, 16733269)
+		SendWebhookEmbedMessage("avan0x_wh_staff", "", "[" .. source .. "]**" .. name .. "** :\n"..msg, 16733269)
 
 		TriggerClientEvent('esx_avan0x:sendReport', -1, source, name, msg)
 	end
