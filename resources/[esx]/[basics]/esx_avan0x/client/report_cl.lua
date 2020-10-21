@@ -1,14 +1,22 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 PlayerGroup = nil
 
 Citizen.CreateThread(function()
-	while PlayerGroup == nil do
-		ESX.TriggerServerCallback("esx_ava_personalmenu:getUsergroup", function(group) 
-			PlayerGroup = group
-		end)
-		Citizen.Wait(10)
+    while ESX == nil do
+		Citizen.Wait(0)
 	end
-end)
 
+	while PlayerGroup == nil do
+		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) 
+			PlayerGroup = group
+        end)
+		Citizen.Wait(10)
+    end
+end)
 
 RegisterNetEvent('esx_avan0x:sendReport')
 AddEventHandler('esx_avan0x:sendReport', function(id, name, message)

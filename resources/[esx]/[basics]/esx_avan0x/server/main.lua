@@ -7,6 +7,22 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+ESX.RegisterServerCallback('esx_avan0x:getUsergroup', function(source, cb)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	if xPlayer ~= nil then
+		local playerGroup = xPlayer.getGroup()
+
+        if playerGroup ~= nil then 
+            cb(playerGroup)
+        else
+            cb(nil)
+        end
+	else
+		cb(nil)
+	end
+end)
+
 
 function SendWebhookMessage(webhookName, message)
 	local webhook = GetConvar(webhookName, "none")

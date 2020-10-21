@@ -1,3 +1,9 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
+
 TriggerEvent('es:addGroupCommand', 'report', 'user', function(source, args)
 	local xPlayer = ESX.GetPlayerFromId(source)
     local name = (GetPlayerName(source) or "SteamName")

@@ -24,7 +24,7 @@ Citizen.CreateThread(function()
 	PlayerData = ESX.GetPlayerData()
 
 	while PlayerGroup == nil do
-		ESX.TriggerServerCallback("esx_ava_personalmenu:getUsergroup", function(group) 
+		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) 
 			PlayerGroup = group
 		end)
 		Citizen.Wait(10)
