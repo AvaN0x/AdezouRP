@@ -17,7 +17,7 @@ AddEventHandler('esx_avan0x:sendReport', function(id, name, message)
     if sourceId == myId then
         TriggerEvent('chatMessage', "", {255, 0, 0}, "Rapport envoyé aux administrateurs en ligne !\n")
         TriggerEvent('chatMessage', "", {255, 0, 0}, " [REPORT] ^0| ^2[".. id .."] ^6" .. name .."  "..":^0  " .. message)
-    elseif group ~= 'user' and sourceId ~= myId then
+    elseif PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
         TriggerEvent('chatMessage', "", {255, 0, 0}, " [REPORT] ^0| ^2[".. id .."] ^6" .. name .."  "..":^0  " .. message)
     end
 end)
