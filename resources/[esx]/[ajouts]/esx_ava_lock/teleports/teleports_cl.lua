@@ -132,8 +132,8 @@ function Teleport(coords, allowVehicles, heading)
 			SetEntityHeading(ped, heading)
 		end
 
-		Citizen.Wait(500)
-		
+		Citizen.Wait(1000)
+
 		FreezeEntityPosition(ped, false)
 	DoScreenFadeIn(100)
 end
