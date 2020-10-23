@@ -61,13 +61,13 @@ AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'drunk', 0, '#8F15A5', function(status)
         return false
     end, function(status)
-		status.remove(1500)
+		status.remove(1000)
 	end)
 	
 	TriggerEvent('esx_status:registerStatus', 'drugged', 0, '#15A517', function(status)
         return false
     end, function(status)
-		status.remove(1500)
+		status.remove(1000)
     end)
 
 	Citizen.CreateThread(function()
