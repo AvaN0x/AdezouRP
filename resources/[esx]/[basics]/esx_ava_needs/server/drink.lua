@@ -6,7 +6,7 @@
 ESX.RegisterUsableItem("water", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "water")
 
-	TriggerClientEvent("esx_status:add", source, "thirst", 600000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
 
 	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
@@ -22,7 +22,7 @@ end)
 ESX.RegisterUsableItem("jus_raisin", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "jus_raisin")
 
-	TriggerClientEvent("esx_status:add", source, "thirst", 100000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 600000)
 
 	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
@@ -30,7 +30,7 @@ end)
 ESX.RegisterUsableItem("cocacola", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "cocacola")
 
-	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 300000)
 
 	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
@@ -47,7 +47,7 @@ end)
 ESX.RegisterUsableItem("sprite", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "sprite")
 
-	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 300000)
 
 	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
@@ -55,7 +55,7 @@ end)
 ESX.RegisterUsableItem("orangina", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "orangina")
 
-	TriggerClientEvent("esx_status:add", source, "thirst", 200000)
+	TriggerClientEvent("esx_status:add", source, "thirst", 300000)
 	
 	TriggerClientEvent("esx_ava_needs:onDrink", source)
 end)
