@@ -121,20 +121,27 @@ end)
 
 
 function Teleport(coords, allowVehicles, heading)
-	local ped = GetPlayerPed(-1)
+	local playerPed = GetPlayerPed(-1)
+	local vehicle = nil
 
 	DoScreenFadeOut(100)
 		Citizen.Wait(250)
-		FreezeEntityPosition(ped, true)
+		if IsPedSittingInAnyVehicle(playerPed) then
+			vehicle = GetVehiclePedIsIn(playerPed, false)
+			FreezeEntityPosition(vehicle, true)
+		end
+		FreezeEntityPosition(playerPed, true)
 
-		SetPedCoordsKeepVehicle(ped, coords.x, coords.y, coords.z)
+		SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)
 		if heading then
-			SetEntityHeading(ped, heading)
+			SetEntityHeading(playerPed, heading)
 		end
 
 		Citizen.Wait(1000)
-
-		FreezeEntityPosition(ped, false)
+		if vehicle then
+			FreezeEntityPosition(vehicle, false)
+		end
+		FreezeEntityPosition(playerPed, false)
 	DoScreenFadeIn(100)
 end
 
