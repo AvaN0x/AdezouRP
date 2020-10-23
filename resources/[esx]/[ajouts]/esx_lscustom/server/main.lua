@@ -18,12 +18,12 @@ AddEventHandler('esx_lscustom:buyMod', function(price)
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
 			local society = {name = "mecano"}
-			local mecanoPart = 0.1
+			local mecanoPart = 0.18
 			-- TriggerEvent('esx_society:saveData',xPlayer,"purchase",society,price,(societyAccount.money-price))
-			TriggerEvent('esx_avan0x:logTransaction', 'society_mecano', 'society_mecano', 'CUSTOM', 'CUSTOM', "purchase_custom", price * (1 - mecanoPart))
+			TriggerEvent('esx_avan0x:logTransaction', 'society_mecano', 'society_mecano', 'CUSTOM', 'CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
 			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
-			end)    		
-			societyAccount.removeMoney(price * (1 - mecanoPart))
+			end)
+			societyAccount.removeMoney(tonumber(price * (1 - mecanoPart)))
 		else
 			TriggerClientEvent('esx_lscustom:cancelInstallMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('not_enough_money'))
@@ -35,7 +35,7 @@ AddEventHandler('esx_lscustom:buyMod', function(price)
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
 			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
-			end)    		
+			end)
 			xPlayer.removeMoney(price)
 		else
 			TriggerClientEvent('esx_lscustom:cancelInstallMod', _source)
