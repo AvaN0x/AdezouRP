@@ -13,7 +13,8 @@ Config.Locale                     = 'fr'
 local second = 1000
 local minute = 60 * second
 
-Config.EarlyRespawnTimer          = 15 * minute  -- Time til respawn is available
+-- Config.EarlyRespawnTimer          = 15 * minute  -- Time til respawn is available
+Config.EarlyRespawnTimer          = 5 * minute  -- Time til respawn is available
 Config.BleedoutTimer              = 20 * minute -- Time til the player bleeds out
 
 Config.EnablePlayerManagement     = true
