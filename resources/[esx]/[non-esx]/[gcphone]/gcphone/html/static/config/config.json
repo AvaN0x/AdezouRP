@@ -22,23 +22,23 @@
     "#8D6E63",
     "#78909C"
   ],
-
   "useFormatNumberFrance": false,
-
   "useWebRTCVocal": false,
   "RTCConfig": {
-    "iceServers": [{
-      "urls": ["turn:barrax.needrp.net"],
-      "username": "gcphone",
-      "credential": "gcphone"
-    }]
+    "iceServers": [
+      {
+        "urls": [
+          "turn:barrax.needrp.net"
+        ],
+        "username": "gcphone",
+        "credential": "gcphone"
+      }
+    ]
   },
-
   "//": "REQUIRES https://github.com/citizenfx/screenshot-basic otherwise set enableTakePhoto to false. Thanks to @GLDmACK for his Upload Service!!!",
   "enableTakePhoto": true,
   "fileUploadService_Url": "https://gcphone.herokuapp.com/uploads/upload",
   "fileUploadService_Field": "image",
-
   "background": {
     "Fond bleu": "fond_bleu.png",
     "Fond orange": "fond_orange.png",
@@ -55,7 +55,6 @@
     "label": "Nature nuit",
     "value": "nature_night.png"
   },
-
   "coque": {
     "Samsung Galaxy S8": "s8.png",
     "Samsung Galaxy S10": "s10.png",
@@ -63,7 +62,6 @@
     "Iphone 11 Green": "iphone11green.png",
     "Google Top Cam": "op.png"
   },
-
   "sonido": {
     "Astronomia": "ring.ogg",
     "Crystallize": "Crystallize.ogg",
@@ -74,21 +72,20 @@
     "Non Copyright - Spectre": "Alan-Walker-Spectre.ogg",
     "Non Copyright 2 - Mortals": "Warriyo-Mortals.ogg"
   },
-
   "coque_default": {
     "label": "Samsung Galaxy S10",
     "value": "s10.png"
   },
-
   "sonido_default": {
     "label": "Crystallize",
     "value": "crystallize.ogg"
   },
-
-  "serviceCall": [{
+  "serviceCall": [
+    {
       "display": "Police",
       "icon": "/html/static/img/icons_app/policier.png",
-      "subMenu": [{
+      "subMenu": [
+        {
           "title": "Envoyer un message",
           "eventName": "esx_addons_gcphone:call",
           "type": {
@@ -104,64 +101,68 @@
         }
       ]
     },
-
-
     {
-      "display": "Ambulance",
+      "display": "EMS",
       "icon": "/html/static/img/icons_app/ambulancier.png",
-      "subMenu": [{
-        "title": "Envoyer un message",
-        "eventName": "esx_addons_gcphone:call",
-        "type": {
-          "number": "ambulance"
+      "subMenu": [
+        {
+          "title": "Envoyer un message",
+          "eventName": "esx_addons_gcphone:call",
+          "type": {
+            "number": "ems"
+          }
         }
-      }]
+      ]
     },
     {
       "display": "Gouvernement",
       "icon": "/html/static/img/icons_app/state.png",
-      "subMenu": [{
-        "title": "Envoyer un message",
-        "eventName": "esx_addons_gcphone:call",
-        "type": {
-          "number": "state"
+      "subMenu": [
+        {
+          "title": "Envoyer un message",
+          "eventName": "esx_addons_gcphone:call",
+          "type": {
+            "number": "state"
+          }
         }
-      }]
+      ]
     },
-
     {
       "display": "Mécano",
       "icon": "/html/static/img/icons_app/mecano.png",
-      "subMenu": [{
-        "title": "Envoyer un message",
-        "eventName": "esx_addons_gcphone:call",
-        "type": {
-          "number": "mecano"
+      "subMenu": [
+        {
+          "title": "Envoyer un message",
+          "eventName": "esx_addons_gcphone:call",
+          "type": {
+            "number": "mecano"
+          }
         }
-      }]
+      ]
     },
-
     {
       "display": "Taxi",
       "icon": "/html/static/img/icons_app/taxi.png",
-      "subMenu": [{
-        "title": "Envoyer un message",
-        "eventName": "esx_addons_gcphone:call",
-        "type": {
-          "number": "taxi"
+      "subMenu": [
+        {
+          "title": "Envoyer un message",
+          "eventName": "esx_addons_gcphone:call",
+          "type": {
+            "number": "taxi"
+          }
         }
-      }]
+      ]
     }
   ],
-
-  "defaultContacts": [{
+  "defaultContacts": [
+    {
       "number": "police",
       "display": "Police",
       "icon": "/html/static/img/icons_app/policier.png"
     },
     {
-      "number": "ambulance",
-      "display": "Ambulanciers",
+      "number": "ems",
+      "display": "EMS",
       "icon": "/html/static/img/icons_app/ambulancier.png"
     },
     {
@@ -180,8 +181,8 @@
       "icon": "/html/static/img/icons_app/taxi.png"
     }
   ],
-
-  "apps": [{
+  "apps": [
+    {
       "name": "Phone",
       "menuTitle": "visible",
       "fr_FR__name": "Téléphone",
@@ -325,7 +326,6 @@
       "routeName": "notes",
       "color": "#feca57",
       "icons": "/html/static/img/icons_app/notes.png"
-
     },
     {
       "name": "9GAG",
@@ -452,19 +452,37 @@
       "APP_BANK_BUTTON_CANCEL": "Annuler",
       "APP_DARKTCHAT_NEW_NOTE": "Ajouter une note",
       "APP_DARKTCHAT_DELETE_NOTE": "Supprimer une note",
-
-
       "TIMEAGO": [
         "à l'instant",
-        ["il y a %s seconde", "il y a %s secondes"],
-        ["il y a %s minute", "il y a %s minutes"],
-        ["il y a %s heure", "il y a %s heures"],
-        ["il y a %s jour", "il y a %s jours"],
-        ["il y a %s semaine", "il y a %s semaines"],
-        ["il y a %s mois", "il y a %s mois"],
-        ["il y a %s an", "il y a %s ans"]
+        [
+          "il y a %s seconde",
+          "il y a %s secondes"
+        ],
+        [
+          "il y a %s minute",
+          "il y a %s minutes"
+        ],
+        [
+          "il y a %s heure",
+          "il y a %s heures"
+        ],
+        [
+          "il y a %s jour",
+          "il y a %s jours"
+        ],
+        [
+          "il y a %s semaine",
+          "il y a %s semaines"
+        ],
+        [
+          "il y a %s mois",
+          "il y a %s mois"
+        ],
+        [
+          "il y a %s an",
+          "il y a %s ans"
+        ]
       ]
-
     },
     "en_US": {
       "NAME": "English",
@@ -581,16 +599,36 @@
       "APP_BANK_BUTTON_CANCEL": "Cancel",
       "APP_DARKTCHAT_NEW_NOTE": "New Note",
       "APP_DARKTCHAT_DELETE_NOTE": "Delete Note",
-
       "TIMEAGO": [
         "Just Now",
-        ["%s second ago", "%s seconds ago"],
-        ["%s minute ago", "%s minutes ago"],
-        ["%s hour ago", "%s hours ago"],
-        ["%s day ago", "%s days ago"],
-        ["%s week ago", "%s weeks ago"],
-        ["%s month ago", "%s months ago"],
-        ["%s year ago", "%s years ago"]
+        [
+          "%s second ago",
+          "%s seconds ago"
+        ],
+        [
+          "%s minute ago",
+          "%s minutes ago"
+        ],
+        [
+          "%s hour ago",
+          "%s hours ago"
+        ],
+        [
+          "%s day ago",
+          "%s days ago"
+        ],
+        [
+          "%s week ago",
+          "%s weeks ago"
+        ],
+        [
+          "%s month ago",
+          "%s months ago"
+        ],
+        [
+          "%s year ago",
+          "%s years ago"
+        ]
       ]
     },
     "de_DE": {
@@ -700,16 +738,36 @@
       "APP_BANK_BUTTON_CANCEL": "Abbrechen",
       "APP_DARKTCHAT_NEW_NOTE": "Neue Notiz",
       "APP_DARKTCHAT_DELETE_NOTE": "Löschen Sie die Notiz",
-
       "TIMEAGO": [
         "jetzt gerade",
-        ["vor %s Sekunde", "vor %s Sekunden"],
-        ["vor %s Minute", "vor %s Minuten"],
-        ["vor %s Stunde", "vor %s Stunden"],
-        ["vor %s Tag", "vor %s Tagen"],
-        ["vor %s Woche", "vor %s Wochen"],
-        ["vor %s Monat", "vor %s Monaten"],
-        ["vor %s Jahr", "vor %s Jahren"]
+        [
+          "vor %s Sekunde",
+          "vor %s Sekunden"
+        ],
+        [
+          "vor %s Minute",
+          "vor %s Minuten"
+        ],
+        [
+          "vor %s Stunde",
+          "vor %s Stunden"
+        ],
+        [
+          "vor %s Tag",
+          "vor %s Tagen"
+        ],
+        [
+          "vor %s Woche",
+          "vor %s Wochen"
+        ],
+        [
+          "vor %s Monat",
+          "vor %s Monaten"
+        ],
+        [
+          "vor %s Jahr",
+          "vor %s Jahren"
+        ]
       ]
     },
     "pl_PL": {
@@ -813,16 +871,35 @@
       "APP_BANK_BUTTON_CANCEL": "Anuluj",
       "APP_DARKTCHAT_NEW_NOTE": "Dodaj notatkę",
       "APP_DARKTCHAT_DELETE_NOTE": "Usuń notatkę",
-
       "TIMEAGO": [
         "tylko teraz",
-        ["mniej niż minuta"],
-        ["około minuty", "%s minut"],
-        ["około godziny", "około %s godzin"],
-        ["około tygodnia", "%s tydzień"],
-        ["%s week ago", "%s weeks ago"],
-        ["około miesiąca", "%s miesięcy"],
-        ["około roku", "%s lat"]
+        [
+          "mniej niż minuta"
+        ],
+        [
+          "około minuty",
+          "%s minut"
+        ],
+        [
+          "około godziny",
+          "około %s godzin"
+        ],
+        [
+          "około tygodnia",
+          "%s tydzień"
+        ],
+        [
+          "%s week ago",
+          "%s weeks ago"
+        ],
+        [
+          "około miesiąca",
+          "%s miesięcy"
+        ],
+        [
+          "około roku",
+          "%s lat"
+        ]
       ]
     },
     "es_ES": {
@@ -937,16 +1014,36 @@
       "APP_MESSAGE_MESS_SMS": "SMS",
       "APP_MESSAGE_MESS_CALL": "Llamar",
       "APP_MESSAGE_MESS_COPY": "Copiar",
-
       "TIMEAGO": [
         "ahora",
-        ["hace %s segundo", "hace %s segundos"],
-        ["hace %s minuto", "hace %s minutos"],
-        ["hace %s hora", "hace %s horas"],
-        ["hace %s día", "hace %s días"],
-        ["hace %s semana", "hace %s semanas"],
-        ["hace %s mes", "hace %s meses"],
-        ["hace %s año", "hace %s años"]
+        [
+          "hace %s segundo",
+          "hace %s segundos"
+        ],
+        [
+          "hace %s minuto",
+          "hace %s minutos"
+        ],
+        [
+          "hace %s hora",
+          "hace %s horas"
+        ],
+        [
+          "hace %s día",
+          "hace %s días"
+        ],
+        [
+          "hace %s semana",
+          "hace %s semanas"
+        ],
+        [
+          "hace %s mes",
+          "hace %s meses"
+        ],
+        [
+          "hace %s año",
+          "hace %s años"
+        ]
       ]
     },
     "pt_PT": {
@@ -1058,16 +1155,36 @@
       "APP_BANK_BUTTON_CANCEL": "Cancelar",
       "APP_DARKTCHAT_NEW_NOTE": "Nova Nota",
       "APP_DARKTCHAT_DELETE_NOTE": "Eliminar Nota",
-
       "TIMEAGO": [
         "Agora mesmo",
-        ["%s segundo atrás", "%s segundos atrás"],
-        ["%s minuto atrás", "%s minutos atrás"],
-        ["%s hora atrás", "%s horas atrás"],
-        ["%s dia atrás", "%s dias atrás"],
-        ["%s semana atrás", "%s semanas atrás"],
-        ["%s mês atrás", "%s meses atrás"],
-        ["%s ano atrás", "%s anos atrás"]
+        [
+          "%s segundo atrás",
+          "%s segundos atrás"
+        ],
+        [
+          "%s minuto atrás",
+          "%s minutos atrás"
+        ],
+        [
+          "%s hora atrás",
+          "%s horas atrás"
+        ],
+        [
+          "%s dia atrás",
+          "%s dias atrás"
+        ],
+        [
+          "%s semana atrás",
+          "%s semanas atrás"
+        ],
+        [
+          "%s mês atrás",
+          "%s meses atrás"
+        ],
+        [
+          "%s ano atrás",
+          "%s anos atrás"
+        ]
       ]
     },
     "cs_CZ": {
@@ -1165,16 +1282,36 @@
       "APP_TWITTER_NOTIF_NEW_PASSWORD_LENGTH_ERROR": "Heslo je příliš krátké",
       "APP_DARKTCHAT_NEW_NOTE": "Nová poznámka",
       "APP_DARKTCHAT_DELETE_NOTE": "Smažte poznámku",
-
       "TIMEAGO": [
         "nyní",
-        ["před  %s sekundou", "před %s sekundami"],
-        ["před %s minutou", "před %s minutami"],
-        ["před %s hodinou", "před %s hodinami"],
-        ["před %s dnem", "před %s dny"],
-        ["před %s týdnem", "před %s týdny"],
-        ["před %s měsícem", "před %s měsíci"],
-        ["před %s rokem", "před %s lety"]
+        [
+          "před  %s sekundou",
+          "před %s sekundami"
+        ],
+        [
+          "před %s minutou",
+          "před %s minutami"
+        ],
+        [
+          "před %s hodinou",
+          "před %s hodinami"
+        ],
+        [
+          "před %s dnem",
+          "před %s dny"
+        ],
+        [
+          "před %s týdnem",
+          "před %s týdny"
+        ],
+        [
+          "před %s měsícem",
+          "před %s měsíci"
+        ],
+        [
+          "před %s rokem",
+          "před %s lety"
+        ]
       ]
     }
   }
