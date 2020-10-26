@@ -105,37 +105,30 @@ end, function(source, args, user)
 end, { help = _U('revive_help'), params = {{ name = 'id' }} })
 
 
-TriggerEvent('es:addGroupCommand', 'test', 'mod', function(source, args, user)
-	TriggerClientEvent('esx_ambulancejob:test', source)
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
-end, { help = _U('revive_help'), params = {{ name = 'id' }} })
-
-
 ESX.RegisterUsableItem('medikit', function(source)
-	if not playersHealing[source] then
+	-- if not playersHealing[source] then
 		local xPlayer = ESX.GetPlayerFromId(source)
 		xPlayer.removeInventoryItem('medikit', 1)
 
 		playersHealing[source] = true
-		TriggerClientEvent('esx_ambulancejob:useItem', source, 'medikit')
+		-- TriggerClientEvent('esx_ambulancejob:useItem', source, 'medikit')
 
 		Citizen.Wait(10000)
-		playersHealing[source] = nil
-	end
+		-- playersHealing[source] = nil
+	-- end
 end)
 
 ESX.RegisterUsableItem('bandage', function(source)
-	if not playersHealing[source] then
+	-- if not playersHealing[source] then
 		local xPlayer = ESX.GetPlayerFromId(source)
 		xPlayer.removeInventoryItem('bandage', 1)
 	
-		playersHealing[source] = true
+		-- playersHealing[source] = true
 		TriggerClientEvent('esx_ambulancejob:useItem', source, 'bandage')
 
 		Citizen.Wait(10000)
-		playersHealing[source] = nil
-	end
+		-- playersHealing[source] = nil
+	-- end
 end)
 
 ESX.RegisterServerCallback('esx_ambulancejob:getDeathStatus', function(source, cb)
