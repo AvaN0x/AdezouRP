@@ -641,7 +641,7 @@ function AdminLoop()
 					local speed = Config.noclip_speed
 
 					SetTextComponentFormat('STRING')
-					AddTextComponentString("~INPUT_SPRINT~ pour accélérer")
+					AddTextComponentString("~INPUT_AIM~ pour quitter, ~INPUT_SPRINT~ pour accélérer")
 					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 
 					SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
@@ -659,6 +659,10 @@ function AdminLoop()
 						z = z - speed * dz
 					end
 					SetEntityCoordsNoOffset(plyPed, x, y, z, true, true, true)
+
+					if IsControlPressed(0, 25) then
+						admin_noclip()
+					end
 				end
 				if showname then
 					for id = 0, 256 do
