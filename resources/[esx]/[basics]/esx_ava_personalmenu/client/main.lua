@@ -68,6 +68,11 @@ AddEventHandler("esx:setJob2", function(job2)
 	RefreshDirtyMoney2()
 end)
 
+RegisterNetEvent('esx_ava_gang:setGang')
+AddEventHandler('esx_ava_gang:setGang', function(gang)
+	actualGang = gang
+end)
+
 AddEventHandler("esx:onPlayerDeath", function()
 	IsDead = true
 end)

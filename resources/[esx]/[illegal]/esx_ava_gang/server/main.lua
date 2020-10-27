@@ -27,9 +27,7 @@ end)
 
 ESX.RegisterServerCallback('esx_ava_gang:getStockItems', function(source, cb, name)
 	TriggerEvent('esx_addoninventory:getSharedInventory', name, function(inventory)
-
 		TriggerEvent('esx_addonaccount:getSharedAccount', name, function(account)
-
 			TriggerEvent('esx_addonaccount:getSharedAccount', name .. "_black", function(accountDirty)
 				cb({
 					items = inventory.items,
@@ -37,9 +35,7 @@ ESX.RegisterServerCallback('esx_ava_gang:getStockItems', function(source, cb, na
 					black_cash = accountDirty.money
 				})
 			end)
-
 		end)
-
 	end)
 end)
 
@@ -175,7 +171,7 @@ AddEventHandler('esx_ava_gang:gang_hire', function(target, gangName)
 		})
 
 		TriggerClientEvent('esx:showNotification', _source, "Vous avez ~g~recruté " .. target .. "~w~.")
-	
+
 		TriggerClientEvent('esx_ava_gang:setGang', target, {name = gangName, grade = 0})
 		TriggerClientEvent('esx:showNotification', target, "Vous avez été ~g~recruté par " .. _source .. "~w~.")
 	end
