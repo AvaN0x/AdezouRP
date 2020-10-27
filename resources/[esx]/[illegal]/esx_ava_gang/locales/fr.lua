@@ -15,4 +15,13 @@ Locales['fr'] = {
 	['inventory'] = 'Inventaire',
 	['have_withdrawn'] = 'Vous avez retiré %s',
 	['have_deposited'] = 'Vous avez ajouté %s',
+
+	['not_in_a_gang'] = "Vous n'êtes dans aucun gang",
+
+	["no_players_nearby"] = "Aucun joueur à proximité",
+	["gang_hire"] = "Recruter",
+	["gang_fire"] = "Virer",
+	["gang_promote"] = "Autoriser à gérer",
+	["gang_demote"] = "Empécher de gérer",
+
 }

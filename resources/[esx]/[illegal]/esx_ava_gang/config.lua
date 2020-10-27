@@ -21,5 +21,3 @@ Config.Gangs = {
 		}
 	},
 }
-
-

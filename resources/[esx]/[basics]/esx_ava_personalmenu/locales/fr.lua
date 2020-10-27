@@ -23,6 +23,7 @@ Locales["fr"] = {
   ["life_invader"] = "💻 Life Invader",
   ["others_menu"] = "⚙️ Divers",
   ["society_menu"] = "🏭 Gestion Entreprise: %s",
+  ["gang_menu"] = "🔪 Gestion Gang: %s",
   ["admin_menu"] = "👑 Administration",
 
 

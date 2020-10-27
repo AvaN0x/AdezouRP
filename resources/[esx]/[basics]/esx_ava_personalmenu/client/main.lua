@@ -7,6 +7,7 @@ local IsDead = false
 ESX = nil
 PlayerData = nil
 PlayerGroup = nil
+actualGang = nil
 
 local societyMoney, societyDirtyMoney, society2Money, society2DirtyMoney = nil, nil, nil, nil
 local noclip, showname = false, false
@@ -26,6 +27,13 @@ Citizen.CreateThread(function()
 	while PlayerGroup == nil do
 		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) 
 			PlayerGroup = group
+		end)
+		Citizen.Wait(10)
+	end
+
+	while actualGang == nil do
+		ESX.TriggerServerCallback('esx_ava_gang:getGang', function(gang)
+			actualGang = gang
 		end)
 		Citizen.Wait(10)
 	end
@@ -50,8 +58,8 @@ AddEventHandler("esx:setJob", function(job)
 	RefreshMoney()
 	societyDirtyMoney = nil
 	RefreshDirtyMoney()
-
 end)
+
 RegisterNetEvent("esx:setJob2")
 AddEventHandler("esx:setJob2", function(job2)
 	PlayerData.job2 = job2
@@ -117,6 +125,9 @@ function OpenPersonalMenu()
 		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
+	if actualGang and actualGang.name and actualGang.grade == 1 then
+		table.insert(elements, {label = _U("bright_red", _U("gang_menu", actualGang.label)), value = "gang_menu"})
+	end
 
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 		table.insert(elements, {label = _U("orange", _U("admin_menu")), value = "admin_menu"})
@@ -137,7 +148,7 @@ function OpenPersonalMenu()
 			TriggerEvent("NB:closeAllMenu")
 			TriggerEvent("NB:closeMenuKey")
 			TriggerEvent("NB:carteSIM")
-		
+
 		elseif data.current.value == "my_keys" then
 			TriggerEvent("esx_menu:key")
 
@@ -165,6 +176,9 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "society2" then
 			OpenSocietyMenu(PlayerData.job2, society2Money, society2DirtyMoney)
+
+		elseif data.current.value == "gang_menu" then
+			TriggerEvent("esx_ava_gang:openMenu")
 
 		elseif data.current.value == "admin_menu" then
 			OpenAdminMenu()
