@@ -277,7 +277,7 @@ function OpenGetStocksMenu()
 		function(data, menu)
 			menu.close()
 		end)
-	end, name)
+	end, actualGang.name)
 end
 
 
