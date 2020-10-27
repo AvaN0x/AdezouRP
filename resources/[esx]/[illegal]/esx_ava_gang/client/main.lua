@@ -22,13 +22,14 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 	end
 
-	while actualGang == nil do
+	local foundGang = nil
+	while foundGang == nil do
 		ESX.TriggerServerCallback('esx_ava_gang:getGang', function(gang)
 			if gang and gang.name and Config.Gangs[gang.name] then
 				actualGang = {name = gang.name, data = Config.Gangs[gang.name], grade = gang.grade}
-			else
-				actualGang = {}
 			end
+			foundGang = true
+			print(foundGang)
 		end)
 		Citizen.Wait(10)
 	end
