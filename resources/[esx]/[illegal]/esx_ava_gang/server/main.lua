@@ -177,7 +177,7 @@ AddEventHandler('esx_ava_gang:gang_hire', function(target, gangName)
 		TriggerClientEvent('esx:showNotification', _source, "Vous avez ~g~recruté " .. target .. "~w~.")
 	
 		TriggerClientEvent('esx_ava_gang:setGang', target, {name = gangName, grade = 0})
-		TriggerClientEvent('esx:showNotification', target, "Vous avez été ~g~embauché par " .. _source .. "~w~.")
+		TriggerClientEvent('esx:showNotification', target, "Vous avez été ~g~recruté par " .. _source .. "~w~.")
 	end
 end)
 
