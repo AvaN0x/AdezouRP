@@ -27,7 +27,9 @@ end)
 
 ESX.RegisterServerCallback('esx_ava_gang:getStockItems', function(source, cb, name)
 	TriggerEvent('esx_addoninventory:getSharedInventory', name, function(inventory)
+
 		TriggerEvent('esx_addonaccount:getSharedAccount', name, function(account)
+
 			TriggerEvent('esx_addonaccount:getSharedAccount', name .. "_black", function(accountDirty)
 				cb({
 					items = inventory.items,
@@ -35,7 +37,9 @@ ESX.RegisterServerCallback('esx_ava_gang:getStockItems', function(source, cb, na
 					black_cash = accountDirty.money
 				})
 			end)
+
 		end)
+
 	end)
 end)
 
@@ -140,6 +144,9 @@ end)
 -------------------------
 
 local function GetGang(xPlayer)
+	if not xPlayer then
+		return nil
+	end
 	local result = MySQL.Sync.fetchAll('SELECT name, grade FROM user_gang WHERE identifier = @identifier',
 	{
 		['@identifier'] = xPlayer.identifier
@@ -160,7 +167,7 @@ RegisterServerEvent('esx_ava_gang:gang_hire')
 AddEventHandler('esx_ava_gang:gang_hire', function(target, gangName)
 	local _source = source
 	local targetXPlayer = ESX.GetPlayerFromId(target)
-	local targetGang = getGang(targetXPlayer)
+	local targetGang = GetGang(targetXPlayer)
 	if not targetGang.name then
 		MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, 0)", {
 			['@identifier'] = targetXPlayer.identifier,
@@ -178,7 +185,7 @@ RegisterServerEvent('esx_ava_gang:gang_fire')
 AddEventHandler('esx_ava_gang:gang_fire', function(target, gangName)
 	local _source = source
 	local targetXPlayer = ESX.GetPlayerFromId(target)
-	local targetGang = getGang(targetXPlayer)
+	local targetGang = GetGang(targetXPlayer)
 	if targetGang and targetGang.name == gangName then
 		MySQL.Sync.execute("DELETE FROM `user_gang` WHERE identifier = @identifier", {
 			['@identifier'] = targetXPlayer.identifier
@@ -197,14 +204,14 @@ RegisterServerEvent('esx_ava_gang:gang_set_manage')
 AddEventHandler('esx_ava_gang:gang_set_manage', function(target, gangName, grade)
 	local _source = source
 	local targetXPlayer = ESX.GetPlayerFromId(target)
-	local targetGang = getGang(targetXPlayer)
+	local targetGang = GetGang(targetXPlayer)
 	if targetGang and targetGang.name == gangName then
 		MySQL.Sync.execute("UPDATE `user_gang` SET `grade` = @grade WHERE `identifier` = @identifier", {
 			['@identifier'] = targetXPlayer.identifier,
 			['@grade'] = grade
 		})
 
-		TriggerClientEvent('esx_ava_gang:setGang', target, getGang(targetXPlayer))
+		TriggerClientEvent('esx_ava_gang:setGang', target, GetGang(targetXPlayer))
 		if grade == 1 then
 			TriggerClientEvent('esx:showNotification', _source,  target .. " peut maintenant gérer les membres")
 			TriggerClientEvent('esx:showNotification', target, "Vous pouvez maintenant gérer les membres de votre gang")
