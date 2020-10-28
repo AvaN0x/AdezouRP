@@ -8,6 +8,9 @@ local zoomOffset     = 0.0
 local camOffset      = 0.0
 local heading        = 90.0
 
+local keepValue = {}
+local lastEdit = nil
+
 Citizen.CreateThread(function()
   while ESX == nil do
     TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -57,6 +60,7 @@ function OpenMenu(submitCb, cancelCb, restrict)
         value     = value,
         min       = _components[i].min,
         textureof = _components[i].textureof,
+        hide      = _components[i].hide,
         zoomOffset= _components[i].zoomOffset,
         camOffset = _components[i].camOffset,
         type      = 'slider'
@@ -80,6 +84,11 @@ function OpenMenu(submitCb, cancelCb, restrict)
       elements = elements
     },
     function(data, menu)
+      for i = #keepValue, 1, -1 do
+        TriggerEvent('skinchanger:change', keepValue[i].name, keepValue[i].value)
+        table.remove(keepValue, i)
+      end
+
       TriggerEvent('skinchanger:getSkin', function(skin)
         LastSkin = skin
       end)
@@ -108,9 +117,20 @@ function OpenMenu(submitCb, cancelCb, restrict)
       TriggerEvent('skinchanger:getSkin', function(skin)
         zoomOffset = data.current.zoomOffset
         camOffset = data.current.camOffset
-        if skin[data.current.name] ~= data.current.value then
+
+        if lastEdit ~= data.current.name then
+          lastEdit = data.current.name
+
+          for i = #keepValue, 1, -1 do
+            TriggerEvent('skinchanger:change', keepValue[i].name, keepValue[i].value)
+            table.remove(keepValue, i)
+          end
+        end
+
+      if skin[data.current.name] ~= data.current.value then
           -- Change skin element
           TriggerEvent('skinchanger:change', data.current.name, data.current.value)
+
           -- Update max values
           TriggerEvent('skinchanger:getData', function(components, maxVals)
             for i=1, #elements, 1 do
@@ -118,6 +138,21 @@ function OpenMenu(submitCb, cancelCb, restrict)
               newData.max = maxVals[elements[i].name]
               if elements[i].textureof ~= nil and data.current.name == elements[i].textureof then
                 newData.value = 0
+              end
+
+              if elements[i].name == data.current.name and elements[i].hide ~= nil then 
+                for __, v_hide in pairs(elements[i].hide) do
+                  local hidden = skin.sex == 1 and v_hide.Female or v_hide.Male
+                  if not keepValueHasValue(keepValue, hidden.name) then
+                    for k_elt, v_elt in ipairs(elements) do
+                      if v_elt.name == hidden.name then
+                        TriggerEvent('skinchanger:change', v_elt.name, hidden.value)
+                        table.insert(keepValue, {name = hidden.name, value = skin[hidden.name]})
+                        break
+                      end
+                    end
+                  end
+                end
               end
               menu.update({name = elements[i].name}, newData)
             end
@@ -131,6 +166,17 @@ function OpenMenu(submitCb, cancelCb, restrict)
     end)
   end)
 end
+
+function keepValueHasValue(tab, val)
+  for index, value in ipairs(tab) do
+      if value.name == val then
+          return true
+      end
+  end
+
+  return false
+end
+
 
 function CreateSkinCam()
   if not DoesCamExist(cam) then
@@ -294,9 +340,3 @@ AddEventHandler('esx_skin:openSaveableRestrictedMenu', function(submitCb, cancel
   OpenSaveableMenu(submitCb, cancelCb, restrict)
 end)
 
-RegisterNetEvent('esx_skin:requestSaveSkin')
-AddEventHandler('esx_skin:requestSaveSkin', function()
-  TriggerEvent('skinchanger:getSkin', function(skin)
-    TriggerServerEvent('esx_skin:responseSaveSkin', skin)
-  end)
-end)

@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'Skin Changer'
+description 'Skin Changer modified by AvaN0x'
 
 version '1.0.3'
 
