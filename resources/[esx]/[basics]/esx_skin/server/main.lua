@@ -87,16 +87,3 @@ ESX.RegisterServerCallback('esx_skin:getPlayerSkin2', function(source, cb)
   )
 
 end)
-
--- Commands
-TriggerEvent('es:addGroupCommand', 'skin', 'admin', function(source, args, user)
-  TriggerClientEvent('esx_skin:openSaveableMenu', source)
-end, function(source, args, user)
-  TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, 'Insufficient permissions!')
-end, {help = _U('skin')})
-
-TriggerEvent('es:addGroupCommand', 'skinsave', 'admin', function(source, args, user)
-  TriggerClientEvent('esx_skin:requestSaveSkin', source)
-end, function(source, args, user)
-  TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Insufficient Permissions.")
-end, {help = _U('saveskin')})
