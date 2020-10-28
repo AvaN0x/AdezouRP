@@ -16,15 +16,11 @@ Citizen.CreateThread(function()
 end)
 
 function OpenMenu(submitCb, cancelCb, restrict)
-
   local playerPed = GetPlayerPed(-1)
-
   TriggerEvent('skinchanger:getSkin', function(skin)
     LastSkin = skin
   end)
-
   TriggerEvent('skinchanger:getData', function(components, maxVals)
-
     local elements    = {}
     local _components = {}
 
@@ -35,9 +31,7 @@ function OpenMenu(submitCb, cancelCb, restrict)
       end
     else
       for i=1, #components, 1 do
-
         local found = false
-
         for j=1, #restrict, 1 do
           if components[i].name == restrict[j] then
             found = true
@@ -47,20 +41,16 @@ function OpenMenu(submitCb, cancelCb, restrict)
         if found then
           table.insert(_components, components[i])
         end
-
       end
     end
 
     -- Insert elements
     for i=1, #_components, 1 do
-
       local value       = _components[i].value
       local componentId = _components[i].componentId
-
       if componentId == 0 then
         value = GetPedPropIndex(playerPed,  _components[i].componentId)
       end
-
       local data = {
         label     = _components[i].label,
         name      = _components[i].name,
@@ -71,100 +61,75 @@ function OpenMenu(submitCb, cancelCb, restrict)
         camOffset = _components[i].camOffset,
         type      = 'slider'
       }
-
       for k,v in pairs(maxVals) do
         if k == _components[i].name then
           data.max = v
         end
       end
-
       table.insert(elements, data)
-
     end
 
     CreateSkinCam()
     zoomOffset = _components[1].zoomOffset
     camOffset = _components[1].camOffset
 
-    ESX.UI.Menu.Open(
-      'default', GetCurrentResourceName(), 'skin',
-      {
-        title = _U('skin_menu'),
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'skin',
+    {
+      title = _U('skin_menu'),
+      align = 'left',
+      elements = elements
+    },
+    function(data, menu)
+      TriggerEvent('skinchanger:getSkin', function(skin)
+        LastSkin = skin
+      end)
+      submitCb(data, menu)
+      DeleteSkinCam()
+    end, function(data, menu)
+      ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'confirm_escape', {
+        title = _U('confirm_escape'),
         align = 'left',
-        elements = elements
-      },
-      function(data, menu)
-
-        TriggerEvent('skinchanger:getSkin', function(skin)
-          LastSkin = skin
-        end)
-
-        submitCb(data, menu)
-        DeleteSkinCam()
-      end, function(data, menu)
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'confirm_escape', {
-			title = _U('confirm_escape'),
-			align = 'left',
-			elements = {
-				{label = _U('no'),  value = 'no'},
-				{label = _U('yes'), value = 'yes'}
-			}
-		}, function(data2, menu2)
-			if data2.current.value == 'yes' then
-				menu.close()
-				DeleteSkinCam()
-				TriggerEvent('skinchanger:loadSkin', LastSkin)
-			end
-			menu2.close()
-		end)
-
-		if cancelCb ~= nil then
-			cancelCb(data, menu)
-		end
-      end,function(data, menu)
-        TriggerEvent('skinchanger:getSkin', function(skin)
-
-          zoomOffset = data.current.zoomOffset
-          camOffset = data.current.camOffset
-
-          if skin[data.current.name] ~= data.current.value then
-
-            -- Change skin element
-            TriggerEvent('skinchanger:change', data.current.name, data.current.value)
-
-            -- Update max values
-            TriggerEvent('skinchanger:getData', function(components, maxVals)
-
-              for i=1, #elements, 1 do
-
-                local newData = {}
-
-                newData.max = maxVals[elements[i].name]
-
-                if elements[i].textureof ~= nil and data.current.name == elements[i].textureof then
-                  newData.value = 0
-                end
-
-                menu.update({name = elements[i].name}, newData)
-
-              end
-
-              menu.refresh()
-
-            end)
-
-          end
-
-        end)
-
-      end,
-      function()
-        DeleteSkinCam()
+        elements = {
+          {label = _U('no'),  value = 'no'},
+          {label = _U('yes'), value = 'yes'}
+        }
+      }, function(data2, menu2)
+        if data2.current.value == 'yes' then
+          menu.close()
+          DeleteSkinCam()
+          TriggerEvent('skinchanger:loadSkin', LastSkin)
+        end
+        menu2.close()
+      end)
+      if cancelCb ~= nil then
+        cancelCb(data, menu)
       end
-    )
-
+    end,function(data, menu)
+      TriggerEvent('skinchanger:getSkin', function(skin)
+        zoomOffset = data.current.zoomOffset
+        camOffset = data.current.camOffset
+        if skin[data.current.name] ~= data.current.value then
+          -- Change skin element
+          TriggerEvent('skinchanger:change', data.current.name, data.current.value)
+          -- Update max values
+          TriggerEvent('skinchanger:getData', function(components, maxVals)
+            for i=1, #elements, 1 do
+              local newData = {}
+              newData.max = maxVals[elements[i].name]
+              if elements[i].textureof ~= nil and data.current.name == elements[i].textureof then
+                newData.value = 0
+              end
+              menu.update({name = elements[i].name}, newData)
+            end
+            menu.refresh()
+          end)
+        end
+      end)
+    end,
+    function()
+      DeleteSkinCam()
+    end)
   end)
-
 end
 
 function CreateSkinCam()
@@ -260,57 +225,40 @@ Citizen.CreateThread(function()
 end)
 
 function OpenSaveableMenu(submitCb, cancelCb, restrict)
-
   TriggerEvent('skinchanger:getSkin', function(skin)
     LastSkin = skin
   end)
 
   OpenMenu(function(data, menu)
-
     menu.close()
-
     DeleteSkinCam()
 
     TriggerEvent('skinchanger:getSkin', function(skin)
-
       TriggerServerEvent('esx_skin:save', skin)
-
       if submitCb ~= nil then
         submitCb(data, menu)
       end
-
     end)
-
   end, cancelCb, restrict)
-
 end
 
 AddEventHandler('playerSpawned', function()
-
   Citizen.CreateThread(function()
-
     while not PlayerLoaded do
       Citizen.Wait(0)
     end
 
     if FirstSpawn then
-
       ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-
         if skin == nil then
           TriggerEvent('skinchanger:loadSkin', {sex = 0}, OpenSaveableMenu)
         else
           TriggerEvent('skinchanger:loadSkin', skin)
         end
-
       end)
-
       FirstSpawn = false
-
     end
-
   end)
-
 end)
 
 RegisterNetEvent('esx:playerLoaded')
