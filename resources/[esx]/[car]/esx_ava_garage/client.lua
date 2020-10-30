@@ -217,11 +217,11 @@ function StockVehicleMenu(target)
 
 				if (valid) then
 					if engineHealth < 1000 then
-						local fraisRep= math.floor((1000 - engineHealth)*100)				  
+						local fraisRep= math.floor((1000 - engineHealth)*100)
 						reparation(fraisRep, vehicle, vehicleProps, target)
 					else
 						ranger(vehicle, vehicleProps, target)
-					end	
+					end
 				else
 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule ici')
 				end
@@ -266,9 +266,8 @@ function reparation(prix, vehicle, vehicleProps, target)
 		end,
 		function(data, menu)
 			menu.close()
-			
 		end
-	)	
+	)
 end
 
 
@@ -284,7 +283,7 @@ function SpawnVehicle(vehicle, fuel, target)
 	ESX.Game.SpawnVehicle(vehicle.model,{
 		x=this_Garage.SpawnPoint.Pos.x ,
 		y=this_Garage.SpawnPoint.Pos.y,
-		z=this_Garage.SpawnPoint.Pos.z + 1											
+		z=this_Garage.SpawnPoint.Pos.z + 1
 		},this_Garage.SpawnPoint.Heading, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
@@ -382,13 +381,13 @@ function ReturnVehicleMenu(target, isGov)
 						end
 						if data.current.type == "car" and not isGov then
 							SpawnPoundedVehicle(data.current.value, target)
+							times=times+1
+							Citizen.Wait(60000)
+							times=0
 						else
 							ESX.ShowNotification('Le véhicule est sorti de la fourrière')
 							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, true, target)
 						end
-						times=times+1
-						Citizen.Wait(60000)
-							times=0
 					elseif times > 0 then
 						ESX.ShowNotification('Veuillez patienter une minute')
 						Citizen.Wait(60000)
