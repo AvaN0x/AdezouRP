@@ -49,13 +49,13 @@ Config.Teleports = {
 				heading = 270.0,
 				size  = {x = 2.5, y = 2.5, z = 1.0},
 				-- color = {r = 255, g = 0, b = 255},
-				label = "Entrer"
+				label = "Sortir"
 			},
 			tpExit = {
 				pos = vector3(-675.28, -2390.24, 12.88),
 				heading = 60.0,
 				size  = {x = 2.5, y = 2.5, z = 1.0},
-				label = "Sortir"
+				label = "Entrer"
 			},
 			authorizedJobs = { 'nightclub' },
 			allowVehicles = true,
