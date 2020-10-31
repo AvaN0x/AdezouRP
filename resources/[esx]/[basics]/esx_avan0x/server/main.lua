@@ -134,3 +134,13 @@ AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
 		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
 	end
 end)
+
+RegisterServerEvent("esx:onPlayerDeath")
+AddEventHandler("esx:onPlayerDeath", function(data)
+	local _source = source
+	if data.killedByPlayer then
+		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. data.deathCause .. " at distance : " .. data.distance, 16711680) -- #ff0000
+	else
+		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. data.deathCause .. "." , 16711680) -- #ff0000
+	end
+end)
