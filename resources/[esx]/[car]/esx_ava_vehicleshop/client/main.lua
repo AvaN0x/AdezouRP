@@ -28,6 +28,7 @@ local LastVehicles            = {}
 local CurrentVehicleData      = nil
 
 ESX                           = nil
+local PlayerGroup = nil
 
 Citizen.CreateThread(function ()
 	while ESX == nil do
@@ -44,6 +45,19 @@ Citizen.CreateThread(function ()
 	ESX.TriggerServerCallback('esx_vehicleshop:getVehicles', function (vehicles)
 		Vehicles = vehicles
 	end)
+
+	while PlayerGroup == nil do
+		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) 
+			PlayerGroup = group
+		end)
+		Citizen.Wait(10)
+	end
+
+	if PlayerGroup ~= nil and (PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+		for k_shop, v_shop in pairs(Config.Shops) do
+			table.insert(v_shop.Categories, "hide_" .. v_shop.VehicleType)
+		end
+	end
 end)
 
 RegisterNetEvent('esx:playerLoaded')
