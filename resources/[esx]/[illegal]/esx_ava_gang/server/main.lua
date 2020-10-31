@@ -154,9 +154,11 @@ local function GetGang(xPlayer)
 	end
 end
 
-ESX.RegisterServerCallback('esx_ava_gang:getGang', function(source, cb)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	cb(GetGang(xPlayer))
+RegisterServerEvent('esx_ava_gang:requestGang')
+AddEventHandler('esx_ava_gang:requestGang', function()
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	TriggerClientEvent('esx_ava_gang:setGang', _source, GetGang(xPlayer))
 end)
 
 RegisterServerEvent('esx_ava_gang:gang_hire')

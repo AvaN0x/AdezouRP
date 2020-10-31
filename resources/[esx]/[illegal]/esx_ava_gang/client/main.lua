@@ -22,17 +22,8 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 	end
 
-	local foundGang = nil
-	while foundGang == nil do
-		ESX.TriggerServerCallback('esx_ava_gang:getGang', function(gang)
-			if gang and gang.name and Config.Gangs[gang.name] then
-				actualGang = {name = gang.name, data = Config.Gangs[gang.name], grade = gang.grade}
-			end
-			foundGang = true
-			print(foundGang)
-		end)
-		Citizen.Wait(10)
-	end
+	Citizen.Wait(5000)
+	TriggerServerEvent("esx_ava_gang:requestGang")
 end)
 
 
@@ -87,20 +78,20 @@ Citizen.CreateThread(function()
 			local coords      = GetEntityCoords(GetPlayerPed(-1))
 			local isInMarker  = false
 			local currentZone = nil
-			
+
 			for k,v in pairs(actualGang.data.Zones) do
 				if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
 					isInMarker  = true
 					currentZone = k
 				end
 			end
-			
+
 			if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
 				HasAlreadyEnteredMarker = true
 				LastZone                = currentZone
 				TriggerEvent('esx_ava_gang:hasEnteredMarker', currentZone)
 			end
-			
+
 			if not isInMarker and HasAlreadyEnteredMarker then
 				HasAlreadyEnteredMarker = false
 				TriggerEvent('esx_ava_gang:hasExitedMarker', LastZone)

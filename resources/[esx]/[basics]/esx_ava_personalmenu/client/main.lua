@@ -31,12 +31,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 
-	while actualGang == nil do
-		ESX.TriggerServerCallback('esx_ava_gang:getGang', function(gang)
-			actualGang = gang
-		end)
-		Citizen.Wait(10)
-	end
+	-- TriggerServerEvent("esx_ava_gang:requestGang") -- already triggered in esx_ava_gang
 
 	AdminLoop()
 
