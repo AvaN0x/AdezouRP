@@ -23,7 +23,7 @@ AddEventHandler('esx_lscustom:buyMod', function(price)
 			TriggerEvent('esx_avan0x:logTransaction', 'society_mecano', 'society_mecano', 'CUSTOM', 'CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
 			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
 			end)
-			societyAccount.removeMoney(tonumber(price * (1 - mecanoPart)))
+			societyAccount.removeMoney(math.floor(tonumber(price * (1 - mecanoPart))))
 		else
 			TriggerClientEvent('esx_lscustom:cancelInstallMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('not_enough_money'))
