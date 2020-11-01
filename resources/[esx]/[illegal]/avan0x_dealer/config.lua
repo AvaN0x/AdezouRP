@@ -6,9 +6,7 @@
 Config = {}
 
 -- For the door.
-Config.ShowBlip = false
 Config.DrawTextDist = 1.0 -- LAISSER A 1
-Config.NotificationTime = 5.0
 
 -- The door.
 Config.HintLocation      =   vector4(143.9,-131.7,53.86, 155.37) -- new point
@@ -64,8 +62,6 @@ Config.SalesLocations    =   {
   [40] = vector4(279.25, 6782.38, 15.7, 2.91),
 
 }
-
-Config.TargetAverageSpeed = 60.0
 
 Config.DealerPed = 's_m_y_dealer_01'
 
