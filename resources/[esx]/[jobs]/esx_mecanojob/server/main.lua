@@ -222,7 +222,7 @@ AddEventHandler('esx_mecanojob:onNPCJobMissionCompleted', function()
 
 	local societyAccount = nil
 
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_taxi', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
 		societyAccount = account
 	end)
 
