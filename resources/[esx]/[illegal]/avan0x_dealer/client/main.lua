@@ -81,11 +81,11 @@ function MissionStart()
 	local tPos = MissionStarted
 	local prices = {}
 	for k, v in pairs(Config.DrugItems) do
-		prices[v] = math.floor(Config.DrugPrices[v] * (math.random(100.0-Config.MaxPriceVariance, 100.0 + Config.MaxPriceVariance)/100.0))
+		prices[v] = math.floor(Config.DrugPrices[v] * (math.random(100.0 - Config.MaxPriceVariance, 100.0 + Config.MaxPriceVariance) / 100.0))
 	end
 	local startTime = GetGameTimer()
 	local timer = 600000 -- 10 minutes
-	while ((GetGameTimer() - startTime) < math.floor(timer) and not MissionCompleted) or (MissionCompleted and GetDistanceBetweenCoords(pPos, tPos, true) < (Config.DrawTextDist*30.0)) do
+	while ((GetGameTimer() - startTime) < math.floor(timer) and not MissionCompleted) or (MissionCompleted and GetDistanceBetweenCoords(pPos, tPos, true) < 60) do
 		Citizen.Wait(0)
 		plyPed = GetPlayerPed(-1)
 		pPos = GetEntityCoords(plyPed)
@@ -102,6 +102,10 @@ function MissionStart()
 				FreezeEntityPosition(PedSpawned, true)
 				SetModelAsNoLongerNeeded(hash)
 				ESX.ShowNotification("Vous êtes proche de l'acheteur")
+
+				if math.random(1, 3) == 1 then
+					TriggerServerEvent("esx_phone:sendEmergency", "police", "Une personne suspecte a été aperçue proche de cette position.", true, { ["x"] = (pPos.x + math.random(-20, 20)), ["y"] = (pPos.y + math.random(-20, 20)), ["z"] = pPos.z })
+				end
 			end
 
 			if GetDistanceBetweenCoords(pPos, tPos, true) < Config.DrawTextDist then
@@ -147,10 +151,10 @@ function OpenDealerMenu()
 			drugPrice = prices[v]
 			table.insert(elements, {label = k..' : $'..drugPrice, val = v, price = drugPrice})
 		end
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'Drug_Dealer', { title = "Acheteur de drogues", align = 'left', elements = elements }, 
+		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'Drug_Dealer', {title = "Acheteur de drogues", align = 'left', elements = elements},
 		function(data, menu)
 			local count = false
-			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'How_Much', {title = "Combien voulez-vous vendre ? [Max : "..counts[data.current.val].."]"}, 
+			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'How_Much', {title = "Combien voulez-vous vendre ? [Max : "..counts[data.current.val].."]"},
 			function(data2, menu2)
 				local quantity = tonumber(data2.value)
 
@@ -160,7 +164,7 @@ function OpenDealerMenu()
 					count = quantity
 					menu2.close()
 				end
-			end, 
+			end,
 			function(data2, menu2)
 				menu2.close()
 			end)
@@ -172,7 +176,7 @@ function OpenDealerMenu()
 				menu.close()
 				Citizen.Wait(1500)
 			end
-		end, 
+		end,
 		function(data, menu)
 			menu.close()
 		end)
