@@ -144,3 +144,27 @@ AddEventHandler("esx:onPlayerDeath", function(data)
 		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. data.deathCause .. "." , 16711680) -- #ff0000
 	end
 end)
+
+-- command to add new burglary
+-- TriggerEvent('es:addGroupCommand', 'burglary', 'user', function(source, args)
+-- 	local playerPed = GetPlayerPed(source)
+-- 	local coords = GetEntityCoords(playerPed)
+-- 	local heading = GetEntityHeading(playerPed) + 180
+-- 	if heading > 360 then
+-- 		heading = heading - 360
+-- 	end
+
+-- 	local code = "{\n" .. "\tpos = {x = " .. coords.x .. ", y = " .. coords.y .. ", z = " .. coords.z .. ", h = " .. heading .. "},\n" .. "\tlocked = true, doorTime = {}\n" .. "},"
+
+-- 	SendWebhookMessage("avan0x_wh_staff", "```lua\n"..code.."```")
+-- end, function(source, args)
+-- 	TriggerClientEvent('chat:addMessage', source, {args = {'^1SYSTEM', 'Insufficient Permissions.'}})
+-- end, {
+-- 	help = "Envoyer votre tenue au staff", 
+-- 	params = {
+-- 		{
+-- 			name = "message",
+-- 			help = "Message descriptif pour la tenue"
+-- 		}
+-- 	}
+-- })
