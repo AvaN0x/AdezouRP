@@ -426,6 +426,14 @@ Config.Doors = {
 			distance = 6
 		},
 
+		{ -- hidden custom
+			objHash = 270330101,
+			objCoords  = vector3( 723.24, -1088.95, 21.24),
+			textCoords = vector3( 723.24, -1088.95, 21.24),
+			authorizedJobs = { 'mecano' },
+			locked = true,
+			distance = 8
+		},
 
 
 
