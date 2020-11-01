@@ -67,8 +67,8 @@ Config.DealerPed = 's_m_y_dealer_01'
 
 Config.DrugItems = {
   -- ['Montre Rolex'] = 'rolex',
-  -- ['Lingot d\'Or'] = 'gold',
-  -- ['Diamant'] = 'diamond',
+  ['Lingot d\'Or'] = 'gold',
+  ['Diamant'] = 'diamond',
   ['Pochon de cannabis'] = 'bagweed',
   ['Pochon de cocaïne'] = 'bagcoke',
   ['Pochon d\'extazy'] = 'bagexta',
@@ -76,13 +76,12 @@ Config.DrugItems = {
 }
 
 Config.DrugPrices = {
-  -- ['gold'] = 1000,
-  -- ['rolex'] = 1200,
-  -- ['diamond'] = 1500,
+  ['gold'] = 800,
+  ['diamond'] = 1000,
   ['bagweed'] = 420, -- 25k heure
   ['bagcoke'] = 1250, -- 50k heure
   ['bagexta'] = 280, -- 25k heure
   ['methamphetamine'] = 1650, -- + chère que coke
 }
 
-Config.MaxPriceVariance = 10.0 --%
+Config.MaxPriceVariance = 10.0 -- %
