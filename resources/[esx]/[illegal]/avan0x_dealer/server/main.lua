@@ -9,9 +9,9 @@ AddEventHandler('avan0x_dealer:Sold', function(item,price,count)
 	local iItem = xPlayer.getInventoryItem(item)
 	local iCount = iItem.count
 	if iCount and iCount >= count then
-		TriggerClientEvent('esx:showNotification', xPlayer.source, "Vous avez vendu " + tonumber(count) + " " + iItem.label + " pour $" + tonumber(count)*tonumber(price) + ".")
 		xPlayer.removeInventoryItem(item, count)
 		xPlayer.addAccountMoney('black_money', count * price)
+		TriggerClientEvent('esx:showNotification', xPlayer.source, "Vous avez vendu " .. count .. " " .. iItem.label .. " pour $" .. (count * price) .. ".")
 	end
 end)
 

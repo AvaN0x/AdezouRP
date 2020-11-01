@@ -117,7 +117,43 @@ function MissionStart()
 				ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour parler au dealer")
 
 				if IsControlJustPressed(0, 38) then
-					OpenDealerMenu()
+					ESX.TriggerServerCallback('avan0x_dealer:GetDrugCount', function(counts)
+						ESX.UI.Menu.CloseAll()
+						local elements = {}
+						for k, v in pairs(Config.DrugItems) do
+							drugPrice = prices[v]
+							table.insert(elements, {label = k..' : $'..drugPrice, val = v, price = drugPrice})
+						end
+						ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'Drug_Dealer', {title = "Acheteur de drogues", align = 'left', elements = elements},
+						function(data, menu)
+							local count = false
+							ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'How_Much', {title = "Combien voulez-vous vendre ? [Max : "..counts[data.current.val].."]"},
+							function(data2, menu2)
+								local quantity = tonumber(data2.value)
+
+								if quantity == nil then
+									ESX.ShowNotification("Montant non valide")
+								else
+									count = quantity
+									menu2.close()
+								end
+							end,
+							function(data2, menu2)
+								menu2.close()
+							end)
+							while not count do Citizen.Wait(0); end
+							if tonumber(count) > tonumber(counts[data.current.val]) then
+								ESX.ShowNotification("Tu n'as pas tant que ça. "..data.current.val..".")
+							else
+								TriggerServerEvent('avan0x_dealer:Sold', data.current.val, data.current.price, count)
+								menu.close()
+								Citizen.Wait(1500)
+							end
+						end,
+						function(data, menu)
+							menu.close()
+						end)
+					end)
 				end
 			end
 		end
@@ -140,45 +176,4 @@ function MissionStart()
 		MissionStarted = false
 		PedSpawned = false
 	end
-end
-
-
-function OpenDealerMenu()
-	ESX.TriggerServerCallback('avan0x_dealer:GetDrugCount', function(counts)
-		ESX.UI.Menu.CloseAll()
-		local elements = {}
-		for k, v in pairs(Config.DrugItems) do
-			drugPrice = prices[v]
-			table.insert(elements, {label = k..' : $'..drugPrice, val = v, price = drugPrice})
-		end
-		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'Drug_Dealer', {title = "Acheteur de drogues", align = 'left', elements = elements},
-		function(data, menu)
-			local count = false
-			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'How_Much', {title = "Combien voulez-vous vendre ? [Max : "..counts[data.current.val].."]"},
-			function(data2, menu2)
-				local quantity = tonumber(data2.value)
-
-				if quantity == nil then
-					ESX.ShowNotification("Montant non valide")
-				else
-					count = quantity
-					menu2.close()
-				end
-			end,
-			function(data2, menu2)
-				menu2.close()
-			end)
-			while not count do Citizen.Wait(0); end
-			if tonumber(count) > tonumber(counts[data.current.val]) then
-				ESX.ShowNotification("Tu n'as pas tant que ça. "..data.current.val..".")
-			else
-				TriggerServerEvent('avan0x_dealer:Sold', data.current.val, data.current.price, count)
-				menu.close()
-				Citizen.Wait(1500)
-			end
-		end,
-		function(data, menu)
-			menu.close()
-		end)
-	end)
 end
