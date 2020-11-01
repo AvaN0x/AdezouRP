@@ -67,6 +67,7 @@ Config.BuyZones = {
 			{name = 'rhum', price = 20},
 			{name = 'tequila', price = 20},
 			{name = 'vodka', price = 20},
+			{name = 'beer', price = 20},
 			{name = 'whisky', price = 20}
 		},
 		Pos   = {x = 376.81, y = -362.84, z = 45.85},
