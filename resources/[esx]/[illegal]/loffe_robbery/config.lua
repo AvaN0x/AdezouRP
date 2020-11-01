@@ -1,8 +1,7 @@
 Config = {}
 Translation = {}
 
--- Config.Shopkeeper = 416176080 -- hash of the shopkeeper ped
-Config.Shopkeeper = GetHashKey("u_m_y_zombie_01")
+Config.Shopkeeper = 416176080 -- hash of the shopkeeper ped
 Config.Locale = 'fr' -- 'en', 'sv' or 'custom'
 
 Config.Shops = {

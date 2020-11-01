@@ -68,18 +68,14 @@ Config.Peds = {
     --     }
     -- },
     Gouv = {
-        -- Name = "a_f_y_business_01",
-        -- Type= "PED_TYPE_CIVFEMALE",
-        Name = "u_f_y_corpse_01",
+        Name = "a_f_y_business_01",
         Type= "PED_TYPE_CIVFEMALE",
         PosList = {
             {x = -550.76, y = -190.07, z = 36.72, h = 193.6, scenario = "PROP_HUMAN_SEAT_ARMCHAIR"},
         }
     },
     Pacifique = {
-        -- Name = "a_m_y_business_02",
-        -- Type= "PED_TYPE_CIVMALE",
-        Name = "u_m_m_streetart_01",
+        Name = "a_m_y_business_02",
         Type= "PED_TYPE_CIVMALE",
         PosList = {
             {x = 248.95, y = 224.51, z = 104.97, h = 166.76, scenario = "PROP_HUMAN_SEAT_BENCH"},
@@ -94,9 +90,7 @@ Config.Peds = {
     --     }
     -- },
     Tatoo = {
-        -- Name = "a_m_y_ktown_01",
-        -- Type= "PED_TYPE_CIVMALE",
-        Name = "a_m_m_tranvest_01",
+        Name = "a_m_y_ktown_01",
         Type= "PED_TYPE_CIVMALE",
         PosList = {
             {x = 319.71, y = 180.9, z = 102.61, h = 254.42, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
@@ -107,5 +101,4 @@ Config.Peds = {
         }
 
     },
-
 }
