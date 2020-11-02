@@ -25,9 +25,8 @@ Config.Shops = {
     {coords = vector3(-705.89, -913.97, 18.26), heading = 97.0, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false},
     {coords = vector3(-1819.79, 794.18, 137.20), heading = 138.0, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false},
     {coords = vector3(1697.71, 4922.87, 41.08), heading = 317.0, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false},
-    {coords = vector3(269.24, -978.32, 29.37), heading = 160.0, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false},
     {coords = vector3(372.48, 326.44, 102.59), heading = 252.22, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false},
-    {coords = vector3(269.23, -978.3, 28.39), heading = 156.0, money = {5000, 15000}, cops = 2, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false}
+    {coords = vector3(269.23, -978.3, 28.39), heading = 156.0, money = {5000, 15000}, cops = 0, cooldown = {hour = 0, minute = 30, second = 0}, robbed = false}
 }
 
 Translation = {

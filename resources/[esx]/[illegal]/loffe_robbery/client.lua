@@ -235,7 +235,7 @@ Citizen.CreateThread(function()
                                 loadDict('missheist_agency2ahands_up')
                                 TaskPlayAnim(peds[i], "missheist_agency2ahands_up", "handsup_anxious", 8.0, -8.0, -1, 1, 0, false, false, false)
 
-                                local delay = 20
+                                local delay = 40
                                 local timer = 0
                                 exports['progressBars']:startUI(delay * 1000, "Braquage en cours")
                                 while timer < delay and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 do
@@ -251,6 +251,7 @@ Citizen.CreateThread(function()
                                         while robbing do Wait(0) if IsPedDeadOrDying(peds[i]) then robbing = false end end
                                     end
                                 else
+                                    TriggerServerEvent('loffe_robbery:setRobbed', i, false)
                                     ClearPedTasks(peds[i])
                                     local wait = GetGameTimer()+5000
                                     while wait >= GetGameTimer() do

@@ -46,6 +46,7 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
     end
     if cops >= Config.Shops[store].cops then
         if not Config.Shops[store].robbed and not deadPeds[store] then
+            Config.Shops[store].robbed = true
             cb(true)
         else
             cb(false)
@@ -54,6 +55,12 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
         cb('no_cops')
     end
 end)
+
+RegisterServerEvent('loffe_robbery:setRobbed')
+AddEventHandler('loffe_robbery:setRobbed', function(store, boolean)
+    Config.Shops[store].robbed = boolean
+end)
+
 
 RegisterServerEvent('loffe_robbery:rob')
 AddEventHandler('loffe_robbery:rob', function(store)
