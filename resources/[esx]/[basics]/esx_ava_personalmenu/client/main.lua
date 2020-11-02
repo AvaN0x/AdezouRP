@@ -634,6 +634,14 @@ function OpenAdminMenu()
 			admin_vehicle_repair()
 		elseif data.current.value == "show_names" then
 			showname = not showname
+			for _, id in ipairs(GetActivePlayers()) do
+				local ped = GetPlayerPed(id)
+				local blip = GetBlipFromEntity(ped)
+
+				if DoesBlipExist(blip) then
+					RemoveBlip(blip)
+				end
+			end
 		elseif data.current.value == "change_skin" then
 			changer_skin()
 		elseif data.current.value == "save_skin" then
@@ -645,10 +653,11 @@ function OpenAdminMenu()
 end
 
 function AdminLoop()
-	Citizen.CreateThread(function()
-		if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+		Citizen.CreateThread(function()
 			while true do
-				plyPed = PlayerPedId()
+				Citizen.Wait(0)
+				playerPed = PlayerPedId()
 				if noclip then
 					local x, y, z = getPosition()
 					local dx, dy, dz = getCamDirection()
@@ -658,7 +667,7 @@ function AdminLoop()
 					AddTextComponentString("~INPUT_AIM~ pour quitter, ~INPUT_SPRINT~ pour accélérer")
 					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 
-					SetEntityVelocity(plyPed, 0.0001, 0.0001, 0.0001)
+					SetEntityVelocity(playerPed, 0.0001, 0.0001, 0.0001)
 					if IsControlPressed(0, 21) then
 						speed = Config.noclip_speed_shift
 					end
@@ -672,30 +681,83 @@ function AdminLoop()
 						y = y - speed * dy
 						z = z - speed * dz
 					end
-					SetEntityCoordsNoOffset(plyPed, x, y, z, true, true, true)
+					SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
 
 					if IsControlPressed(0, 25) then
 						admin_noclip()
 					end
 				end
 				if showname then
-					for id = 0, 256 do
-						if NetworkIsPlayerActive(id) and GetPlayerPed(id) ~= plyPed then
-							local headId = Citizen.InvokeNative(0xBFEFE3321A3F5015, GetPlayerPed(id), (GetPlayerServerId(id) .. ' - ' .. GetPlayerName(id)), false, false, "", false)
+					for _, player in ipairs(GetActivePlayers()) do
+						if GetPlayerPed(player) ~= playerPed then
+							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
 						end
 					end
 				end
-				Citizen.Wait(0)
 			end
-		end
-	end)
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Wait(1)
+				if showname then
+					playerPed = PlayerPedId()
+					for _, player in ipairs(GetActivePlayers()) do
+						if GetPlayerPed(player) ~= playerPed then
+							local targetPed = GetPlayerPed(player)
+							local blip = GetBlipFromEntity(targetPed)
+
+							if not DoesBlipExist(blip) then
+								blip = AddBlipForEntity(targetPed)
+								SetBlipSprite(blip, 1)
+								SetBlipColour(blip, 8)
+								SetBlipCategory(blip, 7)
+								SetBlipScale(blip, 0.7)
+								ShowHeadingIndicatorOnBlip(blip, true)
+								SetBlipNameToPlayerName(blip, player)
+							else
+								local blipSprite = GetBlipSprite(blip)
+								local veh = GetVehiclePedIsIn(targetPed, false)
+								if not GetEntityHealth(targetPed) then
+									if blipSprite ~= 274 then
+										SetBlipSprite(blip, 274)
+									end
+								elseif veh then
+									vehClass = GetVehicleClass(veh)
+									if vehClass == 16 then -- plane
+										if blipSprite ~= 423 then
+											SetBlipSprite(blip, 423)
+										end
+									elseif vehClass == 15 then -- heli
+										if blipSprite ~= 422 then
+											SetBlipSprite(blip, 422)
+										end
+									elseif vehClass == 14 then -- boat
+										if blipSprite ~= 404 then
+											SetBlipSprite(blip, 404)
+										end
+									elseif blipSprite ~= 1 then -- default blip
+										SetBlipSprite(blip, 1)
+									end
+								else
+									if blipSprite ~= 1 then
+										SetBlipSprite(blip, 1)
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
 end
 
 function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
     AddTextEntry(entryTitle, textEntry)
     DisplayOnscreenKeyboard(1, entryTitle, "", inputText, "", "", "", maxLength)
 	blockinput = true
-
+	
     while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
         Citizen.Wait(0)
     end
@@ -713,13 +775,13 @@ function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
 end
 
 function getPosition()
-	local x, y, z = table.unpack(GetEntityCoords(plyPed, true))
+	local x, y, z = table.unpack(GetEntityCoords(playerPed, true))
 
 	return x, y, z
 end
 
 function getCamDirection()
-	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(plyPed)
+	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(playerPed)
 	local pitch = GetGameplayCamRelativePitch()
 
 	local x = -math.sin(heading * math.pi/180.0)
@@ -778,15 +840,15 @@ function admin_bring()
 		plyId = tonumber(plyId)
 
 		if type(plyId) == 'number' then
-			local plyPedCoords = GetEntityCoords(PlayerPedId())
-			TriggerServerEvent('esx_ava_personalmenu:bring_sv', plyId, plyPedCoords)
+			local playerPedCoords = GetEntityCoords(PlayerPedId())
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', plyId, playerPedCoords)
 		end
 	end
 end
 
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')
-AddEventHandler('esx_ava_personalmenu:bring_cl', function(plyPedCoords)
-	SetEntityCoords(PlayerPedId(), plyPedCoords)
+AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
+	SetEntityCoords(PlayerPedId(), playerPedCoords)
 end)
 
 
