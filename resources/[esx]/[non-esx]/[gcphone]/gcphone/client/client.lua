@@ -172,7 +172,7 @@ function styleBlip(blip, type, number, player)
 end
 
 RegisterNetEvent('gcPhone:receiveLivePosition')
-AddEventHandler('gcPhone:receiveLivePosition', function(sourcePlayerServerId, timeoutInMilliseconds, sourceNumber, type)
+AddEventHandler('gcPhone:receiveLivePosition', function(sourcePlayerServerId, timeoutInMilliseconds, sourceNumber, type, coords)
   if (sourcePlayerServerId ~= nil and sourceNumber ~= nil) then
     local blipId = sourceNumber
     if (gpsBlips[blipId] ~= nil) then
@@ -181,8 +181,10 @@ AddEventHandler('gcPhone:receiveLivePosition', function(sourcePlayerServerId, ti
     end
     local sourcePlayer = GetPlayerFromServerId(sourcePlayerServerId)
     local sourcePed = GetPlayerPed(sourcePlayer)
-    if (type == 2) then
-      local coords = GetEntityCoords(sourcePed)
+    if (type == 2) then -- emergency call
+      if not coords then
+        coords = GetEntityCoords(sourcePed)
+      end
       gpsBlips[blipId] = AddBlipForCoord(coords.x, coords.y, coords.z)
     else
       gpsBlips[blipId] = AddBlipForEntity(sourcePed)
