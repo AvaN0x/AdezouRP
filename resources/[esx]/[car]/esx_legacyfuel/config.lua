@@ -4,8 +4,8 @@ Config = {}
 Config.UseESX = true
 
 -- What should the price of jerry cans be?
-Config.JerryCanCost = 300
-Config.RefillCost = 500 -- If it is missing half of it capacity, this amount will be divided in half, and so on.
+Config.JerryCanCost = 450
+Config.RefillCost = 400 -- If it is missing half of it capacity, this amount will be divided in half, and so on.
 
 -- Fuel decor - No need to change this, just leave it.
 Config.FuelDecor = "_FUEL_LEVEL"
