@@ -5,6 +5,21 @@
 
 ESX = nil
 
+local deathCauses = {
+	Suicide = { Label = "Suicide", Hash = {0} },
+	Melee = { Label = "Melee", Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466} },
+	Bullet = { Label = "Bullet", Hash = {453432689, 1593441988, 584646201, -1716589765, 324215364, 736523883, -270015777, -1074790547, -2084633992, -1357824103, -1660422300, 2144741730, 487013001, 2017895192, -494615257, -1654528753, 100416529, 205991906, 1119849093} },
+	Knife = { Label = "Knife", Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060} },
+	Car = { Label = "Car", Hash = {133987706, -1553120962} },
+	Animal = { Label = "Animal", Hash = {-100946242, 148160082} },
+	FallDamage = { Label = "FallDamage", Hash = {-842959696} },
+	Explosion = { Label = "Explosion", Hash = {-1568386805, 1305664598, -1312131151, 375527679, 324506233, 1752584910, -1813897027, 741814745, -37975472, 539292904, 341774354, -1090665087} },
+	Gas = { Label = "Gas", Hash = {-1600701090} },
+	Burn = { Label = "Burn", Hash = {615608432, 883325847, -544306709} },
+	Drown = { Label = "Drown", Hash = {-10959621, 1936677264} }
+}
+
+
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 ESX.RegisterServerCallback('esx_avan0x:getUsergroup', function(source, cb)
@@ -27,7 +42,7 @@ end)
 function SendWebhookMessage(webhookName, message)
 	local webhook = GetConvar(webhookName, "none")
 	if webhook ~= "none" then
-		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json'})
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), {['Content-Type'] = 'application/json'})
 	end
 end
 
@@ -43,7 +58,7 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 						color = color
 					}
 				}
-			}), { ['Content-Type'] = 'application/json'})
+			}), {['Content-Type'] = 'application/json'})
 	end
 end
 
@@ -138,12 +153,24 @@ end)
 RegisterServerEvent("esx:onPlayerDeath")
 AddEventHandler("esx:onPlayerDeath", function(data)
 	local _source = source
+	local deathCauseLabel = GetDeathCauseLabel(data.deathCause)
 	if data.killedByPlayer then
-		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. data.deathCause .. " at distance : " .. data.distance, 16711680) -- #ff0000
+		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. " (" .. data.deathCause .. ") at distance : " .. data.distance, 16711680) -- #ff0000
 	else
-		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. data.deathCause .. "." , 16711680) -- #ff0000
+		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. deathCauseLabel .. " (" .. data.deathCause .. ")." , 16711680) -- #ff0000
 	end
 end)
+
+function GetDeathCauseLabel(deathCause)
+	for _, v in pairs(deathCauses) do
+		for __, v_ in ipairs(v.Hash) do
+			if v_ == deathCause then
+				return v.Label
+			end
+		end
+	end
+	return deathCause
+end
 
 -- command to add new burglary
 -- TriggerEvent('es:addGroupCommand', 'burglary', 'user', function(source, args)
@@ -167,4 +194,4 @@ end)
 -- 			help = "Message descriptif pour la tenue"
 -- 		}
 -- 	}
--- })
+--})
