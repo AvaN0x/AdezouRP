@@ -162,6 +162,7 @@ function styleBlip(blip, type, number, player)
     ShowOutlineIndicatorOnBlip(blip, true)
     SetBlipSecondaryColour(blip, 255, 0, s0)
     SetBlipColour(blip, 5)
+    SetBlipRoute(blip, true)
   end
 
   BeginTextCommandSetBlipName("STRING")
