@@ -143,25 +143,25 @@ Config.Teleports = {
 		},
 
 
-		{ -- arena war
-			tpEnter = {
-				pos = vector3(-366.0, -1867.94, 19.55),
-				heading = 15.0,
-				size  = {x = 5.0, y = 5.0, z = 1.0},
-				-- color = {r = 255, g = 0, b = 255},
-				label = "Entrer"
-			},
-			tpExit = {
-				pos = vector3(2844.9, -3911.09, 139.02),
-				heading = 0.0,
-				size  = {x = 2.5, y = 2.5, z = 1.0},
-				label = "Sortir"
-			},
-			authorizedJobs = { '' },
-			allowVehicles = true,
-			locked = false,
-			distance = 20
-		},
+		-- { -- maze bank arena
+		-- 	tpEnter = {
+		-- 		pos = vector3(-366.0, -1867.94, 19.55),
+		-- 		heading = 15.0,
+		-- 		size  = {x = 5.0, y = 5.0, z = 1.0},
+		-- 		-- color = {r = 255, g = 0, b = 255},
+		-- 		label = "Entrer"
+		-- 	},
+		-- 	tpExit = {
+		-- 		pos = vector3(2844.9, -3911.09, 139.02),
+		-- 		heading = 0.0,
+		-- 		size  = {x = 2.5, y = 2.5, z = 1.0},
+		-- 		label = "Sortir"
+		-- 	},
+		-- 	authorizedJobs = { '' },
+		-- 	allowVehicles = true,
+		-- 	locked = false,
+		-- 	distance = 20
+		-- },
 	
 
 		-- exemple to teleport vehicle
