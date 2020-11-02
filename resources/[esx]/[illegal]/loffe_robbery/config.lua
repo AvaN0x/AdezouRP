@@ -52,6 +52,7 @@ Translation = {
         ['set_waypoint'] = 'Placer un point à la superette',
         ['hide_box'] = 'Ferme cette boite',
         ['robbery'] = 'Braquage en cours',
-        ['walked_too_far'] = 'Tu es parti trop loin'
+        ['walked_too_far'] = 'Tu es parti trop loin',
+        ['wait_before_next'] = 'Patientez avant de rebraquer une superette'
     }
 }

@@ -1,6 +1,7 @@
-ESX                           = nil
+ESX = nil
 local ESXLoaded = false
 local robbing = false
+local minutesBeforeNextRobbery = 0
 
 Citizen.CreateThread(function ()
     while ESX == nil do
@@ -45,6 +46,13 @@ end)
 RegisterNetEvent('loffe_robbery:robberyOver')
 AddEventHandler('loffe_robbery:robberyOver', function()
     robbing = false
+    minutesBeforeNextRobbery = 15
+    local timeBeforeNext = GetGameTimer() + minutesBeforeNextRobbery * 60000
+    while timeBeforeNext >= GetGameTimer() and minutesBeforeNextRobbery > 0 do
+        Wait(60000)
+        minutesBeforeNextRobbery = minutesBeforeNextRobbery - 1
+    end
+    minutesBeforeNextRobbery = 0
 end)
 
 RegisterNetEvent('loffe_robbery:talk')
@@ -98,7 +106,7 @@ AddEventHandler('loffe_robbery:rob', function(i)
             RequestModel(model)
             while not HasModelLoaded(model) do Wait(0) end
             local bag = CreateObject(model, GetEntityCoords(peds[i]), false, false)
-                        
+
             AttachEntityToEntity(bag, peds[i], GetPedBoneIndex(peds[i], 60309), 0.1, -0.11, 0.08, 0.0, -75.0, -75.0, 1, 1, 0, 0, 2, 1)
             timer = GetGameTimer() + 10000
             while timer >= GetGameTimer() do
@@ -214,7 +222,13 @@ Citizen.CreateThread(function()
             if IsPlayerFreeAiming(PlayerId()) then
                 for i = 1, #peds do
                     if HasEntityClearLosToEntityInFront(me, peds[i], 19) and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 5.0 then
-                        if not robbing then
+                        if minutesBeforeNextRobbery > 0 then
+                            local wait = GetGameTimer() + 5000
+                            while wait >= GetGameTimer() do
+                                Wait(0)
+                                DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['wait_before_next'] .. " (" .. minutesBeforeNextRobbery .. " minutes)")
+                            end
+                        elseif not robbing then
                             local canRob = nil
                             ESX.TriggerServerCallback('loffe_robbery:canRob', function(cb)
                                 canRob = cb
@@ -253,7 +267,7 @@ Citizen.CreateThread(function()
                                 else
                                     TriggerServerEvent('loffe_robbery:setRobbed', i, false)
                                     ClearPedTasks(peds[i])
-                                    local wait = GetGameTimer()+5000
+                                    local wait = GetGameTimer() + 5000
                                     while wait >= GetGameTimer() do
                                         Wait(0)
                                         DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['walked_too_far'])
@@ -261,7 +275,7 @@ Citizen.CreateThread(function()
                                     robbing = false
                                 end
                             elseif canRob == 'no_cops' then
-                                local wait = GetGameTimer()+5000
+                                local wait = GetGameTimer() + 5000
                                 while wait >= GetGameTimer() do
                                     Wait(0)
                                     DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['no_cops'])
