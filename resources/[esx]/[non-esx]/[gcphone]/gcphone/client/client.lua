@@ -32,7 +32,7 @@ local TokoVoipID = nil
 local PhoneInCall = {}
 local currentPlaySound = false
 local soundDistanceMax = 8.0
-
+local webhookPic = nil
 
 --====================================================================================
 -- Check if the players have a phone
@@ -61,6 +61,11 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
   end
 
+	while webhookPic == nil do
+    ESX.TriggerServerCallback('gcphone:screenshotWebhook', function(webhook) webhookPic = webhook end)
+		Citizen.Wait(0)
+  end
+
 end)
 
 function hasPhone (cb)
@@ -72,7 +77,7 @@ end
 function ShowNoPhoneWarning () 
   if (ESX == nil) then return end
   ESX.ShowNotification("You do not have a ~r~phone~s~.")
-end 
+end
 
 AddEventHandler('esx:onPlayerDeath', function()
   if menuIsOpen then
@@ -825,14 +830,24 @@ RegisterNUICallback('takePhoto', function(data, cb)
       takePhoto = false
       break
     elseif IsControlJustPressed(1, 176) then -- TAKE.. PIC
-			exports['screenshot-basic']:requestScreenshotUpload(data.url, data.field, function(data)
-        local resp = json.decode(data)
-        DestroyMobilePhone()
-        CellCamActivate(false, false)
-        --cb(json.encode({ url = resp.files[1].url }))   
-        cb(json.encode({ url = resp.url }))
-      end)
-      takePhoto = false
+			-- exports['screenshot-basic']:requestScreenshotUpload(data.url, data.field, function(data)
+      --   local resp = json.decode(data)
+      --   DestroyMobilePhone()
+      --   CellCamActivate(false, false)
+      --   --cb(json.encode({ url = resp.files[1].url }))
+      --   cb(json.encode({ url = resp.url }))
+      -- end)
+      if webhookPic ~= "none" then
+        exports['screenshot-basic']:requestScreenshotUpload(webhookPic, data.field, function(data)
+          local image = json.decode(data)
+          DestroyMobilePhone()
+          CellCamActivate(false, false)
+          cb(json.encode({ url = image.attachments[1].proxy_url }))
+        end)
+        takePhoto = false
+      else
+        print("webhook not found for screenshot")
+      end
 		end
 		HideHudComponentThisFrame(7)
 		HideHudComponentThisFrame(8)

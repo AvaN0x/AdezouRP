@@ -9,7 +9,11 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-math.randomseed(os.time()) 
+math.randomseed(os.time())
+
+ESX.RegisterServerCallback('gcphone:screenshotWebhook', function(source, cb)
+    cb(GetConvar("avan0x_wh_screenshot_basics", "none"))
+end)
 
 --- For phone numbers like: XXX-XXXX
 function getPhoneRandomNumber()
