@@ -174,7 +174,7 @@ AddEventHandler('esx_ava_gang:gang_hire', function(target, gangName)
 
 		TriggerClientEvent('esx:showNotification', _source, "Vous avez ~g~recruté " .. target .. "~w~.")
 
-		TriggerClientEvent('esx_ava_gang:setGang', target, {name = gangName, grade = 0})
+		TriggerClientEvent('esx_ava_gang:setGang', target, {name = gangName, label = Config.Gangs[gangName].Name, grade = 0})
 		TriggerClientEvent('esx:showNotification', target, "Vous avez été ~g~recruté par " .. _source .. "~w~.")
 	end
 end)
@@ -222,3 +222,64 @@ AddEventHandler('esx_ava_gang:gang_set_manage', function(target, gangName, grade
 	end
 end)
 
+
+TriggerEvent('es:addGroupCommand', 'setgang', 'admin', function(source, args, user)
+	if tonumber(args[1]) and args[2] and tonumber(args[3]) then
+		local xPlayer = ESX.GetPlayerFromId(args[1])
+
+		if xPlayer then
+			if Config.Gangs[args[2]] ~= nil then
+				if tonumber(args[3]) >= 0 and tonumber(args[3]) <=1 then
+					if GetGang(xPlayer) then
+						MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, @grade)", {
+							['@identifier'] = xPlayer.identifier,
+							['@name'] = args[2],
+							['@grade'] = tonumber(args[3])
+						})
+					else
+						MySQL.Sync.execute("UPDATE `user_gang` SET `name` = @name, `grade` = @grade WHERE `identifier` = @identifier", {
+							['@identifier'] = xPlayer.identifier,
+							['@name'] = args[2],
+							['@grade'] = tonumber(args[3])
+						})
+					end
+					TriggerClientEvent('esx_ava_gang:setGang', args[1], {name = args[2], label = Config.Gangs[args[2]].Name, grade = tonumber(args[3])})
+				else
+					TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That gang grade does not exist.' } })
+				end
+			else
+				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That gang does not exist.' } })
+			end
+		else
+			TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Player not online.' } })
+		end
+	else
+		TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Invalid usage.' } })
+	end
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end, {help = "Set player gang", params = {{name = "id", help = "player id"}, {name = "gang", help = "gang name"}, {name = "grade_id", help = "grade ID"}}})
+
+
+TriggerEvent('es:addGroupCommand', 'remgang', 'admin', function(source, args, user)
+	if tonumber(args[1]) then
+		local xPlayer = ESX.GetPlayerFromId(args[1])
+
+		if xPlayer then
+			if GetGang(xPlayer) then
+				MySQL.Sync.execute("DELETE FROM `user_gang` WHERE identifier = @identifier", {
+					['@identifier'] = xPlayer.identifier
+				})
+				TriggerClientEvent('esx_ava_gang:setGang', args[1], {})
+			else
+				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That player doesn\'t remain to any gang' } })
+			end
+		else
+			TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Player not online.' } })
+		end
+	else
+		TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Invalid usage.' } })
+	end
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end, {help = "Remove player gang", params = {{name = "id", help = "player id"}}})
