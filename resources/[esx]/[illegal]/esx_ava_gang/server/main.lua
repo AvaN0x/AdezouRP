@@ -230,14 +230,14 @@ TriggerEvent('es:addGroupCommand', 'setgang', 'admin', function(source, args, us
 		if xPlayer then
 			if Config.Gangs[args[2]] ~= nil then
 				if tonumber(args[3]) >= 0 and tonumber(args[3]) <=1 then
-					if GetGang(xPlayer) then
-						MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, @grade)", {
+					if GetGang(xPlayer).name then
+						MySQL.Sync.execute("UPDATE `user_gang` SET `name` = @name, `grade` = @grade WHERE `identifier` = @identifier", {
 							['@identifier'] = xPlayer.identifier,
 							['@name'] = args[2],
 							['@grade'] = tonumber(args[3])
 						})
 					else
-						MySQL.Sync.execute("UPDATE `user_gang` SET `name` = @name, `grade` = @grade WHERE `identifier` = @identifier", {
+						MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, @grade)", {
 							['@identifier'] = xPlayer.identifier,
 							['@name'] = args[2],
 							['@grade'] = tonumber(args[3])
@@ -266,13 +266,13 @@ TriggerEvent('es:addGroupCommand', 'remgang', 'admin', function(source, args, us
 		local xPlayer = ESX.GetPlayerFromId(args[1])
 
 		if xPlayer then
-			if GetGang(xPlayer) then
+			if GetGang(xPlayer).name then
 				MySQL.Sync.execute("DELETE FROM `user_gang` WHERE identifier = @identifier", {
 					['@identifier'] = xPlayer.identifier
 				})
 				TriggerClientEvent('esx_ava_gang:setGang', args[1], {})
 			else
-				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That player doesn\'t remain to any gang' } })
+				TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That player doesn\'t belong to any gang' } })
 			end
 		else
 			TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Player not online.' } })
