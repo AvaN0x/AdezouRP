@@ -20,4 +20,28 @@ Config.Gangs = {
 			},
 		}
 	},
+	gang_ballas = {
+		Name = "Ballas",
+		Zones = {
+			Stock = {
+				Pos   = {x = 118.93, y = -1966.05, z = 20.35},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
+	gang_families = {
+		Name = "Families",
+		Zones = {
+			Stock = {
+				Pos   = {x = -157.71, y = -1603.08, z = 34.06},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
 }

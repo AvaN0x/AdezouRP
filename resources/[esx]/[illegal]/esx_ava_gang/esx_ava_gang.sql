@@ -1,10 +1,16 @@
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 	('gang_vagos','Vagos', 1),
-	('gang_vagos_black','Vagos', 1)
+	('gang_vagos_black','Vagos', 1),
+	('gang_ballas','Ballas', 1),
+	('gang_ballas_black','Ballas', 1),
+	('gang_families','Families', 1),
+	('gang_families_black','Families', 1)
 ;
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
-	('gang_vagos','Vagos', 1)
+	('gang_vagos','Vagos', 1),
+	('gang_ballas','Ballas', 1),
+	('gang_families','Families', 1)
 ;
 
 CREATE TABLE `user_gang` (
