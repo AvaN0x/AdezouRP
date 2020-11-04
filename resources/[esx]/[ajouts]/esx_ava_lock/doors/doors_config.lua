@@ -4,7 +4,7 @@
 -------------------------------------------
 Config.Doors = {
 	ObjectDistance = 30,
-	DefaultDistance = 1.5,
+	DefaultDistance = 1.0,
 	DefaultSize = 0.3,
 
 	DoorList = {
@@ -14,7 +14,6 @@ Config.Doors = {
 			textCoords = vector3(434.7, -981.9, 30.80),
 			authorizedJobs = { 'police', 'state' },
 			locked = false,
-			distance = 2.5,
 			doors = {
 				{
 					objName = 'v_ilev_ph_door01',
@@ -60,7 +59,6 @@ Config.Doors = {
 			textCoords = vector3(444.6, -989.4, 30.9),
 			authorizedJobs = { 'police', 'state' },
 			locked = true,
-			distance = 2,
 			doors = {
 				{
 					objName = 'v_ilev_ph_gendoor005',
@@ -275,7 +273,6 @@ Config.Doors = {
 			objCoords  = vector3( 255.59, 224.03, 101.88),
 			textCoords = vector3( 252.82, 228.64, 102.08),
 			authorizedJobs = { 'police' },
-			distance = 1.8,
 			locked = true
 		},
 
@@ -594,7 +591,7 @@ Config.Doors = {
 		},
 	
 		-- HOPITAL
-		{ 
+		{
 			textCoords = vector3(299.5, -584.9, 44.70),
 			authorizedJobs = { 'ambulance' },
 			locked = false,

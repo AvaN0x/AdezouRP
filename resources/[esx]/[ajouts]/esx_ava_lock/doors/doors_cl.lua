@@ -39,39 +39,13 @@ Citizen.CreateThread(function()
 		if not doorID.distance then
 			doorID.distance = Config.Doors.DefaultDistance
 		end
+		doorID.checkDistance = doorID.distance * 2
+		if doorID.checkDistance > Config.Doors.ObjectDistance then
+			doorID.checkDistance = Config.Doors.ObjectDistance
+		end
 		if not doorID.size then
 			doorID.size = Config.Doors.DefaultSize
 		end
-	end
-end)
-
-Citizen.CreateThread(function()
-	while true do
-		local playerCoords = GetEntityCoords(PlayerPedId())
-
-		for _,doorID in ipairs(Config.Doors.DoorList) do
-			if doorID.doors then
-				for k,v in ipairs(doorID.doors) do
-					if not v.object or not DoesEntityExist(v.object) then
-						local distance = #(playerCoords - doorID.textCoords)
-
-						if distance < Config.Doors.ObjectDistance then
-							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
-						end
-					end
-				end
-			else
-				if not doorID.object or not DoesEntityExist(doorID.object) then
-					local distance = #(playerCoords - doorID.textCoords)
-
-					if distance < Config.Doors.ObjectDistance then
-						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
-					end
-				end
-			end
-		end
-
-		Citizen.Wait(2000)
 	end
 end)
 
@@ -83,12 +57,15 @@ Citizen.CreateThread(function()
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
 			local distance = #(playerCoords - doorID.textCoords)
-			
-			if distance < Config.Doors.ObjectDistance then
+
+			if distance < doorID.checkDistance then
 				if doorID.doors then
 					for _,v in ipairs(doorID.doors) do
+						if not v.object then
+							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
+						end
 						FreezeEntityPosition(v.object, doorID.locked)
-						
+
 						if doorID.locked and v.objYaw and GetEntityRotation(v.object).z ~= v.objYaw then
 							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
 						elseif not doorID.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
@@ -97,8 +74,11 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
+					if not doorID.object then
+						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
+					end
 					FreezeEntityPosition(doorID.object, doorID.locked)
-					
+
 					if doorID.locked and doorID.objYaw and GetEntityRotation(doorID.object).z ~= doorID.objYaw then
 						SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objYaw, 2, true)
 					elseif not doorID.locked and doorID.objOpenYaw and GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
@@ -106,26 +86,26 @@ Citizen.CreateThread(function()
 						SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objOpenYaw, 2, true)
 					end
 				end
-			end
-			
-			if distance < doorID.distance then
-				local displayText = _U('doors_unlocked')
-				if doorID.locked then
-					displayText = _U('doors_locked')
-				end
-				
-				local isAuthorized = IsAuthorized(doorID)
-				if isAuthorized then
-					displayText = _U('doors_press_button', displayText)
-				end
 
-				DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
+				if distance < doorID.distance then
+					local displayText = _U('doors_unlocked')
+					if doorID.locked then
+						displayText = _U('doors_locked')
+					end
 
-				if IsControlJustReleased(0, 38) then
+					local isAuthorized = IsAuthorized(doorID)
 					if isAuthorized then
-						doorID.locked = not doorID.locked
-						TriggerEvent("esx_ava_lock:dooranim")
-						TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
+						displayText = _U('doors_press_button', displayText)
+					end
+
+					DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
+
+					if IsControlJustReleased(0, 38) then
+						if isAuthorized then
+							doorID.locked = not doorID.locked
+							TriggerEvent("esx_ava_lock:dooranim")
+							TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
+						end
 					end
 				end
 			end
@@ -159,7 +139,7 @@ function FindClosestDoor()
 	local playerCoords = GetEntityCoords(PlayerPedId())
 	for k,doorID in ipairs(Config.Doors.DoorList) do
 		local distance = #(playerCoords - doorID.textCoords)
-				
+
 		if distance < doorID.distance then
 			local isAuthorized = IsAuthorized(doorID)
 			if doorID.locked and not isAuthorized then
@@ -189,17 +169,17 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 	local playerPed = GetPlayerPed(-1)
 	ClearPedTasksImmediately(playerPed)
 	if result and closestDoor then
-		Citizen.CreateThread(function()
-			ThreadID = GetIdOfThisThread()
+		-- Citizen.CreateThread(function()
+		-- 	ThreadID = GetIdOfThisThread()
 			CurrentAction = 'lockpick'
 			if CurrentAction ~= nil then
 				closestDoor.door.locked = not closestDoor.door.locked
 				TriggerServerEvent('esx_ava_doors:updateState', closestDoor.name, closestDoor.door.locked)
 			end
-			
+
 			CurrentAction = nil
 			closestDoor = nil
-			TerminateThisThread()
-		end)
+		-- 	TerminateThisThread()
+		-- end)
 	end
 end)
