@@ -17,6 +17,8 @@ Citizen.CreateThread(function()
 
 	PlayerData = ESX.GetPlayerData()
 
+	SetAllAuthorized()
+
 	ESX.TriggerServerCallback('esx_ava_doors:getDoorInfo', function(doorInfo)
 		for doorID,state in pairs(doorInfo) do
 			Config.Doors.DoorList[doorID].locked = state
@@ -27,11 +29,13 @@ end)
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
 	PlayerData.job = job
+	SetAllAuthorized()
 end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
+	SetAllAuthorized()
 end)
 
 Citizen.CreateThread(function()
@@ -50,7 +54,7 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	Citizen.Wait(5000)
+	Citizen.Wait(1000)
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
@@ -93,15 +97,14 @@ Citizen.CreateThread(function()
 						displayText = _U('doors_locked')
 					end
 
-					local isAuthorized = IsAuthorized(doorID)
-					if isAuthorized then
+					if doorID.authorized then
 						displayText = _U('doors_press_button', displayText)
 					end
 
 					DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
 
 					if IsControlJustReleased(0, 38) then
-						if isAuthorized then
+						if doorID.authorized then
 							doorID.locked = not doorID.locked
 							TriggerEvent("esx_ava_lock:dooranim")
 							TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
@@ -113,8 +116,14 @@ Citizen.CreateThread(function()
 	end
 end)
 
+function SetAllAuthorized()
+	for k,doorID in ipairs(Config.Doors.DoorList) do
+		doorID.authorized = IsAuthorized(doorID)
+	end
+end
+
 function IsAuthorized(doorID)
-	if PlayerData.job == nil or PlayerData.job2 == nil then
+	if PlayerData == nil or PlayerData.job == nil or PlayerData.job2 == nil then
 		return false
 	end
 
@@ -169,17 +178,13 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 	local playerPed = GetPlayerPed(-1)
 	ClearPedTasksImmediately(playerPed)
 	if result and closestDoor then
-		-- Citizen.CreateThread(function()
-		-- 	ThreadID = GetIdOfThisThread()
-			CurrentAction = 'lockpick'
-			if CurrentAction ~= nil then
-				closestDoor.door.locked = not closestDoor.door.locked
-				TriggerServerEvent('esx_ava_doors:updateState', closestDoor.name, closestDoor.door.locked)
-			end
+		CurrentAction = 'lockpick'
+		if CurrentAction ~= nil then
+			closestDoor.door.locked = not closestDoor.door.locked
+			TriggerServerEvent('esx_ava_doors:updateState', closestDoor.name, closestDoor.door.locked)
+		end
 
-			CurrentAction = nil
-			closestDoor = nil
-		-- 	TerminateThisThread()
-		-- end)
+		CurrentAction = nil
+		closestDoor = nil
 	end
 end)

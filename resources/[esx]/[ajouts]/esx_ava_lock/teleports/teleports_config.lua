@@ -23,8 +23,7 @@ Config.Teleports = {
 				label = "Descendre"
 			},
 			authorizedJobs = { 'ambulance' },
-			locked = true,
-			distance = 10
+			locked = true
 		},
 		{ -- nightclub entry
 			tpEnter = {
@@ -40,8 +39,7 @@ Config.Teleports = {
 				label = "Sortir"
 			},
 			authorizedJobs = { 'nightclub' },
-			locked = true,
-			distance = 10
+			locked = true
 		},
 		{ -- nightclub vehicle entry
 			tpEnter = {
@@ -55,12 +53,12 @@ Config.Teleports = {
 				pos = vector3(-675.28, -2390.24, 12.88),
 				heading = 60.0,
 				size  = {x = 2.5, y = 2.5, z = 1.0},
+				distance = 20,
 				label = "Entrer"
 			},
 			authorizedJobs = { 'nightclub' },
 			allowVehicles = true,
-			locked = true,
-			distance = 10
+			locked = true
 		},
 
 	
@@ -78,8 +76,7 @@ Config.Teleports = {
 				label = "Sortir"
 			},
 			authorizedJobs = { '' },
-			locked = false,
-			distance = 10
+			locked = false
 		},
 		{ -- arcade vehicle entry
 			tpEnter = {
@@ -97,8 +94,7 @@ Config.Teleports = {
 			},
 			authorizedJobs = { '' },
 			allowVehicles = true,
-			locked = false,
-			distance = 10
+			locked = false
 		},
 	
 	
@@ -116,8 +112,7 @@ Config.Teleports = {
 				label = "Sortir"
 			},
 			authorizedJobs = { '' },
-			locked = false,
-			distance = 10
+			locked = false
 		},
 	
 
@@ -138,8 +133,7 @@ Config.Teleports = {
 			},
 			authorizedJobs = { 'ammunation' },
 			allowVehicles = true,
-			locked = true,
-			distance = 10
+			locked = true
 		},
 
 
@@ -159,8 +153,7 @@ Config.Teleports = {
 		-- 	},
 		-- 	authorizedJobs = { '' },
 		-- 	allowVehicles = true,
-		-- 	locked = false,
-		-- 	distance = 20
+		-- 	locked = false
 		-- },
 	
 
@@ -171,18 +164,19 @@ Config.Teleports = {
 		-- 		heading = 180.0,
 		-- 		size  = {x = 2.5, y = 2.5, z = 1.0},
 		-- 		-- color = {r = 255, g = 0, b = 255},
+		--      -- distance = 15,
 		-- 		label = "Entrer"
 		-- 	},
 		-- 	tpExit = {
 		-- 		pos = vector3(-1899.85, 2018.84, 139.86),
 		-- 		heading = 0.0,
 		-- 		size  = {x = 2.5, y = 2.5, z = 1.0},
+		--      -- distance = 15,
 		-- 		label = "Sortir"
 		-- 	},
 		-- 	authorizedJobs = { '' },
 		-- 	allowVehicles = true,
-		-- 	locked = false,
-		-- 	disntace = 10
+		-- 	locked = false
 		-- },
 	
 	}

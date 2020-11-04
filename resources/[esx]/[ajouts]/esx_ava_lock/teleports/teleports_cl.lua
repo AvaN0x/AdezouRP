@@ -38,6 +38,9 @@ end)
 Citizen.CreateThread(function()
 	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+			if not tpID2.distance then
+				tpID2.distance = Config.Teleports.DrawDistance
+			end
 			if not tpID2.size then
 				tpID2.size = Config.Teleports.DefaultSize
 			end
@@ -49,7 +52,7 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	Citizen.Wait(5000)
+	Citizen.Wait(1000)
 	while true do
 		Citizen.Wait(0)
 		local playerCoords = GetEntityCoords(PlayerPedId())
@@ -60,35 +63,35 @@ Citizen.CreateThread(function()
 			}) do
 				local distance = #(playerCoords - tpID2.from.pos)
 
-				if distance < Config.Teleports.DrawDistance then
+				if distance < tpID2.from.distance then
 					DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y, tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
-				end
 
-				if distance < tpID2.from.size.x then
-					local isAuthorized = IsAuthorized(tpID)
-					local helpText = _U('teleports_unlocked')
-					local label = "~g~"
-					if tpID.locked then
-						helpText = _U('teleports_locked')
-						label = "~r~"
-					end
-					if isAuthorized then
-						helpText = _U('teleports_press_button', helpText)
-					end
-
-					DrawText3D(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2, label .. tpID2.from.label, 0.40) -- draw label
-					ESX.ShowHelpNotification(helpText)
-
-					if IsControlJustReleased(0, 38) then -- E
-						if not tpID.locked then
-							Teleport(tpID2.to.pos, tpID.allowVehicles, tpID2.to.heading)
+					if distance < tpID2.from.size.x then
+						local isAuthorized = IsAuthorized(tpID)
+						local helpText = _U('teleports_unlocked')
+						local label = "~g~"
+						if tpID.locked then
+							helpText = _U('teleports_locked')
+							label = "~r~"
 						end
-					end
-					if IsControlJustReleased(0, 73) then -- X
 						if isAuthorized then
-							tpID.locked = not tpID.locked
-							TriggerEvent("esx_ava_lock:dooranim")
-							TriggerServerEvent('esx_ava_teleports:updateState', k, tpID.locked) -- Broadcast new state of the door to everyone
+							helpText = _U('teleports_press_button', helpText)
+						end
+
+						DrawText3D(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2, label .. tpID2.from.label, 0.40) -- draw label
+						ESX.ShowHelpNotification(helpText)
+
+						if IsControlJustReleased(0, 38) then -- E
+							if not tpID.locked then
+								Teleport(tpID2.to.pos, tpID.allowVehicles, tpID2.to.heading)
+							end
+						end
+						if IsControlJustReleased(0, 73) then -- X
+							if isAuthorized then
+								tpID.locked = not tpID.locked
+								TriggerEvent("esx_ava_lock:dooranim")
+								TriggerServerEvent('esx_ava_teleports:updateState', k, tpID.locked) -- Broadcast new state of the door to everyone
+							end
 						end
 					end
 				end
@@ -100,7 +103,7 @@ end)
 
 
 function IsAuthorized(tpID)
-	if PlayerData.job == nil or PlayerData.job2 == nil then
+	if PlayerData == nil or PlayerData.job == nil or PlayerData.job2 == nil then
 		return false
 	end
 
@@ -183,14 +186,9 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 	local playerPed = GetPlayerPed(-1)
 	ClearPedTasksImmediately(playerPed)
 	if result and closestTeleport then
-		-- Citizen.CreateThread(function()
-		-- 	ThreadID = GetIdOfThisThread()
+		closestTeleport.teleport.locked = not closestTeleport.teleport.locked
+		TriggerServerEvent('esx_ava_teleports:updateState', closestTeleport.name, closestTeleport.teleport.locked)
 
-			closestTeleport.teleport.locked = not closestTeleport.teleport.locked
-			TriggerServerEvent('esx_ava_teleports:updateState', closestTeleport.name, closestTeleport.teleport.locked)
-
-			closestTeleport = nil
-		-- 	TerminateThisThread()
-		-- end)
+		closestTeleport = nil
 	end
 end)
