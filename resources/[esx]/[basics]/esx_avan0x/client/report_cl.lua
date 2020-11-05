@@ -11,9 +11,7 @@ Citizen.CreateThread(function()
 	end
 
 	while PlayerGroup == nil do
-		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) 
-			PlayerGroup = group
-        end)
+		ESX.TriggerServerCallback("esx_avan0x:getUsergroup", function(group) PlayerGroup = group end)
 		Citizen.Wait(10)
     end
 end)

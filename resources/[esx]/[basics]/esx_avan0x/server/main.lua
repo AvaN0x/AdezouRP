@@ -124,10 +124,10 @@ TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 end, function(source, args)
 	TriggerClientEvent('chat:addMessage', source, {args = {'^1SYSTEM', 'Insufficient Permissions.'}})
 end, {
-	help = "Envoyer votre tenue au staff", 
+	help = "Envoyer votre tenue au staff",
 	params = {
 		{
-			name = "message", 
+			name = "message",
 			help = "Message descriptif pour la tenue"
 		}
 	}

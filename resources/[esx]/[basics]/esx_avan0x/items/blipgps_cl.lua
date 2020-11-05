@@ -41,12 +41,6 @@ AddEventHandler('esx_avan0x:blipgps', function()
     end
 end)
 
--- RequestAnimDict(anim.dict)
--- while not HasAnimDictLoaded(anim.dict) do
---     Citizen.Wait(0)
--- end
-
--- TaskPlayAnim(playerPed, anim.dict, anim.anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
 
 
 
