@@ -78,7 +78,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
+		Citizen.Wait(10)
 		if IsControlJustReleased(0, Config.MenuKey) and not IsDead then
 			OpenPersonalMenu()
 		end
