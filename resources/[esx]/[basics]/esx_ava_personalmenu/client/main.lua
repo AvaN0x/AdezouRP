@@ -730,7 +730,7 @@ function AdminLoop()
 										print("set blip sprite to ".. 274 .. " for ".. player)
 										SetBlipSprite(blip, 274)
 									end
-								elseif veh then
+								elseif veh ~= 0 then
 									vehClass = GetVehicleClass(veh)
 									if vehClass == 16 then -- plane
 										if blipSprite ~= 423 then
