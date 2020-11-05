@@ -699,7 +699,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Wait(100)
+				Wait(5000)
 				if showname then
 					playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
@@ -715,34 +715,51 @@ function AdminLoop()
 								SetBlipCategory(blip, 7)
 								SetBlipScale(blip, 0.7)
 								ShowHeadingIndicatorOnBlip(blip, true)
-								SetBlipNameToPlayerName(blip, player)
+								-- SetBlipNameToPlayerName(blip, player)
+								BeginTextCommandSetBlipName("STRING")
+								AddTextComponentString(GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player))
+								EndTextCommandSetBlipName(blip)
 							else
 								local blipSprite = GetBlipSprite(blip)
 								print("blip exist for "..player.." with sprite number "..blipSprite)
 								local veh = GetVehiclePedIsIn(targetPed, false)
 								if not GetEntityHealth(targetPed) then
+									print(player.." is dead with sprite number "..blipSprite)
 									if blipSprite ~= 274 then
+										print("set blip sprite to ".. 274 .. " for ".. player)
 										SetBlipSprite(blip, 274)
 									end
 								elseif veh then
 									vehClass = GetVehicleClass(veh)
 									if vehClass == 16 then -- plane
 										if blipSprite ~= 423 then
+											print("set blip sprite to ".. 423 .. " for ".. player)
 											SetBlipSprite(blip, 423)
 										end
 									elseif vehClass == 15 then -- heli
 										if blipSprite ~= 422 then
+											print("set blip sprite to ".. 422 .. " for ".. player)
 											SetBlipSprite(blip, 422)
 										end
 									elseif vehClass == 14 then -- boat
 										if blipSprite ~= 404 then
+											print("set blip sprite to ".. 404 .. " for ".. player)
 											SetBlipSprite(blip, 404)
 										end
 									elseif blipSprite ~= 1 then -- default blip
 										SetBlipSprite(blip, 1)
 									end
+									-- show number of passenger on blip (have a max of 5?)
+									local passengers = GetVehicleNumberOfPassengers(veh)
+									if passengers and passengers > 1 then
+										ShowNumberOnBlip(blip, passengers)
+									else
+										HideNumberOnBlip(blip)
+									end
 								else
 									if blipSprite ~= 1 then
+										-- hide number of passenger
+										HideNumberOnBlip(blip)
 										SetBlipSprite(blip, 1)
 									end
 								end
