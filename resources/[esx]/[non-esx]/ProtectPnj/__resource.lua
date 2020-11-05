@@ -2,7 +2,6 @@
 
 client_script {
 	'deletearmevehiculeclient.lua',
-	'NoDrivingCopCar.lua',
 	'NoMoreCopNPC.lua',
 	'NoMoreWeaponsOnNPC.lua',
 	'NoWeaponReward.lua',

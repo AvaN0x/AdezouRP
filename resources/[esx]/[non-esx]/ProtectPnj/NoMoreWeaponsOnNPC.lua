@@ -1,47 +1,20 @@
---[[
-----------------------------------------------------------------------------
-____________________________________________________________________________
-						
-						AUTHOR : Soig
-
-			Plus aucune armes droppées par les PNJ
-			Peds wont drop weapons no more
-		
-
-____________________________________________________________________________
-						
----------------------------------------------------------------------------
-]]--
-
-local pedindex = {}
-
-function SetWeaponDrops() -- This function will set the closest entity to you as the variable entity.
+function SetWeaponDrops()
     local handle, ped = FindFirstPed()
-    local finished = false -- FindNextPed will turn the first variable to false when it fails to find another ped in the index
-    repeat 
+    local finished = false
+
+    repeat
         if not IsEntityDead(ped) then
-                pedindex[ped] = {}
+            SetPedDropsWeaponsWhenDead(ped, false) 
         end
-        finished, ped = FindNextPed(handle) -- first param returns true while entities are found
+        finished, ped = FindNextPed(handle)
     until not finished
+
     EndFindPed(handle)
-
-    for peds,_ in pairs(pedindex) do
-        if peds ~= nil then -- set all peds to not drop weapons on death.
-            SetPedDropsWeaponsWhenDead(peds, false) 
-        end
-    end
 end
-
 
 Citizen.CreateThread(function()
     while true do
-       -- Citizen.Wait(0)
-        Citizen.Wait(500)
         SetWeaponDrops()
+        Citizen.Wait(500)
     end
 end)
-
----------------------------------
---------- ikNox#6088 ------------
----------------------------------
