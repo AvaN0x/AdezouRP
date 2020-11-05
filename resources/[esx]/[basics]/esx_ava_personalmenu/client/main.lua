@@ -747,8 +747,8 @@ function AdminLoop()
 											print("set blip sprite to ".. 404 .. " for ".. player)
 											SetBlipSprite(blip, 404)
 										end
-									elseif blipSprite ~= 1 then -- default blip
-										SetBlipSprite(blip, 1)
+									elseif blipSprite ~= 595 then -- default car blip
+										SetBlipSprite(blip, 595)
 									end
 									-- show number of passenger on blip (have a max of 5?)
 									local passengers = GetVehicleNumberOfPassengers(veh)
