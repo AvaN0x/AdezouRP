@@ -698,6 +698,7 @@ function AdminLoop()
 		end)
 
 		Citizen.CreateThread(function()
+			local blipColor = 8
 			while true do
 				Wait(5000)
 				if showname then
@@ -708,47 +709,44 @@ function AdminLoop()
 							local blip = GetBlipFromEntity(targetPed)
 
 							if not DoesBlipExist(blip) then
-								print("blip doest not exist for "..player)
 								blip = AddBlipForEntity(targetPed)
 								SetBlipSprite(blip, 1)
-								SetBlipColour(blip, 8)
+								SetBlipColour(blip, blipColor)
 								SetBlipCategory(blip, 7)
 								SetBlipScale(blip, 0.7)
 								ShowHeadingIndicatorOnBlip(blip, true)
-								-- SetBlipNameToPlayerName(blip, player)
 								BeginTextCommandSetBlipName("STRING")
 								AddTextComponentString(GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player))
 								EndTextCommandSetBlipName(blip)
 							else
 								local blipSprite = GetBlipSprite(blip)
-								print("blip exist for "..player.." with sprite number "..blipSprite)
 								local veh = GetVehiclePedIsIn(targetPed, false)
 								print(veh)
 								if IsEntityDead(targetPed) then
-									print(player.." is dead with sprite number "..blipSprite)
 									if blipSprite ~= 274 then
-										print("set blip sprite to ".. 274 .. " for ".. player)
 										SetBlipSprite(blip, 274)
+										SetBlipColour(blip, blipColor)
 									end
 								elseif veh ~= 0 then
 									vehClass = GetVehicleClass(veh)
 									if vehClass == 16 then -- plane
 										if blipSprite ~= 423 then
-											print("set blip sprite to ".. 423 .. " for ".. player)
 											SetBlipSprite(blip, 423)
+											SetBlipColour(blip, blipColor)
 										end
 									elseif vehClass == 15 then -- heli
 										if blipSprite ~= 422 then
-											print("set blip sprite to ".. 422 .. " for ".. player)
 											SetBlipSprite(blip, 422)
+											SetBlipColour(blip, blipColor)
 										end
 									elseif vehClass == 14 then -- boat
 										if blipSprite ~= 404 then
-											print("set blip sprite to ".. 404 .. " for ".. player)
 											SetBlipSprite(blip, 404)
+											SetBlipColour(blip, blipColor)
 										end
 									elseif blipSprite ~= 595 then -- default car blip
 										SetBlipSprite(blip, 595)
+										SetBlipColour(blip, blipColor)
 									end
 									-- show number of passenger on blip (have a max of 5?)
 									local passengers = GetVehicleNumberOfPassengers(veh)
@@ -762,6 +760,7 @@ function AdminLoop()
 										-- hide number of passenger
 										HideNumberOnBlip(blip)
 										SetBlipSprite(blip, 1)
+										SetBlipColour(blip, blipColor)
 									end
 								end
 							end
