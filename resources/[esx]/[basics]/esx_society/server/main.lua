@@ -484,7 +484,6 @@ ESX.RegisterServerCallback('esx_society:setJob', function(source, cb, identifier
       print(notifMsg)
       DropPlayer(source, 'Lua Execution/Mod Menu')
       TriggerClientEvent('chatMessage', -1, '^3[Chat]', {255, 0, 0}, "^3" ..xPlayer.name.. "^1 a été kick pour avoir tenté de ce mettre Patron d'un métier.")
-      TriggerEvent('DiscordBot:ToDiscord', 'cheat', 'AntiCheat', notifMsg, 'https://scotchandiron.org/gameassets/anticheat-icon.png', true)
       cb()
     end
 end)
