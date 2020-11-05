@@ -657,8 +657,8 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(0)
-				playerPed = PlayerPedId()
 				if noclip then
+					playerPed = PlayerPedId()
 					local x, y, z = getPosition()
 					local dx, dy, dz = getCamDirection()
 					local speed = Config.noclip_speed
@@ -693,15 +693,16 @@ function AdminLoop()
 		end)
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(0)
+				Citizen.Wait(30)
 				if showname then
+					playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
 						end
 					end
 				else
-					Citizen.Wait(1000)
+					Citizen.Wait(5000)
 				end
 			end
 		end)
