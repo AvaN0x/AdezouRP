@@ -143,7 +143,7 @@ Citizen.CreateThread(function()
 				showhud = false
 			})
 		end
-
+		Citizen.Wait(400)
 	end
 end)
 
