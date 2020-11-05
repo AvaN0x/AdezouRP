@@ -723,7 +723,8 @@ function AdminLoop()
 								local blipSprite = GetBlipSprite(blip)
 								print("blip exist for "..player.." with sprite number "..blipSprite)
 								local veh = GetVehiclePedIsIn(targetPed, false)
-								if not GetEntityHealth(targetPed) then
+								print(veh)
+								if IsEntityDead(targetPed) then
 									print(player.." is dead with sprite number "..blipSprite)
 									if blipSprite ~= 274 then
 										print("set blip sprite to ".. 274 .. " for ".. player)
