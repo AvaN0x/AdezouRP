@@ -10,7 +10,8 @@ PlayerGroup = nil
 actualGang = nil
 
 local societyMoney, societyDirtyMoney, society2Money, society2DirtyMoney = nil, nil, nil, nil
-local noclip, showname = false, false
+local noclip, showname, showHash = false, false, false
+local visibleHash = {}
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -618,6 +619,7 @@ function OpenAdminMenu()
 			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
 			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _U("orange", _U("admin_show_names")), value = "show_names"},
+			{label = _U("orange", _U("admin_show_hash")), value = "show_hash"},
 			{label = _U("red", _U("admin_change_skin")), value = "change_skin"},
 			{label = _U("red", _U("admin_save_skin")), value = "save_skin"}
 		}
@@ -642,6 +644,8 @@ function OpenAdminMenu()
 					RemoveBlip(blip)
 				end
 			end
+		elseif data.current.value == "show_hash" then
+			showHash = not showHash
 		elseif data.current.value == "change_skin" then
 			changer_skin()
 		elseif data.current.value == "save_skin" then
@@ -706,6 +710,54 @@ function AdminLoop()
 				end
 			end
 		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(3000)
+				if showHash then
+					playerPed = PlayerPedId()
+					local playerCoords = GetEntityCoords(playerPed)
+					visibleHash = {}
+					for _, v in ipairs(GetGamePool("CObject")) do
+						local prop = GetObjectIndexFromEntityIndex(v)
+						local propCoords = GetEntityCoords(prop)
+						if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, propCoords.x, propCoords.y, propCoords.z, false) < 10.0 then
+							table.insert(visibleHash, {hash = GetEntityModel(prop), coords = propCoords})
+						end
+					end
+					for _, v in ipairs(GetGamePool("CVehicle")) do
+						local prop = GetObjectIndexFromEntityIndex(v)
+						local propCoords = GetEntityCoords(prop)
+						if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, propCoords.x, propCoords.y, propCoords.z, false) < 10.0 then
+							table.insert(visibleHash, {hash = GetEntityModel(prop), entity = prop})
+						end
+					end
+				else
+					Citizen.Wait(10000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(0)
+				if showHash then
+					playerPed = PlayerPedId()
+					local playerCoords = GetEntityCoords(playerPed)
+					for _, prop in ipairs(visibleHash) do
+						if prop.coords then
+							DrawText3D(prop.coords.x, prop.coords.y, prop.coords.z, prop.hash, 0.3)
+						else
+							local coords = GetEntityCoords(prop.entity)
+							DrawText3D(coords.x, coords.y, coords.z, prop.hash, 0.3)
+						end
+					end
+				else
+					Citizen.Wait(10000)
+				end
+			end
+		end)
+
 		Citizen.CreateThread(function()
 			local blipColor = 8
 			while true do
@@ -907,4 +959,23 @@ end
 
 function save_skin()
 	TriggerEvent('esx_skin:requestSaveSkin', source)
+end
+
+function DrawText3D(x, y, z, text, size)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    
+    if onScreen then
+        SetTextScale(0.35, size or 0.35)
+        SetTextFont(0)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        SetTextOutline()
+
+        AddTextComponentString(text)
+        DrawText(_x, _y)
+        -- local factor = (string.len(text)) / 350
+        -- DrawRect(_x, _y + 0.0125, factor + 0.015, 0.03, 35, 35, 35, 150)
+    end
 end

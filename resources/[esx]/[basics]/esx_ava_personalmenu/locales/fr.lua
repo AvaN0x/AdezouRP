@@ -70,7 +70,8 @@ Locales["fr"] = {
   ["admin_bring"] = "TP Joueur sur moi",
   ["admin_noclip"] = "NoClip",
   ["admin_repair_vehicle"] = "Réparer Véhicule",
-  ["admin_show_names"] = "Afficher/Cacher Noms des Joueurs",
+  ["admin_show_names"] = "Afficher/Cacher noms des joueurs",
+  ["admin_show_hash"] = "Afficher/Cacher hash des props",
   ["admin_change_skin"] = "Changer l'Apparence",
   ["admin_save_skin"] = "Sauvegarder l'Apparence",
 
