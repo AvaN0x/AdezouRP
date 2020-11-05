@@ -699,7 +699,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Wait(1)
+				Wait(100)
 				if showname then
 					playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
@@ -708,6 +708,7 @@ function AdminLoop()
 							local blip = GetBlipFromEntity(targetPed)
 
 							if not DoesBlipExist(blip) then
+								print("blip doest not exist for "..player)
 								blip = AddBlipForEntity(targetPed)
 								SetBlipSprite(blip, 1)
 								SetBlipColour(blip, 8)
@@ -717,6 +718,7 @@ function AdminLoop()
 								SetBlipNameToPlayerName(blip, player)
 							else
 								local blipSprite = GetBlipSprite(blip)
+								print("blip exist for "..player.." with sprite number "..blipSprite)
 								local veh = GetVehiclePedIsIn(targetPed, false)
 								if not GetEntityHealth(targetPed) then
 									if blipSprite ~= 274 then
