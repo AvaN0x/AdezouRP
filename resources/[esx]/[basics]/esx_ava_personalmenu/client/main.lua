@@ -721,11 +721,9 @@ function AdminLoop()
 							else
 								local blipSprite = GetBlipSprite(blip)
 								local veh = GetVehiclePedIsIn(targetPed, false)
-								print(veh)
 								if IsEntityDead(targetPed) then
 									if blipSprite ~= 274 then
 										SetBlipSprite(blip, 274)
-										SetBlipColour(blip, blipColor)
 									end
 								elseif veh ~= 0 then
 									vehClass = GetVehicleClass(veh)
