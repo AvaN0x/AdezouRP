@@ -34,9 +34,9 @@ Citizen.CreateThread(function()
     while true do
         local ped = PlayerPedId()
         local closestVehicle, Distance = ESX.Game.GetClosestVehicle()
-        local vehicleCoords = GetEntityCoords(closestVehicle)
-        local dimension = GetModelDimensions(GetEntityModel(closestVehicle), First, Second)
-        if Distance < 6.0  and not IsPedInAnyVehicle(ped, false) then
+        if Distance < 4.0  and not IsPedInAnyVehicle(ped, false) and GetVehicleEngineHealth(closestVehicle) <= Config.DamageNeeded then
+            local vehicleCoords = GetEntityCoords(closestVehicle)
+            local dimension = GetModelDimensions(GetEntityModel(closestVehicle), First, Second)
             Vehicle.Coords = vehicleCoords
             Vehicle.Dimensions = dimension
             Vehicle.Vehicle = closestVehicle
@@ -55,62 +55,62 @@ end)
 
 
 Citizen.CreateThread(function()
-    while true do 
+    while true do
         Citizen.Wait(5)
-        local ped = PlayerPedId()
         if Vehicle.Vehicle ~= nil then
- 
-                if IsVehicleSeatFree(Vehicle.Vehicle, -1) and GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded then
-                    ESX.Game.Utils.DrawText3D({x = Vehicle.Coords.x, y = Vehicle.Coords.y, z = Vehicle.Coords.z}, 'Maintenir [~g~SHIFT~w~] + [~g~E~w~] pour pousser le véhicule', 0.4)
-                end
-     
-
-            if IsControlPressed(0, Keys["LEFTSHIFT"]) and IsVehicleSeatFree(Vehicle.Vehicle, -1) and not IsEntityAttachedToEntity(ped, Vehicle.Vehicle) and IsControlJustPressed(0, Keys["E"])  and GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded then
-                NetworkRequestControlOfEntity(Vehicle.Vehicle)
-                local coords = GetEntityCoords(ped)
-                if Vehicle.IsInFront then    
-                    AttachEntityToEntity(PlayerPedId(), Vehicle.Vehicle, GetPedBoneIndex(6286), 0.0, Vehicle.Dimensions.y * -1 + 0.1 , Vehicle.Dimensions.z + 1.0, 0.0, 0.0, 180.0, 0.0, false, false, true, false, true)
-                else
-                    AttachEntityToEntity(PlayerPedId(), Vehicle.Vehicle, GetPedBoneIndex(6286), 0.0, Vehicle.Dimensions.y - 0.3, Vehicle.Dimensions.z  + 1.0, 0.0, 0.0, 0.0, 0.0, false, false, true, false, true)
-                end
-
-                ESX.Streaming.RequestAnimDict('missfinale_c2ig_11')
-                TaskPlayAnim(ped, 'missfinale_c2ig_11', 'pushcar_offcliff_m', 2.0, -8.0, -1, 35, 0, 0, 0, 0)
-                Citizen.Wait(200)
-
-                local currentVehicle = Vehicle.Vehicle
-                 while true do
-                    Citizen.Wait(5)
-                    if IsDisabledControlPressed(0, Keys["A"]) then
-                        TaskVehicleTempAction(PlayerPedId(), currentVehicle, 11, 1000)
-                    end
-					
-					if IsDisabledControlPressed(0, Keys["Q"]) then
-                        TaskVehicleTempAction(PlayerPedId(), currentVehicle, 11, 1000)
-                    end
-
-                    if IsDisabledControlPressed(0, Keys["D"]) then
-                        TaskVehicleTempAction(PlayerPedId(), currentVehicle, 10, 1000)
-                    end
-
+            local ped = PlayerPedId()
+            if IsVehicleSeatFree(Vehicle.Vehicle, -1) and GetVehicleEngineHealth(Vehicle.Vehicle) <= Config.DamageNeeded then
+                ESX.Game.Utils.DrawText3D({x = Vehicle.Coords.x, y = Vehicle.Coords.y, z = Vehicle.Coords.z}, 'Maintenir [~g~SHIFT~w~] + [~g~E~w~] pour pousser le véhicule', 0.4)
+                
+                if IsControlPressed(0, Keys["LEFTSHIFT"]) and IsControlJustPressed(0, Keys["E"]) and not IsEntityAttachedToEntity(ped, Vehicle.Vehicle) then
+                    NetworkRequestControlOfEntity(Vehicle.Vehicle)
+                    local coords = GetEntityCoords(ped)
                     if Vehicle.IsInFront then
-                        SetVehicleForwardSpeed(currentVehicle, -1.0)
+                        AttachEntityToEntity(PlayerPedId(), Vehicle.Vehicle, GetPedBoneIndex(6286), 0.0, Vehicle.Dimensions.y * -1 + 0.1 , Vehicle.Dimensions.z + 1.0, 0.0, 0.0, 180.0, 0.0, false, false, true, false, true)
                     else
-                        SetVehicleForwardSpeed(currentVehicle, 1.0)
+                        AttachEntityToEntity(PlayerPedId(), Vehicle.Vehicle, GetPedBoneIndex(6286), 0.0, Vehicle.Dimensions.y - 0.3, Vehicle.Dimensions.z  + 1.0, 0.0, 0.0, 0.0, 0.0, false, false, true, false, true)
                     end
-
-                    if HasEntityCollidedWithAnything(currentVehicle) then
-                        SetVehicleOnGroundProperly(currentVehicle)
-                    end
-
-                    if not IsDisabledControlPressed(0, Keys["E"]) then 
-                        DetachEntity(ped, false, false)
-                        StopAnimTask(ped, 'missfinale_c2ig_11', 'pushcar_offcliff_m', 2.0)
-                        FreezeEntityPosition(ped, false)
-                        break
+                    
+                    ESX.Streaming.RequestAnimDict('missfinale_c2ig_11')
+                    TaskPlayAnim(ped, 'missfinale_c2ig_11', 'pushcar_offcliff_m', 2.0, -8.0, -1, 35, 0, 0, 0, 0)
+                    Citizen.Wait(200)
+                    
+                    local currentVehicle = Vehicle.Vehicle
+                    while true do
+                        Citizen.Wait(5)
+                        if IsDisabledControlPressed(0, Keys["A"]) then
+                            TaskVehicleTempAction(PlayerPedId(), currentVehicle, 11, 1000)
+                        end
+                        
+                        if IsDisabledControlPressed(0, Keys["Q"]) then
+                            TaskVehicleTempAction(PlayerPedId(), currentVehicle, 11, 1000)
+                        end
+                        
+                        if IsDisabledControlPressed(0, Keys["D"]) then
+                            TaskVehicleTempAction(PlayerPedId(), currentVehicle, 10, 1000)
+                        end
+                        
+                        if Vehicle.IsInFront then
+                            SetVehicleForwardSpeed(currentVehicle, -1.0)
+                        else
+                            SetVehicleForwardSpeed(currentVehicle, 1.0)
+                        end
+                        
+                        if HasEntityCollidedWithAnything(currentVehicle) then
+                            SetVehicleOnGroundProperly(currentVehicle)
+                        end
+                        
+                        if not IsDisabledControlPressed(0, Keys["E"]) then 
+                            DetachEntity(ped, false, false)
+                            StopAnimTask(ped, 'missfinale_c2ig_11', 'pushcar_offcliff_m', 2.0)
+                            FreezeEntityPosition(ped, false)
+                            break
+                        end
                     end
                 end
             end
+        else
+            Citizen.Wait(1000)
         end
     end
 end)
