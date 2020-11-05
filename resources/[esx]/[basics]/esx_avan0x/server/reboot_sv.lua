@@ -12,7 +12,6 @@ function checkreboot()
 	local date_local = os.date('%H:%M:%S', os.time())
 
 	for _, hour in ipairs(rebootHours) do
-		print(hour)
 		if date_local == hour .. ':30:00' then
 			TriggerClientEvent('esx:showNotification', -1, "~r~Le serveur reboot automatiquement dans 30 minutes !")
 			ExecuteCommand('weather thunder')
