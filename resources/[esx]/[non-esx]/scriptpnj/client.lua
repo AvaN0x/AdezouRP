@@ -1,9 +1,9 @@
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0) -- prevent crashing
-		SetPedDensityMultiplierThisFrame(0.5) -- set npc/ai peds density to 0
-		SetRandomVehicleDensityMultiplierThisFrame(0.3) -- 
-		SetParkedVehicleDensityMultiplierThisFrame(0.3)
+		-- SetPedDensityMultiplierThisFrame(0.5) -- set npc/ai peds density to 0
+		-- SetRandomVehicleDensityMultiplierThisFrame(0.3) -- 
+		-- SetParkedVehicleDensityMultiplierThisFrame(0.3)
 
 		-- These natives have to be called every frame.
 
