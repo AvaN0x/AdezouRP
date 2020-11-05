@@ -686,17 +686,25 @@ function AdminLoop()
 					if IsControlPressed(0, 25) then
 						admin_noclip()
 					end
+				else
+					Citizen.Wait(1000)
 				end
+			end
+		end)
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(0)
 				if showname then
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
 						end
 					end
+				else
+					Citizen.Wait(1000)
 				end
 			end
 		end)
-
 		Citizen.CreateThread(function()
 			local blipColor = 8
 			while true do
