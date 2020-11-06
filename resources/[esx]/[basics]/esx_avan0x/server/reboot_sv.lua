@@ -6,7 +6,7 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-local rebootHours = {'02', '08', '14', '20'}
+local rebootHours = {'01', '07', '13', '19'} -- minus 1
 
 function checkreboot()
 	local date_local = os.date('%H:%M:%S', os.time())
