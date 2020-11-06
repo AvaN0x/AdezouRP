@@ -740,7 +740,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(0)
+				Citizen.Wait(10)
 				if showHash then
 					playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
