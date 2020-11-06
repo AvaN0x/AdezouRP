@@ -14,17 +14,20 @@ function checkreboot()
 	for _, hour in ipairs(rebootHours) do
 		if date_local == hour .. ':30:00' then
 			TriggerClientEvent('esx:showNotification', -1, "~r~Le serveur reboot automatiquement dans 30 minutes !")
+			SendWebhookMessage("avan0x_wh_staff", "~r~Le serveur reboot automatiquement dans 30 minutes !")
 			ExecuteCommand('weather thunder')
 			ExecuteCommand('freezeweather')
 			break
 		elseif date_local == hour .. ':45:00' then
 			TriggerClientEvent('esx:showNotification', -1, "~r~Le serveur reboot automatiquement dans 15 minutes !")
+			SendWebhookMessage("avan0x_wh_staff", "~r~Le serveur reboot automatiquement dans 15 minutes !")
 			ExecuteCommand('time 23 0')
 			-- GetClockHours() is client sided
 			ExecuteCommand('freezetime')
 			break
 		elseif date_local == hour .. ':55:00' then
 			TriggerClientEvent('esx:showNotification', -1, "~r~Le serveur reboot automatiquement dans 5 minutes ! Pensez à vous déconnecter !")
+			SendWebhookMessage("avan0x_wh_staff", "~r~Le serveur reboot automatiquement dans 5 minutes ! Pensez à vous déconnecter !")
 			ExecuteCommand('blackout')
 			ExecuteCommand('weather halloween')
 			break
