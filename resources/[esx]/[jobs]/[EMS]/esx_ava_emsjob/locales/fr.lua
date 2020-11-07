@@ -92,7 +92,7 @@ Locales['fr'] = {
   -- -- Factures
   ['billing'] = 'Soins ambulancier',
   ['bill_amount'] = 'Montant de la facture',
-  ['amount_invalid'] = 'montant invalide'
+  ['amount_invalid'] = 'montant invalide',
 
 
   ['hospital'] = 'hôpital',
