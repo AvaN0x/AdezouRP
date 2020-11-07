@@ -50,13 +50,23 @@ Config.Zones = {
 		}
 	},
 
-	-- Ammunation = {
-	-- 	Name = 'Ammunation',
-	-- 	Items = {},
-	-- 	Pos = {
-	-- 		{x = 21.33,   y = -1106.91, z = 28.82},
-	-- 	}
-	-- }
+	Ammunation = {
+		Name = 'Ammunation',
+		Items = {},
+		Pos = {
+			{x = -662.1,  y = -935.3,  z = 20.8,  blip = true},
+			{x = 810.2,   y = -2157.3, z = 28.6,  blip = true},
+			{x = 1693.4,  y =  3759.5, z = 33.7,  blip = true},
+			{x = -330.2,  y =  6083.8, z = 30.4,  blip = true},
+			{x = 252.3,   y = -50.0,   z = 68.9,  blip = true},
+			{x = 22.0,    y = -1107.2, z = 28.8,  blip = true},
+			{x = 2567.6,  y =  294.3,  z = 107.7, blip = true},
+			{x = -1117.5, y =  2698.6, z = 17.5,  blip = true},
+			{x = -1305.44, y = -394.43, z = 35.72, blip = true},
+			{x = -3172.03, y =  1087.97, z = 19.86, blip = true},
+			{x = 842.4,   y = -1033.4, z = 27.1,  blip = true}
+		}
+	},
 
 	Pharmacy = {
 		Name = 'Pharmacy',
