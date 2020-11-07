@@ -27,6 +27,7 @@ end)
 RegisterServerEvent('esx_ava_burglary:enterHouse')
 AddEventHandler('esx_ava_burglary:enterHouse', function(houseID)
 	houseInfos[houseID] = 1
+	TriggerClientEvent('esx_ava_burglary:setState', -1, houseID, 1)
 
 	Wait(30 * 60 * 1000)
 	houseInfos[houseID] = 0
