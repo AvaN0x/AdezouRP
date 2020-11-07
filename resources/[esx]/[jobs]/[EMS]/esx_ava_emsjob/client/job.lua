@@ -13,7 +13,7 @@ function OpenMobileAmbulanceActionsMenu()
 		align    = 'top-left',
 		elements = {
 			{label = _U('ems_menu'), value = 'citizen_interaction'},
-			{label = '<span style="color:orange;">📜Donner une facture<span style="color:white;">', value = 'billing'},
+			{label = _U('give_bill'), value = 'billing'},
 		}
 	}, function(data, menu)
 		if data.current.value == 'billing' then

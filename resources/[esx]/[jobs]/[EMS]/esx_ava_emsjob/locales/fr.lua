@@ -62,6 +62,7 @@ Locales['fr'] = {
   ['bandage'] = 'bandage',
   ['max_item'] = 'vous en portez déjà assez sur vous.',
   -- -- F6 Menu
+  ['give_bill'] = '<span style="color:orange;">📜Donner une facture<span style="color:white;">',
   ['ems_menu'] = '📈Interaction citoyen',
   ['ems_menu_title'] = 'Ambulance - Interactions Citoyen',
   ['ems_menu_revive'] = '❤️ Réanimer',
