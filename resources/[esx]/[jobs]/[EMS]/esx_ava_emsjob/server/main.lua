@@ -128,3 +128,10 @@ AddEventHandler('esx_ambulancejob:giveItem', function(itemName)
 		TriggerClientEvent('esx:showNotification', source, _U('max_item'))
 	end
 end)
+
+ESX.RegisterServerCallback('esx_ambulancejob:getItemAmount', function(source, cb, item)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	local quantity = xPlayer.getInventoryItem(item).count
+
+	cb(quantity)
+end)
