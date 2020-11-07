@@ -13,9 +13,9 @@ INSERT INTO `datastore` (name, label, shared) VALUES
 ;
 
 INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_female) VALUES
-	('ems',0,'employee','Ambulancier', 20, "{}", "{}"),
-	('ems',1,'doctor','Medecin', 40, "{}", "{}"),
-	('ems',2,'boss','Directeur', 80, "{}", "{}")
+	('ems',0,'employee','Ambulancier', 20, '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}', '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}'),
+	('ems',1,'doctor','Medecin', 40, '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}', '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}'),
+	('ems',2,'boss','Directeur', 80, '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}', '{"pants_2":2,"bproof_1":0,"bproof_2":0,"helmet_1":122,"bags_1":0,"chain_2":0,"shoes_1":42,"arms":90,"glasses_1":0,"bags_2":0,"glasses_2":0,"torso_2":0,"tshirt_1":15,"chain_1":126,"helmet_2":0,"shoes_2":2,"pants_1":48,"tshirt_2":0,"torso_1":249}')
 ;
 
 INSERT INTO `jobs` (name, label) VALUES

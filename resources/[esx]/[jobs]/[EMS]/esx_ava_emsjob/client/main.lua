@@ -248,36 +248,38 @@ function StartDeathTimer()
 end
 
 function StartDistressSignal()
-	-- Citizen.CreateThread(function()
-	-- 	local timer = Config.ForceRespawnTimer
+	Citizen.CreateThread(function()
+		local timer = Config.ForceRespawnTimer
 
-	-- 	while timer > 0 and IsDead do
-	-- 		Citizen.Wait(2)
-	-- 		timer = timer - 30
+		while timer > 0 and IsDead do
+			Citizen.Wait(2)
+			timer = timer - 30
 
-	-- 		SetTextFont(4)
-	-- 		SetTextScale(0.45, 0.45)
-	-- 		SetTextColour(185, 185, 185, 255)
-	-- 		SetTextDropshadow(0, 0, 0, 0, 255)
-	-- 		SetTextEdge(1, 0, 0, 0, 255)
-	-- 		SetTextDropShadow()
-	-- 		SetTextOutline()
-	-- 		BeginTextCommandDisplayText('STRING')
-	-- 		AddTextComponentSubstringPlayerName(_U('distress_send'))
-	-- 		EndTextCommandDisplayText(0.175, 0.805)
+			SetTextFont(4)
+			SetTextScale(0.45, 0.45)
+			SetTextColour(185, 185, 185, 255)
+			SetTextDropshadow(0, 0, 0, 0, 255)
+			SetTextEdge(1, 0, 0, 0, 255)
+			SetTextDropShadow()
+			SetTextOutline()
+			BeginTextCommandDisplayText('STRING')
+			AddTextComponentSubstringPlayerName(_U('distress_send'))
+			EndTextCommandDisplayText(0.175, 0.805)
 
-	-- 		if IsControlPressed(0, 47) then
-	-- 			TriggerEvent("AppelemsGetCoords")
-	-- 			Citizen.CreateThread(function()
-	-- 				Citizen.Wait(1000 * 60 * 5)
-	-- 				if IsDead then
-	-- 					StartDistressSignal()
-	-- 				end
-	-- 			end)
-	-- 			break
-	-- 		end
-	-- 	end
-	-- end)
+			if IsControlPressed(0, 47) then
+				local playerPed = PlayerPedId()
+				local coords = GetEntityCoords(playerPed)
+				TriggerServerEvent('esx_phone:send', 'ems', 'Besoin de réanimation', true, {["x"] = coords.x, ["y"] = coords.y, ["z"] = coords.z })
+				Citizen.CreateThread(function()
+					Citizen.Wait(1000 * 60 * 5)
+					if IsDead then
+						StartDistressSignal()
+					end
+				end)
+				break
+			end
+		end
+	end)
 end
 
 

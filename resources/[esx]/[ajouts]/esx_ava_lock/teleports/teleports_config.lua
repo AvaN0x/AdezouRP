@@ -22,7 +22,7 @@ Config.Teleports = {
 				heading = 265.0,
 				label = "Descendre"
 			},
-			authorizedJobs = { 'ambulance' },
+			authorizedJobs = { 'ems' },
 			locked = true
 		},
 		{ -- nightclub entry

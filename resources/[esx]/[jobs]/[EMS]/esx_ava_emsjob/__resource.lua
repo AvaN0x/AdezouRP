@@ -17,6 +17,7 @@ client_scripts {
 	'locales/*.lua',
 	'config.lua',
 	'client/main.lua',
+	'client/job.lua'
 }
 
 dependencies {
