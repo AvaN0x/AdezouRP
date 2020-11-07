@@ -759,7 +759,6 @@ function AdminLoop()
 		end)
 
 		Citizen.CreateThread(function()
-			local blipColor = 8
 			while true do
 				Wait(5000)
 				if showname then
@@ -772,56 +771,13 @@ function AdminLoop()
 							if not DoesBlipExist(blip) then
 								blip = AddBlipForEntity(targetPed)
 								SetBlipSprite(blip, 1)
-								SetBlipColour(blip, blipColor)
+								SetBlipColour(blip, 8)
 								SetBlipCategory(blip, 7)
 								SetBlipScale(blip, 0.7)
 								ShowHeadingIndicatorOnBlip(blip, true)
 								BeginTextCommandSetBlipName("STRING")
 								AddTextComponentString(GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player))
 								EndTextCommandSetBlipName(blip)
-							else
-								local blipSprite = GetBlipSprite(blip)
-								local veh = GetVehiclePedIsIn(targetPed, false)
-								if IsEntityDead(targetPed) then
-									if blipSprite ~= 274 then
-										SetBlipSprite(blip, 274)
-									end
-								elseif veh ~= 0 then
-									vehClass = GetVehicleClass(veh)
-									if vehClass == 16 then -- plane
-										if blipSprite ~= 423 then
-											SetBlipSprite(blip, 423)
-											SetBlipColour(blip, blipColor)
-										end
-									elseif vehClass == 15 then -- heli
-										if blipSprite ~= 422 then
-											SetBlipSprite(blip, 422)
-											SetBlipColour(blip, blipColor)
-										end
-									elseif vehClass == 14 then -- boat
-										if blipSprite ~= 404 then
-											SetBlipSprite(blip, 404)
-											SetBlipColour(blip, blipColor)
-										end
-									elseif blipSprite ~= 595 then -- default car blip
-										SetBlipSprite(blip, 595)
-										SetBlipColour(blip, blipColor)
-									end
-									-- show number of passenger on blip (have a max of 5?)
-									local passengers = GetVehicleNumberOfPassengers(veh)
-									if passengers and passengers > 1 then
-										ShowNumberOnBlip(blip, passengers)
-									else
-										HideNumberOnBlip(blip)
-									end
-								else
-									if blipSprite ~= 1 then
-										-- hide number of passenger
-										HideNumberOnBlip(blip)
-										SetBlipSprite(blip, 1)
-										SetBlipColour(blip, blipColor)
-									end
-								end
 							end
 						end
 					end
