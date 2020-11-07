@@ -400,43 +400,40 @@ end)
 RegisterNetEvent('esx_ambulancejob:revive2')
 AddEventHandler('esx_ambulancejob:revive2', function()
 	local playerPed = PlayerPedId()
-	local coords = GetEntityCoords(playerPed)
+	
+	ESX.TriggerServerCallback('esx_ambulancejob:getDeathStatus', function(isDead)
+		if isDead then
+			local coords = GetEntityCoords(playerPed)
+			TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
+			print(GetEntityMaxHealth(playerPed))
+			Citizen.CreateThread(function()
+				DoScreenFadeOut(800)
+				while not IsScreenFadedOut() do
+					Citizen.Wait(50)
+				end
 
-	TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
-	print(GetEntityMaxHealth(playerPed))
-	Citizen.CreateThread(function()
-		DoScreenFadeOut(800)
-		while not IsScreenFadedOut() do
-			Citizen.Wait(50)
+				local formattedCoords = {
+					x = ESX.Math.Round(coords.x, 1),
+					y = ESX.Math.Round(coords.y, 1),
+					z = ESX.Math.Round(coords.z, 1)
+				}
+
+				ESX.SetPlayerData('lastPosition', formattedCoords)
+				TriggerServerEvent('esx:updateLastPosition', formattedCoords)
+				RespawnPed(playerPed, formattedCoords, 0.0)
+
+				SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+
+				StopScreenEffect('DeathFailOut')
+				DoScreenFadeIn(800)
+
+				ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~REVIVE', 'Tu as été revive par un staff.', 'CHAR_DEVIN', 8)
+			end)
+		else
+			SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+			ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~HEAL', 'Tu as été heal par un staff.', 'CHAR_DEVIN', 8)
+
 		end
-
-		local formattedCoords = {
-			x = ESX.Math.Round(coords.x, 1),
-			y = ESX.Math.Round(coords.y, 1),
-			z = ESX.Math.Round(coords.z, 1)
-		}
-
-		ESX.SetPlayerData('lastPosition', formattedCoords)
-		TriggerServerEvent('esx:updateLastPosition', formattedCoords)
-		RespawnPed(playerPed, formattedCoords, 0.0)
-
-		SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
-
-		StopScreenEffect('DeathFailOut')
-		DoScreenFadeIn(800)
-
-		ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~REVIVE', 'Tu as été revive par un staff.', 'CHAR_DEVIN', 8)
 	end)
-
 end)
 
-
-
-
-
-
-
-RegisterNetEvent('esx_ambulancejob:test')
-AddEventHandler('esx_ambulancejob:test', function()
-	SetEntityHealth(PlayerPedId(), 0)
-end)
