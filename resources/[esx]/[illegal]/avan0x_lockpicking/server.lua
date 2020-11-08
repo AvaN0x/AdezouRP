@@ -18,3 +18,9 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(didWin)
 		xPlayer.removeInventoryItem('lockpick', 1)
 	end
 end)
+
+ESX.RegisterUsableItem('lockpick', function(source)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	TriggerClientEvent('esx_ava_lockpick:onUse', _source)
+end)

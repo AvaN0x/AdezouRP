@@ -47,3 +47,38 @@ AddEventHandler('avan0x_lockpicking:StartLockPicking', function()
 	SetNuiFocus(true, true)
 	SendNUIMessage({type = 'openGeneral'})
 end)
+
+
+
+RegisterNetEvent('esx_ava_lockpick:onUse')
+AddEventHandler('esx_ava_lockpick:onUse', function()
+	local playerPed   = GetPlayerPed(-1)
+	local coords    = GetEntityCoords(playerPed)
+	if IsAnyVehicleNearPoint(coords.x, coords.y, coords.z, 2.0) then
+		vehicle = nil
+
+		if not IsPedInAnyVehicle(playerPed, false) then
+			vehicle = GetClosestVehicle(coords.x, coords.y, coords.z, 5.0, 0, 71)
+		end
+
+		if DoesEntityExist(vehicle) then
+			TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+			TriggerEvent('avan0x_lockpicking:StartLockPicking')
+		end
+	else
+		vehicle = nil
+	end
+end)
+
+RegisterNetEvent('avan0x_lockpicking:LockpickingComplete')
+AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
+	local playerPed   = GetPlayerPed(-1)
+	ClearPedTasksImmediately(playerPed)
+	if result and vehicle then
+		SetVehicleDoorsLocked(vehicle, 1)
+		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+		ClearPedTasksImmediately(playerPed)
+
+		vehicle = nil
+	end
+end)
