@@ -81,7 +81,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(5)
+        Citizen.Wait(10)
         if IsControlJustPressed(1, 246) and isRequestAnim then
         target, distance = GetClosestPlayer()
             if(distance ~= -1 and distance < 3) then

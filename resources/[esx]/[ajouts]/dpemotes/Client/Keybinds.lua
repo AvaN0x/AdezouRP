@@ -27,9 +27,9 @@ Citizen.CreateThread(function()
         end
     end
 
-    if not IsPedSittingInAnyVehicle(PlayerPedId()) then
-        for k, v in pairs(Config.KeybindKeys) do
-            if IsControlJustReleased(0, v) then
+    for k, v in pairs(Config.KeybindKeys) do
+        if IsControlJustReleased(0, v) then
+            if not IsPedSittingInAnyVehicle(PlayerPedId()) then
                 if k == keyb1 then if emob1 ~= "" then EmoteCommandStart(nil,{emob1, 0}) end end
                 if k == keyb2 then if emob2 ~= "" then EmoteCommandStart(nil,{emob2, 0}) end end
                 if k == keyb3 then if emob3 ~= "" then EmoteCommandStart(nil,{emob3, 0}) end end
@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
             end
         end
     end
-    Citizen.Wait(1)
+    Citizen.Wait(10)
   end
 end)
 

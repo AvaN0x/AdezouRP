@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
 
     if Config.MenuKeybindEnabled then if IsControlPressed(0, Config.MenuKeybind) then OpenEmoteMenu() end end
     if Config.EnableXtoCancel then if IsControlPressed(0, 73) then EmoteCancel() end end
-    Citizen.Wait(1)
+    Citizen.Wait(10)
   end
 end)
 
