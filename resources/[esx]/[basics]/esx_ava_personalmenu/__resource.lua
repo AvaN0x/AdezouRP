@@ -9,7 +9,8 @@ client_scripts {
 	'locales/fr.lua',
 	'config.lua',
 	'client/teb_speed_control/speedlimiter.lua',
-	'client/main.lua'
+	'client/main.lua',
+	'client/admin.lua'
 }
 
 server_scripts {
