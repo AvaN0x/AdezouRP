@@ -10,10 +10,3 @@ ESX.RegisterUsableItem('lockpick', function(source)
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	TriggerClientEvent('esx_ava_lockpick:onUse', _source)
 end)
-
-RegisterNetEvent('esx_ava_lockpick:removeKit')
-AddEventHandler('esx_ava_lockpick:removeKit', function()
-	local _source = source 
-	local xPlayer = ESX.GetPlayerFromId(_source)
-	xPlayer.removeInventoryItem('lockpick', 1)
-end)

@@ -16,5 +16,5 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(didWin)
 	else
 		local xPlayer = ESX.GetPlayerFromId(source)
 		xPlayer.removeInventoryItem('lockpick', 1)
-		end
+	end
 end)
