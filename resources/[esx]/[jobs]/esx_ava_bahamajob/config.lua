@@ -51,17 +51,18 @@ Config.Zones = {
 Config.BuyZones = {
 	BuyBox = {
 		Items = {
-			{name = 'icetea', price = 20},
-			{name = 'sprite', price = 20},
-			{name = 'orangina', price = 20},
-			{name = 'coffee', price = 20},
-			{name = 'cocacola', price = 20},
-			{name = 'ice', price = 5},
+			{name = 'icetea', price = 15},
+			{name = 'sprite', price = 15},
+			{name = 'orangina', price = 15},
+			{name = 'coffee', price = 13},
+			{name = 'cocacola', price = 15},
+			{name = 'ice', price = 2},
 			{name = 'martini', price = 20},
 			{name = 'martini2', price = 20},
 			{name = 'rhum', price = 20},
 			{name = 'tequila', price = 20},
 			{name = 'vodka', price = 20},
+			{name = 'beer', price = 20},
 			{name = 'whisky', price = 20}
 		},
 		Pos   = {x = 376.81, y = -362.84, z = 45.85},
