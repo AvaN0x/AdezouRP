@@ -9,7 +9,7 @@ Citizen.CreateThread(function()
         SetDiscordAppId(746634986093805619)
         -- set the large image
 		SetDiscordRichPresenceAsset('logo1024')
-        SetDiscordRichPresenceAssetText('AdezouRP')
+        SetDiscordRichPresenceAssetText('AdezouRP - discord.gg/KRTKC6b')
         -- set the small image
         -- SetDiscordRichPresenceAssetSmall('logo1024')
         -- SetDiscordRichPresenceAssetSmallText('This is a small icon with text')
