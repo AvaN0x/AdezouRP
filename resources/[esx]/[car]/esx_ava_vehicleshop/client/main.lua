@@ -458,15 +458,20 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-
 		local coords = GetEntityCoords(PlayerPedId())
+		local found = false
 
 		for k_shop, v_shop in pairs(Config.Shops) do
 			for k, v in pairs(v_shop.Zones) do
 				if(v.Type ~= -1 and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) then
 					DrawMarker(v.Type, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, Config.MarkerColor.r, Config.MarkerColor.g, Config.MarkerColor.b, 100, false, true, 2, false, false, false, false)
+					found = true
 				end
 			end
+		end
+		
+		if not found then
+			Citizen.Wait(1000)
 		end
 	end
 end)
@@ -500,6 +505,10 @@ Citizen.CreateThread(function ()
 		if not isInMarker and HasAlreadyEnteredMarker then
 			HasAlreadyEnteredMarker = false
 			TriggerEvent('esx_vehicleshop:hasExitedMarker', LastZone)
+		end
+
+		if not isInMarker then
+			Citizen.Wait(200)
 		end
 	end
 end)
