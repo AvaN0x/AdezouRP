@@ -53,12 +53,13 @@ AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps, type)
 		end)
 
 		xPlayer.removeMoney(vehicleData.price)
-		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)',
+		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type, location) VALUES (@owner, @plate, @vehicle, @type, @location)',
 		{
 			['@owner']   = xPlayer.identifier,
 			['@plate']   = vehicleProps.plate,
 			['@vehicle'] = json.encode(vehicleProps),
-			['@type'] = type
+			['@type'] = type,
+			['@location'] = "garage_POUND"
 		}, function (rowsChanged)
 			TriggerClientEvent('esx:showNotification', _source, _U('vehicle_belongs', vehicleProps.plate))
 		end)
