@@ -12,11 +12,10 @@ function OpenAdminMenu()
 		align    = "left",
 		elements = {
             {label = _U("orange", _U("players_list")), value = "players_list"},
-            -- {label = _U("orange", _U("all_players")), value = "all_players"},
+            {label = _U("orange", _U("all_players")), value = "all_players"},
 			{label = _U("blue", _U("admin_tp_marker")), value = "tp_marker"},
 			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
 			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
-			{label = _U("orange", _U("admin_show_names")), value = "show_names"},
 			{label = _U("orange", _U("admin_show_hash")), value = "show_hash"},
 			{label = _U("red", _U("admin_change_skin")), value = "change_skin"},
 			{label = _U("red", _U("admin_save_skin")), value = "save_skin"}
@@ -26,22 +25,12 @@ function OpenAdminMenu()
             admin_tp_marker()
 		elseif data.current.value == "players_list" then
             players_list()
-		-- elseif data.current.value == "all_players" then
-        --     all_players()
+		elseif data.current.value == "all_players" then
+            all_players()
 		elseif data.current.value == "noclip" then
 			admin_noclip()
 		elseif data.current.value == "repair_vehicle" then
 			admin_vehicle_repair()
-		elseif data.current.value == "show_names" then
-			showname = not showname
-			for _, id in ipairs(GetActivePlayers()) do
-				local ped = GetPlayerPed(id)
-				local blip = GetBlipFromEntity(ped)
-
-				if DoesBlipExist(blip) then
-					RemoveBlip(blip)
-				end
-			end
 		elseif data.current.value == "show_hash" then
 			showHash = not showHash
 		elseif data.current.value == "change_skin" then
@@ -54,22 +43,32 @@ function OpenAdminMenu()
 	end)
 end
 
--- function all_players()
---     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
--- 	{
--- 		title    = _U("all_players"),
--- 		align    = "left",
--- 		elements = {
--- 			{label = _U("orange", _U("players_list")), value = "players_list"},
--- 		}
--- 	}, function(data, menu)
---         if data.current.value == "players_list" then
---             players_list()
---         end
---     end, function(data, menu)
--- 		menu.close()
--- 	end)
--- end
+function all_players()
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
+	{
+		title    = _U("all_players"),
+		align    = "left",
+		elements = {
+            {label = _U(showname and "green" or "orange", _U("admin_show_names")), value = "show_names"},
+		}
+	}, function(data, menu)
+        if data.current.value == "show_names" then
+            showname = not showname
+            for _, id in ipairs(GetActivePlayers()) do
+                local ped = GetPlayerPed(id)
+                local blip = GetBlipFromEntity(ped)
+
+                if DoesBlipExist(blip) then
+                    RemoveBlip(blip)
+                end
+            end
+            menu.update({value = "show_names"}, {label = _U(showname and "green" or "orange", _U("admin_show_names"))})
+            menu.refresh()
+        end
+    end, function(data, menu)
+		menu.close()
+	end)
+end
 
 function players_list()
     local elements = {}
