@@ -11,9 +11,9 @@ function OpenAdminMenu()
 		title    = _U("admin_menu"),
 		align    = "left",
 		elements = {
+            {label = _U("orange", _U("players_list")), value = "players_list"},
+            -- {label = _U("orange", _U("all_players")), value = "all_players"},
 			{label = _U("blue", _U("admin_tp_marker")), value = "tp_marker"},
-			{label = _U("blue", _U("admin_goto")), value = "goto"},
-			{label = _U("blue", _U("admin_bring")), value = "bring"},
 			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
 			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _U("orange", _U("admin_show_names")), value = "show_names"},
@@ -23,11 +23,11 @@ function OpenAdminMenu()
 		}
 	}, function(data, menu)
 		if data.current.value == "tp_marker" then
-			admin_tp_marker()
-		elseif data.current.value == "goto" then
-			admin_goto()
-		elseif data.current.value == "bring" then
-			admin_bring()
+            admin_tp_marker()
+		elseif data.current.value == "players_list" then
+            players_list()
+		-- elseif data.current.value == "all_players" then
+        --     all_players()
 		elseif data.current.value == "noclip" then
 			admin_noclip()
 		elseif data.current.value == "repair_vehicle" then
@@ -54,9 +54,64 @@ function OpenAdminMenu()
 	end)
 end
 
+-- function all_players()
+--     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
+-- 	{
+-- 		title    = _U("all_players"),
+-- 		align    = "left",
+-- 		elements = {
+-- 			{label = _U("orange", _U("players_list")), value = "players_list"},
+-- 		}
+-- 	}, function(data, menu)
+--         if data.current.value == "players_list" then
+--             players_list()
+--         end
+--     end, function(data, menu)
+-- 		menu.close()
+-- 	end)
+-- end
 
+function players_list()
+    local elements = {}
+    for _, player in ipairs(GetActivePlayers()) do
+        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player})
+    end
+    if #elements >= 1 then
+        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
+        {
+            title    = _U("players_list"),
+            align    = "left",
+            elements = elements
+        }, function(data, menu)
+            PlayerManagment(data.current.value)
+        end, function(data, menu)
+            menu.close()
+        end)
+    end
+end
 
-
+function PlayerManagment(player)
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. GetPlayerServerId(player),
+	{
+		title    = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player),
+		align    = "left",
+		elements = {
+			{label = _U("pink", _U("admin_revive")), value = "admin_revive"},
+			{label = _U("pink", _U("admin_goto")), value = "admin_goto"},
+			{label = _U("pink", _U("admin_bring")), value = "admin_bring"},
+		}
+	}, function(data, menu)
+        if data.current.value == "admin_revive" then
+            TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
+        elseif data.current.value == "admin_goto" then
+            admin_goto(GetPlayerServerId(player))
+        elseif data.current.value == "admin_bring" then
+            admin_bring(GetPlayerServerId(player))
+        end
+    end, function(data, menu)
+		menu.close()
+	end)
+end
 
 
 function AdminLoop()
@@ -256,31 +311,12 @@ function admin_tp_marker()
 	end
 end
 
-function admin_goto()
-	local playerPed = PlayerPedId()
-	local plyId = KeyboardInput("KORIOZ_BOX_ID", _U('dialogbox_playerid'), "", 8)
-
-	if plyId ~= nil then
-		plyId = tonumber(plyId)
-
-		if type(plyId) == 'number' then
-			local targetPlyCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(plyId)))
-			SetPedCoordsKeepVehicle(playerPed, targetPlyCoords)
-		end
-	end
+function admin_goto(id)
+    SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(id))))
 end
 
-function admin_bring()
-	local plyId = KeyboardInput("KORIOZ_BOX_ID", _U('dialogbox_playerid'), "", 8)
-
-	if plyId ~= nil then
-		plyId = tonumber(plyId)
-
-		if type(plyId) == 'number' then
-			local playerPedCoords = GetEntityCoords(PlayerPedId())
-			TriggerServerEvent('esx_ava_personalmenu:bring_sv', plyId, playerPedCoords)
-		end
-	end
+function admin_bring(id)
+    TriggerServerEvent('esx_ava_personalmenu:bring_sv', id, GetEntityCoords(PlayerPedId()))
 end
 
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')

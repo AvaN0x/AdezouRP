@@ -66,8 +66,6 @@ Locales["fr"] = {
   ["society_demote"] = "Destituer",
 
   ["admin_tp_marker"] = "TP sur le Marqueur",
-  ["admin_goto"] = "TP sur Joueur",
-  ["admin_bring"] = "TP Joueur sur moi",
   ["admin_noclip"] = "NoClip",
   ["admin_repair_vehicle"] = "Réparer Véhicule",
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
@@ -79,4 +77,14 @@ Locales["fr"] = {
   ["no_players_nearby"] = "Aucun joueur à proximité",
   ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
   ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",
+
+
+  ['all_players'] = "Tous les joueurs",
+  ['players_list'] = "Liste",
+
+  -- player managment
+  ['admin_revive'] = "Revive / Heal",
+  ["admin_goto"] = "TP sur Joueur",
+  ["admin_bring"] = "TP Joueur sur moi",
+
 }
