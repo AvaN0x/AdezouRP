@@ -234,8 +234,9 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	
 	xPlayer.removeMoney(exitPrice)
 	
-	local toState  = math.ceil(exitPrice * 0.6)
-	local toLSPD = math.floor(exitPrice * 0.4)
+	local toState  = math.ceil(exitPrice * 0.4)
+	local toLSPD = math.floor(exitPrice * 0.35)
+	local toMecano = math.floor(exitPrice * 0.25)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
@@ -245,6 +246,11 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
 		if account ~= nil then
 			account.addMoney(toLSPD)
+		end
+	end)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
+		if account ~= nil then
+			account.addMoney(toMecano)
 		end
     end)
 	
@@ -262,9 +268,10 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 		end
     end)
 
-	local toState  = math.ceil(exitPrice * 0.6)
-	local toLSPD = math.floor(exitPrice * 0.4)
-
+	local toState  = math.ceil(exitPrice * 0.4)
+	local toLSPD = math.floor(exitPrice * 0.35)
+	local toMecano = math.floor(exitPrice * 0.25)
+	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
 			account.addMoney(toState)
@@ -275,6 +282,11 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 			account.addMoney(toLSPD)
 		end
 	end)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
+		if account ~= nil then
+			account.addMoney(toMecano)
+		end
+    end)
 	
 	TriggerClientEvent('esx:showNotification', source, 'L\'entreprise a payé ' .. exitPrice .. '$')
 
