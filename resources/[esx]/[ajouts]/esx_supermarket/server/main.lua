@@ -80,22 +80,43 @@ AddEventHandler('esx_shops:buyItem', function(itemName, amount, zone, shopName)
 
 	price = price * amount
 
-	-- can the player afford this item?
-	if xPlayer.getMoney() >= price then
-		local xItem = xPlayer.getInventoryItem(itemName)
-		
-		-- can the player carry the said amount of x item?
-		if xItem.limit ~= -1 and xItem.count + amount > xItem.limit then
-			TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
+	if Config.Zones[zone].DirtyMoney then
+		-- can the player afford this item?
+		if xPlayer.getAccount('black_money').money >= price then
+			local xItem = xPlayer.getInventoryItem(itemName)
+
+			-- can the player carry the said amount of x item?
+			if xItem.limit ~= -1 and xItem.count + amount > xItem.limit then
+				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
+			else
+				xPlayer.removeAccountMoney('black_money', price)
+				xPlayer.addInventoryItem(itemName, amount)
+				TriggerClientEvent('esx:showNotification', _source, _U('bought_dirty', amount, itemLabel, price))
+			end
 		else
-			TriggerEvent('esx_statejob:getTaxed', shopName, price, function(toSociety)
-			end)    
-			xPlayer.removeMoney(price)
-			xPlayer.addInventoryItem(itemName, amount)
-			TriggerClientEvent('esx:showNotification', _source, _U('bought', amount, itemLabel, price))
+			local missingMoney = price - xPlayer.getMoney()
+			TriggerClientEvent('esx:showNotification', _source, _U('not_enough_dirty', missingMoney))
 		end
+
 	else
-		local missingMoney = price - xPlayer.getMoney()
-		TriggerClientEvent('esx:showNotification', _source, _U('not_enough', missingMoney))
+		-- can the player afford this item?
+		if xPlayer.getMoney() >= price then
+			local xItem = xPlayer.getInventoryItem(itemName)
+
+			-- can the player carry the said amount of x item?
+			if xItem.limit ~= -1 and xItem.count + amount > xItem.limit then
+				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
+			else
+				TriggerEvent('esx_statejob:getTaxed', shopName, price, function(toSociety)
+				end)
+				xPlayer.removeMoney(price)
+				xPlayer.addInventoryItem(itemName, amount)
+				TriggerClientEvent('esx:showNotification', _source, _U('bought', amount, itemLabel, price))
+			end
+		else
+			local missingMoney = price - xPlayer.getMoney()
+			TriggerClientEvent('esx:showNotification', _source, _U('not_enough', missingMoney))
+		end
 	end
+
 end)

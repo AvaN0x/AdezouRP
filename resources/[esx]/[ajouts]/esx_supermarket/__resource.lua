@@ -1,6 +1,6 @@
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
-description 'ESX Supermarket'
+description 'ESX Supermarket modified by AvaN0x'
 
 version '1.0.1'
 
@@ -11,28 +11,14 @@ files {
 	'html/debounce.min.js',
 	'html/iransans.otf',
 	-- default
-	'html/img/default.png',
-	'html/img/bread.png',
-	'html/img/close.png',
-	'html/img/croquettes.png',
-	'html/img/water.png',
-	'html/img/plus.png',
-	'html/img/minus.png'
+	'html/img/*.png'
 }
 
 ui_page 'html/ui.html'
 
 client_scripts {
 	'@es_extended/locale.lua',
-	'locales/de.lua',
-	'locales/br.lua',
-	'locales/en.lua',
-	'locales/fi.lua',
-	'locales/fr.lua',
-	'locales/es.lua',
-	'locales/sv.lua',
-	'locales/pl.lua',
-	'locales/fa.lua',
+	'locales/*.lua',
 	'config.lua',
 	'client/main.lua'
 }
@@ -40,15 +26,7 @@ client_scripts {
 server_scripts {
 	'@es_extended/locale.lua',
 	'@mysql-async/lib/MySQL.lua',
-	'locales/de.lua',
-	'locales/br.lua',
-	'locales/en.lua',
-	'locales/fi.lua',
-	'locales/fr.lua',
-	'locales/es.lua',
-	'locales/sv.lua',
-	'locales/pl.lua',
-	'locales/fa.lua',
+	'locales/*.lua',
 	'config.lua',
 	'server/main.lua'
 }

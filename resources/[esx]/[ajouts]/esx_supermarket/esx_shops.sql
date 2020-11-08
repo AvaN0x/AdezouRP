@@ -33,3 +33,10 @@ INSERT INTO `shops` (`store`, `item`, `price`) VALUES
 	('RobsLiquor', 		'weapon_flashlight', 700),
 	('TwentyFourSeven', 'weapon_flashlight', 700)
 ;
+
+INSERT INTO `shops` (`store`, `item`, `price`) VALUES
+	('BlackMarket', 'lockpick', 2000),
+	('BlackMarket', 'balisegps', 3000),
+	('BlackMarket', 'tenuecasa', 5000),
+	('BlackMarket', 'headbag', 2000)
+;
