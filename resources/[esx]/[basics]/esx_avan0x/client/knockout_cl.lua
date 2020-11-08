@@ -4,7 +4,7 @@ local count = 40
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(10)
+		Citizen.Wait(5)
 		local playerPed = GetPlayerPed(-1)
 		if IsPedInMeleeCombat(playerPed) then
 			if GetEntityHealth(playerPed) < 115 then
@@ -38,3 +38,10 @@ function ShowNotification(text)
 	AddTextComponentString(text)
 	DrawNotification(false, false)
 end
+
+RegisterNetEvent("esx_avan0x:resetKO")
+AddEventHandler("esx_avan0x:resetKO", function()
+	knockedOut = false
+	wait = 15
+	count = 40
+end)

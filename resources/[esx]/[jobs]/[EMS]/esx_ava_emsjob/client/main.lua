@@ -392,6 +392,7 @@ AddEventHandler('esx_ambulancejob:revive', function()
 		TriggerServerEvent('esx:updateLastPosition', formattedCoords)
 		RespawnPed(playerPed, formattedCoords, 0.0)
 
+		TriggerEvent('esx_avan0x:resetKO')
 		SetEntityHealth(playerPed, 105)
 
 		StopScreenEffect('DeathFailOut')
@@ -424,6 +425,7 @@ AddEventHandler('esx_ambulancejob:revive2', function()
 				TriggerServerEvent('esx:updateLastPosition', formattedCoords)
 				RespawnPed(playerPed, formattedCoords, 0.0)
 
+				TriggerEvent('esx_avan0x:resetKO')
 				SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
 
 				StopScreenEffect('DeathFailOut')
@@ -432,9 +434,9 @@ AddEventHandler('esx_ambulancejob:revive2', function()
 				ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~REVIVE', 'Tu as été revive par un staff.', 'CHAR_DEVIN', 8)
 			end)
 		else
+			TriggerEvent('esx_avan0x:resetKO')
 			SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
 			ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~HEAL', 'Tu as été heal par un staff.', 'CHAR_DEVIN', 8)
-
 		end
 	end)
 end)
