@@ -242,7 +242,7 @@ Config.Garages = {
 			Pos = {x=-852.73, y=-1345.86, z=1.01},
 			Heading = 107.84
 		},
-		Identifier = "garage_MARINA"
+		Identifier = "garage_tackle_street"
 	},
 
 
@@ -268,7 +268,7 @@ Config.Garages = {
 			Pos = {x=-724.71, y=-1444.0, z=5.0},
 			Heading = 138.7
 		},
-		Identifier = "garage_HELI"
+		Identifier = "garage_shank_street"
 	},
 
 
@@ -292,7 +292,7 @@ Config.Garages = {
 			Pos = {x=-988.43, y=-3001.67, z=13.95},
 			Heading = 60.56
 		},
-		Identifier = "garage_PLANE"
+		Identifier = "garage_ls_airport"
 	},
 
 
