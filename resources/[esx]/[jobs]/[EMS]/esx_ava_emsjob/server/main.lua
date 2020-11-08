@@ -17,7 +17,7 @@ AddEventHandler('esx_ava_emsjob:revive', function(target)
 
 	if xPlayer.job.name == 'ems' or xPlayer.job2.name  == 'ems' then
 		local societyAccount = nil
-		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ambulance', function(account)
+		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ems', function(account)
 			societyAccount = account
 		end)
 		if societyAccount ~= nil then

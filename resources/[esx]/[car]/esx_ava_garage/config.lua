@@ -61,7 +61,7 @@ Config.Garages = {
 	},
 	Garage_car_04 = {	
 		Name = "Garage",
-		Pos = {x = 1520.39,y = 3765.16,z = 33.14 },
+		Pos = {x = 1520.39,y = 3765.16,z = 34.04 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -71,7 +71,7 @@ Config.Garages = {
 		},
 		Type = "car",
 		SpawnPoint = {
-			Pos = {x = 1520.39,y = 3765.16,z = 33.14 },
+			Pos = {x = 1520.39,y = 3765.16,z = 34.04 },
 			Heading = 157.84
 		},
 		Identifier = "garage_sandy"
@@ -92,7 +92,7 @@ Config.Garages = {
 			Pos = {x = 442.53,y = -1026.09,z = 28.71 },
 			Heading = 5.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_lspd"
 	},
 	Garage_TAXI = {	
 		Name = "hide",
@@ -110,7 +110,7 @@ Config.Garages = {
 			Pos = {x = 900.67,y = -186.91,z = 73.79 },
 			Heading = 328.76
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_taxi"
 	},
 	Garage_GOUV = {	
 		Name = "hide",
@@ -128,7 +128,7 @@ Config.Garages = {
 			Pos = {x = -579.05,y = -170.05,z = 38.23},
 			Heading = 25.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_gouv"
 	},
 	Garage_VIGNERON = {
 		Name = "hide",
@@ -146,7 +146,7 @@ Config.Garages = {
 			Pos = {x = -1886.5,y = 2015.78,z = 141.04},
 			Heading = 169.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_vigneron"
 	},
 	Garage_MECANO = {
 		Name = "hide",
@@ -164,7 +164,7 @@ Config.Garages = {
 			Pos = {x = -326.24,y = -152.57,z = 36.3},
 			Heading = 258.71
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_mecano"
 	},
 	Garage_CLUCKIN = {
 		Name = "hide",
@@ -182,7 +182,7 @@ Config.Garages = {
 			Pos = {x = -479.99,y = -604.52, z = 31.17},
 			Heading = 180.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_cluckin"
 	},
 	Garage_TAILOR = {
 		Name = "hide",
@@ -200,7 +200,7 @@ Config.Garages = {
 			Pos = {x = 705.19,y = -991.21, z = 23.02},
 			Heading = 280.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_tailor"
 	},
 
 	Garage_VAGOS = {
@@ -218,7 +218,7 @@ Config.Garages = {
 			Pos = {x = 335.46, y = -2039.61, z = 21.13},
 			Heading = 50.0
 		},
-		Identifier = "garage_SOCIETY"
+		Identifier = "garage_vagos"
 	},
 
 
