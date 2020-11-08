@@ -52,7 +52,7 @@ local xPlayer = ESX.GetPlayerFromId(_source)
 end)
 
 
--- Véhicle appartenue mais sans clés
+-- Véhicle appartenu mais sans clés
 
 ESX.RegisterServerCallback('esx_vehiclelock:getVehiclesnokey', function(source, cb)
 	local _source = source
@@ -99,7 +99,7 @@ end)
 
 -----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
--- Véhicle appartenue mais sans clés
+-- Véhicle appartenu mais sans clés
 
 ESX.RegisterServerCallback('esx_vehiclelock:getVehiclesnokeycardealer', function(source, cb, target)
 	local xPlayer = ESX.GetPlayerFromId(target)
@@ -138,7 +138,7 @@ MySQL.Async.fetchAll(
 	)
 end)
 
--- Donné les clé
+-- Donner les clés
 RegisterServerEvent('esx_vehiclelock:givekeycardealer')
 AddEventHandler('esx_vehiclelock:givekeycardealer', function(target, plate)
 local _source = source
@@ -216,7 +216,7 @@ MySQL.Async.execute(
 end)
 -----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
---Clés appartenue par rapport a la plaque
+--Clés appartenues par rapport a la plaque
 ESX.RegisterServerCallback('esx_vehiclelock:mykey', function(source, cb, plate)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
@@ -246,7 +246,7 @@ ESX.RegisterServerCallback('esx_vehiclelock:mykey', function(source, cb, plate)
 	)
 end)
 
--- Toutes les clés appartenu par le joueur
+-- Toutes les clés appartenues par le joueur
 ESX.RegisterServerCallback('esx_vehiclelock:allkey', function(source, cb)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
@@ -272,7 +272,7 @@ ESX.RegisterServerCallback('esx_vehiclelock:allkey', function(source, cb)
 	)
 end)
 
--- Suppression clé jobs
+-- Suppression clés jobs
 RegisterServerEvent('esx_vehiclelock:deletekeyjobs')
 AddEventHandler('esx_vehiclelock:deletekeyjobs', function(target, plate)
 local _source = source
@@ -307,7 +307,7 @@ MySQL.Async.fetchAll(
 	end)
 end)
 
--- Donné un double
+-- Donner un double
 RegisterServerEvent('esx_vehiclelock:givekey')
 AddEventHandler('esx_vehiclelock:givekey', function(target, plate)
 local _source = source
@@ -372,7 +372,7 @@ MySQL.Async.execute(
 
 end)
 
---Perte des clés 
+--Perte des clés
 RegisterServerEvent('esx_vehiclelock:onplayerdeath')
 AddEventHandler('esx_vehiclelock:onplayerdeath', function()
 local _source = source
@@ -409,7 +409,7 @@ end)
 
 
 ---------------------------------------------------------------------------------------------
---------------------------------- Menu pour donner / preter clé -----------------------------
+--------------------------------- Menu pour donner / preter clés ----------------------------
 ---------------------------------------------------------------------------------------------
 --
 ---- changement de propriétaire
@@ -440,7 +440,7 @@ MySQL.Async.fetchAll(
 	end)
 end)
 
------- Donné clé
+------ Donner clés
 RegisterServerEvent('esx_vehiclelock:donnerkey')
 AddEventHandler('esx_vehiclelock:donnerkey', function(target, plate)
 local _source = source
@@ -493,7 +493,7 @@ MySQL.Async.fetchAll(
 	end)
 end)
 
-------- Préter clé
+------- Préter clés
 RegisterServerEvent('esx_vehiclelock:preterkey')
 AddEventHandler('esx_vehiclelock:preterkey', function(target, plate)
 local _source = source
