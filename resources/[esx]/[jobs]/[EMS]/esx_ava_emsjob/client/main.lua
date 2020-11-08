@@ -81,7 +81,7 @@ AddEventHandler('playerSpawned', function()
 		exports.spawnmanager:setAutoSpawn(false) -- disable respawn
 		FirstSpawn = false
 
-		ESX.TriggerServerCallback('esx_ambulancejob:getDeathStatus', function(isDead)
+		ESX.TriggerServerCallback('esx_ava_emsjob:getDeathStatus', function(isDead)
 			if isDead then
 				while not PlayerLoaded do
 					Citizen.Wait(1000)
@@ -101,7 +101,7 @@ end)
 function OnPlayerDeath()
 	IsDead = true
 	ESX.UI.Menu.CloseAll()
-	TriggerServerEvent('esx_ambulancejob:setDeathStatus', true)
+	TriggerServerEvent('esx_ava_emsjob:setDeathStatus', true)
 
 	StartDeathTimer()
 	StartDistressSignal()
@@ -122,7 +122,7 @@ end
 function RPDeathRespawn()
 	local playerPed = PlayerPedId()
 	local coords = GetEntityCoords(playerPed)
-	TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
+	TriggerServerEvent('esx_ava_emsjob:setDeathStatus', false)
 	SetEntityHealth(playerPed, 105)
 
 	Citizen.CreateThread(function()
@@ -283,8 +283,8 @@ function StartDistressSignal()
 end
 
 
-RegisterNetEvent('esx_ambulancejob:useItem')
-AddEventHandler('esx_ambulancejob:useItem', function(itemName)
+RegisterNetEvent('esx_ava_emsjob:useItem')
+AddEventHandler('esx_ava_emsjob:useItem', function(itemName)
 	ESX.UI.Menu.CloseAll()
 
 	if itemName == 'medikit' then
@@ -300,7 +300,7 @@ AddEventHandler('esx_ambulancejob:useItem', function(itemName)
 				DisableAllControlActions(0)
 			end
 	
-			TriggerEvent('esx_ambulancejob:heal', 'big', true)
+			TriggerEvent('esx_ava_emsjob:heal', 'big', true)
 			ESX.ShowNotification(_U('used_medikit'))
 		end)
 
@@ -317,14 +317,14 @@ AddEventHandler('esx_ambulancejob:useItem', function(itemName)
 				DisableAllControlActions(0)
 			end
 
-			TriggerEvent('esx_ambulancejob:heal', 'small', true)
+			TriggerEvent('esx_ava_emsjob:heal', 'small', true)
 			ESX.ShowNotification(_U('used_bandage'))
 		end)
 	end
 end)
 
-RegisterNetEvent('esx_ambulancejob:heal')
-AddEventHandler('esx_ambulancejob:heal', function(healType, quiet)
+RegisterNetEvent('esx_ava_emsjob:heal')
+AddEventHandler('esx_ava_emsjob:heal', function(healType, quiet)
 	local playerPed = PlayerPedId()
 	local maxHealth = GetEntityMaxHealth(playerPed)
 
@@ -369,12 +369,12 @@ end
 
 
 -- revives
-RegisterNetEvent('esx_ambulancejob:revive')
-AddEventHandler('esx_ambulancejob:revive', function()
+RegisterNetEvent('esx_ava_emsjob:revive')
+AddEventHandler('esx_ava_emsjob:revive', function()
 	local playerPed = PlayerPedId()
 	local coords = GetEntityCoords(playerPed)
 
-	TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
+	TriggerServerEvent('esx_ava_emsjob:setDeathStatus', false)
 	print(GetEntityMaxHealth(playerPed))
 	Citizen.CreateThread(function()
 		DoScreenFadeOut(800)
@@ -400,14 +400,14 @@ AddEventHandler('esx_ambulancejob:revive', function()
 	end)
 end)
 
-RegisterNetEvent('esx_ambulancejob:revive2')
-AddEventHandler('esx_ambulancejob:revive2', function()
+RegisterNetEvent('esx_ava_emsjob:revive2')
+AddEventHandler('esx_ava_emsjob:revive2', function()
 	local playerPed = PlayerPedId()
 	
-	ESX.TriggerServerCallback('esx_ambulancejob:getDeathStatus', function(isDead)
+	ESX.TriggerServerCallback('esx_ava_emsjob:getDeathStatus', function(isDead)
 		if isDead then
 			local coords = GetEntityCoords(playerPed)
-			TriggerServerEvent('esx_ambulancejob:setDeathStatus', false)
+			TriggerServerEvent('esx_ava_emsjob:setDeathStatus', false)
 			print(GetEntityMaxHealth(playerPed))
 			Citizen.CreateThread(function()
 				DoScreenFadeOut(800)

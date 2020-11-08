@@ -58,7 +58,7 @@ function OpenMobileAmbulanceActionsMenu()
 					if data.current.value == 'revive' then
 						IsBusy = true
 
-						ESX.TriggerServerCallback('esx_ambulancejob:getItemAmount', function(quantity)
+						ESX.TriggerServerCallback('esx_ava_emsjob:getItemAmount', function(quantity)
 							if quantity > 0 then
 								local closestPlayerPed = GetPlayerPed(closestPlayer)
 								if IsPedDeadOrDying(closestPlayerPed, 1) then
@@ -74,8 +74,8 @@ function OpenMobileAmbulanceActionsMenu()
 										end)
 									end
 
-									TriggerServerEvent('esx_ambulancejob:removeItem', 'medikit')
-									TriggerServerEvent('esx_ambulancejob:revive', GetPlayerServerId(closestPlayer))
+									TriggerServerEvent('esx_ava_emsjob:removeItem', 'medikit')
+									TriggerServerEvent('esx_ava_emsjob:revive', GetPlayerServerId(closestPlayer))
 									RemoveAnimDict('mini@cpr@char_a@cpr_str')
 									RemoveAnimDict('cpr_pumpchest')
 									-- Show revive award?
@@ -94,7 +94,7 @@ function OpenMobileAmbulanceActionsMenu()
 						end, 'medikit')
 
 					elseif data.current.value == 'small' then
-						ESX.TriggerServerCallback('esx_ambulancejob:getItemAmount', function(quantity)
+						ESX.TriggerServerCallback('esx_ava_emsjob:getItemAmount', function(quantity)
 							if quantity > 0 then
 								local closestPlayerPed = GetPlayerPed(closestPlayer)
 								local health = GetEntityHealth(closestPlayerPed)
@@ -108,8 +108,8 @@ function OpenMobileAmbulanceActionsMenu()
 									Citizen.Wait(10000)
 									ClearPedTasks(playerPed)
 
-									TriggerServerEvent('esx_ambulancejob:removeItem', 'bandage')
-									TriggerServerEvent('esx_ambulancejob:heal', GetPlayerServerId(closestPlayer), 'small')
+									TriggerServerEvent('esx_ava_emsjob:removeItem', 'bandage')
+									TriggerServerEvent('esx_ava_emsjob:heal', GetPlayerServerId(closestPlayer), 'small')
 									ESX.ShowNotification(_U('heal_complete', GetPlayerName(closestPlayer)))
 									IsBusy = false
 								else
@@ -122,7 +122,7 @@ function OpenMobileAmbulanceActionsMenu()
 
 					elseif data.current.value == 'big' then
 
-						ESX.TriggerServerCallback('esx_ambulancejob:getItemAmount', function(quantity)
+						ESX.TriggerServerCallback('esx_ava_emsjob:getItemAmount', function(quantity)
 							if quantity > 0 then
 								local closestPlayerPed = GetPlayerPed(closestPlayer)
 								local health = GetEntityHealth(closestPlayerPed)
@@ -136,8 +136,8 @@ function OpenMobileAmbulanceActionsMenu()
 									Citizen.Wait(10000)
 									ClearPedTasks(playerPed)
 
-									TriggerServerEvent('esx_ambulancejob:removeItem', 'medikit')
-									TriggerServerEvent('esx_ambulancejob:heal', GetPlayerServerId(closestPlayer), 'big')
+									TriggerServerEvent('esx_ava_emsjob:removeItem', 'medikit')
+									TriggerServerEvent('esx_ava_emsjob:heal', GetPlayerServerId(closestPlayer), 'big')
 									ESX.ShowNotification(_U('heal_complete', GetPlayerName(closestPlayer)))
 									IsBusy = false
 								else
@@ -170,7 +170,7 @@ function OpenPharmacyMenu()
 			{label = _U('pharmacy_take', _U('bandage')), value = 'bandage'}
 		}
 	}, function(data, menu)
-		TriggerServerEvent('esx_ambulancejob:giveItem', data.current.value)
+		TriggerServerEvent('esx_ava_emsjob:giveItem', data.current.value)
 	end, function(data, menu)
 		menu.close()
 	end)
@@ -317,19 +317,19 @@ Citizen.CreateThread(function()
 				(LastHospital ~= nil and LastPart ~= nil) and
 				(LastHospital ~= currentHospital or LastPart ~= currentPart)
 			then
-				TriggerEvent('esx_ambulancejob:hasExitedMarker', LastHospital, LastPart, LastPartNum)
+				TriggerEvent('esx_ava_emsjob:hasExitedMarker', LastHospital, LastPart, LastPartNum)
 				hasExited = true
 			end
 
 			HasAlreadyEnteredMarker, LastHospital, LastPart = true, currentHospital, currentPart
 
-			TriggerEvent('esx_ambulancejob:hasEnteredMarker', currentHospital, currentPart)
+			TriggerEvent('esx_ava_emsjob:hasEnteredMarker', currentHospital, currentPart)
 
 		end
 
 		if not hasExited and not isInMarker and HasAlreadyEnteredMarker then
 			HasAlreadyEnteredMarker = false
-			TriggerEvent('esx_ambulancejob:hasExitedMarker', LastHospital, LastPart)
+			TriggerEvent('esx_ava_emsjob:hasExitedMarker', LastHospital, LastPart)
 		end
 
 		if letSleep then
@@ -372,7 +372,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
-AddEventHandler('esx_ambulancejob:hasEnteredMarker', function(hospital, part, partNum)
+AddEventHandler('esx_ava_emsjob:hasEnteredMarker', function(hospital, part, partNum)
 	if (PlayerData.job and PlayerData.job.name == 'ems') or (PlayerData.job2 and PlayerData.job2.name == 'ems') then
 		if part == 'AmbulanceActions' then
 			CurrentAction = part
@@ -394,7 +394,7 @@ AddEventHandler('esx_ambulancejob:hasEnteredMarker', function(hospital, part, pa
 	end
 end)
 
-AddEventHandler('esx_ambulancejob:hasExitedMarker', function(hospital, part, partNum)
+AddEventHandler('esx_ava_emsjob:hasExitedMarker', function(hospital, part, partNum)
 	CurrentAction = nil
 end)
 
@@ -403,8 +403,8 @@ end)
 
 
 
-RegisterNetEvent('esx_ambulancejob:heal')
-AddEventHandler('esx_ambulancejob:heal', function(healType, quiet)
+RegisterNetEvent('esx_ava_emsjob:heal')
+AddEventHandler('esx_ava_emsjob:heal', function(healType, quiet)
 	local playerPed = PlayerPedId()
 	local maxHealth = GetEntityMaxHealth(playerPed)
 
