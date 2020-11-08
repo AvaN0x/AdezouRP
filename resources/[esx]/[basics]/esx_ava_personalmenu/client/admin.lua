@@ -320,7 +320,7 @@ end
 
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')
 AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
-	SetEntityCoords(PlayerPedId(), playerPedCoords)
+	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
 end)
 
 
