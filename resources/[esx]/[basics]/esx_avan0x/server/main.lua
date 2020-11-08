@@ -181,17 +181,17 @@ end
 -- 		heading = heading - 360
 -- 	end
 
--- 	local code = "{\n" .. "\tpos = {x = " .. coords.x .. ", y = " .. coords.y .. ", z = " .. coords.z .. ", h = " .. heading .. "},\n" .. "\tlocked = true, doorTime = {}\n" .. "},"
+-- 	local code = "{\n" .. "\tpos = {x = " .. coords.x .. ", y = " .. coords.y .. ", z = " .. coords.z .. ", h = " .. heading .. "},\n" .. "\tstate = 0\n" .. "},"
 
--- 	SendWebhookMessage("avan0x_wh_staff", "```lua\n"..code.."```")
+-- 	SendWebhookMessage("avan0x_wh_dev", "```lua\n"..code.."```")
 -- end, function(source, args)
 -- 	TriggerClientEvent('chat:addMessage', source, {args = {'^1SYSTEM', 'Insufficient Permissions.'}})
 -- end, {
--- 	help = "Envoyer votre tenue au staff", 
+-- 	help = "Coords template for burglary", 
 -- 	params = {
 -- 		{
--- 			name = "message",
--- 			help = "Message descriptif pour la tenue"
+-- 			name = "",
+-- 			help = ""
 -- 		}
 -- 	}
 --})
