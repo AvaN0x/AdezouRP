@@ -1,5 +1,5 @@
 Config              = {}
-Config.DrawDistance = 100
+Config.DrawDistance = 20
 Config.Size 		= 1.5
 Config.Size         = {x = 1.5, y = 1.5, z = 1.5}
 Config.Color        = {r = 134, g = 180, b = 84}
