@@ -320,21 +320,36 @@ else
 	 xPlayer = ESX.GetPlayerFromId(target)
 end
 
-
-MySQL.Async.execute(
-		'INSERT INTO open_car (label, value, NB, got, identifier) VALUES (@label, @value, @NB, @got, @identifier)',
-		{
-			['@label']		  = 'Cles',
-			['@value']  	  = toplate,
-			['@NB']   		  = 2,
-			['@got']  		  = 'true',
-			['@identifier']   = xPlayer.identifier
-
-		},
-		function(result)
-				TriggerClientEvent('esx:showNotification', xPlayer.source, 'Vous avez recu un double de clés ')
-		end)
-
+-- Gets all the keys that the target have
+MySQL.Async.fetchAll(
+	'SELECT * FROM open_car WHERE identifier = @identifier',
+	{
+		['@identifier']   = xPlayer.identifier
+	},
+	function(result)
+		for index, key in pairs(result) do
+			-- If the plate exist, don't add it
+			if key.value == toplate then
+				TriggerClientEvent('esx:showNotification', xPlayer.source, 'Vous avez déjà les clés qu\'on voulait vous donner.')
+				return
+			end
+		end
+		-- Finnaly add it
+		MySQL.Async.execute(
+			'INSERT INTO open_car (label, value, NB, got, identifier) VALUES (@label, @value, @NB, @got, @identifier)',
+			{
+				['@label']		  = 'Cles',
+				['@value']  	  = toplate,
+				['@NB']   		  = 2,
+				['@got']  		  = 'true',
+				['@identifier']   = xPlayer.identifier
+	
+			},
+			function(result)
+					TriggerClientEvent('esx:showNotification', xPlayer.source, 'Vous avez reçu un double de clés ')
+			end
+		)
+	end)
 end)
 
 
