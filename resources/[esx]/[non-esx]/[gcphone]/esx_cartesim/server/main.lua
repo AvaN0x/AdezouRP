@@ -83,12 +83,12 @@ function NewSim(source)
 	local source = source
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
-		MySQL.Async.fetchAll(
-			'SELECT * FROM users WHERE identifier = @identifier',
-			{
-				['@identifier'] = xPlayer.identifier
-			},
-			function(result)
+		-- MySQL.Async.fetchAll(
+		-- 	'SELECT * FROM users WHERE identifier = @identifier',
+		-- 	{
+		-- 		['@identifier'] = xPlayer.identifier
+		-- 	},
+		-- 	function(result)
 
 				local phoneNumber = GenerateUniquePhoneNumber() 
 				
@@ -102,7 +102,7 @@ function NewSim(source)
 					TriggerClientEvent('esx:showNotification', source, "Vous avez une nouvelle carte sim")
 					end
 				)
-		end)
+		-- end)
 end
 
 ESX.RegisterServerCallback('esx_cartesim:CheckSim', function(source, cb)
@@ -248,7 +248,3 @@ ESX.RegisterServerCallback('esx_cartesim:GetNameZ', function(source, cb, id)
 		end
 	end)
 end)
-
----------------------------------
---------- ikNox#6088 ------------
----------------------------------
