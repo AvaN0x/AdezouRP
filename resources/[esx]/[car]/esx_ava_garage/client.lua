@@ -134,7 +134,7 @@ function OpenMenuGarage(PointType, target)
 			menu.close()
 			-- CurrentAction = 'open_garage_menu'
 		end
-	)	
+	)
 end
 
 
@@ -410,21 +410,27 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(0)		
-		local coords = GetEntityCoords(GetPlayerPed(-1))			
+		Citizen.Wait(0)
+		local coords = GetEntityCoords(GetPlayerPed(-1))
+		local found = false
+
 		for k,v in pairs(Config.Garages) do
 			if (GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) 
 				and (PlayerData and (v.Job == nil or (PlayerData.job ~= nil and PlayerData.job.name ==  v.Job) or (PlayerData.job2 ~= nil and PlayerData.job2.name ==  v.Job))) then
 				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)	
-
+				found = true
 			end
 		end
 		for k,v in pairs(Config.Pound) do
 			if(GetDistanceBetweenCoords(coords, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, true) < Config.DrawDistance) then
 				DrawMarker(v.MunicipalPoundPoint.Marker, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.MunicipalPoundPoint.Size.x, v.MunicipalPoundPoint.Size.y, v.MunicipalPoundPoint.Size.z, v.MunicipalPoundPoint.Color.r, v.MunicipalPoundPoint.Color.g, v.MunicipalPoundPoint.Color.b, 100, false, true, 2, false, false, false, false)	
-				-- DrawMarker(v.SpawnMunicipalPoundPoint.Marker, v.SpawnMunicipalPoundPoint.Pos.x, v.SpawnMunicipalPoundPoint.Pos.y, v.SpawnMunicipalPoundPoint.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.SpawnMunicipalPoundPoint.Size.x, v.SpawnMunicipalPoundPoint.Size.y, v.SpawnMunicipalPoundPoint.Size.z, v.SpawnMunicipalPoundPoint.Color.r, v.SpawnMunicipalPoundPoint.Color.g, v.SpawnMunicipalPoundPoint.Color.b, 100, false, true, 2, false, false, false, false)
-			end		
-		end	
+				found = true
+			end
+		end
+
+		if not found then
+			Citizen.Wait(1000)
+		end
 	end
 end)
 
@@ -449,7 +455,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(0)
+		Citizen.Wait(50)
 		local coords	  = GetEntityCoords(GetPlayerPed(-1))
 		local isInMarker  = false
 
@@ -479,13 +485,16 @@ Citizen.CreateThread(function()
 			hasAlreadyEnteredMarker = false
 			TriggerEvent('esx_ava_garage:hasExitedMarker', LastZone)
 		end
+		if not isInMarker then
+			Citizen.Wait(200)
+		end
 	end
 end)
 
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
+		Citizen.Wait(10)
 		if CurrentAction ~= nil then
 			SetTextComponentFormat('STRING')
 			AddTextComponentString(CurrentActionMsg)
