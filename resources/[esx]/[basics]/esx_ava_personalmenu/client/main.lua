@@ -91,10 +91,10 @@ end)
 function OpenPersonalMenu()
 	local playerPed = PlayerPedId()
 	local elements = {
-		{label = _U("orange", _U("sim_card")), value = "sim_card"},
-		{label = _U("orange", _U("my_keys")), value = "my_keys"},
-		{label = _U("pink", _U("wallet")), value = "wallet"},
-		{label = _U("pink", _U("bills_menu")), value = "bills"}
+		{label = _("orange", _("sim_card")), value = "sim_card"},
+		{label = _("orange", _("my_keys")), value = "my_keys"},
+		{label = _("pink", _("wallet")), value = "wallet"},
+		{label = _("pink", _("bills_menu")), value = "bills"}
 	}
 	
 	if  IsPedSittingInAnyVehicle(playerPed) then
@@ -102,32 +102,32 @@ function OpenPersonalMenu()
 		local isDriver = (GetPedInVehicleSeat(vehicle, -1) == playerPed)
 		if GetVehicleClass(GetVehiclePedIsIn(playerPed, false)) ~= 13 then -- remove if bike
 			if isDriver or (GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0) then
-				table.insert(elements, {label = _U("vehicle_menu"), value = "vehicle_menu"})
+				table.insert(elements, {label = _("vehicle_menu"), value = "vehicle_menu"})
 			end
 		end
 		if isDriver then
-			table.insert(elements, {label = _U("speed_limiter"), value = "speed_limiter"})
+			table.insert(elements, {label = _("speed_limiter"), value = "speed_limiter"})
 		end
 	end
 	
 	-- todo, only if the user have a phone
-	table.insert(elements, {label = _U("bright_red", _U("life_invader")), value = "life_invader"})
+	table.insert(elements, {label = _("bright_red", _("life_invader")), value = "life_invader"})
 
-	table.insert(elements, {label = _U("blue", _U("others_menu")), value = "others_menu"})
+	table.insert(elements, {label = _("blue", _("others_menu")), value = "others_menu"})
 
 	if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" and PlayerData.job.grade_name ~= "interim" then
-		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job.label)), value = "society"})
+		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job.label)), value = "society"})
 	end
 	if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" and PlayerData.job2.grade_name ~= "interim" then
-		table.insert(elements, {label = _U("red", _U("society_menu", PlayerData.job2.label)), value = "society2"})
+		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job2.label)), value = "society2"})
 	end
 
 	if actualGang and actualGang.name and actualGang.grade == 1 then
-		table.insert(elements, {label = _U("bright_red", _U("gang_menu", actualGang.label)), value = "gang_menu"})
+		table.insert(elements, {label = _("bright_red", _("gang_menu", actualGang.label)), value = "gang_menu"})
 	end
 
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-		table.insert(elements, {label = _U("orange", _U("admin_menu")), value = "admin_menu"})
+		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu"})
 	end
 
 
@@ -135,7 +135,7 @@ function OpenPersonalMenu()
 
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu",
 	{
-		title    = _U("menu_header"),
+		title    = _("menu_header"),
 		align    = "left",
 		elements = elements
 	}, function(data, menu)
@@ -191,12 +191,12 @@ function OpenBillsMenu()
 		local elements = {}
 
 		for i = 1, #bills, 1 do
-			table.insert(elements, {label = _U("bills_item", bills[i].label, bills[i].amount), value = "pay_bill", billId = bills[i].id})
+			table.insert(elements, {label = _("bills_item", bills[i].label, bills[i].amount), value = "pay_bill", billId = bills[i].id})
 		end
 
 		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_bills",
 		{
-			title    = _U("bills_menu"),
+			title    = _("bills_menu"),
 			align    = "left",
 			elements = elements
 		}, function(data, menu)
@@ -215,12 +215,12 @@ end
 function OpenWalletMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_wallet",
 	{
-		title    = _U("wallet"),
+		title    = _("wallet"),
 		align    = "left",
 		elements = {
-			{label = _U("blue", _U("wallet_idcard")), value = nil},
-			{label = _U("green", _U("wallet_driver_license")), value = "driver"},
-			{label = _U("red", _U("wallet_weapon_port_license")), value = "weapon"}
+			{label = _("blue", _("wallet_idcard")), value = nil},
+			{label = _("green", _("wallet_driver_license")), value = "driver"},
+			{label = _("red", _("wallet_weapon_port_license")), value = "weapon"}
 		}
 	}, function(data, menu)
 		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_wallet2",
@@ -228,8 +228,8 @@ function OpenWalletMenu()
 			title    = data.current.label,
 			align    = "left",
 			elements = {
-				{label = _U("wallet_show"), value = "show"},
-				{label = _U("wallet_check"), value = "check"}
+				{label = _("wallet_show"), value = "show"},
+				{label = _("wallet_check"), value = "check"}
 			}
 		}, function(data2, menu2)
 			if data2.current.value == "show" then
@@ -237,7 +237,7 @@ function OpenWalletMenu()
 				if closestDistance ~= -1 and closestDistance <= 3.0 then
 					TriggerServerEvent("jsfour-idcard:open", GetPlayerServerId(PlayerId()), GetPlayerServerId(closestPlayer), data.current.value)
 				else
-					ESX.ShowNotification(_U("no_players_nearby"))
+					ESX.ShowNotification(_("no_players_nearby"))
 				end
 			elseif data2.current.value == "check" then
 				TriggerServerEvent("jsfour-idcard:open", GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()), data.current.value)
@@ -265,34 +265,34 @@ function OpenVehicleMenu()
 	vehicle = GetVehiclePedIsIn(playerPed, false)
 
 	if GetPedInVehicleSeat(vehicle, -1) == playerPed then
-		table.insert(elements, {label = _U("vehicle_engine"), value = "vehicle_engine"})
+		table.insert(elements, {label = _("vehicle_engine"), value = "vehicle_engine"})
 
 		if DoesVehicleHaveDoor(vehicle, 4) then
-			table.insert(elements, {label = _U("vehicle_hood"), value = "vehicle_door", door = 4})
+			table.insert(elements, {label = _("vehicle_hood"), value = "vehicle_door", door = 4})
 		end
 		if DoesVehicleHaveDoor(vehicle, 5) then
-			table.insert(elements, {label = _U("vehicle_trunk"), value = "vehicle_door", door = 5})
+			table.insert(elements, {label = _("vehicle_trunk"), value = "vehicle_door", door = 5})
 		end
 		if DoesVehicleHaveDoor(vehicle, 0) and GetVehicleClass(vehicle) ~= 8 then -- remove if motorcycle
-			table.insert(elements, {label = _U("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
+			table.insert(elements, {label = _("vehicle_door_frontleft"), value = "vehicle_door", door = 0})
 		end
 		if DoesVehicleHaveDoor(vehicle, 1) then
-			table.insert(elements, {label = _U("vehicle_door_frontright"), value = "vehicle_door", door = 1})
+			table.insert(elements, {label = _("vehicle_door_frontright"), value = "vehicle_door", door = 1})
 		end
 		if DoesVehicleHaveDoor(vehicle, 2) then
-			table.insert(elements, {label = _U("vehicle_door_backleft"), value = "vehicle_door", door = 2})
+			table.insert(elements, {label = _("vehicle_door_backleft"), value = "vehicle_door", door = 2})
 		end
 		if DoesVehicleHaveDoor(vehicle, 3) then
-			table.insert(elements, {label = _U("vehicle_door_backright"), value = "vehicle_door", door = 3})
+			table.insert(elements, {label = _("vehicle_door_backright"), value = "vehicle_door", door = 3})
 		end
 
 	elseif GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0 then
-		table.insert(elements, {label = _U("vehicle_move_to_driver_seat"), value = "move_to_driver_seat"})
+		table.insert(elements, {label = _("vehicle_move_to_driver_seat"), value = "move_to_driver_seat"})
 	end
 
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_vehicle_menu",
 	{
-		title    = _U("vehicle_menu"),
+		title    = _("vehicle_menu"),
 		align    = "left",
 		elements = elements
 	}, function(data, menu)
@@ -320,11 +320,11 @@ function OpenVehicleMenu()
 					menu.refresh()
 					OpenVehicleMenu()
 				else
-					ESX.ShowNotification(_U("not_in_passenger_seat"))
+					ESX.ShowNotification(_("not_in_passenger_seat"))
 				end
 			end
 		else
-			ESX.ShowNotification(_U("not_in_vehicle"))
+			ESX.ShowNotification(_("not_in_vehicle"))
 		end
 
 	end, function(data, menu)
@@ -336,13 +336,13 @@ end
 function OpenSpeedMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_speed_limiter",
 	{
-		title    = _U("speed_limiter"),
+		title    = _("speed_limiter"),
 		align    = "left",
 		elements = {
-			{label = _U("speed_disable"), value = "speed_disable"},
-			{label = _U("speed_set_at", 50), value = "set_speed", speed = 50},
-			{label = _U("speed_set_at", 90), value = "set_speed", speed = 90},
-			{label = _U("speed_set_at", 130), value = "set_speed", speed = 130}
+			{label = _("speed_disable"), value = "speed_disable"},
+			{label = _("speed_set_at", 50), value = "set_speed", speed = 50},
+			{label = _("speed_set_at", 90), value = "set_speed", speed = 90},
+			{label = _("speed_set_at", 130), value = "set_speed", speed = 130}
 		}
 	}, function(data, menu)
 		if data.current.value == "speed_disable" then
@@ -359,7 +359,7 @@ end
 
 function OpenLifeInvaderMenu()
 	ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "life_invader", {
-		title = _U("enter_message")
+		title = _("enter_message")
 	}, function(data, menu)
 		menu.close()
 		TriggerServerEvent("esx_avan0x:lifeInvader", data.value)
@@ -374,10 +374,10 @@ local interface = true
 function OpenOthersMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_others",
 	{
-		title    = _U("others_menu"),
+		title    = _("others_menu"),
 		align    = "left",
 		elements = {
-			{label = _U("others_toggle_hud"), value = "toggle_hud"}
+			{label = _("others_toggle_hud"), value = "toggle_hud"}
 		}
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then
@@ -401,32 +401,32 @@ end
 function OpenSocietyMenu(job, money, dirtyMoney)
 	local elements = {}
 	if job.grade_name == "boss" then
-		table.insert(elements, {label = _U("society_money", money or 0)})
+		table.insert(elements, {label = _("society_money", money or 0)})
 		if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
-			table.insert(elements, {label = _U("society_dirty_money", dirtyMoney or 0)})
+			table.insert(elements, {label = _("society_dirty_money", dirtyMoney or 0)})
 		end
 	end
 
 	
 	-- todo, only if the user have a phone
-	table.insert(elements, {label = _U("life_invader"), value = "life_invader"})
-	table.insert(elements, {label = _U("billing"), value = "billing"})
+	table.insert(elements, {label = _("life_invader"), value = "life_invader"})
+	table.insert(elements, {label = _("billing"), value = "billing"})
 	
 	
 	if job.grade_name == "boss" then
-		table.insert(elements, {label = _U("society_first_job"), value = "society_first_job"})
-		table.insert(elements, {label = _U("society_second_job"), value = "society_second_job"})
+		table.insert(elements, {label = _("society_first_job"), value = "society_first_job"})
+		table.insert(elements, {label = _("society_second_job"), value = "society_second_job"})
 	end
 
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society",
 	{
-		title    = _U("society_menu", job.label),
+		title    = _("society_menu", job.label),
 		align    = "left",
 		elements = elements
 	}, function(data, menu)
 		if data.current.value == "life_invader" then
 			ESX.UI.Menu.Open("dialog", GetCurrentResourceName(), "life_invader", {
-				title = _U("enter_message")
+				title = _("enter_message")
 			}, function(data, menu)
 				menu.close()
 				TriggerServerEvent("esx_avan0x:lifeInvader", data.value, job.label)
@@ -437,17 +437,17 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		elseif data.current.value == "billing" then
 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'billing',
 				{
-					title = _U('billing_amount')
+					title = _('billing_amount')
 				},
 				function(data, menu)
 					local amount = tonumber(data.value)
 					if amount == nil or amount <= 0 then
-						ESX.ShowNotification(_U('invalid_amount'))
+						ESX.ShowNotification(_('invalid_amount'))
 					else
 						menu.close()
 						local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 						if closestPlayer == -1 or closestDistance > 3.0 then
-							ESX.ShowNotification(_U('no_players_nearby'))
+							ESX.ShowNotification(_('no_players_nearby'))
 						else
 							local playerPed = GetPlayerPed(-1)
 
@@ -466,18 +466,18 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		elseif data.current.value == "society_first_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",
 			{
-				title    = _U("society_first_job", job.label),
+				title    = _("society_first_job", job.label),
 				align    = "left",
 				elements = {
-					{label = _U("society_hire"), value = "society_hire"},
-					{label = _U("society_fire"), value = "society_fire"},
-					{label = _U("society_promote"), value = "society_promote"},
-					{label = _U("society_demote"), value = "society_demote"}
+					{label = _("society_hire"), value = "society_hire"},
+					{label = _("society_fire"), value = "society_fire"},
+					{label = _("society_promote"), value = "society_promote"},
+					{label = _("society_demote"), value = "society_demote"}
 				}
 			}, function(data2, menu2)
 				closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 				if closestPlayer == -1 or closestDistance > 3.0 then
-					ESX.ShowNotification(_U("no_players_nearby"))
+					ESX.ShowNotification(_("no_players_nearby"))
 
 				elseif data2.current.value == "society_hire" then
 					TriggerServerEvent("esx_ava_personalmenu:society_hire", GetPlayerServerId(closestPlayer), job.name)
@@ -499,18 +499,18 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		elseif data.current.value == "society_second_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_second_job",
 			{
-				title    = _U("society_second_job", job.label),
+				title    = _("society_second_job", job.label),
 				align    = "left",
 				elements = {
-					{label = _U("society_hire"), value = "society_hire"},
-					{label = _U("society_fire"), value = "society_fire"},
-					{label = _U("society_promote"), value = "society_promote"},
-					{label = _U("society_demote"), value = "society_demote"}
+					{label = _("society_hire"), value = "society_hire"},
+					{label = _("society_fire"), value = "society_fire"},
+					{label = _("society_promote"), value = "society_promote"},
+					{label = _("society_demote"), value = "society_demote"}
 				}
 			}, function(data2, menu2)
 				closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 				if closestPlayer == -1 or closestDistance > 3.0 then
-					ESX.ShowNotification(_U("no_players_nearby"))
+					ESX.ShowNotification(_("no_players_nearby"))
 
 				elseif data2.current.value == "society_hire" then
 					TriggerServerEvent("esx_ava_personalmenu:society_hire2", GetPlayerServerId(closestPlayer), job.name)

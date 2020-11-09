@@ -83,9 +83,12 @@ Locales["fr"] = {
   ['players_list'] = "Liste",
 
   -- player managment
+  ['admin_enter_reason'] = "Entrez une raison",
+
   ['admin_revive'] = "Revive / Heal",
   ["admin_goto"] = "TP sur Joueur",
   ["admin_bring"] = "TP Joueur sur moi",
   ["admin_kill"] = "Kill",
+  ["admin_kick"] = "Kick",
 
 }

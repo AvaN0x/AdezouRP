@@ -8,17 +8,17 @@ local visibleHash = {}
 function OpenAdminMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin",
 	{
-		title    = _U("admin_menu"),
+		title    = _("admin_menu"),
 		align    = "left",
 		elements = {
-            {label = _U("orange", _U("players_list")), value = "players_list"},
-            {label = _U("orange", _U("all_players")), value = "all_players"},
-			{label = _U("blue", _U("admin_tp_marker")), value = "tp_marker"},
-			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
-			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
-			{label = _U("orange", _U("admin_show_hash")), value = "show_hash"},
-			{label = _U("red", _U("admin_change_skin")), value = "change_skin"},
-			{label = _U("red", _U("admin_save_skin")), value = "save_skin"}
+            {label = _("orange", _("players_list")), value = "players_list"},
+            {label = _("orange", _("all_players")), value = "all_players"},
+			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
+			{label = _("pink", _("admin_noclip")), value = "noclip"},
+			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
+			{label = _("orange", _("admin_show_hash")), value = "show_hash"},
+			{label = _("red", _("admin_change_skin")), value = "change_skin"},
+			{label = _("red", _("admin_save_skin")), value = "save_skin"}
 		}
 	}, function(data, menu)
 		if data.current.value == "tp_marker" then
@@ -46,10 +46,10 @@ end
 function all_players()
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
 	{
-		title    = _U("all_players"),
+		title    = _("all_players"),
 		align    = "left",
 		elements = {
-            {label = _U(showname and "green" or "orange", _U("admin_show_names")), value = "show_names"},
+            {label = _(showname and "green" or "orange", _("admin_show_names")), value = "show_names"},
 		}
 	}, function(data, menu)
         if data.current.value == "show_names" then
@@ -62,7 +62,7 @@ function all_players()
                     RemoveBlip(blip)
                 end
             end
-            menu.update({value = "show_names"}, {label = _U(showname and "green" or "orange", _U("admin_show_names"))})
+            menu.update({value = "show_names"}, {label = _(showname and "green" or "orange", _("admin_show_names"))})
             menu.refresh()
         end
     end, function(data, menu)
@@ -78,7 +78,7 @@ function players_list()
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
         {
-            title    = _U("players_list"),
+            title    = _("players_list"),
             align    = "left",
             elements = elements
         }, function(data, menu)
@@ -90,27 +90,44 @@ function players_list()
 end
 
 function PlayerManagment(player)
-    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. GetPlayerServerId(player),
+	local serverID = GetPlayerServerId(player)
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. serverID,
 	{
-		title    = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player),
+		title    = serverID .. ' - ' .. GetPlayerName(player),
 		align    = "left",
 		elements = {
-			{label = _U("pink", _U("admin_revive")), value = "admin_revive"},
-			{label = _U("blue", _U("admin_goto")), value = "admin_goto"},
-			{label = _U("blue", _U("admin_bring")), value = "admin_bring"},
-			{label = _U("red", _U("admin_kill")), value = "admin_kill"},
+			{label = _("pink", _("admin_revive")), value = "admin_revive"},
+			{label = _("blue", _("admin_goto")), value = "admin_goto"},
+			{label = _("blue", _("admin_bring")), value = "admin_bring"},
+			{label = _("red", _("admin_kill")), value = "admin_kill"},
+			{label = _("red", _("admin_kick")), value = "admin_kick"},
 		}
 	}, function(data, menu)
         if data.current.value == "admin_revive" then
-            TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
+            TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
         elseif data.current.value == "admin_goto" then
-            admin_goto(GetPlayerServerId(player))
+            admin_goto(serverID)
         elseif data.current.value == "admin_bring" then
-            admin_bring(GetPlayerServerId(player))
+            admin_bring(serverID)
         elseif data.current.value == "admin_kill" then
-            SetEntityHealth(GetPlayerPed(player), 0)
+			SetEntityHealth(GetPlayerPed(player), 0)
+		elseif data.current.value == "admin_kick" then
+			EnterReason(function(reason)
+				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
+			end)
         end
     end, function(data, menu)
+		menu.close()
+	end)
+end
+
+function EnterReason(cb)
+	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_enter_reason", {
+		title = _('admin_enter_reason')
+	}, function(data, menu)
+		menu.close()
+		cb(data.value)
+	end, function(data, menu)
 		menu.close()
 	end)
 end
