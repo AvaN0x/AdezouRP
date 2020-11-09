@@ -135,7 +135,7 @@ function AdminLoop()
 				Citizen.Wait(10)
 				if noclip then
 					local playerPed = PlayerPedId()
-					SetEntityInvincible(playerPed, admin_mode)
+					SetEntityInvincible(playerPed, true)
 					local x, y, z = getPosition()
 					local dx, dy, dz = getCamDirection()
 					local speed = Config.noclip_speed
