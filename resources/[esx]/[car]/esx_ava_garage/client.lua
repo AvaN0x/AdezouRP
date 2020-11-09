@@ -279,7 +279,7 @@ end
 function ranger(vehicle, vehicleProps, gIdentifier, target)
 	DeleteEntity(vehicle)
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target)
-	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans le garage')
+	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans ce garage')
 end
 
 
