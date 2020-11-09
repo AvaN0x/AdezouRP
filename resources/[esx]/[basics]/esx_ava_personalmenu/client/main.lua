@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local IsDead = false
+IsDead = false
 
 ESX = nil
 PlayerData = nil

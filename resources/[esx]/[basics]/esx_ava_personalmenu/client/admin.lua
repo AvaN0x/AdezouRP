@@ -134,7 +134,8 @@ function AdminLoop()
 			while true do
 				Citizen.Wait(10)
 				if noclip then
-					playerPed = PlayerPedId()
+					local playerPed = PlayerPedId()
+					SetEntityInvincible(playerPed, admin_mode)
 					local x, y, z = getPosition()
 					local dx, dy, dz = getCamDirection()
 					local speed = Config.noclip_speed
@@ -167,11 +168,12 @@ function AdminLoop()
 				end
 			end
 		end)
+
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(10)
 				if show_names then
-					playerPed = PlayerPedId()
+					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
@@ -185,9 +187,23 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
+				Citizen.Wait(0)
+				if admin_mode then
+					local playerPed = PlayerPedId()
+					SetSuperJumpThisFrame(PlayerId(-1))
+					SetPedMoveRateOverride(playerPed, 2.15)
+					SetEntityInvincible(playerPed, admin_mode)
+				else
+					Citizen.Wait(4000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
 				Citizen.Wait(3000)
 				if show_hashes then
-					playerPed = PlayerPedId()
+					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
 					visibleHash = {}
 					for _, v in ipairs(GetGamePool("CObject")) do
@@ -214,7 +230,7 @@ function AdminLoop()
 			while true do
 				Citizen.Wait(10)
 				if show_hashes then
-					playerPed = PlayerPedId()
+					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
 					for _, prop in ipairs(visibleHash) do
 						if prop.coords then
@@ -234,7 +250,7 @@ function AdminLoop()
 			while true do
 				Wait(5000)
 				if show_names then
-					playerPed = PlayerPedId()
+					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local targetPed = GetPlayerPed(player)
@@ -315,11 +331,13 @@ function admin_noclip()
 	local playerPed = PlayerPedId()
 
 	if noclip then
-		SetEntityInvincible(playerPed, true)
+		-- SetPlayerInvincible(playerPed, true)
 		SetEntityVisible(playerPed, false, false)
 		ESX.ShowNotification("NoClip ~g~Activé")
 	else
-		SetEntityInvincible(playerPed, false)
+		-- if not admin_mode then
+			-- SetPlayerInvincible(playerPed, false)
+		-- end
 		SetEntityVisible(playerPed, true, false)
 		ESX.ShowNotification("NoClip ~r~Désactivé")
 	end
@@ -330,7 +348,7 @@ function RemoveAllPlayersBlips()
 		for _, id in ipairs(GetActivePlayers()) do
 			local ped = GetPlayerPed(id)
 			local blip = GetBlipFromEntity(ped)
-			
+
 			if DoesBlipExist(blip) then
 				RemoveBlip(blip)
 			end
@@ -350,6 +368,9 @@ function ToggleAdminMode()
 	show_names = admin_mode
 
 	RemoveAllPlayersBlips()
+	local playerPed = PlayerPedId()
+	local playerId = PlayerId()
+	SetPedCanRagdoll(playerPed, not admin_mode)
 
 	if admin_mode then
 		TriggerEvent('skinchanger:getSkin', function(skin)
@@ -363,5 +384,8 @@ function ToggleAdminMode()
 		ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
 			TriggerEvent('skinchanger:loadSkin', skin)
 		end)
+		ClearPedBloodDamage(playerPed)
+		ResetPedVisibleDamage(playerPed)
+		ResetPedMovementClipset(playerPed, 0)
 	end
 end
