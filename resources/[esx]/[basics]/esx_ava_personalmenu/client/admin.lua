@@ -136,8 +136,8 @@ function AdminLoop()
 				if noclip then
 					local playerPed = PlayerPedId()
 					SetEntityInvincible(playerPed, true)
-					local x, y, z = getPosition()
-					local dx, dy, dz = getCamDirection()
+					local x, y, z = getPosition(playerPed)
+					local dx, dy, dz = getCamDirection(playerPed)
 					local speed = Config.noclip_speed
 
 					SetTextComponentFormat('STRING')
@@ -275,13 +275,13 @@ function AdminLoop()
 	end
 end
 
-function getPosition()
+function getPosition(playerPed)
 	local x, y, z = table.unpack(GetEntityCoords(playerPed, true))
 
 	return x, y, z
 end
 
-function getCamDirection()
+function getCamDirection(playerPed)
 	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(playerPed)
 	local pitch = GetGameplayCamRelativePitch()
 
