@@ -18,7 +18,6 @@ function OpenAdminMenu()
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash"},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
-			{label = _("red", _("admin_save_skin")), value = "save_skin"}
 		}
 	}, function(data, menu)
 		if data.current.value == "tp_marker" then
@@ -35,8 +34,6 @@ function OpenAdminMenu()
 			showHash = not showHash
 		elseif data.current.value == "change_skin" then
 			changer_skin()
-		elseif data.current.value == "save_skin" then
-			save_skin()
 		end
 	end, function(data, menu)
 		menu.close()
@@ -264,27 +261,6 @@ function AdminLoop()
 	end
 end
 
-function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
-    AddTextEntry(entryTitle, textEntry)
-    DisplayOnscreenKeyboard(1, entryTitle, "", inputText, "", "", "", maxLength)
-	blockinput = true
-	
-    while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-        Citizen.Wait(0)
-    end
-
-    if UpdateOnscreenKeyboard() ~= 2 then
-        local result = GetOnscreenKeyboardResult()
-        Citizen.Wait(500)
-		blockinput = false
-        return result
-    else
-        Citizen.Wait(500)
-		blockinput = false
-        return nil
-    end
-end
-
 function getPosition()
 	local x, y, z = table.unpack(GetEntityCoords(playerPed, true))
 
@@ -369,8 +345,4 @@ end
 function changer_skin()
 	Citizen.Wait(100)
 	TriggerEvent('esx_skin:openSaveableMenu', source)
-end
-
-function save_skin()
-	TriggerEvent('esx_skin:requestSaveSkin', source)
 end

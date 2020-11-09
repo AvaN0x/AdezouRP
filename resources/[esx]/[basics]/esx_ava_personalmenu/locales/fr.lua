@@ -71,7 +71,6 @@ Locales["fr"] = {
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
   ["admin_show_hash"] = "Toggle hash des props",
   ["admin_change_skin"] = "Changer l'Apparence",
-  ["admin_save_skin"] = "Sauvegarder l'Apparence",
 
   ["invalid_amount"] = "Montant invalide",
   ["no_players_nearby"] = "Aucun joueur à proximité",
