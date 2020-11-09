@@ -151,10 +151,12 @@ function ListVehiclesMenu(type, target)
 			local hashVehicule = v.vehicle.model
 			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
 			local labelvehicle
-			if v.state then
+			if v.location == this_Garage.Identifier then
 				labelvehicle = vehicleName..' - '.. v.vehicle.plate
-			else
+			elseif v.location == "garage_POUND" then
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+			else
+				labelvehicle = "<span style=\"color:darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 			end	
 			table.insert(elements, {label =labelvehicle , value = v})
 			count = count + 1
@@ -181,13 +183,15 @@ function ListVehiclesMenu(type, target)
 				elements = elements,
 			},
 			function(data, menu)
-				if(data.current.value.state)then
+				if data.current.value.location == this_Garage.Identifier then
 					menu.close()
 					
 					SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
-					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, false, target)
-				else
+					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target)
+				elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere')
+				else
+					TriggerEvent('esx:showNotification', 'Ce véhicule est dans un autre garage')
 				end
 			end,
 			function(data, menu)
@@ -220,12 +224,12 @@ function StockVehicleMenu(target)
 						local fraisRep= math.floor((1000 - engineHealth)*100)
 						reparation(fraisRep, vehicle, vehicleProps, target)
 					else
-						ranger(vehicle, vehicleProps, target)
+						ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
 					end
 				else
 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule ici')
 				end
-			end, vehicleProps, fuel, this_Garage.Type, target)
+			end, vehicleProps, fuel, this_Garage.Type, this_Garage.Identifier, target)
 		end)
 	else
 		TriggerEvent('esx:showNotification', 'Il n\'y a pas de vehicule à rentrer')
@@ -257,7 +261,7 @@ function reparation(prix, vehicle, vehicleProps, target)
 			menu.close()
 			if(data.current.value == 'yes') then
 				-- TriggerServerEvent('esx_ava_garage:payhealth1', prix)
-				ranger(vehicle, vehicleProps, target)
+				ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
 			end
 			if(data.current.value == 'no') then
 				ESX.ShowNotification('Passez voir le mécano')
@@ -272,9 +276,9 @@ end
 
 
 
-function ranger(vehicle, vehicleProps, target)
+function ranger(vehicle, vehicleProps, gIdentifier, target)
 	DeleteEntity(vehicle)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, true, target)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target)
 	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans le garage')
 end
 
@@ -305,7 +309,7 @@ function SpawnVehicle(vehicle, fuel, target)
 		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
 	end
 
-	-- TriggerServerEvent('esx_ava_garage:modifystate', vehicle, false)
+	-- TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND")
 
 end
 
@@ -326,10 +330,10 @@ function SpawnPoundedVehicle(vehicle, target)
 	if target then
 		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
 	end
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, true, target)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target)
 
 	Citizen.Wait(10000)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, false, target)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND", target)
 
 end
 
@@ -386,7 +390,7 @@ function ReturnVehicleMenu(target, isGov)
 							times=0
 						else
 							ESX.ShowNotification('Le véhicule est sorti de la fourrière')
-							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, true, target)
+							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, this_Garage.Identifier, target)
 						end
 					elseif times > 0 then
 						ESX.ShowNotification('Veuillez patienter une minute')
@@ -518,6 +522,7 @@ end)
 RegisterNetEvent("esx_ava_garage:OpenSocietyVehiclesMenu")
 AddEventHandler("esx_ava_garage:OpenSocietyVehiclesMenu", function(societyName, garage, type)
 	this_Garage = garage
+	this_Garage.Identifier = "garage_SOCIETY"
 	if not this_Garage.Type then
 		this_Garage.Type = 'car'
 	end

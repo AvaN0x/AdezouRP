@@ -32,7 +32,7 @@ function OpenMobileAmbulanceActionsMenu()
 						ESX.ShowNotification(_U('no_players'))
 					else
 						menu.close()
-						TriggerServerEvent('esx_billing:sendBill1', GetPlayerServerId(closestPlayer), 'society_ambulance', _U('billing'), amount)
+						TriggerServerEvent('esx_billing:sendBill1', GetPlayerServerId(closestPlayer), 'society_ems', _U('billing'), amount)
 					end
 				end
 			end, function(data, menu)
@@ -355,9 +355,9 @@ Citizen.CreateThread(function()
 				elseif CurrentAction == 'Pharmacy' then
 					OpenPharmacyMenu()
 				elseif CurrentAction == 'SocietyGarage' then
-					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ambulance", Config.Hospitals[CurrentActionData.hospital].SocietyGarage)
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ems", Config.Hospitals[CurrentActionData.hospital].SocietyGarage)
 				elseif CurrentAction == 'SocietyHeliGarage' then
-					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ambulance", Config.Hospitals[CurrentActionData.hospital].SocietyHeliGarage)
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', "society_ems", Config.Hospitals[CurrentActionData.hospital].SocietyHeliGarage)
 				end
 
 				CurrentAction = nil

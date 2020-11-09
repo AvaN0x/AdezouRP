@@ -25,7 +25,6 @@ RegisterServerEvent('rlUpdateNamesResult')
 
 AddEventHandler('rlUpdateNamesResult', function(res)
     if source ~= trustedPlayer then
-        print('bad guy')
         return
     end
 

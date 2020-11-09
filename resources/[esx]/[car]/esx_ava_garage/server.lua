@@ -48,8 +48,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, ty
 	}, function(data) 
 		for _,v in pairs(data) do
 			local vehicle = json.decode(v.vehicle)
-			table.insert(vehicules, {vehicle = vehicle, state = v.state, fuel = v.fuel})
-			print(v.plate)
+			table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
 		end
 		cb(vehicules)
 	end)
@@ -66,7 +65,7 @@ function getPlayerVehicles(identifier)
 end
 
 
-ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehicleProps, fuel, type, target)
+ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehicleProps, fuel, type, gIdentifier, target)
 	local isFound = false
 	local identifier = nil
 	if target then
@@ -76,20 +75,25 @@ ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehiclePr
 		local xPlayer = ESX.GetPlayerFromId(_source)
 		identifier = xPlayer.getIdentifier()
 	end
-	
-	local vehicules = getPlayerVehicles(identifier)
+	print(identifier)
+	local vehicles = getPlayerVehicles(identifier)
 	local plate = vehicleProps.plate
-	print(plate)
-	
-		for _,v in pairs(vehicules) do
-			if plate == v.plate and type == v.type then
-				local vehprop = json.encode(vehicleProps)
-				MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel WHERE plate=@plate",{['@vehprop'] = vehprop, ['@fuel'] = fuel, ['@plate'] = plate})
-				isFound = true
-				break
-			end
+	for _,v in pairs(vehicles) do
+		print(v.plate)
+		if plate == v.plate and type == v.type then
+			local vehprop = json.encode(vehicleProps)
+			MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel, location=@location WHERE plate=@plate",
+			{
+				['@vehprop'] = vehprop,
+				['@fuel'] = fuel,
+				['@plate'] = plate,
+				['@location'] = gIdentifier
+			})
+			isFound = true
+			break
 		end
-		cb(isFound)
+	end
+	cb(isFound)
 end)
 
 
@@ -112,7 +116,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-	MySQL.Async.fetchAll("SELECT parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id	AND state = 1) as parked_count FROM users WHERE users.identifier = @id",
+	MySQL.Async.fetchAll("SELECT parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id	AND location<>'garage_POUND') as parked_count FROM users WHERE users.identifier = @id",
 	{['@id'] = xPlayer.getIdentifier()}, function(data) 
 		cb(data[1])
 	end)
@@ -126,7 +130,7 @@ end)
 -- 	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = societyname}, function(data) 
 -- 		for _,v in pairs(data) do
 -- 			local vehicle = json.decode(v.vehicle)
--- 			table.insert(vehicules, {vehicle = vehicle, state = v.state, fuel = v.fuel})
+-- 			table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
 -- 		end
 -- 		cb(vehicules)
 -- 	end)
@@ -151,7 +155,7 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
-AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, state, target)
+AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target)
 	local identifier = nil
 	if target then
 		identifier = target
@@ -160,30 +164,30 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, state, targ
 		local xPlayer = ESX.GetPlayerFromId(_source)
 		identifier = xPlayer.getIdentifier()
 	end
-	
+
 	local vehicules = getPlayerVehicles(identifier)
 	local plate = vehicleProps.plate
-	local state = state
+	local location = location
 
 	for _,v in pairs(vehicules) do
 		if(plate == v.plate)then
-			MySQL.Sync.execute("UPDATE owned_vehicles SET state =@state WHERE plate=@plate",{['@state'] = state , ['@plate'] = plate})
+			MySQL.Sync.execute("UPDATE owned_vehicles SET location=@location WHERE plate=@plate",{['@location'] = location , ['@plate'] = plate})
 			break
-		end		
+		end
 	end
-end)	
+end)
 
--- AddEventHandler('esx_ava_garage:modifySocietystate', function(vehicleProps, state, societyname)
+-- AddEventHandler('esx_ava_garage:modifySocietystate', function(vehicleProps, location, societyname)
 -- 	-- local _source = source
 -- 	-- local xPlayer = ESX.GetPlayerFromId(_source)
 -- 	local vehicules = getPlayerVehicles(societyname)
 -- 	local plate = vehicleProps.plate
--- 	local state = state
+-- 	local location = location
 
 -- 	for _,v in pairs(vehicules) do
 -- 		if(tostring(plate) == tostring(v.plate))then
 -- 			-- local idveh = v.id
--- 			MySQL.Sync.execute("UPDATE owned_vehicles SET state =@state WHERE plate=@plate",{['@state'] = state , ['@plate'] = plate})
+-- 			MySQL.Sync.execute("UPDATE owned_vehicles SET location =@location WHERE plate=@plate",{['@location'] = location , ['@plate'] = plate})
 -- 			break
 -- 		end		
 -- 	end
@@ -200,11 +204,10 @@ ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, 
 		local xPlayer = ESX.GetPlayerFromId(_source)
 		identifier = xPlayer.getIdentifier()
 	end
-	print(identifier)
-	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier AND state=false",
+	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier AND location='garage_POUND'",
 	{
 		['@identifier'] = identifier
-	}, function(data) 
+	}, function(data)
 		for _,v in pairs(data) do
 			local vehicle = json.decode(v.vehicle)
 			table.insert(vehicules, {vehicle = vehicle, type = v.type})

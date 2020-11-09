@@ -22,7 +22,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x=229.700, y=-800.1149, z=30.5722},
 			Heading = 157.84
-		}
+		},
+		Identifier = "garage_pillbox"
 	},
 	Garage_car_02 = {	
 		Name = "Garage",
@@ -38,7 +39,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x=154.13, y=6561.41, z=31.83},
 			Heading = 345.0
-		}
+		},
+		Identifier = "garage_paleto"
 	},
 	Garage_car_03 = {	
 		Name = "Garage",
@@ -54,11 +56,12 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = 1709.29,y = 4799.75,z = 41.33 },
 			Heading = 11.84
-		}
+		},
+		Identifier = "garage_grapeseed"
 	},
 	Garage_car_04 = {	
 		Name = "Garage",
-		Pos = {x = 1520.39,y = 3765.16,z = 33.14 },
+		Pos = {x = 1520.39,y = 3765.16,z = 34.04 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -68,9 +71,10 @@ Config.Garages = {
 		},
 		Type = "car",
 		SpawnPoint = {
-			Pos = {x = 1520.39,y = 3765.16,z = 33.14 },
+			Pos = {x = 1520.39,y = 3765.16,z = 34.04 },
 			Heading = 157.84
-		}
+		},
+		Identifier = "garage_sandy"
 	},
 	Garage_LSPD = {	
 		Name = "hide",
@@ -87,7 +91,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = 442.53,y = -1026.09,z = 28.71 },
 			Heading = 5.0
-		}
+		},
+		Identifier = "garage_lspd"
 	},
 	Garage_TAXI = {	
 		Name = "hide",
@@ -104,7 +109,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = 900.67,y = -186.91,z = 73.79 },
 			Heading = 328.76
-		}
+		},
+		Identifier = "garage_taxi"
 	},
 	Garage_GOUV = {	
 		Name = "hide",
@@ -121,7 +127,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = -579.05,y = -170.05,z = 38.23},
 			Heading = 25.0
-		}
+		},
+		Identifier = "garage_gouv"
 	},
 	Garage_VIGNERON = {
 		Name = "hide",
@@ -138,7 +145,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = -1886.5,y = 2015.78,z = 141.04},
 			Heading = 169.0
-		}
+		},
+		Identifier = "garage_vigneron"
 	},
 	Garage_MECANO = {
 		Name = "hide",
@@ -155,7 +163,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = -326.24,y = -152.57,z = 36.3},
 			Heading = 258.71
-		}
+		},
+		Identifier = "garage_mecano"
 	},
 	Garage_CLUCKIN = {
 		Name = "hide",
@@ -172,7 +181,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = -479.99,y = -604.52, z = 31.17},
 			Heading = 180.0
-		}
+		},
+		Identifier = "garage_cluckin"
 	},
 	Garage_TAILOR = {
 		Name = "hide",
@@ -189,7 +199,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = 705.19,y = -991.21, z = 23.02},
 			Heading = 280.0
-		}
+		},
+		Identifier = "garage_tailor"
 	},
 
 	Garage_VAGOS = {
@@ -206,7 +217,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x = 335.46, y = -2039.61, z = 21.13},
 			Heading = 50.0
-		}
+		},
+		Identifier = "garage_vagos"
 	},
 
 
@@ -229,7 +241,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x=-852.73, y=-1345.86, z=1.01},
 			Heading = 107.84
-		}
+		},
+		Identifier = "garage_tackle_street"
 	},
 
 
@@ -254,7 +267,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x=-724.71, y=-1444.0, z=5.0},
 			Heading = 138.7
-		}
+		},
+		Identifier = "garage_shank_street"
 	},
 
 
@@ -277,7 +291,8 @@ Config.Garages = {
 		SpawnPoint = {
 			Pos = {x=-988.43, y=-3001.67, z=13.95},
 			Heading = 60.56
-		}
+		},
+		Identifier = "garage_ls_airport"
 	},
 
 
@@ -307,6 +322,7 @@ Config.Pound = {
 			Heading = 230.0,
 			Marker = 27
 		},
+		Identifier = "garage_POUND"
 	},
 
 
