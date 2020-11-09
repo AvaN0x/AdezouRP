@@ -96,8 +96,8 @@ function PlayerManagment(player)
 		align    = "left",
 		elements = {
 			{label = _U("pink", _U("admin_revive")), value = "admin_revive"},
-			{label = _U("pink", _U("admin_goto")), value = "admin_goto"},
-			{label = _U("pink", _U("admin_bring")), value = "admin_bring"},
+			{label = _U("blue", _U("admin_goto")), value = "admin_goto"},
+			{label = _U("blue", _U("admin_bring")), value = "admin_bring"},
 		}
 	}, function(data, menu)
         if data.current.value == "admin_revive" then
