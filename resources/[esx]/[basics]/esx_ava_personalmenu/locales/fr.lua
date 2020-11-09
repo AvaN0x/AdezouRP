@@ -86,5 +86,6 @@ Locales["fr"] = {
   ['admin_revive'] = "Revive / Heal",
   ["admin_goto"] = "TP sur Joueur",
   ["admin_bring"] = "TP Joueur sur moi",
+  ["admin_kill"] = "Kill",
 
 }

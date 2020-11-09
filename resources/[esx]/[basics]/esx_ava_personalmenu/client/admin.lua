@@ -98,6 +98,7 @@ function PlayerManagment(player)
 			{label = _U("pink", _U("admin_revive")), value = "admin_revive"},
 			{label = _U("blue", _U("admin_goto")), value = "admin_goto"},
 			{label = _U("blue", _U("admin_bring")), value = "admin_bring"},
+			{label = _U("red", _U("admin_kill")), value = "admin_kill"},
 		}
 	}, function(data, menu)
         if data.current.value == "admin_revive" then
@@ -106,6 +107,8 @@ function PlayerManagment(player)
             admin_goto(GetPlayerServerId(player))
         elseif data.current.value == "admin_bring" then
             admin_bring(GetPlayerServerId(player))
+        elseif data.current.value == "admin_kill" then
+            SetEntityHealth(GetPlayerPed(player), 0)
         end
     end, function(data, menu)
 		menu.close()
