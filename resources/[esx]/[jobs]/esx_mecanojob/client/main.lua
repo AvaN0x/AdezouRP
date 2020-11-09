@@ -22,7 +22,6 @@ local NPCOnJob                = false
 local NPCTargetTowable        = nil
 local NPCTargetTowableZone    = nil
 local NPCHasSpawnedTowable    = false
-local NPCLastCancel           = GetGameTimer() - 5 * 60000
 local NPCHasBeenNextToTowable = false
 local NPCTargetDeleterZone    = false
 local IsDead                  = false
@@ -1101,12 +1100,7 @@ Citizen.CreateThread(function()
 
 			if NPCOnJob then
 
-				if GetGameTimer() - NPCLastCancel > 5 * 60000 then
-					StopNPCJob(true)
-					NPCLastCancel = GetGameTimer()
-				else
-					ESX.ShowNotification(_U('wait_five'))
-				end
+				StopNPCJob(true)
 
 			else
 
