@@ -80,6 +80,7 @@ Locales["fr"] = {
 
   ['all_players'] = "Tous les joueurs",
   ['players_list'] = "Liste",
+  ['admin_mode'] = "Toggle mode admin",
 
   -- player managment
   ['admin_enter_reason'] = "Entrez une raison",
