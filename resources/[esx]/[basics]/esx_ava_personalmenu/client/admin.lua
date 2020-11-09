@@ -363,6 +363,14 @@ function admin_vehicle_repair()
 	SetVehicleDirtLevel(vehicle, 0.0)
 end
 
+RegisterNetEvent('esx_ava_personalmenu:toggle_admin_mode')
+AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
+	if IsDead then
+		TriggerEvent('esx_ava_emsjob:revive2')
+	end
+	ToggleAdminMode()
+end)
+
 function ToggleAdminMode()
 	admin_mode = not admin_mode
 	show_names = admin_mode
