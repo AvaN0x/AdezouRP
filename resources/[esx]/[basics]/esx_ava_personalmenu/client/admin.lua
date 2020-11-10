@@ -95,8 +95,8 @@ function PlayerManagment(player)
 			{label = _("blue", _("admin_bring")), value = "admin_bring"},
 			{label = _("pink", _("admin_revive")), value = "admin_revive"},
 			{label = _("pink", _("admin_debug")), value = "admin_debug"},
-			{label = _("red", _("admin_kill")), value = "admin_kill"},
-			{label = _("red", _("admin_kick")), value = "admin_kick"},
+			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
+			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
 		}
 	}, function(data, menu)
 		if data.current.value == "admin_goto" then
@@ -195,7 +195,7 @@ function AdminLoop()
 					local playerPed = PlayerPedId()
 					SetSuperJumpThisFrame(PlayerId(-1))
 					SetPedMoveRateOverride(playerPed, 2.15)
-					SetEntityInvincible(playerPed, admin_mode)
+					SetEntityInvincible(playerPed, true)
 				else
 					Citizen.Wait(4000)
 				end
