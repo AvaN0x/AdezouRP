@@ -227,7 +227,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(0)
+		Wait(10)
 		if IsControlJustReleased(0, 303) then -- Touche U
 			OpenCloseVehicle()
 		end
@@ -237,124 +237,124 @@ end)
 ------------------------------------------------------------------------
 -----------------------------Car Dealer --------------------------------
 
-RegisterNetEvent('esx_menu:keycardealer')
-AddEventHandler('esx_menu:keycardealer', function()
-ESX.TriggerServerCallback('esx_vehiclelock:allkey', function(mykey)
-	local elements = {}
-		for i=1, #mykey, 1 do
-			if mykey[i].got == 'true' then
-				if 	mykey[i].NB == 3 then
-						table.insert(elements, {label = '[PRO] Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
-					end
-				end
-			end
+-- RegisterNetEvent('esx_menu:keycardealer')
+-- AddEventHandler('esx_menu:keycardealer', function()
+-- ESX.TriggerServerCallback('esx_vehiclelock:allkey', function(mykey)
+-- 	local elements = {}
+-- 		for i=1, #mykey, 1 do
+-- 			if mykey[i].got == 'true' then
+-- 				if 	mykey[i].NB == 3 then
+-- 						table.insert(elements, {label = '[PRO] Clés : '.. ' [' .. mykey[i].plate .. ']', value = mykey[i].plate})
+-- 					end
+-- 				end
+-- 			end
 
-ESX.UI.Menu.Open(
-	'default', GetCurrentResourceName(), 'mykey',
-	{
-		title = 'Clé Pro',
-		align = 'right',
-		elements = elements
-	  },
-        function(data2, menu2) --Submit Cb
+-- ESX.UI.Menu.Open(
+-- 	'default', GetCurrentResourceName(), 'mykey',
+-- 	{
+-- 		title = 'Clé Pro',
+-- 		align = 'right',
+-- 		elements = elements
+-- 	  },
+--         function(data2, menu2) --Submit Cb
 
-        if data2.current.value ~= nil then
-        ESX.UI.Menu.CloseAll()
-  			ESX.UI.Menu.Open(
-				'default', GetCurrentResourceName(), 'mykey',
-				{
-				title = 'Voulez vous ?',
-				align = 'left',
-				elements = {{label = 'Donner', value = data2.current.value}, -- Donné un double
-			  		},
-	  			},
-        		function(data3, menu3) --Submit Cb
- 					local player, distance = ESX.Game.GetClosestPlayer()
+--         if data2.current.value ~= nil then
+--         ESX.UI.Menu.CloseAll()
+--   			ESX.UI.Menu.Open(
+-- 				'default', GetCurrentResourceName(), 'mykey',
+-- 				{
+-- 				title = 'Voulez vous ?',
+-- 				align = 'left',
+-- 				elements = {{label = 'Donner', value = data2.current.value}, -- Donné un double
+-- 			  		},
+-- 	  			},
+--         		function(data3, menu3) --Submit Cb
+--  					local player, distance = ESX.Game.GetClosestPlayer()
 
-       				 if data3.current.value ~= nil then
-       					 ESX.UI.Menu.CloseAll()
-       					if distance ~= -1 and distance <= 3.0 then
-       					  TriggerServerEvent('esx_vehiclelock:givekeycardealer', GetPlayerServerId(player), data2.current.value)
-       					  TriggerServerEvent('esx_vehiclelock:deletekeycardealer', GetPlayerServerId(player), data2.current.value)
-       					end
-      				 end
-       			 end,
+--        				 if data3.current.value ~= nil then
+--        					 ESX.UI.Menu.CloseAll()
+--        					if distance ~= -1 and distance <= 3.0 then
+--        					  TriggerServerEvent('esx_vehiclelock:givekeycardealer', GetPlayerServerId(player), data2.current.value)
+--        					  TriggerServerEvent('esx_vehiclelock:deletekeycardealer', GetPlayerServerId(player), data2.current.value)
+--        					end
+--       				 end
+--        			 end,
 
-       			 function(data3, menu3) --Cancel Cb
-           		     menu3.close()
-       			 end,
-       			 function(data3, menu3) --Change Cb
+--        			 function(data3, menu3) --Cancel Cb
+--            		     menu3.close()
+--        			 end,
+--        			 function(data3, menu3) --Change Cb
 
-        		 end
-   			 )
-        end
-        end,
-        function(data2, men2) --Cancel Cb
-                men2.close()
-        end,
-        function(dat2, men2) --Change Cb
-        end
-      )
-  end)
-end)
+--         		 end
+--    			 )
+--         end
+--         end,
+--         function(data2, men2) --Cancel Cb
+--                 men2.close()
+--         end,
+--         function(dat2, men2) --Change Cb
+--         end
+--       )
+--   end)
+-- end)
 
 
--- Menu Serrurier --
-function OpenSerrurierMenu()
-	ESX.UI.Menu.Open(
-	'default', GetCurrentResourceName(), 'GetKey',
-	{
-		title = 'Que voulez vous ? ',
-		align = 'left',
-		elements = {
-			{label = ('Enregistrer une nouvelle clé'),              value = 'registerkey'},
-	}
-	  },
-        function(data, menu) --Submit Cb
+-- -- Menu Serrurier --
+-- function OpenSerrurierMenu()
+-- 	ESX.UI.Menu.Open(
+-- 	'default', GetCurrentResourceName(), 'GetKey',
+-- 	{
+-- 		title = 'Que voulez vous ? ',
+-- 		align = 'left',
+-- 		elements = {
+-- 			{label = ('Enregistrer une nouvelle clé'),              value = 'registerkey'},
+-- 	}
+-- 	  },
+--         function(data, menu) --Submit Cb
 
-        if data.current.value == 'registerkey' then
-					ESX.TriggerServerCallback('esx_vehiclelock:getVehiclesnokey', function(Vehicles2)
-						local elements = {}
+--         if data.current.value == 'registerkey' then
+-- 					ESX.TriggerServerCallback('esx_vehiclelock:getVehiclesnokey', function(Vehicles2)
+-- 						local elements = {}
 
-						if Vehicles2 == nil then
-							table.insert(elements, {label = 'Aucun véhicule sans clés ', value = nil})
-						else
-							for i=1, #Vehicles2, 1 do
-								model = Vehicles2[i].model
-								modelname = GetDisplayNameFromVehicleModel(model)
-								Vehicles2[i].model = GetLabelText(modelname)
-							end
+-- 						if Vehicles2 == nil then
+-- 							table.insert(elements, {label = 'Aucun véhicule sans clés ', value = nil})
+-- 						else
+-- 							for i=1, #Vehicles2, 1 do
+-- 								model = Vehicles2[i].model
+-- 								modelname = GetDisplayNameFromVehicleModel(model)
+-- 								Vehicles2[i].model = GetLabelText(modelname)
+-- 							end
 
-							for i=1, #Vehicles2, 1 do
-								table.insert(elements, {label = Vehicles2[i].model .. ' [' .. Vehicles2[i].plate .. ']', value = Vehicles2[i].plate})
-							end
+-- 							for i=1, #Vehicles2, 1 do
+-- 								table.insert(elements, {label = Vehicles2[i].model .. ' [' .. Vehicles2[i].plate .. ']', value = Vehicles2[i].plate})
+-- 							end
 
-							ESX.UI.Menu.Open(
-							'default', GetCurrentResourceName(), 'backey',
-							{
-							title    = '300 $ Pour de nouvelle clés.',
-							align    = 'left',
-							elements = elements
-							},
-							function(data2, menu2)
-									menu2.close()
-									TriggerServerEvent('esx_vehiclelock:registerkey', data2.current.value, 'no')
-							end,
-							function(data2, menu2)
-								menu2.close()
-							end
-							)
-						end
-					end)
-			end
-        end,
-        function(data, menu) --Cancel Cb
-                menu.close()
-        end,
-        function(data, menu) --Change Cb
-        end
-      )
-end
+-- 							ESX.UI.Menu.Open(
+-- 							'default', GetCurrentResourceName(), 'backey',
+-- 							{
+-- 							title    = '300 $ Pour de nouvelle clés.',
+-- 							align    = 'left',
+-- 							elements = elements
+-- 							},
+-- 							function(data2, menu2)
+-- 									menu2.close()
+-- 									TriggerServerEvent('esx_vehiclelock:registerkey', data2.current.value, 'no')
+-- 							end,
+-- 							function(data2, menu2)
+-- 								menu2.close()
+-- 							end
+-- 							)
+-- 						end
+-- 					end)
+-- 			end
+--         end,
+--         function(data, menu) --Cancel Cb
+--                 menu.close()
+--         end,
+--         function(data, menu) --Change Cb
+--         end
+--       )
+-- end
 --[[
 -- Create Blips
 Citizen.CreateThread(function()
