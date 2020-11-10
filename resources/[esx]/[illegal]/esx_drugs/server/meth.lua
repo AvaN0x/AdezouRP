@@ -65,7 +65,8 @@ AddEventHandler('esx_illegal:processMeth', function()
                 xPlayer.removeInventoryItem('methpseudophedrine', 5)
                 xPlayer.removeInventoryItem('methylamine', 5)
                 xPlayer.removeInventoryItem('methacide', 5)
-                xPlayer.addInventoryItem('metamphetamine', 1)
+                xPlayer.removeInventoryItem('dopebag', 1)
+                xPlayer.addInventoryItem('methamphetamine', 1)
 
                 TriggerClientEvent('esx:showNotification', _source, _U('meth_processed'))
             end
