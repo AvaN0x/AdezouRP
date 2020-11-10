@@ -91,21 +91,24 @@ function PlayerManagment(player)
 		title    = serverID .. ' - ' .. GetPlayerName(player),
 		align    = "left",
 		elements = {
-			{label = _("pink", _("admin_revive")), value = "admin_revive"},
 			{label = _("blue", _("admin_goto")), value = "admin_goto"},
 			{label = _("blue", _("admin_bring")), value = "admin_bring"},
+			{label = _("pink", _("admin_revive")), value = "admin_revive"},
+			{label = _("pink", _("admin_debug")), value = "admin_debug"},
 			{label = _("red", _("admin_kill")), value = "admin_kill"},
 			{label = _("red", _("admin_kick")), value = "admin_kick"},
 		}
 	}, function(data, menu)
-        if data.current.value == "admin_revive" then
-            TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
-        elseif data.current.value == "admin_goto" then
+		if data.current.value == "admin_goto" then
 			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(player)))
-        elseif data.current.value == "admin_bring" then
+		elseif data.current.value == "admin_bring" then
 			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
+        elseif data.current.value == "admin_revive" then
+            TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
+        elseif data.current.value == "admin_debug" then
+            TriggerServerEvent("esx_ava_emsjob:revive2", serverID, true)
         elseif data.current.value == "admin_kill" then
-			SetEntityHealth(GetPlayerPed(player), 0)
+			TriggerServerEvent('esx_ava_personalmenu:kill_sv', serverID)
 		elseif data.current.value == "admin_kick" then
 			EnterReason(function(reason)
 				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
@@ -325,6 +328,10 @@ AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
 	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
 end)
 
+RegisterNetEvent('esx_ava_personalmenu:kill_cl')
+AddEventHandler('esx_ava_personalmenu:kill_cl', function()
+	SetEntityHealth(PlayerPedId(), 0)
+end)
 
 function admin_noclip()
 	noclip = not noclip

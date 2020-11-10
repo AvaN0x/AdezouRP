@@ -32,10 +32,10 @@ AddEventHandler('esx_ava_emsjob:revive', function(target)
 end)
 
 RegisterServerEvent('esx_ava_emsjob:revive2')
-AddEventHandler('esx_ava_emsjob:revive2', function(target)
+AddEventHandler('esx_ava_emsjob:revive2', function(target, debug)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xPlayers = ESX.GetPlayers()
-	TriggerClientEvent('esx_ava_emsjob:revive2', target)
+	TriggerClientEvent('esx_ava_emsjob:revive2', target, debug)
 end)
 
 TriggerEvent('es:addGroupCommand', 'revive', 'mod', function(source, args, user)
