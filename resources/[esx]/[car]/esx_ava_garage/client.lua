@@ -306,7 +306,7 @@ function SpawnVehicle(vehicle, fuel, target)
 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
 	end)
 	if target then
-		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
+		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
 
 	-- TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND")
@@ -328,7 +328,7 @@ function SpawnPoundedVehicle(vehicle, target)
 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
 	end)
 	if target then
-		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
+		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target)
 
