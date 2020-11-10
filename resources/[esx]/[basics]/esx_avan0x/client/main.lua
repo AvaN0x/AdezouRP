@@ -44,7 +44,7 @@ local shouldStopMTDS = nil
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(3000)
+		Citizen.Wait(2000)
 		local playerPed = GetPlayerPed(-1)
 		local veh = GetVehiclePedIsIn(playerPed, false)
 		shouldStopMTDS = veh ~= 0 and disableMTDS and GetPedInVehicleSeat(veh, 0) == playerPed
@@ -54,7 +54,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(100)
+        Citizen.Wait(10)
 		if shouldStopMTDS and disableMTDS then
 			local playerPed = GetPlayerPed(-1)
 			if GetIsTaskActive(playerPed, 165) then
