@@ -402,6 +402,10 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 	local elements = {}
 	if job.grade_name == "boss" then
 		table.insert(elements, {label = _("society_money", money or 0)})
+		print("value of dirtyMoney ")
+		print(dirtyMoney)
+		print("value of tonumber(dirtyMoney) ")
+		print(tonumber(dirtyMoney))
 		if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
 			table.insert(elements, {label = _("society_dirty_money", dirtyMoney or 0)})
 		end
