@@ -382,7 +382,7 @@ function GetAction(data)
 						else
 							print(vehiclePrice)
 							print(ESX.DumpTable(v))
-							print(ESX.DumpTable(v.price)
+							print(ESX.DumpTable(v.price))
 							print(v.price[j+1])
 							price = math.floor(vehiclePrice * v.price[j+1] / 100)
 							_label = _U('level', j+1) .. ' - <span style="color:orange;">$' .. price .. ' </span>'
