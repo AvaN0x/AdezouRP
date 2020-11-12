@@ -59,7 +59,7 @@ function ToggleOpenCar()
         vehicle = GetVehiclePedIsIn(playerPed, false)
     else
         local coords = GetEntityCoords(playerPed, true)
-        vehicle = GetClosestVehicle(coords.x, coords.y, coords.z, 7.0, 0, 70)
+        vehicle = GetClosestVehicle(coords.x, coords.y, coords.z, 7.0, 0, 71)
         if vehicle ~= 0 then
             TaskPlayAnim(playerPed, "anim@mp_player_intmenu@key_fob@", "fob_click_fp", 8.0, 8.0, -1, 48, 1, false, false, false)
         end
