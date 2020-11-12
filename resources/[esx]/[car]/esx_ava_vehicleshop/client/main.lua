@@ -253,7 +253,7 @@ function OpenShopMenu()
 				else
 					ESX.TriggerServerCallback('esx_vehicleshop:buyVehicle', function (hasEnoughMoney)
 						if hasEnoughMoney then
-							ESX.TriggerServerCallback('esx_ava_garage:getParkingInfos', function(parkingInfos)									
+							ESX.TriggerServerCallback('esx_ava_garage:getParkingInfos', function(parkingInfos)
 								if (parkingInfos.owned_count < parkingInfos.parking_slots) then
 									IsInShopMenu = false
 									menu2.close()
@@ -282,7 +282,7 @@ function OpenShopMenu()
 								else
 									ESX.ShowNotification(_U('no_more_parking_slots'))
 								end
-							end)
+							end, CurrentActionData.VehicleType)
 						else
 							ESX.ShowNotification(_U('not_enough_money'))
 						end

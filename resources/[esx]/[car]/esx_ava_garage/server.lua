@@ -100,25 +100,61 @@ end)
 
 
 
--- TODO faire une nouvelle table avec les places de parking terrestre, marrins et aériens
 -- TODO ajouter joueur dans cette table que lorsqu'il a passé le permis pour la 1ere fois
 -- TODO donner la asbo au joueur gratos
-ESX.RegisterServerCallback('esx_ava_garage:getParkingSlots', function(source, cb)
+ESX.RegisterServerCallback('esx_ava_garage:getParkingSlots', function(source, cb, slot)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-	MySQL.Async.fetchAll("SELECT parking_slots FROM users WHERE identifier=@identifier",{['@identifier'] = xPlayer.getIdentifier()}, function(data) 
-		cb(data[1].parking_slots)
+	MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots FROM parking_slot WHERE identifier=@identifier",
+	{
+		['@slot'] = slot,
+		['@identifier'] = xPlayer.getIdentifier()
+	}, function(data) 
+		if data[1] ~= nil then
+			cb(data[1].parking_slots)
+		else
+			MySQL.Async.execute('INSERT INTO user_parking (identifier) VALUES (@identifier)',
+			{
+				['@identifier'] = xPlayer.getIdentifier()
+			}, function(rowsChanged)
+				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots FROM parking_slot WHERE identifier=@identifier",
+				{
+					['@slot'] = slot,
+					['@id'] = xPlayer.getIdentifier()
+				}, function(data2)
+					cb(data2[1].parking_slots)
+				end)
+			end)
+		end
 	end)
 end)
 
-ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb)
+ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb, slot)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-	MySQL.Async.fetchAll("SELECT parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id	AND location<>'garage_POUND') as parked_count FROM users WHERE users.identifier = @id",
-	{['@id'] = xPlayer.getIdentifier()}, function(data) 
-		cb(data[1])
+	MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND') as parked_count FROM user_parking WHERE user_parking.identifier = @id",
+	{
+		['@slot'] = slot,
+		['@id'] = xPlayer.getIdentifier()
+	}, function(data)
+		if data[1] ~= nil then
+			cb(data[1])
+		else
+			MySQL.Async.execute('INSERT INTO user_parking (identifier) VALUES (@identifier)',
+			{
+				['@identifier'] = xPlayer.getIdentifier()
+			}, function(rowsChanged)
+				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND') as parked_count FROM user_parking WHERE user_parking.identifier = @id",
+				{
+					['@slot'] = slot,
+					['@id'] = xPlayer.getIdentifier()
+				}, function(data2)
+					cb(data2[1])
+				end)
+			end)
+		end
 	end)
 end)
 

@@ -276,7 +276,7 @@ function OpenstateActionsMenu()
 							if data2.data.parking_slots > Config.MinParkingSlots then
 								ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
 									TriggerEvent('esx:showNotification', _U('park_rem', data2.data.name))
-								end, data2.data, data2.data.parking_slots - 1)
+								end, data2.data, data2.data.parking_slots - 1, "car")
 							else
 								TriggerEvent('esx:showNotification', _U('park_already_min', data2.data.name))
 							end
@@ -286,7 +286,7 @@ function OpenstateActionsMenu()
 							if data2.data.parking_slots < Config.MaxParkingSlots then
 								ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
 									TriggerEvent('esx:showNotification', _U('park_add', data2.data.name))
-								end, data2.data, data2.data.parking_slots + 1)
+								end, data2.data, data2.data.parking_slots + 1, "car")
 							else
 								TriggerEvent('esx:showNotification', _U('park_already_max', data2.data.name))
 							end
@@ -294,7 +294,7 @@ function OpenstateActionsMenu()
 					end, function(data2, menu2)
 						menu2.close()
 					end)
-				end, data.value)
+				end, data.value, "car")
 			end, function(data, menu)
 				menu.close()
 			end)
