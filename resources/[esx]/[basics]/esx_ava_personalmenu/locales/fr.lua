@@ -26,6 +26,11 @@ Locales["fr"] = {
   ["gang_menu"] = "🔪 Gestion Gang: %s",
   ["admin_menu"] = "👑 Administration",
 
+  ['wallet_detail'] = "Accédez à vos papiers d'identité",
+  ['bills_menu_detail'] = "Payez vos factures",
+  ['life_invader_detail'] = "Envoyer un message sur le LifeInvader",
+  ['admin_menu_detail'] = "Gérez les joueurs",
+
 
   ["wallet_idcard"] = "📇 Carte d'identité",
   ["wallet_idcard"] = "📇 Carte d'identité",
@@ -51,9 +56,9 @@ Locales["fr"] = {
   ["bills_item"] = "%s <span style='color: #0cc421'>$%s</span>",
 
   ["enter_message"] = "Saisissez le message à envoyer",
-  
+
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
-  
+
   ["billing"] = "Facture",
   ["billing_amount"] = "Montant de la facture",
   ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
@@ -64,6 +69,9 @@ Locales["fr"] = {
   ["society_fire"] = "Virer",
   ["society_promote"] = "Promouvoir",
   ["society_demote"] = "Destituer",
+
+  ['billing_detail'] = "Rédigez une facture au nom de l'entreprise",
+  ['society_life_invader_detail'] = "Envoyer un message sur le LifeInvader au nom de l'entreprise",
 
   ["admin_tp_marker"] = "TP sur le Marqueur",
   ["admin_noclip"] = "NoClip",

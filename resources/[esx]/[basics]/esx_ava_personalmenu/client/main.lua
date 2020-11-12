@@ -93,8 +93,8 @@ function OpenPersonalMenu()
 	local elements = {
 		{label = _("orange", _("sim_card")), value = "sim_card"},
 		{label = _("orange", _("my_keys")), value = "my_keys"},
-		{label = _("pink", _("wallet")), value = "wallet"},
-		{label = _("pink", _("bills_menu")), value = "bills"}
+		{label = _("pink", _("wallet")), value = "wallet", detail = _("wallet_detail")},
+		{label = _("pink", _("bills_menu")), value = "bills", detail = _("bills_menu_detail")}
 	}
 	
 	if  IsPedSittingInAnyVehicle(playerPed) then
@@ -111,7 +111,7 @@ function OpenPersonalMenu()
 	end
 	
 	-- todo, only if the user have a phone
-	table.insert(elements, {label = _("bright_red", _("life_invader")), value = "life_invader"})
+	table.insert(elements, {label = _("bright_red", _("life_invader")), value = "life_invader", detail = _("life_invader_detail")})
 
 	table.insert(elements, {label = _("blue", _("others_menu")), value = "others_menu"})
 
@@ -127,7 +127,7 @@ function OpenPersonalMenu()
 	end
 
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu"})
+		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu", detail = _("admin_menu_detail")})
 	end
 
 
@@ -411,12 +411,12 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		end
 	end
 
-	
+
 	-- todo, only if the user have a phone
-	table.insert(elements, {label = _("life_invader"), value = "life_invader"})
-	table.insert(elements, {label = _("billing"), value = "billing"})
-	
-	
+	table.insert(elements, {label = _("life_invader"), value = "life_invader", detail = _("society_life_invader_detail")})
+	table.insert(elements, {label = _("billing"), value = "billing", detail = _("billing_detail")})
+
+
 	if job.grade_name == "boss" then
 		table.insert(elements, {label = _("society_first_job"), value = "society_first_job"})
 		table.insert(elements, {label = _("society_second_job"), value = "society_second_job"})
