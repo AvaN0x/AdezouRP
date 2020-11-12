@@ -78,7 +78,7 @@ function ToggleOpenCar()
             elseif locked == 2 then -- 2 is locked
                 SetVehicleDoorsLocked(vehicle, 1)
                 PlayVehicleDoorOpenSound(vehicle, 0)
-				ESX.ShowAdvancedColoredNotification(_('keyss'), plate, _('you_opened_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
+				ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('you_opened_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
 			end
 		else
 			ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('have_no_key'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
