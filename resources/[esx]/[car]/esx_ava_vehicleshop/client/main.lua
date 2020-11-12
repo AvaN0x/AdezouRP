@@ -147,7 +147,8 @@ function OpenShopMenu()
 				value   = 0,
 				type    = 'slider',
 				max     = #Categories[i],
-				options = options
+				options = options,
+				detail = _('warning_plate')
 			})
 		elseif (playerData.job ~= nil and playerData.job.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job.name) or
 			(playerData.job2 ~= nil and playerData.job2.grade_name == 'boss' and Categories[i].name == "society_"..playerData.job2.name) then
@@ -234,7 +235,6 @@ function OpenShopMenu()
 									SetVehicleNumberPlateText(vehicle, newPlate)
 
 										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps, CurrentActionData.VehicleType)
-										ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 										TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
 
 									ESX.ShowNotification(_U('vehicle_purchased'))
@@ -271,7 +271,6 @@ function OpenShopMenu()
 										SetVehicleNumberPlateText(vehicle, newPlate)
 
 											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps, CurrentActionData.VehicleType)
-											ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 											TriggerServerEvent('esx_ava_keys:giveKey', vehicleProps.plate, 1)
 
 										ESX.ShowNotification(_U('vehicle_purchased'))
@@ -526,7 +525,6 @@ Citizen.CreateThread(function()
 
 			if IsControlJustReleased(0, Keys['E']) then
 				if CurrentAction == 'shop_menu' then
-					ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
 					OpenShopMenu()
 				elseif CurrentAction == 'resell_vehicle' then
 					if CurrentActionData.category == CurrentActionData.shopdata.JobOthers or has_value(CurrentActionData.shopdata.Categories, CurrentActionData.category) then

@@ -28,4 +28,6 @@ Locales['fr'] = {
   ['vehicle_sold_for'] = 'le ~b~%s~s~ a été ~y~vendu~s~ pour ~g~$%s~s~',
 
   ['no_more_parking_slots'] = 'vous n\'avez plus de places de parking disponibles, veuillez en acheter au Gouvernement',
+
+  ['warning_plate'] = '<span style="red">La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.</span>',
 }
