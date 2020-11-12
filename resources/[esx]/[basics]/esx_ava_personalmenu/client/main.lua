@@ -147,7 +147,7 @@ function OpenPersonalMenu()
 			TriggerEvent("NB:carteSIM")
 
 		elseif data.current.value == "my_keys" then
-			TriggerEvent("esx_menu:key")
+			TriggerEvent("esx_ava_keys:keysMenu")
 
 		elseif data.current.value == "wallet" then
 			menu.close()

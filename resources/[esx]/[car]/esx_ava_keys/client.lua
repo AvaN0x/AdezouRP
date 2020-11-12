@@ -108,8 +108,8 @@ function keys_has_value(tab, plate)
     return false
 end
 
-RegisterNetEvent('esx_menu:key')
-AddEventHandler('esx_menu:key', function()
+RegisterNetEvent('esx_ava_keys:keysMenu')
+AddEventHandler('esx_ava_keys:keysMenu', function()
     TriggerServerEvent("esx_ava_keys:requestKeys")
     MyKeysMenu()
 end)
