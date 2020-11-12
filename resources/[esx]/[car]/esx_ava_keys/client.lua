@@ -65,22 +65,23 @@ function ToggleOpenCar()
         end
     end
     print(vehicle)
-    print(GetVehicleDoorLockStatus(vehicle))
     if vehicle ~= 0 then
-		if keys_has_value(my_keys, GetVehicleNumberPlateText(vehicle)) then
+        local plate = GetVehicleNumberPlateText(vehicle)
+        print(plate)
+		if keys_has_value(my_keys, plate) then
 			local locked = GetVehicleDoorLockStatus(vehicle)
             VehicleAnim(vehicle)
             if locked == 1 or locked == 0 then -- if unlocked is unlocked and  is none
                 SetVehicleDoorsLocked(vehicle, 2)
                 PlayVehicleDoorCloseSound(vehicle, 1)
-				ESX.ShowAdvancedColoredNotification(_('key'), _('of_car'), _('you_closed_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
+				ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('you_closed_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
             elseif locked == 2 then -- 2 is locked
                 SetVehicleDoorsLocked(vehicle, 1)
                 PlayVehicleDoorOpenSound(vehicle, 0)
-				ESX.ShowAdvancedColoredNotification(_('key'), _('of_car'), _('you_opened_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
+				ESX.ShowAdvancedColoredNotification(_('keyss'), plate, _('you_opened_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
 			end
 		else
-			ESX.ShowAdvancedColoredNotification(_('key'), _('of_car'), _('have_no_key'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
+			ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('have_no_key'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
 		end
     end
 end

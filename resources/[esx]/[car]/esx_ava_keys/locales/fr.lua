@@ -5,8 +5,7 @@
 
 Locales["fr"] = {
   ["menu_header"] = "Menu de clés",
-  ['key'] = "Clé",
-  ['of_car'] = "de voiture",
+  ['keys'] = "Clés",
   ['you_opened_vehicle'] = "Vous avez ~g~ouvert~s~ le véhicule.",
   ['you_closed_vehicle'] = "Vous avez ~r~fermé~s~ le véhicule.",
   ['have_no_key'] = "Vous n'avez pas les clés de ce véhicule.",
