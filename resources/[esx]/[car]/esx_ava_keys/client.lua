@@ -142,9 +142,9 @@ function MyKeysMenu()
             local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
             if closestDistance ~= -1 and closestDistance < 3 then
                 if data2.current.value == 'give_double' then
-                    TriggerServerEvent('esx_ava_keys:giveKey', data.current.value.plate, 2, closestPlayer)
+                    TriggerServerEvent('esx_ava_keys:giveKey', data.current.value.plate, 2, GetPlayerServerId(closestPlayer))
                 elseif data2.current.value == 'change_owner' then
-                    TriggerServerEvent('esx_ava_keys:giveOwnerShip', data.current.value.plate, closestPlayer)
+                    TriggerServerEvent('esx_ava_keys:giveOwnerShip', data.current.value.plate, GetPlayerServerId(closestPlayer))
                 end
             else
                 ESX.ShowNotification(_('no_players_nearby'))
