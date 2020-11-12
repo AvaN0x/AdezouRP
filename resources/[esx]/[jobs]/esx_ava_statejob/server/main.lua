@@ -215,38 +215,22 @@ end)
 
 -- parkingSlots
 
-ESX.RegisterServerCallback('esx_ava_statejob:getParkingSlots', function (source, cb, search, slot)
-	MySQL.Async.fetchAll('SELECT identifier, CONCAT(lastname, " ", firstname) AS name, '..slot..' AS parking_slots FROM users JOIN user_parking USING (identifier) WHERE LOWER(CONCAT(lastname, " ", firstname)) LIKE LOWER(CONCAT("%", TRIM(@search), "%")) ORDER BY '..slot..' DESC, name ASC', 
-		{
-			["@slot"] = slot,
-			["@search"] = search
-		}, function(result)
-		if result ~= nil then
-			cb(result)
-		else
-			MySQL.Async.execute('INSERT INTO user_parking (identifier) VALUES (@identifier)',
-			{
-				['@identifier'] = xPlayer.getIdentifier()
-			}, function(rowsChanged)
-				MySQL.Async.fetchAll('SELECT identifier, CONCAT(lastname, " ", firstname) AS name, '..slot..' AS parking_slots FROM users JOIN user_parking USING (identifier) WHERE LOWER(CONCAT(lastname, " ", firstname)) LIKE LOWER(CONCAT("%", TRIM(@search), "%")) ORDER BY '..slot..' DESC, name ASC',
-				{
-					['@slot'] = slot,
-					['@id'] = xPlayer.getIdentifier()
-				}, function(result2)
-					cb(result)
-				end)
-			end)
-		end
+ESX.RegisterServerCallback('esx_ava_statejob:getParkingSlots', function (source, cb, search)
+	MySQL.Async.fetchAll('SELECT identifier, CONCAT(lastname, " ", firstname) AS name, car, boat, heli, plane FROM users JOIN user_parking USING (identifier) WHERE LOWER(CONCAT(lastname, " ", firstname)) LIKE LOWER(CONCAT("%", TRIM(@search), "%")) ORDER BY name ASC', 
+	{
+		["@search"] = search
+	}, function(result)
+		cb(result)
 	end)
 end)
 
 ESX.RegisterServerCallback('esx_ava_statejob:setParkingSlots', function (source, cb, result, value, slot)
 	MySQL.Async.execute(
-		'INSERT INTO user_parking (`identifier`) VALUES (@indentifier) UPDATE '..slot..' = @value',
+		'INSERT INTO user_parking (`identifier`) VALUES (@identifier) ON DUPLICATE KEY UPDATE '..slot..' = @value',
 		{
 			['@slot'] = slot,
-			['@value']   = value,
-			['@identifier'] = result.identifier,
+			['@value'] = value,
+			['@identifier'] = result.identifier
 		},
 		function(rowsChanged)
 		cb()
