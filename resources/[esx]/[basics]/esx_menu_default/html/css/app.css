@@ -266,8 +266,13 @@
   font-weight: bold;
   padding: 0 10px;
   position: left;
-  top: 0px;
+  top: 0;
+  overflow-y: hidden;
+  display: flex;
+}
 
+.menu .title>span:first-child {
+  flex-grow: 1;
 }
 
 .menu .menu-items {
@@ -290,7 +295,6 @@
 
 .menu .menu-items .menu-item.selected {
   background-color: white;
-
   color: black;
 }
 

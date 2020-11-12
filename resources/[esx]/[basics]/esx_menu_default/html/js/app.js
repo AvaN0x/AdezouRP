@@ -2,7 +2,7 @@
 	let MenuTpl =
 		'<div id="menu_{{_namespace}}_{{_name}}" class="menu{{#align}} align-{{align}}{{/align}}">' +
 		'<div class="header head_{{{css}}}"><span></span></div>' +
-		'<div class="title"><span>{{{title}}}</span></div>' +
+		'<div class="title"><span>{{{title}}}</span><span>{{{pos}}}/{{{elements.length}}}</span></div>' +
 		'<div class="menu-items">' +
 		'{{#elements}}' +
 		'<div class="menu-item {{#selected}}selected{{/selected}}">' +
@@ -18,7 +18,6 @@
 	ESX_MENU.ResourceName = 'esx_menu_default';
 	ESX_MENU.opened = {};
 	ESX_MENU.focus = [];
-	ESX_MENU.pos = {};
 
 	ESX_MENU.open = function (namespace, name, data) {
 		if (typeof ESX_MENU.opened[namespace] == 'undefined')
@@ -26,9 +25,6 @@
 
 		if (typeof ESX_MENU.opened[namespace][name] != 'undefined')
 			ESX_MENU.close(namespace, name);
-
-		if (typeof ESX_MENU.pos[namespace] == 'undefined')
-			ESX_MENU.pos[namespace] = {};
 
 		for (let i = 0; i < data.elements.length; i++)
 			if (typeof data.elements[i].type == 'undefined')
@@ -42,13 +38,12 @@
 			data.elements[i]._namespace = namespace;
 			data.elements[i]._name = name;
 		}
-
+		data.pos = (data.elements.length > 0 ? 1 : 0);
 		ESX_MENU.opened[namespace][name] = data;
-		ESX_MENU.pos[namespace][name] = 0;
 
 		for (let i = 0; i < data.elements.length; i++) {
 			if (data.elements[i].selected)
-				ESX_MENU.pos[namespace][name] = i;
+				ESX_MENU.opened[namespace][name].pos = i + 1;
 			else
 				data.elements[i].selected = false
 		}
@@ -100,7 +95,7 @@
 						default:
 							break;
 					}
-					if (i == ESX_MENU.pos[namespace][name]) {
+					if (i == menuData.pos - 1) {
 						element.selected = true;
 						menuData.detail = element.detail || null;
 					}
@@ -165,8 +160,8 @@
 
 						if (typeof focused != 'undefined') {
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
-							let pos = ESX_MENU.pos[focused.namespace][focused.name];
-							let elem = menu.elements[pos];
+							let pos = menu.pos;
+							let elem = menu.elements[pos - 1];
 
 							if (menu.elements.length > 0)
 								ESX_MENU.submit(focused.namespace, focused.name, elem);
@@ -185,16 +180,16 @@
 						let focused = ESX_MENU.getFocused();
 						if (typeof focused != 'undefined') {
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
-							let pos = ESX_MENU.pos[focused.namespace][focused.name];
-							if (pos > 0)
-								ESX_MENU.pos[focused.namespace][focused.name]--;
+							let pos = menu.pos;
+							if (pos > 1)
+								menu.pos--;
 							else
-								ESX_MENU.pos[focused.namespace][focused.name] = menu.elements.length - 1;
+								menu.pos = menu.elements.length;
 
-							let elem = menu.elements[ESX_MENU.pos[focused.namespace][focused.name]];
+							let elem = menu.elements[pos];
 
 							for (let i = 0; i < menu.elements.length; i++) {
-								if (i == ESX_MENU.pos[focused.namespace][focused.name])
+								if (i == menu.pos - 1)
 									menu.elements[i].selected = true
 								else
 									menu.elements[i].selected = false
@@ -211,17 +206,17 @@
 						let focused = ESX_MENU.getFocused();
 						if (typeof focused != 'undefined') {
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
-							let pos = ESX_MENU.pos[focused.namespace][focused.name];
+							let pos = menu.pos;
 							let length = menu.elements.length;
 
-							if (pos < length - 1)
-								ESX_MENU.pos[focused.namespace][focused.name]++;
+							if (pos < length)
+								menu.pos++;
 							else
-								ESX_MENU.pos[focused.namespace][focused.name] = 0;
+								menu.pos = 1;
 
-							let elem = menu.elements[ESX_MENU.pos[focused.namespace][focused.name]];
+							let elem = menu.elements[menu.pos - 1];
 							for (let i = 0; i < menu.elements.length; i++) {
-								if (i == ESX_MENU.pos[focused.namespace][focused.name])
+								if (i == menu.pos - 1)
 									menu.elements[i].selected = true
 								else
 									menu.elements[i].selected = false
@@ -237,8 +232,8 @@
 						let focused = ESX_MENU.getFocused();
 						if (typeof focused != 'undefined') {
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
-							let pos = ESX_MENU.pos[focused.namespace][focused.name];
-							let elem = menu.elements[pos];
+							let pos = menu.pos;
+							let elem = menu.elements[pos - 1];
 
 							switch (elem.type) {
 								case 'default':
@@ -264,8 +259,8 @@
 						let focused = ESX_MENU.getFocused();
 						if (typeof focused != 'undefined') {
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
-							let pos = ESX_MENU.pos[focused.namespace][focused.name];
-							let elem = menu.elements[pos];
+							let pos = menu.pos;
+							let elem = menu.elements[pos - 1];
 
 							switch (elem.type) {
 								case 'default':
