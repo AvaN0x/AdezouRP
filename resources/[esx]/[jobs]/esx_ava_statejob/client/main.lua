@@ -669,10 +669,6 @@ Citizen.CreateThread(function()
 				CurrentAction = nil
 			end
 		end
-
-		if IsControlJustReleased(0, Keys['F6']) and GetLastInputMethod(2) and not IsDead and Config.EnablePlayerManagement and ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == 'state' and (ESX.PlayerData.job.grade_name == 'boss' or ESX.PlayerData.job.grade_name == 'proc') then
-			OpenMobilestateActionsMenu()
-		end
 	end
 end)
 

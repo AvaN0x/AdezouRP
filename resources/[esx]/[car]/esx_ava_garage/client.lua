@@ -157,8 +157,8 @@ function ListVehiclesMenu(type, target)
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 			else
 				labelvehicle = "<span style=\"color:darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
-			end	
-			table.insert(elements, {label =labelvehicle , value = v})
+			end
+			table.insert(elements, {label = labelvehicle, detail = "Essence : " .. math.floor(v.fuel) .. " %", value = v})
 			count = count + 1
 		end
 
@@ -279,7 +279,7 @@ end
 function ranger(vehicle, vehicleProps, gIdentifier, target)
 	DeleteEntity(vehicle)
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target)
-	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans le garage')
+	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans ce garage')
 end
 
 
@@ -306,7 +306,7 @@ function SpawnVehicle(vehicle, fuel, target)
 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
 	end)
 	if target then
-		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
+		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
 
 	-- TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND")
@@ -328,7 +328,7 @@ function SpawnPoundedVehicle(vehicle, target)
 		TriggerServerEvent("ls:mainCheck", plate, callback_vehicle, true)
 	end)
 	if target then
-		TriggerServerEvent('esx_vehiclelock:givekey', 'no', vehicle.plate)
+		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target)
 

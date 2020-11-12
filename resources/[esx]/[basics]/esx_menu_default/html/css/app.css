@@ -253,7 +253,7 @@
   background-image: url("../img/header/unicorn.png");
 } */
 
-.menu .categorie {
+.menu .title {
   font-family: glitch;
   font-size: 23px;
   height: 30px;
@@ -292,4 +292,18 @@
   background-color: white;
 
   color: black;
+}
+
+.menu .detail {
+  margin-top: 8px;
+  display: block;
+  font-size: 21px;
+  min-height: 35px;
+  line-height: 35px;
+  color: white;
+  text-align: left;
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: space-between;
+
 }

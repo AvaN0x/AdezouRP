@@ -2,15 +2,13 @@ resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
 version '1.0.0'
 author 'github.com/AvaN0x'
-description 'ESX Personal menu'
+description 'ESX Vehicle keys'
 
 client_scripts {
 	'@es_extended/locale.lua',
 	'locales/fr.lua',
 	'config.lua',
-	'client/teb_speed_control/speedlimiter.lua',
-	'client/main.lua',
-	'client/admin.lua'
+	'client.lua',
 }
 
 server_scripts {
@@ -18,8 +16,7 @@ server_scripts {
 	'@es_extended/locale.lua',
 	'locales/fr.lua',
 	'config.lua',
-	'server/main.lua',
-	'server/admin.lua'
+	'server.lua',
 }
 
 dependencies {

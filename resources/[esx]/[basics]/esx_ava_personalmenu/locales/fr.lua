@@ -71,7 +71,6 @@ Locales["fr"] = {
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
   ["admin_show_hash"] = "Toggle hash des props",
   ["admin_change_skin"] = "Changer l'Apparence",
-  ["admin_save_skin"] = "Sauvegarder l'Apparence",
 
   ["invalid_amount"] = "Montant invalide",
   ["no_players_nearby"] = "Aucun joueur à proximité",
@@ -81,10 +80,16 @@ Locales["fr"] = {
 
   ['all_players'] = "Tous les joueurs",
   ['players_list'] = "Liste",
+  ['admin_mode'] = "Toggle mode admin",
 
   -- player managment
-  ['admin_revive'] = "Revive / Heal",
+  ['admin_enter_reason'] = "Entrez une raison",
+
   ["admin_goto"] = "TP sur Joueur",
   ["admin_bring"] = "TP Joueur sur moi",
+  ['admin_revive'] = "Revive / Heal",
+  ["admin_debug"] = "Debug",
+  ["admin_kill"] = "Kill",
+  ["admin_kick"] = "Kick",
 
 }

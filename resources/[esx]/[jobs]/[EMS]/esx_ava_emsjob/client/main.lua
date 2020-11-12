@@ -401,11 +401,11 @@ AddEventHandler('esx_ava_emsjob:revive', function()
 end)
 
 RegisterNetEvent('esx_ava_emsjob:revive2')
-AddEventHandler('esx_ava_emsjob:revive2', function()
+AddEventHandler('esx_ava_emsjob:revive2', function(debug)
 	local playerPed = PlayerPedId()
 	
 	ESX.TriggerServerCallback('esx_ava_emsjob:getDeathStatus', function(isDead)
-		if isDead then
+		if isDead or debug then
 			local coords = GetEntityCoords(playerPed)
 			TriggerServerEvent('esx_ava_emsjob:setDeathStatus', false)
 			print(GetEntityMaxHealth(playerPed))

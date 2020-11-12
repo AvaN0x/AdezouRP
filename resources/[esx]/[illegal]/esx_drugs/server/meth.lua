@@ -5,10 +5,10 @@ AddEventHandler('esx_illegal:pickedUpMethyla', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methylamine')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', source, _U('methyla_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
@@ -17,10 +17,10 @@ AddEventHandler('esx_illegal:pickedUpPseudo', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methpseudophedrine')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', _source, _U('pseudo_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
@@ -29,10 +29,10 @@ AddEventHandler('esx_illegal:pickedUpMetha', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methacide')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', _source, _U('metha_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
@@ -65,7 +65,8 @@ AddEventHandler('esx_illegal:processMeth', function()
                 xPlayer.removeInventoryItem('methpseudophedrine', 5)
                 xPlayer.removeInventoryItem('methylamine', 5)
                 xPlayer.removeInventoryItem('methacide', 5)
-                xPlayer.addInventoryItem('metamphetamine', 1)
+                xPlayer.removeInventoryItem('dopebag', 1)
+                xPlayer.addInventoryItem('methamphetamine', 1)
 
                 TriggerClientEvent('esx:showNotification', _source, _U('meth_processed'))
             end

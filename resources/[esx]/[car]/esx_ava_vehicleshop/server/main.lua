@@ -14,9 +14,7 @@ function RemoveOwnedVehicle(plate)
 	MySQL.Async.execute('DELETE FROM owned_vehicles WHERE plate = @plate', {
 		['@plate'] = plate
 	})
-	MySQL.Async.execute('DELETE FROM open_car WHERE value = @plate', {
-		['@plate'] = plate
-	})
+	TriggerEvent('esx_ava_keys:deleteKeys', plate)
 
 end
 

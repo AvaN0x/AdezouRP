@@ -2,41 +2,43 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local noclip, showname, showHash = false, false, false
+local noclip, show_names, show_hashes, admin_mode = false, false, false, false
 local visibleHash = {}
 
 function OpenAdminMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin",
 	{
-		title    = _U("admin_menu"),
+		title    = _("admin_menu"),
 		align    = "left",
 		elements = {
-            {label = _U("orange", _U("players_list")), value = "players_list"},
-            {label = _U("orange", _U("all_players")), value = "all_players"},
-			{label = _U("blue", _U("admin_tp_marker")), value = "tp_marker"},
-			{label = _U("pink", _U("admin_noclip")), value = "noclip"},
-			{label = _U("green", _U("admin_repair_vehicle")), value = "repair_vehicle"},
-			{label = _U("orange", _U("admin_show_hash")), value = "show_hash"},
-			{label = _U("red", _U("admin_change_skin")), value = "change_skin"},
-			{label = _U("red", _U("admin_save_skin")), value = "save_skin"}
+            {label = _("orange", _("players_list")), value = "players_list"},
+            {label = _("orange", _("all_players")), value = "all_players"},
+			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
+			{label = _("pink", _("admin_noclip")), value = "noclip"},
+			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
+			{label = _("orange", _("admin_show_hash")), value = "show_hash"},
+			{label = _(admin_mode and "green" or "bright_red", _("admin_mode")), value = "admin_mode"},
+			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
 	}, function(data, menu)
-		if data.current.value == "tp_marker" then
-            admin_tp_marker()
-		elseif data.current.value == "players_list" then
-            players_list()
+		if data.current.value == "players_list" then
+			players_list()
 		elseif data.current.value == "all_players" then
-            all_players()
+			all_players()
+		elseif data.current.value == "tp_marker" then
+            admin_tp_marker()
 		elseif data.current.value == "noclip" then
 			admin_noclip()
 		elseif data.current.value == "repair_vehicle" then
 			admin_vehicle_repair()
 		elseif data.current.value == "show_hash" then
-			showHash = not showHash
+			show_hashes = not show_hashes
+		elseif data.current.value == "admin_mode" then
+			ToggleAdminMode()
+			menu.update({value = "admin_mode"}, {label = _(admin_mode and "green" or "bright_red", _("admin_mode"))})
+            menu.refresh()
 		elseif data.current.value == "change_skin" then
-			changer_skin()
-		elseif data.current.value == "save_skin" then
-			save_skin()
+			TriggerEvent('esx_skin:openSaveableMenu', source)
 		end
 	end, function(data, menu)
 		menu.close()
@@ -46,23 +48,16 @@ end
 function all_players()
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
 	{
-		title    = _U("all_players"),
+		title    = _("all_players"),
 		align    = "left",
 		elements = {
-            {label = _U(showname and "green" or "orange", _U("admin_show_names")), value = "show_names"},
+            {label = _(show_names and "green" or "orange", _("admin_show_names")), value = "show_names"},
 		}
 	}, function(data, menu)
         if data.current.value == "show_names" then
-            showname = not showname
-            for _, id in ipairs(GetActivePlayers()) do
-                local ped = GetPlayerPed(id)
-                local blip = GetBlipFromEntity(ped)
-
-                if DoesBlipExist(blip) then
-                    RemoveBlip(blip)
-                end
-            end
-            menu.update({value = "show_names"}, {label = _U(showname and "green" or "orange", _U("admin_show_names"))})
+            show_names = not show_names
+			RemoveAllPlayersBlips()
+			menu.update({value = "show_names"}, {label = _(show_names and "green" or "orange", _("admin_show_names"))})
             menu.refresh()
         end
     end, function(data, menu)
@@ -78,7 +73,7 @@ function players_list()
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
         {
-            title    = _U("players_list"),
+            title    = _("players_list"),
             align    = "left",
             elements = elements
         }, function(data, menu)
@@ -90,24 +85,47 @@ function players_list()
 end
 
 function PlayerManagment(player)
-    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. GetPlayerServerId(player),
+	local serverID = GetPlayerServerId(player)
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. serverID,
 	{
-		title    = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player),
+		title    = serverID .. ' - ' .. GetPlayerName(player),
 		align    = "left",
 		elements = {
-			{label = _U("pink", _U("admin_revive")), value = "admin_revive"},
-			{label = _U("pink", _U("admin_goto")), value = "admin_goto"},
-			{label = _U("pink", _U("admin_bring")), value = "admin_bring"},
+			{label = _("blue", _("admin_goto")), value = "admin_goto"},
+			{label = _("blue", _("admin_bring")), value = "admin_bring"},
+			{label = _("pink", _("admin_revive")), value = "admin_revive"},
+			{label = _("pink", _("admin_debug")), value = "admin_debug"},
+			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
+			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
 		}
 	}, function(data, menu)
-        if data.current.value == "admin_revive" then
-            TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
-        elseif data.current.value == "admin_goto" then
-            admin_goto(GetPlayerServerId(player))
-        elseif data.current.value == "admin_bring" then
-            admin_bring(GetPlayerServerId(player))
+		if data.current.value == "admin_goto" then
+			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(player)))
+		elseif data.current.value == "admin_bring" then
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
+        elseif data.current.value == "admin_revive" then
+            TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
+        elseif data.current.value == "admin_debug" then
+            TriggerServerEvent("esx_ava_emsjob:revive2", serverID, true)
+        elseif data.current.value == "admin_kill" then
+			TriggerServerEvent('esx_ava_personalmenu:kill_sv', serverID)
+		elseif data.current.value == "admin_kick" then
+			EnterReason(function(reason)
+				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
+			end)
         end
     end, function(data, menu)
+		menu.close()
+	end)
+end
+
+function EnterReason(cb)
+	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_enter_reason", {
+		title = _('admin_enter_reason')
+	}, function(data, menu)
+		menu.close()
+		cb(data.value)
+	end, function(data, menu)
 		menu.close()
 	end)
 end
@@ -119,9 +137,10 @@ function AdminLoop()
 			while true do
 				Citizen.Wait(10)
 				if noclip then
-					playerPed = PlayerPedId()
-					local x, y, z = getPosition()
-					local dx, dy, dz = getCamDirection()
+					local playerPed = PlayerPedId()
+					SetEntityInvincible(playerPed, true)
+					local x, y, z = getPosition(playerPed)
+					local dx, dy, dz = getCamDirection(playerPed)
 					local speed = Config.noclip_speed
 
 					SetTextComponentFormat('STRING')
@@ -152,11 +171,12 @@ function AdminLoop()
 				end
 			end
 		end)
+
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(30)
-				if showname then
-					playerPed = PlayerPedId()
+				Citizen.Wait(10)
+				if show_names then
+					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
@@ -170,9 +190,23 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
+				Citizen.Wait(0)
+				if admin_mode then
+					local playerPed = PlayerPedId()
+					SetSuperJumpThisFrame(PlayerId(-1))
+					SetPedMoveRateOverride(playerPed, 2.15)
+					SetEntityInvincible(playerPed, true)
+				else
+					Citizen.Wait(4000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
 				Citizen.Wait(3000)
-				if showHash then
-					playerPed = PlayerPedId()
+				if show_hashes then
+					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
 					visibleHash = {}
 					for _, v in ipairs(GetGamePool("CObject")) do
@@ -198,8 +232,8 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(10)
-				if showHash then
-					playerPed = PlayerPedId()
+				if show_hashes then
+					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
 					for _, prop in ipairs(visibleHash) do
 						if prop.coords then
@@ -218,8 +252,8 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Wait(5000)
-				if showname then
-					playerPed = PlayerPedId()
+				if show_names then
+					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
 							local targetPed = GetPlayerPed(player)
@@ -244,34 +278,13 @@ function AdminLoop()
 	end
 end
 
-function KeyboardInput(entryTitle, textEntry, inputText, maxLength)
-    AddTextEntry(entryTitle, textEntry)
-    DisplayOnscreenKeyboard(1, entryTitle, "", inputText, "", "", "", maxLength)
-	blockinput = true
-	
-    while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-        Citizen.Wait(0)
-    end
-
-    if UpdateOnscreenKeyboard() ~= 2 then
-        local result = GetOnscreenKeyboardResult()
-        Citizen.Wait(500)
-		blockinput = false
-        return result
-    else
-        Citizen.Wait(500)
-		blockinput = false
-        return nil
-    end
-end
-
-function getPosition()
+function getPosition(playerPed)
 	local x, y, z = table.unpack(GetEntityCoords(playerPed, true))
 
 	return x, y, z
 end
 
-function getCamDirection()
+function getCamDirection(playerPed)
 	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(playerPed)
 	local pitch = GetGameplayCamRelativePitch()
 
@@ -310,32 +323,43 @@ function admin_tp_marker()
 	end
 end
 
-function admin_goto(id)
-    SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(id))))
-end
-
-function admin_bring(id)
-    TriggerServerEvent('esx_ava_personalmenu:bring_sv', id, GetEntityCoords(PlayerPedId()))
-end
-
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')
 AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
-	SetEntityCoords(PlayerPedId(), playerPedCoords)
+	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
 end)
 
+RegisterNetEvent('esx_ava_personalmenu:kill_cl')
+AddEventHandler('esx_ava_personalmenu:kill_cl', function()
+	SetEntityHealth(PlayerPedId(), 0)
+end)
 
 function admin_noclip()
 	noclip = not noclip
 	local playerPed = PlayerPedId()
 
 	if noclip then
-		SetEntityInvincible(playerPed, true)
+		-- SetPlayerInvincible(playerPed, true)
 		SetEntityVisible(playerPed, false, false)
 		ESX.ShowNotification("NoClip ~g~Activé")
 	else
-		SetEntityInvincible(playerPed, false)
+		-- if not admin_mode then
+			-- SetPlayerInvincible(playerPed, false)
+		-- end
 		SetEntityVisible(playerPed, true, false)
 		ESX.ShowNotification("NoClip ~r~Désactivé")
+	end
+end
+
+function RemoveAllPlayersBlips()
+	if not show_names then
+		for _, id in ipairs(GetActivePlayers()) do
+			local ped = GetPlayerPed(id)
+			local blip = GetBlipFromEntity(ped)
+
+			if DoesBlipExist(blip) then
+				RemoveBlip(blip)
+			end
+		end
 	end
 end
 
@@ -346,11 +370,37 @@ function admin_vehicle_repair()
 	SetVehicleDirtLevel(vehicle, 0.0)
 end
 
-function changer_skin()
-	Citizen.Wait(100)
-	TriggerEvent('esx_skin:openSaveableMenu', source)
-end
+RegisterNetEvent('esx_ava_personalmenu:toggle_admin_mode')
+AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
+	if IsDead then
+		TriggerEvent('esx_ava_emsjob:revive2')
+	end
+	ToggleAdminMode()
+end)
 
-function save_skin()
-	TriggerEvent('esx_skin:requestSaveSkin', source)
+function ToggleAdminMode()
+	admin_mode = not admin_mode
+	show_names = admin_mode
+
+	RemoveAllPlayersBlips()
+	local playerPed = PlayerPedId()
+	local playerId = PlayerId()
+	SetPedCanRagdoll(playerPed, not admin_mode)
+
+	if admin_mode then
+		TriggerEvent('skinchanger:getSkin', function(skin)
+			if skin.sex == 0 then
+				TriggerEvent('skinchanger:loadClothes', skin, json.decode('{"pants_1":106,"glasses_2":11,"torso_2":5,"helmet_1":15,"chain_2":0,"bags_2":0,"arms":3,"glasses_1":29,"torso_1":274,"bproof_2":0,"tshirt_2":0,"shoes_2":5,"bproof_1":0,"bags_1":0,"shoes_1":83,"pants_2":5,"tshirt_1":15,"chain_1":0,"helmet_2":5}'))
+			else
+				TriggerEvent('skinchanger:loadClothes', skin, json.decode('{"glasses_2":0,"pants_2":5,"bags_2":0,"helmet_1":-1,"pants_1":113,"chain_1":0,"tshirt_2":0,"glasses_1":5,"bproof_1":0,"torso_1":287,"bproof_2":0,"chain_2":0,"shoes_1":87,"tshirt_1":14,"torso_2":5,"bags_1":0,"shoes_2":5,"arms":8,"helmet_2":0}'))
+			end
+		end)
+	else
+		ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
+			TriggerEvent('skinchanger:loadSkin', skin)
+		end)
+		ClearPedBloodDamage(playerPed)
+		ResetPedVisibleDamage(playerPed)
+		ResetPedMovementClipset(playerPed, 0)
+	end
 end

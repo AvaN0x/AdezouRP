@@ -272,7 +272,7 @@ function OpenShopMenu()
 
 											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps, CurrentActionData.VehicleType)
 											ESX.ShowNotification('~r~La LSPD a la liberté de fouiller et de saisir les véhicules sans plaques.')
-											TriggerServerEvent('esx_vehiclelock:registerkey', vehicleProps.plate, nil)
+											TriggerServerEvent('esx_ava_keys:giveKey', vehicleProps.plate, 1)
 
 										ESX.ShowNotification(_U('vehicle_purchased'))
 									end)

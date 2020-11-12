@@ -240,7 +240,7 @@ end)
 -- get out of pound
 
 ESX.RegisterServerCallback('esx_ava_statejob:getPoundedSocietyVehicles', function (source, cb)
-	MySQL.Async.fetchAll('SELECT DISTINCT(owned_vehicles.owner) AS society, addon_account.label FROM owned_vehicles JOIN addon_account ON owned_vehicles.owner = addon_account.name WHERE state = 0 ORDER BY owned_vehicles.owner DESC', 
+	MySQL.Async.fetchAll('SELECT DISTINCT(owned_vehicles.owner) AS society, addon_account.label FROM owned_vehicles JOIN addon_account ON owned_vehicles.owner = addon_account.name WHERE location = "garage_POUND" ORDER BY owned_vehicles.owner DESC', 
 		{}, function(result)
 		cb(result)
 	end)

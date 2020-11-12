@@ -32,10 +32,10 @@ AddEventHandler('esx_ava_emsjob:revive', function(target)
 end)
 
 RegisterServerEvent('esx_ava_emsjob:revive2')
-AddEventHandler('esx_ava_emsjob:revive2', function(target)
+AddEventHandler('esx_ava_emsjob:revive2', function(target, debug)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xPlayers = ESX.GetPlayers()
-	TriggerClientEvent('esx_ava_emsjob:revive2', target)
+	TriggerClientEvent('esx_ava_emsjob:revive2', target, debug)
 end)
 
 TriggerEvent('es:addGroupCommand', 'revive', 'mod', function(source, args, user)
@@ -134,4 +134,15 @@ ESX.RegisterServerCallback('esx_ava_emsjob:getItemAmount', function(source, cb, 
 	local quantity = xPlayer.getInventoryItem(item).count
 
 	cb(quantity)
+end)
+
+RegisterServerEvent('esx_ambulancejob:heal')
+AddEventHandler('esx_ambulancejob:heal', function(target, type)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	if xPlayer.job.name == 'ems' then
+		TriggerClientEvent('esx_ambulancejob:heal', target, type)
+	else
+		print(('esx_ambulancejob: %s attempted to heal!'):format(xPlayer.identifier))
+	end
 end)

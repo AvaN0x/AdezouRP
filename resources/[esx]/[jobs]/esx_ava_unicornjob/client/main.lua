@@ -140,65 +140,6 @@ function OpenJobActionsMenu()
 	)
 end
 
-function OpenJobMobileActionsMenu()
-
-	ESX.UI.Menu.CloseAll()
-
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'mobile_job_actions',
-		{
-			title    = Config.LabelName,
-			align    = 'left',
-			css 	 = 'metier',
-			elements = {
-				{label = _U('billing'), value = 'billing'}
-			}
-		},
-		function(data, menu)
-
-			if data.current.value == 'billing' then
-
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'billing',
-					{
-						title = _U('invoice_amount')
-					},
-					function(data, menu)
-
-						local amount = tonumber(data.value)
-
-						if amount == nil or amount <= 0 then
-							ESX.ShowNotification(_U('amount_invalid'))
-						else
-							menu.close()
-
-							local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-
-							if closestPlayer == -1 or closestDistance > 3.0 then
-								ESX.ShowNotification(_U('no_players_near'))
-							else
-								local playerPed        = GetPlayerPed(-1)
-
-								Citizen.CreateThread(function()
-									TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
-									Citizen.Wait(5000)
-									ClearPedTasks(playerPed)
-									TriggerServerEvent('esx_billing:sendBill1', GetPlayerServerId(closestPlayer), Config.SocietyName, Config.LabelName, amount)
-								end)
-							end
-						end
-					end,
-					function(data, menu)
-						menu.close()
-					end
-				)
-			end
-		end,
-		function(data, menu)
-			menu.close()
-		end
-	)
-end
 
 function OpenGetStocksMenu()
 
@@ -526,13 +467,6 @@ Citizen.CreateThread(function()
 				GUI.Time      = GetGameTimer()
 
 			end
-		end
-
-		if IsControlPressed(0,  Keys['F6'])
-		and (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName and (PlayerData.job.grade_name == 'boss' or PlayerData.job.grade_name == 'chef'))  
-		and (GetGameTimer() - GUI.Time) > 150 then
-			OpenJobMobileActionsMenu()
-			GUI.Time = GetGameTimer()
 		end
 	end
 end)
