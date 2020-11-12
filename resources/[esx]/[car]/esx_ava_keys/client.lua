@@ -110,6 +110,7 @@ end
 
 RegisterNetEvent('esx_menu:key')
 AddEventHandler('esx_menu:key', function()
+    TriggerServerEvent("esx_ava_keys:requestKeys")
     MyKeysMenu()
 end)
 
