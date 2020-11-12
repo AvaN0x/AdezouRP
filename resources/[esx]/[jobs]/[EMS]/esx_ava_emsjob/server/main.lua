@@ -135,3 +135,14 @@ ESX.RegisterServerCallback('esx_ava_emsjob:getItemAmount', function(source, cb, 
 
 	cb(quantity)
 end)
+
+RegisterServerEvent('esx_ambulancejob:heal')
+AddEventHandler('esx_ambulancejob:heal', function(target, type)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	if xPlayer.job.name == 'ems' then
+		TriggerClientEvent('esx_ambulancejob:heal', target, type)
+	else
+		print(('esx_ambulancejob: %s attempted to heal!'):format(xPlayer.identifier))
+	end
+end)
