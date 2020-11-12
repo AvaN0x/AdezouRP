@@ -1,9 +1,8 @@
 (function () {
-	// A FINIR
 	let MenuTpl =
 		'<div id="menu_{{_namespace}}_{{_name}}" class="menu{{#align}} align-{{align}}{{/align}}">' +
 		'<div class="header head_{{{css}}}"><span></span></div>' +
-		'<div class="categorie"><span>{{{title}}}</span></div>' +
+		'<div class="title"><span>{{{title}}}</span></div>' +
 		'<div class="menu-items">' +
 		'{{#elements}}' +
 		'<div class="menu-item {{#selected}}selected{{/selected}}">' +
@@ -11,6 +10,7 @@
 		'</div>' +
 		'{{/elements}}' +
 		'</div>' +
+		'{{#detail}}<div class="detail"><span>{{{detail}}}</span></div>{{/detail}}' +
 		'</div>' +
 		'</div>';
 
@@ -21,7 +21,6 @@
 	ESX_MENU.pos = {};
 
 	ESX_MENU.open = function (namespace, name, data) {
-
 		if (typeof ESX_MENU.opened[namespace] == 'undefined')
 			ESX_MENU.opened[namespace] = {};
 
@@ -65,7 +64,6 @@
 	}
 
 	ESX_MENU.close = function (namespace, name) {
-
 		delete ESX_MENU.opened[namespace][name];
 
 		for (let i = 0; i < ESX_MENU.focus.length; i++) {
@@ -76,11 +74,9 @@
 		}
 
 		ESX_MENU.render();
-
 	}
 
 	ESX_MENU.render = function () {
-
 		let menuContainer = document.getElementById('menus');
 		let focused = ESX_MENU.getFocused();
 		menuContainer.innerHTML = '';
@@ -89,40 +85,29 @@
 
 		for (let namespace in ESX_MENU.opened) {
 			for (let name in ESX_MENU.opened[namespace]) {
-
 				let menuData = ESX_MENU.opened[namespace][name];
-				let view = JSON.parse(JSON.stringify(menuData))
-
 				for (let i = 0; i < menuData.elements.length; i++) {
-
-					let element = view.elements[i];
+					let element = menuData.elements[i];
 
 					switch (element.type) {
-
 						case 'default':
 							break;
-
 						case 'slider': {
-
 							element.isSlider = true;
 							element.sliderLabel = (typeof element.options == 'undefined') ? element.value : element.options[element.value];
-
 							break;
 						}
-
 						default:
 							break;
-
 					}
-
-					if (i == ESX_MENU.pos[namespace][name])
+					if (i == ESX_MENU.pos[namespace][name]) {
 						element.selected = true;
+						menuData.detail = element.detail || null;
+					}
 				}
 
-				let menu = $(Mustache.render(MenuTpl, view))[0];
-
+				let menu = $(Mustache.render(MenuTpl, menuData))[0];
 				$(menu).hide();
-
 				menuContainer.appendChild(menu);
 			}
 		}
@@ -164,63 +149,43 @@
 	}
 
 	window.onData = (data) => {
-
 		switch (data.action) {
-
 			case 'openMenu': {
 				ESX_MENU.open(data.namespace, data.name, data.data);
 				break;
 			}
-
 			case 'closeMenu': {
 				ESX_MENU.close(data.namespace, data.name);
 				break;
 			}
-
 			case 'controlPressed': {
-
 				switch (data.control) {
-
 					case 'ENTER': {
-
 						let focused = ESX_MENU.getFocused();
 
 						if (typeof focused != 'undefined') {
-
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = ESX_MENU.pos[focused.namespace][focused.name];
 							let elem = menu.elements[pos];
 
 							if (menu.elements.length > 0)
 								ESX_MENU.submit(focused.namespace, focused.name, elem);
-
 						}
-
 						break;
 					}
 
 					case 'BACKSPACE': {
-
 						let focused = ESX_MENU.getFocused();
-
 						if (typeof focused != 'undefined') {
-
 							ESX_MENU.cancel(focused.namespace, focused.name);
-
 						}
-
 						break;
 					}
-
 					case 'TOP': {
-
 						let focused = ESX_MENU.getFocused();
-
 						if (typeof focused != 'undefined') {
-
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = ESX_MENU.pos[focused.namespace][focused.name];
-
 							if (pos > 0)
 								ESX_MENU.pos[focused.namespace][focused.name]--;
 							else
@@ -239,19 +204,12 @@
 							ESX_MENU.render();
 
 							$('#menu_' + focused.namespace + '_' + focused.name).find('.menu-item.selected')[0].scrollIntoView();
-
 						}
-
 						break;
-
 					}
-
 					case 'DOWN': {
-
 						let focused = ESX_MENU.getFocused();
-
 						if (typeof focused != 'undefined') {
-
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = ESX_MENU.pos[focused.namespace][focused.name];
 							let length = menu.elements.length;
@@ -262,82 +220,57 @@
 								ESX_MENU.pos[focused.namespace][focused.name] = 0;
 
 							let elem = menu.elements[ESX_MENU.pos[focused.namespace][focused.name]];
-
 							for (let i = 0; i < menu.elements.length; i++) {
 								if (i == ESX_MENU.pos[focused.namespace][focused.name])
 									menu.elements[i].selected = true
 								else
 									menu.elements[i].selected = false
 							}
-
 							ESX_MENU.change(focused.namespace, focused.name, elem)
 							ESX_MENU.render();
 
 							$('#menu_' + focused.namespace + '_' + focused.name).find('.menu-item.selected')[0].scrollIntoView();
-
 						}
-
 						break;
 					}
-
 					case 'LEFT': {
-
 						let focused = ESX_MENU.getFocused();
-
 						if (typeof focused != 'undefined') {
-
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = ESX_MENU.pos[focused.namespace][focused.name];
 							let elem = menu.elements[pos];
 
 							switch (elem.type) {
-
 								case 'default':
 									break;
-
 								case 'slider': {
-
 									let min = (typeof elem.min == 'undefined') ? 0 : elem.min;
-
 									if (elem.value > min) {
 										elem.value--;
 										ESX_MENU.change(focused.namespace, focused.name, elem)
 									}
 
 									ESX_MENU.render();
-
 									break;
 								}
-
 								default:
 									break;
-
 							}
-
 							$('#menu_' + focused.namespace + '_' + focused.name).find('.menu-item.selected')[0].scrollIntoView();
-
 						}
-
 						break;
 					}
-
 					case 'RIGHT': {
-
 						let focused = ESX_MENU.getFocused();
-
 						if (typeof focused != 'undefined') {
-
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = ESX_MENU.pos[focused.namespace][focused.name];
 							let elem = menu.elements[pos];
 
 							switch (elem.type) {
-
 								case 'default':
 									break;
-
 								case 'slider': {
-
 									if (typeof elem.options != 'undefined' && elem.value < elem.options.length - 1) {
 										elem.value++;
 										ESX_MENU.change(focused.namespace, focused.name, elem)
@@ -347,34 +280,23 @@
 										elem.value++;
 										ESX_MENU.change(focused.namespace, focused.name, elem)
 									}
-
 									ESX_MENU.render();
 
 									break;
 								}
-
 								default:
 									break;
-
 							}
-
 							$('#menu_' + focused.namespace + '_' + focused.name).find('.menu-item.selected')[0].scrollIntoView();
-
 						}
-
 						break;
 					}
-
 					default:
 						break;
-
 				}
-
 				break;
 			}
-
 		}
-
 	}
 
 	window.onload = function (e) {
