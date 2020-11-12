@@ -5,10 +5,10 @@ AddEventHandler('esx_illegal:pickedUpMethyla', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methylamine')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', source, _U('methyla_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
@@ -17,10 +17,10 @@ AddEventHandler('esx_illegal:pickedUpPseudo', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methpseudophedrine')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', _source, _U('pseudo_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
@@ -29,10 +29,10 @@ AddEventHandler('esx_illegal:pickedUpMetha', function()
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xItem = xPlayer.getInventoryItem('methacide')
 
-	if xItem.limit ~= -1 and (xItem.count + 1) > xItem.limit then
+	if xItem.limit ~= -1 and (xItem.count + 15) > xItem.limit then
 		TriggerClientEvent('esx:showNotification', _source, _U('metha_inventoryfull'))
 	else
-		xPlayer.addInventoryItem(xItem.name, 2)
+		xPlayer.addInventoryItem(xItem.name, 15)
 	end
 end)
 
