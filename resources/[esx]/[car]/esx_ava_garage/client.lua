@@ -157,8 +157,8 @@ function ListVehiclesMenu(type, target)
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 			else
 				labelvehicle = "<span style=\"color:darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
-			end	
-			table.insert(elements, {label =labelvehicle , value = v})
+			end
+			table.insert(elements, {label = labelvehicle, detail = "Essence : " .. math.floor(v.fuel) .. " %", value = v})
 			count = count + 1
 		end
 

@@ -75,11 +75,11 @@ ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehiclePr
 		local xPlayer = ESX.GetPlayerFromId(_source)
 		identifier = xPlayer.getIdentifier()
 	end
-	print(identifier)
+	-- print(identifier)
 	local vehicles = getPlayerVehicles(identifier)
 	local plate = vehicleProps.plate
 	for _,v in pairs(vehicles) do
-		print(v.plate)
+		-- print(v.plate)
 		if plate == v.plate and type == v.type then
 			local vehprop = json.encode(vehicleProps)
 			MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel, location=@location WHERE plate=@plate",
@@ -220,7 +220,7 @@ ESX.RegisterServerCallback('esx_ava_garage:checkMoney', function(source, cb, exi
 
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	print(tonumber(exitPrice))
+	-- print(tonumber(exitPrice))
 	if xPlayer.get('money') >= tonumber(exitPrice) then
 		cb(true)
 	else
@@ -232,7 +232,7 @@ end)
 
 RegisterServerEvent('esx_ava_garage:pay')
 AddEventHandler('esx_ava_garage:pay', function(exitPrice)
-	print(exitPrice)
+	-- print(exitPrice)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
 	xPlayer.removeMoney(exitPrice)
@@ -264,7 +264,7 @@ end)
 
 RegisterServerEvent('esx_ava_garage:payByState')
 AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
-	print(exitPrice)
+	-- print(exitPrice)
 	TriggerEvent('esx_addonaccount:getSharedAccount', society, function(account)
 		if account ~= nil then
 			account.removeMoney(exitPrice)
