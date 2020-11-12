@@ -6,16 +6,32 @@ Config.EnableSocietyOwnedVehicles = false
 Config.Locale = 'fr'
 Config.FacturesDays = 3 -- nb jours pour afficher les factures
 
-Config.MinParkingSlots = 2
-Config.MaxParkingSlots = 8
+Config.ParkingSlotsLimits = {
+	car = {
+		min = 2,
+		max = 8
+	},
+	boat = {
+		min = 1,
+		max = 2
+	},
+	heli = {
+		min = 0,
+		max = 1
+	},
+	plane = {
+		min = 0,
+		max = 1
+	}
+}
 
-Config.Taxe = 0.1 
+Config.Taxe = 0.1
 
 Config.AuthorizedVehicles = {
 	{label = 'Limousine', model = 'Stretch'},
-	{label = 'Oracle', model = 'umoracle'}, 
+	{label = 'Oracle', model = 'umoracle'},
 	{label = 'Schafter blindé', model = 'schafter5'},
-	{label = 'XLS blindé', model = 'xls2'} 
+	{label = 'XLS blindé', model = 'xls2'}
 }
 
 Config.AuthorizedHelico = {

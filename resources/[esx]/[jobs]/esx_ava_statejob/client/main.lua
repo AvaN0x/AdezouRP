@@ -242,8 +242,8 @@ function OpenstateActionsMenu()
 			end)
 
 
-		elseif data.current.value == 'parkingSlots' then
 
+		elseif data.current.value == 'parkingSlots' then
 
 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'parkingSlots', {
 				title = 'Nom à chercher'
@@ -251,7 +251,7 @@ function OpenstateActionsMenu()
 				menu.close()
 				ESX.TriggerServerCallback('esx_ava_statejob:getParkingSlots', function(result)
 					local elements = {
-						head = { 'Nom', 'Places', 'Actions'},
+						head = { 'Nom', 'Voitures', 'Bateaux', 'Hélicoptères', 'Avions'},
 						rows = {}
 					}
 
@@ -260,36 +260,33 @@ function OpenstateActionsMenu()
 							data = result[i],
 							cols = {
 								result[i].name,
-								result[i].parking_slots,
-								'{{' .. "-" .. '|remove}} {{' .. "+" .. '|add}}'
+								'{{' .. "-" .. '|remove_car}} ' .. result[i].car .. ' {{' .. "+" .. '|add_car}}',
+								'{{' .. "-" .. '|remove_boat}} ' .. result[i].boat .. ' {{' .. "+" .. '|add_boat}}',
+								'{{' .. "-" .. '|remove_heli}} ' .. result[i].heli .. ' {{' .. "+" .. '|add_heli}}',
+								'{{' .. "-" .. '|remove_plane}} ' .. result[i].plane .. ' {{' .. "+" .. '|add_plane}}'
 							}
 						})
 					end
 
-					ESX.UI.Menu.Open('list', GetCurrentResourceName(), 'parkingSlots', 
-						elements, 
+					ESX.UI.Menu.Open('list', GetCurrentResourceName(), 'parkingSlots',
+						elements,
 					function(data2, menu2)
-
-						if data2.value == 'remove' then
-							menu2.close()
-							print(data2.data.identifier .. ' remove a parking place')
-							if data2.data.parking_slots > Config.MinParkingSlots then
-								ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
-									TriggerEvent('esx:showNotification', _U('park_rem', data2.data.name))
-								end, data2.data, data2.data.parking_slots - 1)
-							else
-								TriggerEvent('esx:showNotification', _U('park_already_min', data2.data.name))
-							end
-						elseif data2.value == 'add' then
-							menu2.close()
-							print(data2.data.identifier .. ' add a parking place')
-							if data2.data.parking_slots < Config.MaxParkingSlots then
-								ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
-									TriggerEvent('esx:showNotification', _U('park_add', data2.data.name))
-								end, data2.data, data2.data.parking_slots + 1)
-							else
-								TriggerEvent('esx:showNotification', _U('park_already_max', data2.data.name))
-							end
+						if data2.value == 'remove_car' then
+							RemParking(menu2, data2.data, "car")
+						elseif data2.value == 'add_car' then
+							AddParking(menu2, data2.data, "car")
+						elseif data2.value == 'remove_boat' then
+							RemParking(menu2, data2.data, "boat")
+						elseif data2.value == 'add_boat' then
+							AddParking(menu2, data2.data, "boat")
+						elseif data2.value == 'remove_heli' then
+							RemParking(menu2, data2.data, "heli")
+						elseif data2.value == 'add_heli' then
+							AddParking(menu2, data2.data, "heli")
+						elseif data2.value == 'remove_plane' then
+							RemParking(menu2, data2.data, "plane")
+						elseif data2.value == 'add_plane' then
+							AddParking(menu2, data2.data, "plane")
 						end
 					end, function(data2, menu2)
 						menu2.close()
@@ -338,6 +335,29 @@ function OpenstateActionsMenu()
 		CurrentActionData = {}
 	end)
 end
+
+function AddParking(menu, data, slot)
+	if data[slot] < Config.ParkingSlotsLimits[slot].max then
+		menu.close()
+		ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
+			TriggerEvent('esx:showNotification', _U('park_add', data.name))
+		end, data, data[slot] + 1, slot)
+	else
+		TriggerEvent('esx:showNotification', _U('park_already_max', data.name))
+	end
+end
+
+function RemParking(menu, data, slot)
+	if data[slot] > Config.ParkingSlotsLimits[slot].min then
+		ESX.TriggerServerCallback('esx_ava_statejob:setParkingSlots', function()
+			TriggerEvent('esx:showNotification', _U('park_rem', data.name))
+		end, data, data[slot] - 1, slot)
+		menu.close()
+	else
+		TriggerEvent('esx:showNotification', _U('park_already_min', data.name))
+	end
+end
+
 
 function OpenMobilestateActionsMenu()
 	ESX.UI.Menu.CloseAll()

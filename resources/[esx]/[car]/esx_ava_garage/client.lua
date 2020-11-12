@@ -199,7 +199,7 @@ function ListVehiclesMenu(type, target)
 				-- CurrentAction = 'open_garage_menu'
 				OpenMenuGarage('open_garage_menu', target)
 			end)
-		end)
+		end, this_Garage.Type)
 
 	end, type, target)
 end

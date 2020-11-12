@@ -216,20 +216,21 @@ end)
 -- parkingSlots
 
 ESX.RegisterServerCallback('esx_ava_statejob:getParkingSlots', function (source, cb, search)
-	MySQL.Async.fetchAll('SELECT identifier, CONCAT(lastname, " ", firstname) AS name, parking_slots AS parking_slots FROM users WHERE LOWER(CONCAT(lastname, " ", firstname)) LIKE LOWER(CONCAT("%", TRIM(@search), "%")) ORDER BY parking_slots DESC, name ASC', 
-		{
-			["@search"] = search
-		}, function(result)
+	MySQL.Async.fetchAll('SELECT identifier, CONCAT(lastname, " ", firstname) AS name, car, boat, heli, plane FROM users JOIN user_parking USING (identifier) WHERE LOWER(CONCAT(lastname, " ", firstname)) LIKE LOWER(CONCAT("%", TRIM(@search), "%")) ORDER BY name ASC', 
+	{
+		["@search"] = search
+	}, function(result)
 		cb(result)
 	end)
 end)
 
-ESX.RegisterServerCallback('esx_ava_statejob:setParkingSlots', function (source, cb, result, value)
+ESX.RegisterServerCallback('esx_ava_statejob:setParkingSlots', function (source, cb, result, value, slot)
 	MySQL.Async.execute(
-		'UPDATE users SET parking_slots = @value WHERE identifier = @identifier',
+		'INSERT INTO user_parking (`identifier`) VALUES (@identifier) ON DUPLICATE KEY UPDATE '..slot..' = @value',
 		{
-			['@value']   = value,
-			['@identifier'] = result.identifier,
+			['@slot'] = slot,
+			['@value'] = value,
+			['@identifier'] = result.identifier
 		},
 		function(rowsChanged)
 		cb()
