@@ -146,7 +146,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb
 			{
 				['@identifier'] = xPlayer.getIdentifier()
 			}, function(rowsChanged)
-				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND') as parked_count FROM user_parking WHERE user_parking.identifier = @id",
+				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id AND type = @slot) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND' AND type = @slot) as parked_count FROM user_parking WHERE user_parking.identifier = @id",
 				{
 					['@slot'] = slot,
 					['@id'] = xPlayer.getIdentifier()
