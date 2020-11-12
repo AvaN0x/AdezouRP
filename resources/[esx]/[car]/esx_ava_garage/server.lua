@@ -106,11 +106,13 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingSlots', function(source, cb
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-	MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots FROM parking_slot WHERE identifier=@identifier",
-	{
+	local sql = "SELECT "..slot.." AS parking_slots FROM parking_slot WHERE identifier=@identifier"
+	local attributes = {
 		['@slot'] = slot,
 		['@identifier'] = xPlayer.getIdentifier()
-	}, function(data) 
+	}
+
+	MySQL.Async.fetchAll(sql, attributes, function(data) 
 		if data[1] ~= nil then
 			cb(data[1].parking_slots)
 		else
@@ -118,11 +120,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingSlots', function(source, cb
 			{
 				['@identifier'] = xPlayer.getIdentifier()
 			}, function(rowsChanged)
-				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots FROM parking_slot WHERE identifier=@identifier",
-				{
-					['@slot'] = slot,
-					['@id'] = xPlayer.getIdentifier()
-				}, function(data2)
+				MySQL.Async.fetchAll(sql, attributes, function(data2)
 					cb(data2[1].parking_slots)
 				end)
 			end)
