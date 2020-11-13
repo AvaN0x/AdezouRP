@@ -186,7 +186,7 @@
 							else
 								menu.pos = menu.elements.length;
 
-							let elem = menu.elements[pos];
+							let elem = menu.elements[menu.pos - 1];
 
 							for (let i = 0; i < menu.elements.length; i++) {
 								if (i == menu.pos - 1)
