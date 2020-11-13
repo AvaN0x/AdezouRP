@@ -43,7 +43,7 @@ Citizen.CreateThread(function()
 		if not doorID.distance then
 			doorID.distance = Config.Doors.DefaultDistance
 		end
-		doorID.checkDistance = doorID.distance * 4
+		doorID.checkDistance = doorID.distance * 2
 		if doorID.checkDistance > Config.Doors.ObjectDistance then
 			doorID.checkDistance = Config.Doors.ObjectDistance
 		end
@@ -65,7 +65,7 @@ Citizen.CreateThread(function()
 			if distance < doorID.checkDistance then
 				if doorID.doors then
 					for _,v in ipairs(doorID.doors) do
-						if not v.object then
+						if not v.object or not DoesEntityExist(v.object) then
 							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
 						end
 						FreezeEntityPosition(v.object, doorID.locked)
@@ -78,7 +78,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
-					if not doorID.object then
+					if not doorID.object or not DoesEntityExist(doorID.object) then
 						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
 					end
 					FreezeEntityPosition(doorID.object, doorID.locked)
