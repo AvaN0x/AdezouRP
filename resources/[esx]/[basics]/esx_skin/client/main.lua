@@ -144,13 +144,8 @@ function OpenMenu(submitCb, cancelCb, restrict)
                 for __, v_hide in pairs(elements[i].hide) do
                   local hidden = skin.sex == 1 and v_hide.Female or v_hide.Male
                   if not keepValueHasValue(keepValue, hidden.name) then
-                    for k_elt, v_elt in ipairs(elements) do
-                      if v_elt.name == hidden.name then
-                        TriggerEvent('skinchanger:change', v_elt.name, hidden.value)
-                        table.insert(keepValue, {name = hidden.name, value = skin[hidden.name]})
-                        break
-                      end
-                    end
+                    TriggerEvent('skinchanger:change', hidden.name, hidden.value)
+                    table.insert(keepValue, {name = hidden.name, value = skin[hidden.name]})
                   end
                 end
               end
@@ -253,7 +248,7 @@ end)
 Citizen.CreateThread(function()
   local angle = 90
   while true do
-    Citizen.Wait(0)
+    Citizen.Wait(10)
     if isCameraActive then
       if IsControlPressed(0, 52) then -- A
         angle = angle - 1
