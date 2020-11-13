@@ -406,7 +406,7 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 		print(dirtyMoney)
 		print("value of tonumber(dirtyMoney) ")
 		print(tonumber(dirtyMoney))
-		if dirtyMoney ~= nil and tonumber(dirtyMoney) > 0 then
+		if dirtyMoney ~= nil and type(dirtyMoney) == 'number' and dirtyMoney > 0 then
 			table.insert(elements, {label = _("society_dirty_money", dirtyMoney or 0)})
 		end
 	end
