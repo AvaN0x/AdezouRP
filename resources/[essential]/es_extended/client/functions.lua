@@ -773,7 +773,9 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 		modTank           = GetVehicleMod(vehicle, 45),
 		modWindows        = GetVehicleMod(vehicle, 46),
 		modLivery         = GetVehicleMod(vehicle, 48),
-		livery 			  = GetVehicleLivery(vehicle)
+		livery 			  = GetVehicleLivery(vehicle),
+		modInteriorColor  = GetVehicleInteriorColour(vehicle),
+		modDashboardColor = GetVehicleDashboardColour(vehicle)
 	}
 end
 
@@ -1035,6 +1037,14 @@ ESX.Game.SetVehicleProperties = function(vehicle, props)
 	
 	if props.livery ~= nil then
 		SetVehicleLivery(vehicle, props.livery)
+	end
+
+	if props.modInteriorColor ~= nil then
+		SetVehicleInteriorColour(vehicle, props.modInteriorColor)
+	end
+
+	if props.modDashboardColor ~= nil then
+		SetVehicleDashboardColour(vehicle, props.modDashboardColor)
 	end
 end
 
@@ -1418,5 +1428,3 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
-
---ikNox#6088

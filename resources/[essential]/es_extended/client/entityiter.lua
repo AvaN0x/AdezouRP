@@ -45,16 +45,37 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
 
 		local enum = {handle = iter, destructor = disposeFunc}
 		setmetatable(enum, entityEnumerator)
-
 		local next = true
+
 		repeat
-		coroutine.yield(id)
-		next, id = moveFunc(iter)
+			coroutine.yield(id)
+			next, id = moveFunc(iter)
 		until not next
 
 		enum.destructor, enum.handle = nil, nil
 		disposeFunc(iter)
 	end)
+end
+
+function EnumerateEntitiesWithinDistance(entities, isPlayerEntities, coords, maxDistance)
+	local nearbyEntities = {}
+
+	if coords then
+		coords = vector3(coords.x, coords.y, coords.z)
+	else
+		local playerPed = PlayerPedId()
+		coords = GetEntityCoords(playerPed)
+	end
+
+	for k,entity in pairs(entities) do
+		local distance = #(coords - GetEntityCoords(entity))
+
+		if distance <= maxDistance then
+			table.insert(nearbyEntities, isPlayerEntities and k or entity)
+		end
+	end
+
+	return nearbyEntities
 end
 
 function EnumerateObjects()
@@ -72,5 +93,3 @@ end
 function EnumeratePickups()
 	return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup)
 end
-
---ikNox#6088

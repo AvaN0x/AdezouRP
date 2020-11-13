@@ -12,5 +12,3 @@ RegisterNUICallback('__chunk', function(data, cb)
 
 	cb('')
 end)
-
---ikNox#6088

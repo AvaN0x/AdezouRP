@@ -2,14 +2,8 @@
 ![Repo Size](https://img.shields.io/github/repo-size/AvaN0x/AdezouRP?logo=github)
 ![License](https://img.shields.io/github/license/AvaN0x/AdezouRP?logo=github)
 
-AdezouRP is a FiveM server.
+AdezouRP is a FiveM RolePlay server.
 
-# Origin
-
-The original base used is the [Arkadia](https://github.com/ItsikNox/FiveM-Arkadia_) one from [ItsikNox](https://github.com/ItsikNox). I give him a big thanks.
+Made and remade a lot of scripts, some are based on others because I don't have the knowledge of FiveM required.
 
 Big thanks to the FiveM and ESX community for all those open source resources.
-
-# Modifications
-
-Even if the base is not mine, I have given a lot of modification to it, only the basics resources are remaining.

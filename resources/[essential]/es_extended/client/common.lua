@@ -5,5 +5,3 @@ end)
 function getSharedObject()
 	return ESX
 end
-
---ikNox#6088
