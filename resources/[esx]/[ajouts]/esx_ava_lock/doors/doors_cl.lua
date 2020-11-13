@@ -43,7 +43,7 @@ Citizen.CreateThread(function()
 		if not doorID.distance then
 			doorID.distance = Config.Doors.DefaultDistance
 		end
-		doorID.checkDistance = doorID.distance * 2
+		doorID.checkDistance = doorID.distance * 4
 		if doorID.checkDistance > Config.Doors.ObjectDistance then
 			doorID.checkDistance = Config.Doors.ObjectDistance
 		end
