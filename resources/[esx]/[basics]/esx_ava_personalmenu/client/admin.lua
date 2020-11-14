@@ -425,8 +425,6 @@ function ReviveAllClose()
 	local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 15.0)
 
 	for k, player in ipairs(players) do
-		-- if player ~= PlayerId() then
-			TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
-		-- end
+		TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
 	end
 end
