@@ -1,0 +1,132 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FiveM | Loadingscreen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="noselect">
+
+    <main>
+        <div class="mountains"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 637 56">
+                <g>
+                    <path
+                        d="M1442,238.7l47.324-18.5,15.852,10.339,31.525,4.064,28.067-9.085,40.007,5.021,44.176-5.021,43.54-5.318,35.64-19.087,28.315-2.38,16.769-5.522,22.2,15.886,32.527,4.37,8.29-4.37,20.552-1.979,12.426-8.385,68.581,14.733,13.666,12.55,35.66-2.649,30.294,8.446,31.5-8.446h6.278l3.432,5.8,21.256,2.649v14.256H1442Z"
+                        transform="translate(-1442 -191)" fill="#180727"></path>
+                </g>
+            </svg></div>
+        <div class="moon">
+            <div class="lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+        <div class="plane">
+            <div class="vlines">
+                <div class="left">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="right">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    </main>
+
+    <h1 id="usespace" style="display:none" /*class="enable_music"*/>Appuie sur <strong>espace</strong> pour
+        activer/désactiver la musique</h1>
+
+    <h1 class="servername"><strong>Adezou</strong> RolePlay</h1>
+    <h1 class="undertext">Connexion au serveur en cours</h1>
+
+    <div class="progress"></div>
+
+    <div id="yt" style="display:none"></div>
+
+    <script>
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt', {
+                width: 300,
+                height: 170,
+                // videoId: 'Fl-GjkQLtHM',
+                videoId: 'MBOhNfmbSsQ',
+                playerVars: {
+                    // start: 68
+                    start: 33
+                },
+                events: {
+                    onReady: initialize
+                }
+            });
+        }
+
+        function initialize() {
+            var usespace = document.getElementById("usespace");
+            usespace.classList.add("enable_music");
+            usespace.style.display = "inline-block";
+            player.setVolume(10);
+            player.playVideo();
+            usespace.innerHTML += "<br/><strong>" + player.getVideoData().title + "</strong>";
+        }
+
+        var play = false;
+
+        function onKeyDown(event) {
+            switch (event.keyCode) {
+                case 32: //SpaceBar
+                    if (play) {
+                        player.pauseVideo();
+                        play = false;
+                    } else {
+                        player.playVideo();
+                        play = true;
+                    }
+                    break;
+            }
+            return false;
+
+        }
+
+        window.addEventListener("keydown", onKeyDown, false);
+    </script>
+
+</body>
+
+</html>

@@ -21,7 +21,9 @@ $(document).ready(function () {
 
             var range = 15;
 
-            var color = "background: #000000;box-shadow: 0 0 5px #ffffff;"
+            // var color = "background: rgb("+getRandomInt(0,255)+","+getRandomInt(0,255)+","+getRandomInt(0,255)+");";
+            // var color ="background: rgb(255,255,255);";
+            var color = "background: #fe50b1;box-shadow: 0 0 5px #ff91cf;"
 
             var sizeInt = getRandomInt(10, 30);
             size = "height: " + sizeInt + "px; width: " + sizeInt + "px;";
@@ -37,21 +39,3 @@ $(document).ready(function () {
         }
     }, 1);
 });
-
-setInterval(function () {
-    $('#slideshow > img:first')
-        .css('z-index', '5');
-    $('#slideshow > img:eq(1)')
-        .css('display', 'block');
-    $('#slideshow > img:first')
-        .fadeOut(500)
-        .css('left', '-100%');
-    window.setTimeout(function () {
-        $('#slideshow > img:first')
-            .css('left', '')
-            .css('z-index', '')
-            .css('display', '')
-            .appendTo('#slideshow');
-    }, 1000);
-}, 3000);
-
