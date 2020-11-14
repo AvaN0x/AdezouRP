@@ -55,13 +55,16 @@ function all_players()
 		align    = "left",
 		elements = {
             {label = _(show_names and "green" or "orange", _("admin_show_names")), value = "show_names"},
+            {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
 		}
 	}, function(data, menu)
         if data.current.value == "show_names" then
             show_names = not show_names
 			RemoveAllPlayersBlips()
 			menu.update({value = "show_names"}, {label = _(show_names and "green" or "orange", _("admin_show_names"))})
-            menu.refresh()
+			menu.refresh()
+		elseif data.current.value == "admin_revive_all_close" then
+			ReviveAllClose()
         end
     end, function(data, menu)
 		menu.close()
@@ -413,5 +416,17 @@ function ToggleAdminMode()
 		ClearPedBloodDamage(playerPed)
 		ResetPedVisibleDamage(playerPed)
 		ResetPedMovementClipset(playerPed, 0)
+	end
+end
+
+
+function ReviveAllClose()
+	local playerPed = PlayerPedId()
+	local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 15.0)
+
+	for k, player in ipairs(players) do
+		-- if player ~= PlayerId() then
+			TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
+		-- end
 	end
 end
