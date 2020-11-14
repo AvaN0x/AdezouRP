@@ -16,6 +16,7 @@ function OpenAdminMenu()
 			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
 			{label = _("pink", _("admin_noclip")), value = "noclip"},
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
+			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash"},
 			{label = _(admin_mode and "green" or "bright_red", _("admin_mode")), value = "admin_mode"},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
@@ -31,6 +32,8 @@ function OpenAdminMenu()
 			admin_noclip()
 		elseif data.current.value == "repair_vehicle" then
 			admin_vehicle_repair()
+		elseif data.current.value == "tp_nearest_vehicle" then
+			admin_tp_nearest_vehicle()
 		elseif data.current.value == "show_hash" then
 			show_hashes = not show_hashes
 		elseif data.current.value == "admin_mode" then
@@ -369,6 +372,14 @@ function admin_vehicle_repair()
 	SetVehicleFixed(vehicle)
 	SetVehicleDirtLevel(vehicle, 0.0)
 end
+
+function admin_tp_nearest_vehicle()
+	local playerPed = GetPlayerPed(-1)
+	local coords = GetEntityCoords(playerPed, true)
+
+	TaskWarpPedIntoVehicle(playerPed, GetClosestVehicle(coords.x, coords.y, coords.z, 10.0, 0, 71), -1)
+end
+
 
 RegisterNetEvent('esx_ava_personalmenu:toggle_admin_mode')
 AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
