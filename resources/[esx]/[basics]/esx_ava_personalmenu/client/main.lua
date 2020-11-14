@@ -377,7 +377,7 @@ function OpenOthersMenu()
 		title    = _("others_menu"),
 		align    = "left",
 		elements = {
-			{label = _("others_toggle_hud"), value = "toggle_hud"}
+			{label = _("others_toggle_hud"), value = "toggle_hud", type="checkbox", checked=interface}
 		}
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then

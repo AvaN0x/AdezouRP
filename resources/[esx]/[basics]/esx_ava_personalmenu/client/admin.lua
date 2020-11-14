@@ -14,11 +14,11 @@ function OpenAdminMenu()
             {label = _("orange", _("players_list")), value = "players_list"},
             {label = _("orange", _("all_players")), value = "all_players"},
 			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
-			{label = _("pink", _("admin_noclip")), value = "noclip"},
+			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
-			{label = _("orange", _("admin_show_hash")), value = "show_hash"},
-			{label = _(admin_mode and "green" or "bright_red", _("admin_mode")), value = "admin_mode"},
+			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hash},
+			{label = _(admin_mode and "green" or "bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
 	}, function(data, menu)
@@ -38,8 +38,8 @@ function OpenAdminMenu()
 			show_hashes = not show_hashes
 		elseif data.current.value == "admin_mode" then
 			ToggleAdminMode()
-			menu.update({value = "admin_mode"}, {label = _(admin_mode and "green" or "bright_red", _("admin_mode"))})
-            menu.refresh()
+			-- menu.update({value = "admin_mode"}, {label = _(admin_mode and "green" or "bright_red", _("admin_mode"))})
+            -- menu.refresh()
 		elseif data.current.value == "change_skin" then
 			TriggerEvent('esx_skin:openSaveableMenu', source)
 		end
@@ -54,7 +54,7 @@ function all_players()
 		title    = _("all_players"),
 		align    = "left",
 		elements = {
-            {label = _(show_names and "green" or "orange", _("admin_show_names")), value = "show_names"},
+            {label = _(show_names and "green" or "orange", _("admin_show_names")), value = "show_names", type="checkbox", checked=show_names},
             {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
 		}
 	}, function(data, menu)

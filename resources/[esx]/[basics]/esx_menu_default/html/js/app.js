@@ -7,6 +7,7 @@
 		'{{#elements}}' +
 		'<div class="menu-item {{#selected}}selected{{/selected}}">' +
 		'{{{label}}}{{#isSlider}} : &lt;{{{sliderLabel}}}&gt;{{/isSlider}}' +
+		'{{#isCheckBox}}<input type="checkbox" {{#checked}}checked{{/checked}}><label></label></checkbox>{{/isCheckBox}}' +
 		'</div>' +
 		'{{/elements}}' +
 		'</div>' +
@@ -92,6 +93,10 @@
 							element.sliderLabel = (typeof element.options == 'undefined') ? element.value : element.options[element.value];
 							break;
 						}
+						case 'checkbox': {
+							element.isCheckBox = true;
+							break;
+						}
 						default:
 							break;
 					}
@@ -162,6 +167,18 @@
 							let menu = ESX_MENU.opened[focused.namespace][focused.name];
 							let pos = menu.pos;
 							let elem = menu.elements[pos - 1];
+
+							switch (elem.type) {
+								case 'checkbox': {
+									elem.checked = !elem.checked;
+									ESX_MENU.change(focused.namespace, focused.name, elem)
+
+									ESX_MENU.render();
+									break;
+								}
+								default:
+									break;
+							}
 
 							if (menu.elements.length > 0)
 								ESX_MENU.submit(focused.namespace, focused.name, elem);

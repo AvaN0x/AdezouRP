@@ -298,6 +298,57 @@
   color: black;
 }
 
+/* .menu .menu-items .menu-item input[type="checkbox"] {
+  background-color: red;
+  color: blue;
+} */
+
+/* input[type="checkbox"] {
+  background-color: red;
+  color: blue;
+}
+ */
+.menu .menu-items .menu-item input[type="checkbox"] {
+  display: none;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]+label {
+  content: '';
+  height: 16px;
+  width: 16px;
+  border: white solid 2px;
+  background-color: #00000000;
+  border-radius: 2px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.menu .menu-items .menu-item.selected input[type="checkbox"]+label {
+  border: black solid 2px;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]+label::before {
+  content: '';
+  position: relative;
+  top: -9px;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]:checked+label {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.menu .menu-items .menu-item.selected input[type="checkbox"]:checked+label {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]:checked+label::before {
+  content: '✔';
+}
+
+
 .menu .detail {
   margin-top: 8px;
   display: block;
