@@ -145,6 +145,7 @@ function PlayerManagment(player)
 			admin_spectate_player(player)
 		end
     end, function(data, menu)
+		admin_spectate_player(-1)
 		menu.close()
 	end)
 end
