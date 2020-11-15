@@ -140,7 +140,6 @@ function AdminLoop()
 				Citizen.Wait(10)
 				if noclip then
 					local playerPed = PlayerPedId()
-					SetEntityInvincible(playerPed, true)
 					local x, y, z = getPosition(playerPed)
 					local dx, dy, dz = getCamDirection(playerPed)
 					local speed = Config.noclip_speed
@@ -193,13 +192,15 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(0)
-				if admin_mode then
+				if noclip then
+					SetEntityInvincible(PlayerPedId(), true)
+				elseif admin_mode then
 					local playerPed = PlayerPedId()
+					SetEntityInvincible(playerPed, true)
 					SetSuperJumpThisFrame(PlayerId(-1))
 					SetPedMoveRateOverride(playerPed, 2.15)
-					SetEntityInvincible(playerPed, true)
 				else
-					Citizen.Wait(4000)
+					Citizen.Wait(2000)
 				end
 			end
 		end)
