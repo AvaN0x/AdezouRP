@@ -17,7 +17,7 @@ function OpenAdminMenu()
 			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
-			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hash},
+			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
 			{label = _("bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
