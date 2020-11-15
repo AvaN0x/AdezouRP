@@ -1,18 +1,17 @@
-local carryingBackInProgress = false
+local piggyBackInProgress = false
+local piggyBackAnimNamePlaying = ""
+local piggyBackAnimDictPlaying = ""
+local piggyBackControlFlagPlaying = 0
 
-RegisterNetEvent('carry:anim')
-AddEventHandler('carry:anim', function()
-	--print("carrying")
-	if not carryingBackInProgress then
-		carryingBackInProgress = true
+RegisterCommand("piggy",function(source, args)
+	if not piggyBackInProgress then
 		local player = PlayerPedId()	
-		lib = 'missfinale_c2mcs_1'
-		anim1 = 'fin_c2_mcs_1_camman'
-		lib2 = 'nm'
-		anim2 = 'firemans_carry'
-		distans = 0.15
-		distans2 = 0.27
-		height = 0.63
+		lib = 'anim@arena@celeb@flat@paired@no_props@'
+		anim1 = 'piggyback_c_player_a'
+		anim2 = 'piggyback_c_player_b'
+		distans = -0.07
+		distans2 = 0.0
+		height = 0.45
 		spin = 0.0		
 		length = 100000
 		controlFlagMe = 49
@@ -20,34 +19,29 @@ AddEventHandler('carry:anim', function()
 		animFlagTarget = 1
 		local closestPlayer = GetClosestPlayer(3)
 		target = GetPlayerServerId(closestPlayer)
-		if closestPlayer ~= nil then
-			--print("triggering cmg1_animations:sync")
-			TriggerServerEvent('cmg1_animations:sync', closestPlayer, lib,lib2, anim1, anim2, distans, distans2, height,target,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget)
-		else
+		if closestPlayer ~= -1 and closestPlayer ~= nil then
+			piggyBackInProgress = true
+			TriggerServerEvent('cmg2_animations:sync', closestPlayer, lib, anim1, anim2, distans, distans2, height,target,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget)
+		else 
 			drawNativeNotification("Personne à proximité.")
 		end
 	else
-		carryingBackInProgress = false
+		piggyBackInProgress = false
 		ClearPedSecondaryTask(GetPlayerPed(-1))
 		DetachEntity(GetPlayerPed(-1), true, false)
 		local closestPlayer = GetClosestPlayer(3)
 		target = GetPlayerServerId(closestPlayer)
-		TriggerServerEvent("cmg1_animations:stop",target)
+		if target ~= 0 then 
+			TriggerServerEvent("cmg2_animations:stop",target)
+		end
 	end
-end)
+end,false)
 
-function ShowAdvancedNotification(text)
-	SetNotificationTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawNotification(false, false)
-	end
-
-RegisterNetEvent('cmg1_animations:syncTarget')
-AddEventHandler('cmg1_animations:syncTarget', function(target, animationLib, animation2, distans, distans2, height, length,spin,controlFlag)
+RegisterNetEvent('cmg2_animations:syncTarget')
+AddEventHandler('cmg2_animations:syncTarget', function(target, animationLib, animation2, distans, distans2, height, length,spin,controlFlag)
 	local playerPed = GetPlayerPed(-1)
 	local targetPed = GetPlayerPed(GetPlayerFromServerId(target))
-	carryingBackInProgress = true
-	--print("triggered cmg1_animations:syncTarget")
+	piggyBackInProgress = true
 	RequestAnimDict(animationLib)
 
 	while not HasAnimDictLoaded(animationLib) do
@@ -57,12 +51,14 @@ AddEventHandler('cmg1_animations:syncTarget', function(target, animationLib, ani
 	AttachEntityToEntity(GetPlayerPed(-1), targetPed, 0, distans2, distans, height, 0.5, 0.5, spin, false, false, false, false, 2, false)
 	if controlFlag == nil then controlFlag = 0 end
 	TaskPlayAnim(playerPed, animationLib, animation2, 8.0, -8.0, length, controlFlag, 0, false, false, false)
+	piggyBackAnimNamePlaying = animation2
+	piggyBackAnimDictPlaying = animationLib
+	piggyBackControlFlagPlaying = controlFlag
 end)
 
-RegisterNetEvent('cmg1_animations:syncMe')
-AddEventHandler('cmg1_animations:syncMe', function(animationLib, animation,length,controlFlag,animFlag)
+RegisterNetEvent('cmg2_animations:syncMe')
+AddEventHandler('cmg2_animations:syncMe', function(animationLib, animation,length,controlFlag,animFlag)
 	local playerPed = GetPlayerPed(-1)
-	--print("triggered cmg1_animations:syncMe")
 	RequestAnimDict(animationLib)
 
 	while not HasAnimDictLoaded(animationLib) do
@@ -71,21 +67,35 @@ AddEventHandler('cmg1_animations:syncMe', function(animationLib, animation,lengt
 	Wait(500)
 	if controlFlag == nil then controlFlag = 0 end
 	TaskPlayAnim(playerPed, animationLib, animation, 8.0, -8.0, length, controlFlag, 0, false, false, false)
-
-	Citizen.Wait(length)
+	piggyBackAnimNamePlaying = animation
+	piggyBackAnimDictPlaying = animationLib
+	piggyBackControlFlagPlaying = controlFlag
 end)
 
-RegisterNetEvent('cmg1_animations:cl_stop')
-AddEventHandler('cmg1_animations:cl_stop', function()
-	carryingBackInProgress = false
+RegisterNetEvent('cmg2_animations:cl_stop')
+AddEventHandler('cmg2_animations:cl_stop', function()
+	piggyBackInProgress = false
 	ClearPedSecondaryTask(GetPlayerPed(-1))
 	DetachEntity(GetPlayerPed(-1), true, false)
 end)
 
+Citizen.CreateThread(function()
+	while true do
+		if piggyBackInProgress then 
+			while not IsEntityPlayingAnim(GetPlayerPed(-1), piggyBackAnimDictPlaying, piggyBackAnimNamePlaying, 3) do
+				TaskPlayAnim(GetPlayerPed(-1), piggyBackAnimDictPlaying, piggyBackAnimNamePlaying, 8.0, -8.0, 100000, piggyBackControlFlagPlaying, 0, false, false, false)
+				Citizen.Wait(0)
+			end
+		end
+		Wait(0)
+	end
+end)
+
+
 function GetPlayers()
     local players = {}
 
-    for i = 0, 256 do
+    for i = 0, 255 do
         if NetworkIsPlayerActive(i) then
             table.insert(players, i)
         end
@@ -120,17 +130,8 @@ function GetClosestPlayer(radius)
 	end
 end
 
-RegisterNetEvent("carry:notify")
-AddEventHandler("carry:notify", function(icon, type, sender, title, text)
-    Citizen.CreateThread(function()
-		Wait(1)
-		SetNotificationTextEntry("STRING");
-		AddTextComponentString(text);
-		SetNotificationMessage(icon, icon, true, type, sender, title, text);
-		DrawNotification(false, true);
-    end)
-end)
-
-RegisterCommand("carry",function(source, args)
-   TriggerEvent("carry:anim")
-end, false)
+function drawNativeNotification(text)
+    SetTextComponentFormat('STRING')
+    AddTextComponentString(text)
+    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+end
