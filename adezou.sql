@@ -1,6 +1,11 @@
 -- phpMyAdmin SQL Dump
 -- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
+--
+-- Hôte : localhost:3306
+-- Généré le : Dim 15 nov. 2020 à 12:26
+-- Version du serveur :  8.0.21-0ubuntu0.20.04.4
+-- Version de PHP : 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,9 +35,11 @@ CREATE TABLE `accounts_logs` (
   `identifier_target` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `account_target` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `amount` int NOT NULL
+  `amount` int NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `account_logs`
@@ -45,6 +52,8 @@ CREATE TABLE `account_logs` (
   `amount` varchar(15) NOT NULL,
   `new` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `addon_account`
@@ -63,15 +72,20 @@ CREATE TABLE `addon_account` (
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 ('bank_savings', 'Livret Bleu', 0),
 ('caution', 'Caution', 0),
+('gang_ballas', 'Ballas', 1),
+('gang_ballas_black', 'Ballas', 1),
+('gang_families', 'Families', 1),
+('gang_families_black', 'Families', 1),
+('gang_vagos', 'Vagos', 1),
+('gang_vagos_black', 'Vagos', 1),
 ('property_black_money', 'Argent Sale Propriété', 0),
 ('society_ambulance', 'Ambulance', 1),
 ('society_ammunation', 'Ammunation', 1),
 ('society_bahama', 'Bahama Mas', 1),
-('society_cardealer', 'Concessionnaire', 1),
 ('society_cluckin', 'Cluckin Bell', 1),
+('society_ems', 'EMS', 1),
 ('society_mecano', 'Mecano', 1),
 ('society_nightclub', 'Galaxy', 1),
-('society_pecheur', 'Pecheur', 1),
 ('society_police', 'LSPD', 1),
 ('society_police_black', 'LSPD BlackMoney', 1),
 ('society_state', 'Gouv', 1),
@@ -80,6 +94,8 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 ('society_unicorn', 'Unicorn', 1),
 ('society_vigne', 'Vigneron', 1),
 ('society_vigneron', 'Vigneron', 1);
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `addon_account_data`
@@ -97,20 +113,45 @@ CREATE TABLE `addon_account_data` (
 --
 
 INSERT INTO `addon_account_data` (`id`, `account_name`, `money`, `owner`) VALUES
-(4, 'society_ammunation', 36800, NULL),
+(4, 'society_ammunation', 118800, NULL),
 (6, 'society_bahama', 68910, NULL),
-(31, 'society_mecano', 0, NULL),
+(14, 'society_cardealer', 50000, NULL),
+(18, 'society_famillies', 0, NULL),
+(19, 'society_famillies_black', 0, NULL),
+(31, 'society_mecano', 608356, NULL),
 (36, 'society_pecheur', 0, NULL),
-(39, 'society_police', 0, NULL),
-(44, 'society_state', 0, NULL),
-(48, 'society_taxi', 0, NULL),
-(49, 'society_unicorn', 0, NULL),
-(303, 'society_police_black', 0, NULL),
-(432, 'society_ambulance', 32017, NULL),
-(617, 'society_vigneron', 155396, NULL),
-(663, 'society_tailor', 125492, NULL),
-(670, 'society_cluckin', 147267, NULL),
-(671, 'society_nightclub', 100, NULL),
+(39, 'society_police', 112104, NULL),
+(40, 'society_pompiste', 50000, NULL),
+(41, 'society_realestateagent', 50000, NULL),
+(42, 'society_securoserv', 0, NULL),
+(43, 'society_shadow', 0, NULL),
+(44, 'society_state', 2834306, NULL),
+(48, 'society_taxi', 47474, NULL),
+(49, 'society_unicorn', 41900, NULL),
+(50, 'society_vagos', 0, NULL),
+(51, 'society_vagos_black', 0, NULL),
+(277, 'society_families', 20, NULL),
+(278, 'society_families_black', 0, NULL),
+(303, 'society_police_black', 2000, NULL),
+(432, 'society_ambulance', 18915, NULL),
+(571, 'society_ballas', 0, NULL),
+(572, 'society_ballas_black', 0, NULL),
+(617, 'society_vigneron', 285476, NULL),
+(648, 'society_rivera', 0, NULL),
+(649, 'society_rivera_black', 0, NULL),
+(650, 'society_vigne', 0, NULL),
+(663, 'society_tailor', 67423, NULL),
+(670, 'society_cluckin', 133567, NULL),
+(671, 'society_nightclub', 9075, NULL),
+(786, 'society_ems', 7930, NULL),
+(787, 'gang_vagos', 0, NULL),
+(788, 'gang_vagos_black', 25083, NULL),
+(831, 'gang_ballas', 0, NULL),
+(832, 'gang_ballas_black', 0, NULL),
+(833, 'gang_families', 0, NULL),
+(834, 'gang_families_black', 0, NULL);
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `addon_inventory`
@@ -127,15 +168,15 @@ CREATE TABLE `addon_inventory` (
 --
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
-('organisation_biker', 'Biker', 1),
-('organisation_cartel', 'Cartel', 1),
-('organisation_gang', 'Gang', 1),
-('organisation_mafia', 'Mafia', 1),
+('gang_ballas', 'Ballas', 1),
+('gang_families', 'Families', 1),
+('gang_vagos', 'Vagos', 1),
 ('property', 'Propriété', 0),
 ('society_ambulance', 'Ambulance', 1),
 ('society_ammunation', 'Ammunation', 1),
 ('society_bahama', 'Bahama Mas', 1),
 ('society_cluckin', 'Cluckin Bell', 1),
+('society_ems', 'EMS', 1),
 ('society_mecano', 'Mécano', 1),
 ('society_nightclub', 'Galaxy', 1),
 ('society_police', 'Police', 1),
@@ -143,7 +184,7 @@ INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
 ('society_tailor', 'Couturier', 1),
 ('society_taxi', 'Taxi', 1),
 ('society_unicorn', 'Unicorn', 1),
-('society_vigneron', 'Vigneron', 1),
+('society_vigneron', 'Vigneron', 1);
 
 -- --------------------------------------------------------
 
@@ -158,8 +199,18 @@ CREATE TABLE `addon_inventory_items` (
   `count` int NOT NULL,
   `owner` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `arrests_list`
+--
 
+CREATE TABLE `arrests_list` (
+  `id` int NOT NULL,
+  `json_data` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `baninfo`
@@ -175,6 +226,9 @@ CREATE TABLE `baninfo` (
   `playerip` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '0.0.0.0',
   `playername` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT 'no info'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `banlist`
@@ -235,7 +289,12 @@ CREATE TABLE `billing` (
   `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `billing`
+--
 
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `datastore`
@@ -256,17 +315,14 @@ INSERT INTO `datastore` (`name`, `label`, `shared`) VALUES
 ('society_ambulance', 'Ambulance', 1),
 ('society_ammunation', 'Ammunation', 1),
 ('society_cluckin', 'Cluckin Bell', 1),
+('society_ems', 'EMS', 1),
 ('society_nightclub', 'Galaxy', 1),
 ('society_police', 'Police', 1),
 ('society_state', 'State', 1),
 ('society_tailor', 'Couturier', 1),
 ('society_taxi', 'Taxi', 1),
 ('society_unicorn', 'Unicorn', 1),
-('society_vigneron', 'Vigneron', 1),
-('user_ears', 'Ears', 0),
-('user_glasses', 'Glasses', 0),
-('user_helmet', 'Helmet', 0),
-('user_mask', 'Mask', 0);
+('society_vigneron', 'Vigneron', 1);
 
 -- --------------------------------------------------------
 
@@ -286,15 +342,19 @@ CREATE TABLE `datastore_data` (
 --
 
 INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
-(1818, 'society_police', NULL, '{\"weapons\":[{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":4},{\"name\":\"WEAPON_PUMPSHOTGUN\",\"count\":2},{\"name\":\"WEAPON_ADVANCEDRIFLE\",\"count\":2},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_FIREWORK\",\"count\":0},{\"name\":\"WEAPON_PROXMINE\",\"count\":0},{\"name\":\"WEAPON_SWITCHBLADE\",\"count\":0},{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":4},{\"name\":\"WEAPON_BULLPUPRIFLE\",\"count\":0},{\"name\":\"WEAPON_NIGHTSTICK\",\"count\":6},{\"name\":\"WEAPON_HEAVYPISTOL\",\"count\":0},{\"name\":\"WEAPON_PETROLCAN\",\"count\":2},{\"name\":\"GADGET_PARACHUTE\",\"count\":0},{\"name\":\"WEAPON_ASSAULTSMG\",\"count\":0},{\"name\":\"WEAPON_SPECIALCARBINE\",\"count\":0},{\"name\":\"WEAPON_CARBINERIFLE\",\"count\":1},{\"name\":\"WEAPON_SMG\",\"count\":1},{\"name\":\"WEAPON_KNUCKLE\",\"count\":0},{\"name\":\"WEAPON_PISTOL_MK2\",\"count\":4}],\"weaponsGrasped\":[{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":0},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_FIREWORK\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":0},{\"name\":\"WEAPON_PROXMINE\",\"count\":0},{\"name\":\"WEAPON_SWITCHBLADE\",\"count\":0}],\"weaponsGasped\":[{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_DOUBLEACTION\",\"count\":0}]}\r\n'),
-(1821, 'society_state', NULL, '{\"weapons\":[{\"count\":1,\"name\":\"WEAPON_STUNGUN\"},{\"count\":0,\"name\":\"WEAPON_NIGHTSTICK\"},{\"count\":1,\"name\":\"WEAPON_HEAVYPISTOL\"},{\"count\":0,\"name\":\"WEAPON_PUMPSHOTGUN\"},{\"count\":0,\"name\":\"WEAPON_ADVANCEDRIFLE\"},{\"count\":1,\"name\":\"WEAPON_PISTOL\"}]}'),
-(1825, 'society_taxi', NULL, '{\"garage\":[]}'),
-(1826, 'society_unicorn', NULL, '{\"weapons\":[{\"count\":1,\"name\":\"WEAPON_KNUCKLE\"},{\"count\":0,\"name\":\"WEAPON_SWITCHBLADE\"},{\"count\":0,\"name\":\"WEAPON_PISTOL\"}]}'),
-(267164, 'society_ammunation', NULL, '{\"weapons\":[{\"name\":\"WEAPON_CARBINERIFLE\",\"count\":0},{\"name\":\"WEAPON_MUSKET\",\"count\":1},{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_PISTOL\",\"count\":10},{\"name\":\"WEAPON_NIGHTSTICK\",\"count\":0},{\"name\":\"WEAPON_PUMPSHOTGUN\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":0},{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":0},{\"name\":\"WEAPON_MACHINEPISTOL\",\"count\":0},{\"name\":\"WEAPON_ASSAULTSHOTGUN\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_PISTOL50\",\"count\":0},{\"name\":\"WEAPON_SNSPISTOL\",\"count\":1},{\"name\":\"WEAPON_VINTAGEPISTOL\",\"count\":1},{\"name\":\"WEAPON_DOUBLEACTION\",\"count\":1}]}'),
-(267979, 'society_vigneron', NULL, '{}'),
-(268050, 'society_tailor', NULL, '{}'),
-(268061, 'society_cluckin', NULL, '{}'),
-(268062, 'society_nightclub', NULL, '{}'),
+(1, 'society_police', NULL, '{\"weapons\":[{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":0},{\"name\":\"WEAPON_PUMPSHOTGUN\",\"count\":1},{\"name\":\"WEAPON_ADVANCEDRIFLE\",\"count\":0},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_FIREWORK\",\"count\":0},{\"name\":\"WEAPON_PROXMINE\",\"count\":0},{\"name\":\"WEAPON_SWITCHBLADE\",\"count\":0},{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":4},{\"name\":\"WEAPON_BULLPUPRIFLE\",\"count\":0},{\"name\":\"WEAPON_NIGHTSTICK\",\"count\":3},{\"name\":\"WEAPON_HEAVYPISTOL\",\"count\":0},{\"name\":\"WEAPON_PETROLCAN\",\"count\":1},{\"name\":\"GADGET_PARACHUTE\",\"count\":0},{\"name\":\"WEAPON_ASSAULTSMG\",\"count\":0},{\"name\":\"WEAPON_SPECIALCARBINE\",\"count\":0},{\"name\":\"WEAPON_CARBINERIFLE\",\"count\":0},{\"name\":\"WEAPON_SMG\",\"count\":1},{\"name\":\"WEAPON_KNUCKLE\",\"count\":0},{\"name\":\"WEAPON_PISTOL_MK2\",\"count\":0}],\"weaponsGasped\":[{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_DOUBLEACTION\",\"count\":0}],\"weaponsGrasped\":[{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":0},{\"name\":\"WEAPON_APPISTOL\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_FIREWORK\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":0},{\"name\":\"WEAPON_PROXMINE\",\"count\":0},{\"name\":\"WEAPON_SWITCHBLADE\",\"count\":0}]}'),
+(2, 'society_ambulance', NULL, '{}'),
+(3, 'society_state', NULL, '{\"weapons\":[{\"count\":1,\"name\":\"WEAPON_STUNGUN\"},{\"count\":0,\"name\":\"WEAPON_NIGHTSTICK\"},{\"count\":1,\"name\":\"WEAPON_HEAVYPISTOL\"},{\"count\":0,\"name\":\"WEAPON_PUMPSHOTGUN\"},{\"count\":0,\"name\":\"WEAPON_ADVANCEDRIFLE\"},{\"count\":1,\"name\":\"WEAPON_PISTOL\"}]}'),
+(4, 'society_ems', NULL, '{}'),
+(5, 'society_cluckin', NULL, '{}'),
+(6, 'society_ammunation', NULL, '{\"weapons\":[{\"name\":\"WEAPON_CARBINERIFLE\",\"count\":0},{\"name\":\"WEAPON_MUSKET\",\"count\":1},{\"name\":\"WEAPON_COMBATPISTOL\",\"count\":0},{\"name\":\"WEAPON_PISTOL\",\"count\":10},{\"name\":\"WEAPON_NIGHTSTICK\",\"count\":0},{\"name\":\"WEAPON_PUMPSHOTGUN\",\"count\":0},{\"name\":\"WEAPON_STUNGUN\",\"count\":0},{\"name\":\"WEAPON_FLASHLIGHT\",\"count\":0},{\"name\":\"WEAPON_MACHINEPISTOL\",\"count\":0},{\"name\":\"WEAPON_ASSAULTSHOTGUN\",\"count\":0},{\"name\":\"WEAPON_STICKYBOMB\",\"count\":0},{\"name\":\"WEAPON_PISTOL50\",\"count\":0},{\"name\":\"WEAPON_SNSPISTOL\",\"count\":1},{\"name\":\"WEAPON_VINTAGEPISTOL\",\"count\":1},{\"name\":\"WEAPON_DOUBLEACTION\",\"count\":1}]}'),
+(7, 'society_nightclub', NULL, '{}'),
+(8, 'society_tailor', NULL, '{}'),
+(9, 'society_taxi', NULL, '{\"garage\":[]}'),
+(10, 'society_unicorn', NULL, '{\"weapons\":[{\"count\":1,\"name\":\"WEAPON_KNUCKLE\"},{\"count\":0,\"name\":\"WEAPON_SWITCHBLADE\"},{\"count\":0,\"name\":\"WEAPON_PISTOL\"}]}'),
+(11, 'society_vigneron', NULL, '{}');
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `dpkeybinds`
@@ -316,6 +376,7 @@ CREATE TABLE `dpkeybinds` (
   `emote6` varchar(255) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `fine_types`
@@ -333,49 +394,49 @@ CREATE TABLE `fine_types` (
 --
 
 INSERT INTO `fine_types` (`id`, `label`, `amount`, `category`) VALUES
-(1, 'Klaxon abusif', 50, 0),
+(1, 'Klaxon abusif', 100, 0),
 (2, 'Non respect CDLR', 200, 0),
 (3, 'Circulation hors-route', 500, 0),
 (4, 'Non-respect VH prio', 750, 0),
 (5, 'Entrave de la circu', 1500, 0),
-(6, 'Délit de fuite', 7500, 0),
-(7, 'Conduite sans permis', 20000, 0),
-(8, 'Excès de vitesse 0 à 20', 150, 0),
-(9, 'Excès de vitesse 20 à 40', 375, 0),
-(10, 'Excès de vitesse 40 à 60', 1500, 0),
-(11, 'Excès de vitesse > 60', 10000, 0),
+(6, 'Délit de fuite', 5000, 0),
+(7, 'Conduite sans permis', 10000, 0),
+(8, 'Excès de vitesse 0 à 20', 500, 0),
+(9, 'Excès de vitesse 20 à 40', 1000, 0),
+(10, 'Excès de vitesse 40 à 60', 2500, 0),
+(11, 'Excès de vitesse > 60', 5000, 0),
 (12, 'Retrait de permis', 10000, 0),
-(13, 'Outrage citoyen', 5000, 1),
-(14, 'Outrage agent', 15000, 1),
-(15, 'Menace Verbale Civil', 10000, 1),
-(16, 'Menace verbale agent', 15000, 1),
-(17, 'Menace de mort civils', 45000, 1),
-(18, 'Menace de mort agent', 75000, 1),
-(19, 'Tentative de corruption', 100000, 1),
-(20, 'Prise d\'otage civil', 75000, 1),
-(21, 'Prise d\'otage agent', 125000, 1),
-(22, 'Dégradation', 7500, 2),
-(23, 'Trouble ordre publique', 15000, 2),
-(24, 'Entrave OP police', 20000, 2),
+(13, 'Outrage citoyen', 3000, 1),
+(14, 'Outrage agent', 5000, 1),
+(15, 'Menace Verbale Civil', 7500, 1),
+(16, 'Menace verbale agent', 10000, 1),
+(17, 'Menace de mort civils', 15000, 1),
+(18, 'Menace de mort agent', 20000, 1),
+(19, 'Tentative de corruption', 70000, 1),
+(20, 'Prise d\'otage civil', 30000, 1),
+(21, 'Prise d\'otage agent', 50000, 1),
+(22, 'Dégradation', 5000, 2),
+(23, 'Trouble ordre publique', 8000, 2),
+(24, 'Entrave OP police', 15000, 2),
 (25, 'Escroquerie entreprise', 50000, 2),
-(26, 'Pas de PPA', 35000, 3),
-(27, 'Arme illégal', 75000, 3),
-(28, 'Vente armes illégales', 100000, 3),
-(29, 'Fab armes illégales', 100000, 3),
-(30, 'Poss drogue < 100', 7500, 4),
-(31, 'Poss drogue 100 à 2000', 50000, 4),
-(32, 'Poss drogue > 2000', 150000, 4),
-(33, 'Vente drogue', 75000, 4),
-(34, 'Fabrication drogue', 125000, 4),
-(35, 'Vol de véhicule', 25000, 5),
-(36, 'Carjacking', 45000, 5),
-(37, 'Braquage Civil', 75000, 5),
+(26, 'Pas de PPA', 20000, 3),
+(27, 'Arme illégal', 30000, 3),
+(28, 'Vente armes illégales', 50000, 3),
+(29, 'Fab armes illégales', 80000, 3),
+(30, 'Poss drogue < 100', 5000, 4),
+(31, 'Poss drogue 100 à 500', 20000, 4),
+(32, 'Poss drogue > 500', 40000, 4),
+(33, 'Vente drogue', 30000, 4),
+(34, 'Fabrication drogue', 50000, 4),
+(35, 'Vol de véhicule', 20000, 5),
+(36, 'Carjacking', 3000, 5),
+(37, 'Braquage Civil', 40000, 5),
 (38, 'Braquage Magasin', 75000, 5),
 (39, 'Braquage Banque', 150000, 5),
-(40, 'Tir sur civil ', 50000, 5),
-(41, 'Tir sur agent', 80000, 5),
-(42, 'Meurtre involontaire', 35000, 5),
-(43, 'Meurtre sur civil', 125000, 5),
+(40, 'Tir sur civil ', 30000, 5),
+(41, 'Tir sur agent', 50000, 5),
+(42, 'Meurtre involontaire', 80000, 5),
+(43, 'Meurtre sur civil', 100000, 5),
 (44, 'Meurtre sur agent', 150000, 5);
 
 -- --------------------------------------------------------
@@ -409,7 +470,7 @@ INSERT INTO `items` (`name`, `label`, `limit`, `rare`, `can_remove`, `price`, `w
 ('beer', '🍺 Bière', 15, 0, 1, 0, 400),
 ('bread', '🥖 Pain', 15, 0, 1, 0, 133),
 ('cannabis', 'Cannabis', 150, 0, 1, 0, 1),
-('cardboardbox', 'Boite en carton', 20, 0, 1, 0, 1),
+('cardboardbox', 'Boite en carton', 150, 0, 1, 0, 1),
 ('carokit', 'Kit carosserie', 15, 0, 1, 0, 1100),
 ('champagne', '🍾 Champagne', 20, 0, 1, 0, 200),
 ('champagnebox', 'Caisse de Champagne', 20, 0, 1, 0, 1),
@@ -417,7 +478,7 @@ INSERT INTO `items` (`name`, `label`, `limit`, `rare`, `can_remove`, `price`, `w
 ('chickenwrap', 'Wrap au poulet', 20, 0, 1, 0, 1),
 ('clip', 'Chargeur', 50, 0, 1, 0, 200),
 ('clothe', '👔 Vêtement', 36, 0, 1, 0, 133),
-('clothebox', 'Boite de vêtements', 20, 0, 1, 0, 1),
+('clothebox', 'Boite de vêtements', 30, 0, 1, 0, 1),
 ('cocacola', 'Canette de Coca-Cola', 15, 0, 1, 0, 1),
 ('coffee', '☕ Café', 15, 0, 1, 0, 133),
 ('coke', 'Cocaïne', 150, 0, 1, 0, 1),
@@ -431,7 +492,7 @@ INSERT INTO `items` (`name`, `label`, `limit`, `rare`, `can_remove`, `price`, `w
 ('doublechickenburger', 'Double Chicken Burger', 20, 0, 1, 0, 1),
 ('extaamphetamine', 'Amphétamine', 50, 0, 1, 0, 1),
 ('extamdma', 'MDMA', 50, 0, 1, 0, 1),
-('extazyp', 'Extazy en poudre', 150, 0, 1, 0, 1),
+('extazyp', 'Extazy en poudre', 250, 0, 1, 0, 1),
 ('fabric', '🧵 Tissu', 72, 0, 1, 0, 13),
 ('fixkit', '🧰 Kit réparation', 15, 0, 1, 0, 133),
 ('frites', 'Frites', 20, 0, 1, 0, 1),
@@ -606,7 +667,11 @@ INSERT INTO `jobs` (`name`, `label`, `whitelisted`) VALUES
 ('ambulance', 'Ambulancier', 1),
 ('ammunation', 'Ammunation', 1),
 ('bahama', 'Bahama Mas', 1),
+('ballas', 'Ballas', 1),
+('cardealer', 'Concessionnaire', 1),
 ('cluckin', 'Cluckin Bell', 1),
+('ems', 'EMS', 0),
+('families', 'Families', 1),
 ('mecano', 'Mécano', 1),
 ('nightclub', 'Galaxy', 1),
 ('police', 'LSPD', 1),
@@ -616,6 +681,7 @@ INSERT INTO `jobs` (`name`, `label`, `whitelisted`) VALUES
 ('unemployed', 'Chômeur', 0),
 ('unemployed2', 'État', 0),
 ('unicorn', 'Unicorn', 1),
+('vagos', 'Vagos', 1),
 ('vigneron', 'Vigneron', 1);
 
 -- --------------------------------------------------------
@@ -641,11 +707,15 @@ CREATE TABLE `job_grades` (
 
 INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, `skin_male`, `skin_female`) VALUES
 (1, 'unemployed', 0, 'unemployed', 'Pole Emploi', 50, '{}', '{}'),
-(17, 'mecano', 0, 'recrue', 'Recrue', 450, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(18, 'mecano', 1, 'novice', 'Novice', 450, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(19, 'mecano', 2, 'experimente', 'Experimente', 550, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(20, 'mecano', 3, 'chief', 'Chef d\'équipe', 650, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(21, 'mecano', 4, 'boss', 'Patron', 850, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(9, 'cardealer', 0, 'recruit', 'Recrue', 1, '{}', '{}'),
+(10, 'cardealer', 1, 'novice', 'Novice', 1, '{}', '{}'),
+(11, 'cardealer', 2, 'experienced', 'Experimente', 1, '{}', '{}'),
+(12, 'cardealer', 3, 'boss', 'Patron', 1, '{}', '{}'),
+(17, 'mecano', 0, 'recrue', 'Recrue', 300, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(18, 'mecano', 1, 'novice', 'Novice', 370, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(19, 'mecano', 2, 'experimente', 'Experimente', 450, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(20, 'mecano', 3, 'chief', 'Chef d\'équipe', 550, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(21, 'mecano', 4, 'boss', 'Patron', 150, '{\"tshirt_2\":0,\"ears_1\":-1,\"glasses_1\":0,\"torso_2\":3,\"ears_2\":0,\"glasses_2\":0,\"shoes_2\":3,\"pants_1\":97,\"shoes_1\":7,\"bags_1\":0,\"helmet_2\":0,\"pants_2\":2,\"torso_1\":251,\"tshirt_1\":15,\"arms\":19,\"bags_2\":0,\"helmet_1\":-1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":21,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":1,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":62,\"helmet_1\":-1,\"torso_2\":2,\"helmet_2\":0,\"arms\":63,\"bproof_1\":0,\"torso_1\":171,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (30, 'taxi', 0, 'recrue', 'CDD', 100, '{\"tshirt_1\":15,\"tshirt_2\":0,\"torso_1\":12,\"torso_2\":0,\"pants_1\":0,\"pants_2\":1,\"shoes_1\":32,\"shoes_2\":0,\"chain_1\":0,\"chain_2\":0,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":20,\"glasses_1\":0,\"glasses_2\":0}', '{\"pants_1\":23,\"torso_1\":7,\"glasses_2\":3,\"bags_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"chain_2\":0,\"pants_2\":12,\"shoes_2\":0,\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":0,\"bags_1\":0,\"helmet_1\":-1,\"helmet_2\":0,\"shoes_1\":13,\"arms\":27,\"torso_2\":0,\"tshirt_1\":64}\r\n'),
 (31, 'taxi', 1, 'novice', 'Employé', 200, '{\"tshirt_1\":15,\"tshirt_2\":0,\"torso_1\":12,\"torso_2\":0,\"pants_1\":0,\"pants_2\":1,\"shoes_1\":32,\"shoes_2\":0,\"chain_1\":0,\"chain_2\":0,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":20,\"glasses_1\":0,\"glasses_2\":0}', '{\"pants_1\":23,\"torso_1\":7,\"glasses_2\":3,\"bags_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"chain_2\":0,\"pants_2\":12,\"shoes_2\":0,\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":0,\"bags_1\":0,\"helmet_1\":-1,\"helmet_2\":0,\"shoes_1\":13,\"arms\":27,\"torso_2\":0,\"tshirt_1\":64}\r\n'),
 (32, 'taxi', 2, 'experimente', 'Responsable', 300, '{\"tshirt_1\":15,\"tshirt_2\":0,\"torso_1\":12,\"torso_2\":0,\"pants_1\":0,\"pants_2\":1,\"shoes_1\":32,\"shoes_2\":0,\"chain_1\":0,\"chain_2\":0,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":20,\"glasses_1\":0,\"glasses_2\":0}', '{\"pants_1\":23,\"torso_1\":7,\"glasses_2\":3,\"bags_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"chain_2\":0,\"pants_2\":12,\"shoes_2\":0,\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":0,\"bags_1\":0,\"helmet_1\":-1,\"helmet_2\":0,\"shoes_1\":13,\"arms\":27,\"torso_2\":0,\"tshirt_1\":64}\r\n'),
@@ -657,26 +727,37 @@ INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, 
 (126, 'police', 3, 'intendent', 'Sergent-Chef', 600, '{}', '{}'),
 (127, 'police', 4, 'lieutenant', 'Lieutenant', 750, '{}', '{}'),
 (128, 'police', 5, 'chef', 'Capitaine', 900, '{}', '{}'),
-(129, 'police', 6, 'boss', 'Commandant', 0, '{}', '{}'),
-(130, 'police', 7, 'bac', 'BAC', 700, '{}', '{}'),
+(129, 'police', 6, 'boss', 'Commandant', 999, '{}', '{}'),
+(236, 'families', 0, 'soldato', 'Petite frappe', 0, '{}', '{}'),
+(238, 'families', 1, 'consigliere', 'Caporal Chef', 0, '{}', '{}'),
+(239, 'families', 2, 'righthand', 'Bras Droit', 0, '{}', '{}'),
+(240, 'families', 3, 'gboss', 'Chef', 0, '', '{}'),
 (256, 'unemployed2', 0, 'rsa', 'Civil', 50, '{}', '{}'),
 (263, 'state', 0, 'protec', 'Protection rapprochée', 100, '{\"tshirt_1\":96,\"tshirt_2\":16,\"torso_1\":31,\"torso_2\":0,\"pants_1\":24,\"pants_2\":0,\"shoes_1\":21,\"shoes_2\":0,\"chain_1\":28,\"chain_2\":15,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":22,\"glasses_1\":0,\"glasses_2\":0,\"mask_1\":121,\"mask_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":2,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"tshirt_1\":38,\"shoes_1\":42,\"helmet_1\":-1,\"torso_2\":0,\"helmet_2\":0,\"arms\":3,\"bproof_1\":0,\"torso_1\":24,\"pants_1\":7,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (265, 'state', 1, 'proc', 'Procureur', 200, '{\"tshirt_1\":31,\"tshirt_2\":0,\"torso_1\":10,\"torso_2\":0,\"pants_1\":35,\"pants_2\":0,\"shoes_1\":10,\"shoes_2\":0,\"chain_1\":0,\"chain_2\":0,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":4,\"glasses_1\":0,\"glasses_2\":1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":2,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"tshirt_1\":38,\"shoes_1\":42,\"helmet_1\":-1,\"torso_2\":0,\"helmet_2\":0,\"arms\":3,\"bproof_1\":0,\"torso_1\":24,\"pants_1\":7,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (266, 'state', 2, 'boss', 'Gouverneur', 300, '{\"tshirt_1\":31,\"tshirt_2\":0,\"torso_1\":10,\"torso_2\":0,\"pants_1\":35,\"pants_2\":0,\"shoes_1\":10,\"shoes_2\":0,\"chain_1\":10,\"chain_2\":1,\"bags_1\":0,\"bags_2\":0,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":-1,\"helmet_2\":0,\"arms\":4,\"glasses_1\":0,\"glasses_2\":1}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":2,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"tshirt_1\":38,\"shoes_1\":42,\"helmet_1\":-1,\"torso_2\":0,\"helmet_2\":0,\"arms\":3,\"bproof_1\":0,\"torso_1\":24,\"pants_1\":7,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(321, 'vagos', 0, 'soldato', 'Hermano', 0, '{}', '{}'),
+(322, 'vagos', 1, 'capo', 'Gringo', 0, '{}', '{}'),
+(323, 'vagos', 2, 'consigliere', 'Secondo', 0, '{}', '{}'),
+(324, 'vagos', 3, 'gboss', 'Jéfé', 0, '{}', '{}'),
+(325, 'ballas', 0, 'soldato', 'Homie', 0, '{}', '{}'),
+(326, 'ballas', 1, 'capo', 'Soldier', 0, '{}', '{}'),
+(327, 'ballas', 2, 'consigliere', 'Hustler', 0, '{}', '{}'),
+(328, 'ballas', 3, 'gboss', 'Chef', 0, '{}', '{}'),
 (346, 'ambulance', 0, 'ambulance', 'Infirmier', 300, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (347, 'ambulance', 1, 'doctor', 'Médecin', 400, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (348, 'ambulance', 2, 'boss', 'Directeur', 500, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (349, 'vigneron', 0, 'interim', 'Intérimaire', 50, '{\"tshirt_1\":59,\"tshirt_2\":0,\"torso_1\":12,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":1, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":3,\"glasses_2\":0,\"bags_1\":0,\"bproof_2\":0,\"tshirt_1\":4,\"helmet_1\":54,\"torso_2\":12,\"helmet_2\":2,\"arms\":79,\"bproof_1\":0,\"pants_2\":1,\"torso_1\":354,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0,\"shoes_1\":11}\r\n'),
 (350, 'vigneron', 1, 'employe', 'Employé', 200, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":3,\"glasses_2\":0,\"bags_1\":0,\"bproof_2\":0,\"tshirt_1\":4,\"helmet_1\":54,\"torso_2\":12,\"helmet_2\":2,\"arms\":79,\"bproof_1\":0,\"pants_2\":1,\"torso_1\":354,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0,\"shoes_1\":11}\r\n'),
 (351, 'vigneron', 2, 'chef', 'Chef', 400, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":3,\"glasses_2\":0,\"bags_1\":0,\"bproof_2\":0,\"tshirt_1\":4,\"helmet_1\":54,\"torso_2\":12,\"helmet_2\":2,\"arms\":79,\"bproof_1\":0,\"pants_2\":1,\"torso_1\":354,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0,\"shoes_1\":11}\r\n'),
-(352, 'vigneron', 3, 'boss', 'Patron', 500, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":3,\"glasses_2\":0,\"bags_1\":0,\"bproof_2\":0,\"tshirt_1\":4,\"helmet_1\":54,\"torso_2\":12,\"helmet_2\":2,\"arms\":79,\"bproof_1\":0,\"pants_2\":1,\"torso_1\":354,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0,\"shoes_1\":11}\r\n'),
+(352, 'vigneron', 3, 'boss', 'Patron', 999, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":3,\"glasses_2\":0,\"bags_1\":0,\"bproof_2\":0,\"tshirt_1\":4,\"helmet_1\":54,\"torso_2\":12,\"helmet_2\":2,\"arms\":79,\"bproof_1\":0,\"pants_2\":1,\"torso_1\":354,\"pants_1\":54,\"bags_2\":0,\"chain_2\":0,\"shoes_1\":11}\r\n'),
 (353, 'tailor', 0, 'interim', 'Intérimaire', 50, '{\"tshirt_1\":59,\"tshirt_2\":0,\"torso_1\":12,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":1, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
-(354, 'tailor', 1, 'employe', 'Employé', 300, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
-(355, 'tailor', 2, 'chef', 'Chef', 400, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
-(356, 'tailor', 3, 'boss', 'Patron', 500, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
-(357, 'cluckin', 0, 'employe', 'Employé', 300, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(358, 'cluckin', 1, 'chef', 'Chef', 400, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(359, 'cluckin', 2, 'boss', 'Patron', 700, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(354, 'tailor', 1, 'employe', 'Employé', 150, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
+(355, 'tailor', 2, 'chef', 'Chef', 150, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
+(356, 'tailor', 3, 'boss', 'Patron', 150, '{\"tshirt_1\":57,\"tshirt_2\":0,\"torso_1\":13,\"torso_2\":5,\"shoes_1\":7,\"shoes_2\":2,\"pants_1\":9, \"pants_2\":7, \"arms\":11, \"helmet_1\":11, \"helmet_2\":0,\"bags_1\":0,\"bags_2\":0,\"ears_1\":0,\"glasses_1\":0,\"ears_2\":0,\"glasses_2\":0}', '{\"pants_2\":4,\"shoes_1\":62,\"torso_1\":57,\"bproof_2\":0,\"helmet_2\":7,\"bags_2\":0,\"chain_2\":0,\"helmet_1\":3,\"bproof_1\":0,\"bags_1\":0,\"pants_1\":23,\"torso_2\":1,\"shoes_2\":20,\"arms\":3,\"glasses_2\":0,\"tshirt_2\":1,\"glasses_1\":5,\"tshirt_1\":69,\"chain_1\":0}\r\n'),
+(357, 'cluckin', 0, 'employe', 'Employé', 0, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(358, 'cluckin', 1, 'chef', 'Chef', 0, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(359, 'cluckin', 2, 'boss', 'Patron', 0, '{\"chain_2\":0,\"bproof_2\":0,\"bproof_1\":0,\"glasses_2\":0,\"bags_1\":0,\"chain_1\":19,\"arms\":11,\"pants_1\":27,\"helmet_1\":130,\"shoes_2\":0,\"glasses_1\":0,\"bags_2\":0,\"pants_2\":1,\"tshirt_1\":87,\"helmet_2\":5,\"tshirt_2\":0,\"torso_1\":13,\"shoes_1\":49,\"torso_2\":8}\r\n', '{\"chain_1\":0,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":11,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":12,\"bproof_2\":0,\"tshirt_1\":15,\"shoes_1\":13,\"helmet_1\":129,\"torso_2\":10,\"helmet_2\":5,\"arms\":1,\"bproof_1\":0,\"torso_1\":294,\"pants_1\":12,\"bags_2\":0,\"chain_2\":0}\r\n'),
 (360, 'unicorn', 0, 'employe', 'Employe', 0, '{}', '{}'),
 (361, 'unicorn', 1, 'boss', 'Patron', 0, '{}', '{}'),
 (362, 'bahama', 0, 'employe', 'Employe', 200, '{}', '{}'),
@@ -684,7 +765,10 @@ INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, 
 (364, 'nightclub', 0, 'employe', 'Employe', 200, '{}', '{}'),
 (365, 'nightclub', 1, 'boss', 'Patron', 500, '{}', '{}'),
 (366, 'ammunation', 0, 'employe', 'Employé', 200, '{}', '{\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":9,\"shoes_2\":1,\"glasses_2\":3,\"bags_1\":0,\"pants_2\":8,\"bproof_2\":0,\"tshirt_1\":206,\"shoes_1\":22,\"helmet_1\":-1,\"torso_2\":3,\"helmet_2\":0,\"arms\":4,\"bproof_1\":0,\"torso_1\":194,\"pants_1\":87,\"bags_2\":0,\"chain_2\":0}\r\n'),
-(367, 'ammunation', 1, 'boss', 'Patron', 500, '{}', '{\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":9,\"shoes_2\":1,\"glasses_2\":3,\"bags_1\":0,\"pants_2\":8,\"bproof_2\":0,\"tshirt_1\":206,\"shoes_1\":22,\"helmet_1\":-1,\"torso_2\":3,\"helmet_2\":0,\"arms\":4,\"bproof_1\":0,\"torso_1\":194,\"pants_1\":87,\"bags_2\":0,\"chain_2\":0}\r\n');
+(367, 'ammunation', 1, 'boss', 'Patron', 500, '{}', '{\"chain_1\":0,\"glasses_1\":11,\"tshirt_2\":9,\"shoes_2\":1,\"glasses_2\":3,\"bags_1\":0,\"pants_2\":8,\"bproof_2\":0,\"tshirt_1\":206,\"shoes_1\":22,\"helmet_1\":-1,\"torso_2\":3,\"helmet_2\":0,\"arms\":4,\"bproof_1\":0,\"torso_1\":194,\"pants_1\":87,\"bags_2\":0,\"chain_2\":0}\r\n'),
+(371, 'ems', 0, 'employee', 'Ambulancier', 20, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}'),
+(372, 'ems', 1, 'doctor', 'Medecin', 40, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}'),
+(373, 'ems', 2, 'boss', 'Directeur', 80, '{\"pants_2\":2,\"bproof_1\":0,\"bproof_2\":0,\"helmet_1\":122,\"bags_1\":0,\"chain_2\":0,\"shoes_1\":42,\"arms\":90,\"glasses_1\":0,\"bags_2\":0,\"glasses_2\":0,\"torso_2\":0,\"tshirt_1\":15,\"chain_1\":126,\"helmet_2\":0,\"shoes_2\":2,\"pants_1\":48,\"tshirt_2\":0,\"torso_1\":249}', '{\"chain_1\":96,\"glasses_1\":5,\"tshirt_2\":0,\"shoes_2\":22,\"glasses_2\":0,\"bags_1\":0,\"pants_2\":0,\"bproof_2\":0,\"helmet_1\":-1,\"tshirt_1\":15,\"torso_2\":0,\"helmet_2\":0,\"arms\":109,\"bproof_1\":0,\"shoes_1\":62,\"torso_1\":258,\"pants_1\":23,\"bags_2\":0,\"chain_2\":0}');
 
 -- --------------------------------------------------------
 
@@ -712,18 +796,17 @@ INSERT INTO `licenses` (`type`, `label`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `open_car`
+-- Structure de la table `owned_keys`
 --
 
-CREATE TABLE `open_car` (
+CREATE TABLE `owned_keys` (
   `id` int NOT NULL,
-  `identifier` varchar(255) DEFAULT NULL,
-  `label` varchar(255) DEFAULT NULL,
-  `value` varchar(50) DEFAULT NULL,
-  `got` varchar(50) DEFAULT NULL,
-  `NB` int DEFAULT '0' COMMENT '1 possède, 2 double'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `identifier` varchar(50) NOT NULL,
+  `plate` varchar(12) NOT NULL,
+  `type` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `owned_properties`
@@ -747,16 +830,13 @@ CREATE TABLE `owned_vehicles` (
   `owner` varchar(22) NOT NULL,
   `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Etat de la voiture',
   `plate` varchar(12) NOT NULL,
-  `impound` tinyint(1) DEFAULT '0',
+  `location` varchar(50) NOT NULL DEFAULT 'garage_POUND',
   `vehicle` longtext,
   `fuel` decimal(6,3) NOT NULL DEFAULT '100.000',
-  `type` varchar(20) NOT NULL DEFAULT 'car',
-  `job` varchar(20) DEFAULT NULL,
-  `stored` tinyint(1) NOT NULL DEFAULT '0',
-  `fourrieremecano` tinyint(1) NOT NULL DEFAULT '0',
-  `vehiclename` varchar(50) NOT NULL DEFAULT 'voiture'
+  `type` varchar(20) NOT NULL DEFAULT 'car'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `phone_app_chat`
@@ -769,7 +849,7 @@ CREATE TABLE `phone_app_chat` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `phone_calls`
@@ -784,6 +864,7 @@ CREATE TABLE `phone_calls` (
   `accepts` int NOT NULL COMMENT 'Appels accepter ou pas'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `phone_messages`
@@ -799,6 +880,8 @@ CREATE TABLE `phone_messages` (
   `owner` int NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `phone_users_contacts`
 --
@@ -810,6 +893,7 @@ CREATE TABLE `phone_users_contacts` (
   `display` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '-1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `playerstattoos`
@@ -821,18 +905,116 @@ CREATE TABLE `playerstattoos` (
   `tattoos` varchar(355) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+-- --------------------------------------------------------
 
 --
--- Structure de la table `quincaillerie`
+-- Structure de la table `properties`
 --
 
-CREATE TABLE `quincaillerie` (
+CREATE TABLE `properties` (
   `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `item` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `entering` varchar(255) DEFAULT NULL,
+  `exit` varchar(255) DEFAULT NULL,
+  `inside` varchar(255) DEFAULT NULL,
+  `outside` varchar(255) DEFAULT NULL,
+  `ipls` varchar(255) DEFAULT '[]',
+  `gateway` varchar(255) DEFAULT NULL,
+  `is_single` int DEFAULT NULL,
+  `is_room` int DEFAULT NULL,
+  `is_gateway` int DEFAULT NULL,
+  `room_menu` varchar(255) DEFAULT NULL,
   `price` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `properties`
+--
+
+INSERT INTO `properties` (`id`, `name`, `label`, `entering`, `exit`, `inside`, `outside`, `ipls`, `gateway`, `is_single`, `is_room`, `is_gateway`, `room_menu`, `price`) VALUES
+(36, 'Aqua3Apartment', 'Appartement Aqua 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_08_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.287,\"y\":331.084,\"z\":195.086}', 1300000),
+(37, 'IntegrityWay', '4 Integrity Way', '{\"x\":-47.804,\"y\":-585.867,\"z\":36.956}', NULL, NULL, '{\"x\":-54.178,\"y\":-583.762,\"z\":35.798}', '[]', NULL, 0, 0, 1, NULL, 0),
+(35, 'Aqua2Apartment', 'Appartement Aqua 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_08_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.658,\"y\":326.563,\"z\":186.313}', 1300000),
+(34, 'Aqua1Apartment', 'Appartement Aqua 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_08_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.187,\"y\":328.47,\"z\":210.396}', 1300000),
+(33, 'Regal3Apartment', 'Appartement Régal 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_07_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.087,\"y\":331.429,\"z\":195.123}', 1300000),
+(32, 'Regal2Apartment', 'Appartement Régal 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_07_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.545,\"y\":326.659,\"z\":186.313}', 1300000),
+(31, 'Regal1Apartment', 'Appartement Régal 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_07_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.956,\"y\":328.257,\"z\":210.396}', 1300000),
+(30, 'Seductive3Apartment', 'Appartement Séduisant 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_06_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.3,\"y\":331.414,\"z\":195.085}', 1300000),
+(29, 'Seductive2Apartment', 'Appartement Séduisant 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_06_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.655,\"y\":326.611,\"z\":186.313}', 1300000),
+(27, 'Monochrome3Apartment', 'Appartement Monochrome 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_05_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.094,\"y\":330.976,\"z\":195.085}', 1300000),
+(28, 'Seductive1Apartment', 'Appartement Séduisant 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_06_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.263,\"y\":328.104,\"z\":210.396}', 1300000),
+(26, 'Monochrome2Apartment', 'Appartement Monochrome 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_05_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.692,\"y\":326.762,\"z\":186.313}', 1300000),
+(25, 'Monochrome1Apartment', 'Appartement Monochrome 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_05_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.289,\"y\":328.086,\"z\":210.396}', 1300000),
+(24, 'Sharp3Apartment', 'Appartement Persan 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_04_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.503,\"y\":331.318,\"z\":195.085}', 1300000),
+(23, 'Sharp2Apartment', 'Appartement Persan 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_04_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.642,\"y\":326.497,\"z\":186.313}', 1300000),
+(22, 'Sharp1Apartment', 'Appartement Persan 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_04_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.527,\"y\":327.89,\"z\":210.396}', 1300000),
+(21, 'Vibrant3Apartment', 'Appartement Vibrant 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_03_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.525,\"y\":330.851,\"z\":195.085}', 1300000),
+(20, 'Vibrant2Apartment', 'Appartement Vibrant 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_03_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.607,\"y\":327.344,\"z\":186.313}', 1300000),
+(19, 'Vibrant1Apartment', 'Appartement Vibrant 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_03_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.885,\"y\":327.641,\"z\":210.396}', 1300000),
+(18, 'Mody3Apartment', 'Appartement Mode 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_02_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.303,\"y\":330.932,\"z\":195.085}', 1300000),
+(17, 'Mody2Apartment', 'Appartement Mode 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_02_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.297,\"y\":327.092,\"z\":186.313}', 1300000),
+(16, 'Mody1Apartment', 'Appartement Mode 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_02_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.615,\"y\":327.878,\"z\":210.396}', 1300000),
+(15, 'Modern3Apartment', 'Appartement Moderne 3', NULL, '{\"x\":-774.012,\"y\":342.042,\"z\":195.686}', '{\"x\":-779.057,\"y\":342.063,\"z\":195.686}', NULL, '[\"apa_v_mp_h_01_b\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-765.386,\"y\":330.782,\"z\":195.08}', 1300000),
+(14, 'Modern2Apartment', 'Appartement Moderne 2', NULL, '{\"x\":-786.8663,\"y\":315.764,\"z\":186.913}', '{\"x\":-781.808,\"y\":315.866,\"z\":186.913}', NULL, '[\"apa_v_mp_h_01_c\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-795.735,\"y\":326.757,\"z\":186.313}', 1300000),
+(13, 'Modern1Apartment', 'Appartement Moderne 1', NULL, '{\"x\":-784.194,\"y\":323.636,\"z\":210.997}', '{\"x\":-779.751,\"y\":323.385,\"z\":210.997}', NULL, '[\"apa_v_mp_h_01_a\"]', 'MiltonDrive', 0, 1, 0, '{\"x\":-766.661,\"y\":327.672,\"z\":210.396}', 1300000),
+(12, 'MiltonDrive', 'Milton Drive', '{\"x\":-775.17,\"y\":312.01,\"z\":84.658}', NULL, NULL, '{\"x\":-775.346,\"y\":306.776,\"z\":84.7}', '[]', NULL, 0, 0, 1, NULL, 0),
+(11, 'TinselTowersApt12', 'Tinsel Towers, Apt 42', '{\"y\":37.025,\"z\":42.58,\"x\":-618.299}', '{\"y\":58.898,\"z\":97.2,\"x\":-603.301}', '{\"y\":58.941,\"z\":97.2,\"x\":-608.741}', '{\"y\":30.603,\"z\":42.524,\"x\":-620.017}', '[]', NULL, 1, 1, 0, '{\"x\":-622.173,\"y\":54.585,\"z\":96.599}', 1700000),
+(10, 'HillcrestAvenue2868', '2868 Hillcrest Avenue', '{\"y\":620.494,\"z\":141.588,\"x\":-752.82}', '{\"y\":618.62,\"z\":143.153,\"x\":-759.317}', '{\"y\":617.629,\"z\":143.153,\"x\":-760.789}', '{\"y\":621.281,\"z\":141.254,\"x\":-750.919}', '[]', NULL, 1, 1, 0, '{\"x\":-762.504,\"y\":618.992,\"z\":135.53}', 1500000),
+(9, 'HillcrestAvenue2874', '2874 Hillcrest Avenue', '{\"x\":-853.346,\"y\":696.678,\"z\":147.782}', '{\"y\":690.875,\"z\":151.86,\"x\":-859.961}', '{\"y\":688.361,\"z\":151.857,\"x\":-859.395}', '{\"y\":701.628,\"z\":147.773,\"x\":-855.007}', '[]', NULL, 1, 1, 0, '{\"x\":-858.543,\"y\":697.514,\"z\":144.253}', 1500000),
+(8, 'MadWayneThunder', '2113 Mad Wayne Thunder', '{\"y\":454.955,\"z\":96.462,\"x\":-1294.433}', '{\"x\":-1289.917,\"y\":449.541,\"z\":96.902}', '{\"y\":446.322,\"z\":96.899,\"x\":-1289.642}', '{\"y\":455.453,\"z\":96.517,\"x\":-1298.851}', '[]', NULL, 1, 1, 0, '{\"x\":-1287.306,\"y\":455.901,\"z\":89.294}', 1500000),
+(7, 'LowEndApartment', 'Appartement de base', '{\"y\":-1078.735,\"z\":28.4031,\"x\":292.528}', '{\"y\":-1007.152,\"z\":-102.002,\"x\":265.845}', '{\"y\":-1002.802,\"z\":-100.008,\"x\":265.307}', '{\"y\":-1078.669,\"z\":28.401,\"x\":296.738}', '[]', NULL, 1, 1, 0, '{\"x\":265.916,\"y\":-999.38,\"z\":-100.008}', 562500),
+(6, 'HillcrestAvenue2862', '2862 Hillcrest Avenue', '{\"y\":596.58,\"z\":142.641,\"x\":-686.554}', '{\"y\":591.988,\"z\":144.392,\"x\":-681.728}', '{\"y\":590.608,\"z\":144.392,\"x\":-680.124}', '{\"y\":599.019,\"z\":142.059,\"x\":-689.492}', '[]', NULL, 1, 1, 0, '{\"x\":-680.46,\"y\":588.6,\"z\":136.769}', 1500000),
+(5, 'WildOatsDrive', '3655 Wild Oats Drive', '{\"y\":502.696,\"z\":136.421,\"x\":-176.003}', '{\"y\":497.817,\"z\":136.653,\"x\":-174.349}', '{\"y\":495.069,\"z\":136.666,\"x\":-173.331}', '{\"y\":506.412,\"z\":135.0664,\"x\":-177.927}', '[]', NULL, 1, 1, 0, '{\"x\":-174.725,\"y\":493.095,\"z\":129.043}', 1500000),
+(4, 'NorthConkerAvenue2044', '2044 North Conker Avenue', '{\"y\":440.8,\"z\":146.702,\"x\":346.964}', '{\"y\":437.456,\"z\":148.394,\"x\":341.683}', '{\"y\":435.626,\"z\":148.394,\"x\":339.595}', '{\"x\":350.535,\"y\":443.329,\"z\":145.764}', '[]', NULL, 1, 1, 0, '{\"x\":337.726,\"y\":436.985,\"z\":140.77}', 1500000),
+(3, 'RichardMajesticApt2', 'Richard Majestic, Apt 2', '{\"y\":-379.165,\"z\":37.961,\"x\":-936.363}', '{\"y\":-365.476,\"z\":113.274,\"x\":-913.097}', '{\"y\":-367.637,\"z\":113.274,\"x\":-918.022}', '{\"y\":-382.023,\"z\":37.961,\"x\":-943.626}', '[]', NULL, 1, 1, 0, '{\"x\":-927.554,\"y\":-377.744,\"z\":112.674}', 1700000),
+(2, 'NorthConkerAvenue2045', '2045 North Conker Avenue', '{\"x\":372.796,\"y\":428.327,\"z\":144.685}', '{\"x\":373.548,\"y\":422.982,\"z\":144.907},', '{\"y\":420.075,\"z\":145.904,\"x\":372.161}', '{\"x\":372.454,\"y\":432.886,\"z\":143.443}', '[]', NULL, 1, 1, 0, '{\"x\":377.349,\"y\":429.422,\"z\":137.3}', 1500000),
+(1, 'WhispymoundDrive', '2677 Whispymound Drive', '{\"y\":564.89,\"z\":182.959,\"x\":119.384}', '{\"x\":117.347,\"y\":559.506,\"z\":183.304}', '{\"y\":557.032,\"z\":183.301,\"x\":118.037}', '{\"y\":567.798,\"z\":182.131,\"x\":119.249}', '[]', NULL, 1, 1, 0, '{\"x\":118.748,\"y\":566.573,\"z\":175.697}', 1500000),
+(38, 'IntegrityWay28', '4 Integrity Way - Apt 28', NULL, '{\"x\":-31.409,\"y\":-594.927,\"z\":79.03}', '{\"x\":-26.098,\"y\":-596.909,\"z\":79.03}', NULL, '[]', 'IntegrityWay', 0, 1, 0, '{\"x\":-11.923,\"y\":-597.083,\"z\":78.43}', 1700000),
+(39, 'IntegrityWay30', '4 Integrity Way - Apt 30', NULL, '{\"x\":-17.702,\"y\":-588.524,\"z\":89.114}', '{\"x\":-16.21,\"y\":-582.569,\"z\":89.114}', NULL, '[]', 'IntegrityWay', 0, 1, 0, '{\"x\":-26.327,\"y\":-588.384,\"z\":89.123}', 1700000),
+(40, 'DellPerroHeights', 'Dell Perro Heights', '{\"x\":-1447.06,\"y\":-538.28,\"z\":33.74}', NULL, NULL, '{\"x\":-1440.022,\"y\":-548.696,\"z\":33.74}', '[]', NULL, 0, 0, 1, NULL, 0),
+(41, 'DellPerroHeightst4', 'Dell Perro Heights - Apt 28', NULL, '{\"x\":-1452.125,\"y\":-540.591,\"z\":73.044}', '{\"x\":-1455.435,\"y\":-535.79,\"z\":73.044}', NULL, '[]', 'DellPerroHeights', 0, 1, 0, '{\"x\":-1467.058,\"y\":-527.571,\"z\":72.443}', 1700000),
+(42, 'DellPerroHeightst7', 'Dell Perro Heights - Apt 30', NULL, '{\"x\":-1451.562,\"y\":-523.535,\"z\":55.928}', '{\"x\":-1456.02,\"y\":-519.209,\"z\":55.929}', NULL, '[]', 'DellPerroHeights', 0, 1, 0, '{\"x\":-1457.026,\"y\":-530.219,\"z\":55.937}', 1700000),
+(69, 'MBWExecutive Contrast', 'MBW Executive Contrast', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_02a\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(68, 'MBWExecutiveCool', 'MBW Executive Cool', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_02c\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(67, 'MBWExecutiveRich', 'MBW Executive Rich', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_02b\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(66, 'MBWOldSpiceVintage', 'MBW Old Spice Vintage', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_01c\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(65, 'MBWOldSpiceClassical', 'MBW Old Spice Classical', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_01b\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(63, 'MazeBankWest', 'Maze Bank West', '{\"x\":-1379.58,\"y\":-499.63,\"z\":32.22}', NULL, NULL, '{\"x\":-1378.95,\"y\":-502.82,\"z\":32.22}', '[]', NULL, 0, 0, 1, NULL, 0),
+(64, 'MBWOldSpiceWarm', 'MBW Old Spice Warm', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_01a\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(62, 'LBPowerBrokerPolished', 'LB Power Broker Polished', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_03c\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(61, 'LBPowerBrokerConservative', 'LB Power Broker Conservative', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_03b\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(60, 'LBPowerBrokerIce', 'LB Power Broker Ice', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_03a\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(59, 'LBExecutiveContrast', 'LB Executive Contrast', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_02a\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(58, 'LBExecutiveCool', 'LB Executive Cool', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_02c\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(57, 'LBExecutiveRich', 'LB Executive Rich', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_02b\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(56, 'LBOldSpiceVintage', 'LB Old Spice Vintage', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_01c\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(55, 'LBOldSpiceClassical', 'LB Old Spice Classical', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_01b\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(54, 'LBOldSpiceWarm', 'LB Old Spice Warm', NULL, '{\"x\":-1579.53,\"y\":-564.89,\"z\":107.62}', '{\"x\":-1576.42,\"y\":-567.57,\"z\":107.62}', NULL, '[\"ex_sm_13_office_01a\"]', 'LomBank', 0, 1, 0, '{\"x\":-1571.26,\"y\":-575.76,\"z\":107.52}', 3500000),
+(53, 'LomBank', 'Lom Bank', '{\"x\":-1581.36,\"y\":-558.23,\"z\":34.07}', NULL, NULL, '{\"x\":-1583.60,\"y\":-555.12,\"z\":34.07}', '[]', NULL, 0, 0, 1, NULL, 0),
+(52, 'PowerBrokerPolished', 'Power Broker Polished', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_03c\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(51, 'PowerBrokerConservative', 'Power Broker Conservative', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_03b\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(50, 'PowerBrokerIce', 'Power Broker Ice', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_03a\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(49, 'ExecutiveContrast', 'Executive Contrast', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_02a\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(48, 'ExecutiveCool', 'Executive Cool', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_02c\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(47, 'ExecutiveRich', 'Executive Rich', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_02b\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(46, 'OldSpiceVintage', 'Old Spice Vintage', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_01c\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(45, 'OldSpiceClassical', 'Old Spice Classical', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_01b\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(43, 'MazeBankBuilding', 'Maze Bank Building', '{\"x\":-79.18,\"y\":-795.92,\"z\":43.35}', NULL, NULL, '{\"x\":-72.50,\"y\":-786.92,\"z\":43.40}', '[]', NULL, 0, 0, 1, NULL, 0),
+(44, 'OldSpiceWarm', 'Old Spice Warm', NULL, '{\"x\":-75.69,\"y\":-827.08,\"z\":242.43}', '{\"x\":-75.51,\"y\":-823.90,\"z\":242.43}', NULL, '[\"ex_dt1_11_office_01a\"]', 'MazeBankBuilding', 0, 1, 0, '{\"x\":-71.81,\"y\":-814.34,\"z\":242.39}', 5000000),
+(70, 'MBWPowerBrokerIce', 'MBW Power Broker Ice', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_03a\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(71, 'MBWPowerBrokerConvservative', 'MBW Power Broker Convservative', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_03b\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(72, 'MBWPowerBrokerPolished', 'MBW Power Broker Polished', NULL, '{\"x\":-1392.74,\"y\":-480.18,\"z\":71.14}', '{\"x\":-1389.43,\"y\":-479.01,\"z\":71.14}', NULL, '[\"ex_sm_15_office_03c\"]', 'MazeBankWest', 0, 1, 0, '{\"x\":-1390.76,\"y\":-479.22,\"z\":72.04}', 2700000),
+(496, 'Bay City AvenueMotel1', 'Bay City Avenue', '{\"x\":-1308.9658203125,\"y\":-931.15521240234,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1308.9658203125,\"y\":-931.15521240234,\"z\":16.357076644897}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(497, 'Bay City AvenueMotel2', 'Bay City Avenue', '{\"x\":-1310.7575683594,\"y\":-931.86700439453,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1310.7575683594,\"y\":-931.86700439453,\"z\":16.357303619385}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(498, 'Bay City AvenueMotel3', 'Bay City Avenue', '{\"x\":-1317.9606933594,\"y\":-934.37451171875,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1317.9606933594,\"y\":-934.37451171875,\"z\":16.358287811279}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(499, 'Bay City AvenueMotel4', 'Bay City Avenue', '{\"x\":-1319.7747802734,\"y\":-935.06658935547,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1319.7747802734,\"y\":-935.06658935547,\"z\":16.35852432251}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(500, 'Bay City AvenueMotel5', 'Bay City Avenue', '{\"x\":-1329.3909912109,\"y\":-938.58111572266,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1329.3909912109,\"y\":-938.58111572266,\"z\":15.357588768005}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(501, 'Bay City AvenueMotel6', 'Bay City Avenue', '{\"x\":-1331.1315917969,\"y\":-939.28826904297,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1331.1315917969,\"y\":-939.28826904297,\"z\":15.357841491699}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(502, 'Vespucci BoulevardMotel7', 'Vespucci Boulevard', '{\"x\":-1339.1380615234,\"y\":-941.53643798828,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1339.1380615234,\"y\":-941.53643798828,\"z\":15.357811927795}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750),
+(503, 'Vespucci BoulevardMotel8', 'Vespucci Boulevard', '{\"x\":-1338.0535888672,\"y\":-941.72857666016,\"z\":15.36}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":151.37,\"y\":-1007.54,\"z\":-99.97}', '{\"x\":-1338.0535888672,\"y\":-941.72857666016,\"z\":15.358644485474}', '[\"hei_hw1_blimp_interior_v_motel_mp_milo_\"]', NULL, 1, 0, NULL, '{\"x\":152.36,\"y\":-1000.68,\"z\":-100.0}', 43750);
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `shops`
@@ -850,29 +1032,20 @@ CREATE TABLE `shops` (
 --
 
 INSERT INTO `shops` (`id`, `store`, `item`, `price`) VALUES
-(1, 'TwentyFourSeven', 'bread', 3),
-(2, 'TwentyFourSeven', 'water', 3),
-(3, 'TwentyFourSeven', 'hamburger', 6),
-(4, 'TwentyFourSeven', 'hotdog', 5),
-(6, 'TwentyFourSeven', 'cocacola', 3),
+(1, 'TwentyFourSeven', 'bread', 13),
+(2, 'TwentyFourSeven', 'water', 12),
 (7, 'TwentyFourSeven', 'donut', 2),
 (8, 'TwentyFourSeven', 'dopebag', 15),
 (9, 'TwentyFourSeven', 'tel', 500),
 (10, 'TwentyFourSeven', 'sim', 50),
-(12, 'RobsLiquor', 'bread', 3),
-(13, 'RobsLiquor', 'water', 3),
-(14, 'RobsLiquor', 'hamburger', 6),
-(15, 'RobsLiquor', 'hotdog', 5),
-(17, 'RobsLiquor', 'cocacola', 3),
+(12, 'RobsLiquor', 'bread', 13),
+(13, 'RobsLiquor', 'water', 12),
 (18, 'RobsLiquor', 'donut', 2),
 (19, 'RobsLiquor', 'dopebag', 15),
 (20, 'RobsLiquor', 'tel', 500),
 (21, 'RobsLiquor', 'sim', 50),
-(23, 'LTDgasoline', 'bread', 3),
-(24, 'LTDgasoline', 'water', 3),
-(25, 'LTDgasoline', 'hamburger', 6),
-(26, 'LTDgasoline', 'hotdog', 5),
-(28, 'LTDgasoline', 'cocacola', 3),
+(23, 'LTDgasoline', 'bread', 13),
+(24, 'LTDgasoline', 'water', 12),
 (29, 'LTDgasoline', 'donut', 2),
 (30, 'LTDgasoline', 'dopebag', 15),
 (31, 'LTDgasoline', 'tel', 500),
@@ -880,18 +1053,25 @@ INSERT INTO `shops` (`id`, `store`, `item`, `price`) VALUES
 (34, 'TwentyFourSeven', 'radio', 200),
 (35, 'RobsLiquor', 'radio', 200),
 (36, 'LTDgasoline', 'radio', 200),
-(37, 'Ammunation', 'weapon_dagger', 300),
-(38, 'Ammunation', 'weapon_bat', 200),
-(39, 'Ammunation', 'weapon_machete', 600),
-(40, 'Ammunation', 'weapon_switchblade', 300),
-(41, 'Ammunation', 'weapon_knife', 300),
-(42, 'Ammunation', 'weapon_knuckle', 100),
-(43, 'Ammunation', 'weapon_snspistol', 20000),
-(44, 'Ammunation', 'weapon_pistol', 35000),
-(45, 'Ammunation', 'weapon_vintagepistol', 40000),
-(46, 'Ammunation', 'weapon_pistol50', 55000),
-(47, 'Ammunation', 'weapon_doubleaction', 65000),
-(48, 'Ammunation', 'clip', 230);
+(49, 'Pharmacy', 'bandage', 200),
+(50, 'Pharmacy', 'medikit', 5000),
+(51, 'Ammunation', 'clip', 200),
+(52, 'Ammunation', 'weapon_bat', 750),
+(53, 'Ammunation', 'weapon_battleaxe', 1800),
+(54, 'Ammunation', 'weapon_machete', 1500),
+(55, 'Ammunation', 'weapon_switchblade', 2200),
+(56, 'Ammunation', 'weapon_knife', 2000),
+(57, 'Ammunation', 'gadget_parachute', 5000),
+(58, 'Ammunation', 'weapon_flare', 3000),
+(59, 'Ammunation', 'weapon_pistol', 20000),
+(60, 'Ammunation', 'weapon_doubleaction', 100000),
+(61, 'LTDgasoline', 'weapon_flashlight', 700),
+(62, 'RobsLiquor', 'weapon_flashlight', 700),
+(63, 'TwentyFourSeven', 'weapon_flashlight', 700),
+(64, 'BlackMarket', 'lockpick', 2000),
+(65, 'BlackMarket', 'balisegps', 3000),
+(66, 'BlackMarket', 'tenuecasa', 5000),
+(67, 'BlackMarket', 'headbag', 2000);
 
 -- --------------------------------------------------------
 
@@ -904,7 +1084,7 @@ CREATE TABLE `sim` (
   `phone_number` varchar(10) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `society_moneywash`
@@ -930,6 +1110,7 @@ CREATE TABLE `trunk_inventory` (
   `owned` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `twitter_accounts`
@@ -984,8 +1165,6 @@ CREATE TABLE `users` (
   `job_grade` int DEFAULT '0',
   `job2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT 'unemployed2',
   `job2_grade` int DEFAULT '0',
-  `org` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT 'freecity',
-  `org_gradeorg` int DEFAULT '0',
   `loadout` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `position` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `permission_level` int DEFAULT NULL,
@@ -1007,6 +1186,7 @@ CREATE TABLE `users` (
   `last_save` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `user_accounts`
@@ -1019,6 +1199,19 @@ CREATE TABLE `user_accounts` (
   `money` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_gang`
+--
+
+CREATE TABLE `user_gang` (
+  `identifier` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `grade` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `user_inventory`
@@ -1029,16 +1222,6 @@ CREATE TABLE `user_inventory` (
   `identifier` varchar(255) NOT NULL,
   `item` varchar(255) NOT NULL,
   `count` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
---
--- Structure de la table `user_lastcharacter`
---
-
-CREATE TABLE `user_lastcharacter` (
-  `steamid` varchar(255) NOT NULL,
-  `charid` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1053,6 +1236,21 @@ CREATE TABLE `user_licenses` (
   `owner` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_parking`
+--
+
+CREATE TABLE `user_parking` (
+  `identifier` varchar(50) NOT NULL,
+  `car` int NOT NULL DEFAULT '2',
+  `boat` int NOT NULL DEFAULT '1',
+  `plane` int NOT NULL DEFAULT '0',
+  `heli` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `vehicleshop`
@@ -1070,15 +1268,14 @@ CREATE TABLE `vehicleshop` (
 --
 
 INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
-('Burrito', 'aburrito', 80000, 'society_ammunation'),
-('Adder', 'adder', NULL, 'society_state'),
+('Burrito', 'aburrito', 80000, 'hide_car'),
 ('Adder', 'adder', 750000, 'super'),
 ('Akuma', 'akuma', 33500, 'motorcycles'),
 ('Alpha', 'alpha', 30000, 'sports'),
-('Ambulance', 'ambulance', 80000, 'society_ambulance'),
+('Ambulance', 'ambulance', 80000, 'hide_car'),
 ('Asea', 'asea', 8000, 'sedans'),
 ('Asterope', 'asterope', 14000, 'sedans'),
-('Fourgon Blindé', 'astockade', 130000, 'society_ammunation'),
+('Fourgon Blindé', 'astockade', 130000, 'hide_car'),
 ('Autarch', 'autarch', 700000, 'super'),
 ('Avarus', 'avarus', 20000, 'motorcycles'),
 ('Bagger', 'bagger', 15000, 'motorcycles'),
@@ -1087,8 +1284,8 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Banshee', 'banshee', 63500, 'sports'),
 ('Banshee 900R', 'banshee2', 430000, 'super'),
 ('Bati 801', 'bati', 47000, 'motorcycles'),
-('Bati 801RR', 'bati2', 50000, 'motorcycles'),
-('Benson', 'benson', 110000, 'society_cluckin'),
+('Bati 801RR', 'bati2', 50000, 'hide_car'),
+('Benson', 'benson', 110000, 'hide_car'),
 ('Bestia GTS', 'bestiagts', 75000, 'sports'),
 ('BF400', 'bf400', 80000, 'motorcycles'),
 ('BF Injection', 'bfinjection', 40000, 'offroad'),
@@ -1101,6 +1298,7 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Blazer Sport', 'blazer4', 6000, 'offroad'),
 ('Blista', 'blista', 10000, 'compacts'),
 ('Blista Retro', 'blista2', 12500, 'sportsclassics'),
+('Blista Monkey', 'blista3', 12500, 'hide_car'),
 ('BMX (velo)', 'bmx', 300, 'motorcycles'),
 ('Bobcat XL', 'bobcatxl', 30000, 'vans'),
 ('Bodhi', 'bodhi2', 32000, 'offroad'),
@@ -1109,20 +1307,15 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Btype', 'btype', 45000, 'sportsclassics'),
 ('Fränken Stange', 'btype2', 50000, 'sportsclassics'),
 ('Btype Luxe', 'btype3', 45000, 'sportsclassics'),
-('Buccaneer', 'buccaneer', 33500, 'muscle'),
-('Buccaneer Rider', 'buccaneer2', 19000, 'muscle'),
+('Buccaneer', 'buccaneer', 19000, 'muscle'),
+('Buccaneer Rider', 'buccaneer2', 33500, 'muscle'),
 ('Buffalo', 'buffalo', 24000, 'muscle'),
 ('Buffalo S', 'buffalo2', 27000, 'muscle'),
-('Buffalo course', 'buffalo3', 28000, 'muscle'),
+('Buffalo course', 'buffalo3', 28000, 'hide_car'),
 ('Bullet', 'bullet', 350000, 'super'),
-('Burrito', 'burrito3', NULL, 'society_bahama'),
-('Burrito', 'burrito3', NULL, 'society_cluckin'),
-('Burrito', 'burrito3', NULL, 'society_nightclub'),
-('Burrito', 'burrito3', NULL, 'society_unicorn'),
 ('Burrito', 'burrito3', 80000, 'vans'),
 ('Camper', 'camper', 12000, 'vans'),
 ('Caracara', 'caracara2', 200000, 'offroad'),
-('Carbonizzare', 'carbonizzare', NULL, 'society_bahama'),
 ('Carbonizzare', 'carbonizzare', 92000, 'sports'),
 ('Carbon RS', 'carbonrs', 35000, 'motorcycles'),
 ('Casco', 'casco', 57500, 'sportsclassics'),
@@ -1156,11 +1349,13 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Diablous', 'diablous', 22000, 'motorcycles'),
 ('Diablous Custom', 'diablous2', 30000, 'motorcycles'),
 ('Dilettante', 'dilettante', 9000, 'sedans'),
+('Dinghy', 'dinghy', 180000, 'boats'),
+('Dodo', 'dodo', 6000000, 'planes'),
 ('Dominator', 'dominator', 25000, 'muscle'),
+('Dominator Course', 'dominator2', 25000, 'hide_car'),
 ('Dominator GTX', 'dominator3', 35000, 'muscle'),
 ('Double T', 'double', 38000, 'motorcycles'),
 ('8F Obey', 'drafter', 79000, 'sports'),
-('Dubsta', 'dubsta', NULL, 'society_mecano'),
 ('Dubsta', 'dubsta', 50000, 'suvs'),
 ('Dubsta Luxuary', 'dubsta2', 90000, 'suvs'),
 ('Dubsta 6x6', 'dubsta3', 55000, 'offroad'),
@@ -1169,11 +1364,11 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Dune Buggy', 'dune', 10000, 'offroad'),
 ('Dynasty', 'dynasty', 7000, 'sportsclassics'),
 ('Elegy', 'elegy', 65000, 'sports'),
-('Elegy Sport', 'elegy2', 63000, 'sports'),
+('Elegy Sport', 'elegy2', 70000, 'sports'),
 ('Ellie', 'ellie', 19500, 'muscle'),
 ('Emerus', 'emerus', 1200000, 'super'),
 ('Emperor', 'emperor', 8000, 'sedans'),
-('Buffalo S EMS', 'emsbuffalo', 70000, 'society_ambulance'),
+('Buffalo S EMS', 'emsbuffalo', 70000, 'hide_car'),
 ('Enduro', 'enduro', 14000, 'motorcycles'),
 ('Entity XXR', 'entity2', 220000, 'sports'),
 ('Esskey', 'esskey', 12000, 'motorcycles'),
@@ -1187,18 +1382,16 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Faggio Sport', 'faggio', 1000, 'motorcycles'),
 ('Faggio', 'faggio2', 500, 'motorcycles'),
 ('Faggio Custom', 'faggio3', 750, 'motorcycles'),
-('Buffalo Banalisée', 'fbi', 63000, 'society_ambulance'),
-('Buffalo Banalisée', 'fbi', 63000, 'society_police'),
+('Buffalo Banalisée', 'fbi', 63000, 'hide_car'),
 ('FCR', 'fcr', 15000, 'motorcycles'),
 ('FCR Custom', 'fcr2', 17000, 'motorcycles'),
 ('Felon', 'felon', 32000, 'sedans'),
-('Felon', 'felon', NULL, 'society_taxi'),
 ('Felon GT', 'felon2', 15000, 'coupes'),
 ('Feltzer', 'feltzer2', 107999, 'sports'),
 ('Stirling GT', 'feltzer3', 67000, 'sportsclassics'),
 ('Fixter (velo)', 'fixter', 500, 'motorcycles'),
 ('FlashGT', 'flashgt', 95000, 'sports'),
-('Plateau', 'flatbed', 150000, 'society_mecano'),
+('Plateau', 'flatbed', 150000, 'hide_car'),
 ('FMJ', 'fmj', 500000, 'super'),
 ('FQ2', 'fq2', 40000, 'suvs'),
 ('Freecrawler', 'freecrawler', 30000, 'offroad'),
@@ -1208,7 +1401,7 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Futo', 'futo', 30000, 'sports'),
 ('Gargoyle', 'gargoyle', 18000, 'motorcycles'),
 ('Gauntlet', 'gauntlet', 34000, 'muscle'),
-('Gauntlet Course', 'gauntlet2', 42000, 'muscle'),
+('Gauntlet Course', 'gauntlet2', 42000, 'hide_car'),
 ('Gauntlet Classic', 'gauntlet3', 28000, 'muscle'),
 ('Gauntlet Hellfire', 'gauntlet4', 55000, 'muscle'),
 ('Gauntlet Classic Custom', 'gauntlet5', 80000, 'muscle'),
@@ -1232,6 +1425,7 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Hotring', 'hotring', 45000, 'muscle'),
 ('Huntley S', 'huntley', 70000, 'suvs'),
 ('Hustler', 'hustler', 24000, 'muscle'),
+('Imorgon', 'imorgon', 190000, 'sports'),
 ('Impaler', 'impaler', 31000, 'muscle'),
 ('Infernus', 'infernus', 200000, 'super'),
 ('Infernus Classique', 'infernus2', 100000, 'sportsclassics'),
@@ -1243,12 +1437,13 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Issi Sport', 'issi7', 60000, 'sports'),
 ('Itali GTB', 'italigtb', 500000, 'super'),
 ('Itali GTB Custom', 'italigtb2', 540000, 'super'),
-('Itali GTO', 'italigto', 129999, 'sports'),
+('Itali GTO', 'italigto', 200000, 'sports'),
 ('Jackal', 'jackal', 34000, 'coupes'),
 ('JB700', 'jb700', 75000, 'sportsclassics'),
 ('Jester', 'jester', 60000, 'sports'),
-('Jester Sport', 'jester2', 70000, 'sports'),
+('Jester Sport', 'jester2', 70000, 'hide_car'),
 ('Jester Classique', 'jester3', 63000, 'sports'),
+('JetMax', 'jetmax', 180000, 'boats'),
 ('Journey', 'journey', 6000, 'vans'),
 ('Jugular', 'jugular', 79000, 'sports'),
 ('Kamacho', 'kamacho', 42000, 'offroad'),
@@ -1259,12 +1454,14 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Kuruma', 'kuruma', 63000, 'sports'),
 ('Lectro', 'lectro', 25000, 'motorcycles'),
 ('Locust', 'locust', 82000, 'sports'),
+('Lurcher', 'lurcher', 100000, 'hide_car'),
+('Luxor', 'luxor', 9000000, 'hide_plane'),
 ('Lynx', 'lynx', 62000, 'sports'),
 ('Mamba', 'mamba', 80000, 'sports'),
 ('Manana', 'manana', 10000, 'sportsclassics'),
 ('Manchez', 'manchez', 24500, 'motorcycles'),
 ('Massacro', 'massacro', 91000, 'sports'),
-('Massacro sport', 'massacro2', 96000, 'sports'),
+('Massacro sport', 'massacro2', 96000, 'hide_car'),
 ('Mesa', 'mesa', 40000, 'suvs'),
 ('Mesa Trail', 'mesa3', 55000, 'suvs'),
 ('Michelli GT', 'michelli', 27000, 'sportsclassics'),
@@ -1274,14 +1471,14 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Nebula TURBO', 'nebula', 6000, 'sportsclassics'),
 ('Nemesis', 'nemesis', 13000, 'motorcycles'),
 ('Neo', 'neo', 102000, 'sports'),
-('Pfister Neon', 'neon', 125275, 'sports'),
+('Pfister Neon', 'neon', 155275, 'sports'),
 ('Nero', 'nero', 850000, 'super'),
 ('Nero Custom', 'nero2', 1000000, 'super'),
 ('Nightblade', 'nightblade', 30000, 'motorcycles'),
 ('Nightshade', 'nightshade', 24000, 'muscle'),
 ('9F', 'ninef', 85000, 'sports'),
 ('9F Cabrio', 'ninef2', 90000, 'sports'),
-('Novak', 'novak', 95000, 'society_state'),
+('Novak', 'novak', 95000, 'hide_car'),
 ('Omnis', 'omnis', 130000, 'sports'),
 ('Oracle XS', 'oracle2', 35000, 'sedans'),
 ('Osiris', 'osiris', 550000, 'super'),
@@ -1291,9 +1488,8 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Paragon', 'paragon', 96000, 'sports'),
 ('Pariah', 'pariah', 80000, 'sports'),
 ('Patriot', 'patriot', 60000, 'suvs'),
-('Bus Prison', 'pbus', 180000, 'society_police'),
-('Bus Musicale', 'pbus2', 400000, 'society_bahama'),
-('Bus Musicale', 'pbus2', 400000, 'society_nightclub'),
+('Bus Prison', 'pbus', 180000, 'hide_car'),
+('Bus Musicale', 'pbus2', 400000, 'hide_car'),
 ('PCJ 600', 'pcj', 10000, 'motorcycles'),
 ('Penetrator', 'penetrator', 110000, 'sportsclassics'),
 ('Penumbra', 'penumbra', 80000, 'sports'),
@@ -1304,25 +1500,26 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Phoenix', 'phoenix', 35000, 'muscle'),
 ('Picador', 'picador', 12000, 'muscle'),
 ('Pigalle', 'pigalle', 30000, 'sportsclassics'),
-('Buffalo S Police', 'polbuffalo', 72000, 'society_police'),
-('Bullet Police', 'polbullet', 380000, 'society_police'),
-('Gauntlet Police', 'polgauntlet', 70000, 'society_police'),
-('Stanier', 'police', 32000, 'society_police'),
-('Buffalo', 'police2', 70000, 'society_police'),
-('Cruiser', 'police3', 85000, 'society_police'),
-('Stanier Banalisée', 'police4', 26000, 'society_police'),
-('Moto', 'policeb', 30000, 'society_police'),
-('Fourgon transport', 'policet', 72000, 'society_police'),
-('Thrust Police', 'polthrust', 32500, 'society_police'),
-('Vacca Police', 'polvacca', 300000, 'society_police'),
+('Buffalo S Police', 'polbuffalo', 72000, 'hide_car'),
+('Bullet Police', 'polbullet', 380000, 'hide_car'),
+('Gauntlet Police', 'polgauntlet', 70000, 'hide_car'),
+('Stanier', 'police', 32000, 'hide_car'),
+('Buffalo', 'police2', 70000, 'hide_car'),
+('Cruiser', 'police3', 85000, 'hide_car'),
+('Stanier Banalisée', 'police4', 26000, 'hide_car'),
+('Moto', 'policeb', 30000, 'hide_car'),
+('Fourgon transport', 'policet', 72000, 'hide_car'),
+('Maverick', 'polmav', 3000000, 'hide_heli'),
+('Vacca Police', 'polvacca', 300000, 'hide_car'),
 ('Pony', 'pony', 35000, 'vans'),
 ('Pony Weed', 'pony2', 40000, 'vans'),
 ('Prairie', 'prairie', 10000, 'coupes'),
+('Predator', 'predator', 250000, 'hide_boat'),
 ('Premier', 'premier', 14000, 'sedans'),
 ('Primo', 'primo', 12000, 'sedans'),
 ('Primo Custom', 'primo2', 15000, 'sedans'),
 ('X80 Proto', 'prototipo', 1200000, 'super'),
-('Coil Raiden', 'raiden', 100101, 'sports'),
+('Coil Raiden', 'raiden', 120101, 'sports'),
 ('Rancher XL', 'rancherxl', 35000, 'offroad'),
 ('Rapid GT', 'rapidgt', 81000, 'sports'),
 ('Rapid GT Cabrio', 'rapidgt2', 85000, 'sports'),
@@ -1332,12 +1529,13 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Ratloader Custom', 'ratloader2', 35000, 'vans'),
 ('Reaper', 'reaper', 700000, 'super'),
 ('Rebel', 'rebel2', 18000, 'offroad'),
+('Rebla', 'rebla', 90000, 'suvs'),
 ('Regina', 'regina', 7000, 'sportsclassics'),
 ('Retinue', 'retinue', 43500, 'sportsclassics'),
 ('Rhapsody', 'rhapsody', 4000, 'compacts'),
 ('Riata', 'riata', 36000, 'offroad'),
-('Fourgon Blindé', 'riot', 130000, 'society_police'),
-('Fourgon Antiémeute', 'riot2', 500000, 'society_police'),
+('Fourgon Blindé', 'riot', 130000, 'hide_car'),
+('Fourgon Antiémeute', 'riot2', 500000, 'hide_car'),
 ('Rocoto', 'rocoto', 100000, 'suvs'),
 ('R Rocket', 'rrocket', 50000, 'motorcycles'),
 ('Ruffian', 'ruffian', 24000, 'motorcycles'),
@@ -1354,10 +1552,9 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Sandking XL', 'sandking2', 35000, 'offroad'),
 ('Savestra', 'savestra', 45000, 'sportsclassics'),
 ('SC1', 'sc1', 450000, 'super'),
-('Schafter', 'schafter', 33000, 'sedans'),
-('Schafter V12', 'schafter3', NULL, 'society_nightclub'),
+('Schafter', 'schafter2', 33000, 'sedans'),
 ('Schafter V12', 'schafter3', 55000, 'sports'),
-('Schafter', 'schafter5', 120000, 'society_state'),
+('Schafter', 'schafter5', 120000, 'hide_car'),
 ('Schlagen', 'schlagen', 100000, 'sports'),
 ('Schwarzer', 'schwarzer', 95000, 'sports'),
 ('Scorcher (velo)', 'scorcher', 3400, 'motorcycles'),
@@ -1374,30 +1571,35 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Specter Custom', 'specter2', 89000, 'sports'),
 ('Stafford', 'stafford', 90000, 'muscle'),
 ('Stalion', 'stalion', 14000, 'muscle'),
-('Stalion Course', 'stalion2', 37000, 'muscle'),
+('Stalion Course', 'stalion2', 37000, 'hide_car'),
 ('Stanier', 'stanier', 16500, 'sedans'),
 ('Stinger', 'stinger', 50000, 'sportsclassics'),
 ('Stinger GT', 'stingergt', 65000, 'sportsclassics'),
 ('Stratum', 'stratum', 9000, 'sedans'),
 ('Streiter', 'streiter', 75000, 'sports'),
-('Limo', 'stretch', 120000, 'society_state'),
+('Limo', 'stretch', 120000, 'hide_car'),
+('Stryder', 'stryder', 55000, 'motorcycles'),
 ('Sugoi', 'sugoi', 55000, 'sports'),
 ('Sultan', 'sultan', 33000, 'sedans'),
 ('Sultan Retro', 'sultan2', 32000, 'sedans'),
 ('Sultan RS', 'sultanrs', 120000, 'super'),
 ('Super Diamond', 'superd', 75000, 'sedans'),
+('Super Volito', 'supervolito', 4900000, 'helis'),
 ('Surano', 'surano', 83000, 'sports'),
 ('Surfer', 'surfer', 14000, 'vans'),
 ('Surge', 'surge', 13500, 'sedans'),
+('Swift', 'swift', 5500000, 'helis'),
+('Swift Luxe', 'swift2', 9800000, 'helis'),
 ('Swinger', 'swinger', 73500, 'sportsclassics'),
 ('T20', 't20', 1020000, 'super'),
-('FoodTruck', 'taco', 150000, 'society_cluckin'),
+('FoodTruck', 'taco', 150000, 'hide_car'),
 ('Tailgater', 'tailgater', 16000, 'sedans'),
 ('Taipan', 'taipan', 3500000, 'super'),
 ('Tampa', 'tampa', 15000, 'muscle'),
 ('Tampa Drift', 'tampa2', 90000, 'muscle'),
-('Taxi', 'taxi', 30000, 'society_taxi'),
+('Taxi', 'taxi', 30000, 'hide_car'),
 ('Tempesta', 'tempesta', 600000, 'super'),
+('Tezeract', 'tezeract', 950000, 'super'),
 ('Thrax', 'thrax', 1200000, 'super'),
 ('Thrust', 'thrust', 22500, 'motorcycles'),
 ('Tigon', 'tigon', 750000, 'sportsclassics'),
@@ -1407,8 +1609,8 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Tornado Custom', 'tornado5', 8000, 'sportsclassics'),
 ('Tornado Rat-rod', 'tornado6', 7000, 'sportsclassics'),
 ('Pegassi Toros', 'toros', 150000, 'suvs'),
-('DépaneuseG', 'towtruck', 100000, 'society_mecano'),
-('DépaneuseP', 'towtruck2', 95000, 'society_mecano'),
+('DépaneuseG', 'towtruck', 100000, 'hide_car'),
+('DépaneuseP', 'towtruck2', 95000, 'hide_car'),
 ('Tri bike (velo)', 'tribike3', 2000, 'motorcycles'),
 ('Trophy Truck', 'trophytruck', 350000, 'offroad'),
 ('Buggy Raid', 'trophytruck2', 350000, 'offroad'),
@@ -1418,19 +1620,21 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Turismo R', 'turismor', 700000, 'super'),
 ('Tyrant', 'tyrant', 340000, 'super'),
 ('Tyrus', 'tyrus', 800000, 'super'),
-('Oracle Banalisée', 'umoracle', 60000, 'society_police'),
+('Oracle Banalisée', 'umoracle', 60000, 'hide_car'),
 ('Vacca', 'vacca', 280000, 'super'),
 ('Vader', 'vader', 11000, 'motorcycles'),
 ('Vagner', 'vagner', 1260000, 'super'),
 ('Vagrant', 'vagrant', 110000, 'offroad'),
 ('Vamos', 'vamos', 32000, 'muscle'),
 ('Verlierer', 'verlierer2', 120000, 'sports'),
+('Vestra', 'vestra', 7500000, 'planes'),
 ('Vigero', 'vigero', 31000, 'muscle'),
 ('Vindicator', 'vindicator', 35000, 'motorcycles'),
 ('Virgo', 'virgo', 8000, 'muscle'),
 ('Virgo Custom', 'virgo2', 17000, 'muscle'),
 ('Viseris', 'viseris', 70000, 'sportsclassics'),
 ('Visione', 'visione', 950000, 'super'),
+('Volatus', 'volatus', 5000000, 'helis'),
 ('Voltic', 'voltic', 60000, 'sports'),
 ('Voodoo', 'voodoo', 15000, 'muscle'),
 ('Vortex', 'vortex', 21000, 'motorcycles'),
@@ -1442,14 +1646,11 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Woflsbane', 'wolfsbane', 12000, 'motorcycles'),
 ('Ocelot XA-21', 'xa21', 1562500, 'super'),
 ('XLS', 'xls', 55000, 'suvs'),
-('XLS', 'xls2', 145000, 'society_state'),
+('XLS', 'xls2', 145000, 'hide_car'),
 ('Yosemite', 'yosemite', 25000, 'vans'),
 ('Yosemite Drift', 'yosemite2', 45000, 'vans'),
 ('Yosemite Rancher', 'yosemite3', 30000, 'offroad'),
-('Yosemite Rancher', 'yosemite3', NULL, 'society_mecano'),
-('Yosemite Rancher', 'yosemite3', NULL, 'society_vigneron'),
 ('Youga', 'youga', 80000, 'vans'),
-('Youga Classique', 'youga2', 85000, 'society_tailor'),
 ('Youga Classique', 'youga2', 85000, 'vans'),
 ('Youga classic 4x4', 'youga3', 95000, 'vans'),
 ('Z190', 'z190', 40000, 'sportsclassics'),
@@ -1461,6 +1662,70 @@ INSERT INTO `vehicleshop` (`name`, `model`, `price`, `category`) VALUES
 ('Zombie Luxuary', 'zombieb', 16000, 'motorcycles'),
 ('Zorrusso', 'zorrusso', 850000, 'super'),
 ('Z-Type', 'ztype', 96500, 'sportsclassics');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `vehicleshop_society`
+--
+
+CREATE TABLE `vehicleshop_society` (
+  `model` varchar(60) NOT NULL,
+  `society` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `vehicleshop_society`
+--
+
+INSERT INTO `vehicleshop_society` (`model`, `society`) VALUES
+('aburrito', 'society_ammunation'),
+('adder', 'society_state'),
+('ambulance', 'society_ems'),
+('astockade', 'society_ammunation'),
+('benson', 'society_cluckin'),
+('burrito3', 'society_bahama'),
+('burrito3', 'society_cluckin'),
+('burrito3', 'society_nightclub'),
+('burrito3', 'society_unicorn'),
+('carbonizzare', 'society_bahama'),
+('dubsta', 'society_mecano'),
+('emsbuffalo', 'society_ems'),
+('fbi', 'society_ems'),
+('fbi', 'society_police'),
+('felon', 'society_taxi'),
+('flatbed', 'society_mecano'),
+('novak', 'society_state'),
+('pbus', 'society_police'),
+('pbus2', 'society_bahama'),
+('pbus2', 'society_nightclub'),
+('polbuffalo', 'society_police'),
+('polbullet', 'society_police'),
+('polgauntlet', 'society_police'),
+('police', 'society_police'),
+('police2', 'society_police'),
+('police3', 'society_police'),
+('police4', 'society_police'),
+('policeb', 'society_police'),
+('policet', 'society_police'),
+('polmav', 'society_ems'),
+('polmav', 'society_police'),
+('polvacca', 'society_police'),
+('predator', 'society_police'),
+('riot', 'society_police'),
+('riot2', 'society_police'),
+('schafter3', 'society_nightclub'),
+('schafter5', 'society_state'),
+('stretch', 'society_state'),
+('taco', 'society_cluckin'),
+('taxi', 'society_taxi'),
+('towtruck', 'society_mecano'),
+('towtruck2', 'society_mecano'),
+('umoracle', 'society_police'),
+('xls2', 'society_state'),
+('yosemite3', 'society_mecano'),
+('yosemite3', 'society_vigneron'),
+('youga2', 'society_tailor');
 
 -- --------------------------------------------------------
 
@@ -1478,11 +1743,18 @@ CREATE TABLE `vehicle_categories` (
 --
 
 INSERT INTO `vehicle_categories` (`name`, `label`) VALUES
+('boats', 'Bateaux'),
 ('compacts', 'Compacts'),
 ('coupes', 'Coupés'),
+('helis', 'Hélicos'),
+('hide_boat', '<span style=\'color: #eb4034\'>Staff</span>'),
+('hide_car', '<span style=\'color: #eb4034\'>Staff</span>'),
+('hide_heli', '<span style=\'color: #eb4034\'>Staff</span>'),
+('hide_plane', '<span style=\'color: #eb4034\'>Staff</span>'),
 ('motorcycles', 'Motos'),
 ('muscle', 'Muscle'),
 ('offroad', 'Off Road'),
+('planes', 'Avions'),
 ('sedans', 'Sedans'),
 ('sports', 'Sports'),
 ('sportsclassics', 'Sports Classics'),
@@ -1604,9 +1876,9 @@ ALTER TABLE `licenses`
   ADD PRIMARY KEY (`type`);
 
 --
--- Index pour la table `open_car`
+-- Index pour la table `owned_keys`
 --
-ALTER TABLE `open_car`
+ALTER TABLE `owned_keys`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1655,12 +1927,6 @@ ALTER TABLE `playerstattoos`
 -- Index pour la table `properties`
 --
 ALTER TABLE `properties`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `quincaillerie`
---
-ALTER TABLE `quincaillerie`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1717,6 +1983,12 @@ ALTER TABLE `user_accounts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `user_gang`
+--
+ALTER TABLE `user_gang`
+  ADD PRIMARY KEY (`identifier`);
+
+--
 -- Index pour la table `user_inventory`
 --
 ALTER TABLE `user_inventory`
@@ -1729,10 +2001,22 @@ ALTER TABLE `user_licenses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `user_parking`
+--
+ALTER TABLE `user_parking`
+  ADD PRIMARY KEY (`identifier`);
+
+--
 -- Index pour la table `vehicleshop`
 --
 ALTER TABLE `vehicleshop`
   ADD PRIMARY KEY (`model`,`category`);
+
+--
+-- Index pour la table `vehicleshop_society`
+--
+ALTER TABLE `vehicleshop_society`
+  ADD PRIMARY KEY (`model`,`society`);
 
 --
 -- Index pour la table `vehicle_categories`
@@ -1748,19 +2032,19 @@ ALTER TABLE `vehicle_categories`
 -- AUTO_INCREMENT pour la table `accounts_logs`
 --
 ALTER TABLE `accounts_logs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3312;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `addon_account_data`
 --
 ALTER TABLE `addon_account_data`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=744;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=877;
 
 --
 -- AUTO_INCREMENT pour la table `addon_inventory_items`
 --
 ALTER TABLE `addon_inventory_items`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
 
 --
 -- AUTO_INCREMENT pour la table `arrests_list`
@@ -1772,7 +2056,7 @@ ALTER TABLE `arrests_list`
 -- AUTO_INCREMENT pour la table `baninfo`
 --
 ALTER TABLE `baninfo`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1144;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1184;
 
 --
 -- AUTO_INCREMENT pour la table `banlisthistory`
@@ -1784,15 +2068,13 @@ ALTER TABLE `banlisthistory`
 -- AUTO_INCREMENT pour la table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
-
---
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1327;
 
 --
 -- AUTO_INCREMENT pour la table `datastore_data`
 --
 ALTER TABLE `datastore_data`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268183;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT pour la table `fine_types`
@@ -1804,49 +2086,49 @@ ALTER TABLE `fine_types`
 -- AUTO_INCREMENT pour la table `job_grades`
 --
 ALTER TABLE `job_grades`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=368;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=374;
 
 --
--- AUTO_INCREMENT pour la table `open_car`
+-- AUTO_INCREMENT pour la table `owned_keys`
 --
-ALTER TABLE `open_car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=754;
+ALTER TABLE `owned_keys`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `owned_properties`
 --
 ALTER TABLE `owned_properties`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `phone_app_chat`
 --
 ALTER TABLE `phone_app_chat`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `phone_calls`
 --
 ALTER TABLE `phone_calls`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=437;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `phone_messages`
 --
 ALTER TABLE `phone_messages`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12287;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `phone_users_contacts`
 --
 ALTER TABLE `phone_users_contacts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=441;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `playerstattoos`
 --
 ALTER TABLE `playerstattoos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `properties`
@@ -1855,16 +2137,10 @@ ALTER TABLE `properties`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=537;
 
 --
--- AUTO_INCREMENT pour la table `quincaillerie`
---
-ALTER TABLE `quincaillerie`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `shops`
 --
 ALTER TABLE `shops`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT pour la table `society_moneywash`
@@ -1876,43 +2152,43 @@ ALTER TABLE `society_moneywash`
 -- AUTO_INCREMENT pour la table `trunk_inventory`
 --
 ALTER TABLE `trunk_inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `twitter_accounts`
 --
 ALTER TABLE `twitter_accounts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `twitter_likes`
 --
 ALTER TABLE `twitter_likes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `twitter_tweets`
 --
 ALTER TABLE `twitter_tweets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `user_inventory`
 --
 ALTER TABLE `user_inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67841;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `user_licenses`
 --
 ALTER TABLE `user_licenses`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
