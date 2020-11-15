@@ -52,11 +52,14 @@ function all_players()
 		title    = _("all_players"),
 		align    = "left",
 		elements = {
+			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
             {label = _("orange", _("admin_show_names")), value = "show_names", type="checkbox", checked=show_names},
             {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
 		}
 	}, function(data, menu)
-        if data.current.value == "show_names" then
+		if data.current.name == "admin_spectate" then
+			players_list_spectate()
+        elseif data.current.value == "show_names" then
             show_names = not show_names
 			RemoveAllPlayersBlips()
 		elseif data.current.value == "admin_revive_all_close" then
@@ -74,6 +77,25 @@ function players_list()
     end
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
+        {
+            title    = _("players_list"),
+            align    = "left",
+            elements = elements
+        }, function(data, menu)
+            PlayerManagment(data.current.value)
+		end, function(data, menu)
+            menu.close()
+        end)
+    end
+end
+
+function players_list_spectate()
+    local elements = {}
+    for _, player in ipairs(GetActivePlayers()) do
+        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player})
+    end
+    if #elements >= 1 then
+        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
         {
             title    = _("players_list"),
             align    = "left",
@@ -100,6 +122,7 @@ function PlayerManagment(player)
 			{label = _("blue", _("admin_bring")), value = "admin_bring"},
 			{label = _("pink", _("admin_revive")), value = "admin_revive"},
 			{label = _("pink", _("admin_debug")), value = "admin_debug"},
+			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
 			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
 			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
 		}
@@ -118,6 +141,8 @@ function PlayerManagment(player)
 			EnterReason(function(reason)
 				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
 			end)
+		elseif data.current.value == "admin_spectate" then
+			admin_spectate_player(player)
 		end
     end, function(data, menu)
 		menu.close()

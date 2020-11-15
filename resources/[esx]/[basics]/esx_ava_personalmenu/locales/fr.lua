@@ -73,6 +73,7 @@ Locales["fr"] = {
   ['billing_detail'] = "Rédigez une facture au nom de l'entreprise",
   ['society_life_invader_detail'] = "Envoyer un message sur le LifeInvader au nom de l'entreprise",
 
+  ["admin_spectate"] = "Spectate",
   ["admin_tp_marker"] = "TP sur le Marqueur",
   ["admin_noclip"] = "NoClip",
   ["admin_repair_vehicle"] = "Réparer Véhicule",
