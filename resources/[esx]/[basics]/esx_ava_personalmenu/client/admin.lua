@@ -57,7 +57,7 @@ function all_players()
             {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
 		}
 	}, function(data, menu)
-		if data.current.name == "admin_spectate" then
+		if data.current.value == "admin_spectate" then
 			players_list_spectate()
         elseif data.current.value == "show_names" then
             show_names = not show_names
