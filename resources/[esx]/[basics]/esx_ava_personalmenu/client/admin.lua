@@ -85,7 +85,6 @@ function players_list()
             menu.close()
 		end, function(data, menu)
 			admin_spectate_player(data.current.value)
-            menu.close()
         end)
     end
 end
