@@ -78,7 +78,7 @@ function players_list()
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
         {
-            title    = _("players_list"),
+            title    = _("admin_spectate"),
             align    = "left",
             elements = elements
         }, function(data, menu)
