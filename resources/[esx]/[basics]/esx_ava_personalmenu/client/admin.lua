@@ -348,12 +348,14 @@ function admin_spectate(player)
 		SetEntityVisible(playerPed, false, 0)
 		SetEveryoneIgnorePlayer(playerPed, true)
 		SetEntityCollision(playerPed, false, false)
+		FreezeEntityPosition(playerPed, true)
 	else
 		NetworkSetInSpectatorMode(false, targetPed)
 		SetEntityInvincible(playerPed, false)
 		SetEntityVisible(playerPed, true, 0)
 		SetEveryoneIgnorePlayer(playerPed, false)
 		SetEntityCollision(playerPed, true, true)
+		FreezeEntityPosition(playerPed, false)
 	end
 end
 
