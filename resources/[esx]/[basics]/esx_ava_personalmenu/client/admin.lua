@@ -59,8 +59,6 @@ function all_players()
         if data.current.value == "show_names" then
             show_names = not show_names
 			RemoveAllPlayersBlips()
-			menu.update({value = "show_names"}, {label = _("orange", _("admin_show_names"))})
-			menu.refresh()
 		elseif data.current.value == "admin_revive_all_close" then
 			ReviveAllClose()
         end
