@@ -99,6 +99,7 @@ function PlayerManagment(player)
 			{label = _("pink", _("admin_debug")), value = "admin_debug"},
 			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
 			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
+			{label = _("bright_red", _("admin_spectate")), value = "admin_spectate"},
 		}
 	}, function(data, menu)
 		if data.current.value == "admin_goto" then
@@ -115,7 +116,9 @@ function PlayerManagment(player)
 			EnterReason(function(reason)
 				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
 			end)
-        end
+		elseif data.current.value == "admin_spectate" then
+			admin_spectate(player)
+		end
     end, function(data, menu)
 		menu.close()
 	end)
@@ -335,6 +338,24 @@ RegisterNetEvent('esx_ava_personalmenu:kill_cl')
 AddEventHandler('esx_ava_personalmenu:kill_cl', function()
 	SetEntityHealth(PlayerPedId(), 0)
 end)
+
+function admin_spectate(player)
+	local playerPed = GetPlayerPed(-1)
+	local targetPed = GetPlayerPed(player)
+	if targetPed ~= playerPed then
+		NetworkSetInSpectatorMode(true, targetPed)
+		SetEntityInvincible(playerPed, true)
+		SetEntityVisible(playerPed, false, 0)
+		SetEveryoneIgnorePlayer(playerPed, true)
+		SetEntityCollision(playerPed, false, false)
+	else
+		NetworkSetInSpectatorMode(false, targetPed)
+		SetEntityInvincible(playerPed, false)
+		SetEntityVisible(playerPed, true, 0)
+		SetEveryoneIgnorePlayer(playerPed, false)
+		SetEntityCollision(playerPed, true, true)
+	end
+end
 
 function admin_noclip()
 	noclip = not noclip
