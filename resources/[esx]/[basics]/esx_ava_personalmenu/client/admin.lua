@@ -80,7 +80,11 @@ function players_list()
             elements = elements
         }, function(data, menu)
             PlayerManagment(data.current.value)
-        end, function(data, menu)
+		end, function(data, menu)
+			admin_spectate_player(-1)
+            menu.close()
+		end, function(data, menu)
+			admin_spectate_player(data.current.value)
             menu.close()
         end)
     end
@@ -117,7 +121,7 @@ function PlayerManagment(player)
 				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
 			end)
 		elseif data.current.value == "admin_spectate" then
-			admin_spectate(player)
+			admin_spectate_player(player)
 		end
     end, function(data, menu)
 		menu.close()
@@ -339,7 +343,7 @@ AddEventHandler('esx_ava_personalmenu:kill_cl', function()
 	SetEntityHealth(PlayerPedId(), 0)
 end)
 
-function admin_spectate(player)
+function admin_spectate_player(player)
 	local playerPed = GetPlayerPed(-1)
 	local targetPed = GetPlayerPed(player)
 	if targetPed ~= playerPed then
