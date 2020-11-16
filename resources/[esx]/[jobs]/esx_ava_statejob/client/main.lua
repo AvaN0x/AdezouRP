@@ -713,7 +713,7 @@ AddEventHandler("esx_ava_statejob:sendRequest", function(name,id)
 	ESX.ShowAdvancedNotification(
 		'Secrétaire', 
 		'GOUVERNEMENT', 
-		"~b~"..name.." ~w~a sonné à la porte du gouvernement.\n~g~Y~s~ / ~r~X~s~", 'CHAR_ANTONIA', 2)
+		"~b~"..name.." ~w~a sonné à la porte du gouvernement.\n~g~Y~s~ / ~r~X~s~", 'CHAR_CASINO_MANAGER', 2)
 
 
 	stopRequest = false

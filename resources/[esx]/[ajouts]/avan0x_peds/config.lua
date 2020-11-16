@@ -68,7 +68,8 @@ Config.Peds = {
     --     }
     -- },
     Gouv = {
-        Name = "a_f_y_business_01",
+        -- Name = "a_f_y_business_01",
+        Name = "ig_agatha",
         Type= "PED_TYPE_CIVFEMALE",
         PosList = {
             {x = -550.76, y = -190.07, z = 36.72, h = 193.6, scenario = "PROP_HUMAN_SEAT_ARMCHAIR"},
