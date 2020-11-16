@@ -125,6 +125,7 @@ function PlayerManagment(player)
 			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
 			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
 			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
+			{label = _("bright_red", _("admin_ban")), value = "admin_ban"},
 		}
 	}, function(data, menu)
 		if data.current.value == "admin_goto" then
@@ -134,15 +135,19 @@ function PlayerManagment(player)
         elseif data.current.value == "admin_revive" then
             TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
         elseif data.current.value == "admin_debug" then
-            TriggerServerEvent("esx_ava_emsjob:revive2", serverID, true)
+			TriggerServerEvent("esx_ava_emsjob:revive2", serverID, true)
+		elseif data.current.value == "admin_spectate" then
+			admin_spectate_player(player)
         elseif data.current.value == "admin_kill" then
 			TriggerServerEvent('esx_ava_personalmenu:kill_sv', serverID)
 		elseif data.current.value == "admin_kick" then
 			EnterReason(function(reason)
 				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
 			end)
-		elseif data.current.value == "admin_spectate" then
-			admin_spectate_player(player)
+		elseif data.current.value == "admin_ban" then
+			EnterReason(function(reason)
+				TriggerServerEvent("ava_connection:banPlayer", serverID, reason)
+			end)
 		end
     end, function(data, menu)
 		admin_spectate_player(-1)
@@ -150,6 +155,7 @@ function PlayerManagment(player)
 	end)
 end
 
+--todo add default value ?
 function EnterReason(cb)
 	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_enter_reason", {
 		title = _('admin_enter_reason')

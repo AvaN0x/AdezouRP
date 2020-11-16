@@ -102,5 +102,6 @@ Locales["fr"] = {
   ["admin_debug"] = "Debug",
   ["admin_kill"] = "Kill",
   ["admin_kick"] = "Kick",
+  ["admin_ban"] = "Bannir",
 
 }
