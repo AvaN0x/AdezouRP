@@ -155,9 +155,11 @@ AddEventHandler("esx:onPlayerDeath", function(data)
 	local _source = source
 	local deathCauseLabel = GetDeathCauseLabel(data.deathCause)
 	if data.killedByPlayer then
+		TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. GetPlayerName(_source) .. "~s~ got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. ".")
 		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. " (`" .. data.deathCause .. "`) at distance : " .. data.distance, 16711680) -- #ff0000
 	else
-		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. deathCauseLabel .. " (`" .. data.deathCause .. "`)." , 16711680) -- #ff0000
+		TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. GetPlayerName(_source) .. "~s~ died from " .. deathCauseLabel .. ".")
+		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. deathCauseLabel .. " (`" .. data.deathCause .. "`).", 16711680) -- #ff0000
 	end
 end)
 
