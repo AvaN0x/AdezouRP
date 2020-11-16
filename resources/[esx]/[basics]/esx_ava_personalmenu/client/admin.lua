@@ -55,11 +55,14 @@ function all_players()
 			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
             {label = _("orange", _("admin_show_names")), value = "show_names", type="checkbox", checked=show_names},
             {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
+			{label = _("orange", _("admin_unban")), value = "admin_unban"},
 		}
 	}, function(data, menu)
-		if data.current.value == "admin_spectate" then
+		if data.current.value == "admin_unban" then
+			admin_unban()
+		elseif data.current.value == "admin_spectate" then
 			players_list_spectate()
-        elseif data.current.value == "show_names" then
+		elseif data.current.value == "show_names" then
             show_names = not show_names
 			RemoveAllPlayersBlips()
 		elseif data.current.value == "admin_revive_all_close" then
@@ -487,3 +490,19 @@ AddEventHandler('esx_ava_personalmenu:notifStaff', function(content)
 		ESX.ShowNotification(content)
 	end
 end)
+
+function admin_unban()
+	ESX.TriggerServerCallback('ava_connection:getBannedElements', function(elements)
+		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_unban",
+        {
+            title    = _("admin_unban_title"),
+            align    = "left",
+            elements = elements
+        }, function(data, menu)
+			TriggerServerEvent('ava_connection:unban', data.current.value)
+			menu.close()
+		end, function(data, menu)
+            menu.close()
+        end)
+	end)
+end

@@ -5,6 +5,10 @@
 --- https://github.com/sadboilogan/discord_perms ---
 ----------------------------------------------------
 
+ESX = nil
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
 local formattedToken
 local banList = nil
 
@@ -166,10 +170,6 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 RegisterServerEvent("ava_connection:banPlayer")
-AddEventHandler("ava_connection:banPlayer", function()
-end)
-
-RegisterServerEvent("ava_connection:banPlayer")
 AddEventHandler("ava_connection:banPlayer", function(id, reason)
 	local steam, license, discord, ip, live, xbl = GetPlayerIdentifiersInVars(id)
 	local name = GetPlayerName(id)
@@ -194,7 +194,7 @@ end)
 
 
 function GetBanList()
-	MySQL.Async.fetchAll("SELECT * FROM `ban_list`", {}, function(data)
+	MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, users.name AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier", {}, function(data)
 		if data[1] then
 			banList = data
 		else
@@ -210,9 +210,32 @@ function isBanned(steam, license, discord, ip, live, xbl)
 
 	for k, v in ipairs(banList) do
 		if v.steam == steam or v.license == license or v.discord == discord or v.ip == ip or v.live == live or v.xbl == xbl then
-			return true, v.reason -- todo add steam name of the staff who banned the player?
+			return true, v.reason .. " (" .. v.staff_name .. ")"
 		end
 	end
 
 	return false, ""
 end
+
+ESX.RegisterServerCallback('ava_connection:getBannedElements', function(source, cb)
+	local elements = {}
+	for k, v in ipairs(banList) do
+		local detail = "Reason : " .. v.reason .. "<br/>" .. "Staff : " .. v.staff_name
+		table.insert(elements, {label = v.name, value = v.license, detail = detail})
+	end
+	cb(elements)
+end)
+
+RegisterServerEvent("ava_connection:unban")
+AddEventHandler("ava_connection:unban", function(license)
+	MySQL.Async.execute('DELETE FROM `ban_list` WHERE license = @license', {
+		['@license'] = license
+	})
+	for k, v in ipairs(banList) do
+		if v.license == license then
+			SendWebhookEmbedMessage("avan0x_wh_staff", "", v.name .. " got unbanned by **" .. GetPlayerName(source) .. "**.", 16575503)
+			break
+		end
+	end
+	GetBanList()
+end)

@@ -103,5 +103,7 @@ Locales["fr"] = {
   ["admin_kill"] = "Kill",
   ["admin_kick"] = "Kick",
   ["admin_ban"] = "Bannir",
+  ["admin_unban"] = "Débannir",
+  ["admin_unban_title"] = "Débannir instantanément",
 
 }
