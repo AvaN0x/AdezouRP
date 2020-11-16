@@ -194,7 +194,7 @@ end)
 
 
 function GetBanList()
-	MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, users.name AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier", {}, function(data)
+	MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban, COALESCE (users.name,'STAFF') AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier ORDER BY date_ban DESC", {}, function(data)
 		if data[1] then
 			banList = data
 		else
@@ -220,7 +220,7 @@ end
 ESX.RegisterServerCallback('ava_connection:getBannedElements', function(source, cb)
 	local elements = {}
 	for k, v in ipairs(banList) do
-		local detail = "Reason : " .. v.reason .. "<br/>" .. "Staff : " .. v.staff_name
+		local detail = "Reason : " .. v.reason .. "<br/>" .. "Staff : " .. v.staff_name.. "<br/>" .. "Date : " .. v.date_ban
 		table.insert(elements, {label = v.name, value = v.license, detail = detail})
 	end
 	cb(elements)
