@@ -23,5 +23,6 @@ server_script 'server/updatecheck.lua'
 server_export 'getFactory'
 
 -- Uncomment the below lines to enable examples
--- server_script 'server/included/demo.lua'
+server_script 'server/plugins/*'
+--server_script 'server/included/demo.lua'
 -- server_script 'server/included/boilerplate.lua'
