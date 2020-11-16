@@ -23,3 +23,8 @@ RegisterServerEvent("esx_ava_personalmenu:notifStaff")
 AddEventHandler("esx_ava_personalmenu:notifStaff", function(content)
 	TriggerClientEvent("esx_ava_personalmenu:notifStaff", -1, content)
 end)
+
+RegisterServerEvent("esx_ava_personalmenu:privateMessage")
+AddEventHandler("esx_ava_personalmenu:privateMessage", function(plyId, content)
+	TriggerClientEvent("esx_ava_personalmenu:privateMessage", plyId, GetPlayerName(source), content)
+end)

@@ -118,6 +118,7 @@ function PlayerManagment(player)
 		title    = serverID .. ' - ' .. GetPlayerName(player),
 		align    = "left",
 		elements = {
+			{label = _("green", _("admin_private_message")), value = "admin_private_message"},
 			{label = _("blue", _("admin_goto")), value = "admin_goto"},
 			{label = _("blue", _("admin_bring")), value = "admin_bring"},
 			{label = _("pink", _("admin_revive")), value = "admin_revive"},
@@ -125,10 +126,14 @@ function PlayerManagment(player)
 			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
 			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
 			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
-			{label = _("bright_red", _("admin_ban")), value = "admin_ban"},
+			{label = _("bright_red", _("admin_ban")), value = "admin_ban", detail = _('admin_ban_detail')},
 		}
 	}, function(data, menu)
-		if data.current.value == "admin_goto" then
+		if data.current.value == "admin_private_message" then
+			EnterReason(function(content)
+				TriggerServerEvent("esx_ava_personalmenu:privateMessage", serverID, content)
+			end)
+		elseif data.current.value == "admin_goto" then
 			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(player)))
 		elseif data.current.value == "admin_bring" then
 			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
@@ -361,6 +366,14 @@ function admin_tp_marker()
 	end
 end
 
+RegisterNetEvent('esx_ava_personalmenu:privateMessage')
+AddEventHandler('esx_ava_personalmenu:privateMessage', function(name, content)
+    if not HasStreamedTextureDictLoaded("WEB_BITTERSWEETCELLPHONE") then
+        RequestStreamedTextureDict("WEB_BITTERSWEETCELLPHONE", true)
+    end
+	ESX.ShowAdvancedNotification(_('staff'), name, content, 'WEB_BITTERSWEETCELLPHONE', 2)
+end)
+
 RegisterNetEvent('esx_ava_personalmenu:bring_cl')
 AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
 	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
@@ -501,8 +514,8 @@ function admin_vehicle_menu()
 		elements = {
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
 			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
-			{label = _("green", _("admin_delete_vehicle")), value = "delete_vehicle"},
-			{label = _("green", _("admin_flip_vehicle")), value = "flip_vehicle"},
+			{label = _("red", _("admin_delete_vehicle")), value = "delete_vehicle"},
+			{label = _("admin_flip_vehicle"), value = "flip_vehicle"},
 		}
 	}, function(data, menu)
 		if data.current.value == "repair_vehicle" then

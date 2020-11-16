@@ -73,6 +73,9 @@ Locales["fr"] = {
   ['billing_detail'] = "Rédigez une facture au nom de l'entreprise",
   ['society_life_invader_detail'] = "Envoyer un message sur le LifeInvader au nom de l'entreprise",
 
+
+  -- staff
+  ['staff'] = "STAFF",
   ["admin_spectate"] = "Spectate",
   ["admin_tp_marker"] = "TP sur le Marqueur",
   ["admin_noclip"] = "NoClip",
@@ -93,8 +96,9 @@ Locales["fr"] = {
   ['admin_mode'] = "Toggle mode admin",
 
   -- player managment
-  ['admin_enter_reason'] = "Entrez une raison",
+  ['admin_enter_reason'] = "Entrez une raison / contenu",
 
+  ["admin_private_message"] = "Envoyer un message",
   ["admin_goto"] = "TP sur Joueur",
   ["admin_bring"] = "TP Joueur sur moi",
   ['admin_revive'] = "Revive / Heal",
@@ -102,6 +106,7 @@ Locales["fr"] = {
   ["admin_kill"] = "Kill",
   ["admin_kick"] = "Kick",
   ["admin_ban"] = "Bannir",
+  ["admin_ban_detail"] = "Bannir définitivement",
   ["admin_unban"] = "Débannir",
   ["admin_unban_title"] = "Débannir instantanément",
 
