@@ -76,8 +76,7 @@ Locales["fr"] = {
   ["admin_spectate"] = "Spectate",
   ["admin_tp_marker"] = "TP sur le Marqueur",
   ["admin_noclip"] = "NoClip",
-  ["admin_repair_vehicle"] = "Réparer Véhicule",
-  ['admin_tp_nearest_vehicle'] = "Tp véhicule le plus proche",
+  ["admin_vehicle_menu"] = "Véhicules",
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
   ["admin_show_hash"] = "Toggle hash des props",
   ["admin_change_skin"] = "Changer l'Apparence",
@@ -106,4 +105,9 @@ Locales["fr"] = {
   ["admin_unban"] = "Débannir",
   ["admin_unban_title"] = "Débannir instantanément",
 
+  -- vehicles
+  ["admin_repair_vehicle"] = "Réparer Véhicule",
+  ['admin_tp_nearest_vehicle'] = "Tp véhicule le plus proche",
+  ['admin_delete_vehicle'] = "Supprimer le véhicule",
+  ['admin_flip_vehicle'] = "Retourner le véhicule",
 }

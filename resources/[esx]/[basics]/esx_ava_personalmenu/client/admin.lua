@@ -15,8 +15,7 @@ function OpenAdminMenu()
             {label = _("orange", _("all_players")), value = "all_players"},
 			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
 			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
-			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
-			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
+			{label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
 			{label = _("bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
@@ -30,10 +29,8 @@ function OpenAdminMenu()
             admin_tp_marker()
 		elseif data.current.value == "noclip" then
 			admin_noclip()
-		elseif data.current.value == "repair_vehicle" then
-			admin_vehicle_repair()
-		elseif data.current.value == "tp_nearest_vehicle" then
-			admin_tp_nearest_vehicle()
+		elseif data.current.value == "admin_vehicle_menu" then
+			admin_vehicle_menu()
 		elseif data.current.value == "show_hash" then
 			show_hashes = not show_hashes
 		elseif data.current.value == "admin_mode" then
@@ -424,21 +421,6 @@ function RemoveAllPlayersBlips()
 	end
 end
 
-function admin_vehicle_repair()
-	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-
-	SetVehicleFixed(vehicle)
-	SetVehicleDirtLevel(vehicle, 0.0)
-end
-
-function admin_tp_nearest_vehicle()
-	local playerPed = GetPlayerPed(-1)
-	local coords = GetEntityCoords(playerPed, true)
-
-	TaskWarpPedIntoVehicle(playerPed, GetClosestVehicle(coords.x, coords.y, coords.z, 10.0, 0, 71), -1)
-end
-
-
 RegisterNetEvent('esx_ava_personalmenu:toggle_admin_mode')
 AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
 	if IsDead then
@@ -505,4 +487,55 @@ function admin_unban()
             menu.close()
         end)
 	end)
+end
+
+
+
+
+--? vehicles part
+function admin_vehicle_menu()
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_vehicle_menu",
+	{
+		title    = _("admin_vehicle_menu"),
+		align    = "left",
+		elements = {
+			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
+			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
+			{label = _("green", _("admin_delete_vehicle")), value = "delete_vehicle"},
+			{label = _("green", _("admin_flip_vehicle")), value = "flip_vehicle"},
+		}
+	}, function(data, menu)
+		if data.current.value == "repair_vehicle" then
+			admin_vehicle_repair()
+		elseif data.current.value == "tp_nearest_vehicle" then
+			admin_tp_nearest_vehicle()
+		elseif data.current.value == "delete_vehicle" then
+			TriggerEvent('esx:deleteVehicle')
+		elseif data.current.value == "flip_vehicle" then
+			admin_flip_vehicle()
+        end
+    end, function(data, menu)
+		menu.close()
+	end)
+end
+
+function admin_vehicle_repair()
+	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+
+	SetVehicleFixed(vehicle)
+	SetVehicleDirtLevel(vehicle, 0.0)
+end
+
+function admin_tp_nearest_vehicle()
+	local playerPed = GetPlayerPed(-1)
+	local coords = GetEntityCoords(playerPed, true)
+
+	TaskWarpPedIntoVehicle(playerPed, GetClosestVehicle(coords.x, coords.y, coords.z, 12.0, 0, 71), -1)
+end
+
+function admin_flip_vehicle()
+	local playerPed = GetPlayerPed(-1)
+	local coords = GetEntityCoords(playerPed, true)
+
+	SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)
 end
