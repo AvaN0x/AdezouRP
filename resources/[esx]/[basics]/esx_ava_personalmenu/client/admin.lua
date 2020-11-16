@@ -178,6 +178,19 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(10)
+				if IsControlJustReleased(0, Config.AdminMenuKey) then
+					if IsDead then
+						TriggerEvent('esx_ava_emsjob:revive2')
+						Citizen.Wait(1000)
+					end
+					OpenAdminMenu()
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(10)
 				if noclip then
 					local playerPed = PlayerPedId()
 					local x, y, z = getPosition(playerPed)
