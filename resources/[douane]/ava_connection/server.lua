@@ -95,6 +95,7 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
 			if gotRole then
 				name = data.user.username .. "#" .. data.user.discriminator .. " (" .. name .. ")"
 				print(name .. " se connecte.")
+				TriggerEvent('esx_ava_personalmenu:notifStaff', "~g~" .. name .. "~s~ se connecte.")
 				SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " se connecte.", 311891)
 				deferrals.done()
 				return
@@ -127,6 +128,7 @@ AddEventHandler('playerDropped', function(reason)
 		end
 	end
 	print(name .. " a quitté.\n\tRaison : " .. reason)
+	TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. name .. "~s~ a quitté. (" .. reason .. ")")
 	SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " a quitté.\n\tRaison : " .. reason, 16733269)
 end)
 

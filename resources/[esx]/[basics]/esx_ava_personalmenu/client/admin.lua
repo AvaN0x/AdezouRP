@@ -450,7 +450,7 @@ function ToggleAdminMode()
 	if admin_mode then
 		TriggerEvent('skinchanger:getSkin', function(skin)
 			if skin.sex == 0 then
-				TriggerEvent('skinchanger:loadClothes', skin, json.decode('{"pants_1":106,"glasses_2":11,"torso_2":5,"helmet_1":15,"chain_2":0,"bags_2":0,"arms":3,"glasses_1":29,"torso_1":274,"bproof_2":0,"tshirt_2":0,"shoes_2":5,"bproof_1":0,"bags_1":0,"shoes_1":83,"pants_2":5,"tshirt_1":15,"chain_1":0,"helmet_2":5}'))
+				TriggerEvent('skinchanger:loadClothes', skin, json.decode('{"pants_1":106,"glasses_2":11,"torso_2":5,"helmet_1":-1,"chain_2":0,"bags_2":0,"arms":3,"glasses_1":29,"torso_1":274,"bproof_2":0,"tshirt_2":0,"shoes_2":5,"bproof_1":0,"bags_1":0,"shoes_1":83,"pants_2":5,"tshirt_1":15,"chain_1":0,"helmet_2":0}'))
 			else
 				TriggerEvent('skinchanger:loadClothes', skin, json.decode('{"glasses_2":0,"pants_2":5,"bags_2":0,"helmet_1":-1,"pants_1":113,"chain_1":0,"tshirt_2":0,"glasses_1":5,"bproof_1":0,"torso_1":287,"bproof_2":0,"chain_2":0,"shoes_1":87,"tshirt_1":14,"torso_2":5,"bags_1":0,"shoes_2":5,"arms":8,"helmet_2":0}'))
 			end
@@ -474,3 +474,10 @@ function ReviveAllClose()
 		TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
 	end
 end
+
+RegisterNetEvent('esx_ava_personalmenu:notifStaff')
+AddEventHandler('esx_ava_personalmenu:notifStaff', function(content)
+	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+		ESX.ShowNotification(content)
+	end
+end)

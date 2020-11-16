@@ -18,3 +18,8 @@ TriggerEvent('es:addGroupCommand', 'a', 'admin', function(source, args, user)
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
 end, {help = "Toggle admin mode", params = {}})
+
+RegisterServerEvent("esx_ava_personalmenu:notifStaff")
+AddEventHandler("esx_ava_personalmenu:notifStaff", function(content)
+	TriggerClientEvent("esx_ava_personalmenu:notifStaff", -1, content)
+end)
