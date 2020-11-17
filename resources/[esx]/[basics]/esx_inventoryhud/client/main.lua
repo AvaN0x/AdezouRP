@@ -442,3 +442,8 @@ Citizen.CreateThread(
         end
     end
 )
+
+--! temporary
+RegisterCommand('inv', function(source, args, raw)
+    ESX.ShowInventory()
+end)
