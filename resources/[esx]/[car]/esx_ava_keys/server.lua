@@ -90,18 +90,24 @@ end
 RegisterServerEvent('esx_ava_keys:giveOwnerShip')
 AddEventHandler('esx_ava_keys:giveOwnerShip', function(plate, target)
 	local _source = source
+	local _target = target
 	local xPlayer = ESX.GetPlayerFromId(_source)
-	local xTarget = ESX.GetPlayerFromId(target)
+	local xTarget = ESX.GetPlayerFromId(_target)
 	MySQL.Async.execute('UPDATE `owned_keys` SET `identifier`= @identifier WHERE `type` = 1 AND `plate` = @plate', {
 		['@identifier'] = xTarget.identifier,
 		['@plate'] = plate
 	}, function(rowsChanged)
-		TriggerClientEvent('esx_ava_keys:setKeys', _source, GetKeys(xPlayer))
-		TriggerClientEvent('esx:showNotification', _source, _U('no_longer_owner_of'))
-		MySQL.Async.execute('DELETE FROM `owned_keys` WHERE type<>1 AND plate = @plate', {
+		MySQL.Async.execute('UPDATE `owned_vehicles` SET `owner`= @identifier WHERE `plate` = @plate', {
+			['@identifier'] = xTarget.identifier,
 			['@plate'] = plate
-		})
-		TriggerClientEvent('esx_ava_keys:setKeys', target, GetKeys(xTarget))
-		TriggerClientEvent('esx:showNotification', target, _U('new_owner_of', plate))
+		}, function(rowsChanged)
+			MySQL.Async.execute('DELETE FROM `owned_keys` WHERE type<>1 AND plate = @plate', {
+				['@plate'] = plate
+			})
+			TriggerClientEvent('esx_ava_keys:setKeys', _source, GetKeys(xPlayer))
+			TriggerClientEvent('esx:showNotification', _source, _U('no_longer_owner_of'))
+			TriggerClientEvent('esx_ava_keys:setKeys', _target, GetKeys(xTarget))
+			TriggerClientEvent('esx:showNotification', _target, _U('new_owner_of', plate))
+		end)
 	end)
 end)
