@@ -4,8 +4,6 @@ server.cfg
 permissions.cfg
 *.sh
 /cache/
-/resources/\[local\]/
-/resources/\[douane\]/discord_perms/config.lua
 /resources/\[textures\]/
 /resources/\[esx\]/\[test\]
 
