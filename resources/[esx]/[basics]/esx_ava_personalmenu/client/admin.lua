@@ -72,8 +72,8 @@ end
 
 function players_list()
     local elements = {}
-    for _, player in ipairs(GetActivePlayers()) do
-        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player})
+    for k, player in ipairs(GetActivePlayers()) do
+        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player, detail = _('local_id', player)})
     end
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
@@ -91,8 +91,8 @@ end
 
 function players_list_spectate()
     local elements = {}
-    for _, player in ipairs(GetActivePlayers()) do
-        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player})
+	for k, player in ipairs(GetActivePlayers()) do
+        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player, detail = _('local_id', player)})
     end
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
