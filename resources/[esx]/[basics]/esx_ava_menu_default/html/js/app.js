@@ -16,7 +16,7 @@
 		'</div>';
 
 	window.ESX_MENU = {};
-	ESX_MENU.ResourceName = 'esx_menu_default';
+	ESX_MENU.ResourceName = 'esx_ava_menu_default';
 	ESX_MENU.opened = {};
 	ESX_MENU.focus = [];
 

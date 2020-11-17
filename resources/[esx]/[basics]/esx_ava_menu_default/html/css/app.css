@@ -1,0 +1,189 @@
+@font-face {
+  font-family: SignPainter;
+  src: url('../fonts/pdown.ttf');
+}
+
+@font-face {
+  font-family: vo;
+  src: url('../fonts/bankgothic.ttf');
+}
+
+.menu {
+  font-family: vo;
+  width: 400px;
+  /* min-width: 400px; */
+  /* max-width: 400px; */
+  color: #fff;
+  left: 40;
+  top: 80;
+  position: absolute;
+}
+
+.menu.align-left {
+  right: 40;
+  top: 80;
+
+}
+
+.menu.align-top-left {
+  left: 40;
+  top: 100;
+}
+
+.menu.align-top {
+  left: 40;
+  top: 80;
+}
+
+.menu.align-top-right {
+  left: 40;
+  top: 280;
+}
+
+.menu.align-right {
+  left: 40;
+  top: 80;
+}
+
+.menu.align-bottom-right {
+  left: 40;
+  top: 80;
+}
+
+.menu.align-bottom {
+  left: 40;
+  top: 80;
+}
+
+.menu.align-bottom-left {
+  right: 40;
+  bottom: 80;
+}
+
+.menu.align-center {
+  left: 40;
+  top: 80;
+}
+
+
+.menu .header {
+  font-family: SignPainter;
+  font-size: 59px;
+
+  background-image: url("../img/header/header.png");
+  text-align: center;
+  height: 90px;
+  line-height: 105px;
+  color: white;
+  font-style: oblique;
+}
+
+.menu .title {
+  font-family: SignPainter;
+  font-size: 23px;
+  height: 30px;
+  line-height: 35px;
+  padding: 0 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 1);
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 10px;
+  position: left;
+  top: 0;
+  overflow-y: hidden;
+  display: flex;
+}
+
+.menu .title>span:first-child {
+  flex-grow: 1;
+}
+
+.menu .menu-items {
+  max-height: 350px;
+  overflow-y: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.menu .menu-items .menu-item {
+  display: block;
+  font-size: 21px;
+  height: 35px;
+  line-height: 35px;
+  color: white;
+  text-align: left;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu .menu-items .menu-item.selected {
+  background-color: white;
+  color: black;
+}
+
+/* .menu .menu-items .menu-item input[type="checkbox"] {
+  background-color: red;
+  color: blue;
+} */
+
+/* input[type="checkbox"] {
+  background-color: red;
+  color: blue;
+}
+ */
+.menu .menu-items .menu-item input[type="checkbox"] {
+  display: none;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]+label {
+  content: '';
+  height: 16px;
+  width: 16px;
+  border: white solid 2px;
+  background-color: #00000000;
+  border-radius: 2px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.menu .menu-items .menu-item.selected input[type="checkbox"]+label {
+  border: black solid 2px;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]+label::before {
+  content: '';
+  position: relative;
+  top: -9px;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]:checked+label {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.menu .menu-items .menu-item.selected input[type="checkbox"]:checked+label {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.menu .menu-items .menu-item input[type="checkbox"]:checked+label::before {
+  content: '✔';
+}
+
+
+.menu .detail {
+  margin-top: 8px;
+  display: block;
+  font-size: 21px;
+  min-height: 35px;
+  line-height: 35px;
+  color: white;
+  text-align: left;
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: space-between;
+
+}

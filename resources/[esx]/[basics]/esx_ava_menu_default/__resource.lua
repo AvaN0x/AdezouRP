@@ -1,7 +1,6 @@
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
-description 'ESX Menu Default'
-
+description 'ESX Menu Default edited by AvaN0x'
 version '1.0.2'
 
 client_scripts {
@@ -17,13 +16,9 @@ files {
 	'html/css/app.css',
 	'html/js/mustache.min.js',
 	'html/js/app.js',
-	'html/fonts/pdown.ttf',
-	'html/fonts/bankgothic.ttf',
-    'html/fonts/v.ttf',
-	'html/img/*.png',
-	'html/img/keys/*.png',
+	'html/fonts/*.ttf',
+	'html/img/**/*.png',
 	'html/img/header/*.png',
-
 }
 
 dependencies {
