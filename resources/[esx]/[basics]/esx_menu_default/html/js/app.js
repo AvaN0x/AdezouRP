@@ -56,7 +56,8 @@
 
 		ESX_MENU.render();
 
-		$('#menu_' + namespace + '_' + name).find('.menu-item.selected')[0].scrollIntoView();
+		if (data.elements.length > 0)
+			$('#menu_' + namespace + '_' + name).find('.menu-item.selected')[0].scrollIntoView();
 	}
 
 	ESX_MENU.close = function (namespace, name) {
