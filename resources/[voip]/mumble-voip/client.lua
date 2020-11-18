@@ -177,7 +177,13 @@ Citizen.CreateThread(function()
 
 		local playerId = PlayerId()
 		local playerPed = PlayerPedId()
-		local playerPos = GetPedBoneCoords(playerPed, headBone)
+		local playerPos
+		if NetworkIsInSpectatorMode() then --! modified to support player in spectator mode
+			playerPos = GetGameplayCamCoord()
+		else
+			playerPos = GetPedBoneCoords(playerPed, headBone)
+		end
+
 		local playerList = GetActivePlayers()
 		local playerData = voiceData[playerServerId]
 		local playerRadio = 0
