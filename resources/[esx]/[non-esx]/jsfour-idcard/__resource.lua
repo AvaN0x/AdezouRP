@@ -14,7 +14,6 @@ client_script {
 files {
 	'html/index.html',
 	'html/assets/css/style.css',
-	'html/assets/js/jquery.js',
 	'html/assets/js/init.js',
 	'html/assets/fonts/roboto/Roboto-Bold.woff',
 	'html/assets/fonts/roboto/Roboto-Bold.woff2',
