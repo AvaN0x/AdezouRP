@@ -194,112 +194,76 @@ ESX.RegisterServerCallback('esx_billing:payBill', function(source, cb, id)
 	MySQL.Async.fetchAll('SELECT * FROM billing WHERE id = @id', {
 		['@id'] = id
 	}, function(result)
+		if result[1] then
+			local sender     = result[1].sender
+			local targetType = result[1].target_type
+			local target     = result[1].target
+			local amount     = result[1].amount
 
-		local sender     = result[1].sender
-		local targetType = result[1].target_type
-		local target     = result[1].target
-		local amount     = result[1].amount
+			local xTarget = ESX.GetPlayerFromIdentifier(sender)
 
-		local xTarget = ESX.GetPlayerFromIdentifier(sender)
+			if targetType == 'player' then
+				if xTarget ~= nil then
+					if xPlayer.getBank() >= amount then
 
-		if targetType == 'player' then
+						MySQL.Async.execute('DELETE from billing WHERE id = @id', {
+							['@id'] = id
+						}, function(rowsChanged)
+							TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'bank', target, 'bank', "paybill", amount)
+							TriggerEvent('esx_avan0x:logTransaction', target, 'bank', xPlayer.identifier, 'bank', "recievebill", amount)
 
-			if xTarget ~= nil then
+							xPlayer.removeAccountMoney('bank', amount)
+							xTarget.addAccountMoney('bank', amount)
 
-				-- if xPlayer.getMoney() >= amount then
+							TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
+							TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
 
-				-- 	MySQL.Async.execute('DELETE from billing WHERE id = @id', {
-				-- 		['@id'] = id
-				-- 	}, function(rowsChanged)
-				-- 		xPlayer.removeMoney(amount)
-				-- 		xTarget.addMoney(amount)
+							cb()
+						end)
 
-				-- 		TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
-				-- 		TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
-
-				-- 		cb()
-				-- 	end)
-
-				-- elseif xPlayer.getBank() >= amount then
-				if xPlayer.getBank() >= amount then
-
-					MySQL.Async.execute('DELETE from billing WHERE id = @id', {
-						['@id'] = id
-					}, function(rowsChanged)
-						TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'bank', target, 'bank', "paybill", amount)
-						TriggerEvent('esx_avan0x:logTransaction', target, 'bank', xPlayer.identifier, 'bank', "recievebill", amount)
-
-						xPlayer.removeAccountMoney('bank', amount)
-						xTarget.addAccountMoney('bank', amount)
-
-						TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
-						TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
+					else
+						TriggerClientEvent('esx:showNotification', xTarget.source, _U('target_no_money'))
+						TriggerClientEvent('esx:showNotification', xPlayer.source, _U('no_money'))
 
 						cb()
-					end)
+					end
 
 				else
-					TriggerClientEvent('esx:showNotification', xTarget.source, _U('target_no_money'))
-					TriggerClientEvent('esx:showNotification', xPlayer.source, _U('no_money'))
-
+					TriggerClientEvent('esx:showNotification', xPlayer.source, _U('player_not_online'))
 					cb()
 				end
 
 			else
-				TriggerClientEvent('esx:showNotification', xPlayer.source, _U('player_not_online'))
-				cb()
-			end
+				TriggerEvent('esx_addonaccount:getSharedAccount', target, function(account)
+					if xPlayer.getBank() >= amount then
+						TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'bank', target, target, "paybill", amount)
+						TriggerEvent('esx_avan0x:logTransaction', target, target, xPlayer.identifier, 'bank', "recievebill", amount)
 
-		else
-			TriggerEvent('esx_addonaccount:getSharedAccount', target, function(account)
-				-- if xPlayer.getMoney() >= amount then
+						MySQL.Async.execute('DELETE from billing WHERE id = @id', {
+							['@id'] = id
+						}, function(rowsChanged)
+							xPlayer.removeAccountMoney('bank', amount)
+							account.addMoney(amount)
 
-				-- 	MySQL.Async.execute('DELETE from billing WHERE id = @id', {
-				-- 		['@id'] = id
-				-- 	}, function(rowsChanged)
+							TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
+							if xTarget ~= nil and xTarget.identifier ~= xPlayer.identifier then
+								TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
+							end
 
-				-- 		xPlayer.removeMoney(amount)
-				-- 		account.addMoney(amount)
+							cb()
+						end)
 
-				-- 		TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
-				-- 		if xTarget ~= nil and xTarget.identifier ~= xPlayer.identifier then
-				-- 			TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
-				-- 		end
+					else
+						TriggerClientEvent('esx:showNotification', xPlayer.source, _U('no_money'))
 
-				-- 		cb()
-				-- 	end)
-
-				-- elseif xPlayer.getBank() >= amount then
-				if xPlayer.getBank() >= amount then
-					TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'bank', target, target, "paybill", amount)
-					TriggerEvent('esx_avan0x:logTransaction', target, target, xPlayer.identifier, 'bank', "recievebill", amount)
-
-					MySQL.Async.execute('DELETE from billing WHERE id = @id', {
-						['@id'] = id
-					}, function(rowsChanged)
-						xPlayer.removeAccountMoney('bank', amount)
-						account.addMoney(amount)
-
-						TriggerClientEvent('esx:showNotification', xPlayer.source, _U('paid_invoice', ESX.Math.GroupDigits(amount)))
-						if xTarget ~= nil and xTarget.identifier ~= xPlayer.identifier then
-							TriggerClientEvent('esx:showNotification', xTarget.source, _U('received_payment', ESX.Math.GroupDigits(amount)))
+						if xTarget ~= nil then
+							TriggerClientEvent('esx:showNotification', xTarget.source, _U('target_no_money'))
 						end
 
 						cb()
-					end)
-
-				else
-					TriggerClientEvent('esx:showNotification', xPlayer.source, _U('no_money'))
-
-					if xTarget ~= nil then
-						TriggerClientEvent('esx:showNotification', xTarget.source, _U('target_no_money'))
 					end
-
-					cb()
-				end
-			end)
-
+				end)
+			end
 		end
-
 	end)
 end)
