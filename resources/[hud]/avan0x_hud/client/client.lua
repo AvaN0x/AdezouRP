@@ -100,7 +100,12 @@ end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
-	SendNUIMessage({action = "setValue2", key = "job2", value = job2.label.." - "..job2.grade_label, icon2 = job2.name})
+	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, icon = job2.name})
+end)
+
+RegisterNetEvent('esx_ava_gang:setGang')
+AddEventHandler('esx_ava_gang:setGang', function(gang)
+	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, icon = gang.name})
 end)
 
 RegisterNetEvent('esx_customui:updateStatus')
@@ -108,42 +113,35 @@ AddEventHandler('esx_customui:updateStatus', function(status)
 	SendNUIMessage({action = "updateStatus", status = status})
 end)
 
+local vehiclePlayerIsIn = 0
 
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(100)
-		local Ped = GetPlayerPed(-1)
-		if(IsPedInAnyVehicle(Ped)) then
-			local PedCar = GetVehiclePedIsIn(Ped, false)
-			if PedCar then
-				-- Speed
-				carSpeed = math.ceil(GetEntitySpeed(PedCar) * 3.6)
-				fuel = GetVehicleFuelLevel(PedCar)
-				SendNUIMessage({
-					action = 'showcarhud', 
-					showhud = true,
-					speed = carSpeed,
-					fuel = fuel
-				})
+		local vehiclePlayerIsIn = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+		if vehiclePlayerIsIn ~= 0 then
+			-- Speed
+			carSpeed = math.ceil(GetEntitySpeed(vehiclePlayerIsIn) * 3.6)
+			fuel = GetVehicleFuelLevel(vehiclePlayerIsIn)
+			SendNUIMessage({
+				action = 'showcarhud',
+				showhud = true,
+				speed = carSpeed,
+				fuel = fuel
+			})
 
-				SendNUIMessage({
-					action = 'setbelt',
-					isAccepted = has_value(vehiclesCars, GetVehicleClass(PedCar)),
-					belt = beltOn
-				})
-			else
-				SendNUIMessage({
-					action = 'showcarhud', 
-					showhud = false
-				})
-			end
+			SendNUIMessage({
+				action = 'setbelt',
+				isAccepted = has_value(vehiclesCars, GetVehicleClass(vehiclePlayerIsIn)),
+				belt = beltOn
+			})
 		else
 			SendNUIMessage({
-				action = 'showcarhud', 
+				action = 'showcarhud',
 				showhud = false
 			})
+			Citizen.Wait(500)
 		end
-		Citizen.Wait(400)
 	end
 end)
 
@@ -151,22 +149,19 @@ end)
 Citizen.CreateThread(function()
 	Citizen.Wait(500)
 	while true do
-		
-		local ped = GetPlayerPed(-1)
-		local car = GetVehiclePedIsIn(ped)
-		
-		if car ~= 0 and (wasInCar or has_value(vehiclesCars, GetVehicleClass(car))) then
-			
+		if vehiclePlayerIsIn ~= 0 and (wasInCar or has_value(vehiclesCars, GetVehicleClass(vehiclePlayerIsIn))) then
+			local ped = GetPlayerPed(-1)
+
 			wasInCar = true
-			
+
 			speedBuffer[2] = speedBuffer[1]
-			speedBuffer[1] = GetEntitySpeed(car)
-			
+			speedBuffer[1] = GetEntitySpeed(vehiclePlayerIsIn)
+
 			if speedBuffer[2] ~= nil 
 			and speedBuffer[2] > (MinSpeed / 3.5)
 			and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
 				if not beltOn 
-				and GetEntitySpeedVector(car, true).y > 1.0  then
+				and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0  then
 
 					--! debug in production to ask people in the server help about the value of this two variables
 					print("A belt must fly as a fly when it is on")
@@ -186,9 +181,9 @@ Citizen.CreateThread(function()
 					StopGameplayCamShaking(true)
 				end
 			end
-				
+
 			velBuffer[2] = velBuffer[1]
-			velBuffer[1] = GetEntityVelocity(car)
+			velBuffer[1] = GetEntityVelocity(vehiclePlayerIsIn)
 			
 		elseif wasInCar then
 			wasInCar = false
