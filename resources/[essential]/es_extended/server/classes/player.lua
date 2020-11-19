@@ -329,7 +329,7 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 				local newCount = item.count + count
 				item.count     = newCount
 
-				TriggerEvent('esx:onAddInventoryItem', self.source, item, count)
+				-- TriggerEvent('esx:onAddInventoryItem', self.source, item, count)
 				TriggerClientEvent('esx:addInventoryItem', self.source, item, count)
 			else
 				local item     = self.getInventoryItem(name)
@@ -345,7 +345,7 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 		local newCount = item.count - count
 		item.count     = newCount
 
-		TriggerEvent('esx:onRemoveInventoryItem', self.source, item, count)
+		-- TriggerEvent('esx:onRemoveInventoryItem', self.source, item, count)
 		TriggerClientEvent('esx:removeInventoryItem', self.source, item, count)
 	end
 
@@ -355,10 +355,10 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 		item.count     = count
 
 		if oldCount > item.count  then
-			TriggerEvent('esx:onRemoveInventoryItem', self.source, item, oldCount - item.count)
+			-- TriggerEvent('esx:onRemoveInventoryItem', self.source, item, oldCount - item.count)
 			TriggerClientEvent('esx:removeInventoryItem', self.source, item, oldCount - item.count)
 		else
-			TriggerEvent('esx:onAddInventoryItem', self.source, item, item.count - oldCount)
+			-- TriggerEvent('esx:onAddInventoryItem', self.source, item, item.count - oldCount)
 			TriggerClientEvent('esx:addInventoryItem', self.source, item, item.count - oldCount)
 		end
 	end
