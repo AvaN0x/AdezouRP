@@ -6,17 +6,17 @@ description 'ESX Vehicle keys'
 
 client_scripts {
 	'@es_extended/locale.lua',
-	'locales/fr.lua',
+	'locales/*.lua',
 	'config.lua',
-	'client.lua',
+	'client.lua'
 }
 
 server_scripts {
 	'@mysql-async/lib/MySQL.lua',
 	'@es_extended/locale.lua',
-	'locales/fr.lua',
+	'locales/*.lua',
 	'config.lua',
-	'server.lua',
+	'server.lua'
 }
 
 dependencies {
