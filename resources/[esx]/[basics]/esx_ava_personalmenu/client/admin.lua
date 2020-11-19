@@ -72,9 +72,13 @@ end
 
 function players_list()
     local elements = {}
-    for k, player in ipairs(GetActivePlayers()) do
-        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player, detail = _('local_id', player)})
-    end
+	for k, player in ipairs(GetActivePlayers()) do
+		local serverID = GetPlayerServerId(player)
+        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player)})
+	end
+	table.sort(elements, function(a,b)
+		return a.serverID < b.serverID
+	end)
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
         {
@@ -92,8 +96,12 @@ end
 function players_list_spectate()
     local elements = {}
 	for k, player in ipairs(GetActivePlayers()) do
-        table.insert(elements, {label = GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player), value = player, detail = _('local_id', player)})
-    end
+		local serverID = GetPlayerServerId(player)
+        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player)})
+	end
+	table.sort(elements, function(a,b)
+		return a.serverID < b.serverID
+	end)
     if #elements >= 1 then
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
         {
