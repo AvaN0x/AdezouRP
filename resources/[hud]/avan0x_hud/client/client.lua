@@ -1,5 +1,5 @@
 ESX = nil
-local vehiclesCars = {1,2,3,4,5,6,7,9,10,11,12,17,18,20}; 
+local vehiclesCars = {0, 1,2,3,4,5,6,7,9,10,11,12,17,18,20}; 
 -- 0 is on foot
 -- 7 is super
 -- 8 is motorcycle
