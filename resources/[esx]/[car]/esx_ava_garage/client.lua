@@ -132,7 +132,9 @@ function OpenMenuGarage(PointType, target)
 		end,
 		function(data, menu)
 			menu.close()
-			-- CurrentAction = 'open_garage_menu'
+			if target == nil then
+				CurrentAction = 'open_garage_menu'
+			end
 		end
 	)
 end
