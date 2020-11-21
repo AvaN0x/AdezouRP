@@ -82,6 +82,7 @@ Locales["fr"] = {
   ["admin_vehicle_menu"] = "Véhicules",
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
   ["admin_show_hash"] = "Toggle hash des props",
+  ["admin_show_coords"] = "Toggle coordonnées",
   ["admin_change_skin"] = "Changer l'Apparence",
   ['admin_revive_all_close'] = "Revive les joueurs proches",
 

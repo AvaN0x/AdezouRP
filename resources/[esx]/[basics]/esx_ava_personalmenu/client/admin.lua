@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local noclip, show_names, show_hashes, admin_mode = false, false, false, false
+local noclip, show_names, show_hashes, admin_mode, show_coords = false, false, false, false, false
 local visibleHash = {}
 
 function OpenAdminMenu()
@@ -17,6 +17,7 @@ function OpenAdminMenu()
 			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
 			{label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
+			{label = _("orange", _("admin_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
 			{label = _("bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
@@ -33,6 +34,8 @@ function OpenAdminMenu()
 			admin_vehicle_menu()
 		elseif data.current.value == "show_hash" then
 			show_hashes = not show_hashes
+		elseif data.current.value == "show_coords" then
+			show_coords = not show_coords
 		elseif data.current.value == "admin_mode" then
 			ToggleAdminMode()
 		elseif data.current.value == "change_skin" then
@@ -308,11 +311,34 @@ function AdminLoop()
 						end
 					end
 				else
-					Citizen.Wait(7000)
+					Citizen.Wait(5000)
 				end
 			end
 		end)
 
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(10)
+				if show_coords then
+					local playerPed = PlayerPedId()
+					local playerCoords = GetEntityCoords(playerPed)
+
+					SetTextColour(255, 255, 255, 255)
+					SetTextFont(0)
+					SetTextScale(0.34, 0.34)
+					SetTextWrap(0.0, 1.0)
+					SetTextOutline()
+					SetTextEntry("STRING")
+					AddTextComponentString("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y) .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t" .. string.format("%.2f", GetEntityHeading(playerPed)))
+					DrawText(0.9, 0.88)
+				else
+					Citizen.Wait(5000)
+				end
+			end
+		end)
+
+
+		
 		Citizen.CreateThread(function()
 			while true do
 				Wait(5000)
