@@ -276,8 +276,8 @@ function AdminLoop()
 					for _, v in ipairs(GetGamePool("CObject")) do
 						local prop = GetObjectIndexFromEntityIndex(v)
 						local propCoords = GetEntityCoords(prop)
-						if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, propCoords.x, propCoords.y, propCoords.z, false) < 10.0 then
-							table.insert(visibleHash, {hash = GetEntityModel(prop), coords = propCoords})
+						if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, propCoords.x, propCoords.y, propCoords.z, false) < 5.0 then
+							table.insert(visibleHash, {hash = GetEntityModel(prop), coords = propCoords, heading = GetEntityHeading(prop)})
 						end
 					end
 					for _, v in ipairs(GetGamePool("CVehicle")) do
@@ -301,7 +301,7 @@ function AdminLoop()
 					local playerCoords = GetEntityCoords(playerPed)
 					for _, prop in ipairs(visibleHash) do
 						if prop.coords then
-							DrawText3D(prop.coords.x, prop.coords.y, prop.coords.z, prop.hash, 0.3)
+							DrawText3D(prop.coords.x, prop.coords.y, prop.coords.z, "hash = " .. prop.hash .. '\nheading = ' .. prop.heading, 0.3)
 						else
 							local coords = GetEntityCoords(prop.entity)
 							DrawText3D(coords.x, coords.y, coords.z, prop.hash, 0.3)
