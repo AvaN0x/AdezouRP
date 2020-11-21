@@ -4,13 +4,22 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 	('gang_ballas','Ballas', 1),
 	('gang_ballas_black','Ballas', 1),
 	('gang_families','Families', 1),
-	('gang_families_black','Families', 1)
+	('gang_families_black','Families', 1),
+	('orga_celtic','Celtic', 1),
+	('orga_celtic_black','Celtic', 1),
+	('orga_ordre','L\'ordre', 1),
+	('orga_ordre_black','L\'ordre', 1),
+	('biker_lost','The Lost', 1),
+	('biker_lost_black','The Lost', 1)
 ;
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
 	('gang_vagos','Vagos', 1),
 	('gang_ballas','Ballas', 1),
-	('gang_families','Families', 1)
+	('gang_families','Families', 1),
+	('orga_celtic','Celtic', 1),
+	('orga_ordre','L\'ordre', 1),
+	('biker_lost','The Lost', 1)
 ;
 
 CREATE TABLE `user_gang` (

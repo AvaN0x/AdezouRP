@@ -44,4 +44,40 @@ Config.Gangs = {
 			},
 		}
 	},
+	orga_celtic = {
+		Name = "Celtic",
+		Zones = {
+			Stock = {
+				Pos   = {x = -1862.74, y = 2053.34, z = 134.48},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
+	orga_ordre = {
+		Name = "L'ordre",
+		Zones = {
+			Stock = {
+				Pos   = {x = 725.71, y = -1066.51, z = 27.33},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
+	biker_lost = {
+		Name = "The Lost",
+		Zones = {
+			Stock = {
+				Pos   = {x = 986.63, y = -92.71, z = 73.87},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
 }
