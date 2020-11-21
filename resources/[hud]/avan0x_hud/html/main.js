@@ -1,19 +1,20 @@
 ﻿
 $(function () {
-	// $("#gang").hide();
+	$("#job2").hide();
+	$("#gang").hide();
 	window.addEventListener('message', function (event) {
 		if (event.data.action == "setValue") {
 			if (event.data.key == "job") {
-				setJobIcon(event.data.icon)
+				setJobIcon(event.data.name)
 			} else if (event.data.key == "job2") {
-				setJob2Icon(event.data.icon);
-				if (event.data.value == "État - Civil")
+				setJob2Icon(event.data.name);
+				if (event.data.name == "unemployed2")
 					$("#job2").hide();
 				else
 					$("#job2").show();
 			} else if (event.data.key == "gang") {
 				if (event.data.value != null) {
-					setGangIcon(event.data.icon);
+					setGangIcon(event.data.name);
 					$("#gang").show();
 				} else
 					$("#gang").hide();

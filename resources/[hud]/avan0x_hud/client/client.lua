@@ -85,7 +85,7 @@ Citizen.CreateThread(function()
 			HideHudComponentThisFrame(17) -- Save Game
 			HideHudComponentThisFrame(20) -- Weapon Stats
 
-			if beltOn then 
+			if beltOn then
 				DisableControlAction(0, 75, true)  -- Disable exit vehicle when stop
 				DisableControlAction(27, 75, true) -- Disable exit vehicle when Driving
 			end
@@ -95,17 +95,17 @@ end)
 
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
-	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, icon = job.name})
+	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, name = job.name})
 end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
-	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, icon = job2.name})
+	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, name = job2.name})
 end)
 
 RegisterNetEvent('esx_ava_gang:setGang')
 AddEventHandler('esx_ava_gang:setGang', function(gang)
-	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, icon = gang.name})
+	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, name = gang.name})
 end)
 
 RegisterNetEvent('esx_customui:updateStatus')
