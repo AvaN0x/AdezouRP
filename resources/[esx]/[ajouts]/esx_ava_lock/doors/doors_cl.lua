@@ -4,6 +4,7 @@
 -------------------------------------------
 ESX = nil
 PlayerData = nil
+actualGang = nil
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -17,7 +18,7 @@ Citizen.CreateThread(function()
 
 	PlayerData = ESX.GetPlayerData()
 
-	SetAllAuthorized()
+	SetAllDoorsAuthorized()
 
 	ESX.TriggerServerCallback('esx_ava_doors:getDoorInfo', function(doorInfo)
 		for doorID,state in pairs(doorInfo) do
@@ -29,13 +30,19 @@ end)
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
 	PlayerData.job = job
-	SetAllAuthorized()
+	SetAllDoorsAuthorized()
 end)
 
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
-	SetAllAuthorized()
+	SetAllDoorsAuthorized()
+end)
+
+RegisterNetEvent('esx_ava_gang:setGang')
+AddEventHandler('esx_ava_gang:setGang', function(gang)
+	actualGang = gang
+	SetAllDoorsAuthorized()
 end)
 
 Citizen.CreateThread(function()
@@ -116,20 +123,29 @@ Citizen.CreateThread(function()
 	end
 end)
 
-function SetAllAuthorized()
+function SetAllDoorsAuthorized()
 	for k,doorID in ipairs(Config.Doors.DoorList) do
-		doorID.authorized = IsAuthorized(doorID)
+		doorID.authorized = IsDoorAuthorized(doorID)
 	end
 end
 
-function IsAuthorized(doorID)
+function IsDoorAuthorized(doorID)
 	if PlayerData == nil or PlayerData.job == nil or PlayerData.job2 == nil then
 		return false
 	end
 
-	for _,job in pairs(doorID.authorizedJobs) do
-		if job == PlayerData.job.name or job == PlayerData.job2.name then
-			return true
+	if doorID.authorizedJobs then
+		for _,job in pairs(doorID.authorizedJobs) do
+			if job == PlayerData.job.name or job == PlayerData.job2.name then
+				return true
+			end
+		end
+	end
+	if doorID.authorizedGangs and actualGang then
+		for _,gang in pairs(doorID.authorizedGangs) do
+			if gang == actualGang.name then
+				return true
+			end
 		end
 	end
 

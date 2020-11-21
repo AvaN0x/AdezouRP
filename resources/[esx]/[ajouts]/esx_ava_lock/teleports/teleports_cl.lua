@@ -107,9 +107,11 @@ function IsAuthorized(tpID)
 		return false
 	end
 
-	for _,job in pairs(tpID.authorizedJobs) do
-		if job == PlayerData.job.name or job == PlayerData.job2.name then
-			return true
+	if tpID.authorizedJobs then
+		for _,job in pairs(tpID.authorizedJobs) do
+			if job == PlayerData.job.name or job == PlayerData.job2.name then
+				return true
+			end
 		end
 	end
 

@@ -75,7 +75,6 @@ Config.Teleports = {
 				heading = 180.0,
 				label = "Sortir"
 			},
-			authorizedJobs = { '' },
 			locked = false
 		},
 		{ -- arcade vehicle entry
@@ -92,7 +91,6 @@ Config.Teleports = {
 				size  = {x = 2.5, y = 2.5, z = 1.0},
 				label = "Sortir"
 			},
-			authorizedJobs = { '' },
 			allowVehicles = true,
 			locked = false
 		},
@@ -111,7 +109,6 @@ Config.Teleports = {
 				heading = 265.0,
 				label = "Sortir"
 			},
-			authorizedJobs = { '' },
 			locked = false
 		},
 	
