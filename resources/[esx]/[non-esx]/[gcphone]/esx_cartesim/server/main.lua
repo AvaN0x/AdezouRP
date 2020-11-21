@@ -214,10 +214,10 @@ AddEventHandler('esx_cartesim:sim_use', function (sim)
 	)
 
 	-- TriggerClientEvent("gcPhone:UpdateSimNumber", _source, sim)
-	TriggerServerEvent('gcPhone:allUpdate')
+	TriggerEvent('gcPhone:allUpdate')
 	-- Try again in 1 minutes (Recovers bugged phone numbers)
 	Citizen.Wait(60000)
-	TriggerServerEvent('gcPhone:allUpdate')
+	TriggerEvent('gcPhone:allUpdate')
 
 end)
 
