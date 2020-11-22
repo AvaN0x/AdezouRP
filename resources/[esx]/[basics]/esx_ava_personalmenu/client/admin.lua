@@ -145,7 +145,7 @@ function PlayerManagment(player)
 				TriggerServerEvent("esx_ava_personalmenu:privateMessage", serverID, content)
 			end)
 		elseif data.current.value == "admin_goto" then
-			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(GetPlayerPed(player)))
+			admin_goto(player)
 		elseif data.current.value == "admin_bring" then
 			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
         elseif data.current.value == "admin_revive" then
@@ -449,6 +449,17 @@ function admin_spectate_player(player)
 		SetEveryoneIgnorePlayer(playerPed, false)
 		SetEntityCollision(playerPed, true, true)
 		FreezeEntityPosition(playerPed, false)
+	end
+end
+
+function admin_goto(player)
+	local targetPed = GetPlayerPed(player)
+	local targetVehicle = GetVehiclePedIsIn(targetPed, false)
+
+	if targetVehicle ~= 0 then
+		SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
+	else
+		SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(targetPed))
 	end
 end
 
