@@ -126,6 +126,9 @@ function OpenMenuGarage(PointType, target)
 				ListVehiclesMenu(this_Garage.Type, target)
 			elseif data.current.value == 'stock_vehicle' then
 				StockVehicleMenu(target)
+				if target == nil then
+					CurrentAction = 'open_garage_menu'
+				end
 			elseif data.current.value == 'return_vehicle' then
 				ReturnVehicleMenu(data.current.job)
 			end
