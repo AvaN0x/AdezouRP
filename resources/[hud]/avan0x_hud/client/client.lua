@@ -140,6 +140,7 @@ Citizen.CreateThread(function()
 				action = 'showcarhud',
 				showhud = false
 			})
+			beltOn = false
 			Citizen.Wait(500)
 		end
 	end
