@@ -116,7 +116,7 @@ function mainLoop()
 end
 
 function canUserPlay()
-    return not Config.LimitToAmbulanceJob and playerData.job == 'ambulance'
+    return not Config.LimitToAmbulanceJob and playerData.job == 'ems'
 end
 
 function mainLoopNotAllowedToPlay()

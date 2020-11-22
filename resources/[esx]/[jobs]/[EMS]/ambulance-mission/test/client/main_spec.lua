@@ -190,7 +190,7 @@ describe('client - main', function()
 
         verifyNoCall(_G.Wrapper.IsControlJustPressed(1, 1))
 
-        setPlayerJob({name = 'ambulance'})
+        setPlayerJob({name = 'ems'})
         iterateLoop(loop)
         iterateLoop(loop)
 
