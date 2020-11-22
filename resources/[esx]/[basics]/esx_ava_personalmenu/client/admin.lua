@@ -264,6 +264,7 @@ function AdminLoop()
 					SetSuperJumpThisFrame(PlayerId(-1))
 					SetPedMoveRateOverride(playerPed, 2.15)
 				else
+					SetEntityInvincible(PlayerPedId(), false)
 					Citizen.Wait(2000)
 				end
 			end
