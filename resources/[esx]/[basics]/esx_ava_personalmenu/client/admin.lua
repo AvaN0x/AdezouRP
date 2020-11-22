@@ -455,11 +455,17 @@ end
 function admin_goto(player)
 	local targetPed = GetPlayerPed(player)
 	local targetVehicle = GetVehiclePedIsIn(targetPed, false)
-
+	
 	if targetVehicle ~= 0 then
 		SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
 	else
-		SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(targetPed))
+		local playerPed = PlayerPedId()
+		local vehicle = GetVehiclePedIsIn(playerPed, false)
+		if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
+			SetEntityCoords(playerPed, GetEntityCoords(targetPed))
+		else
+			SetPedCoordsKeepVehicle(playerPed, GetEntityCoords(targetPed))
+		end
 	end
 end
 
