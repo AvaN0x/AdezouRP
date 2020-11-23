@@ -4,23 +4,10 @@
 -------------------------------------------
 
 ESX = nil
-
-local deathCauses = {
-	Suicide = { Label = "Suicide", Hash = {0} },
-	Melee = { Label = "Melee", Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184} },
-	Bullet = { Label = "Bullet", Hash = {453432689, 1593441988, 584646201, -1716589765, 324215364, 736523883, -270015777, -1074790547, -2084633992, -1357824103, -1660422300, 2144741730, 487013001, 2017895192, -494615257, -1654528753, 100416529, 205991906, 1119849093, -1076751822, -1045183535} },
-	Knife = { Label = "Knife", Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060} },
-	Car = { Label = "Car", Hash = {133987706, -1553120962} },
-	Animal = { Label = "Animal", Hash = {-100946242, 148160082} },
-	FallDamage = { Label = "FallDamage", Hash = {-842959696} },
-	Explosion = { Label = "Explosion", Hash = {-1568386805, 1305664598, -1312131151, 375527679, 324506233, 1752584910, -1813897027, 741814745, -37975472, 539292904, 341774354, -1090665087, -1355376991} },
-	Gas = { Label = "Gas", Hash = {-1600701090} },
-	Burn = { Label = "Burn", Hash = {615608432, 883325847, -544306709} },
-	Drown = { Label = "Drown", Hash = {-10959621, 1936677264} }
-}
-
-
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
+
+
 
 ESX.RegisterServerCallback('esx_avan0x:getUsergroup', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -77,6 +64,8 @@ AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account
 	end)
 end)
 
+
+--? sendskin command
 TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local msg = table.concat(args, " ") or ""
@@ -109,8 +98,6 @@ TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 				or k == "helmet_1"
 				or k == "helmet_2"
 				or k == "arms"
-				or k == "glasses_1"
-				or k == "glasses_2"
 				then
 					table.insert(skin, "\""..k.."\":"..v)
 				end
@@ -149,6 +136,22 @@ AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
 		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
 	end
 end)
+
+
+--? death verification
+local deathCauses = {
+	Suicide = { Label = "Suicide", Hash = {0} },
+	Melee = { Label = "Melee", Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184} },
+	Bullet = { Label = "Bullet", Hash = {-86904375, 453432689, 1593441988, 584646201, -1716589765, 324215364, 736523883, -270015777, -1074790547, -2084633992, -1357824103, -1660422300, 2144741730, 487013001, 2017895192, -494615257, -1654528753, 100416529, 205991906, 1119849093, -1076751822, -1045183535} },
+	Knife = { Label = "Knife", Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060} },
+	Car = { Label = "Car", Hash = {133987706, -1553120962} },
+	Animal = { Label = "Animal", Hash = {-100946242, 148160082} },
+	FallDamage = { Label = "FallDamage", Hash = {-842959696} },
+	Explosion = { Label = "Explosion", Hash = {-1568386805, 1305664598, -1312131151, 375527679, 324506233, 1752584910, -1813897027, 741814745, -37975472, 539292904, 341774354, -1090665087, -1355376991} },
+	Gas = { Label = "Gas", Hash = {-1600701090} },
+	Burn = { Label = "Burn", Hash = {615608432, 883325847, -544306709} },
+	Drown = { Label = "Drown", Hash = {-10959621, 1936677264} }
+}
 
 RegisterServerEvent("esx:onPlayerDeath")
 AddEventHandler("esx:onPlayerDeath", function(data)
