@@ -117,4 +117,8 @@ Locales["fr"] = {
   ['admin_tp_nearest_vehicle'] = "Tp véhicule le plus proche",
   ['admin_delete_vehicle'] = "Supprimer le véhicule",
   ['admin_flip_vehicle'] = "Retourner le véhicule",
+
+  -- player model
+  ['admin_load_model'] = "Charger un model de ped",
+  ['model_not_found'] = "Model de ped non trouvé : %s (%s)",
 }

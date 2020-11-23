@@ -18,6 +18,7 @@ function OpenAdminMenu()
 			{label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
 			{label = _("orange", _("admin_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
+			{label = _("orange", _("admin_load_model")), value = "admin_load_model"},
 			{label = _("bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
@@ -36,6 +37,10 @@ function OpenAdminMenu()
 			show_hashes = not show_hashes
 		elseif data.current.value == "show_coords" then
 			show_coords = not show_coords
+		elseif data.current.value == "admin_load_model" then
+			EnterReason(function(value)
+				LoadPedModel(value)
+			end)
 		elseif data.current.value == "admin_mode" then
 			ToggleAdminMode()
 		elseif data.current.value == "change_skin" then
@@ -616,4 +621,29 @@ function admin_flip_vehicle()
 	local coords = GetEntityCoords(playerPed, true)
 
 	SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)
+end
+
+function LoadPedModel(model)
+	Citizen.CreateThread(function()
+		local playerPed = PlayerPedId()
+		local playerId = PlayerId()
+		local modelHash = GetHashKey(model:gsub("\n", ""))
+
+		RequestModel(modelHash)
+		if IsModelInCdimage(modelHash) then
+			while not HasModelLoaded(modelHash) do
+				RequestModel(modelHash)
+				Citizen.Wait(0)
+			end
+
+			if GetEntityModel(playerId) ~= modelHash then
+				SetPlayerModel(playerId, modelHash)
+			end
+
+			SetModelAsNoLongerNeeded(modelHash)
+		else
+			TriggerEvent('esx_ava_personalmenu:privateMessage', GetPlayerName(playerId), _('model_not_found', model, modelHash))
+		end
+
+	end)
 end
