@@ -643,7 +643,30 @@ function LoadPedModel(model)
 		end
 
 		if GetEntityModel(playerId) ~= modelHash then
+			local playerPed = PlayerPedId()
+			local weapons = {}
+			local bool, equipedWeapon = GetCurrentPedWeapon(playerPed, 1)
+			for k, v in ipairs(ESX.GetWeaponList()) do
+				local weaponHash = GetHashKey(v.name)
+				if v.name ~= 'WEAPON_UNARMED' and HasPedGotWeapon(playerPed, weaponHash, false) then
+					table.insert(weapons, {
+						hash = weaponHash,
+						ammo = GetAmmoInPedWeapon(playerPed, weaponHash),
+						equiped = weaponHash == equipedWeapon
+					})
+				end
+			end
+
 			SetPlayerModel(playerId, modelHash)
+			playerPed = PlayerPedId() -- reload playerPed as it have changed
+
+			for k, v in ipairs(weapons) do
+				GiveWeaponToPed(playerPed, v.hash, v.ammo, false, false)
+				if v.equiped then
+					SetCurrentPedWeapon(playerPed, v.hash, true)
+				end
+			end
+
 		end
 
 		SetModelAsNoLongerNeeded(modelHash)
