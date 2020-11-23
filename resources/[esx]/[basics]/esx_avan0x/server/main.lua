@@ -6,8 +6,36 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+function trim(s)
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+end
 
+local formattedToken
 
+function DiscordRequest(method, endpoint, jsondata)
+    local data = nil
+    PerformHttpRequest("https://discordapp.com/api/"..endpoint, function(errorCode, resultData, resultHeaders)
+			data = {data=resultData, code=errorCode, headers=resultHeaders}
+		end,
+		method, #jsondata > 0 and json.encode(jsondata) or "",
+		{["Content-Type"] = "application/json", ["Authorization"] = formattedToken})
+
+    while data == nil do
+        Citizen.Wait(0)
+    end
+
+    return data
+end
+
+--? init thread
+Citizen.CreateThread(function()
+	local botToken = GetConvar("avan0x_bot_token", "avan0x_bot_token")
+	if botToken ~= "avan0x_bot_token" then
+		formattedToken = "Bot " .. botToken
+	else
+		print("You need to use \"set avan0x_bot_token 'YOUR BOT TOKEN'\" in your server.cfg.")
+	end
+end)
 
 ESX.RegisterServerCallback('esx_avan0x:getUsergroup', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -176,6 +204,44 @@ function GetDeathCauseLabel(deathCause)
 	end
 	return deathCause
 end
+
+
+local LifeInvaderChannelID = 762292381353115658
+local lastID = nil
+--? life invader check last messages
+Citizen.CreateThread(function()
+    while true do
+        local channel = DiscordRequest("GET", "channels/" .. LifeInvaderChannelID, {})
+        if channel.code == 200 then
+			local chanData = json.decode(channel.data)
+			if lastID == nil then
+				lastID = chanData.last_message_id
+			elseif lastID ~= chanData.last_message_id then
+				lastID = chanData.last_message_id
+				local lastMessage = DiscordRequest("GET", "channels/" .. LifeInvaderChannelID .. "/messages/" .. lastID, {})
+				if lastMessage.code == 200 then
+					local data = json.decode(lastMessage.data)
+					if not data.webhook_id then
+						local message = trim(data.content)
+						if #message > 1 then
+							local name = data.author.username .. "#" .. data.author.discriminator
+							for k, file in ipairs(data.attachments) do
+								if file.width then
+									message = message .. "\n[IMAGE]"
+									break
+								end
+							end
+							TriggerClientEvent('esx:showAdvancedNotification', -1, 'LIFEINVADER', name, message, "CHAR_LIFEINVADER", 1)
+						end
+					end
+				end
+			end
+        end
+        Citizen.Wait(2000)
+    end
+end)
+
+
 
 -- command to add new burglary
 -- TriggerEvent('es:addGroupCommand', 'burglary', 'user', function(source, args)

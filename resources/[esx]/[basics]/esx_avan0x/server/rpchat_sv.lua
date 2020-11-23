@@ -34,12 +34,8 @@ AddEventHandler('esx_avan0x:lifeInvader', function(msg, jobLabel)
         else
             local name = getIdentity(xPlayer.identifier)
             account = name.firstname .. " " .. name.lastname
-            SendWebhookEmbedMessage("avan0x_wh_lifeinvader", account, msg, 16733269) -- #ff5455 
+            SendWebhookEmbedMessage("avan0x_wh_lifeinvader", account, msg, 16733269) -- #ff5455
         end
         TriggerClientEvent('esx:showAdvancedNotification', -1, 'LIFEINVADER', account, msg, "CHAR_LIFEINVADER", 1)
     end
 end)
-
-function trim(s)
-    return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
-end
