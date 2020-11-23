@@ -245,7 +245,7 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(10)
-				if show_names then
+				if show_names or admin_mode then
 					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
@@ -348,7 +348,7 @@ function AdminLoop()
 		Citizen.CreateThread(function()
 			while true do
 				Wait(5000)
-				if show_names then
+				if show_names or admin_mode then
 					local playerPed = PlayerPedId()
 					for _, player in ipairs(GetActivePlayers()) do
 						if GetPlayerPed(player) ~= playerPed then
@@ -514,7 +514,6 @@ end)
 
 function ToggleAdminMode()
 	admin_mode = not admin_mode
-	show_names = admin_mode
 
 	RemoveAllPlayersBlips()
 	local playerPed = PlayerPedId()
