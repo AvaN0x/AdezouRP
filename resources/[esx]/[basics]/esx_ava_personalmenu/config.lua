@@ -12,3 +12,4 @@ Config.AdminMenuKey = 213
 Config.noclip_speed = 0.5
 Config.noclip_speed_shift = 4.0
 
+Config.AdminPed = "Zeus"
