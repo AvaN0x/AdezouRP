@@ -28,11 +28,11 @@ AddEventHandler('esx:playerLoaded', function(xPlayer)
 
 	-- Job
 	local job = data.job
-	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, icon = job.name})
+	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, name = job.name})
 
 	-- Job2
 	local job2 = data.job2
-	SendNUIMessage({action = "setValue2", key = "job2", value = job2.label.." - "..job2.grade_label, icon2 = job2.name})
+	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, name = job2.name})
 end)
 
 
@@ -60,7 +60,7 @@ Citizen.CreateThread(function()
 
 			if IsControlJustReleased(0, 73) then -- X
 				local ped = GetPlayerPed(-1)
-				if(IsPedInAnyVehicle(ped)) then	
+				if(IsPedInAnyVehicle(ped)) then
 					local car = GetVehiclePedIsIn(ped, false)
 					local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
 					if car and isAccepted then
