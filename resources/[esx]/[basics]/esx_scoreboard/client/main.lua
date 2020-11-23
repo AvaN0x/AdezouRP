@@ -113,7 +113,7 @@ function UpdatePlayerTable(connectedPlayers)
 
 		-- players = players + 1
 
-		if v.job == 'ambulance' or v.job2 == 'ambulance' then
+		if v.job == 'ems' or v.job2 == 'ems' then
 			ems = ems + 1
 		elseif v.job == 'police' or v.job2 == 'police' then
 			police = police + 1
