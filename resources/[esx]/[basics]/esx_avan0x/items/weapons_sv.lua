@@ -10,6 +10,13 @@ AddEventHandler('esx_avan0x:giveWeapon', function(weaponName)
 	xPlayer.addWeapon(weaponName, 0)
 end)
 
+RegisterServerEvent("esx_avan0x:giveProjectile")
+AddEventHandler('esx_avan0x:giveProjectile', function(source, weaponName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	xPlayer.removeInventoryItem(weaponName, 1)
+	xPlayer.addWeapon(weaponName, 1)
+end)
+
 ESX.RegisterUsableItem("weapon_advancedrifle", function(source)
 	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_advancedrifle")
 end)
@@ -67,7 +74,7 @@ ESX.RegisterUsableItem("weapon_bullpupshotgun", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_bzgas", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bzgas")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_bzgas")
 end)
 
 ESX.RegisterUsableItem("weapon_carbinerifle", function(source)
@@ -127,7 +134,7 @@ ESX.RegisterUsableItem("weapon_firework", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_flare", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_flare")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_flare")
 end)
 
 ESX.RegisterUsableItem("weapon_flaregun", function(source)
@@ -223,7 +230,7 @@ ESX.RegisterUsableItem("weapon_minismg", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_molotov", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_molotov")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_molotov")
 end)
 
 ESX.RegisterUsableItem("weapon_musket", function(source)
@@ -231,7 +238,7 @@ ESX.RegisterUsableItem("weapon_musket", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_nightstick", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_nightstick")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_nightstick")
 end)
 
 ESX.RegisterUsableItem("gadget_parachute", function(source)
@@ -243,7 +250,7 @@ ESX.RegisterUsableItem("weapon_petrolcan", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_pipebomb", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pipebomb")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_pipebomb")
 end)
 
 ESX.RegisterUsableItem("weapon_pistol", function(source)
@@ -263,7 +270,7 @@ ESX.RegisterUsableItem("weapon_poolcue", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_proxmine", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_proxmine")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_proxmine")
 end)
 
 ESX.RegisterUsableItem("weapon_pumpshotgun", function(source)
@@ -303,7 +310,7 @@ ESX.RegisterUsableItem("weapon_smg_mk2", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_smokegrenade", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_smokegrenade")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_smokegrenade")
 end)
 
 ESX.RegisterUsableItem("weapon_sniperrifle", function(source)
@@ -311,7 +318,7 @@ ESX.RegisterUsableItem("weapon_sniperrifle", function(source)
 end)
 
 ESX.RegisterUsableItem("weapon_snowball", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_snowball")
+	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_snowball")
 end)
 
 ESX.RegisterUsableItem("weapon_snspistol", function(source)
