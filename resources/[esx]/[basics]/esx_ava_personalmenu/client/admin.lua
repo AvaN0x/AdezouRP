@@ -19,7 +19,7 @@ function OpenAdminMenu()
 			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
 			{label = _("orange", _("admin_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
 			{label = _("orange", _("admin_load_model")), value = "admin_load_model"},
-			{label = _("bright_red", _("admin_mode")), value = "admin_mode", type="checkbox", checked=admin_mode},
+			{label = _("bright_red", _("admin_mode")), value = "admin_mode", detail = _('admin_mode_detail'), type="checkbox", checked=admin_mode},
 			{label = _("red", _("admin_change_skin")), value = "change_skin"},
 		}
 	}, function(data, menu)

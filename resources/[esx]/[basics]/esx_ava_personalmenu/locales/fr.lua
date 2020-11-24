@@ -95,6 +95,7 @@ Locales["fr"] = {
   ['all_players'] = "Tous les joueurs",
   ['players_list'] = "Liste",
   ['admin_mode'] = "Toggle mode admin",
+  ['admin_mode_detail'] = "Peut aussi être activé avec la commande /a",
   ['local_id'] = "ID local : %s",
 
   -- player managment
