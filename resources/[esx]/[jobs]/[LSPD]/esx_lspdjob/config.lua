@@ -398,7 +398,7 @@ Config.Uniforms = {
 		    ['arms'] = 41,
 		    ['pants_1'] = 52,   ['pants_2'] = 1,
 		    ['shoes_1'] = 25,   ['shoes_2'] = 0,
-		    ['helmet_1'] = 0,  ['helmet_2'] = 0,
+		    ['helmet_1'] = -1,  ['helmet_2'] = 0,
 		    ['chain_1'] = 0,    ['chain_2'] = 0,
 		    ['ears_1'] = 2,     ['ears_2'] = 0
 	    },
