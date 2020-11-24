@@ -8,6 +8,7 @@
 		'<div class="menu-item {{#selected}}selected{{/selected}}">' +
 		'{{{label}}}{{#isSlider}} : &lt;{{{sliderLabel}}}&gt;{{/isSlider}}' +
 		'{{#isCheckBox}}<input type="checkbox" {{#checked}}checked{{/checked}}><label></label></checkbox>{{/isCheckBox}}' +
+		'{{#rightLabel}}<label class="{{{type}}}">{{{rightLabel}}}</label>{{/rightLabel}}' +
 		'</div>' +
 		'{{/elements}}' +
 		'</div>' +
@@ -96,6 +97,10 @@
 						}
 						case 'checkbox': {
 							element.isCheckBox = true;
+							break;
+						}
+						case 'submenu': {
+							element.rightLabel = ">>>";
 							break;
 						}
 						default:

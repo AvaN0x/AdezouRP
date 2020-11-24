@@ -57,10 +57,10 @@ function all_players()
 		title    = _("all_players"),
 		align    = "left",
 		elements = {
-			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
+			{label = _("orange", _("admin_spectate")), value = "admin_spectate", type = "submenu"},
             {label = _("orange", _("admin_show_names")), value = "show_names", type="checkbox", checked=show_names},
             {label = _("pink", _("admin_revive_all_close")), value = "admin_revive_all_close"},
-			{label = _("orange", _("admin_unban")), value = "admin_unban"},
+			{label = _("orange", _("admin_unban")), value = "admin_unban", type = "submenu"},
 		}
 	}, function(data, menu)
 		if data.current.value == "admin_unban" then
@@ -82,7 +82,7 @@ function players_list()
     local elements = {}
 	for k, player in ipairs(GetActivePlayers()) do
 		local serverID = GetPlayerServerId(player)
-        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player)})
+        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player), type = "submenu"})
 	end
 	table.sort(elements, function(a,b)
 		return a.serverID < b.serverID
@@ -105,7 +105,7 @@ function players_list_spectate()
     local elements = {}
 	for k, player in ipairs(GetActivePlayers()) do
 		local serverID = GetPlayerServerId(player)
-        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player)})
+        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player), type = "submenu"})
 	end
 	table.sort(elements, function(a,b)
 		return a.serverID < b.serverID

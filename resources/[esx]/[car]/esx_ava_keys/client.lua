@@ -118,9 +118,9 @@ function MyKeysMenu()
     local elements = {}
     for k, v in ipairs(my_keys) do
         if v.type == 1 then
-            table.insert(elements, {label = _('main', v.plate), value = v})
+            table.insert(elements, {label = _('main', v.plate), value = v, type = "submenu"})
         else
-            table.insert(elements, {label = _('double', v.plate), value = v})
+            table.insert(elements, {label = _('double', v.plate), value = v, type = "submenu"})
         end
     end
 

@@ -31,7 +31,7 @@ function OpenSimMenu()
   
 		  for _,v in pairs(sim) do
   
-			  table.insert(elements, {label = tostring(v.number), value = v})
+			  table.insert(elements, {label = tostring(v.number), value = v, type = "submenu"})
 			  
 		  end
   

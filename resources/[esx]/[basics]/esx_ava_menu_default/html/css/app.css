@@ -115,6 +115,7 @@
   text-align: left;
   padding: 0 10px;
   display: flex;
+  text-overflow: ellipsis;
   justify-content: space-between;
 }
 

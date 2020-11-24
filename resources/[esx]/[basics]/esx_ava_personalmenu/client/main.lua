@@ -91,10 +91,10 @@ end)
 function OpenPersonalMenu()
 	local playerPed = PlayerPedId()
 	local elements = {
-		{label = _("orange", _("sim_card")), value = "sim_card"},
-		{label = _("orange", _("my_keys")), value = "my_keys"},
-		{label = _("pink", _("wallet")), value = "wallet", detail = _("wallet_detail")},
-		{label = _("pink", _("bills_menu")), value = "bills", detail = _("bills_menu_detail")}
+		{label = _("orange", _("sim_card")), value = "sim_card", type = "submenu"},
+		{label = _("orange", _("my_keys")), value = "my_keys", type = "submenu"},
+		{label = _("pink", _("wallet")), value = "wallet", detail = _("wallet_detail"), type = "submenu"},
+		{label = _("pink", _("bills_menu")), value = "bills", detail = _("bills_menu_detail"), type = "submenu"}
 	}
 	
 	if  IsPedSittingInAnyVehicle(playerPed) then
@@ -102,32 +102,32 @@ function OpenPersonalMenu()
 		local isDriver = (GetPedInVehicleSeat(vehicle, -1) == playerPed)
 		if GetVehicleClass(GetVehiclePedIsIn(playerPed, false)) ~= 13 then -- remove if bike
 			if isDriver or (GetPedInVehicleSeat(vehicle, 0) == playerPed and GetPedInVehicleSeat(vehicle, -1) == 0) then
-				table.insert(elements, {label = _("vehicle_menu"), value = "vehicle_menu"})
+				table.insert(elements, {label = _("vehicle_menu"), value = "vehicle_menu", type = "submenu"})
 			end
 		end
 		if isDriver then
-			table.insert(elements, {label = _("speed_limiter"), value = "speed_limiter"})
+			table.insert(elements, {label = _("speed_limiter"), value = "speed_limiter", type = "submenu"})
 		end
 	end
 	
 	-- todo, only if the user have a phone
 	table.insert(elements, {label = _("bright_red", _("life_invader")), value = "life_invader", detail = _("life_invader_detail")})
 
-	table.insert(elements, {label = _("blue", _("others_menu")), value = "others_menu"})
+	table.insert(elements, {label = _("blue", _("others_menu")), value = "others_menu", type = "submenu"})
 
 	if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" and PlayerData.job.grade_name ~= "interim" then
-		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job.label)), value = "society"})
+		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job.label)), value = "society", type = "submenu"})
 	end
 	if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" and PlayerData.job2.grade_name ~= "interim" then
-		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job2.label)), value = "society2"})
+		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job2.label)), value = "society2", type = "submenu"})
 	end
 
 	if actualGang and actualGang.name and actualGang.grade == 1 then
-		table.insert(elements, {label = _("bright_red", _("gang_menu", actualGang.label)), value = "gang_menu"})
+		table.insert(elements, {label = _("bright_red", _("gang_menu", actualGang.label)), value = "gang_menu", type = "submenu"})
 	end
 
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu", detail = _("admin_menu_detail")})
+		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu", detail = _("admin_menu_detail"), type = "submenu"})
 	end
 
 
@@ -218,9 +218,9 @@ function OpenWalletMenu()
 		title    = _("wallet"),
 		align    = "left",
 		elements = {
-			{label = _("blue", _("wallet_idcard")), value = nil},
-			{label = _("green", _("wallet_driver_license")), value = "driver"},
-			{label = _("red", _("wallet_weapon_port_license")), value = "weapon"}
+			{label = _("blue", _("wallet_idcard")), value = nil, type = "submenu"},
+			{label = _("green", _("wallet_driver_license")), value = "driver", type = "submenu"},
+			{label = _("red", _("wallet_weapon_port_license")), value = "weapon", type = "submenu"}
 		}
 	}, function(data, menu)
 		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_wallet2",
@@ -428,8 +428,8 @@ function OpenSocietyMenu(job, money, dirtyMoney)
 
 
 	if job.grade_name == "boss" then
-		table.insert(elements, {label = _("society_first_job"), value = "society_first_job"})
-		table.insert(elements, {label = _("society_second_job"), value = "society_second_job"})
+		table.insert(elements, {label = _("society_first_job"), value = "society_first_job", type = "submenu"})
+		table.insert(elements, {label = _("society_second_job"), value = "society_second_job", type = "submenu"})
 	end
 
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society",
