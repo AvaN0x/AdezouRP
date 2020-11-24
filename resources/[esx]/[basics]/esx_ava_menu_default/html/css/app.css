@@ -103,7 +103,7 @@
 .menu .menu-items {
   max-height: 350px;
   overflow-y: hidden;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0.6));
 }
 
 .menu .menu-items .menu-item {
@@ -184,7 +184,7 @@
   color: white;
   text-align: left;
   padding: 0 10px;
-  background-color: rgba(0, 0, 0, 0.7);
+  border-top: 3px solid #000;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
   justify-content: space-between;
-
 }
