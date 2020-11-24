@@ -229,7 +229,7 @@ function OpenstateActionsMenu()
 							result[i].amount .. " $",
 							result[i].target,
 							result[i].date,
-							result[i].jours
+							result[i].days
 						}
 					})
 				end
