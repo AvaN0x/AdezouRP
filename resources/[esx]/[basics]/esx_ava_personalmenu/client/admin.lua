@@ -529,6 +529,9 @@ function ToggleAdminMode()
 		-- 	end
 		-- end)
 		LoadPedModel(Config.AdminPed)
+		playerPed = PlayerPedId()
+		GiveWeaponToPed(playerPed, GetHashKey('weapon_raypistol'), 0, false, false)
+		SetCurrentPedWeapon(playerPed, GetHashKey('weapon_raypistol'), true)
 	else
 		ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
 			if skin.sex == 0 then
@@ -539,6 +542,7 @@ function ToggleAdminMode()
 
 			TriggerEvent('skinchanger:loadSkin', skin)
 		end)
+		playerPed = PlayerPedId()
 		ClearPedBloodDamage(playerPed)
 		ResetPedVisibleDamage(playerPed)
 		ResetPedMovementClipset(playerPed, 0)
@@ -644,14 +648,12 @@ function LoadPedModel(model)
 		if GetEntityModel(playerId) ~= modelHash then
 			local playerPed = PlayerPedId()
 			local weapons = {}
-			local bool, equipedWeapon = GetCurrentPedWeapon(playerPed, 1)
 			for k, v in ipairs(ESX.GetWeaponList()) do
 				local weaponHash = GetHashKey(v.name)
 				if v.name ~= 'WEAPON_UNARMED' and HasPedGotWeapon(playerPed, weaponHash, false) then
 					table.insert(weapons, {
 						hash = weaponHash,
-						ammo = GetAmmoInPedWeapon(playerPed, weaponHash),
-						equiped = weaponHash == equipedWeapon
+						ammo = GetAmmoInPedWeapon(playerPed, weaponHash)
 					})
 				end
 			end
@@ -661,9 +663,6 @@ function LoadPedModel(model)
 
 			for k, v in ipairs(weapons) do
 				GiveWeaponToPed(playerPed, v.hash, v.ammo, false, false)
-				if v.equiped then
-					SetCurrentPedWeapon(playerPed, v.hash, true)
-				end
 			end
 
 		end
