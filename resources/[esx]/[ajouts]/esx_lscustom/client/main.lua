@@ -449,11 +449,12 @@ function GetAction(data)
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' then
-							if not Config.Menus[l].modType 
-							or Config.Menus[l].modType == 22 
+							if not Config.Menus[l].modType
+							or Config.Menus[l].modType == 22
 							or Config.Menus[l].modType == 'windowTint'
 							or Config.Menus[l].modType == 'plateIndex'
 							or Config.Menus[l].modType == 'modXenonColour'
+							or Config.Menus[l].modType == 'neonColor'
 							or (Config.Menus[l].modType == 'modLivery' and GetVehicleLiveryCount(vehicle) > 0)
 							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0 then
 								table.insert(elements, {label = w, value = l})
