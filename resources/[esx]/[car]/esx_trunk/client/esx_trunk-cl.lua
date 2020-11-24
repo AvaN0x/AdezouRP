@@ -195,7 +195,7 @@ Citizen.CreateThread(function()
     elseif lastOpen and IsControlPressed(0, Keys["BACKSPACE"]) and (GetGameTimer() - GUI.Time) > 150 then
 	    CloseToVehicle = false
       lastOpen = false
-      if lastVehicle > 0 then
+      if lastVehicle ~= nil and lastVehicle > 0 then
         SetVehicleDoorShut(lastVehicle, 5, false)
         lastVehicle = 0
       end
