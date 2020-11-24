@@ -174,8 +174,10 @@ AddEventHandler("ava_connection:banPlayer", function(id, reason)
 	local steam, license, discord, ip, live, xbl = GetPlayerIdentifiersInVars(id)
 	local name = GetPlayerName(id)
 	local staffSteam = GetPlayerIdentifiersInVars(source)
+	local staffName = GetPlayerName(source)
 
-	DropPlayer(id, "Tu as été banni par " .. GetPlayerName(source) .. " : ".. reason)
+	DropPlayer(id, "Tu as été banni par " .. staffName .. " : ".. reason)
+	SendWebhookEmbedMessage("avan0x_wh_staff", "", name .. " got banned by **" .. staffName .. "**.\nReason : " .. reason, 16711680) -- #ff0000
 
 	MySQL.Async.execute('INSERT INTO `ban_list`(`steam`, `license`, `discord`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@steam, @license, @discord, @ip, @xbl, @live, @name, @reason, @staff)', {
 		['@steam'] = steam or "not_found",
