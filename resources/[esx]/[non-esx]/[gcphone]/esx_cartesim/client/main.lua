@@ -22,8 +22,6 @@ end)
 
 function OpenSimMenu()
 
-	ESX.UI.Menu.CloseAll()
-
 	local elements = {}
 	local elements2 = {}
   
