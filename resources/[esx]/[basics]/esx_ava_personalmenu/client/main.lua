@@ -371,19 +371,29 @@ end
 
 
 local interface = true
+local big_minimap = false
 function OpenOthersMenu()
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_others",
 	{
 		title    = _("others_menu"),
 		align    = "left",
 		elements = {
-			{label = _("others_toggle_hud"), value = "toggle_hud", type="checkbox", checked=interface}
+			{label = _("others_toggle_hud"), value = "toggle_hud", type="checkbox", checked=interface},
+			{label = _("others_resize_minimap"), value = "resize_minimap", type="checkbox", checked=resize_minimap}
 		}
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then
 			interface = not interface
-			TriggerEvent('ui:toggle', interface)
+			if not interface or not big_minimap then
+				TriggerEvent('ui:toggle', interface)
+			end
 			DisplayRadar(interface)
+		elseif data.current.value == "resize_minimap" then
+			big_minimap = not big_minimap
+			SetRadarBigmapEnabled(big_minimap, false)
+			if interface or big_minimap then
+				TriggerEvent('ui:toggle', not big_minimap)
+			end
 		end
 	end, function(data, menu)
 		menu.close()
