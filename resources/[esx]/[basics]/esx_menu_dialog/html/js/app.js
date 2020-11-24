@@ -120,7 +120,7 @@
 				// }.bind({ namespace: namespace, name: name, data: menuData }));
 
 				$(menu).find('[name="value"]').bind('input propertychange', function () {
-					this.data.value = $(menu).find('[name="value"]').val();
+					this.data.value = $(menu).find('[name="value"]').val().trim();
 					ESX_MENU.change(this.namespace, this.name, this.data);
 				}.bind({ namespace: namespace, name: name, data: menuData }));
 
