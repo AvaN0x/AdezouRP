@@ -58,6 +58,7 @@ Locales["fr"] = {
   ["enter_message"] = "Saisissez le message à envoyer",
 
   ["others_toggle_hud"] = "Activer/Désactiver HUD",
+  ["others_resize_minimap"] = "Taille de la map",
 
   ["billing"] = "Facture",
   ["billing_amount"] = "Montant de la facture",
