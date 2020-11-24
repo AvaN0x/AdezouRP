@@ -609,7 +609,7 @@ end)
 -- Just For reload
 RegisterServerEvent('gcPhone:allUpdate')
 AddEventHandler('gcPhone:allUpdate', function()
-    local sourcePlayer = tonumber(source)
+    local sourcePlayer = source
     local identifier = getPlayerID(source)
     local num = getNumberPhone(identifier)
     TriggerClientEvent("gcPhone:myPhoneNumber", sourcePlayer, num)
