@@ -220,6 +220,23 @@ Config.Garages = {
 		},
 		Identifier = "garage_vagos"
 	},
+	Garage_LOST = {
+		Name = "hide",
+		Pos = {x = 975.37, y = -140.63, z = 74.23},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = 975.37, y = -140.63, z = 74.23},
+			Heading = 50.0
+		},
+		Identifier = "garage_lost"
+	},
 
 
 
