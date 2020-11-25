@@ -150,7 +150,6 @@ function OpenPersonalMenu()
 			TriggerEvent("esx_ava_keys:keysMenu")
 
 		elseif data.current.value == "wallet" then
-			menu.close()
 			OpenWalletMenu()
 
 		elseif data.current.value == "vehicle_menu" then
