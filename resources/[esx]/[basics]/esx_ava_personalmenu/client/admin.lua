@@ -623,7 +623,7 @@ end
 function admin_tp_nearest_vehicle()
 	local playerPed = GetPlayerPed(-1)
 	local coords = GetEntityCoords(playerPed, true)
-
+	ClearPedTasksImmediately(playerPed)
 	TaskWarpPedIntoVehicle(playerPed, GetClosestVehicle(coords.x, coords.y, coords.z, 12.0, 0, 71), -1)
 end
 
