@@ -463,7 +463,11 @@ function admin_goto(player)
 	local targetVehicle = GetVehiclePedIsIn(targetPed, false)
 	
 	if targetVehicle ~= 0 then
-		SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
+		if AreAnyVehicleSeatsFree(targetVehicle) then
+			SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
+		else
+			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(targetPed))
+		end
 	else
 		local playerPed = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(playerPed, false)
