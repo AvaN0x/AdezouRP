@@ -14,6 +14,7 @@ function OpenAdminMenu()
             {label = _("orange", _("players_list")), value = "players_list", type = "submenu"},
             {label = _("orange", _("all_players")), value = "all_players", type = "submenu"},
 			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
+			{label = _("blue", _("admin_clear_area")), value = "admin_clear_area"},
 			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
 			{label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu", type = "submenu"},
 			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
@@ -28,7 +29,9 @@ function OpenAdminMenu()
 		elseif data.current.value == "all_players" then
 			all_players()
 		elseif data.current.value == "tp_marker" then
-            admin_tp_marker()
+			admin_tp_marker()
+		elseif data.current.value == "admin_clear_area" then
+			admin_clear_area()
 		elseif data.current.value == "noclip" then
 			admin_noclip()
 		elseif data.current.value == "admin_vehicle_menu" then
@@ -587,7 +590,12 @@ function admin_unban()
 	end)
 end
 
+function admin_clear_area()
+	local playerPed = PlayerPedId()
+	local coords = GetEntityCoords(playerPed, true)
 
+	ClearAreaOfEverything(coords.x, coords.y, coords.z, 100.0, false, false, false, false)
+end
 
 
 --? vehicles part

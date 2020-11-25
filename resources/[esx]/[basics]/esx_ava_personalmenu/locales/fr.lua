@@ -79,6 +79,7 @@ Locales["fr"] = {
   ['staff'] = "STAFF",
   ["admin_spectate"] = "Spectate",
   ["admin_tp_marker"] = "TP sur le Marqueur",
+  ['admin_clear_area'] = "Clear area",
   ["admin_noclip"] = "NoClip",
   ["admin_vehicle_menu"] = "Véhicules",
   ["admin_show_names"] = "Toggle noms et blip des joueurs",
