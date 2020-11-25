@@ -636,5 +636,16 @@ Config.Doors = {
 				}
 			}
 		},
+
+
+		-- BIKER LOST
+		{
+			objHash = 190770132,
+			objCoords  = vector3( 981.90, -102.50, 74.85),
+			textCoords = vector3( 981.90, -102.50, 74.85),
+			authorizedGangs = { 'biker_lost' },
+			objYaw = 42.65,
+			locked = true
+		},
 	}
 }
