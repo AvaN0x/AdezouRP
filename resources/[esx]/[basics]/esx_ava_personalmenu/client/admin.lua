@@ -198,6 +198,7 @@ function AdminLoop()
 					if IsDead then
 						TriggerEvent('esx_ava_emsjob:revive2')
 						Citizen.Wait(1000)
+						ToggleAdminMode(true)
 					end
 					OpenAdminMenu()
 				end
@@ -512,8 +513,8 @@ AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
 	ToggleAdminMode()
 end)
 
-function ToggleAdminMode()
-	admin_mode = not admin_mode
+function ToggleAdminMode(bool)
+	admin_mode = bool or not admin_mode
 
 	RemoveAllPlayersBlips()
 	local playerPed = PlayerPedId()
