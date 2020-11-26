@@ -206,3 +206,14 @@ AddEventHandler('esx_ava_personalmenu:society_demote2', function(target, jobName
 	end
 end)
 
+
+
+
+
+-- AddEventHandler('esx:playerLoaded', function(source)
+-- 	local _source = source
+--     local xPlayer = ESX.GetPlayerFromId(_source)
+
+-- 	local inventories = xPlayer.get('ava_inventories')
+-- 	print(ESX.DumpTable(inventories))
+-- end)
