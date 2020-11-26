@@ -11,6 +11,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 	self.items = items
 	self.max_weight = max_weight
 	self.actual_weight = 0
+	self.modified = false
 
 	self.updateWeight = function()
 		self.actual_weight = 0
@@ -45,24 +46,26 @@ function CreateInventory(name, label, max_weight, identifier, items)
 	end
 
 	self.saveInventory = function()
-		if self.identifier == nil then
-			print("Save inventory for ".. self.name)
-			for k, item in ipairs(items) do
-				MySQL.Async.execute('INSERT INTO inventories_items (name, item, count) VALUES (@name, @item, @count) ON DUPLICATE KEY UPDATE count = @count', {
-					['@name'] = self.name,
-					['@item'] = item.name,
-					['@count'] = item.count
-				})
-			end
-		else
-			print("Save inventory for ".. self.name .. " of " .. self.identifier)
-			for k, item in ipairs(items) do
-				MySQL.Async.execute('INSERT INTO inventories_items (name, item, count, identifier) VALUES (@name, @item, @count, @identifier) ON DUPLICATE KEY UPDATE count = @count', {
-					['@name'] = self.name,
-					['@item'] = item.name,
-					['@count'] = item.count,
-					['@identifier'] = self.identifier
-				})
+		if self.modified == true then
+			if self.identifier == nil then
+				print("Save inventory for ".. self.name)
+				for k, item in ipairs(items) do
+					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count) VALUES (@name, @item, @count) ON DUPLICATE KEY UPDATE count = @count', {
+						['@name'] = self.name,
+						['@item'] = item.name,
+						['@count'] = item.count
+					})
+				end
+			else
+				print("Save inventory for ".. self.name .. " of " .. self.identifier)
+				for k, item in ipairs(items) do
+					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count, identifier) VALUES (@name, @item, @count, @identifier) ON DUPLICATE KEY UPDATE count = @count', {
+						['@name'] = self.name,
+						['@item'] = item.name,
+						['@count'] = item.count,
+						['@identifier'] = self.identifier
+					})
+				end
 			end
 		end
 	end
@@ -73,6 +76,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		item.count = item.count + count
 
 		self.updateWeight()
+		self.modified = true
 	end
 
 	self.removeItem = function(name, count)
@@ -80,6 +84,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		item.count = item.count - count
 
 		self.updateWeight()
+		self.modified = true
 	end
 
 	self.setItem = function(name, count)
@@ -87,8 +92,8 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		item.count = count
 
 		self.updateWeight()
+		self.modified = true
 	end
-
 
 	return self
 end
