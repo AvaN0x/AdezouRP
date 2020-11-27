@@ -137,8 +137,14 @@ end)
 ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source, cb, name)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
+	local inventory = GetInventory(name, xPlayer.identifier)
 
-	cb(GetInventory(name, xPlayer.identifier))
+	cb({
+		max_weight = inventory.max_weight,
+		actual_weight = inventory.actual_weight,
+		label = inventory.label,
+		items = inventory.items
+	})
 end)
 
 RegisterServerEvent("esx_ava_inventories:saveSharedInventories")

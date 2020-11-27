@@ -99,7 +99,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 
 	self.canAddItem = function(name, count)
 		local item = self.getItem(name)
-		if item.limit ~= -1 and item.count + count > item.limit then
+		if self.identifier ~= nil and item.limit ~= -1 and item.count + count > item.limit then -- only check limit if not shared inventory
 			return false
 		else
 			if self.actual_weight + count * item.weight > self.max_weight then
@@ -114,7 +114,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		local total_weight = 0
 		for k, v in ipairs(items) do
 			local item = self.getItem(v.name)
-			if item.limit ~= -1 and item.count + v.count > item.limit then
+			if self.identifier ~= nil and item.limit ~= -1 and item.count + v.count > item.limit then -- only check limit if not shared inventory
 				return false
 			end
 			total_weight = total_weight + v.count * item.weight
@@ -135,6 +135,12 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		end
 	end
 
+	self.clearInventory = function()
+		for k, item in ipairs(self.items) do
+			item.count = 0
+		end
+		self.actual_weight = 0
+	end
 
 	return self
 end
