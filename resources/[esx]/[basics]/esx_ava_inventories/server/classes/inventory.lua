@@ -81,7 +81,8 @@ function CreateInventory(name, label, max_weight, identifier, items)
 
 	self.removeItem = function(name, count)
 		local item = self.getItem(name)
-		item.count = item.count - count
+		local new_count = item.count - count
+		item.count = new_count >= 0 and new_count or 0
 
 		self.updateWeight()
 		self.modified = true
