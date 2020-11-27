@@ -67,6 +67,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 					})
 				end
 			end
+			self.modified = false
 		end
 	end
 
