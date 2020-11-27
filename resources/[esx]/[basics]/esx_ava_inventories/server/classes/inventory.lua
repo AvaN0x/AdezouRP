@@ -96,6 +96,45 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		self.modified = true
 	end
 
+	self.canAddItem = function(name, count)
+		local item = self.getItem(name)
+		if item.limit ~= -1 and item.count + count > item.limit then
+			return false
+		else
+			if self.actual_weight + count * item.weight > self.max_weight then
+				return false
+			else
+				return true
+			end
+		end
+	end
+
+	self.canAddAllItem = function(items) -- {name, count}
+		local total_weight = 0
+		for k, v in ipairs(items) do
+			local item = self.getItem(v.name)
+			if item.limit ~= -1 and item.count + v.count > item.limit then
+				return false
+			end
+			total_weight = total_weight + v.count * item.weight
+		end
+		if self.actual_weight + total_weight > self.max_weight then
+			return false
+		else
+			return true
+		end
+	end
+
+	self.canRemoveItem = function(name, count)
+		local item = self.getItem(name)
+		if item.count >= count then
+			return true
+		else
+			return false
+		end
+	end
+
+
 	return self
 end
 

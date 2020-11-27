@@ -54,7 +54,7 @@ AddEventHandler('onMySQLReady', function()
 			SharedInventories[name] = CreateInventory(name, label, max_weight, nil, items)
 		end
 	end
-	TriggerEvent('esx_ava_inventories:saveInventories')
+	TriggerEvent('esx_ava_inventories:saveSharedInventories')
 end)
 
 function GetInventory(name, identifier)
@@ -141,15 +141,17 @@ ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source
 	cb(GetInventory(name, xPlayer.identifier))
 end)
 
-RegisterServerEvent("esx_ava_inventories:saveInventories")
-AddEventHandler("esx_ava_inventories:saveInventories", function()
-	for k, nonShared in ipairs(playerInventoriesNames) do
-		for k2, inv in ipairs(Inventories[nonShared.name]) do
-			inv.saveInventory()
-		end
-	end
-
+RegisterServerEvent("esx_ava_inventories:saveSharedInventories")
+AddEventHandler("esx_ava_inventories:saveSharedInventories", function()
 	for k, inv in pairs(SharedInventories) do
 		inv.saveInventory()
+	end
+end)
+
+RegisterServerEvent("esx_ava_inventories:saveInventories")
+AddEventHandler("esx_ava_inventories:saveInventories", function(identifier)
+	for k, nonShared in ipairs(playerInventoriesNames) do
+		local inventory = GetInventory(nonShared.name, identifier)
+		inventory.saveInventory()
 	end
 end)
