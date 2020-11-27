@@ -29,10 +29,17 @@ Citizen.CreateThread(function()
 		Citizen.Wait(3000)
 		local playerPed = GetPlayerPed(-1)
         vehicle = GetVehiclePedIsIn(playerPed, false)
-        if GetPedInVehicleSeat(vehicle, -1) == playerPed and vehicleClassDisableControl[GetVehicleClass(vehicle)] then
-            disableAirControl = true
-        else
-            disableAirControl = false
+        if vehicle ~= 0 then
+            if GetPedInVehicleSeat(vehicle, -1) == playerPed and vehicleClassDisableControl[GetVehicleClass(vehicle)] then
+                disableAirControl = true
+            else
+                disableAirControl = false
+            end
+            --! stop vehicle from despawning
+            if not IsEntityAMissionEntity(vehicle) then
+                print("SetEntityAsMissionEntity(vehicle)")
+                SetEntityAsMissionEntity(vehicle)
+            end
         end
 	end
 end)
