@@ -54,6 +54,7 @@ AddEventHandler('onMySQLReady', function()
 			SharedInventories[name] = CreateInventory(name, label, max_weight, nil, items)
 		end
 	end
+	TriggerEvent('esx_ava_inventories:reloadUsableItems')
 	TriggerEvent('esx_ava_inventories:saveSharedInventories')
 end)
 
@@ -80,6 +81,11 @@ AddEventHandler('esx_ava_inventories:getSharedInventory', function(name, cb)
 	cb(GetSharedInventory(name))
 end)
 
+AddEventHandler('esx_ava_inventories:reloadUsableItems', function()
+	for item, cb in ipairs(ESX.UsableItemsCallbacks) do
+		Items[item].usable = true
+	end
+end)
 
 AddEventHandler('esx:playerLoaded', function(source)
 	local _source = source
@@ -138,6 +144,11 @@ ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	local inventory = GetInventory(name, xPlayer.identifier)
+	for k, item in ipairs(inventory.items) do
+		if item.count > 0 then
+			item.usable = Items[item.name].usable
+		end
+	end
 
 	cb({
 		max_weight = inventory.max_weight,
