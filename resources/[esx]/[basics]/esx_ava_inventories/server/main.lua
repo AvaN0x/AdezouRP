@@ -58,9 +58,11 @@ AddEventHandler('onMySQLReady', function()
 end)
 
 function GetInventory(name, identifier)
-	for i=1, #Inventories[name], 1 do
-		if Inventories[name][i].identifier == identifier then
-			return Inventories[name][i]
+	if Inventories[name] then
+		for i=1, #Inventories[name], 1 do
+			if Inventories[name][i].identifier == identifier then
+				return Inventories[name][i]
+			end
 		end
 	end
 	return nil
@@ -77,8 +79,6 @@ end)
 AddEventHandler('esx_ava_inventories:getSharedInventory', function(name, cb)
 	cb(GetSharedInventory(name))
 end)
-
-
 
 
 AddEventHandler('esx:playerLoaded', function(source)
@@ -113,6 +113,7 @@ AddEventHandler('esx:playerLoaded', function(source)
 		end
 
 		local inventory = CreateInventory(name, label, max_weight, identifier, items)
+
 		table.insert(Inventories[name], inventory)
 		table.insert(ava_inventories, inventory) -- add inventory to player inventories
 	end
@@ -121,30 +122,34 @@ AddEventHandler('esx:playerLoaded', function(source)
 end)
 
 
-ESX.RegisterServerCallback('esx_ava_inventories:getMyInventories', function(source, cb)
+-- ESX.RegisterServerCallback('esx_ava_inventories:getMyInventories', function(source, cb)
+-- 	local _source = source
+-- 	local xPlayer = ESX.GetPlayerFromId(_source)
+-- 	local inventories = {}
+
+-- 	for k, nonShared in ipairs(playerInventoriesNames) do
+-- 		inventories[nonShared.name] = GetInventory(nonShared.name, xPlayer.identifier)
+-- 	end
+-- 	print('ava_inventories = ' .. ESX.DumpTable(inventories))
+-- 	cb(inventories)
+-- end)
+
+ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source, cb, name)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
-	local inventories = {}
 
-	for k, nonShared in ipairs(playerInventoriesNames) do
-		inventories[nonShared.name] = GetInventory(nonShared.name, xPlayer.identifier)
-	end
-	print('ava_inventories = ' .. ESX.DumpTable(inventories))
-	cb(inventories)
+	cb(GetInventory(name, xPlayer.identifier))
 end)
-
-
 
 RegisterServerEvent("esx_ava_inventories:saveInventories")
 AddEventHandler("esx_ava_inventories:saveInventories", function()
 	for k, nonShared in ipairs(playerInventoriesNames) do
 		for k2, inv in ipairs(Inventories[nonShared.name]) do
-			inv.saveInventory() -- todo
+			inv.saveInventory()
 		end
 	end
 
 	for k, inv in pairs(SharedInventories) do
-		inv.saveInventory() -- todo
+		inv.saveInventory()
 	end
 end)
-

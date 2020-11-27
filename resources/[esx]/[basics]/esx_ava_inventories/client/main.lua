@@ -15,9 +15,14 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(10)
         if IsControlJustReleased(0, Config.OpenControl) then
-            ESX.TriggerServerCallback('esx_ava_inventories:getMyInventories', function(inventories)
-                print(ESX.DumpTable(inventories))
-            end)
+            OpenMyInventory('inventory')
         end
     end
 end)
+
+function OpenMyInventory(name)
+    ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
+        ESX.ShowNotification(inventory.actual_weight .. "/" .. inventory.max_weight)
+        print(ESX.DumpTable(inventory))
+    end, name)
+end
