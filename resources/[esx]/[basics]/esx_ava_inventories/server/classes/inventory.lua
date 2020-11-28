@@ -140,6 +140,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 			item.count = 0
 		end
 		self.actual_weight = 0
+		self.modified = true
 	end
 
 	return self
