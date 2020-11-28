@@ -9,7 +9,6 @@ local playerInventoriesNames = {} -- inventories shared = 0
 local Inventories = {}
 local SharedInventories = {}
 
-
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 AddEventHandler('onMySQLReady', function()
@@ -82,10 +81,21 @@ AddEventHandler('esx_ava_inventories:getSharedInventory', function(name, cb)
 end)
 
 AddEventHandler('esx_ava_inventories:reloadUsableItems', function()
-	for item, cb in ipairs(ESX.UsableItemsCallbacks) do
-		Items[item].usable = true
+	TriggerEvent('esx:getUsableItems', function(items)
+		for item, cb in pairs(items) do
+			if Items[item] then
+				Items[item].usable = true
+			end
+		end
+	end)
+end)
+
+AddEventHandler('esx_ava_inventories:setItemUsable', function(itemName)
+	if Items[itemName] then
+		Items[itemName].usable = true
 	end
 end)
+
 
 AddEventHandler('esx:playerLoaded', function(source)
 	local _source = source
@@ -170,5 +180,55 @@ AddEventHandler("esx_ava_inventories:saveInventories", function(identifier)
 	for k, nonShared in ipairs(playerInventoriesNames) do
 		local inventory = GetInventory(nonShared.name, identifier)
 		inventory.saveInventory()
+	end
+end)
+
+RegisterServerEvent('esx_ava_inventories:giveItem')
+AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, target, itemName, count)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	local playerInventory = GetInventory(inventoryName, xPlayer.identifier)
+	local xTarget = ESX.GetPlayerFromId(target)
+	local targetInventory = GetInventory(inventoryName, xTarget.identifier)
+
+	if count == nil or count < 1 then
+		TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity') .. "1")
+	elseif type == 'item_standard' then
+		if playerInventory.canRemoveItem(itemName, count) then
+			if targetInventory.canAddItem(itemName, count) then
+				playerInventory.removeItem(itemName, count)
+				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
+				targetInventory.addItem(itemName, count)
+				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName, count)
+			else
+				TriggerClientEvent('esx:showNotification', _source, _('target_not_enough_place'))
+				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
+			end
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity') .. "2")
+		end
+	end
+end)
+
+RegisterServerEvent('esx_ava_inventories:dropItem')
+AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, itemName, count)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	local inventory = GetInventory(inventoryName, xPlayer.identifier)
+
+	if count == nil or count < 1 then
+		TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+	elseif type == 'item_standard' then
+		if inventory.canRemoveItem(itemName, count) then
+			inventory.removeItem(itemName, count)
+			TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
+
+			local item = inventory.getItem(itemName)
+			ESX.CreatePickup(type, itemName, count, ('~y~%s~s~ [~b~%s~s~]'):format(item.label, count), _source)
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
+
+
 	end
 end)

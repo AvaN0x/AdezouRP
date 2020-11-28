@@ -71,7 +71,6 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		end
 	end
 
-
 	self.addItem = function(name, count)
 		local item = self.getItem(name)
 		item.count = item.count + count
@@ -79,6 +78,10 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		self.updateWeight()
 		self.modified = true
 	end
+
+	-- todo return count left
+	-- todo self.addMaxItem = function(name, count)
+	-- todo end)
 
 	self.removeItem = function(name, count)
 		local item = self.getItem(name)
@@ -123,6 +126,25 @@ function CreateInventory(name, label, max_weight, identifier, items)
 			return false
 		else
 			return true
+		end
+	end
+
+	self.canTake = function(name)
+		if self.actual_weight > self.max_weight then
+			return 0
+		end
+		local item = self.getItem(name)
+
+		local fromWeight = (self.max_weight - self.actual_weight) % item.weight
+		if self.identifier ~= nil and item.limit ~= -1 then -- only check limit if not shared inventory
+			local fromLimit = item.limit - item.count
+			if fromLimit < 0 then
+				fromLimit = 0
+			end
+
+			return fromLimit < fromWeight and fromLimit or fromWeight
+		else
+			return fromWeight
 		end
 	end
 
