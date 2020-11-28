@@ -150,10 +150,10 @@ end)
 -- 	cb(inventories)
 -- end)
 
-ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source, cb, name)
+ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source, cb)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
-	local inventory = GetInventory(name, xPlayer.identifier)
+	local inventory = GetInventory('inventory', xPlayer.identifier)
 	for k, item in ipairs(inventory.items) do
 		if item.count > 0 then
 			item.usable = Items[item.name].usable
@@ -164,7 +164,31 @@ ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source
 		max_weight = inventory.max_weight,
 		actual_weight = inventory.actual_weight,
 		label = inventory.label,
-		items = inventory.items
+		items = inventory.items,
+		money = xPlayer.getMoney(),
+		accounts = xPlayer.accounts,
+		weapons = xPlayer.loadout
+	})
+end)
+
+ESX.RegisterServerCallback('esx_ava_inventories:getTargetInventory', function(source, cb, target)
+	local _target = target
+	local xTarget = ESX.GetPlayerFromId(_target)
+	local inventory = GetInventory('inventory', xTarget.identifier)
+	for k, item in ipairs(inventory.items) do
+		if item.count > 0 then
+			item.usable = Items[item.name].usable
+		end
+	end
+
+	cb({
+		max_weight = inventory.max_weight,
+		actual_weight = inventory.actual_weight,
+		label = inventory.label,
+		items = inventory.items,
+		money = xTarget.getMoney(),
+		accounts = xTarget.accounts,
+		weapons = xTarget.loadout
 	})
 end)
 
@@ -192,7 +216,7 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 	local targetInventory = GetInventory(inventoryName, xTarget.identifier)
 
 	if count == nil or count < 1 then
-		TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity') .. "1")
+		TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 	elseif type == 'item_standard' then
 		if playerInventory.canRemoveItem(itemName, count) then
 			if targetInventory.canAddItem(itemName, count) then
@@ -205,8 +229,27 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
 			end
 		else
-			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity') .. "2")
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
+
+
+	elseif type == 'item_weapon' then
+		if xPlayer.hasWeapon(itemName) then
+			itemName = itemName:lower()
+			print(itemName)
+			if targetInventory.canAddItem(itemName, 1) then
+				xPlayer.removeWeapon(itemName)
+				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
+				targetInventory.addItem(itemName, 1)
+				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName, count)
+			else
+				TriggerClientEvent('esx:showNotification', _source, _('target_not_enough_place'))
+				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
+			end
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
+
 	end
 end)
 
@@ -229,6 +272,23 @@ AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, it
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
 
+
+	elseif type == 'item_weapon' then
+		local xPlayer = ESX.GetPlayerFromId(source)
+		local loadout = xPlayer.getLoadout()
+
+		if xPlayer.hasWeapon(itemName) then
+			for k, wea in ipairs(loadout) do
+				if wea.name == itemName then
+					count = wea.ammo
+					break
+				end
+			end
+			local weaponLabel, weaponPickup = ESX.GetWeaponLabel(itemName), 'PICKUP_' .. string.upper(itemName)
+
+			xPlayer.removeWeapon(itemName)
+			TriggerClientEvent('esx:pickupWeapon', _source, weaponPickup, itemName, count > 0 and count or 1)
+		end
 
 	end
 end)
