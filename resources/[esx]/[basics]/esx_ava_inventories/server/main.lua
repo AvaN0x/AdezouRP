@@ -171,6 +171,16 @@ ESX.RegisterServerCallback('esx_ava_inventories:getMyInventory', function(source
 	})
 end)
 
+TriggerEvent('es:addGroupCommand', 'openinventory', 'mod', function(source, args, user)
+	if args[1] ~= nil then
+		if GetPlayerName(tonumber(args[1])) ~= nil then
+			TriggerClientEvent('esx_ava_inventories:openPlayerInventory', source, tonumber(args[1]))
+		end
+	end
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end)
+
 ESX.RegisterServerCallback('esx_ava_inventories:getTargetInventory', function(source, cb, target)
 	local _target = target
 	local xTarget = ESX.GetPlayerFromId(_target)
@@ -184,7 +194,7 @@ ESX.RegisterServerCallback('esx_ava_inventories:getTargetInventory', function(so
 	cb({
 		max_weight = inventory.max_weight,
 		actual_weight = inventory.actual_weight,
-		label = inventory.label,
+		label = inventory.label .. " - " .. GetPlayerName(target),
 		items = inventory.items,
 		money = xTarget.getMoney(),
 		accounts = xTarget.accounts,

@@ -7,15 +7,15 @@ description 'ESX Inventories'
 client_scripts {
   "@es_extended/locale.lua",
   "locales/*.lua",
-  'client/main.lua',
-  "config.lua"
+  "config.lua",
+  'client/main.lua'
 }
 
 server_scripts {
   '@mysql-async/lib/MySQL.lua',
   "@es_extended/locale.lua",
   "locales/*.lua",
+  "config.lua",
   "server/classes/inventory.lua",
-  "server/main.lua",
-  "config.lua"
+  "server/main.lua"
 }

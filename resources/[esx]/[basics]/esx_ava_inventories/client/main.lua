@@ -184,6 +184,48 @@ function DropItem(itemType, itemName)
 end
 
 --? other inventory
+RegisterNetEvent('esx_ava_inventories:openPlayerInventory')
+AddEventHandler('esx_ava_inventories:openPlayerInventory', function(serverId)
+    ESX.TriggerServerCallback('esx_ava_inventories:getTargetInventory', function(inventory)
+        OpenTakeInventory(inventory)
+    end, serverId)
+end)
+
+-- function OpenSharedInventory(name)
+--     OpenOtherInventory(inventory)
+-- end
+
+function OpenOtherInventory(inventory)
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_open_other_inventory',
+	{
+		title = inventory.label,
+		align = 'left',
+		elements = {
+            {label = _U('deposit_stock'), value = 'put_stock'},
+            {label = _U('take_stock'), value = 'get_stock'}
+        }
+	},
+	function(data, menu)
+		if data.current.value == 'put_stock' then
+			OpenPutInventory(inventory)
+		elseif data.current.value == 'get_stock' then
+			OpenTakeInventory(inventory)
+		end
+	end,
+	function(data, menu)
+		menu.close()
+	end)
+end
+
+function OpenPutInventory(inventory)
+    print(ESX.DumpTable(inventory))
+end
+
+function OpenTakeInventory(inventory)
+    print(ESX.DumpTable(inventory))
+end
+
+
 function TakeItem()
 
 end
