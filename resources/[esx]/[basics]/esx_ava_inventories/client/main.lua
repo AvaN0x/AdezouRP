@@ -50,11 +50,7 @@ function OpenMyInventory()
         for k, wea in pairs(inventory.weapons) do
             if wea.name ~= "WEAPON_UNARMED" then
                 local ammo = GetAmmoInPedWeapon(playerPed, GetHashKey(wea.name))
-                local detail = ""
-                if ammo ~= -1 then
-                    detail = _('weapon_ammo_amount', ammo) .. "</br>"
-                end
-                table.insert(elements, {label = _('label_weapon', wea.label), value = "item_weapon", item = {name = wea.name, usable = true}, detail = detail .. _('loadout_weapon_detail')})
+                table.insert(elements, {label = _('label_weapon', wea.label), value = "item_weapon", item = {name = wea.name, usable = true}, detail = _('weapon_ammo_amount', ammo) .. "</br>" .. _('loadout_weapon_detail')})
             end
         end
 

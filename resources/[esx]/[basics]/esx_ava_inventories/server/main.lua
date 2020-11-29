@@ -235,13 +235,11 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 
 	elseif type == 'item_weapon' then
 		if xPlayer.hasWeapon(itemName) then
-			itemName = itemName:lower()
-			print(itemName)
-			if targetInventory.canAddItem(itemName, 1) then
+			if targetInventory.canAddItem(itemName:lower(), 1) then
 				xPlayer.removeWeapon(itemName)
-				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
-				targetInventory.addItem(itemName, 1)
-				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName, count)
+				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName:lower(), count)
+				targetInventory.addItem(itemName:lower(), 1)
+				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName:lower(), count)
 			else
 				TriggerClientEvent('esx:showNotification', _source, _('target_not_enough_place'))
 				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
