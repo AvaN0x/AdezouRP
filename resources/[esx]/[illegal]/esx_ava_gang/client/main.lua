@@ -171,10 +171,15 @@ end
 
 
 function OpenPutStocksMenu()
-	ESX.TriggerServerCallback('esx_ava_gang:getPlayerInventory', function(inventory)
+	ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
 		local elements = {}
-		table.insert(elements, {label = "Argent " .. inventory.cash .. '$', type = 'cash'})
-		table.insert(elements, {label = "Argent sale " .. inventory.black_cash .. '$', type = 'black_cash'})
+		table.insert(elements, {label = "Argent " .. inventory.money .. '$', type = 'cash'})
+        for k, acc in pairs(inventory.accounts) do
+            if acc.name == "black_money" then
+				table.insert(elements, {label = "Argent sale " .. acc.money .. '$', type = 'black_cash'})
+				break
+			end
+        end
 
 		for i=1, #inventory.items, 1 do
 			local item = inventory.items[i]
