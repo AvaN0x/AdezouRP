@@ -22,6 +22,8 @@ Locales["fr"] = {
 	["drop_item"] = "Jeter",
 
 	["invalid_quantity"] = "Quantité invalide",
+	['cash'] = 'Liquide',
+	['cash_amount'] = '$%s',
 
 	["target_not_enough_place"] = "La personne n'a pas assez de place dans son inventaire",
 	["not_enough_place"] = "Vous n'avez pas assez de place dans votre inventaire",

@@ -29,6 +29,13 @@ function OpenMyInventory()
 
         local elements = {}
 
+        table.insert(elements, {label = _('label_cash', ESX.Math.GroupDigits(inventory.money)), value = "item_money", item = {name = "money", count = inventory.money}})
+
+        for k, acc in pairs(inventory.accounts) do
+            if acc.name ~= "bank" and acc.money > 0 then
+                table.insert(elements, {label = _('label_account_' .. acc.name, ESX.Math.GroupDigits(acc.money)), value = "item_account", item = {name = acc.name, count = acc.money}})
+            end
+        end
 
         for k, item in ipairs(inventory.items) do
             if item.count > 0 then
@@ -113,14 +120,14 @@ function GetClosestPlayer(cb)
     local elements = {}
 
     for k, player in ipairs(players) do
-        -- if player ~= playerId then
+        if player ~= playerId then
             foundPlayers = true
             -- todo draw player name and a line to them?
             table.insert(elements, {
                 label = GetPlayerName(player),
                 player = GetPlayerServerId(player)
             })
-        -- end
+        end
     end
 
     if foundPlayers then
