@@ -31,7 +31,7 @@ INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
 ('society_unicorn', 'Unicorn', 100000, 1),
 ('society_vigneron', 'Vigneron', 100000, 1),
 ('orga_celtic', 'Celtic', 100000, 1),
-('orga_ordre', 'L''ordre', 100000, 1),
+('orga_ordre', 'L\'ordre', 100000, 1),
 ('biker_lost', 'The Lost', 100000, 1);
 
 CREATE TABLE IF NOT EXISTS `inventories_items` (

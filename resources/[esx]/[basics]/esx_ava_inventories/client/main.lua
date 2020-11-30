@@ -165,6 +165,13 @@ function GiveItem(player, itemType, itemName)
     end
     if type(amount) == "number" and math.floor(amount) == amount then
         TriggerServerEvent("esx_ava_inventories:giveItem", 'inventory', itemType, player, itemName, amount)
+        ESX.Streaming.RequestAnimDict("mp_common", function()
+            local playerPed = PlayerPedId()
+            TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, 8, 2000, 1, 0, 0, 0, 0)
+
+            Citizen.Wait(2000)
+            ClearPedTasksImmediately(playerPed)
+        end)
     end
 end
 
