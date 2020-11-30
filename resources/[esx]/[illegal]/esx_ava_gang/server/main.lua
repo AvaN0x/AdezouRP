@@ -56,7 +56,7 @@ end)
 
 ESX.RegisterServerCallback('esx_ava_gang:getPlayerInventory', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local items = xPlayer.inventory
+	local items = xPlayer.getInventory().items
 	cb({
 		items = items,
 		cash = xPlayer.get('money'),

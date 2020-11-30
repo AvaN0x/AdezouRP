@@ -334,7 +334,7 @@ ESX.RegisterServerCallback('esx_trunk:getPlayerInventory', function(source, cb)
 
   local xPlayer    = ESX.GetPlayerFromId(source)
   local blackMoney = xPlayer.getAccount('black_money').money
-  local items      = xPlayer.inventory
+  local items      = xPlayer.getInventory().items
 
   cb({
     blackMoney = blackMoney,

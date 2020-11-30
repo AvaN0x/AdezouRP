@@ -263,3 +263,11 @@ TriggerEvent('es:addGroupCommand', 'clearloadout', 'admin', function(source, arg
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
 end, {help = _U('command_clearloadout'), params = {{name = "playerId", help = _U('command_playerid_param')}}})
+
+
+
+TriggerEvent('es:addGroupCommand', 'saveplayers', 'superadmin', function(source, args, user)
+	ESX.SavePlayers()
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end)

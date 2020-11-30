@@ -36,17 +36,17 @@ AddEventHandler('onMySQLReady', function()
 			local inventories_items = MySQL.Sync.fetchAll('SELECT * FROM inventories_items WHERE name = @name', {
 				['@name'] = name
 			})
-	
+
 			local items = {}
 
 			for j=1, #inventories_items, 1 do
-				if Items[inventories_items[j].name] then
+				if Items[inventories_items[j].item] then
 					table.insert(items, {
 						name  = inventories_items[j].item,
 						count = inventories_items[j].count,
-						label = Items[inventories_items[j].name].label,
-						limit = Items[inventories_items[j].name].limit,
-						weight = Items[inventories_items[j].name].weight
+						label = Items[inventories_items[j].item].label,
+						limit = Items[inventories_items[j].item].limit,
+						weight = Items[inventories_items[j].item].weight
 					})
 				end
 			end
