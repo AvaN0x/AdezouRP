@@ -1281,7 +1281,7 @@ end
 -- 	end, GetPlayerServerId(player))
 -- end
 function OpenBodySearchMenu(player)
-	TriggerEvent("esx_inventoryhud:openPlayerInventory", GetPlayerServerId(player), GetPlayerName(player))
+	TriggerEvent("esx_ava_inventories:openPlayerInventory", GetPlayerServerId(player))
 end
 
 function OpenFineMenu(player)

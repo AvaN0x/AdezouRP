@@ -419,32 +419,19 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 	end
 
 	self.addWeapon = function(weaponName, ammo)
-		-- TriggerEvent('esx_inventoryhud:canPlayerHave', self.source,function(can)
-			-- local weaponLabel, weaponPickup = ESX.GetWeaponLabel(weaponName), 'PICKUP_' .. string.upper(weaponName)
-			local weaponLabel = ESX.GetWeaponLabel(weaponName)
+		local weaponLabel = ESX.GetWeaponLabel(weaponName)
 
-			if not self.hasWeapon(weaponName) then
-				table.insert(self.loadout, {
-					name = weaponName,
-					ammo = ammo,
-					label = weaponLabel,
-					components = {}
-				})
-			end
+		if not self.hasWeapon(weaponName) then
+			table.insert(self.loadout, {
+				name = weaponName,
+				ammo = ammo,
+				label = weaponLabel,
+				components = {}
+			})
+		end
 
-			-- if can then
-				TriggerClientEvent('esx:addWeapon', self.source, weaponName, ammo)
-				TriggerClientEvent('esx:inventoryItemNotification', self.source, true, {label = weaponLabel}, 1)
-			-- else
-			-- 	if ammo > 0 then
-			-- 		TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, ammo)
-			-- 	else
-			-- 		-- workaround for CreateAmbientPickup() giving 30 rounds of ammo when you drop the weapon with 0 ammo
-			-- 		TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, 1)
-			-- 	end
-			-- 	TriggerClientEvent('esx:showNotification', self.source, 'Tu n\'as plus de place pour porter cela !')
-			-- end
-		-- end, weaponName, 1)
+		TriggerClientEvent('esx:addWeapon', self.source, weaponName, ammo)
+		TriggerClientEvent('esx:inventoryItemNotification', self.source, true, {label = weaponLabel}, 1)
 	end
 
 	self.addWeaponComponent = function(weaponName, weaponComponent)

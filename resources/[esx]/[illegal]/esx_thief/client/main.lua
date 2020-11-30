@@ -122,7 +122,7 @@ end
 -- 	end, GetPlayerServerId(target))
 -- end
 function OpenStealMenu(player, target_id)
-	TriggerEvent("esx_inventoryhud:openPlayerInventory", target_id or GetPlayerServerId(player), GetPlayerName(player))
+	TriggerEvent("esx_ava_inventories:openPlayerInventory", target_id or GetPlayerServerId(player))
 end
 
 
