@@ -83,15 +83,16 @@ AddEventHandler('esx_shops:buyItem', function(itemName, amount, zone, shopName)
 	if Config.Zones[zone].DirtyMoney then
 		-- can the player afford this item?
 		if xPlayer.getAccount('black_money').money >= price then
-			local xItem = xPlayer.getInventoryItem(itemName)
+			local inventory = xPlayer.getInventory()
 
-			-- can the player carry the said amount of x item?
-			if xItem.limit ~= -1 and xItem.count + amount > xItem.limit then
-				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
-			else
+			if inventory.canAddItem(itemName, amount) then
+				TriggerEvent('esx_statejob:getTaxed', shopName, price, function(toSociety)
+				end)
 				xPlayer.removeAccountMoney('black_money', price)
-				xPlayer.addInventoryItem(itemName, amount)
-				TriggerClientEvent('esx:showNotification', _source, _U('bought_dirty', amount, itemLabel, price))
+				inventory.addItem(itemName, amount)
+				TriggerClientEvent('esx:showNotification', _source, _U('bought', amount, itemLabel, price))
+			else
+				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
 			end
 		else
 			local missingMoney = price - xPlayer.getMoney()
@@ -101,17 +102,16 @@ AddEventHandler('esx_shops:buyItem', function(itemName, amount, zone, shopName)
 	else
 		-- can the player afford this item?
 		if xPlayer.getMoney() >= price then
-			local xItem = xPlayer.getInventoryItem(itemName)
+			local inventory = xPlayer.getInventory()
 
-			-- can the player carry the said amount of x item?
-			if xItem.limit ~= -1 and xItem.count + amount > xItem.limit then
-				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
-			else
+			if inventory.canAddItem(itemName, amount) then
 				TriggerEvent('esx_statejob:getTaxed', shopName, price, function(toSociety)
 				end)
 				xPlayer.removeMoney(price)
-				xPlayer.addInventoryItem(itemName, amount)
+				inventory.addItem(itemName, amount)
 				TriggerClientEvent('esx:showNotification', _source, _U('bought', amount, itemLabel, price))
+			else
+				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
 			end
 		else
 			local missingMoney = price - xPlayer.getMoney()
