@@ -147,7 +147,7 @@ AddEventHandler('esx_policejob:getStockItem', function(itemName, count)
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	local sourceItem = xPlayer.getInventoryItem(itemName)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_police', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_police', function(inventory)
 		local inventoryItem = inventory.getItem(itemName)
 
 		-- is there enough in the society?
@@ -172,7 +172,7 @@ AddEventHandler('esx_policejob:putStockItems', function(itemName, count)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local sourceItem = xPlayer.getInventoryItem(itemName)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_police', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_police', function(inventory)
 		local inventoryItem = inventory.getItem(itemName)
 
 		-- does the player have enough of the item?
@@ -547,7 +547,7 @@ function getPriceFromHash(hashKey, jobGrade, type)
 end
 
 ESX.RegisterServerCallback('esx_policejob:getStockItems', function(source, cb)
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_police', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_police', function(inventory)
 		cb(inventory.items)
 	end)
 end)

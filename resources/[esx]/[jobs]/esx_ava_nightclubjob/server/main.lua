@@ -14,7 +14,7 @@ AddEventHandler('esx_ava_nightclubjob:getStockItem', function(itemName, count)
 
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', Config.SocietyName, function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
 
 		local item = inventory.getItem(itemName)
 
@@ -33,7 +33,7 @@ end)
 
 ESX.RegisterServerCallback('esx_ava_nightclubjob:getStockItems', function(source, cb)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', Config.SocietyName, function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
 		cb(inventory.items)
 	end)
 
@@ -45,7 +45,7 @@ AddEventHandler('esx_ava_nightclubjob:putStockItems', function(itemName, count)
   local xPlayer = ESX.GetPlayerFromId(source)
   local sourceItem = xPlayer.getInventoryItem(itemName)
 
-  TriggerEvent('esx_addoninventory:getSharedInventory', Config.SocietyName, function(inventory)
+  TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
 
     local inventoryItem = inventory.getItem(itemName)
 

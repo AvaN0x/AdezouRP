@@ -13,7 +13,7 @@ RegisterServerEvent('esx_ava_statejob:getStockItem')
 AddEventHandler('esx_ava_statejob:getStockItem', function(itemName, count)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_state', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_state', function(inventory)
 		local item = inventory.getItem(itemName)
 		local sourceItem = xPlayer.getInventoryItem(itemName)
 
@@ -35,7 +35,7 @@ AddEventHandler('esx_ava_statejob:getStockItem', function(itemName, count)
 end)
 
 ESX.RegisterServerCallback('esx_ava_statejob:getStockItems', function(source, cb)
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_state', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_state', function(inventory)
 		cb(inventory.items)
 	end)
 end)
@@ -44,7 +44,7 @@ RegisterServerEvent('esx_ava_statejob:putStockItems')
 AddEventHandler('esx_ava_statejob:putStockItems', function(itemName, count)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_state', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_state', function(inventory)
 		local item = inventory.getItem(itemName)
 
 		if item.count >= 0 then

@@ -277,7 +277,7 @@ RegisterServerEvent('esx_mecanojob:getStockItem')
 AddEventHandler('esx_mecanojob:getStockItem', function(itemName, count)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_mecano', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_mecano', function(inventory)
 		local item = inventory.getItem(itemName)
 		local sourceItem = xPlayer.getInventoryItem(itemName)
 
@@ -299,7 +299,7 @@ AddEventHandler('esx_mecanojob:getStockItem', function(itemName, count)
 end)
 
 ESX.RegisterServerCallback('esx_mecanojob:getStockItems', function(source, cb)
-	TriggerEvent('esx_addoninventory:getSharedInventory', 'society_mecano', function(inventory)
+	TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_mecano', function(inventory)
 		cb(inventory.items)
 	end)
 end)
@@ -310,7 +310,7 @@ AddEventHandler('esx_mecanojob:putStockItems', function(itemName, count)
   local xPlayer = ESX.GetPlayerFromId(source)
   local sourceItem = xPlayer.getInventoryItem(itemName)
 
-  TriggerEvent('esx_addoninventory:getSharedInventory', 'society_mecano', function(inventory)
+  TriggerEvent('esx_ava_inventories:getSharedInventory', 'society_mecano', function(inventory)
 
     local inventoryItem = inventory.getItem(itemName)
 
