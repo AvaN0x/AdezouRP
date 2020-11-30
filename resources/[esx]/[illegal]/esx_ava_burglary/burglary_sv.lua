@@ -21,7 +21,11 @@ RegisterServerEvent('esx_ava_burglary:giveItem')
 AddEventHandler('esx_ava_burglary:giveItem', function(item, quantity)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
-	xPlayer.addInventoryItem(item, quantity)
+	local inventory = xPlayer.getInventory()
+
+	if inventory.canAddItem(item, quantity) then
+		inventory.addItem(item, quantity)
+	end
 end)
 
 RegisterServerEvent('esx_ava_burglary:enterHouse')
