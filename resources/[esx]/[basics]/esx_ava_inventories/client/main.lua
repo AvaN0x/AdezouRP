@@ -183,13 +183,92 @@ function DropItem(itemType, itemName)
     end
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --? other inventory
 RegisterNetEvent('esx_ava_inventories:openPlayerInventory')
 AddEventHandler('esx_ava_inventories:openPlayerInventory', function(serverId)
-    ESX.TriggerServerCallback('esx_ava_inventories:getTargetInventory', function(inventory)
-        OpenTakeInventory(inventory)
-    end, serverId)
+    OpenOtherPlayerInventory(serverId)
 end)
+
+function OpenOtherPlayerInventory(serverId)
+    ESX.TriggerServerCallback('esx_ava_inventories:getTargetInventory', function(inventory)
+
+        table.sort(inventory.items, function(a,b)
+            return a.label < b.label
+        end)
+
+        local elements = {}
+
+        table.insert(elements, {label = _('label_cash', ESX.Math.GroupDigits(inventory.money)), value = "item_money", item = {name = "money", count = inventory.money}})
+
+        for k, acc in pairs(inventory.accounts) do
+            if acc.name ~= "bank" and acc.money > 0 then
+                table.insert(elements, {label = _('label_account_' .. acc.name, ESX.Math.GroupDigits(acc.money)), value = "item_account", item = {name = acc.name, count = acc.money}})
+            end
+        end
+
+        for k, item in ipairs(inventory.items) do
+            if item.count > 0 then
+                local label
+                if item.limit ~= -1 then
+                    label = _('label_count_limit', item.label, item.count, item.limit)
+                else
+                    label = _('label_count', item.label, item.count)
+                end
+                table.insert(elements, {label = label, value = "item_standard", item = item, detail = _('item_detail', string.format("%.3f", item.weight / 1000))})
+            end
+        end
+
+        for k, wea in pairs(inventory.weapons) do
+            table.insert(elements, {label = _('label_weapon', wea.label), value = "item_weapon", item = {name = wea.name}})
+        end
+
+        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_ava_my_inventory",
+        {
+            title    = _('title', inventory.label, string.format("%.2f", inventory.actual_weight / 1000), string.format("%.2f", inventory.max_weight / 1000)),
+            align    = "left",
+            elements = elements
+        }, function(data, menu)
+            menu.close()
+            TakePlayerItem(serverId, data.current.value, data.current.item.name)
+            OpenOtherPlayerInventory(serverId)
+		end, function(data, menu)
+            menu.close()
+        end)
+
+    end, serverId)
+end
+
+function TakePlayerItem(player, itemType, itemName)
+    local amount = 1
+    if itemType ~= "item_weapon" then
+        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "1", 10))
+    end
+    if type(amount) == "number" and math.floor(amount) == amount then
+        TriggerServerEvent("esx_ava_inventories:takePlayerItem", 'inventory', itemType, player, itemName, amount)
+    end
+end
+
+
+
+
+
+
+
 
 -- function OpenSharedInventory(name)
 --     OpenOtherInventory(inventory)
@@ -217,14 +296,9 @@ function OpenOtherInventory(inventory)
 	end)
 end
 
-function OpenPutInventory(inventory)
+function OpenPutInventory(inventory, reload)
     print(ESX.DumpTable(inventory))
 end
-
-function OpenTakeInventory(inventory)
-    print(ESX.DumpTable(inventory))
-end
-
 
 function TakeItem()
 

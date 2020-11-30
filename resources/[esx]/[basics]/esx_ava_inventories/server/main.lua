@@ -280,7 +280,6 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 		else
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
-
 	end
 end)
 
@@ -342,6 +341,76 @@ AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, it
 			xPlayer.removeWeapon(itemName)
 			TriggerClientEvent('esx:pickupWeapon', _source, weaponPickup, itemName, count > 0 and count or 1)
 		end
+	end
+end)
 
+
+
+
+
+
+
+
+RegisterServerEvent('esx_ava_inventories:takePlayerItem')
+AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, type, target, itemName, count)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	local playerInventory = GetInventory(inventoryName, xPlayer.identifier)
+	local xTarget = ESX.GetPlayerFromId(target)
+	local targetInventory = GetInventory(inventoryName, xTarget.identifier)
+
+	if count == nil or count < 1 then
+		TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+	elseif type == 'item_standard' then
+		if targetInventory.canRemoveItem(itemName, count) then
+			if playerInventory.canAddItem(itemName, count) then
+				targetInventory.removeItem(itemName, count)
+				TriggerClientEvent('esx:inventoryItemNotification', _source, true, itemName, count)
+				playerInventory.addItem(itemName, count)
+				TriggerClientEvent('esx:inventoryItemNotification', target, false, itemName, count)
+			else
+				TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
+			end
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
+
+	elseif type == 'item_money' then
+		if xTarget.getMoney() >= count then
+			xTarget.removeMoney(count)
+			xPlayer.addMoney(count)
+
+			TriggerClientEvent('esx:inventoryItemNotification', target, false, _('cash'), ESX.Math.GroupDigits(count))
+			TriggerClientEvent('esx:inventoryItemNotification', _source, true, _('cash'), ESX.Math.GroupDigits(count))
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
+
+	elseif type == 'item_account' then
+		local targetAcc = xTarget.getAccount(itemName)
+		if targetAcc.money >= count then
+			xTarget.removeAccountMoney(itemName, count)
+			xPlayer.addAccountMoney(itemName, count)
+
+			print(targetAcc.label)
+			TriggerClientEvent('esx:inventoryItemNotification', target, false, targetAcc.label, ESX.Math.GroupDigits(count))
+			TriggerClientEvent('esx:inventoryItemNotification', _source, true, targetAcc.label, ESX.Math.GroupDigits(count))
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
+
+	elseif type == 'item_weapon' then
+		if xTarget.hasWeapon(itemName) then
+			if playerInventory.canAddItem(itemName:lower(), 1) then
+				xTarget.removeWeapon(itemName)
+				TriggerClientEvent('esx:inventoryItemNotification', _source, true, itemName:lower(), count)
+				playerInventory.addItem(itemName:lower(), 1)
+				TriggerClientEvent('esx:inventoryItemNotification', target, false, itemName:lower(), count)
+			else
+				TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
+			end
+		else
+			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+		end
 	end
 end)
