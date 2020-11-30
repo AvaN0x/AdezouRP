@@ -238,11 +238,7 @@ TriggerEvent('es:addGroupCommand', 'clearinventory', 'admin', function(source, a
 		return
 	end
 
-	for i=1, #xPlayer.inventory, 1 do
-		if xPlayer.inventory[i].count > 0 then
-			xPlayer.setInventoryItem(xPlayer.inventory[i].name, 0)
-		end
-	end
+	xPlayer.getInventory().clearInventory()
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
 end, {help = _U('command_clearinventory'), params = {{name = "playerId", help = _U('command_playerid_param')}}})

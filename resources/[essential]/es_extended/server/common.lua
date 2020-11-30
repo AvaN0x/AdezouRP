@@ -61,19 +61,19 @@ AddEventHandler('esx:playerLoaded', function(source)
 	local accounts        = {}
 	local items           = {}
 	local xPlayerAccounts = xPlayer.getAccounts()
-	local xPlayerItems    = xPlayer.getInventory()
+	-- local xPlayerItems    = xPlayer.getInventory()
 
 	for i=1, #xPlayerAccounts, 1 do
 		accounts[xPlayerAccounts[i].name] = xPlayerAccounts[i].money
 	end
 
-	for i=1, #xPlayerItems, 1 do
-		items[xPlayerItems[i].name] = xPlayerItems[i].count
-	end
+	-- for i=1, #xPlayerItems, 1 do
+	-- 	items[xPlayerItems[i].name] = xPlayerItems[i].count
+	-- end
 
 	ESX.LastPlayerData[source] = {
 		accounts = accounts,
-		items    = items
+		-- items    = items
 	}
 end)
 

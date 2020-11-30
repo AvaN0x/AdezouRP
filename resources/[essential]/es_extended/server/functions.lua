@@ -57,22 +57,27 @@ ESX.SavePlayer = function(xPlayer, cb)
 		end
 	end
 
-	-- Inventory items
-	for i=1, #xPlayer.inventory, 1 do
-		if ESX.LastPlayerData[xPlayer.source].items[xPlayer.inventory[i].name] ~= xPlayer.inventory[i].count then
-			table.insert(asyncTasks, function(cb)
-				MySQL.Async.execute('UPDATE user_inventory SET `count` = @count WHERE identifier = @identifier AND item = @item', {
-					['@count']      = xPlayer.inventory[i].count,
-					['@identifier'] = xPlayer.identifier,
-					['@item']       = xPlayer.inventory[i].name
-				}, function(rowsChanged)
-					cb()
-				end)
-			end)
+	table.insert(asyncTasks, function(cb)
+		TriggerEvent('esx_ava_inventories:saveInventories', xPlayer.identifier)
+	end)
 
-			ESX.LastPlayerData[xPlayer.source].items[xPlayer.inventory[i].name] = xPlayer.inventory[i].count
-		end
-	end
+	-- -- Inventory items
+	-- for i=1, #xPlayer.inventory, 1 do
+	-- 	if ESX.LastPlayerData[xPlayer.source].items[xPlayer.inventory[i].name] ~= xPlayer.inventory[i].count then
+	-- 		table.insert(asyncTasks, function(cb)
+	-- 			MySQL.Async.execute('UPDATE user_inventory SET `count` = @count WHERE identifier = @identifier AND item = @item', {
+	-- 				['@count']      = xPlayer.inventory[i].count,
+	-- 				['@identifier'] = xPlayer.identifier,
+	-- 				['@item']       = xPlayer.inventory[i].name
+	-- 			}, function(rowsChanged)
+	-- 				cb()
+	-- 			end)
+	-- 		end)
+
+	-- 		ESX.LastPlayerData[xPlayer.source].items[xPlayer.inventory[i].name] = xPlayer.inventory[i].count
+	-- 	end
+	-- end
+	
 
     --- SECONDJOB INCLUDED
 	-- Job, loadout and position
@@ -103,6 +108,10 @@ ESX.SavePlayers = function(cb)
 	local asyncTasks = {}
 	local xPlayers   = ESX.GetPlayers()
 
+	table.insert(asyncTasks, function(cb)
+		TriggerEvent('esx_ava_inventories:saveSharedInventories')
+	end)
+
 	for i=1, #xPlayers, 1 do
 		table.insert(asyncTasks, function(cb)
 			local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
@@ -112,7 +121,7 @@ ESX.SavePlayers = function(cb)
 	end
 
 	Async.parallelLimit(asyncTasks, 8, function(results)
-		RconPrint('[SAVED] SAUVEGARDE TOUT LES JOUEURS' .. "\n")
+		RconPrint('[SAVED] SAUVEGARDE DE TOUS LES JOUEURS' .. "\n")
 
 		if cb ~= nil then
 			cb()
@@ -154,38 +163,39 @@ end
 
 ESX.RegisterUsableItem = function(item, cb)
 	ESX.UsableItemsCallbacks[item] = cb
+	TriggerEvent('esx_ava_inventories:setItemUsable', item)
 end
 
 ESX.UseItem = function(source, item)
 	ESX.UsableItemsCallbacks[item](source)
 end
 
-ESX.GetWeight = function(items,weapons)
-	local total = 0
-	for i=1,#items,1 do
-		if items[i].count > 0 then
-			total = total + items[i].count*ESX.GetItemWeight(items[i].name)
-		end
-	end
-	for i=1,#weapons,1 do
-		total = total + ESX.GetItemWeight(weapons[i].name)
-	end
-	return total
-end
+-- ESX.GetWeight = function(items,weapons)
+-- 	local total = 0
+-- 	for i=1,#items,1 do
+-- 		if items[i].count > 0 then
+-- 			total = total + items[i].count*ESX.GetItemWeight(items[i].name)
+-- 		end
+-- 	end
+-- 	for i=1,#weapons,1 do
+-- 		total = total + ESX.GetItemWeight(weapons[i].name)
+-- 	end
+-- 	return total
+-- end
 
-ESX.GetItemWeight = function(item) --ajout
-	if ESX.Items[item] ~= nil then
-		return ESX.Items[item].weight
-	else
-		return 1000
-	end
-end
+-- ESX.GetItemWeight = function(item) --ajout
+-- 	if ESX.Items[item] ~= nil then
+-- 		return ESX.Items[item].weight
+-- 	else
+-- 		return 1000
+-- 	end
+-- end
 
-ESX.GetItemLabel = function(item)
-	if ESX.Items[item] ~= nil then
-		return ESX.Items[item].label
-	end
-end
+-- ESX.GetItemLabel = function(item)
+-- 	if ESX.Items[item] ~= nil then
+-- 		return ESX.Items[item].label
+-- 	end
+-- end
 
 ESX.CreatePickup = function(type, name, count, label, player)
 	local pickupId = (ESX.PickupId == 65635 and 0 or ESX.PickupId + 1)

@@ -1,10 +1,11 @@
 ---SECONDJOB INCLUDED
-function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, name, lastPosition)
+-- function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, name, lastPosition)
+function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPosition)
 	local self = {}
 
 	self.player       = player
 	self.accounts     = accounts
-	self.inventory    = inventory
+	-- self.inventory    = inventory
 	self.job          = job
 	self.job2         = job2
 	self.loadout      = loadout
@@ -181,6 +182,8 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 	end
 
 	self.getInventory = function()
+		self.reloadInventory()
+
 		return self.inventory
 	end
 
@@ -314,53 +317,36 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 		TriggerClientEvent('esx:setAccountMoney', self.source, account)
 	end
 
-	self.getInventoryItem = function(name)
-		for i=1, #self.inventory, 1 do
-			if self.inventory[i].name == name then
-				return self.inventory[i]
+	self.reloadInventory = function()
+		if self.inventory == nil then
+			TriggerEvent('esx_ava_inventories:getInventory', "inventory", self.identifier, function(inventory)
+				self.inventory = inventory
+			end)
+
+			while self.inventory == nil do
+				Citizen.Wait(10)
 			end
 		end
+	end
+
+	self.getInventoryItem = function(name)
+		self.reloadInventory()
+
+		return self.inventory.getItem(name)
 	end
 
 	self.addInventoryItem = function(name, count)
-		TriggerEvent('esx_inventoryhud:canPlayerHave', self.source,function(can)
-		    if can then
-		    	local item     = self.getInventoryItem(name)
-				local newCount = item.count + count
-				item.count     = newCount
+		local item = self.getInventoryItem(name)
 
-				-- TriggerEvent('esx:onAddInventoryItem', self.source, item, count)
-				TriggerClientEvent('esx:addInventoryItem', self.source, item, count)
-			else
-				local item     = self.getInventoryItem(name)
-				local pickupLabel = ('~y~%s~s~ [~b~%s~s~]'):format(item.label, count)
-				ESX.CreatePickup('item_standard', name, count, item.label, source)
-				TriggerClientEvent('esx:showNotification', self.source, 'Tu n\'as plus de place pour porter cela !')
-			end
-		end, name, count)
+		self.inventory.addItem(name, count)
+		TriggerClientEvent('esx:inventoryItemNotification', self.source, true, item, count)
 	end
 
 	self.removeInventoryItem = function(name, count)
-		local item     = self.getInventoryItem(name)
-		local newCount = item.count - count
-		item.count     = newCount
+		local item = self.getInventoryItem(name)
 
-		-- TriggerEvent('esx:onRemoveInventoryItem', self.source, item, count)
-		TriggerClientEvent('esx:removeInventoryItem', self.source, item, count)
-	end
-
-	self.setInventoryItem = function(name, count)
-		local item     = self.getInventoryItem(name)
-		local oldCount = item.count
-		item.count     = count
-
-		if oldCount > item.count  then
-			-- TriggerEvent('esx:onRemoveInventoryItem', self.source, item, oldCount - item.count)
-			TriggerClientEvent('esx:removeInventoryItem', self.source, item, oldCount - item.count)
-		else
-			-- TriggerEvent('esx:onAddInventoryItem', self.source, item, item.count - oldCount)
-			TriggerClientEvent('esx:addInventoryItem', self.source, item, item.count - oldCount)
-		end
+		self.inventory.removeItem(name, count)
+		TriggerClientEvent('esx:inventoryItemNotification', self.source, false, item, count)
 	end
 
 	self.setJob = function(job, grade)
@@ -433,9 +419,11 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 	end
 
 	self.addWeapon = function(weaponName, ammo)
-		TriggerEvent('esx_inventoryhud:canPlayerHave', self.source,function(can)
-		    local weaponLabel, weaponPickup = ESX.GetWeaponLabel(weaponName), 'PICKUP_' .. string.upper(weaponName)
-		    if not self.hasWeapon(weaponName) then
+		-- TriggerEvent('esx_inventoryhud:canPlayerHave', self.source,function(can)
+			-- local weaponLabel, weaponPickup = ESX.GetWeaponLabel(weaponName), 'PICKUP_' .. string.upper(weaponName)
+			local weaponLabel = ESX.GetWeaponLabel(weaponName)
+
+			if not self.hasWeapon(weaponName) then
 				table.insert(self.loadout, {
 					name = weaponName,
 					ammo = ammo,
@@ -444,19 +432,19 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 				})
 			end
 
-		    if can then
+			-- if can then
 				TriggerClientEvent('esx:addWeapon', self.source, weaponName, ammo)
-				TriggerClientEvent('esx:addInventoryItem', self.source, {label = weaponLabel}, 1)
-			else
-				if ammo > 0 then
-					TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, ammo)
-				else
-					-- workaround for CreateAmbientPickup() giving 30 rounds of ammo when you drop the weapon with 0 ammo
-					TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, 1)
-				end
-				TriggerClientEvent('esx:showNotification', self.source, 'Tu n\'as plus de place pour porter cela !')
-			end
-		end, weaponName, 1)
+				TriggerClientEvent('esx:inventoryItemNotification', self.source, true, {label = weaponLabel}, 1)
+			-- else
+			-- 	if ammo > 0 then
+			-- 		TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, ammo)
+			-- 	else
+			-- 		-- workaround for CreateAmbientPickup() giving 30 rounds of ammo when you drop the weapon with 0 ammo
+			-- 		TriggerClientEvent('esx:pickupWeapon', self.source, weaponPickup, itemName, 1)
+			-- 	end
+			-- 	TriggerClientEvent('esx:showNotification', self.source, 'Tu n\'as plus de place pour porter cela !')
+			-- end
+		-- end, weaponName, 1)
 	end
 
 	self.addWeaponComponent = function(weaponName, weaponComponent)
@@ -489,7 +477,7 @@ function CreateExtendedPlayer(player, accounts, inventory, job, job2, loadout, n
 
 		if weaponLabel then
 			TriggerClientEvent('esx:removeWeapon', self.source, weaponName, ammo)
-			TriggerClientEvent('esx:removeInventoryItem', self.source, {label = weaponLabel}, 1)
+			TriggerClientEvent('esx:inventoryItemNotification', self.source, false, {label = weaponLabel}, 1)
 		end
 	end
 

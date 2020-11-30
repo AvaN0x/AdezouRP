@@ -179,34 +179,41 @@ end)
 
 RegisterNetEvent('esx:addInventoryItem')
 AddEventHandler('esx:addInventoryItem', function(item, count)
-	for i=1, #ESX.PlayerData.inventory, 1 do
-		if ESX.PlayerData.inventory[i].name == item.name then
-			ESX.PlayerData.inventory[i] = item
-			break
-		end
-	end
+	-- for i=1, #ESX.PlayerData.inventory, 1 do
+	-- 	if ESX.PlayerData.inventory[i].name == item.name then
+	-- 		ESX.PlayerData.inventory[i] = item
+	-- 		break
+	-- 	end
+	-- end
 
 	ESX.UI.ShowInventoryItemNotification(true, item, count)
 
-	if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
-		ESX.ShowInventory()
-	end
+	-- if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
+	-- 	ESX.ShowInventory()
+	-- end
 end)
+
+RegisterNetEvent('esx:inventoryItemNotification')
+AddEventHandler('esx:inventoryItemNotification', function(add, item, count)
+	-- todo put this in avan0x_hud, with item being label
+	ESX.UI.ShowInventoryItemNotification(add, item, count)
+end)
+
 
 RegisterNetEvent('esx:removeInventoryItem')
 AddEventHandler('esx:removeInventoryItem', function(item, count)
-	for i=1, #ESX.PlayerData.inventory, 1 do
-		if ESX.PlayerData.inventory[i].name == item.name then
-			ESX.PlayerData.inventory[i] = item
-			break
-		end
-	end
+	-- for i=1, #ESX.PlayerData.inventory, 1 do
+	-- 	if ESX.PlayerData.inventory[i].name == item.name then
+	-- 		ESX.PlayerData.inventory[i] = item
+	-- 		break
+	-- 	end
+	-- end
 
 	ESX.UI.ShowInventoryItemNotification(false, item, count)
 
-	if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
-		ESX.ShowInventory()
-	end
+	-- if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
+	-- 	ESX.ShowInventory()
+	-- end
 end)
 
 RegisterNetEvent('esx:setJob')
@@ -379,7 +386,7 @@ AddEventHandler('esx:pickup', function(id, label, player)
 	local forward = GetEntityForwardVector(ped)
 	local x, y, z = table.unpack(coords + forward * -2.0)
 
-	ESX.Game.SpawnLocalObject('prop_money_bag_01', {
+	ESX.Game.SpawnLocalObject('hei_prop_hei_paper_bag', {
 		x = x,
 		y = y,
 		z = z - 2.0,
@@ -619,7 +626,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 
-		Citizen.Wait(0)
+		Citizen.Wait(10)
 
 		local playerPed = PlayerPedId()
 		local coords    = GetEntityCoords(playerPed)
@@ -634,11 +641,11 @@ Citizen.CreateThread(function()
 			local distance = GetDistanceBetweenCoords(coords, v.coords.x, v.coords.y, v.coords.z, true)
 			local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 
-			if distance <= 5.0 then
+			if distance <= 6.0 then
 				ESX.Game.Utils.DrawText3D({
 					x = v.coords.x,
 					y = v.coords.y,
-					z = v.coords.z + 0.25
+					z = v.coords.z - 0.55
 				}, v.label)
 			end
 
@@ -682,5 +689,5 @@ end)
 
 RegisterNetEvent('NB:openMenuInventaire')
 AddEventHandler('NB:openMenuInventaire', function()
-	ESX.ShowInventory()
+	-- ESX.ShowInventory()
 end)

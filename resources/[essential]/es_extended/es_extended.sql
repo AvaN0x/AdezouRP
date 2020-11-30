@@ -52,11 +52,11 @@ CREATE TABLE `user_accounts` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `user_inventory` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`identifier` varchar(22) NOT NULL,
-	`item` varchar(50) NOT NULL,
-	`count` int(11) NOT NULL,
+-- CREATE TABLE `user_inventory` (
+-- 	`id` int(11) NOT NULL AUTO_INCREMENT,
+-- 	`identifier` varchar(22) NOT NULL,
+-- 	`item` varchar(50) NOT NULL,
+-- 	`count` int(11) NOT NULL,
 
-	PRIMARY KEY (`id`)
-);
+-- 	PRIMARY KEY (`id`)
+-- );
