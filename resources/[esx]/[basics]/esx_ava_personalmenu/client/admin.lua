@@ -300,6 +300,13 @@ function AdminLoop()
 							table.insert(visibleHash, {hash = GetEntityModel(prop), entity = prop})
 						end
 					end
+					for _, v in ipairs(GetGamePool("CPed")) do
+						local prop = GetObjectIndexFromEntityIndex(v)
+						local propCoords = GetEntityCoords(prop)
+						if GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, propCoords.x, propCoords.y, propCoords.z, false) < 10.0 then
+							table.insert(visibleHash, {hash = GetEntityModel(prop), entity = prop})
+						end
+					end
 				else
 					Citizen.Wait(7000)
 				end
