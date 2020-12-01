@@ -264,6 +264,25 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
+				Citizen.Wait(10)
+				if admin_mode then
+					local playerPed = PlayerPedId()
+					local playerCoords = GetEntityCoords(playerPed)
+					for _, player in ipairs(GetActivePlayers()) do
+						local targetPed = GetPlayerPed(player)
+						if targetPed ~= playerPed then
+							local targetCoords = GetEntityCoords(targetPed)
+							DrawLine(playerCoords.x, playerCoords.y, playerCoords.z, targetCoords.x, targetCoords.y, targetCoords.z, 255, 0, 255, 128)
+						end
+					end
+				else
+					Citizen.Wait(4000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
 				Citizen.Wait(0)
 				if noclip then
 					SetEntityInvincible(PlayerPedId(), true)
@@ -318,7 +337,6 @@ function AdminLoop()
 				Citizen.Wait(10)
 				if show_hashes then
 					local playerPed = PlayerPedId()
-					local playerCoords = GetEntityCoords(playerPed)
 					for _, prop in ipairs(visibleHash) do
 						if prop.coords then
 							DrawText3D(prop.coords.x, prop.coords.y, prop.coords.z, "hash = " .. prop.hash .. '\nheading = ' .. prop.heading, 0.3)
