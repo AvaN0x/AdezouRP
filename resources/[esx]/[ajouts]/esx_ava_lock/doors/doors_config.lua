@@ -42,8 +42,8 @@ Config.Doors = {
 		{ -- Rooftop
 			objName = 'v_ilev_gtdoor02',
 			objYaw = 90.0,
-			objCoords  = vector3(464.3, -984.6, 43.8),
-			textCoords = vector3(464.3, -984.0, 44.8),
+			objCoords  = vector3(464.3, -984.6, 43.69),
+			textCoords = vector3(464.3, -984.0, 43.69),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
