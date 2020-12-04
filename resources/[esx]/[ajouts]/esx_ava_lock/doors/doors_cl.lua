@@ -60,14 +60,74 @@ Citizen.CreateThread(function()
 	end
 end)
 
+function DrawEntityBox(entity, r, g, b)
+	local min, max = GetModelDimensions(GetEntityModel(entity))
+	local pad = 0.001;
+
+	-- Bottom
+	local bottom1 = GetOffsetFromEntityInWorldCoords(entity, min.x - pad, min.y - pad, min.z - pad)
+	local bottom2 = GetOffsetFromEntityInWorldCoords(entity, max.x + pad, min.y - pad, min.z - pad)
+	local bottom3 = GetOffsetFromEntityInWorldCoords(entity, max.x + pad, max.y + pad, min.z - pad)
+	local bottom4 = GetOffsetFromEntityInWorldCoords(entity, min.x - pad, max.y + pad, min.z - pad)
+
+	-- Top
+	local top1 = GetOffsetFromEntityInWorldCoords(entity, min.x - pad, min.y - pad, max.z + pad)
+	local top2 = GetOffsetFromEntityInWorldCoords(entity, max.x + pad, min.y - pad, max.z + pad)
+	local top3 = GetOffsetFromEntityInWorldCoords(entity, max.x + pad, max.y + pad, max.z + pad)
+	local top4 = GetOffsetFromEntityInWorldCoords(entity, min.x - pad, max.y + pad, max.z + pad)
+
+	-- bottom
+	DrawLine(bottom1, bottom2, r, g, b, 255)
+	DrawLine(bottom1, bottom4, r, g, b, 255)
+	DrawLine(bottom2, bottom3, r, g, b, 255)
+	DrawLine(bottom3, bottom4, r, g, b, 255)
+
+	-- top
+	DrawLine(top1, top2, 255, r, g, b, 255)
+	DrawLine(top1, top4, 255, r, g, b, 255)
+	DrawLine(top2, top3, 255, r, g, b, 255)
+	DrawLine(top3, top4, 255, r, g, b, 255)
+
+	-- bottom to top
+	DrawLine(bottom1, top1, r, g, b, 255)
+	DrawLine(bottom2, top2, r, g, b, 255)
+	DrawLine(bottom3, top3, r, g, b, 255)
+	DrawLine(bottom4, top4, r, g, b, 255)
+
+	-- top face
+	DrawPoly(top1, top2, top3, r, g, b, 128)
+	DrawPoly(top4, top1, top3, r, g, b, 128)
+
+	-- bottom face
+	DrawPoly(bottom2, bottom1, bottom3, r, g, b, 128)
+	DrawPoly(bottom1, bottom4, bottom3, r, g, b, 128)
+
+	-- back face
+	DrawPoly(top2, top1, bottom1, r, g, b, 128)
+	DrawPoly(bottom1, bottom2, top2, r, g, b, 128)
+
+	-- front face
+	DrawPoly(top4, top3, bottom4, r, g, b, 128)
+	DrawPoly(bottom3, bottom4, top3, r, g, b, 128)
+
+	-- right face
+	DrawPoly(top3, top2, bottom2, r, g, b, 128)
+	DrawPoly(bottom2, bottom3, top3, r, g, b, 128)
+
+	-- left face
+	DrawPoly(top1, top4, bottom1, r, g, b, 128)
+	DrawPoly(bottom4, bottom1, top4, r, g, b, 128)
+end
+
+
 Citizen.CreateThread(function()
 	Citizen.Wait(1000)
-	while true do
+	while Config.Doors.Debug do
 		Citizen.Wait(10)
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
-			local distance = #(playerCoords - doorID.textCoords)
+			local distance = #(playerCoords - (doorID.textCoords or playerCoords))
 
 			if distance < doorID.checkDistance then
 				if doorID.doors then
@@ -75,46 +135,109 @@ Citizen.CreateThread(function()
 						if not v.object or not DoesEntityExist(v.object) then
 							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
 						end
-						FreezeEntityPosition(v.object, doorID.locked)
-
-						if doorID.locked and v.objYaw and GetEntityRotation(v.object).z ~= v.objYaw then
-							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
-						elseif not doorID.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
-							FreezeEntityPosition(v.object, not doorID.locked)
-							SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
+						if distance < doorID.distance then
+							DrawEntityBox(v.object, 255, 255, 255)
+						else
+							DrawEntityBox(v.object, 128, 128, 128)
 						end
 					end
 				else
 					if not doorID.object or not DoesEntityExist(doorID.object) then
 						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
 					end
-					FreezeEntityPosition(doorID.object, doorID.locked)
-
-					if doorID.locked and doorID.objYaw and GetEntityRotation(doorID.object).z ~= doorID.objYaw then
-						SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objYaw, 2, true)
-					elseif not doorID.locked and doorID.objOpenYaw and GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
-						FreezeEntityPosition(doorID.object, not doorID.locked)
-						SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objOpenYaw, 2, true)
+					if distance < doorID.distance then
+						DrawEntityBox(doorID.object, 255, 255, 255)
+					else
+						DrawEntityBox(doorID.object, 128, 128, 128)
 					end
 				end
+				if  not doorID.textCoords then
+					local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[0].object))
+					doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[0].object, min.x, 0.0, 0.0)
+					print(k .. " new text coords : " .. doorID.textCoords))
+				end
 
-				if distance < doorID.distance then
-					local displayText = _U('doors_unlocked')
-					if doorID.locked then
-						displayText = _U('doors_locked')
+				SetTextColour(255, 255, 255, 255)
+				SetTextFont(0)
+				SetTextScale(0.34, 0.34)
+				SetTextWrap(0.0, 1.0)
+				SetTextOutline()
+				SetTextEntry("STRING")
+				AddTextComponentString("X\t\t" .. string.format("%.2f", doorID.textCoords.x) .. "\nY\t\t" .. string.format("%.2f", doorID.textCoords.y) .. "\nZ\t\t" .. string.format("%.2f", doorID.textCoords.z))
+				DrawText(0.9, 0.88)
+
+
+				if IsControlJustReleased(0, Config.Doors.DebugKey) then
+					local offset = tonumber(ESX.KeyboardInput(_('enter_x_offset'), 0, 10))
+					if type(offset) == "number" or type(offset) == "float" then
+						local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[0].object))
+						doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[0].object, min.x + offset, 0.0, 0.0)
+						print(k .. " new text coords : " .. doorID.textCoords)
+					end
+				end
+			end
+		end
+	end
+end)
+
+
+Citizen.CreateThread(function()
+	Citizen.Wait(1000)
+	while true do
+		Citizen.Wait(10)
+		local playerCoords = GetEntityCoords(PlayerPedId())
+
+		for k,doorID in ipairs(Config.Doors.DoorList) do
+			if doorID.textCoords then
+				local distance = #(playerCoords - doorID.textCoords)
+
+				if distance < doorID.checkDistance then
+					if doorID.doors then
+						for _,v in ipairs(doorID.doors) do
+							if not v.object or not DoesEntityExist(v.object) then
+								v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
+							end
+							FreezeEntityPosition(v.object, doorID.locked)
+
+							if doorID.locked and v.objYaw and GetEntityRotation(v.object).z ~= v.objYaw then
+								SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
+							elseif not doorID.locked and v.objOpenYaw and GetEntityRotation(v.object).z ~= v.objOpenYaw then
+								FreezeEntityPosition(v.object, not doorID.locked)
+								SetEntityRotation(v.object, 0.0, 0.0, v.objYaw, 2, true)
+							end
+						end
+					else
+						if not doorID.object or not DoesEntityExist(doorID.object) then
+							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
+						end
+						FreezeEntityPosition(doorID.object, doorID.locked)
+
+						if doorID.locked and doorID.objYaw and GetEntityRotation(doorID.object).z ~= doorID.objYaw then
+							SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objYaw, 2, true)
+						elseif not doorID.locked and doorID.objOpenYaw and GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
+							FreezeEntityPosition(doorID.object, not doorID.locked)
+							SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objOpenYaw, 2, true)
+						end
 					end
 
-					if doorID.authorized then
-						displayText = _U('doors_press_button', displayText)
-					end
+					if distance < doorID.distance then
+						local displayText = _U('doors_unlocked')
+						if doorID.locked then
+							displayText = _U('doors_locked')
+						end
 
-					DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
-
-					if IsControlJustReleased(0, 38) then
 						if doorID.authorized then
-							doorID.locked = not doorID.locked
-							TriggerEvent("esx_ava_lock:dooranim")
-							TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
+							displayText = _U('doors_press_button', displayText)
+						end
+
+						DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
+
+						if IsControlJustReleased(0, 38) then
+							if doorID.authorized then
+								doorID.locked = not doorID.locked
+								TriggerEvent("esx_ava_lock:dooranim")
+								TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
+							end
 						end
 					end
 				end

@@ -11,4 +11,6 @@ Locales ['fr'] = {
 	['teleports_unlocked'] = '~INPUT_CONTEXT~ pour se téléporter',
 	['teleports_locked'] = 'Fermé',
 	['teleports_press_button'] = '%s~n~~INPUT_VEH_DUCK~ pour ouvrir / fermer',
+
+	['copy_paste'] = 'Copiez / Collez',
 }

@@ -3,6 +3,8 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 Config.Doors = {
+	Debug = false,
+	DebugKey = 79,
 	ObjectDistance = 30,
 	DefaultDistance = 1.0,
 	DefaultSize = 0.3,
@@ -43,7 +45,7 @@ Config.Doors = {
 			objName = 'v_ilev_gtdoor02',
 			objYaw = 90.0,
 			objCoords  = vector3(464.3, -984.6, 43.69),
-			textCoords = vector3(464.3, -984.0, 43.69),
+			textCoords = vector3(464.36, -983.44, 43.83),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
