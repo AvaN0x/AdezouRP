@@ -42,9 +42,22 @@ $(function () {
 			} else {
 				$('.belt').fadeIn();
 			}
+		} else if (event.data.action == "copyToClipboard") {
+			let copyTextarea = document.createElement('textarea');
+			let currentSelection = document.getSelection();
+
+			copyTextarea.textContent = event.data.content;
+			document.body.appendChild(copyTextarea);
+
+			currentSelection.removeAllRanges();
+			copyTextarea.select();
+			document.execCommand('copy');
+
+			currentSelection.removeAllRanges();
+			document.body.removeChild(copyTextarea);
+			console.log("Copy to clipboard : \n" + event.data.content);
 		}
 	});
-
 });
 
 

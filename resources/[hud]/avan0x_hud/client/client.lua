@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
 			HideHudComponentThisFrame(2)  -- Weapon Icon
 			HideHudComponentThisFrame(3)  -- Cash
 			HideHudComponentThisFrame(4)  -- MP Cash
-			HideHudComponentThisFrame(6)  -- Vehicle Name
+			-- HideHudComponentThisFrame(6)  -- Vehicle Name
 			HideHudComponentThisFrame(7)  -- Area Name
 			HideHudComponentThisFrame(8)  -- Vehicle Class
 			-- HideHudComponentThisFrame(9)  -- Street Name
@@ -204,3 +204,8 @@ function has_value(tab, val)
 
     return false
 end
+
+RegisterNetEvent('avan0x_hud:copyToClipboard')
+AddEventHandler('avan0x_hud:copyToClipboard', function(content)
+	SendNUIMessage({action = "copyToClipboard", content = content})
+end)
