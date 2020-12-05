@@ -117,10 +117,10 @@ ESX.KeyboardInput = function(textEntry, inputText, maxLength)
         local result = GetOnscreenKeyboardResult()
         Citizen.Wait(100)
         input = false
-        return result
+        return result or ''
     else
         Citizen.Wait(100)
         input = false
-        return nil
+        return ''
     end
 end
