@@ -438,7 +438,7 @@ Config.Doors = {
 
 		-- GOUV
 		{
-			textCoords = vector3(-545.52, -203.53, 38.22), -- entrée
+			textCoords = vector3(-545.51, -203.39, 38.40), -- entrée
 			authorizedJobs = { 'state' },
 			locked = true,
 			doors = {
