@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 Config.Doors = {
-	Debug = false,
+	Debug = true,
 	DebugKey = 79,
 	ObjectDistance = 30,
 	DefaultDistance = 1.0,
@@ -643,11 +643,11 @@ Config.Doors = {
 		-- BIKER LOST
 		{
 			objHash = 190770132,
-			objCoords  = vector3( 981.90, -102.50, 74.85),
-			textCoords = vector3( 981.90, -102.50, 74.85),
+			objCoords  = vector3(981.90, -102.50, 74.85),
+			textCoords = vector3(982.03, -102.44, 74.99),
 			authorizedGangs = { 'biker_lost' },
 			objYaw = 42.65,
-			locked = true
+			locked = false
 		},
 	}
 }
