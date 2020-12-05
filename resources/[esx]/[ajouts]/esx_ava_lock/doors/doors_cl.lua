@@ -151,9 +151,9 @@ Citizen.CreateThread(function()
 						DrawEntityBox(doorID.object, 128, 128, 128)
 					end
 				end
-				if  not doorID.textCoords then
-					local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[0].object))
-					doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[0].object, min.x, 0.0, 0.0)
+				if not doorID.textCoords then
+					local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
+					doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x, 0.0, 0.0)
 					print(k .. " new text coords : " .. doorID.textCoords)
 				end
 
@@ -169,8 +169,8 @@ Citizen.CreateThread(function()
 				if IsControlJustReleased(0, Config.Doors.DebugKey) then
 					local offset = tonumber(ESX.KeyboardInput(_('enter_x_offset'), 0, 10))
 					if type(offset) == "number" or type(offset) == "float" then
-						local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[0].object))
-						doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[0].object, min.x + offset, 0.0, 0.0)
+						local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
+						doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x + offset, 0.0, 0.0)
 						TriggerEvent('avan0x_hud:copyToClipboard', "vector3(" .. string.format("%.2f", doorID.textCoords.x) .. ", " .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z) .. ")")
 					end
 				end
