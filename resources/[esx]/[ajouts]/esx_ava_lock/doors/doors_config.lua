@@ -37,7 +37,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_gendoor004',
 			objYaw = 90.0,
 			objCoords  = vector3(449.6, -986.4, 30.6),
-			textCoords = vector3(450.23, -986.86, 30.69),
+			textCoords = vector3(450.10, -986.94, 30.84),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -58,7 +58,7 @@ Config.Doors = {
 			locked = true
 		},
 		{ -- To downstairs (double doors)
-			textCoords = vector3(444.6, -989.4, 30.9),
+			textCoords = vector3(444.71, -989.44, 30.84),
 			authorizedJobs = { 'police', 'state' },
 			locked = true,
 			doors = {
@@ -86,7 +86,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_cellgate',
 			objYaw = 0.0,
 			objCoords  = vector3(463.8, -992.6, 24.9),
-			textCoords = vector3(463.3, -992.6, 25.1),
+			textCoords = vector3(463.27, -992.66, 25.06),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -94,7 +94,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_cellgate',
 			objYaw = -90.0,
 			objCoords  = vector3(462.3, -993.6, 24.9),
-			textCoords = vector3(461.8, -993.3, 25.0),
+			textCoords = vector3(461.81, -993.11, 25.06),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -102,7 +102,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_cellgate',
 			objYaw = 90.0,
 			objCoords  = vector3(462.3, -998.1, 24.9),
-			textCoords = vector3(461.8, -998.8, 25.0),
+			textCoords = vector3(461.81, -998.96, 25.06),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -110,7 +110,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_cellgate',
 			objYaw = 90.0,
 			objCoords  = vector3(462.704, -1001.92, 24.9149),
-			textCoords = vector3(461.806, -1002.450, 25.064),
+			textCoords = vector3(461.81, -1002.60, 25.06),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -118,7 +118,7 @@ Config.Doors = {
 			objName = 'v_ilev_gtdoor',
 			objYaw = 0.0,
 			objCoords  = vector3(463.4, -1003.5, 25.0),
-			textCoords = vector3(464.53, -1003.5, 24.91),
+			textCoords = vector3(464.68, -1003.54, 25.01),
 			authorizedJobs = { 'police' },
 			locked = true
 		},
@@ -230,7 +230,7 @@ Config.Doors = {
 			size = 0.4
 		},
 		{-- Back (double doors)
-			textCoords = vector3(468.6, -1014.4, 26.55),
+			textCoords = vector3(468.67, -1014.45, 26.54),
 			authorizedJobs = { 'police' },
 			locked = true,
 			doors = {
@@ -250,11 +250,10 @@ Config.Doors = {
 			objName = 'hei_prop_station_gate',
 			objYaw = 90.0,
 			objCoords  = vector3(488.8, -1017.2, 27.1),
-			textCoords = vector3(488.8, -1020.2, 30.0),
+			textCoords = vector3(488.89, -1022.81, 29.15),
 			authorizedJobs = { 'police' },
 			locked = true,
-			distance = 12,
-			size = 0.4
+			distance = 12
 		},
 		{-- Saisi
 			objName = 'prop_fnclink_02gate7',

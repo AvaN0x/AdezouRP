@@ -245,8 +245,14 @@ Citizen.CreateThread(function()
 end)
 
 function SetAllDoorsAuthorized()
-	for k,doorID in ipairs(Config.Doors.DoorList) do
-		doorID.authorized = IsDoorAuthorized(doorID)
+	if Config.Doors.Debug then
+		for k,doorID in ipairs(Config.Doors.DoorList) do
+			doorID.authorized = true
+		end
+	else
+		for k,doorID in ipairs(Config.Doors.DoorList) do
+			doorID.authorized = IsDoorAuthorized(doorID)
+		end
 	end
 end
 
