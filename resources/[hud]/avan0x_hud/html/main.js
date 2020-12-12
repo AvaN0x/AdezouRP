@@ -2,6 +2,7 @@
 $(function () {
 	$("#job2").hide();
 	$("#gang").hide();
+	$('.mainStats').hide();
 	window.addEventListener('message', function (event) {
 		if (event.data.action == "setValue") {
 			if (event.data.key == "job") {
@@ -19,15 +20,27 @@ $(function () {
 				} else
 					$("#gang").hide();
 			}
-			setValue(event.data.key, event.data.value)
+			setValue(event.data.key, event.data.value);
 		} else if (event.data.action == "updateStatus") {
 			updateStatus(event.data.status);
 		} else if (event.data.action == "toggle") {
-			if (event.data.show) {
+			if (event.data.show)
 				$('#ui').show();
-			} else {
+			else
 				$('#ui').hide();
+		} else if (event.data.action == "togglePlayerStats") {
+			if (event.data.show) {
+				$('#playerStats').show();
+				$('.mainStats').show();
+			} else {
+				$('#playerStats').hide();
+				$('.mainStats').hide();
 			}
+		} else if (event.data.action == "toggleMainStats") {
+			if (event.data.show)
+				$('.mainStats').show();
+			else
+				$('.mainStats').hide();
 		} else if (event.data.action == "showcarhud") {
 			if (event.data.showhud) {
 				$('.huds').fadeIn();
@@ -63,7 +76,10 @@ $(function () {
 
 
 function setValue(key, value) {
-	$('#' + key + ' span').html(value)
+	$('#' + key + ' span').html(value);
+	if ($('.mainStats').is(":hidden"))
+		$('.mainStats').fadeIn(500).fadeOut(2000);
+
 }
 
 function setJobIcon(value) {

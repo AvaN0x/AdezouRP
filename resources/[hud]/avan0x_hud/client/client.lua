@@ -1,12 +1,14 @@
 ESX = nil
-local vehiclesCars = {0, 1,2,3,4,5,6,7,9,10,11,12,17,18,20}; 
+PlayerData = nil
+
+local vehiclesCars = {0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 20};
 -- 0 is on foot
 -- 7 is super
 -- 8 is motorcycle
 -- 19 is tank
 
 
-local DiffTrigger = 0.355 
+local DiffTrigger = 0.355
 local MinSpeed    = 60.0 --kmh
 local speedBuffer  = {}
 local velBuffer    = {}
@@ -19,26 +21,81 @@ Citizen.CreateThread(function()
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
+
 	ESX.UI.HUD.SetDisplay(0.0)
+	while ESX.GetPlayerData().job == nil or ESX.GetPlayerData().job2 == nil do
+		Citizen.Wait(10)
+	end
+
+	InitHUD(ESX.GetPlayerData())
 end)
 
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer) 
-	local data = xPlayer
+function InitHUD(xPlayer)
+	PlayerData = xPlayer
+	Citizen.Wait(200)
+	-- Cash
+	SendNUIMessage({action = "setValue", key = "money", value = "$" .. ESX.Math.GroupDigits(xPlayer.money)})
+
+	-- Accounts
+	for k, account in pairs(xPlayer.accounts) do
+		if account.name == "black_money" then
+			SendNUIMessage({action = "setValue", key = account.name, value = "$" .. ESX.Math.GroupDigits(account.money)})
+		end
+	end
+
 
 	-- Job
-	local job = data.job
-	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, name = job.name})
+	SendNUIMessage({action = "setValue", key = "job", value = PlayerData.job.label .. " - " .. PlayerData.job.grade_label, name = PlayerData.job.name})
 
 	-- Job2
-	local job2 = data.job2
-	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, name = job2.name})
-end)
+	SendNUIMessage({action = "setValue", key = "job2", value = PlayerData.job2.label .. " - " .. PlayerData.job2.grade_label, name = PlayerData.job2.name})
+end
 
+RegisterNetEvent("esx:playerLoaded")
+AddEventHandler("esx:playerLoaded", function(xPlayer)
+	InitHUD(xPlayer)
+end)
 
 RegisterNetEvent('ui:toggle')
 AddEventHandler('ui:toggle', function(show)
 	SendNUIMessage({action = "toggle", show = show})
+end)
+
+RegisterNetEvent('ui:togglePlayerStats')
+AddEventHandler('ui:togglePlayerStats', function(show)
+	SendNUIMessage({action = "togglePlayerStats", show = show})
+end)
+
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, name = job.name})
+end)
+
+RegisterNetEvent('esx:setJob2')
+AddEventHandler('esx:setJob2', function(job2)
+	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, name = job2.name})
+end)
+
+RegisterNetEvent('es:activateMoney')
+AddEventHandler('es:activateMoney', function(amount)
+	SendNUIMessage({action = "setValue", key = "money", value = "$" .. ESX.Math.GroupDigits(amount)})
+end)
+
+RegisterNetEvent('esx:setAccountMoney')
+AddEventHandler('esx:setAccountMoney', function(account)
+	if account.name == "black_money" then
+		SendNUIMessage({action = "setValue", key = account.name, value = "$" .. ESX.Math.GroupDigits(account.money)})
+	end
+end)
+
+RegisterNetEvent('esx_ava_gang:setGang')
+AddEventHandler('esx_ava_gang:setGang', function(gang)
+	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, name = gang.name})
+end)
+
+RegisterNetEvent('esx_customui:updateStatus')
+AddEventHandler('esx_customui:updateStatus', function(status)
+	SendNUIMessage({action = "updateStatus", status = status})
 end)
 
 -- clause menu when active
@@ -66,13 +123,14 @@ Citizen.CreateThread(function()
 					if car and isAccepted then
 						beltOn = not beltOn
 						SendNUIMessage({
-							action = 'setbelt', 
+							action = 'setbelt',
 							isAccepted = isAccepted,
 							belt = beltOn
 						})
 					end
 				end
 			end
+
 			HideHudComponentThisFrame(1)  -- Wanted Stars
 			HideHudComponentThisFrame(2)  -- Weapon Icon
 			HideHudComponentThisFrame(3)  -- Cash
@@ -91,26 +149,6 @@ Citizen.CreateThread(function()
 			end
 		end
 	end
-end)
-
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-	SendNUIMessage({action = "setValue", key = "job", value = job.label.." - "..job.grade_label, name = job.name})
-end)
-
-RegisterNetEvent('esx:setJob2')
-AddEventHandler('esx:setJob2', function(job2)
-	SendNUIMessage({action = "setValue", key = "job2", value = job2.label.." - "..job2.grade_label, name = job2.name})
-end)
-
-RegisterNetEvent('esx_ava_gang:setGang')
-AddEventHandler('esx_ava_gang:setGang', function(gang)
-	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, name = gang.name})
-end)
-
-RegisterNetEvent('esx_customui:updateStatus')
-AddEventHandler('esx_customui:updateStatus', function(status)
-	SendNUIMessage({action = "updateStatus", status = status})
 end)
 
 local vehiclePlayerIsIn = 0
@@ -158,18 +196,11 @@ Citizen.CreateThread(function()
 			speedBuffer[2] = speedBuffer[1]
 			speedBuffer[1] = GetEntitySpeed(vehiclePlayerIsIn)
 
-			if speedBuffer[2] ~= nil 
+			if speedBuffer[2] ~= nil
 			and speedBuffer[2] > (MinSpeed / 3.5)
 			and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
-				if not beltOn 
+				if not beltOn
 				and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0  then
-
-					--! debug in production to ask people in the server help about the value of this two variables
-					print("A belt must fly as a fly when it is on")
-					print(beltOn)
-					print("If a fly is in a car, then the fly is in the car ")
-					print(wasInCar)
-
 					local co = GetEntityCoords(ped)
 					SetEntityCoords(ped, co.x, co.y, co.z - 0.47, true, true, true)
 					SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
@@ -185,7 +216,6 @@ Citizen.CreateThread(function()
 
 			velBuffer[2] = velBuffer[1]
 			velBuffer[1] = GetEntityVelocity(vehiclePlayerIsIn)
-			
 		elseif wasInCar then
 			wasInCar = false
 			beltOn = false
@@ -209,3 +239,15 @@ RegisterNetEvent('avan0x_hud:copyToClipboard')
 AddEventHandler('avan0x_hud:copyToClipboard', function(content)
 	SendNUIMessage({action = "copyToClipboard", content = content})
 end)
+
+
+
+RegisterCommand('+keyDetailsHUD', function()
+	SendNUIMessage({action = "toggleMainStats", show = true})
+end, false)
+
+RegisterCommand('-keyDetailsHUD', function()
+	SendNUIMessage({action = "toggleMainStats", show = false})
+end, false)
+
+RegisterKeyMapping('+keyDetailsHUD', 'Détails du HUD', 'keyboard', 'LMENU')

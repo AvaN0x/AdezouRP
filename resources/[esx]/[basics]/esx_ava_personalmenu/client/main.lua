@@ -383,15 +383,13 @@ function OpenOthersMenu()
 	}, function(data, menu)
 		if data.current.value == "toggle_hud" then
 			interface = not interface
-			if not interface or not big_minimap then
-				TriggerEvent('ui:toggle', interface)
-			end
+			TriggerEvent('ui:toggle', interface)
 			DisplayRadar(interface)
 		elseif data.current.value == "resize_minimap" then
 			big_minimap = not big_minimap
 			SetRadarBigmapEnabled(big_minimap, false)
 			if interface or big_minimap then
-				TriggerEvent('ui:toggle', not big_minimap)
+				TriggerEvent('ui:togglePlayerStats', not big_minimap)
 			end
 		end
 	end, function(data, menu)
