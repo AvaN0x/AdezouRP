@@ -60,3 +60,6 @@ typings/
 
 **/package-lock.json
 
+# can't update eslint because it break everything, but I don't want anymore dependabot emails
+**/package.json 
+
