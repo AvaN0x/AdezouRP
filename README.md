@@ -10,4 +10,4 @@ Big thanks to the FiveM and ESX community for all those open source resources.
 
 ## PLEASE
 
-If there's any problem with one of the ressource's licenses please let me know with a pull request, I'll be please to fix them.
+If there's any problem with one of the resource's licenses please let me know with a pull request, I'll be please to fix them.
