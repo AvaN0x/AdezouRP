@@ -12,3 +12,4 @@ permissions.cfg
 /resources/\[esx\]/\[non-esx\]/3dme/log.txt
 
 .vscode/
+imgui.ini
