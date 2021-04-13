@@ -74,3 +74,18 @@ AddEventHandler("esx_avan0x:moveToDriverSeat", function()
 		CancelEvent()
 	end
 end)
+
+
+-------------------------------------------
+-------- CAN'T MOVE TO DRIVER SEAT --------
+-------------------------------------------
+
+RegisterCommand("v", function(source, args, rawCommand)
+    local playerPed = GetPlayerPed(-1)
+	local v = GetVehiclePedIsIn(playerPed, false)
+
+	if v ~= 0 then
+        local vehicleProps = ESX.Game.GetVehicleProperties(vehicle)
+        print(ESX.DumpTable(vehicleProps))
+    end
+end, false)

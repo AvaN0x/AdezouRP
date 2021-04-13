@@ -74,7 +74,7 @@ ESX.DumpTable = function(table, nb)
 		nb = 0
 	end
 
-	if type(table) == 'table' then
+    if type(table) == 'table' then
 		local s = ''
 		for i = 1, nb + 1, 1 do
 			s = s .. "    "

@@ -709,6 +709,12 @@ function admin_vehicle_menu()
 	end)
 end
 
+
+RegisterNetEvent('esx_ava_personalmenu:admin_vehicle_repair')
+AddEventHandler('esx_ava_personalmenu:admin_vehicle_repair', function()
+	admin_vehicle_repair()
+end)
+
 function admin_vehicle_repair()
 	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 
