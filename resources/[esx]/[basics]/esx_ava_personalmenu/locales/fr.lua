@@ -118,6 +118,7 @@ Locales["fr"] = {
   -- vehicles
   ["admin_repair_vehicle"] = "Réparer Véhicule",
   ['admin_tp_nearest_vehicle'] = "Tp véhicule le plus proche",
+  ['admin_tp_nearest_vehicle_detail'] = "Ne fonctionne que lorsque vous êtes a pied",
   ['admin_delete_vehicle'] = "Supprimer le véhicule",
   ['admin_flip_vehicle'] = "Retourner le véhicule",
 

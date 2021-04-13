@@ -690,7 +690,7 @@ function admin_vehicle_menu()
 		align    = "left",
 		elements = {
 			{label = _("green", _("admin_repair_vehicle")), value = "repair_vehicle"},
-			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle"},
+			{label = _("green", _("admin_tp_nearest_vehicle")), value = "tp_nearest_vehicle", detail = _("admin_tp_nearest_vehicle_detail")},
 			{label = _("red", _("admin_delete_vehicle")), value = "delete_vehicle"},
 			{label = _("admin_flip_vehicle"), value = "flip_vehicle"},
 		}
