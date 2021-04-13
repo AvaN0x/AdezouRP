@@ -14,6 +14,9 @@ Citizen.CreateThread(function()
         -- SetDiscordRichPresenceAssetSmall('logo1024')
         -- SetDiscordRichPresenceAssetSmallText('This is a small icon with text')
 
+        -- SetDiscordRichPresenceAction(0, "[Fermé] FiveM", "fivem://connect/localhost:30120")
+        SetDiscordRichPresenceAction(1, "Discord", "https://discord.gg/KRTKC6b")
+
     --     Citizen.Wait(60000)
 	-- end
 end)
