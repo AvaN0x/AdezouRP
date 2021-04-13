@@ -32,7 +32,7 @@ MySQL.ready(function()
 end)
 
 RegisterServerEvent('esx_vehicleshop:setVehicleOwned')
-AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps, type)
+AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps, vehicleName, type)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
@@ -51,10 +51,11 @@ AddEventHandler('esx_vehicleshop:setVehicleOwned', function (vehicleProps, type)
 		end)
 
 		xPlayer.removeMoney(vehicleData.price)
-		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)',
+		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, model, vehicle, type) VALUES (@owner, @plate, @model, @vehicle, @type)',
 		{
 			['@owner']   = xPlayer.identifier,
 			['@plate']   = vehicleProps.plate,
+            ['@model']   = vehicleName,
 			['@vehicle'] = json.encode(vehicleProps),
 			['@type'] = type
 		}, function (rowsChanged)
@@ -68,12 +69,12 @@ end)
 
 
 RegisterServerEvent('esx_vehicleshop:setVehicleOwnedSociety')
-AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, vehicleProps, type)
+AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, vehicleProps, vehicleName, type)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
-
+    
 	local found = false
-
+    
 	for i = 1, #Vehicles, 1 do
         if GetHashKey(Vehicles[i].model) == vehicleProps.model then
             vehicleData = Vehicles[i]
@@ -81,16 +82,17 @@ AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, veh
             break
         end
     end
-
+    
 	if found and xPlayer.getMoney() >= vehicleData.price then
 		TriggerEvent('esx_statejob:getTaxed', 'CONCESSIONNAIRE', vehicleData.price, function(toSociety)
 		end)
-
+        
 		xPlayer.removeMoney(vehicleData.price)
-		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)',
+		MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, model, vehicle, type) VALUES (@owner, @plate, @model, @vehicle, @type)',
 		{
-			['@owner'] = society,
+            ['@owner'] = society,
 			['@plate'] = vehicleProps.plate,
+            ['@model']   = vehicleName,
 			['@vehicle'] = json.encode(vehicleProps),
 			['@type'] = type
 		}, function (rowsChanged)
@@ -100,7 +102,7 @@ AddEventHandler('esx_vehicleshop:setVehicleOwnedSociety', function (society, veh
 		TriggerClientEvent('esx:deleteVehicle', _source)
 		print(('esx_vehicleshop: %s attempted to inject vehicle!'):format(xPlayer.identifier))
 	end
-
+    
 end)
 
 ESX.RegisterServerCallback('esx_vehicleshop:getCategories', function (source, cb)

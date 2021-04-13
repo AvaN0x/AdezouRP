@@ -234,7 +234,7 @@ function OpenShopMenu()
 									vehicleProps.plate = newPlate
 									SetVehicleNumberPlateText(vehicle, newPlate)
 
-										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps, CurrentActionData.VehicleType)
+										TriggerServerEvent('esx_vehicleshop:setVehicleOwnedSociety', data.current.name, vehicleProps, GetDisplayNameFromVehicleModel(vehicleProps.model), CurrentActionData.VehicleType)
 										TriggerServerEvent('esx_vehiclelock:givekey', 'no', newPlate) -- vehicle lock
 
 									ESX.ShowNotification(_U('vehicle_purchased'))
@@ -270,7 +270,7 @@ function OpenShopMenu()
 										vehicleProps.plate = newPlate
 										SetVehicleNumberPlateText(vehicle, newPlate)
 
-											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps, CurrentActionData.VehicleType)
+											TriggerServerEvent('esx_vehicleshop:setVehicleOwned', vehicleProps, GetDisplayNameFromVehicleModel(vehicleProps.model), CurrentActionData.VehicleType)
 											TriggerServerEvent('esx_ava_keys:giveKey', vehicleProps.plate, 1)
 
 										ESX.ShowNotification(_U('vehicle_purchased'))
