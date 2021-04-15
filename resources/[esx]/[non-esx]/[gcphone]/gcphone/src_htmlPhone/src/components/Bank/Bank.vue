@@ -16,7 +16,7 @@
         </div>
 
         <div class="element-content" ref="form"> 
-          <input style=" border-radius: 23px; font-size: 16px;" v-bind:class="{ select: 0 === currentSelect}" v-autofocus ref="form0" v-model="id" class="paragonder" placeholder="ID or Phone Number">
+          <input style=" border-radius: 23px; font-size: 16px;" v-bind:class="{ select: 0 === currentSelect}" v-autofocus ref="form0" v-model="id" class="paragonder" :placeholder="`${IntlString('APP_BANK_PHONE_NUMBER')}`">
       </div> 
 
         <div class="element-content">           
