@@ -206,7 +206,8 @@ function GetDeathCauseLabel(deathCause)
 end
 
 
-local LifeInvaderChannelID = 762292381353115658
+-- TODO set this as convar
+local LifeInvaderChannelID = 831508116234960906
 local lastID = nil
 --? life invader check last messages
 Citizen.CreateThread(function()
