@@ -6,7 +6,7 @@ Wrapper.RegisterNetEvent('blargleambulance:finishLevel')
 Wrapper.AddEventHandler('blargleambulance:finishLevel', function(levelFinished)
     local totalFromAI = Config.Formulas.moneyPerLevel(levelFinished)
     local total = nil
-    TriggerEvent('esx_statejob:getTaxed', 'society_ambulance', totalFromAI, function(toSociety)
+    TriggerEvent('esx_statejob:getTaxed', 'society_ems', totalFromAI, function(toSociety)
         total = toSociety
     end)
 
@@ -14,7 +14,7 @@ Wrapper.AddEventHandler('blargleambulance:finishLevel', function(levelFinished)
     local societyMoney = math.floor(total / 100 * 40)
     local societyAccount = nil
 
-    TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ambulance', function(account)
+    TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ems', function(account)
         societyAccount = account
     end)
 

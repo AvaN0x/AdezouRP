@@ -98,7 +98,7 @@ function checkSpeed(maxspeed, radarName)
 
         ESX.TriggerServerCallback('esx_radars:getVehicleOwner', function(vowner)
             if vowner then
-                if vowner ~= 'society_police' and vowner ~= 'society_ambulance' then
+                if vowner ~= 'society_police' and vowner ~= 'society_ems' then
                     if PlayerData.job.grade_name == "interim" and vowner == "society_"..PlayerData.job.name 
                     or PlayerData.job2.grade_name == "interim" and vowner == "society_"..PlayerData.job2.name then
                         TriggerServerEvent('esx_billing:sendBillWithId', PlayerData.identifier, 'society_police', finelevel, fineamount)
