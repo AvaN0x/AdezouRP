@@ -319,6 +319,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 
 	self.reloadInventory = function()
 		if self.inventory == nil then
+            -- FIXME this may be the thing that does not update ? need tests
 			TriggerEvent('esx_ava_inventories:getInventory', "inventory", self.identifier, function(inventory)
 				self.inventory = inventory
 			end)
