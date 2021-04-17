@@ -318,7 +318,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 	end
 
 	self.reloadInventory = function()
-		if self.inventory == nil then
+		-- if self.inventory == nil then
             -- FIXME this may be the thing that does not update ? need tests
 			TriggerEvent('esx_ava_inventories:getInventory', "inventory", self.identifier, function(inventory)
 				self.inventory = inventory
@@ -327,7 +327,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 			while self.inventory == nil do
 				Citizen.Wait(10)
 			end
-		end
+		-- end
 	end
 
 	self.getInventoryItem = function(name)
@@ -347,6 +347,8 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 		local item = self.getInventoryItem(name)
 
 		self.inventory.removeItem(name, count)
+        -- temp
+        self.reloadInventory()
 		TriggerClientEvent('esx:inventoryItemNotification', self.source, false, item, count)
 	end
 
