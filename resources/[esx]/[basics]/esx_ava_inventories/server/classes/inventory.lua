@@ -100,6 +100,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		self.modified = true
 	end
 
+    -- TODO second arg for items to check without (ex for treatment)
 	self.canAddItem = function(name, count)
 		local item = self.getItem(name)
 		if self.identifier ~= nil and item.limit ~= -1 and item.count + count > item.limit then -- only check limit if not shared inventory
@@ -113,6 +114,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		end
 	end
 
+    -- TODO second arg for items to check without (ex for treatment)
 	self.canAddAllItem = function(items) -- {name, count}
 		local total_weight = 0
 		for k, v in ipairs(items) do
