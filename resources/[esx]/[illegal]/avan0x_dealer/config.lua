@@ -78,10 +78,10 @@ Config.DrugItems = {
 Config.DrugPrices = {
   ['gold'] = 800,
   ['diamond'] = 1000,
-  ['bagweed'] = 110,
-  ['bagcoke'] = 525,
-  ['bagexta'] = 82,
-  ['methamphetamine'] = 725,
+  ['bagweed'] = 70,
+  ['bagcoke'] = 165,
+  ['bagexta'] = 58,
+  ['methamphetamine'] = 220,
 }
 
 Config.MaxPriceVariance = 10.0 -- %
