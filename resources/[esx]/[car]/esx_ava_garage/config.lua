@@ -237,6 +237,57 @@ Config.Garages = {
 		},
 		Identifier = "garage_lost"
 	},
+	Garage_Families = {
+		Name = "hide",
+		Pos = {x = -109.22, y = -1599.54, z = 31.64},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = -109.22, y = -1599.54, z = 31.64},
+			Heading = 316.36
+		},
+		Identifier = "garage_families"
+	},
+	Garage_Ballas = {
+		Name = "hide",
+		Pos = {x = 91.82, y = -1964.06, z = 20.75},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = 91.82, y = -1964.06, z = 20.75},
+			Heading = 321.59
+		},
+		Identifier = "garage_ballas"
+	},
+	Garage_Marabunta = {
+		Name = "hide",
+		Pos = {x = 1329.94, y = -1724.45, z = 56.04},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = 1329.94, y = -1724.45, z = 56.04},
+			Heading = 10.77
+		},
+		Identifier = "garage_marabunta"
+	},
 
 
 
