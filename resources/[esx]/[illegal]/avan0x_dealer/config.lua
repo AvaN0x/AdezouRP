@@ -80,7 +80,7 @@ Config.DrugPrices = {
   ['diamond'] = 1000,
   ['bagweed'] = 70,
   ['bagcoke'] = 165,
-  ['bagexta'] = 58,
+  ['bagexta'] = 90,
   ['methamphetamine'] = 220,
 }
 
