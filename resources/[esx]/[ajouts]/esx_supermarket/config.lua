@@ -21,7 +21,6 @@ Config.Zones = {
 			{x = 2678.91,  	y = 3280.67, 	z = 54.24, 	blip = true, marker = true},
 			{x = 1729.21,  	y = 6414.13, 	z = 34.03, 	blip = true, marker = true},
 			{x = 25.72,    	y = -1346.96, 	z = 28.49, 	blip = true, marker = true},
-			{x = 268.55, 	y = -979.79,  	z = 28.39, 	blip = true, marker = true} -- mapping place du cube
 		}
 	},
 
