@@ -335,7 +335,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(10)
+				Citizen.Wait(0)
 				if show_hashes then
 					local playerPed = PlayerPedId()
 					for _, prop in ipairs(visibleHash) do
@@ -407,7 +407,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(10)
+				Citizen.Wait(0)
 				if show_coords then
 					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)

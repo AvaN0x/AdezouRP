@@ -156,7 +156,7 @@ function ListVehiclesMenu(type, target)
 			local hashVehicule = v.vehicle.model
 			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
 			local labelvehicle
-			if v.location == this_Garage.Identifier then
+			if v.location == 'any' or v.location == this_Garage.Identifier then
 				labelvehicle = vehicleName..' - '.. v.vehicle.plate
 			elseif v.location == "garage_POUND" then
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
@@ -188,9 +188,9 @@ function ListVehiclesMenu(type, target)
 				elements = elements,
 			},
 			function(data, menu)
-				if data.current.value.location == this_Garage.Identifier then
+				if data.current.value.location == 'any' or data.current.value.location == this_Garage.Identifier then
 					menu.close()
-					
+
 					SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
 					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target)
 				elseif data.current.value.location == "garage_POUND" then
