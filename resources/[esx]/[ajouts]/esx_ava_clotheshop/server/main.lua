@@ -9,7 +9,7 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 RegisterServerEvent('esx_ava_clotheshop:pay')
 AddEventHandler('esx_ava_clotheshop:pay', function(name)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	TriggerEvent('esx_statejob:getTaxed', name, Config.Price, function(toSociety)
+	TriggerEvent('esx_statejob:getTaxed', name, Config.Price * 10, function(toSociety) -- *10 for having 100% going to the government
 	end)
 
 	xPlayer.removeMoney(Config.Price)
