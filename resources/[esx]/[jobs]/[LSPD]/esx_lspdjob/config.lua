@@ -246,6 +246,34 @@ Config.AuthorizedHelicopters = {
 -- CHECK SKINCHANGER CLIENT MAIN.LUA for matching elements
 
 Config.Uniforms = {
+	cadet_wear_short = {
+		male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+		female = {
+			['tshirt_1'] = 38,  ['tshirt_2'] = 1,
+			['torso_1'] = 55,   ['torso_2'] = 0,
+			['decals_1'] = 0,   ['decals_2'] = 0,
+			['arms'] = 41,
+			['pants_1'] = 52,   ['pants_2'] = 1,
+			['shoes_1'] = 25,   ['shoes_2'] = 0,
+			['helmet_1'] = -1,  ['helmet_2'] = 0,
+			['chain_1'] = 0,    ['chain_2'] = 0,
+			['ears_1'] = 2,     ['ears_2'] = 0
+		}
+	},
+	cadet_wear_long = {
+		male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":101,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":20,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+		female = {
+			['tshirt_1'] = 38,  ['tshirt_2'] = 1,
+			['torso_1'] = 55,   ['torso_2'] = 0,
+			['decals_1'] = 0,   ['decals_2'] = 0,
+			['arms'] = 41,
+			['pants_1'] = 52,   ['pants_2'] = 1,
+			['shoes_1'] = 25,   ['shoes_2'] = 0,
+			['helmet_1'] = -1,  ['helmet_2'] = 0,
+			['chain_1'] = 0,    ['chain_2'] = 0,
+			['ears_1'] = 2,     ['ears_2'] = 0
+		}
+	},
 	recruit_wear = {
 		male = {
 			['tshirt_1'] = 38,  ['tshirt_2'] = 1,

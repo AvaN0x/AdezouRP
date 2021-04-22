@@ -85,6 +85,8 @@ function OpenCloakroomMenu()
 	
 	if grade == 'recruit' then
 		table.insert(elements, {label = _U('police_wear'), value = 'recruit_wear'})
+		table.insert(elements, {label = _U('cadet_wear_short'), value = 'cadet_wear_short'})
+		table.insert(elements, {label = _U('cadet_wear_long'), value = 'cadet_wear_long'})
 	elseif grade == 'officer' or grade == 'sous-officier' or grade == 'Off-stup' then
 		table.insert(elements, {label = _U('police_wear'), value = 'officer_wear'})
 	elseif grade == 'sergeant' or grade == 'sergent-stup' then
@@ -202,6 +204,8 @@ function OpenCloakroomMenu()
 		end
 
 		if
+			data.current.value == 'cadet_wear_short' or
+			data.current.value == 'cadet_wear_long' or
 			data.current.value == 'recruit_wear' or
 			data.current.value == 'officer_wear' or
 			data.current.value == 'sergeant_wear' or
