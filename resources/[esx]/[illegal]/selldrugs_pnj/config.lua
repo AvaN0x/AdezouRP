@@ -1,5 +1,5 @@
 Config = {
-    requiredCops = 0,
+    requiredCops = 3,
     npcFightOnReject = true,
     account = 'black_money', --change to 'money' if you want
     drugs = {
@@ -12,7 +12,7 @@ Config = {
     cityPoint = vector3(0.0, -500.0, 100.0), --set cityPoint to false to disable
     notify = {
         title = 'Drogue',
-        nodrugs = 'Tu n\'as rien à vendre',
+        nodrugs = 'Vas chercher de quoi vendre!',
         cooldown = '~r~Tu vas trop vite man',
         toofar = '~r~Tu es trop loin de la ville',
         cops = '~r~Pas de policier',
@@ -26,7 +26,7 @@ Config = {
         vehicle = '~r~Tu dois sortir du véhicule',
         sold = '~g~Tu as vendu ~y~x%s de %s ~g~pour %s$',
         client = '~g~Votre client ~n~~r~veut acheter x%s %s',
-        police_notify_title = 'Police dispatch',
+        police_notify_title = 'Appel LSPD',
         police_notify_subtitle = '~r~Vente de drogue',
     },
     pedlist = {
