@@ -5,11 +5,11 @@ Config.enableCmd = false --  /radio command should be active or not (if not you 
 
 Config.messages = {
 
-  ['not_on_radio'] = 'You are currently not on any radio',
-  ['on_radio'] = 'You are currently on the radio: <b>',
-  ['joined_to_radio'] = 'You joined the radio: <b>',
-  ['restricted_channel_error'] = 'You can not join encrypted channels!',
-  ['you_on_radio'] = 'You are already on the radio: <b>',
-  ['you_leave'] = 'You left the radio: <b>'
+  ['not_on_radio'] = 'Actuellement hors radio',
+  ['on_radio'] = 'Actuellement en radio: <b>',
+  ['joined_to_radio'] = 'Tu as rejoint une radio: <b>',
+  ['restricted_channel_error'] = 'Tu ne peux pas rejoindre ce chanel crypté!',
+  ['you_on_radio'] = 'Tu es déjà en radio: <b>',
+  ['you_leave'] = 'Tu as quitté la radio: <b>'
 
 }
