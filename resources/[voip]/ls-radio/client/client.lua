@@ -45,7 +45,7 @@ function enableRadio(enable)
 
 end
 
---- sprawdza czy komenda /radio jest włączony
+--- vérifie si la commande / radio est activée
 
 RegisterCommand('radio', function(source, args)
     if Config.enableCmd then
@@ -70,7 +70,7 @@ RegisterCommand('radiotest', function(source, args)
 
 end, false)
 
--- dołączanie do radia
+-- rejoindre la radio
 
 RegisterNUICallback('joinRadio', function(data, cb)
     local _source = source
@@ -86,7 +86,7 @@ RegisterNUICallback('joinRadio', function(data, cb)
             exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel))
             exports['mythic_notify']:DoHudText('inform', Config.messages['joined_to_radio'] .. data.channel .. '.00 MHz </b>')
           elseif not (PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' or PlayerData.job.name == 'fire') then
-            --- info że nie możesz dołączyć bo nie jesteś policjantem
+            --- des informations auxquelles vous ne pouvez pas adhérer car vous n'êtes pas un policier
             exports['mythic_notify']:DoHudText('error', Config.messages['restricted_channel_error'])
           end
         end
@@ -109,7 +109,7 @@ RegisterNUICallback('joinRadio', function(data, cb)
     cb('ok')
 end)
 
--- opuszczanie radia
+-- quitter la radio
 
 RegisterNUICallback('leaveRadio', function(data, cb)
    local playerName = GetPlayerName(PlayerId())
@@ -136,7 +136,7 @@ RegisterNUICallback('escape', function(data, cb)
     cb('ok')
 end)
 
--- net eventy
+-- pas d'événements
 
 RegisterNetEvent('ls-radio:use')
 AddEventHandler('ls-radio:use', function()
