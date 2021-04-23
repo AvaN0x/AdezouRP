@@ -144,7 +144,7 @@ function TokoVoip.initialize(self)
 				self.plugin_data.radioTalking = true;
 				self.plugin_data.localRadioClicks = true;
 				if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then
-					self.plugin_data.localRadioClicks = false;
+					self.plugin_data.localRadioClicks = true;
 				end
 				if (not getPlayerData(self.serverId, "radio:talking")) then
 					setPlayerData(self.serverId, "radio:talking", true, true);
