@@ -24,15 +24,15 @@ TokoVoipConfig = {
 		-- TeamSpeak channel name used by the voip
 		-- If the TSChannelWait is enabled, players who are currently in TSChannelWait will be automatically moved
 		-- to the TSChannel once everything is running
-		TSChannel = "SERVER_1",
-		TSPassword = "Toko_pass", -- TeamSpeak channel password (can be empty)
+		TSChannel = "En ville",
+		TSPassword = "Adezou_Toko_Pass", -- TeamSpeak channel password (can be empty)
 
 		-- Optional: TeamSpeak waiting channel name, players wait in this channel and will be moved to the TSChannel automatically
 		-- If the TSChannel is public and people can join directly, you can leave this empty and not use the auto-move
 		TSChannelWait = "[TokoVOIP] Waiting channel", -- You NEED tokovoip in the wait channel name!
 
 		-- Blocking screen informations
-		TSServer = "ts.yourserver.com", -- TeamSpeak server address to be displayed on blocking screen
+		TSServer = "185.44.81.108", -- TeamSpeak server address to be displayed on blocking screen
 		TSChannelSupport = "S1: Waiting For Support", -- TeamSpeak support channel name displayed on blocking screen
 		TSDownload = "https://voip.itokoyamato.net", -- Download link displayed on blocking screen
 		TSChannelWhitelist = { -- Black screen will not be displayed when users are in those TS channels
