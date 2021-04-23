@@ -56,15 +56,15 @@ end
 function TokoVoip.updateTokoVoipInfo(self, forceUpdate) -- Update the top-left info
 	local info = "";
 	if (self.mode == 1) then
-		info = "Normal";
+		info = "Parler";
 	elseif (self.mode == 2) then
-		info = "Whispering";
+		info = "Chuchoter";
 	elseif (self.mode == 3) then
-		info = "Shouting";
+		info = "Crier";
 	end
 
 	if (self.plugin_data.radioTalking) then
-		info = info .. " on radio ";
+		info = info .. " Dans la radio ";
 	end
 	if (self.talking == 1 or self.plugin_data.radioTalking) then
 		info = "<font class='talking'>" .. info .. "</font>";
