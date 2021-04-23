@@ -1,5 +1,5 @@
 Config = {
-    requiredCops = 0,
+    requiredCops = 3,
     npcFightOnReject = true,
     account = 'black_money', --change to 'money' if you want
     drugs = {
