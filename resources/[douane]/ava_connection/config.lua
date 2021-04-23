@@ -3,6 +3,10 @@ Config = {
 
 	-- you just need one of them
 	WhitelistedRoles = {
-		"743525702531547228" -- Citoyen
+		"747381143682416710", -- AdezouRP
+		"743525702531547234", -- Admin
+		"743525702531547231", -- Modo
+		"743525702531547230" -- Helper
+		-- "743525702531547228" -- Citoyen
 	}
 }
