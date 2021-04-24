@@ -608,7 +608,7 @@ Config.Doors = {
 				}
 			}
 		},
-		{ -- entrance bottom
+		{ -- entrance front bottom
 			textCoords = vector3(356.93, -590.49, 30.22),
 			authorizedJobs = { 'ems' },
 			locked = false,
@@ -632,6 +632,39 @@ Config.Doors = {
 			objYaw = 160.0,
 			locked = true
 		},
+        { -- entrance back bottom
+			textCoords = vector3(319.84, -560.44, 28.95),
+			authorizedJobs = { 'ems' },
+			locked = true,
+			doors = {
+				{
+					objHash = 1248599813,
+                    objYaw = 205.0,
+					objCoords = vector3(319.95, -560.82, 28.80)
+				},
+				{
+					objHash = -1421582160,
+                    objYaw = 25.0,
+					objCoords = vector3(319.95, -560.82, 28.80)
+				}
+			}
+		},
+        {
+            textCoords = vector3(333.71, -563.12, 28.82),
+            authorizedJobs = { 'ems' },
+            locked = true,
+            distance = 12,
+            doors = {
+                {
+                    objHash = -820650556,
+                    objCoords  = vector3( 330.21, -561.80, 30.80),
+                },
+                {
+                    objHash = -820650556,
+                    objCoords = vector3(337.49, -564.44, 30.80)
+                }
+            }
+        },
 
 
 		-- ORGA CELTIC
