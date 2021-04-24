@@ -592,7 +592,7 @@ Config.Doors = {
 		},
 	
 		-- HOPITAL
-		{
+		{ -- entrance top
 			textCoords = vector3(299.5, -584.9, 44.70),
 			authorizedJobs = { 'ems' },
 			locked = false,
@@ -605,6 +605,22 @@ Config.Doors = {
 				{
 					objHash = 661758796,
 					objCoords = vector3(299.5, -584.9, 43.28)
+				}
+			}
+		},
+		{ -- entrance bottom
+			textCoords = vector3(356.93, -590.49, 30.22),
+			authorizedJobs = { 'ems' },
+			locked = false,
+			distance = 2.0,
+			doors = {
+				{
+					objHash = -487908756,
+					objCoords = vector3(357.06, -590.44, 28.79)
+				},
+				{
+					objHash = 661758796,
+					objCoords = vector3(357.06, -590.44, 28.79)
 				}
 			}
 		},

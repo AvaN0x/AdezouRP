@@ -25,6 +25,22 @@ Config.Teleports = {
 			authorizedJobs = { 'ems' },
 			locked = true
 		},
+		{ -- hospital elevator
+			tpEnter = {
+				pos = vector3(331.75, -595.42, 42.3),
+				heading = 64.0,
+				-- size  = {x = 1.5, y = 1.5, z = 1.0},
+				-- color = {r = 255, g = 0, b = 255},
+				label = "Descendre"
+			},
+			tpExit = {
+				pos = vector3(342.46, -585.49, 27.82),
+				heading = 250.0,
+				label = "Monter à l'étage"
+			},
+			authorizedJobs = { 'ems' },
+			locked = false
+		},
 		{ -- nightclub entry
 			tpEnter = {
 				pos = vector3(-676.83, -2458.72, 12.96),
