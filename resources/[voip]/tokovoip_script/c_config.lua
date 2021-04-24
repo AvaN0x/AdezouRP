@@ -29,7 +29,7 @@ TokoVoipConfig = {
 
 		-- Optional: TeamSpeak waiting channel name, players wait in this channel and will be moved to the TSChannel automatically
 		-- If the TSChannel is public and people can join directly, you can leave this empty and not use the auto-move
-		TSChannelWait = "[TokoVOIP] Waiting channel", -- You NEED tokovoip in the wait channel name!
+		TSChannelWait = "[TokoVOIP] Rocade", -- You NEED tokovoip in the wait channel name!
 
 		-- Blocking screen informations
 		TSServer = "185.44.81.108", -- TeamSpeak server address to be displayed on blocking screen
@@ -46,7 +46,7 @@ TokoVoipConfig = {
 		remote_click_on = false, -- Is remote click on sound active
 		remote_click_off = true, -- Is remote click off sound active
 		enableStereoAudio = true, -- If set to true, positional audio will be stereo (you can hear people more on the left or the right around you)
-		-- ClickVolume = -15, -- Set the radio clicks volume, -15 is a good default
+		ClickVolume = -15, -- Set the radio clicks volume, -15 is a good default
 
 		localName = "", -- If set, this name will be used as the user's teamspeak display name
 		localNamePrefix = "[" .. GetPlayerServerId(PlayerId()) .. "] ", -- If set, this prefix will be added to the user's teamspeak display name

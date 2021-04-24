@@ -311,11 +311,11 @@ function updateWsState(ws, state) {
     for (const [k, v] of Object.entries(wsStates)) {
         switch (v.state) {
             case NOT_CONNECTED:
-                v.msg = 'Not connected'
+                v.msg = 'Non connecté'
                 v.color = 'red'
                 break;
             case OK:
-                v.msg = 'Connected'
+                v.msg = 'Connecté'
                 v.color = 'green'
                 break;
         }
@@ -325,10 +325,10 @@ function updateWsState(ws, state) {
 
 function updateConfig(payload) {
     voip = payload;
-    document.getElementById('TSServer').innerHTML = `TeamSpeak server: <font color="#01b0f0">${voip.plugin_data.TSServer}</font>`;
-    document.getElementById('TSChannel').innerHTML = `TeamSpeak channel: <font color="#01b0f0">${(voip.plugin_data.TSChannelWait) ? voip.plugin_data.TSChannelWait.replace(/\[[a-z]spacer(.*?)\]/, '') : voip.plugin_data.TSChannel.replace(/\[[a-z]spacer(.*?)\]/, '')}</font>`;
-    document.getElementById('TSDownload').innerHTML = voip.plugin_data.TSDownload;
-    document.getElementById('pluginVersion').innerHTML = `Plugin version: <font color="red">Not found</font> (Minimal version: ${voip.minVersion})`;
+    document.getElementById('TSServer').innerHTML = `Serveur TeamSpeak: <font color="#01b0f0">${voip.plugin_data.TSServer}</font>`;
+    document.getElementById('TSChannel').innerHTML = `Channel d'attente:: <font color="#01b0f0">${(voip.plugin_data.TSChannelWait) ? voip.plugin_data.TSChannelWait.replace(/\[[a-z]spacer(.*?)\]/, '') : voip.plugin_data.TSChannel.replace(/\[[a-z]spacer(.*?)\]/, '')}</font>`;
+    // document.getElementById('TSDownload').innerHTML = voip.plugin_data.TSDownload;
+    document.getElementById('pluginVersion').innerHTML = `Plugin version: <font color="red">Introuvable</font> (Version minimale: ${voip.minVersion})`;
 }
 
 function updatePlugin() {
