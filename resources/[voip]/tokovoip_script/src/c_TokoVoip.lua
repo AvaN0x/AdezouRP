@@ -64,16 +64,19 @@ function TokoVoip.updateTokoVoipInfo(self, forceUpdate) -- Update the top-left i
 	end
 
 	if (self.plugin_data.radioTalking) then
-		info = info .. " Dans la radio ";
+		info = info .. " dans la radio ";
 	end
 	if (self.talking == 1 or self.plugin_data.radioTalking) then
 		info = "<font class='talking'>" .. info .. "</font>";
 	end
+
+    info = string.format('<span style="min-width: 10rem; display: inline-block;">[TokoVoip] %s</span>', info)
+
 	if (self.plugin_data.radioChannel ~= -1 and self.myChannels[self.plugin_data.radioChannel]) then
 		if (string.match(self.myChannels[self.plugin_data.radioChannel].name, "Call")) then
-			info = info  .. "<br> [Phone] " .. self.myChannels[self.plugin_data.radioChannel].name;
+			info = info  .. " [Phone] " .. self.myChannels[self.plugin_data.radioChannel].name;
 		else
-			info = info  .. "<br> [Radio] " .. self.myChannels[self.plugin_data.radioChannel].name;
+			info = info  .. " [Radio] " .. self.myChannels[self.plugin_data.radioChannel].name;
 		end
 	end
 	if (info == self.screenInfo and not forceUpdate) then return end
