@@ -220,16 +220,15 @@ Config.Doors = {
 				}
 			}
 		},
-        -- TODO temporary disable
-		-- {-- Parking
-		-- 	objName = 'prop_gate_airport_01',
-		-- 	objCoords  = vector3(416.58, -1024.52, 29.11),
-		-- 	textCoords = vector3(416.85, -1021.52, 29.56),
-		-- 	authorizedJobs = { 'police', 'state' },
-		-- 	locked = true,
-		-- 	distance = 16,
-		-- 	size = 0.4
-		-- },
+		{-- Parking
+			objName = 'prop_gate_airport_01',
+			objCoords  = vector3(416.58, -1024.52, 29.11),
+			textCoords = vector3(416.85, -1021.52, 29.56),
+			authorizedJobs = { 'police', 'state' },
+			locked = true,
+			distance = 16,
+			size = 0.4
+		},
 		{-- Back (double doors)
 			textCoords = vector3(468.67, -1014.45, 26.54),
 			authorizedJobs = { 'police' },
