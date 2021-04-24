@@ -156,7 +156,7 @@ local vehiclePlayerIsIn = 0
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(100)
-		local vehiclePlayerIsIn = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+		vehiclePlayerIsIn = GetVehiclePedIsIn(GetPlayerPed(-1), false)
 		if vehiclePlayerIsIn ~= 0 then
 			-- Speed
 			carSpeed = math.ceil(GetEntitySpeed(vehiclePlayerIsIn) * 3.6)
