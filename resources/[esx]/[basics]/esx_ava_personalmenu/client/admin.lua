@@ -535,6 +535,8 @@ function admin_spectate_player(player)
 		SetEveryoneIgnorePlayer(playerPed, true)
 		SetEntityCollision(playerPed, false, false)
 		FreezeEntityPosition(playerPed, true)
+
+        TriggerEvent("updateVoipTargetPed", targetPed, true) -- TOKOVOIP
 	else
 		NetworkSetInSpectatorMode(false, targetPed)
 		SetEntityInvincible(playerPed, false)
@@ -542,6 +544,8 @@ function admin_spectate_player(player)
 		SetEveryoneIgnorePlayer(playerPed, false)
 		SetEntityCollision(playerPed, true, true)
 		FreezeEntityPosition(playerPed, false)
+
+        TriggerEvent("updateVoipTargetPed", playerPed, false) -- TOKOVOIP
 	end
 end
 
