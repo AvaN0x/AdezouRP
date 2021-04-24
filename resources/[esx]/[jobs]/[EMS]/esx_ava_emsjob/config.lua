@@ -40,12 +40,12 @@ Config.Hospitals = {
 		},
 		SocietyGarage = {
 			Name  = "Garage véhicule",
-			Spawner = vector3(291.73, -594.12, 43.3),
+			Spawner = vector3(337.34, -579.28, 28.80),
 			Marker = {type = 36, x = 1.5, y = 1.5, z = 1.5, r = 0, g = 255, b = 0, a = 100, rotate = true},
 			Type = "car",
 			SpawnPoint = {
-				Pos = {x = 291.73,  y = -594.12, z = 42.3},
-				Heading = 345.0
+				Pos = {x = 337.34,  y = -579.28, z = 28.80},
+				Heading = 340.0
 			}
 		},
 		SocietyHeliGarage = {
