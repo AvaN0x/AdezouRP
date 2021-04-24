@@ -219,7 +219,8 @@ Citizen.CreateThread(function()
         Wait(5)
         local me = PlayerPedId()
         if IsPedArmed(me, 7) then
-            if IsPlayerFreeAiming(PlayerId()) and GetSelectedPedWeapon(me) ~= GetHashKey("weapon_flashlight") then
+            local selectedWeapon = GetSelectedPedWeapon(me)
+            if (IsPlayerFreeAiming(PlayerId()) and selectedWeapon ~= GetHashKey("weapon_flashlight")) or selectedWeapon == GetHashKey("weapon_knife") then
                 for i = 1, #peds do
                     if HasEntityClearLosToEntityInFront(me, peds[i], 19) and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 5.0 then
                         if minutesBeforeNextRobbery > 0 then
