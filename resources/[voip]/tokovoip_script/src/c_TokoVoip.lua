@@ -17,6 +17,7 @@
 TokoVoip = {};
 TokoVoip.__index = TokoVoip;
 local lastTalkState = false
+local isPressingRadioKey = false
 
 function TokoVoip.init(self, config)
 	local self = setmetatable(config, TokoVoip);
@@ -143,7 +144,7 @@ function TokoVoip.initialize(self)
 			end
 
 
-			if (IsControlPressed(0, self.radioKey) and self.plugin_data.radioChannel ~= -1 and self.config.radioEnabled) then -- Talk on radio
+			if (isPressingRadioKey and self.plugin_data.radioChannel ~= -1 and self.config.radioEnabled) then -- Talk on radio
 				self.plugin_data.radioTalking = true;
 				self.plugin_data.localRadioClicks = true;
 				if (self.plugin_data.radioChannel > self.config.radioClickMaxChannel) then
@@ -182,3 +183,14 @@ end
 function TokoVoip.disconnect(self)
 	self:updatePlugin("disconnect");
 end
+
+
+RegisterCommand('+radioKey', function()
+	isPressingRadioKey = true
+end, false)
+
+RegisterCommand('-radioKey', function()
+	isPressingRadioKey = false
+end, false)
+
+RegisterKeyMapping('+radioKey', 'Radio', 'keyboard', 'CAPITAL')

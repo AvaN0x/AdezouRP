@@ -11,7 +11,7 @@ TokoVoipConfig = {
 		40, -- Shout speech distance in gta distance units
 	},
 	headingType = 0, -- headingType 0 uses GetGameplayCamRot, basing heading on the camera's heading, to match how other GTA sounds work. headingType 1 uses GetEntityHeading which is based on the character's direction
-	radioKey = Keys["CAPS"], -- Keybind used to talk on the radio
+	-- radioKey = Keys["CAPS"], -- Keybind used to talk on the radio -- UNUSED -> keymapping in c_TokoVoip.lua
 	keySwitchChannels = Keys["Z"], -- Keybind used to switch the radio channels
 	keySwitchChannelsSecondary = Keys["LEFTSHIFT"], -- If set, both the keySwitchChannels and keySwitchChannelsSecondary keybinds must be pressed to switch the radio channels
 	keyProximity = Keys["Z"], -- Keybind used to switch the proximity mode
