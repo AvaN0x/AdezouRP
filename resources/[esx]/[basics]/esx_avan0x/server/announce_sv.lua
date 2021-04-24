@@ -4,7 +4,7 @@
 -------------------------------------------
 
 TriggerEvent('es:addGroupCommand', 'announce', "admin", function(source, args, user)
-	TriggerClientEvent('esx_avan0x:announce', -1, "~r~ANNONCE STAFF", table.concat(args, " "), 5)
+	TriggerClientEvent('esx_avan0x:announce', -1, "~r~ANNONCE STAFF", table.concat(args, " "), 10)
 end, function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Autorisations insuffisantes !")
 end, 

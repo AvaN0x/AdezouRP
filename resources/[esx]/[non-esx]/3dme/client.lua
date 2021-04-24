@@ -39,7 +39,7 @@ function Display(mePlayer, text, offset)
             TriggerEvent('chat:addMessage', {
                 color = { color.r, color.g, color.b },
                 multiline = true,
-                args = { text}
+                args = { text }
             })
         end
     end
