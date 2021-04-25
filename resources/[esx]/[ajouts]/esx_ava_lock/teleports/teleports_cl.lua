@@ -128,6 +128,7 @@ end)
 function Teleport(coords, allowVehicles, heading)
 	local playerPed = GetPlayerPed(-1)
 	local vehicle = nil
+    RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
 	DoScreenFadeOut(100)
 		Citizen.Wait(250)
