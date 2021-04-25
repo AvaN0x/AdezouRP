@@ -48,7 +48,7 @@ Config.Gangs = {
 		Name = "Marabunta",
 		Zones = {
 			Stock = {
-				Pos   = {x = 1269.12, y = -1710.92, z = 53.78},
+				Pos   = {x = 1294.62, y = -1745.05, z = 53.30},
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
