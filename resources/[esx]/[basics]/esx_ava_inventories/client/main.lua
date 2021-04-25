@@ -89,7 +89,9 @@ function OpenMyInventory()
                     if data.current.value == "item_standard" then
                         UseItem(data.current.item.name)
                     elseif data.current.value == "item_weapon" then
+                        ESX.UI.Menu.CloseAll()
                         TriggerServerEvent("esx_avan0x:useWeaponItem", data.current.item.name)
+                        OpenMyInventory()
                     end
 
                 elseif data2.current.value == "give_item" then
