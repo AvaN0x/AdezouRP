@@ -264,7 +264,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(10)
+				Citizen.Wait(0)
 				if admin_mode then
 					local playerPed = PlayerPedId()
 					local playerCoords = GetEntityCoords(playerPed)
