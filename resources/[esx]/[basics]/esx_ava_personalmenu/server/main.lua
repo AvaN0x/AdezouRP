@@ -210,6 +210,19 @@ end)
 
 
 
+RegisterServerEvent('esx_ava_personalmenu:savePlayer')
+AddEventHandler('esx_ava_personalmenu:savePlayer', function()
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+
+    ESX.SavePlayer(xPlayer)
+    TriggerClientEvent('esx:showColoredNotification', _source, "Synchronisation de votre personnage.", 45)
+end)
+
+
+
+
+
 -- AddEventHandler('esx:playerLoaded', function(source)
 -- 	local _source = source
 --     local xPlayer = ESX.GetPlayerFromId(_source)

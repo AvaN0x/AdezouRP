@@ -17,19 +17,19 @@ Locales["fr"] = {
   ["sim_card"] = "📲 Carte SIM",
   ["my_keys"] = "🔑 Mes Clés",
   ["wallet"] = "👛 Portefeuille",
+  ['wallet_detail'] = "Accédez à vos papiers d'identité",
   ["vehicle_menu"] = "🚙 Gestion Véhicule",
   ["speed_limiter"] = "🚙 Limiteur de vitesse",
   ["bills_menu"] = "📝 Factures",
+  ['bills_menu_detail'] = "Payez vos factures",
   ["life_invader"] = "💻 Life Invader",
+  ['life_invader_detail'] = "Envoyer un message sur le LifeInvader",
   ["others_menu"] = "⚙️ Divers",
   ["society_menu"] = "🏭 Gestion Entreprise: %s",
   ["gang_menu"] = "🔪 Gestion Gang: %s",
   ["admin_menu"] = "👑 Administration",
-
-  ['wallet_detail'] = "Accédez à vos papiers d'identité",
-  ['bills_menu_detail'] = "Payez vos factures",
-  ['life_invader_detail'] = "Envoyer un message sur le LifeInvader",
   ['admin_menu_detail'] = "Gérez les joueurs",
+  ["save_position"] = "📌 Sauvegarder la position",
 
 
   ["wallet_idcard"] = "📇 Carte d'identité",

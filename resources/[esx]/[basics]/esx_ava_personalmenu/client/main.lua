@@ -126,6 +126,8 @@ function OpenPersonalMenu()
 		table.insert(elements, {label = _("bright_red", _("gang_menu", actualGang.label)), value = "gang_menu", type = "submenu"})
 	end
 
+    table.insert(elements, {label = _("pink", _("save_position")), value = "save_position"})
+
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu", detail = _("admin_menu_detail"), type = "submenu"})
 	end
@@ -178,6 +180,9 @@ function OpenPersonalMenu()
 
 		elseif data.current.value == "admin_menu" then
 			OpenAdminMenu()
+
+		elseif data.current.value == "save_position" then
+			TriggerServerEvent("esx_ava_personalmenu:savePlayer")
 
 		end
 	end, function(data, menu)
