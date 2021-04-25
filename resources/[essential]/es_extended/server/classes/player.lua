@@ -340,7 +340,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 		local item = self.getInventoryItem(name)
 
 		self.inventory.addItem(name, count)
-		TriggerClientEvent('esx:inventoryItemNotification', self.source, true, item, count)
+		-- TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, true, item.label, count)
 	end
 
 	self.removeInventoryItem = function(name, count)
@@ -349,7 +349,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 		self.inventory.removeItem(name, count)
         -- temp
         self.reloadInventory()
-		TriggerClientEvent('esx:inventoryItemNotification', self.source, false, item, count)
+		-- TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, false, item.label, count)
 	end
 
 	self.setJob = function(job, grade)
@@ -434,7 +434,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 		end
 
 		TriggerClientEvent('esx:addWeapon', self.source, weaponName, ammo)
-		TriggerClientEvent('esx:inventoryItemNotification', self.source, true, {label = weaponLabel}, 1)
+		TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, true, weaponLabel, 1)
 	end
 
 	self.addWeaponComponent = function(weaponName, weaponComponent)
@@ -467,7 +467,7 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 
 		if weaponLabel then
 			TriggerClientEvent('esx:removeWeapon', self.source, weaponName, ammo)
-			TriggerClientEvent('esx:inventoryItemNotification', self.source, false, {label = weaponLabel}, 1)
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, false, weaponLabel, 1)
 		end
 	end
 

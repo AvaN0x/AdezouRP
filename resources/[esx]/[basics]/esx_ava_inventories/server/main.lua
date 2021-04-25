@@ -128,7 +128,7 @@ AddEventHandler('esx:playerLoaded', function(source)
 			end
 		end
 
-		local inventory = CreateInventory(name, label, max_weight, identifier, items)
+		local inventory = CreateInventory(name, label, max_weight, identifier, items, source)
 
 		table.insert(Inventories[name], inventory)
 		table.insert(ava_inventories, inventory) -- add inventory to player inventories
@@ -231,9 +231,7 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 		if playerInventory.canRemoveItem(itemName, count) then
 			if targetInventory.canAddItem(itemName, count) then
 				playerInventory.removeItem(itemName, count)
-				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
 				targetInventory.addItem(itemName, count)
-				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName, count)
 			else
 				TriggerClientEvent('esx:showNotification', _source, _('target_not_enough_place'))
 				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
@@ -247,8 +245,8 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 			xPlayer.removeMoney(count)
 			xTarget.addMoney(count)
 
-			TriggerClientEvent('esx:inventoryItemNotification', target, true, _('cash'), ESX.Math.GroupDigits(count))
-			TriggerClientEvent('esx:inventoryItemNotification', _source, false, _('cash'), ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', target, true, _('cash'), ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, false, _('cash'), ESX.Math.GroupDigits(count))
 		else
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
@@ -259,9 +257,8 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 			xPlayer.removeAccountMoney(itemName, count)
 			xTarget.addAccountMoney(itemName, count)
 
-			print(sourceAcc.label)
-			TriggerClientEvent('esx:inventoryItemNotification', target, true, sourceAcc.label, ESX.Math.GroupDigits(count))
-			TriggerClientEvent('esx:inventoryItemNotification', _source, false, sourceAcc.label, ESX.Math.GroupDigits(count))
+            TriggerClientEvent('avan0x_hud:inventoryItemNotification', target, true, sourceAcc.label, ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, false, sourceAcc.label, ESX.Math.GroupDigits(count))
 		else
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
@@ -270,9 +267,7 @@ AddEventHandler('esx_ava_inventories:giveItem', function(inventoryName, type, ta
 		if xPlayer.hasWeapon(itemName) then
 			if targetInventory.canAddItem(itemName:lower(), 1) then
 				xPlayer.removeWeapon(itemName)
-				TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName:lower(), count)
 				targetInventory.addItem(itemName:lower(), 1)
-				TriggerClientEvent('esx:inventoryItemNotification', target, true, itemName:lower(), count)
 			else
 				TriggerClientEvent('esx:showNotification', _source, _('target_not_enough_place'))
 				TriggerClientEvent('esx:showNotification', target, _('not_enough_place'))
@@ -294,8 +289,8 @@ AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, it
 	elseif type == 'item_standard' then
 		if inventory.canRemoveItem(itemName, count) then
 			inventory.removeItem(itemName, count)
-			TriggerClientEvent('esx:inventoryItemNotification', _source, false, itemName, count)
 
+            
 			local item = inventory.getItem(itemName)
 			ESX.CreatePickup(type, itemName, count, ('~y~%s~s~ [~b~%s~s~]'):format(item.label, count), _source)
 		else
@@ -310,6 +305,7 @@ AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, it
 		else
 			xPlayer.removeMoney(count)
 
+            TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, false, _('cash'), ESX.Math.GroupDigits(count))
 			local pickupLabel = ('~y~%s~s~ [~g~%s~s~]'):format(_('cash'), _('cash_amount', ESX.Math.GroupDigits(count)))
 			ESX.CreatePickup('item_money', 'money', count, pickupLabel, _source)
 		end
@@ -322,6 +318,7 @@ AddEventHandler('esx_ava_inventories:dropItem', function(inventoryName, type, it
 		else
 			xPlayer.removeAccountMoney(itemName, count)
 
+            TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, false, sourceAcc.label, ESX.Math.GroupDigits(count))
 			local pickupLabel = ('~y~%s~s~ [~g~%s~s~]'):format(account.label, _('cash_amount', ESX.Math.GroupDigits(count)))
 			ESX.CreatePickup('item_account', itemName, count, pickupLabel, _source)
 		end
@@ -365,9 +362,7 @@ AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, ty
 		if targetInventory.canRemoveItem(itemName, count) then
 			if playerInventory.canAddItem(itemName, count) then
 				targetInventory.removeItem(itemName, count)
-				TriggerClientEvent('esx:inventoryItemNotification', _source, true, itemName, count)
 				playerInventory.addItem(itemName, count)
-				TriggerClientEvent('esx:inventoryItemNotification', target, false, itemName, count)
 			else
 				TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
 			end
@@ -380,8 +375,8 @@ AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, ty
 			xTarget.removeMoney(count)
 			xPlayer.addMoney(count)
 
-			TriggerClientEvent('esx:inventoryItemNotification', target, false, _('cash'), ESX.Math.GroupDigits(count))
-			TriggerClientEvent('esx:inventoryItemNotification', _source, true, _('cash'), ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', target, false, _('cash'), ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, true, _('cash'), ESX.Math.GroupDigits(count))
 		else
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
@@ -393,8 +388,8 @@ AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, ty
 			xPlayer.addAccountMoney(itemName, count)
 
 			print(targetAcc.label)
-			TriggerClientEvent('esx:inventoryItemNotification', target, false, targetAcc.label, ESX.Math.GroupDigits(count))
-			TriggerClientEvent('esx:inventoryItemNotification', _source, true, targetAcc.label, ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', target, false, targetAcc.label, ESX.Math.GroupDigits(count))
+			TriggerClientEvent('avan0x_hud:inventoryItemNotification', _source, true, targetAcc.label, ESX.Math.GroupDigits(count))
 		else
 			TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
 		end
@@ -403,9 +398,7 @@ AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, ty
 		if xTarget.hasWeapon(itemName) then
 			if playerInventory.canAddItem(itemName:lower(), 1) then
 				xTarget.removeWeapon(itemName)
-				TriggerClientEvent('esx:inventoryItemNotification', _source, true, itemName:lower(), count)
 				playerInventory.addItem(itemName:lower(), 1)
-				TriggerClientEvent('esx:inventoryItemNotification', target, false, itemName:lower(), count)
 			else
 				TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
 			end

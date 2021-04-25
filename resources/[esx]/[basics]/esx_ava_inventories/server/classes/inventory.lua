@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-function CreateInventory(name, label, max_weight, identifier, items)
+function CreateInventory(name, label, max_weight, identifier, items, playerSource)
 	local self = {}
 
 	self.identifier = identifier
@@ -12,6 +12,7 @@ function CreateInventory(name, label, max_weight, identifier, items)
 	self.max_weight = max_weight
 	self.actual_weight = 0
 	self.modified = false
+    self.playerSource = playerSource
 
 	self.updateWeight = function()
 		self.actual_weight = 0
@@ -75,6 +76,10 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		local item = self.getItem(name)
 		item.count = item.count + count
 
+        if self.playerSource then
+            TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.playerSource, true, item.label, count)
+        end
+
 		self.updateWeight()
 		self.modified = true
 	end
@@ -87,6 +92,10 @@ function CreateInventory(name, label, max_weight, identifier, items)
 		local item = self.getItem(name)
 		local new_count = item.count - count
 		item.count = new_count >= 0 and new_count or 0
+
+        if self.playerSource then
+            TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.playerSource, false, item.label, count)
+        end
 
 		self.updateWeight()
 		self.modified = true

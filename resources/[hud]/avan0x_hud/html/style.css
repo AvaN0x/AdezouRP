@@ -1,106 +1,106 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 
 #playerStats {
-  position: absolute;
-  left: 350px;
-  /* Default: 350px */
-  bottom: 20px;
-  /* Default: 20px */
-  /*bottom: 20px; /* Default: 20px */
+    position: absolute;
+    left: 350px;
+    /* Default: 350px */
+    bottom: 20px;
+    /* Default: 20px */
+    /*bottom: 20px; /* Default: 20px */
 
-  left: 18.2%;
-  /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
-  /*left: 82.0%; /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
-  bottom: 1.85%;
-  /* (1.85% Default-Fix for all 16:9 resolutions) | (21.0% Above Map) */
-  /* 6.5% with esx_ladderui */
+    left: 18.2%;
+    /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
+    /*left: 82.0%; /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
+    bottom: 1.85%;
+    /* (1.85% Default-Fix for all 16:9 resolutions) | (21.0% Above Map) */
+    /* 6.5% with esx_ladderui */
 }
 
 .status {
-  display: flex;
-  width: 195px;
-  position: relative;
-  left: -15px;
-  justify-content: left;
-  margin: 6px 0
+    display: flex;
+    width: 195px;
+    position: relative;
+    left: -15px;
+    justify-content: left;
+    margin: 6px 0
 }
 
 .vert-stat {
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  position: relative;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.5);
-  float: right;
-  margin-top: 5px;
-  margin-right: 5px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
 }
 
 .vert-stat .bg {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 .vert-stat img {
-  width: 60%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+    width: 60%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #gas {
-  position: absolute;
-  right: 100px;
-  bottom: 50px;
+    position: absolute;
+    right: 100px;
+    bottom: 50px;
 }
 
 .mainStats {
-  color: #fff;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
-  position: relative;
-  min-width: 280px;
-  min-height: 30px;
-  left: -15px;
-  border-radius: 5px 0 0 5px;
+    color: #fff;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    position: relative;
+    min-width: 280px;
+    min-height: 30px;
+    left: -15px;
+    border-radius: 5px 0 0 5px;
 }
 
 .mainStats:not(:last-child) {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 .stat {
-  height: 30px;
-  position: relative;
+    height: 30px;
+    position: relative;
 }
 
 .stat img {
-  position: absolute;
-  top: 50%;
-  left: 6px;
-  transform: translateY(-50%);
-  height: 18px;
-  width: 18px;
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 18px;
 }
 
 
 .stat span {
-  position: absolute;
-  top: 50%;
-  min-width: 220px;
-  transform: translateY(-50%);
-  margin-left: 28px;
+    position: absolute;
+    top: 50%;
+    min-width: 220px;
+    transform: translateY(-50%);
+    margin-left: 28px;
 }
 
 
@@ -111,174 +111,189 @@
 
 .background,
 .outer {
-  -webkit-transform: rotate(-180deg);
-  -ms-transform: rotate(-180deg);
-  transform: rotate(-180deg);
-  -webkit-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  transform-origin: 50% 50%;
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
 }
 
 .progress {
-  -webkit-transition: 0.35s stroke-dashoffset;
-  -o-transition: 0.35s stroke-dashoffset;
-  transition: 0.35s stroke-dashoffset;
-  -webkit-transform: rotate(140deg);
-  -ms-transform: rotate(140deg);
-  transform: rotate(140deg);
-  -webkit-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  transform-origin: 50% 50%;
+    -webkit-transition: 0.35s stroke-dashoffset;
+    -o-transition: 0.35s stroke-dashoffset;
+    transition: 0.35s stroke-dashoffset;
+    -webkit-transform: rotate(140deg);
+    -ms-transform: rotate(140deg);
+    transform: rotate(140deg);
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
 }
 
 .huds {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .huds .hud.dashboard {
-  position: absolute;
-  height: 85px;
-  bottom: 20px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
+    position: absolute;
+    height: 85px;
+    bottom: 20px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .huds .hud.dashboard div {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 10px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
 }
 
 .huds .hud.dashboard div svg {
-  opacity: .2;
+    opacity: .2;
 }
 
 .huds .hud.dashboard .active svg {
-  opacity: .8;
+    opacity: .8;
 }
 
 .huds .hud.dashboard .speedometer {
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  -webkit-clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
-  clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    -webkit-clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
+    clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
 }
 
 .huds .hud.dashboard .speedometer svg {
-  opacity: 1;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: scale(2) translate(-25%, -25%);
-  -ms-transform: scale(2) translate(-25%, -25%);
-  transform: scale(2) translate(-25%, -25%);
+    opacity: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: scale(2) translate(-25%, -25%);
+    -ms-transform: scale(2) translate(-25%, -25%);
+    transform: scale(2) translate(-25%, -25%);
 }
 
 .huds .hud.dashboard .speedometer .outer {
-  opacity: .3;
-  -webkit-transform: rotate(180deg) scale(1.2);
-  -ms-transform: rotate(180deg) scale(1.2);
-  transform: rotate(180deg) scale(1.2);
+    opacity: .3;
+    -webkit-transform: rotate(180deg) scale(1.2);
+    -ms-transform: rotate(180deg) scale(1.2);
+    transform: rotate(180deg) scale(1.2);
 }
 
 .huds .hud.dashboard .speedometer .text {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  margin: 0;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
 }
 
 .huds .hud.dashboard .speedometer .text .speed {
-  color: white;
-  font-size: 26px;
-  display: block;
+    color: white;
+    font-size: 26px;
+    display: block;
 }
 
 .huds .hud.dashboard .speedometer .text .kmh {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
-  display: block;
-  text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    display: block;
+    text-transform: uppercase;
 }
 
 .huds .hud.fuel {
-  -webkit-transform: scale(0.7);
-  -ms-transform: scale(0.7);
-  transform: scale(0.7);
-  position: absolute;
-  bottom: -20px;
-  right: -10px;
-  position: absolute;
-  text-align: center;
-  margin: 15px 0;
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    position: absolute;
+    text-align: center;
+    margin: 15px 0;
 }
 
 .huds .hud.fuel span {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  display: block;
-  margin-top: 0px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    display: block;
+    margin-top: 0px;
 }
 
 .huds .hud.fuel svg {
-  opacity: 1 !important;
+    opacity: 1 !important;
 }
 
 .hud.fuel span {
-  opacity: 0;
-  margin-top: -4px;
+    opacity: 0;
+    margin-top: -4px;
 }
 
 .hud.fuel span:after {
-  position: absolute;
-  content: '%';
-  top: 1px;
-  right: 4px;
-  font-size: 7px;
+    position: absolute;
+    content: '%';
+    top: 1px;
+    right: 4px;
+    font-size: 7px;
 }
 
 .hud.fuel g {
-  -webkit-transform: translate(16px, 13px);
-  -ms-transform: translate(16px, 13px);
-  transform: translate(16px, 13px);
+    -webkit-transform: translate(16px, 13px);
+    -ms-transform: translate(16px, 13px);
+    transform: translate(16px, 13px);
 }
 
 
 
 
 .belt {
-  display: block;
-  position: absolute;
-  padding: 10px 8px;
-  margin: 10px 5px 0 5px;
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  overflow: hidden;
-  left: 40px;
-  top: 1px;
-  background: rgba(0, 0, 0, 0.35);
+    display: block;
+    position: absolute;
+    padding: 10px 8px;
+    margin: 10px 5px 0 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    overflow: hidden;
+    left: 40px;
+    top: 1px;
+    background: rgba(0, 0, 0, 0.35);
 }
 
 .belt i {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #FFF;
-  z-index: 11;
-  font-size: 15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFF;
+    z-index: 11;
+    font-size: 15px;
 }
 
 .belt img {
-  width: 22px;
-  margin: 3px 0 0 0;
+    width: 22px;
+    margin: 3px 0 0 0;
+}
+
+
+#inventoryNotifications {
+    position: absolute;
+    right: 20px;
+    bottom: 44px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
 }

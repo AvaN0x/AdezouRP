@@ -23,6 +23,13 @@ $(function () {
             setValue(event.data.key, event.data.value);
         } else if (event.data.action == "updateStatus") {
             updateStatus(event.data.status);
+        } else if (event.data.action == "itemNotification") {
+            let elem = $('<div>' + (event.data.add ? '+' : '-') + event.data.count + ' ' + event.data.label + '</div>');
+            $('#inventoryNotifications').append(elem);
+
+            $(elem).delay(3000).fadeOut(1000, () => {
+                elem.remove();
+            })
         } else if (event.data.action == "toggle") {
             if (event.data.show)
                 $('#ui').show();

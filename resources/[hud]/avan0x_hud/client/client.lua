@@ -98,6 +98,12 @@ AddEventHandler('avan0x_hud:updateStatus', function(status)
 	SendNUIMessage({action = "updateStatus", status = status})
 end)
 
+RegisterNetEvent('avan0x_hud:inventoryItemNotification')
+AddEventHandler('avan0x_hud:inventoryItemNotification', function(add, itemLabel, count)
+    SendNUIMessage({action = "itemNotification", add = add, label = itemLabel, count = count})
+end)
+
+
 -- clause menu when active
 Citizen.CreateThread(function()
     local isPauseMenu = false

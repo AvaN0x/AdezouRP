@@ -186,7 +186,7 @@ AddEventHandler('esx:addInventoryItem', function(item, count)
 	-- 	end
 	-- end
 
-	ESX.UI.ShowInventoryItemNotification(true, item, count)
+	-- ESX.UI.ShowInventoryItemNotification(true, item, count)
 
 	-- if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
 	-- 	ESX.ShowInventory()
@@ -195,8 +195,7 @@ end)
 
 RegisterNetEvent('esx:inventoryItemNotification')
 AddEventHandler('esx:inventoryItemNotification', function(add, item, count)
-	-- todo put this in avan0x_hud, with item being label
-	ESX.UI.ShowInventoryItemNotification(add, item, count)
+	-- ESX.UI.ShowInventoryItemNotification(add, item, count)
 end)
 
 
@@ -209,7 +208,8 @@ AddEventHandler('esx:removeInventoryItem', function(item, count)
 	-- 	end
 	-- end
 
-	ESX.UI.ShowInventoryItemNotification(false, item, count)
+	-- ESX.UI.ShowInventoryItemNotification(false, item, count)
+    
 
 	-- if ESX.UI.Menu.IsOpen('default', 'es_extended', 'inventory') then
 	-- 	ESX.ShowInventory()
