@@ -578,6 +578,7 @@ function admin_noclip()
 		-- SetPlayerInvincible(playerPed, true)
 		SetEntityVisible(playerPed, false, false)
 		ESX.ShowNotification("NoClip ~g~Activé")
+        ClearPedTasksImmediately(playerPed)
 	else
 		-- if not admin_mode then
 			-- SetPlayerInvincible(playerPed, false)
