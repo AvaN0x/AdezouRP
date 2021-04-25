@@ -128,7 +128,8 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
 						end
 					end
 					if gotRole then
-						name = data.user.username .. "#" .. data.user.discriminator .. " (" .. name .. ")"
+						-- name = data.user.username .. "#" .. data.user.discriminator .. " (`" .. name .. "`)"
+						name = "<@" .. discordId .. ">" .. " (`" .. name .. "`)"
 						print(name .. " se connecte.")
 						TriggerEvent('esx_ava_personalmenu:notifStaff', "~g~" .. name .. "~s~ se connecte.")
 						SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " se connecte.", 311891)
@@ -148,21 +149,17 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
 end)
 
 AddEventHandler('playerDropped', function(reason)
-    for k, v in ipairs(GetPlayerIdentifiers(source)) do
-		if string.match(v, "discord:") then
-			discordId = string.gsub(v, "discord:", "")
-			break
-		end
-    end
+    local discordId = GetDiscordId(source)
 	local name = (GetPlayerName(source) or "SteamName")
 
     if discordId then
-        local endpoint = ("users/%s"):format(discordId)
-        local member = DiscordRequest("GET", endpoint, {})
-        if member.code == 200 then
-			local data = json.decode(member.data)
-			name = data.username .. "#" .. data.discriminator .. " (" .. name .. ")"
-		end
+        -- local endpoint = ("users/%s"):format(discordId)
+        -- local member = DiscordRequest("GET", endpoint, {})
+        -- if member.code == 200 then
+		-- 	local data = json.decode(member.data)
+		-- 	name = data.username .. "#" .. data.discriminator .. " (" .. name .. ")"
+		-- end
+        name = "<@" .. discordId .. ">" .. " (`" .. name .. "`)"
 	end
 	print(name .. " a quitté.\n\tRaison : " .. reason)
 	TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. name .. "~s~ a quitté. (" .. reason .. ")")
@@ -173,11 +170,11 @@ RegisterServerEvent("ava_connection:banPlayer")
 AddEventHandler("ava_connection:banPlayer", function(id, reason)
 	local steam, license, discord, ip, live, xbl = GetPlayerIdentifiersInVars(id)
 	local name = GetPlayerName(id)
-	local staffSteam = GetPlayerIdentifiersInVars(source)
+    local staffSteam, _, staffDiscord = GetPlayerIdentifiersInVars(source)
 	local staffName = GetPlayerName(source)
 
 	DropPlayer(id, "Tu as été banni par " .. staffName .. " : ".. reason)
-	SendWebhookEmbedMessage("avan0x_wh_staff", "", name .. " got banned by **" .. staffName .. "**.\nReason : " .. reason, 16711680) -- #ff0000
+	SendWebhookEmbedMessage("avan0x_wh_staff", "", "<@" .. string.gsub(discord, "discord:", "") .. "> (`" .. name .. "`) got banned by " .. (staffDiscord and ("<@" .. string.gsub(staffDiscord, "discord:", "") .. "> (`" .. staffName .. "`)") or staffName) .. ".\nReason : " .. reason, 16711680) -- #ff0000
 
 	MySQL.Async.execute('INSERT INTO `ban_list`(`steam`, `license`, `discord`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@steam, @license, @discord, @ip, @xbl, @live, @name, @reason, @staff)', {
 		['@steam'] = steam or "not_found",
@@ -193,6 +190,15 @@ AddEventHandler("ava_connection:banPlayer", function(id, reason)
 
 	GetBanList()
 end)
+
+function GetDiscordId(source)
+    for k, v in ipairs(GetPlayerIdentifiers(source)) do
+		if string.match(v, "discord:") then
+			return string.gsub(v, "discord:", "")
+		end
+    end
+    return nil
+end
 
 
 function GetBanList()
