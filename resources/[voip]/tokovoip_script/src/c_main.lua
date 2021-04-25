@@ -406,6 +406,7 @@ function displayPluginScreen(toggle)
 end
 
 -- Used for admin spectator feature
+RegisterNetEvent('updateVoipTargetPed')
 AddEventHandler("updateVoipTargetPed", function(newTargetPed, useLocal)
 	targetPed = newTargetPed
 	useLocalPed = useLocal
