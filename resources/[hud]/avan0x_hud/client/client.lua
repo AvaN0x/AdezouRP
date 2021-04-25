@@ -93,8 +93,8 @@ AddEventHandler('esx_ava_gang:setGang', function(gang)
 	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, name = gang.name})
 end)
 
-RegisterNetEvent('esx_customui:updateStatus')
-AddEventHandler('esx_customui:updateStatus', function(status)
+RegisterNetEvent('avan0x_hud:updateStatus')
+AddEventHandler('avan0x_hud:updateStatus', function(status)
 	SendNUIMessage({action = "updateStatus", status = status})
 end)
 
