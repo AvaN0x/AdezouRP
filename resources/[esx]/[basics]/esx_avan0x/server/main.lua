@@ -275,8 +275,8 @@ end)
 
 TriggerEvent('es:addGroupCommand', 'rb', 'mod', function(source, args, user)
 	if args[1] ~= nil then
-		SetPlayerRoutingBucket(source, args[1])
-        print(source .. " is in " .. args[1])
+		SetPlayerRoutingBucket(source, tonumber(args[1]))
+        print(source .. " is in " .. tonumber(args[1]))
     else
         SetPlayerRoutingBucket(source, 0)
 	end
