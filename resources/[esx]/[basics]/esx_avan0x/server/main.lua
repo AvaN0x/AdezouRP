@@ -274,8 +274,9 @@ end)
 
 
 TriggerEvent('es:addGroupCommand', 'rb', 'mod', function(source, args, user)
-	if args[1] ~= nil and tonumber(args[1]) then
+	if args[1] ~= nil then
 		SetPlayerRoutingBucket(source, args[1])
+        print(source .. " is in " .. args[1])
 	end
 end, function(source, args, user)
 	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
