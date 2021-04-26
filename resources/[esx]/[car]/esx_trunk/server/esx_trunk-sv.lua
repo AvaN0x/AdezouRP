@@ -106,8 +106,6 @@ ESX.RegisterServerCallback('esx_trunk:getInventoryV',function(source,cb,plate)
 
     local coffre = (store.get('coffre') or {})
     for i=1,#coffre,1 do
-        -- table.insert(items,{name=coffre[i].name,count=coffre[i].count,label=ESX.GetItemLabel(coffre[i].name)})
-        -- TODO ESX.GetItemLabel doesn't exist anymore
         table.insert(items,{name=coffre[i].name,count=coffre[i].count,label=arrayLabels[coffre[i].name]})
     end
 
