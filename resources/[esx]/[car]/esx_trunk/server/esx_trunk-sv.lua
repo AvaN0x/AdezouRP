@@ -1,5 +1,6 @@
 ESX = nil
 local arrayWeight = {}
+local arrayLabels = {}
 local VehicleList = {}
 local VehicleInventory = {}
 
@@ -13,6 +14,7 @@ AddEventHandler('onMySQLReady', function ()
     if result ~= nil and #result > 0 then
         for _,v in pairs(result) do
           arrayWeight[v.name] = v.weight
+          arrayLabels[v.name] = v.label
         end
     end
   end)
@@ -106,7 +108,7 @@ ESX.RegisterServerCallback('esx_trunk:getInventoryV',function(source,cb,plate)
     for i=1,#coffre,1 do
         -- table.insert(items,{name=coffre[i].name,count=coffre[i].count,label=ESX.GetItemLabel(coffre[i].name)})
         -- TODO ESX.GetItemLabel doesn't exist anymore
-        table.insert(items,{name=coffre[i].name,count=coffre[i].count,label=coffre[i].name})
+        table.insert(items,{name=coffre[i].name,count=coffre[i].count,label=arrayLabels[coffre[i].name]})
     end
 
     local weight = getTotalInventoryWeight(plate)
