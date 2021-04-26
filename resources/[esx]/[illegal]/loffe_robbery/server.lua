@@ -52,7 +52,7 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
             cb(false)
         end
     else
-        cb('no_cops')
+        cb(false)
     end
 end)
 
