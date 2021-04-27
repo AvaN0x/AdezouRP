@@ -212,10 +212,10 @@ Citizen.CreateThread(function()
 					SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
 					Citizen.Wait(1)
 					SetPedToRagdoll(ped, 1000, 1000, 0, 0, 0, 0)
-				else
-					StartScreenEffect('MP_Celeb_Lose', 2000, false)
+				elseif GetPedInVehicleSeat(vehiclePlayerIsIn, -1) == ped then
+					StartScreenEffect('MP_Celeb_Lose', 5000, false)
 					ShakeGameplayCam("DRUNK_SHAKE", 3.0)
-					Wait(2000)
+					Wait(5000)
 					StopGameplayCamShaking(true)
 				end
 			end
