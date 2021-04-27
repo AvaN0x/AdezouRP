@@ -116,7 +116,7 @@ ESX.SavePlayers = function(cb)
 		table.insert(asyncTasks, function(cb)
 			local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
 			ESX.SavePlayer(xPlayer, cb)
-			TriggerClientEvent('esx:showColoredNotification', xPlayer.source, "~o~Synchronisation ~w~de votre ~o~personnage.", 45)
+			TriggerClientEvent('esx:showColoredNotification', xPlayer.source, "Synchronisation de votre personnage.", 45)
 		end)
 	end
 

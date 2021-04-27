@@ -6,23 +6,34 @@ local noclip, show_names, show_hashes, admin_mode, show_coords = false, false, f
 local visibleHash = {}
 
 function OpenAdminMenu()
+    local elements
+    if PlayerGroup ~= nil and (PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+        elements = {
+            {label = _("orange", _("players_list")), value = "players_list", type = "submenu"},
+            {label = _("orange", _("all_players")), value = "all_players", type = "submenu"},
+            {label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
+            {label = _("blue", _("admin_clear_area")), value = "admin_clear_area"},
+            {label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
+            {label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu", type = "submenu"},
+            {label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
+            {label = _("orange", _("admin_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
+            {label = _("orange", _("admin_load_model")), value = "admin_load_model"},
+            {label = _("bright_red", _("admin_mode")), value = "admin_mode", detail = _('admin_mode_detail'), type="checkbox", checked=admin_mode},
+            {label = _("red", _("admin_change_skin")), value = "change_skin"},
+        }
+    elseif PlayerGroup == "mod" then
+        elements = {
+            {label = _("orange", _("players_list")), value = "players_list", type = "submenu"},
+            {label = _("orange", _("all_players")), value = "all_players", type = "submenu"},
+        }
+    end
+
+
 	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin",
 	{
 		title    = _("admin_menu"),
 		align    = "left",
-		elements = {
-            {label = _("orange", _("players_list")), value = "players_list", type = "submenu"},
-            {label = _("orange", _("all_players")), value = "all_players", type = "submenu"},
-			{label = _("blue", _("admin_tp_marker")), value = "tp_marker"},
-			{label = _("blue", _("admin_clear_area")), value = "admin_clear_area"},
-			{label = _("pink", _("admin_noclip")), value = "noclip", type="checkbox", checked=noclip},
-			{label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu", type = "submenu"},
-			{label = _("orange", _("admin_show_hash")), value = "show_hash", type="checkbox", checked=show_hashes},
-			{label = _("orange", _("admin_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
-			{label = _("orange", _("admin_load_model")), value = "admin_load_model"},
-			{label = _("bright_red", _("admin_mode")), value = "admin_mode", detail = _('admin_mode_detail'), type="checkbox", checked=admin_mode},
-			{label = _("red", _("admin_change_skin")), value = "change_skin"},
-		}
+		elements = elements
 	}, function(data, menu)
 		if data.current.value == "players_list" then
 			players_list()
