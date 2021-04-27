@@ -93,7 +93,12 @@ local function clientProcessing()
 	local localPos;
 
 	if useLocalPed then
-		localPos = GetPedBoneCoords(ped, HeadBone);
+        -- localPos = GetPedBoneCoords(ped, HeadBone);
+		if NetworkIsInSpectatorMode() then --! modified to support player in spectator mode
+			localPos = GetGameplayCamCoord()
+		else
+			localPos = GetPedBoneCoords(ped, HeadBone)
+		end
 	else
 		localPos = GetPedBoneCoords(targetPed, HeadBone);
 	end
