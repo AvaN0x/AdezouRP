@@ -46,6 +46,10 @@ end)
 RegisterNetEvent('loffe_robbery:robberyOver')
 AddEventHandler('loffe_robbery:robberyOver', function()
     robbing = false
+end)
+
+RegisterNetEvent('loffe_robbery:waitBeforeRobbery')
+AddEventHandler('loffe_robbery:waitBeforeRobbery', function()
     minutesBeforeNextRobbery = 15
     local timeBeforeNext = GetGameTimer() + minutesBeforeNextRobbery * 60000
     while timeBeforeNext >= GetGameTimer() and minutesBeforeNextRobbery > 0 do
@@ -275,11 +279,11 @@ Citizen.CreateThread(function()
                                     end
                                     robbing = false
                                 end
-                            elseif canRob == 'no_cops' then
+                            elseif canRob == 'no_cops' or canRob == 'wait' then
                                 local wait = GetGameTimer() + 5000
                                 while wait >= GetGameTimer() do
                                     Wait(0)
-                                    DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['no_cops'])
+                                    DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale][canRob])
                                 end
                             else
                                 TriggerEvent('loffe_robbery:talk', i, Translation[Config.Locale]['robbed'], 5)

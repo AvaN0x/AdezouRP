@@ -3,6 +3,7 @@ Translation = {}
 
 Config.Shopkeeper = 416176080 -- hash of the shopkeeper ped
 Config.Locale = 'fr' -- 'en', 'sv' or 'custom'
+Config.TimeBeforeEachRobbery = 15 -- minutes
 
 Config.Shops = {
     -- {coords = vector3(x, y, z), heading = peds heading, money = {min, max}, cops = amount of cops required to rob}
@@ -52,6 +53,7 @@ Translation = {
         ['hide_box'] = 'Ferme cette boite',
         ['robbery'] = 'Braquage en cours',
         ['walked_too_far'] = 'Tu es parti trop loin',
-        ['wait_before_next'] = 'Patientez avant de rebraquer une superette'
+        ['wait_before_next'] = 'Patientez avant de rebraquer une superette',
+        ['wait'] = 'Patientez avant de braquer une superette'
     }
 }

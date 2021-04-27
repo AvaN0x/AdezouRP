@@ -45,14 +45,16 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
         end
     end
     if cops >= Config.Shops[store].cops then
-        if not Config.Shops[store].robbed and not deadPeds[store] then
+        if Config.Shops[store].robbed == 'wait' then
+            cb('wait')
+        elseif not Config.Shops[store].robbed and not deadPeds[store] then
             Config.Shops[store].robbed = true
             cb(true)
         else
             cb(false)
         end
     else
-        cb(false)
+        cb('no_cops')
     end
 end)
 
@@ -71,15 +73,35 @@ AddEventHandler('loffe_robbery:rob', function(store)
     TriggerClientEvent('loffe_robbery:rob', -1, store)
     Wait(30000)
     TriggerClientEvent('loffe_robbery:robberyOver', src)
+    TriggerClientEvent('loffe_robbery:waitBeforeRobbery', src)
 
     local second = 1000
     local minute = 60 * second
     local hour = 60 * minute
+
+    Citizen.CreateThread(function()
+        for k,v in pairs(Config.Shops) do
+            if k ~= store then
+                Config.Shops[k].robbed = 'wait'
+            end
+        end
+        Wait(minute * Config.TimeBeforeEachRobbery)
+        for k,v in pairs(Config.Shops) do
+            if k ~= store then
+                Config.Shops[k].robbed = false
+
+                TriggerClientEvent('loffe_robbery:resetStore', -1, store)
+            end
+        end
+    end)
+
     local cooldown = Config.Shops[store].cooldown
     local wait = cooldown.hour * hour + cooldown.minute * minute + cooldown.second * second
     Wait(wait)
     Config.Shops[store].robbed = false
-    for k, v in pairs(deadPeds) do if k == store then table.remove(deadPeds, k) end end
+    for k, v in pairs(deadPeds) do
+        if k == store then table.remove(deadPeds, k) end
+    end
     TriggerClientEvent('loffe_robbery:resetStore', -1, store)
 end)
 
