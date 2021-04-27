@@ -94,7 +94,7 @@ function GetPlayerIdentifiersInVars(player)
 	return steam, license, discord, ip, live, xbl
 end
 
-AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
+AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
 	deferrals.defer()
 	deferrals.update("Vérification des permissions...")
 
@@ -128,11 +128,11 @@ AddEventHandler("playerConnecting", function(name, setCallback, deferrals)
 						end
 					end
 					if gotRole then
-						-- name = data.user.username .. "#" .. data.user.discriminator .. " (`" .. name .. "`)"
-						name = "<@" .. discordId .. ">" .. " (`" .. name .. "`)"
+						local name = data.user.username .. "#" .. data.user.discriminator .. " (`" .. steamName .. "`)"
+						local namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 						print(name .. " se connecte.")
 						TriggerEvent('esx_ava_personalmenu:notifStaff', "~g~" .. name .. "~s~ se connecte.")
-						SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " se connecte.", 311891)
+						SendWebhookEmbedMessage("avan0x_wh_connections", "", namePing .. " se connecte.", 311891)
 						deferrals.done()
 						return
 					end
@@ -150,20 +150,22 @@ end)
 
 AddEventHandler('playerDropped', function(reason)
     local discordId = GetDiscordId(source)
-	local name = (GetPlayerName(source) or "SteamName")
+	local steamName = (GetPlayerName(source) or "SteamName")
+	local name = steamName
+    local namePing = steamName
 
     if discordId then
-        -- local endpoint = ("users/%s"):format(discordId)
-        -- local member = DiscordRequest("GET", endpoint, {})
-        -- if member.code == 200 then
-		-- 	local data = json.decode(member.data)
-		-- 	name = data.username .. "#" .. data.discriminator .. " (" .. name .. ")"
-		-- end
-        name = "<@" .. discordId .. ">" .. " (`" .. name .. "`)"
+        local endpoint = ("users/%s"):format(discordId)
+        local member = DiscordRequest("GET", endpoint, {})
+        if member.code == 200 then
+			local data = json.decode(member.data)
+			name = data.username .. "#" .. data.discriminator .. " (`" .. steamName .. "`)"
+		end
+        namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 	end
 	print(name .. " a quitté.\n\tRaison : " .. reason)
 	TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. name .. "~s~ a quitté. (" .. reason .. ")")
-	SendWebhookEmbedMessage("avan0x_wh_connections", "", name .. " a quitté.\n\tRaison : " .. reason, 16733269)
+	SendWebhookEmbedMessage("avan0x_wh_connections", "", namePing .. " a quitté.\n\tRaison : " .. reason, 16733269)
 end)
 
 RegisterServerEvent("ava_connection:banPlayer")
