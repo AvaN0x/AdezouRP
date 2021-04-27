@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
         -- SetDiscordRichPresenceAssetSmall('logo1024')
         -- SetDiscordRichPresenceAssetSmallText('This is a small icon with text')
 
-        SetDiscordRichPresenceAction(0, "FiveM", "cfx.re/join/6lopyd")
+        SetDiscordRichPresenceAction(0, "FiveM", "https://cfx.re/join/6lopyd")
         SetDiscordRichPresenceAction(1, "Discord", "https://discord.gg/KRTKC6b")
 
     --     Citizen.Wait(60000)
