@@ -4,6 +4,7 @@
 -------------------------------------------
 
 TriggerEvent('es:addGroupCommand', 'announce', "admin", function(source, args, user)
+    SendWebhookEmbedMessage("avan0x_wh_staff", "ANNONCE STAFF", table.concat(args, " "), 16711935)
 	TriggerClientEvent('esx_avan0x:announce', -1, "~r~ANNONCE STAFF", table.concat(args, " "), 10)
 end, function(source, args, user)
 	TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Autorisations insuffisantes !")
