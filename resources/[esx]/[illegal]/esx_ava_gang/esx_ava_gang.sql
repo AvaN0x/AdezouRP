@@ -1,4 +1,8 @@
-INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
+INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUE
+	('orga_mafia','Mafia', 1),
+	('orga_mafia_black','Mafia', 1),
+	('orga_cartel','Cartel', 1),
+	('orga_cartel_black','Cartel', 1),
 	('gang_marabunta','Marabunta', 1),
 	('gang_marabunta_black','Marabunta', 1),
 	('gang_vagos','Vagos', 1),
@@ -16,6 +20,8 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 ;
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
+	('orga_mafia','Mafia', 1),
+    ('orga_cartel','Cartel', 1),
     ('gang_marabunta','Marabunta', 1), 
 	('gang_vagos','Vagos', 1),
 	('gang_ballas','Ballas', 1),
