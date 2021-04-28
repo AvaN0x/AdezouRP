@@ -305,6 +305,24 @@ Config.Garages = {
 		},
 		Identifier = "garage_cartel"
 	},
+	Garage_Mafia = {
+		Name = "hide",
+		Pos = {x = -888.37., y = -50.98, z = 38.05},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = -871.18, y = -54.99, z = 38.03},
+			Heading = 288.73
+		},
+		Identifier = "garage_mafia"
+	},
+
 
 
 

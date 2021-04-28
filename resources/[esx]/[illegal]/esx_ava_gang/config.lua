@@ -104,4 +104,16 @@ Config.Gangs = {
 			},
 		}
 	},
+	orga_mafia = {
+		Name = "Mafia",
+		Zones = {
+			Stock = {
+				Pos   = {x = -854.99, y =-26.75, z = 40.56},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
 }
