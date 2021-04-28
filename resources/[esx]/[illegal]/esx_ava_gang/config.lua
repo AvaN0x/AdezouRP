@@ -92,4 +92,16 @@ Config.Gangs = {
 			},
 		}
 	},
+	orga_cartel = {
+		Name = "Cartel",
+		Zones = {
+			Stock = {
+				Pos   = {x = 1402.51, y = 1152.79, z = 114.33},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
 }

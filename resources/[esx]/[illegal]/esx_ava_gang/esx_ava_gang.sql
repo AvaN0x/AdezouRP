@@ -1,4 +1,6 @@
-INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
+INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUE
+	('gang_cartel','Cartel', 1),
+	('gang_cartel_black','Cartel', 1),
 	('gang_marabunta','Marabunta', 1),
 	('gang_marabunta_black','Marabunta', 1),
 	('gang_vagos','Vagos', 1),
@@ -16,6 +18,7 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 ;
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
+    ('gang_cartel','Cartel', 1),
     ('gang_marabunta','Marabunta', 1), 
 	('gang_vagos','Vagos', 1),
 	('gang_ballas','Ballas', 1),

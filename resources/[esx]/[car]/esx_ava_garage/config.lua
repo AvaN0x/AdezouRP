@@ -288,6 +288,23 @@ Config.Garages = {
 		},
 		Identifier = "garage_marabunta"
 	},
+	Garage_Cartel = {
+		Name = "hide",
+		Pos = {x = 1404.57, y = 1114.41, z = 114.84},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = 1406.34, y = 1117.52, z = 114.84},
+			Heading = 63.56
+		},
+		Identifier = "garage_cartel"
+	},
 
 
 
