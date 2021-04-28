@@ -248,7 +248,7 @@ function OpenMecanoHarvestMenu()
 		local elements = {
 			{label = _U('gas_can'), value = 'gaz_bottle'},
 			{label = _U('repair_tools'), value = 'fix_tool'},
-			{label = _U('body_work_tools'), value = 'caro_tool'}
+			-- {label = _U('body_work_tools'), value = 'caro_tool'}
 		}
 
 		ESX.UI.Menu.CloseAll()
@@ -289,7 +289,7 @@ function OpenMecanoCraftMenu()
 		local elements = {
 			-- {label = _U('blowtorch'),  value = 'blow_pipe'},
 			{label = _U('repair_kit'), value = 'fix_kit'},
-			{label = _U('body_kit'),   value = 'caro_kit'}
+			-- {label = _U('body_kit'),   value = 'caro_kit'}
 		}
 
 		ESX.UI.Menu.CloseAll()
