@@ -87,6 +87,8 @@ Config.ProcessMenuZones = {
 
 	-- pistols
 	{
+        Title = "Fabrication de pistolets",
+		Process = {
 			PistolProcess = {
 				Name = 'Pistolet 9mm',
 				ItemsGive = {
@@ -228,8 +230,8 @@ Config.ProcessMenuZones = {
 		Name  = "Fabrication de fusils d'assaut",
 		Marker = 27,
 		Blip = false
-	},
-
+	}
+}
 
 
 Config.BuyZones = {
