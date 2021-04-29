@@ -407,3 +407,51 @@ AddEventHandler('esx_ava_inventories:takePlayerItem', function(inventoryName, ty
 		end
 	end
 end)
+
+
+
+
+
+
+ESX.RegisterServerCallback('esx_ava_inventories:getSharedInventory', function(source, cb, name)
+    cb(GetSharedInventory(name))
+end)
+
+RegisterServerEvent('esx_ava_inventories:takeStockItem')
+AddEventHandler('esx_ava_inventories:takeStockItem', function(itemName, count, name)
+    local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+    local inventory = GetSharedInventory(name)
+    local playerInventory = GetInventory('inventory', xPlayer.identifier)
+    local item = inventory.getItem(itemName)
+    if inventory.canRemoveItem(itemName, count) then
+        if playerInventory.canAddItem(itemName, count) then
+            inventory.removeItem(itemName, count)
+            playerInventory.addItem(itemName, count)
+        else
+            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place_stock'))
+        end
+    else
+        TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+    end
+end)
+
+
+RegisterServerEvent('esx_ava_inventories:putStockItems')
+AddEventHandler('esx_ava_inventories:putStockItems', function(itemName, count, name)
+    local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+    local inventory = GetSharedInventory(name)
+    local playerInventory = GetInventory('inventory', xPlayer.identifier)
+    local sourceItem = inventory.getItem(itemName)
+    if playerInventory.canRemoveItem(itemName, count) then
+        if inventory.canAddItem(itemName, count) then
+            playerInventory.removeItem(itemName, count)
+            inventory.addItem(itemName, count)
+        else
+            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
+        end
+    else
+        TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
+    end
+end)

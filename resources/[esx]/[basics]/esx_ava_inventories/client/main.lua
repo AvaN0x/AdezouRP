@@ -163,9 +163,9 @@ end
 function GiveItem(player, itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "1", 10))
+        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
     end
-    if type(amount) == "number" and math.floor(amount) == amount then
+    if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
         TriggerServerEvent("esx_ava_inventories:giveItem", 'inventory', itemType, player, itemName, amount)
         ESX.Streaming.RequestAnimDict("mp_common", function()
             local playerPed = PlayerPedId()
@@ -180,14 +180,14 @@ end
 function DropItem(itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "1", 10))
+        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
     end
     local playerPed = PlayerPedId()
     if IsPedSittingInAnyVehicle(playerPed) then
         return
     end
 
-    if type(amount) == "number" and math.floor(amount) == amount then
+    if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
         TriggerServerEvent("esx_ava_inventories:dropItem", 'inventory', itemType, itemName, amount)
     end
 end
@@ -265,9 +265,9 @@ end
 function TakePlayerItem(player, itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "1", 10))
+        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
     end
-    if type(amount) == "number" and math.floor(amount) == amount then
+    if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
         TriggerServerEvent("esx_ava_inventories:takePlayerItem", 'inventory', itemType, player, itemName, amount)
     end
 end
@@ -278,10 +278,12 @@ end
 
 
 
-
--- function OpenSharedInventory(name)
---     OpenOtherInventory(inventory)
--- end
+RegisterNetEvent('esx_ava_inventories:OpenSharedInventory')
+AddEventHandler('esx_ava_inventories:OpenSharedInventory', function(name)
+    ESX.TriggerServerCallback("esx_ava_inventories:getSharedInventory", function(inventory)
+        OpenOtherInventory(inventory)
+    end, name)
+end)
 
 function OpenOtherInventory(inventory)
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_open_other_inventory',
@@ -295,9 +297,9 @@ function OpenOtherInventory(inventory)
 	},
 	function(data, menu)
 		if data.current.value == 'put_stock' then
-			OpenPutInventory(inventory)
+			OpenPutInventory(inventory.name)
 		elseif data.current.value == 'get_stock' then
-			OpenTakeInventory(inventory)
+			OpenTakeInventory(inventory.name)
 		end
 	end,
 	function(data, menu)
@@ -305,14 +307,186 @@ function OpenOtherInventory(inventory)
 	end)
 end
 
-function OpenPutInventory(inventory, reload)
-    print(ESX.DumpTable(inventory))
+
+-- function OpenPutStocksMenu()
+-- 	ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
+-- 		local elements = {}
+-- 		table.insert(elements, {label = "Argent " .. inventory.money .. '$', type = 'cash'})
+--         for k, acc in pairs(inventory.accounts) do
+--             if acc.name == "black_money" then
+-- 				table.insert(elements, {label = "Argent sale " .. acc.money .. '$', type = 'black_cash'})
+-- 				break
+-- 			end
+--         end
+
+-- 		for i=1, #inventory.items, 1 do
+-- 			local item = inventory.items[i]
+-- 			if item.count > 0 then
+-- 				table.insert(elements, {label = item.label .. ' x' .. item.count, type = 'item_standard', value = item.name})
+-- 			end
+-- 		end
+
+-- 		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'stocks_menu',
+-- 		{
+-- 			title    = _U('inventory'),
+-- 			elements = elements
+-- 		},
+-- 		function(data, menu)
+-- 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'stocks_menu_put_item_count',
+-- 			{
+-- 				title = _U('quantity')
+-- 			},
+-- 			function(data2, menu2)
+-- 				local count = tonumber(data2.value)
+-- 				if count == nil or count <= 0 then
+-- 					ESX.ShowNotification(_U('quantity_invalid'))
+-- 				else
+-- 					menu2.close()
+-- 					menu.close()
+-- 					if data.current.type == "item_standard" then
+-- 						TriggerServerEvent('esx_ava_gang:putStockItems', data.current.value, count, actualGang.name)
+-- 					elseif data.current.type == "cash" then
+-- 						TriggerServerEvent('esx_ava_gang:depositMoney', actualGang.name, count)
+-- 					elseif data.current.type == "black_cash" then
+-- 						TriggerServerEvent('esx_ava_gang:depositMoneyDirty', actualGang.name, count)
+-- 					end
+-- 					OpenPutStocksMenu()
+-- 				end
+-- 			end,
+-- 			function(data2, menu2)
+-- 				menu2.close()
+-- 			end)
+-- 		end,
+-- 		function(data, menu)
+-- 			menu.close()
+-- 		end)
+-- 	end)
+-- end
+
+-- function OpenGetStocksMenu()
+-- 	ESX.TriggerServerCallback('esx_ava_gang:getStockItems', function(inventory)
+-- 		local elements = {}
+-- 		table.insert(elements, {label = "Argent " .. inventory.cash .. '$', type = 'cash'})
+-- 		table.insert(elements, {label = "Argent sale " .. inventory.black_cash .. '$', type = 'black_cash'})
+
+-- 		for i=1, #inventory.items, 1 do
+-- 			if (inventory.items[i].count ~= 0) then
+-- 				table.insert(elements, {label = 'x' .. inventory.items[i].count .. ' ' .. inventory.items[i].label, value = inventory.items[i].name, type = 'item_standard'})
+-- 			end
+-- 		end
+
+-- 		ESX.UI.Menu.Open(
+-- 		'default', GetCurrentResourceName(), 'stocks_menu',
+-- 		{
+-- 			title    = actualGang.data.Name .. ' Stock',
+-- 			align    = 'left',
+-- 			css 	 = 'gang',
+-- 			elements = elements
+-- 		},
+-- 		function(data, menu)
+-- 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'stocks_menu_get_item_count',
+-- 			{
+-- 				title = _U('quantity')
+-- 			},
+-- 			function(data2, menu2)
+-- 				local count = tonumber(data2.value)
+-- 				if count == nil or count <= 0 then
+-- 					ESX.ShowNotification(_U('quantity_invalid'))
+-- 				else
+-- 					menu2.close()
+-- 					menu.close()
+-- 					if data.current.type == "item_standard" then
+-- 						TriggerServerEvent('esx_ava_gang:getStockItem', data.current.value, count, actualGang.name)
+-- 					elseif data.current.type == "cash" then
+-- 						TriggerServerEvent('esx_ava_gang:withdrawMoney', actualGang.name, count)
+-- 					elseif data.current.type == "black_cash" then
+-- 						TriggerServerEvent('esx_ava_gang:withdrawMoneyDirty', actualGang.name, count)
+-- 					end
+-- 					OpenGetStocksMenu()
+-- 				end
+-- 			end,
+-- 			function(data2, menu2)
+-- 				menu2.close()
+-- 			end)
+-- 		end,
+-- 		function(data, menu)
+-- 			menu.close()
+-- 		end)
+-- 	end, actualGang.name)
+-- end
+
+function OpenPutInventory(inventoryName)
+    ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
+        local elements = {}
+        for k, item in ipairs(inventory.items) do
+            if item.count > 0 then
+                local label
+                if item.limit ~= -1 then
+                    label = _('label_count_limit', item.label, item.count, item.limit)
+                else
+                    label = _('label_count', item.label, item.count)
+                end
+                local detail = _('item_detail', string.format("%.3f", item.weight / 1000))
+                table.insert(elements, {label = label, value = "item_standard", item = item, detail = detail})
+            end
+        end
+
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_inventories_put_stocks_menu',
+        {
+            title    = _('title', inventory.label, string.format("%.2f", inventory.actual_weight / 1000), string.format("%.2f", inventory.max_weight / 1000)),
+            elements = elements
+        },
+        function(data, menu)
+            local count = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+            if type(count) == "number" and math.floor(count) == count and count > 0 then
+                menu.close()
+                TriggerServerEvent('esx_ava_inventories:putStockItems', data.current.item.name, count, inventoryName)
+                OpenPutInventory(inventoryName)
+            else
+                ESX.ShowNotification(_('invalid_quantity'))
+            end
+        end,
+        function(data, menu)
+            menu.close()
+        end)
+    end)
 end
 
-function TakeItem()
 
+function OpenTakeInventory(inventoryName)
+    ESX.TriggerServerCallback("esx_ava_inventories:getSharedInventory", function(inventory)
+        local elements = {}
+        for k, item in ipairs(inventory.items) do
+            if item.count > 0 then
+                local label
+                if item.limit ~= -1 then
+                    label = _('label_count_limit', item.label, item.count, item.limit)
+                else
+                    label = _('label_count', item.label, item.count)
+                end
+                local detail = _('item_detail', string.format("%.3f", item.weight / 1000))
+                table.insert(elements, {label = label, value = "item_standard", item = item, detail = detail})
+            end
+        end
+
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_inventories_take_stocks_menu',
+        {
+            title    = _('title', inventory.label, string.format("%.2f", inventory.actual_weight / 1000), string.format("%.2f", inventory.max_weight / 1000)),
+            elements = elements
+        },
+        function(data, menu)
+            local count = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+            if type(count) == "number" and math.floor(count) == count and count > 0 then
+                menu.close()
+                TriggerServerEvent('esx_ava_inventories:takeStockItem', data.current.item.name, count, inventoryName)
+                OpenTakeInventory(inventoryName)
+            else
+                ESX.ShowNotification(_('invalid_quantity'))
+            end
+        end,
+        function(data, menu)
+            menu.close()
+        end)
+    end, inventoryName)
 end
 
-function PutItem()
-
-end
