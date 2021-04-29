@@ -184,6 +184,24 @@ Config.Garages = {
 		},
 		Identifier = "garage_cluckin"
 	},
+	Garage_PLATINIUM = {
+		Name = "hide",
+		Pos = {x = -479.99,y = -604.52, z = 31.17},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		Job = 'platinium',
+		SpawnPoint = {
+			Pos = {x = -479.99,y = -604.52, z = 31.17},
+			Heading = 180.0
+		},
+		Identifier = "garage_platinium"
+	},
 	Garage_TAILOR = {
 		Name = "hide",
 		Pos = {x = 705.19,y = -991.21, z = 24.0},
