@@ -482,8 +482,8 @@ ESX.RegisterServerCallback('esx_society:setJob', function(source, cb, identifier
       notifMsg    = "[JOB] | " ..xPlayer.name.. " ["..xPlayer.identifier.. "] a été automatiquement kick pour avoir tenté de se mettre Patron d'un métier."
       playerMsg    = " Exploi de esx_society. Si vous pensez que c'est une erreur, veuillez consulter notre Discord : https://discord.gg/KRTKC6b"
       print(notifMsg)
-      DropPlayer(source, 'Lua Execution/Mod Menu')
-      TriggerClientEvent('chatMessage', -1, '^3[Chat]', {255, 0, 0}, "^3" ..xPlayer.name.. "^1 a été kick pour avoir tenté de ce mettre Patron d'un métier.")
+    --   DropPlayer(source, 'Lua Execution/Mod Menu')
+    --   TriggerClientEvent('chatMessage', -1, '^3[Chat]', {255, 0, 0}, "^3" ..xPlayer.name.. "^1 a été kick pour avoir tenté de ce mettre Patron d'un métier.")
       cb()
     end
 end)
