@@ -307,7 +307,7 @@ Config.Garages = {
 	},
 	Garage_Mafia = {
 		Name = "hide",
-		Pos = {x = -888.37., y = -50.98, z = 38.05},
+		Pos = {x = -888.37, y = -50.98, z = 38.05},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
