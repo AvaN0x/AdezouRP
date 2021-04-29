@@ -85,145 +85,16 @@ Config.ProcessMenuZones = {
 		Blip = false
 	},
 
-
-	-- melee weapon
-	{
-		Title = "Fabrication d'armes de mélée",
-		Process = {
-			KnifeProcess = {
-				Name = 'Couteau',
-				ItemsGive = {
-					{name = 'steel', quantity = 4},
-					{name = 'plastic', quantity = 4}
-				},
-				ItemsGet = {
-					{name = 'weapon_knife', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			BatProcess = {
-				Name = 'Batte de baseball',
-				ItemsGive = {
-					{name = 'cutted_wood', quantity = 10}
-				},
-				ItemsGet = {
-					{name = 'weapon_bat', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			BattleAxeProcess = {
-				Name = 'Hache de combat',
-				ItemsGive = {
-					{name = 'steel', quantity = 5},
-					{name = 'cutted_wood', quantity = 5}
-				},
-				ItemsGet = {
-					{name = 'weapon_battleaxe', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			MacheteProcess = {
-				Name = 'Machete',
-				ItemsGive = {
-					{name = 'steel', quantity = 4},
-					{name = 'cutted_wood', quantity = 4}
-				},
-				ItemsGet = {
-					{name = 'weapon_machete', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			SwitchBladeProcess = {
-				Name = 'Cran d\'arret',
-				ItemsGive = {
-					{name = 'steel', quantity = 5},
-					{name = 'plastic', quantity = 5}
-				},
-				ItemsGet = {
-					{name = 'weapon_switchblade', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			NightStickProcess = {
-				Name = 'LSPD - Matraque',
-				ItemsGive = {
-					{name = 'steel', quantity = 3},
-					{name = 'cutted_wood', quantity = 3}
-				},
-				ItemsGet = {
-					{name = 'weapon_nightstick', quantity = 1}
-				},
-				Delay = 10000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-		},
-		MaxProcess = 5,
-		Pos   = {x = 907.73, y = -3211.18, z = -99.20},
-		Size  = {x = 2.5, y = 2.5, z = 1.5},
-		Color = {r = 252, g = 186, b = 3},
-		Name  = "Fabrication d'armes de melée",
-		Marker = 27,
-		Blip = false
-	},
-
-
 	-- pistols
 	{
-		Title = "Fabrication de pistolets",
-		Process = {
 			PistolProcess = {
-				Name = 'Pistolet',
+				Name = 'Pistolet 9mm',
 				ItemsGive = {
-					{name = 'steel', quantity = 50},
-					{name = 'plastic', quantity = 10},
-					{name = 'gunpowder', quantity = 20}
-				},
-				ItemsGet = {
-					{name = 'weapon_pistol', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			DoubleActionProcess = {
-				Name = 'Revolver double action',
-				ItemsGive = {
-					{name = 'steel', quantity = 60},
-					{name = 'plastic', quantity = 10},
-					{name = 'gunpowder', quantity = 20},
-					{name = 'gold', quantity = 10}
-				},
-				ItemsGet = {
-					{name = 'weapon_doubleaction', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			PistolMK2Process = {
-				Name = 'LSPD - Pistolet',
-				ItemsGive = {
-					{name = 'steel', quantity = 60},
-					{name = 'plastic', quantity = 10},
-					{name = 'gunpowder', quantity = 20}
-				},
-				ItemsGet = {
-					{name = 'weapon_pistol_mk2', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			StunGunProcess = {
-				Name = 'LSPD - Taser',
-				ItemsGive = {
-					{name = 'plastic', quantity = 80},
+					{name = 'plastic', quantity = 70},
 					{name = 'gunpowder', quantity = 10}
 				},
 				ItemsGet = {
-					{name = 'weapon_stungun', quantity = 1}
+					{name = 'weapon_pistol', quantity = 1}
 				},
 				Delay = 20000,
 				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
@@ -242,21 +113,21 @@ Config.ProcessMenuZones = {
 	{
 		Title = "Fabrication de pistolets mitrailleurs",
 		Process = {
-			SMGProcess = {
-				Name = 'LSPD - SMG',
+			UZIProcess = {
+				Name = 'Uzi',
 				ItemsGive = {
 					{name = 'steel', quantity = 80},
 					{name = 'plastic', quantity = 70},
 					{name = 'gunpowder', quantity = 20}
 				},
 				ItemsGet = {
-					{name = 'weapon_smg', quantity = 1}
+					{name = 'weapon_microsmg', quantity = 1}
 				},
 				Delay = 20000,
 				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
 			},
 			MachinePistolProcess = {
-				Name = 'Machine Pistol',
+				Name = 'Tec-9',
 				ItemsGive = {
 					{name = 'steel', quantity = 70},
 					{name = 'plastic', quantity = 50},
@@ -282,21 +153,8 @@ Config.ProcessMenuZones = {
 	{
 		Title = "Fabrication de fusils à pompe",
 		Process = {
-			PumpMK2Process = {
-				Name = 'LSPD - Shotgun',
-				ItemsGive = {
-					{name = 'steel', quantity = 90},
-					{name = 'plastic', quantity = 65},
-					{name = 'gunpowder', quantity = 30}
-				},
-				ItemsGet = {
-					{name = 'weapon_pumpshotgun_mk2', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
 			SawnOffProcess = {
-				Name = 'Pompe court',
+				Name = 'Fusil à pompe',
 				ItemsGive = {
 					{name = 'steel', quantity = 80},
 					{name = 'plastic', quantity = 60},
@@ -323,15 +181,15 @@ Config.ProcessMenuZones = {
 	{
 		Title = "Fabrication de fusils d'assaut",
 		Process = {
-			CarbineMK2Process = {
-				Name = 'LSPD - Carabine',
+			GusenbergProcess = {
+				Name = 'Gusenberg',
 				ItemsGive = {
 					{name = 'steel', quantity = 130},
-					{name = 'plastic', quantity = 130},
+					{name = 'plastic', quantity = 110},
 					{name = 'gunpowder', quantity = 40}
 				},
 				ItemsGet = {
-					{name = 'weapon_carbinerifle_mk2', quantity = 1}
+					{name = 'weapon_gusenberg', quantity = 1}
 				},
 				Delay = 20000,
 				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
@@ -350,7 +208,7 @@ Config.ProcessMenuZones = {
 				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
 			},
 			CompactARProcess = {
-				Name = 'AK compacte',
+				Name = 'AK compact',
 				ItemsGive = {
 					{name = 'steel', quantity = 130},
 					{name = 'plastic', quantity = 100},
@@ -372,72 +230,7 @@ Config.ProcessMenuZones = {
 		Blip = false
 	},
 
-	
-	-- others
-	{
-		Title = "Fabrication d'armes autres",
-		Process = {
-			SniperProcess = {
-				Name = 'LSPD - Sniper',
-				ItemsGive = {
-					{name = 'steel', quantity = 150},
-					{name = 'plastic', quantity = 150},
-					{name = 'gunpowder', quantity = 80}
-				},
-				ItemsGet = {
-					{name = 'weapon_sniperrifle', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			FireWorkProcess = {
-				Name = 'Lance feu d\'artifice',
-				ItemsGive = {
-					{name = 'steel', quantity = 40},
-					{name = 'plastic', quantity = 30},
-					{name = 'gunpowder', quantity = 30}
-				},
-				ItemsGet = {
-					{name = 'weapon_firework', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			ParachuteProcess = {
-				Name = 'Parachute',
-				ItemsGive = {
-					{name = 'plastic', quantity = 25},
-					{name = 'cutted_wood', quantity = 5}
-				},
-				ItemsGet = {
-					{name = 'gadget_parachute', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-			FlareProcess = {
-				Name = 'Fusée de detresse',
-				ItemsGive = {
-					{name = 'plastic', quantity = 10},
-					{name = 'gunpowder', quantity = 3}
-				},
-				ItemsGet = {
-					{name = 'weapon_flare', quantity = 1}
-				},
-				Delay = 20000,
-				Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-			},
-		},
-		MaxProcess = 5,
-		Pos   = {x = 884.38, y = -3207.36, z = -99.18},
-		Size  = {x = 2.5, y = 2.5, z = 1.5},
-		Color = {r = 252, g = 186, b = 3},
-		Name  = "Fabrication d'armes autres",
-		Marker = 27,
-		Blip = false
-	}
-	
-}
+
 
 Config.BuyZones = {
 	BuyBox = {
