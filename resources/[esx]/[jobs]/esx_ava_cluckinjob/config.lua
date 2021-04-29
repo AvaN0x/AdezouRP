@@ -51,7 +51,7 @@ Config.Zones = {
 Config.FieldZones = {
 	WoolField = {
 		Items = {
-			{name = 'alive_chicken', quantity = 1}
+			{name = 'alive_chicken', quantity = 2}
 		},
 		Prop = 'prop_int_cf_chick_01',
 		Pos   = {x = 85.95, y = 6331.61, z = 30.25},
@@ -82,7 +82,7 @@ Config.ProcessZones = {
 		ItemsGet = {
 			{name = 'plucked_chicken', quantity = 2}
 		},
-		Delay = 5000,
+		Delay = 8000,
 		Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
 		Pos   = {x = -91.05, y = 6240.41, z = 30.11},
 		Size  = {x = 2.5, y = 2.5, z = 1.5},
@@ -98,7 +98,7 @@ Config.ProcessZones = {
 		ItemsGet = {
 			{name = 'raw_chicken', quantity = 8}
 		},
-		Delay = 6000,
+		Delay = 10000,
 		Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
 		Pos   = {x = -103.89, y = 6206.29, z = 30.05},
 		Size  = {x = 2.5, y = 2.5, z = 1.5},
