@@ -44,10 +44,10 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
             cops = cops + 1
         end
     end
-    print("cops value : " .. cops)
-    print("Config.Shops[store].cops value : " .. Config.Shops[store].cops)
-    print("cops >= Config.Shops[store].cops value : " .. cops >= Config.Shops[store].cops)
-    if cops >= Config.Shops[store].cops then
+    print("cops value : " .. cops .. " its type is " .. type(cops))
+    print("Config.Shops[store].cops value : " .. Config.Shops[store].cops .. " its type is " .. type(Config.Shops[store].cops))
+    print("cops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "true" or "false"))
+    if tonumber(cops) >= tonumber(Config.Shops[store].cops) then
         if Config.Shops[store].robbed == 'wait' then
             cb('wait')
         elseif not Config.Shops[store].robbed and not deadPeds[store] then
