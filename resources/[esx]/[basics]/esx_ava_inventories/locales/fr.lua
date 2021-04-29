@@ -27,6 +27,7 @@ Locales["fr"] = {
 
 	["target_not_enough_place"] = "La personne n'a pas assez de place dans son inventaire",
 	["not_enough_place"] = "Vous n'avez pas assez de place dans votre inventaire",
+	["not_enough_place_stock"] = "Il n'y a pas assez de place dans ce coffre",
 
 	["open_inventory"] = "Ouvrir l'inventaire d'un joueur",
 
