@@ -182,7 +182,7 @@ Config.ProcessMenuZones = {
 Config.SellZones = {
 	WineMerchantSell = {
 		Items = {
-			{name = 'vinebox', price = 1800},
+			{name = 'vinebox', price = 1600},
 			{name = 'jus_raisinbox', price = 650}
 		},
 		Pos   = {x = -158.737, y = -54.651, z = 53.42},
