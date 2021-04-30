@@ -198,7 +198,7 @@ Config.ProcessMenuZones = {
 Config.SellZones = {
 	ClothesSell = {
 		Items = {
-			{name = 'clothebox', price = 1950}
+			{name = 'clothebox', price = 1420}
 		},
 		Pos   = {x = 71.67, y = -1390.47, z = 28.4},
 		Size  = {x = 1.5, y = 1.5, z = 1.5},
