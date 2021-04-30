@@ -12,8 +12,8 @@ Config.JobName 				 	  = 'platinium'
 -- Don't forget to change every `esx_ava_platiniumjob`
 
 Config.Blip = {
-	Sprite = 121,
-	Colour = 0
+	Sprite = 566,
+	Colour = 73
 }
 
 Config.Zones = {
