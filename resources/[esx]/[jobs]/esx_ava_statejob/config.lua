@@ -25,7 +25,7 @@ Config.ParkingSlotsLimits = {
 	}
 }
 
-Config.Taxe = 0.1
+Config.Taxe = 0.2
 
 Config.AuthorizedVehicles = {
 	{label = 'Limousine', model = 'Stretch'},
