@@ -186,7 +186,7 @@ Config.Garages = {
 	},
 	Garage_PLATINIUM = {
 		Name = "hide",
-		Pos = {x = -479.99,y = -604.52, z = 31.17},
+		Pos = {x = -189.82,y = -1290.17, z = 31.30},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -197,7 +197,7 @@ Config.Garages = {
 		Type = "car",
 		Job = 'platinium',
 		SpawnPoint = {
-			Pos = {x = -479.99,y = -604.52, z = 31.17},
+			Pos = {x = -189.82,y = -1290.17, z = 31.30},
 			Heading = 180.0
 		},
 		Identifier = "garage_platinium"
