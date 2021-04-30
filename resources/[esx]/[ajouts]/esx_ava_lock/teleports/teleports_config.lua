@@ -144,7 +144,7 @@ Config.Teleports = {
 				size  = {x = 2.5, y = 2.5, z = 1.0},
 				label = "Sortir"
 			},
-			authorizedJobs = { 'ammunation' },
+			authorizedJobs = { 'fabriquearme' },
 			allowVehicles = true,
 			locked = true
 		},
