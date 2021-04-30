@@ -12,8 +12,8 @@ Config.JobName 				 	  = 'fabriquearme'
 -- Don't forget to change every `esx_ava_ammunationjob`
 
 Config.Blip = {
-	Sprite = 110,
-	Colour = 1
+	Sprite = 556,
+	Colour = 31
 }
 
 Config.Zones = {
