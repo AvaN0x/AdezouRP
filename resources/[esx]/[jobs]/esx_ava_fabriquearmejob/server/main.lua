@@ -3,6 +3,8 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
+local playersProcessing = {}
+
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
