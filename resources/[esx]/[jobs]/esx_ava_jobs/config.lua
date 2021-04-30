@@ -184,7 +184,17 @@ Config.Jobs = {
                 Blip = true
             }
         }
+    },
+    cluckin = {
+        SocietyName = 'society_cluckin',
+    },
+    tailor = {
+        SocietyName = 'society_tailor',
+    },
+    unicorn = {
+        SocietyName = 'society_unicorn',
     }
+
 }
 
 
