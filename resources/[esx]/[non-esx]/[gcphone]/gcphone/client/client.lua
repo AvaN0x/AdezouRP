@@ -76,7 +76,7 @@ function hasPhone (cb)
 end
 function ShowNoPhoneWarning () 
   if (ESX == nil) then return end
-  ESX.ShowNotification("You do not have a ~r~phone~s~.")
+  ESX.ShowNotification("Tu n'as pas de ~r~Telephone~s~.")
 end
 
 AddEventHandler('esx:onPlayerDeath', function()
