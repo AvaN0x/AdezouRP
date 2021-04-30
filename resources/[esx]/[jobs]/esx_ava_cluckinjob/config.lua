@@ -80,7 +80,7 @@ Config.ProcessZones = {
 			{name = 'alive_chicken', quantity = 2}
 		},
 		ItemsGet = {
-			{name = 'plucked_chicken', quantity = 2}
+			{name = 'plucked_chicken', quantity = 4}
 		},
 		Delay = 8000,
 		Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
