@@ -13,6 +13,15 @@ local playerJobs = {}
 local mainBlips = {}
 local JobBlips = {}
 
+local HasAlreadyEnteredMarker = false
+local CurrentZoneName = nil
+local CurrentZoneValue = nil
+local CurrentHelpText = nil
+local CurrentJobName = nil
+local CurrentActionEnabled = false
+
+
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -77,13 +86,16 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 
 function setJobsToUse()
+    CurrentZoneName = nil
     playerJobs = {}
     if Config.Jobs[PlayerData.job.name] ~= nil then
         playerJobs[PlayerData.job.name] = Config.Jobs[PlayerData.job.name]
+        playerJobs[PlayerData.job.name].jobIndex = 1
         playerJobs[PlayerData.job.name].grade = PlayerData.job.grade_name
     end
     if Config.Jobs[PlayerData.job2.name] ~= nil then
         playerJobs[PlayerData.job2.name] = Config.Jobs[PlayerData.job2.name]
+        playerJobs[PlayerData.job2.name].jobIndex = 2
         playerJobs[PlayerData.job2.name].grade = PlayerData.job2.grade_name
     end
     clearJobBlips()
@@ -184,13 +196,6 @@ end
 local playerCoords = nil
 
 
-local HasAlreadyEnteredMarker = false
-local LastZone = nil
-local CurrentAction = nil
-local CurrentActionMsg = ''
-local CurrentActionData = {}
-
-
 Citizen.CreateThread(function()
 	while true do
 		playerCoords = GetEntityCoords(GetPlayerPed(-1))
@@ -212,7 +217,7 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
-                    if (v.Marker ~= -1 and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                         if (k ~= 'JobActions' or job.grade ~= 'interim') then
                             DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                             foundMarker = true
@@ -222,7 +227,7 @@ Citizen.CreateThread(function()
             end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (v.Marker ~= -1 and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -230,7 +235,7 @@ Citizen.CreateThread(function()
             end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (v.Marker ~= -1 and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -238,7 +243,7 @@ Citizen.CreateThread(function()
             end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (v.Marker ~= -1 and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -246,7 +251,7 @@ Citizen.CreateThread(function()
             end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (v.Marker ~= -1 and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -260,109 +265,168 @@ Citizen.CreateThread(function()
 end)
 
 
+--------------------------------
+-- Enter / Exit marker events --
+--------------------------------
 
 
+Citizen.CreateThread(function()
+	while true do
+		Wait(200)
+        for jobName, job in pairs(playerJobs) do
+			local isInMarker  = false
+			local zoneNamePlayerIsIn = nil
+			local zonePlayerIsIn = nil
 
-
-
-
-function OpenCloakroomMenu()
-	ESX.UI.Menu.CloseAll()
-
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'cloakroom',
-		{
-			title    = _U('cloakroom'),
-			align    = 'left',
-			css 	 = 'vestiaire',
-			elements = {
-				{label = _U('vine_clothes_civil'), value = 'citizen_wear'},
-				{label = _U('vine_clothes_vine'), value = 'job_wear'}
-			},
-		},
-		function(data, menu)
-
-			menu.close()
-
-			if data.current.value == 'citizen_wear' then
-				ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-					TriggerEvent('skinchanger:loadSkin', skin)
-				end)
-			end
-
-			if data.current.value == 'job_wear' then
-				if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) then
-					ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-						if skin.sex == 0 then
-							TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_male)
-						else
-							TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_female)
-						end
-					end)
-				elseif (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-					ESX.TriggerServerCallback('esx_skin:getPlayerSkin2', function(skin, job2Skin)
-						if skin.sex == 0 then
-							TriggerEvent('skinchanger:loadClothes', skin, job2Skin.skin_male)
-						else
-							TriggerEvent('skinchanger:loadClothes', skin, job2Skin.skin_female)
-						end
-					end)
+            if job.Zones ~= nil then
+                for k, v in pairs(job.Zones) do
+                    if (k ~= 'JobActions' or job.grade ~= 'interim') then
+                        if (#(playerCoords - v.Pos) < v.Size.x) then
+                            isInMarker = true
+                            zoneNamePlayerIsIn = k
+                            zonePlayerIsIn = v
+                        end
+                    end
 				end
 			end
 
-		end,
-		function(data, menu)
-			menu.close()
+			if (isInMarker and not HasAlreadyEnteredMarker)
+                or (isInMarker and CurrentZoneName ~= zoneNamePlayerIsIn)
+            then
+				HasAlreadyEnteredMarker = true
+				TriggerEvent('esx_ava_jobs:hasEnteredMarker', jobName, zoneNamePlayerIsIn, zonePlayerIsIn)
+			end
+
+			if not isInMarker and HasAlreadyEnteredMarker then
+				HasAlreadyEnteredMarker = false
+				TriggerEvent('esx_ava_jobs:hasExitedMarker', jobName, CurrentZoneName, zonePlayerIsIn)
+			end
 		end
-	)
+	end
+end)
 
-end
 
-function OpenJobActionsMenu()
+AddEventHandler('esx_ava_jobs:hasEnteredMarker', function(jobName, zoneName, zone)
+	if zone.HelpText ~= nil then
+        CurrentHelpText = zone.HelpText
+    end
 
+    CurrentJobName = jobName
+    CurrentZoneName = zoneName
+    CurrentZoneValue = zone
+    CurrentActionEnabled = true
+end)
+
+AddEventHandler('esx_ava_jobs:hasExitedMarker', function(zone)
+	ESX.UI.Menu.CloseAll()
+	CurrentZoneName = nil
+end)
+
+
+-- Key Controls
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+
+		if CurrentZoneName ~= nil and CurrentActionEnabled then
+            if CurrentHelpText ~= nil then
+                SetTextComponentFormat('STRING')
+                AddTextComponentString(CurrentHelpText)
+                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+            end
+
+			if IsControlPressed(0, 38) -- E
+                and (GetGameTimer() - GUI.Time) > 300
+            then
+                CurrentActionEnabled = false
+                GUI.Time = GetGameTimer()
+
+				if CurrentZoneName == 'JobActions' then
+					OpenJobActionsMenu(CurrentJobName)
+				elseif CurrentZoneName == 'Dressing' then
+					OpenCloakroomMenu(playerJobs[CurrentJobName].jobIndex)
+				elseif CurrentZoneName == 'SocietyGarage' then
+					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', playerJobs[CurrentJobName].SocietyName, playerJobs[CurrentJobName].Zones.SocietyGarage)
+				end
+
+			end
+		end
+	end
+end)
+
+
+
+
+
+function OpenJobActionsMenu(jobName)
+    local job = playerJobs[jobName]
 	local elements = {
-		{label = _U('deposit_stock'), value = 'put_stock'},
-		{label = _U('take_stock'), value = 'get_stock'}
+		{label = _U('access_chest'), value = 'access_chest'},
 	}
-  
-	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName and (PlayerData.job.grade_name == 'boss')) 
-	or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName and (PlayerData.job2.grade_name == 'boss')) then
+
+	if job.grade == "boss" then
 		table.insert(elements, {label = _U('boss_actions'), value = 'boss_actions'})
 	end
 
 	ESX.UI.Menu.CloseAll()
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_actions',
+    {
+        title    = job.LabelName,
+        align    = 'left',
+        elements = elements
+    },
+    function(data, menu)
+        if data.current.value == 'access_chest' then
+            TriggerEvent('esx_ava_inventories:OpenSharedInventory', job.SocietyName)
 
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'job_actions',
-		{
-			title    = Config.LabelName,
-			align    = 'left',
-			css 	 = 'job',
-			elements = elements
-		},
-		
-		function(data, menu)
-			if data.current.value == 'put_stock' then
-				OpenPutStocksMenu()
-			elseif data.current.value == 'get_stock' then
-				OpenGetStocksMenu()
-			elseif data.current.value == 'boss_actions' then
-				TriggerEvent('esx_society:openBossMenu', Config.JobName, function(data, menu)
-					menu.close()
-				end, {wash = false})
-			end
+        elseif data.current.value == 'boss_actions' then
+            TriggerEvent('esx_society:openBossMenu', jobName, function(data, menu)
+                menu.close()
+            end, {wash = false})
+        end
 
-		end,
-		function(data, menu)
+    end,
+    function(data, menu)
+        menu.close()
+        CurrentActionEnabled = true
+    end)
+end
 
-			menu.close()
+function OpenCloakroomMenu(jobIndex)
+	ESX.UI.Menu.CloseAll()
 
-			CurrentAction     = 'job_actions_menu'
-			CurrentActionMsg  = _U('press_to_open')
-			CurrentActionData = {}
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_cloakroom',
+    {
+        title    = _U('cloakroom'),
+        align    = 'left',
+        css 	 = 'vestiaire',
+        elements = {
+            {label = _U('vine_clothes_civil'), value = 'citizen_wear'},
+            {label = _U('vine_clothes_vine'), value = 'job_wear'}
+        },
+    },
+    function(data, menu)
+        menu.close()
 
-		end
-	)
+        if data.current.value == 'citizen_wear' then
+            ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
+                TriggerEvent('skinchanger:loadSkin', skin)
+            end)
+        end
+
+        if data.current.value == 'job_wear' then
+            ESX.TriggerServerCallback('esx_skin:getPlayerSkin' .. (jobIndex ~= 1 and jobIndex or ''), function(skin, jobSkin)
+                TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and jobSkin.skin_male or jobSkin.skin_female)
+            end)
+        end
+
+        CurrentActionEnabled = true
+    end,
+    function(data, menu)
+        menu.close()
+        CurrentActionEnabled = true
+    end)
+
 end
 
 
@@ -489,104 +553,12 @@ end
 
 
 
-AddEventHandler('esx_ava_vigneronjob:hasEnteredMarker', function(zone)
-	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-		if (zone == 'JobActions' 
-		and ((PlayerData.job ~= nil and PlayerData.job.name == Config.JobName and PlayerData.job.grade_name ~= 'interim') 
-		or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName and PlayerData.job2.grade_name ~= 'interim'))) then
-			-- interim can't access this menu
-			CurrentAction     = 'job_actions_menu'
-			CurrentActionMsg  = _U('press_to_open')
-			CurrentActionData = {}
-
-		elseif zone == 'Dressing' then
-			CurrentAction     = 'dressing'
-			CurrentActionMsg  = _U('press_to_open')
-			CurrentActionData = {}
-
-		elseif zone == 'SocietyGarage' then
-			CurrentAction     = 'vehicle_spawner_menu'
-			CurrentActionMsg  = _U('spawn_veh')
-			CurrentActionData = {}
-		end
-	end
-end)
-
-AddEventHandler('esx_ava_vigneronjob:hasExitedMarker', function(zone)
-	ESX.UI.Menu.CloseAll()
-	CurrentAction = nil
-end)
 
 
 
 
 
 
-
--- Enter / Exit marker events
-Citizen.CreateThread(function()
-	-- while true do
-
-	-- 	Wait(0)
-
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-
-	-- 		local coords      = GetEntityCoords(GetPlayerPed(-1))
-	-- 		local isInMarker  = false
-	-- 		local currentZone = nil
-
-	-- 		for k,v in pairs(Config.Zones) do
-	-- 			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
-	-- 				isInMarker  = true
-	-- 				currentZone = k
-	-- 			end
-	-- 		end
-
-	-- 		if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and LastZone ~= currentZone) then
-	-- 			HasAlreadyEnteredMarker = true
-	-- 			LastZone                = currentZone
-	-- 			TriggerEvent('esx_ava_vigneronjob:hasEnteredMarker', currentZone)
-	-- 		end
-
-	-- 		if not isInMarker and HasAlreadyEnteredMarker then
-	-- 			HasAlreadyEnteredMarker = false
-	-- 			TriggerEvent('esx_ava_vigneronjob:hasExitedMarker', LastZone)
-	-- 		end
-	-- 	end
-	-- end
-end)
-
--- Key Controls
-Citizen.CreateThread(function()
-	-- while true do
-
-	-- 	Citizen.Wait(0)
-
-	-- 	if CurrentAction ~= nil then
-
-	-- 		SetTextComponentFormat('STRING')
-	-- 		AddTextComponentString(CurrentActionMsg)
-	-- 		DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-
-	-- 		if IsControlPressed(0,  Keys['E']) 
-	-- 		and ((PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) 
-	-- 		or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName)) 
-	-- 		and (GetGameTimer() - GUI.Time) > 300 then
-	-- 			if CurrentAction == 'job_actions_menu' then
-	-- 				OpenJobActionsMenu()
-	-- 			elseif CurrentAction == 'dressing' then
-	-- 				OpenCloakroomMenu()
-	-- 			elseif CurrentAction == 'vehicle_spawner_menu' then
-	-- 				TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', Config.SocietyName, Config.Zones.SocietyGarage)
-	-- 			end
-
-	-- 			CurrentAction = nil
-	-- 			GUI.Time      = GetGameTimer()
-
-	-- 		end
-	-- 	end
-	-- end
-end)
 
 
 

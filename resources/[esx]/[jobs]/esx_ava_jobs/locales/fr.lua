@@ -4,21 +4,25 @@
 -------------------------------------------
 
 Locales['fr'] = {
-	-- General
+	['press_to_open'] = 'Appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
+	['store_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour ranger le véhicule',
 	['cloakroom'] = 'Vestiaire',
 	['vine_clothes_civil'] = 'Tenue Civil',
 	['vine_clothes_vine'] = 'Tenue de travail',
+
 	['veh_menu'] = 'Garage',
 	['spawn_veh'] = 'appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',
+
+	['comp_earned'] = 'votre société a gagné ~g~$',
+	['have_earned'] = 'vous avez gagné ~g~$',
+
+
+	['access_chest'] = 'Coffre',
+	-- General
 	['amount_invalid'] = 'montant invalide',
-	['press_to_open'] = 'appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
 	['billing'] = 'facuration',
 	['invoice_amount'] = 'montant de la facture',
 	['no_players_near'] = 'aucun joueur à proximité',
-	['store_veh'] = 'appuyez sur ~INPUT_CONTEXT~ pour ranger le véhicule',
-	['comp_earned'] = 'votre société a gagné ~g~$',
-	['have_earned'] = 'vous avez gagné ~g~$',
-	['deposit_stock'] = 'Déposer Stock',
 	['take_stock'] = 'Prendre Stock',
 	['boss_actions'] = 'action Patron',
 	['quantity'] = 'Quantité',
