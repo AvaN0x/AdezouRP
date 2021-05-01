@@ -305,6 +305,16 @@ Citizen.CreateThread(function()
                     end
 				end
 			end
+            if job.ProcessMenuZones ~= nil then
+                for k, v in pairs(job.ProcessMenuZones) do
+                    if (#(playerCoords - v.Pos) < 2) then
+                        isInMarker = true
+                        zoneCategoryPlayerIsIn = "ProcessMenuZones"
+                        zoneNamePlayerIsIn = k
+                        zonePlayerIsIn = v
+                    end
+				end
+			end
 
 		end
 
@@ -371,16 +381,73 @@ Citizen.CreateThread(function()
                         TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', playerJobs[CurrentJobName].SocietyName, playerJobs[CurrentJobName].Zones.SocietyGarage)
                     end
 
+
                 elseif CurrentZoneCategory == "ProcessZones" then
 					if not CurrentZoneValue.NoInterim or
-                        (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
+                    (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
 					then
                         Process(CurrentZoneValue)
                         CurrentActionEnabled = true
 					else
 						ESX.ShowHelpNotification(_U('no_interim'))
 					end
-                    
+
+
+                elseif CurrentZoneCategory == "ProcessMenuZones" then
+                    local playerPed = PlayerPedId()
+
+                    local elements = {}
+                    for k, v in pairs(CurrentZoneValue.Process) do
+                        table.insert(elements, {label = v.Name, delay = v.Delay, value = v})
+                    end
+
+                    ESX.UI.Menu.CloseAll()
+                    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_process',
+                    {
+                        title = CurrentZoneValue.Title,
+                        align = 'left',
+                        elements = elements
+                    },
+                    function(data,menu)
+                        local count = false
+                        ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'esx_ava_jobs_how_much',
+                        {
+                            title = _('process_how_much', CurrentZoneValue.MaxProcess)
+                        },
+                        function(data2, menu2)
+                            local quantity = tonumber(data2.value)
+
+                            if quantity == nil or quantity < 1 or quantity > CurrentZoneValue.MaxProcess then
+                                ESX.ShowNotification(_U('amount_invalid'))
+                            else
+                                count = quantity
+                                menu2.close()
+                            end
+                        end,
+                        function(data2, menu2)
+                            menu2.close()
+                        end)
+
+
+                        while not count do
+                            Citizen.Wait(0);
+                        end
+                        menu.close()
+
+                        for i = 1, count, 1 do
+                            Process(data.current.value)
+                            Citizen.Wait(data.current.delay + 500)
+                        end
+                        ClearPedTasks(playerPed)
+
+                        CurrentActionEnabled = true
+                        Citizen.Wait(1500)
+                    end,
+                    function(data,menu)
+                        menu.close()
+                        CurrentActionEnabled = true
+                    end)
+
                 end
 
 			end

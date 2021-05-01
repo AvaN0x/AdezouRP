@@ -8,8 +8,12 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 local playersProcessing = {}
 
--- TriggerEvent('esx_phone:registerNumber', Config.JobName, _U('job_client', Config.LabelName), true, true)
--- TriggerEvent('esx_society:registerSociety', Config.JobName, Config.LabelName, Config.SocietyName, Config.SocietyName, Config.SocietyName, {type = 'private'})
+Citizen.CreateThread(function()
+    for jobName, job in pairs(Config.Jobs) do
+        TriggerEvent('esx_phone:registerNumber', jobName, _U('job_client', job.LabelName), true, true)
+        TriggerEvent('esx_society:registerSociety', jobName, Config.LabelName, job.SocietyName, job.SocietyName, job.SocietyName, {type = 'private'})
+    end
+end)
 
 
 
@@ -268,37 +272,34 @@ end)
 
 
 
--- -- USE WOODEN BOXES
 
--- RegisterNetEvent('esx_ava_vigneronjob:UseBox')
--- AddEventHandler('esx_ava_vigneronjob:UseBox', function(source, itembox, item) 
---     local xPlayer = ESX.GetPlayerFromId(source)
+-- USE WOODEN BOXES
+RegisterNetEvent('esx_ava_jobs:UseBox')
+AddEventHandler('esx_ava_jobs:UseBox', function(source, itembox, item) 
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
 
--- 	local xItem = xPlayer.getInventoryItem(item)
--- 	local xBox 	= xPlayer.getInventoryItem('woodenbox')
-
--- 	if (xItem.limit ~= -1 and (xItem.count + 6) > xItem.limit) or (xBox.limit ~= -1 and (xBox.count + 1) > xBox.limit) then
--- 		TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
--- 	else
--- 		xPlayer.removeInventoryItem(itembox, 1)
--- 		xPlayer.addInventoryItem(item, 6)
--- 		xPlayer.addInventoryItem('woodenbox', 1)
--- 	end
-
--- end)
+	if not inventory.canAddItem(item, 6) or not inventory.canAddItem('woodenbox', 6) then
+		TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
+	else
+		inventory.removeItem(itembox, 1)
+		inventory.addItem(item, 6)
+		inventory.addItem('woodenbox', 1)
+	end
+end)
 
 ESX.RegisterUsableItem('vinebox', function(source)
-	TriggerEvent('esx_ava_vigneronjob:UseBox', source, 'vinebox', 'vine')
+	TriggerEvent('esx_ava_jobs:UseBox', source, 'vinebox', 'vine')
 end)
 
 ESX.RegisterUsableItem('jus_raisinbox', function(source)
-	TriggerEvent('esx_ava_vigneronjob:UseBox', source, 'jus_raisinbox', 'jus_raisin')
+	TriggerEvent('esx_ava_jobs:UseBox', source, 'jus_raisinbox', 'jus_raisin')
 end)
 
 ESX.RegisterUsableItem('champagnebox', function(source)
-	TriggerEvent('esx_ava_vigneronjob:UseBox', source, 'champagnebox', 'champagne')
+	TriggerEvent('esx_ava_jobs:UseBox', source, 'champagnebox', 'champagne')
 end)
 
 ESX.RegisterUsableItem('grand_crubox', function(source)
-	TriggerEvent('esx_ava_vigneronjob:UseBox', source, 'grand_crubox', 'grand_cru')
+	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
 end)

@@ -4,6 +4,9 @@
 -------------------------------------------
 
 Locales['fr'] = {
+	['job_client'] = 'client %s',
+
+
 	['press_to_open'] = 'Appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
 	['store_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour ranger le véhicule',
 	['cloakroom'] = 'Vestiaire',
@@ -13,8 +16,8 @@ Locales['fr'] = {
 	['veh_menu'] = 'Garage',
 	['spawn_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',
 
-	['comp_earned'] = 'votre société a gagné ~g~$',
-	['have_earned'] = 'vous avez gagné ~g~$',
+	['comp_earned'] = 'Votre société a gagné ~g~$',
+	['have_earned'] = 'Vous avez gagné ~g~$',
 
 	['process_cant_carry'] = 'Traitement terminé',
 	['press_traitement'] = 'Appuyez sur ~INPUT_CONTEXT~ pour traiter',
@@ -23,8 +26,22 @@ Locales['fr'] = {
 	['press_buy'] = 'Appuyez sur ~INPUT_CONTEXT~ pour acheter des produits',
 
 
+    ['process_not_enough'] = 'Il vous manque : ~g~%s',
+	['process_in_progress'] = 'Traitement en cours',
+	['process_how_much'] = "Combien voulez-vous en traiter ? [Max : %s]",
+
 
 	['access_chest'] = 'Coffre',
+
+	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
+	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
+	['buy_you_paid'] = 'Vous avez payé ~r~$',
+
+	['no_interim'] = "Un intérimaire ne peut pas faire cela",
+
+    ['amount_invalid'] = "Montant non valide",
+
+
 	-- General
 	['amount_invalid'] = 'montant invalide',
 	['billing'] = 'facuration',
@@ -39,17 +56,9 @@ Locales['fr'] = {
 	['added'] = 'Vous avez ajouté x',
 
 	-- A modifier selon l'entreprise
-	['job_client'] = 'client %s',
-	['process_in_progress'] = 'Traitement en cours',
-	['process_not_enough'] = 'Vous n\'avez pas assez de ~g~%s',
-	['process_society_not_enough'] = 'La société n\'a plus ce qu\'il faut dans son coffre',
-	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
-	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
-	['buy_you_paid'] = 'Vous avez payé ~r~$',
+	-- ['process_society_not_enough'] = 'La société n\'a plus ce qu\'il faut dans son coffre',
 	['no_product_sale'] = 'Vous n\'avez plus de produits',
 	['inventoryfull'] = 'Vous n\'avez plus de place',
-	['amount_invalid'] = "Montant non valide",
 
-	['no_interim'] = "Un intérimaire ne peut pas faire cela",
 
 }
