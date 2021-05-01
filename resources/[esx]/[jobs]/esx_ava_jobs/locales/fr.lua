@@ -11,10 +11,17 @@ Locales['fr'] = {
 	['vine_clothes_vine'] = 'Tenue de travail',
 
 	['veh_menu'] = 'Garage',
-	['spawn_veh'] = 'appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',
+	['spawn_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',
 
 	['comp_earned'] = 'votre société a gagné ~g~$',
 	['have_earned'] = 'vous avez gagné ~g~$',
+
+	['process_cant_carry'] = 'Traitement terminé',
+	['press_traitement'] = 'Appuyez sur ~INPUT_CONTEXT~ pour traiter',
+	['press_collect'] = 'Appuyez sur ~INPUT_CONTEXT~ pour récolter',
+	['press_sell'] = 'Appuyez sur ~INPUT_CONTEXT~ pour vendre vos produits',
+	['press_buy'] = 'Appuyez sur ~INPUT_CONTEXT~ pour acheter des produits',
+
 
 
 	['access_chest'] = 'Coffre',
@@ -36,11 +43,6 @@ Locales['fr'] = {
 	['process_in_progress'] = 'Traitement en cours',
 	['process_not_enough'] = 'Vous n\'avez pas assez de ~g~%s',
 	['process_society_not_enough'] = 'La société n\'a plus ce qu\'il faut dans son coffre',
-	['process_cant_carry'] = 'Traitement terminé',
-	['press_traitement'] = 'appuyez sur ~INPUT_CONTEXT~ pour traiter',
-	['press_collect'] = 'appuyez sur ~INPUT_CONTEXT~ pour récolter',
-	['press_sell'] = 'appuyez sur ~INPUT_CONTEXT~ pour vendre vos produits',
-	['press_buy'] = 'appuyez sur ~INPUT_CONTEXT~ pour acheter des produits',
 	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
 	['buy_you_paid'] = 'Vous avez payé ~r~$',

@@ -15,6 +15,7 @@ local JobBlips = {}
 
 local HasAlreadyEnteredMarker = false
 local CurrentZoneName = nil
+local CurrentZoneCategory = nil
 local CurrentZoneValue = nil
 local CurrentHelpText = nil
 local CurrentJobName = nil
@@ -273,57 +274,76 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(200)
-        for jobName, job in pairs(playerJobs) do
-			local isInMarker  = false
-			local zoneNamePlayerIsIn = nil
-			local zonePlayerIsIn = nil
+        local isInMarker  = false
+        local zoneNamePlayerIsIn = nil
+        local zoneCategoryPlayerIsIn = nil
+        local zonePlayerIsIn = nil
+        local zoneJob = nil
 
+        for jobName, job in pairs(playerJobs) do
+            zoneJob = jobName
+            
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
                     if (k ~= 'JobActions' or job.grade ~= 'interim') then
                         if (#(playerCoords - v.Pos) < v.Size.x) then
                             isInMarker = true
+                            zoneCategoryPlayerIsIn = "Zones"
                             zoneNamePlayerIsIn = k
                             zonePlayerIsIn = v
                         end
                     end
 				end
 			end
-
-			if (isInMarker and not HasAlreadyEnteredMarker)
-                or (isInMarker and CurrentZoneName ~= zoneNamePlayerIsIn)
-            then
-				HasAlreadyEnteredMarker = true
-				TriggerEvent('esx_ava_jobs:hasEnteredMarker', jobName, zoneNamePlayerIsIn, zonePlayerIsIn)
+            if job.ProcessZones ~= nil then
+                for k, v in pairs(job.ProcessZones) do
+                    if (#(playerCoords - v.Pos) < 2) then
+                        isInMarker = true
+                        zoneCategoryPlayerIsIn = "ProcessZones"
+                        zoneNamePlayerIsIn = k
+                        zonePlayerIsIn = v
+                    end
+				end
 			end
 
-			if not isInMarker and HasAlreadyEnteredMarker then
-				HasAlreadyEnteredMarker = false
-				TriggerEvent('esx_ava_jobs:hasExitedMarker', jobName, CurrentZoneName, zonePlayerIsIn)
-			end
 		end
+
+
+        if (isInMarker and not HasAlreadyEnteredMarker)
+            or (isInMarker and CurrentZoneName ~= zoneNamePlayerIsIn)
+        then
+            HasAlreadyEnteredMarker = true
+            TriggerEvent('esx_ava_jobs:hasEnteredMarker', zoneJob, zoneNamePlayerIsIn, zoneCategoryPlayerIsIn, zonePlayerIsIn)
+        end
+
+        if not isInMarker and HasAlreadyEnteredMarker then
+            HasAlreadyEnteredMarker = false
+            TriggerEvent('esx_ava_jobs:hasExitedMarker', zoneJob, CurrentZoneName, CurrentZoneCategory)
+        end
 	end
 end)
 
 
-AddEventHandler('esx_ava_jobs:hasEnteredMarker', function(jobName, zoneName, zone)
+AddEventHandler('esx_ava_jobs:hasEnteredMarker', function(jobName, zoneName, zoneCategory, zone)
 	if zone.HelpText ~= nil then
         CurrentHelpText = zone.HelpText
     end
 
     CurrentJobName = jobName
     CurrentZoneName = zoneName
+    CurrentZoneCategory = zoneCategory
     CurrentZoneValue = zone
     CurrentActionEnabled = true
 end)
 
-AddEventHandler('esx_ava_jobs:hasExitedMarker', function(zone)
+AddEventHandler('esx_ava_jobs:hasExitedMarker', function(jobName, zoneName, zoneCategory)
 	ESX.UI.Menu.CloseAll()
 	CurrentZoneName = nil
 end)
 
-
--- Key Controls
+------------------
+-- Key Controls --
+------------------
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
@@ -340,14 +360,28 @@ Citizen.CreateThread(function()
             then
                 CurrentActionEnabled = false
                 GUI.Time = GetGameTimer()
+                local job = playerJobs[CurrentJobName]
 
-				if CurrentZoneName == 'JobActions' then
-					OpenJobActionsMenu(CurrentJobName)
-				elseif CurrentZoneName == 'Dressing' then
-					OpenCloakroomMenu(playerJobs[CurrentJobName].jobIndex)
-				elseif CurrentZoneName == 'SocietyGarage' then
-					TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', playerJobs[CurrentJobName].SocietyName, playerJobs[CurrentJobName].Zones.SocietyGarage)
-				end
+                if CurrentZoneCategory == "Zones" then
+                    if CurrentZoneName == 'JobActions' then
+                        OpenJobActionsMenu(CurrentJobName)
+                    elseif CurrentZoneName == 'Dressing' then
+                        OpenCloakroomMenu(playerJobs[CurrentJobName].jobIndex)
+                    elseif CurrentZoneName == 'SocietyGarage' then
+                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', playerJobs[CurrentJobName].SocietyName, playerJobs[CurrentJobName].Zones.SocietyGarage)
+                    end
+
+                elseif CurrentZoneCategory == "ProcessZones" then
+					if not CurrentZoneValue.NoInterim or
+                        (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
+					then
+                        Process(CurrentZoneValue)
+                        CurrentActionEnabled = true
+					else
+						ESX.ShowHelpNotification(_U('no_interim'))
+					end
+                    
+                end
 
 			end
 		end
@@ -430,129 +464,30 @@ function OpenCloakroomMenu(jobIndex)
 end
 
 
-function OpenGetStocksMenu()
 
-	ESX.TriggerServerCallback('esx_ava_vigneronjob:getStockItems', function(items)
+function Process(process)
+	ESX.TriggerServerCallback('esx_ava_jobs:canprocess', function(canProcess)
+		if canProcess then
+			TriggerServerEvent('esx_ava_jobs:process', process)
+			local timeLeft = process.Delay / 1000
+			local playerPed = PlayerPedId()
 
-		print(json.encode(items))
+			exports['progressBars']:startUI(process.Delay, _U('process_in_progress'))
+			TaskStartScenarioInPlace(playerPed, process.Scenario, 0, true)
+			while timeLeft > 0 do
+				Citizen.Wait(1000)
+				timeLeft = timeLeft - 1
 
-		local elements = {}
-
-		for i=1, #items, 1 do
-			if (items[i].count ~= 0) then
-				table.insert(elements, {label = 'x' .. items[i].count .. ' ' .. items[i].label, value = items[i].name})
+				if #(playerCoords - process.Pos) > 2 then
+					TriggerServerEvent('esx_ava_jobs:cancelProcessing')
+					break
+				end
 			end
+			Citizen.Wait(1500)
+			ClearPedTasks(playerPed)
 		end
-
-		ESX.UI.Menu.Open(
-			'default', GetCurrentResourceName(), 'stocks_menu',
-			{
-				title    = Config.LabelName..' Stock',
-				align    = 'left',
-				css 	 = 'job',
-				elements = elements
-			},
-			function(data, menu)
-
-				local itemName = data.current.value
-
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'stocks_menu_get_item_count',
-					{
-						title = _U('quantity')
-					},
-					function(data2, menu2)
-		
-						local count = tonumber(data2.value)
-
-						if count == nil or count <= 0 then
-							ESX.ShowNotification(_U('quantity_invalid'))
-						else
-							menu2.close()
-							menu.close()
-							OpenGetStocksMenu()
-
-							TriggerServerEvent('esx_ava_vigneronjob:getStockItem', itemName, count)
-						end
-
-					end,
-					function(data2, menu2)
-						menu2.close()
-					end
-				)
-
-			end,
-			function(data, menu)
-				menu.close()
-			end
-		)
-	end)
+	end, process)
 end
-
-function OpenPutStocksMenu()
-
-	ESX.TriggerServerCallback('esx_ava_vigneronjob:getPlayerInventory', function(inventory)
-
-		local elements = {}
-
-		for i=1, #inventory.items, 1 do
-
-			local item = inventory.items[i]
-
-			if item.count > 0 then
-				table.insert(elements, {label = item.label .. ' x' .. item.count, type = 'item_standard', value = item.name})
-			end
-
-		end
-
-		ESX.UI.Menu.Open(
-			'default', GetCurrentResourceName(), 'stocks_menu',
-			{
-				title    = _U('inventory'),
-				elements = elements
-			},
-			function(data, menu)
-
-				local itemName = data.current.value
-
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'stocks_menu_put_item_count',
-					{
-						title = _U('quantity')
-					},
-					function(data2, menu2)
-
-						local count = tonumber(data2.value)
-
-						if count == nil or count <= 0 then
-							ESX.ShowNotification(_U('quantity_invalid'))
-						else
-							menu2.close()
-							menu.close()
-							OpenPutStocksMenu()
-
-							TriggerServerEvent('esx_ava_vigneronjob:putStockItems', itemName, count)
-						end
-
-					end,
-					function(data2, menu2)
-						menu2.close()
-					end
-				)
-
-			end,
-			function(data, menu)
-				menu.close()
-			end
-		)
-
-	end)
-
-end
-
-
-
-
 
 
 
@@ -867,34 +802,6 @@ Citizen.CreateThread(function()
 end)
 
 
-function Process(v)
-	
-	ESX.TriggerServerCallback('esx_ava_vigneronjob:canprocess', function(canProcess)
-		isProcessing = true
-		if canProcess then
-			TriggerServerEvent('esx_ava_vigneronjob:process', v)
-			local timeLeft = v.Delay / 1000
-			local playerPed = PlayerPedId()
-		
-			exports['progressBars']:startUI(v.Delay, _U('process_in_progress'))
-			TaskStartScenarioInPlace(playerPed, v.Scenario, 0, false)
-			while timeLeft - 2 > 0 do
-		
-				Citizen.Wait(1000)
-				timeLeft = timeLeft - 1
-		
-				if GetDistanceBetweenCoords(GetEntityCoords(playerPed), v.Pos.x, v.Pos.y, v.Pos.z, false) > 2 then
-					TriggerServerEvent('esx_ava_vigneronjob:cancelProcessing')
-					break
-				end
-			end
-			Citizen.Wait(2000)
-			ClearPedTasks(playerPed)		
-		end
-		isProcessing = false
-	end, v)
-
-end
 
 
 

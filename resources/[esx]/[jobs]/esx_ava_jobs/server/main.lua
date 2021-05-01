@@ -6,77 +6,10 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+local playersProcessing = {}
+
 -- TriggerEvent('esx_phone:registerNumber', Config.JobName, _U('job_client', Config.LabelName), true, true)
 -- TriggerEvent('esx_society:registerSociety', Config.JobName, Config.LabelName, Config.SocietyName, Config.SocietyName, Config.SocietyName, {type = 'private'})
-
--- RegisterServerEvent('esx_ava_vigneronjob:getStockItem')
--- AddEventHandler('esx_ava_vigneronjob:getStockItem', function(itemName, count)
-
--- 	local xPlayer = ESX.GetPlayerFromId(source)
-
--- 	TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
-
--- 		local item = inventory.getItem(itemName)
-
--- 		if item.count >= count then
--- 			inventory.removeItem(itemName, count)
--- 			xPlayer.addInventoryItem(itemName, count)
--- 		else
--- 			TriggerClientEvent('esx:showNotification', xPlayer.source, _U('quantity_invalid'))
--- 		end
-
--- 		TriggerClientEvent('esx:showNotification', xPlayer.source, _U('have_withdrawn') .. count .. ' ' .. item.label)
-
--- 	end)
-
--- end)
-
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:getStockItems', function(source, cb)
-
--- 	TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
--- 		cb(inventory.items)
--- 	end)
-
--- end)
-
--- RegisterServerEvent('esx_ava_vigneronjob:putStockItems')
--- AddEventHandler('esx_ava_vigneronjob:putStockItems', function(itemName, count)
-
---   local xPlayer = ESX.GetPlayerFromId(source)
---   local sourceItem = xPlayer.getInventoryItem(itemName)
-
---   TriggerEvent('esx_ava_inventories:getSharedInventory', Config.SocietyName, function(inventory)
-
---     local inventoryItem = inventory.getItem(itemName)
-
---     if sourceItem.count >= count and count > 0 then
---       xPlayer.removeInventoryItem(itemName, count)
---       inventory.addItem(itemName, count)
---     else
---       TriggerClientEvent('esx:showNotification', xPlayer.source, _U('quantity_invalid'))
---     end
-
---     TriggerClientEvent('esx:showNotification', xPlayer.source, _U('added') .. count .. ' ' .. item.label)
-
---   end)
-
--- end)
-
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:getPlayerInventory', function(source, cb)
-
--- 	local xPlayer    = ESX.GetPlayerFromId(source)
--- 	local items      = xPlayer.getInventory().items
-
--- 	cb({
--- 		items      = items
--- 	})
-
--- end)
-
-
-
-
-
 
 
 
@@ -89,7 +22,6 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 -- -- RECOLTE --
 -- -------------
 
--- local playersProcessing = {}
 
 -- ESX.RegisterServerCallback('esx_ava_vigneronjob:canPickUp', function(source, cb, items)
 -- 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -127,89 +59,92 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 -- -- TRAITEMENT --
 -- ----------------
 
--- local function canCarryAll(source, items)
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	for i=1, #items, 1 do
+local function canCarryAll(source, items)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	for i=1, #items, 1 do
 
--- 		local xItem = xPlayer.getInventoryItem(items[i].name)
+		local xItem = xPlayer.getInventoryItem(items[i].name)
 
--- 		if xItem.limit ~= -1 and xItem.count >= xItem.limit then
--- 			TriggerClientEvent('esx:showNotification', source, _U('process_cant_carry'))
--- 			return false
--- 		end
--- 	end
--- 	return true	
--- end
+		if xItem.limit ~= -1 and xItem.count >= xItem.limit then
+			TriggerClientEvent('esx:showNotification', source, _U('process_cant_carry'))
+			return false
+		end
+	end
+	return true
+end
 
--- local function hasEnoughItems(source, items)
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	local result = {}
--- 	for i=1, #items, 1 do
--- 		local xItem = xPlayer.getInventoryItem(items[i].name)
--- 		if xItem.count < items[i].quantity then
--- 			table.insert(result, (items[i].quantity - xItem.count) .. " " .. xItem.label)
--- 		end
--- 	end
--- 	if result[1] then
--- 		TriggerClientEvent('esx:showNotification', source, _U('process_not_enough', table.concat(result, "~s~, ~g~")))
--- 		return false
--- 	else
--- 		return true	
--- 	end
+local function hasEnoughItems(source, items)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
 
--- end
+	local result = {}
+	for i=1, #items, 1 do
+		local xItem = inventory.getItem(items[i].name)
+		if xItem.count < items[i].quantity then
+			table.insert(result, (items[i].quantity - xItem.count) .. " " .. xItem.label)
+		end
+	end
+	if result[1] then
+		TriggerClientEvent('esx:showNotification', source, _U('process_not_enough', table.concat(result, "~s~, ~g~")))
+		return false
+	else
+		return true
+	end
 
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:canprocess', function(source, cb, v)
---     if not playersProcessing[source] then
--- 		if hasEnoughItems(source, v.ItemsGive) and canCarryAll(source, v.ItemsGet) then
--- 			cb(true)
--- 		else
--- 			cb(false)
--- 		end
---     else
---         print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
---     end
--- end)
+end
 
--- RegisterServerEvent('esx_ava_vigneronjob:process')
--- AddEventHandler('esx_ava_vigneronjob:process', function(v)
--- 	local _source = source
--- 	local xPlayer = ESX.GetPlayerFromId(_source)
+ESX.RegisterServerCallback('esx_ava_jobs:canprocess', function(source, cb, process)
+    if not playersProcessing[source] then
+		if hasEnoughItems(source, process.ItemsGive) and canCarryAll(source, process.ItemsGet) then
+			cb(true)
+		else
+			cb(false)
+		end
+    else
+        print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
+    end
+end)
 
--- 	playersProcessing[_source] = true
+RegisterServerEvent('esx_ava_jobs:process')
+AddEventHandler('esx_ava_jobs:process', function(process)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+    local inventory = xPlayer.getInventory()
 
--- 	Citizen.Wait(v.Delay)
--- 	for i=1, #v.ItemsGive, 1 do
--- 		xPlayer.removeInventoryItem(v.ItemsGive[i].name, v.ItemsGive[i].quantity)
--- 	end
--- 	for i=1, #v.ItemsGet, 1 do
--- 		xPlayer.addInventoryItem(v.ItemsGet[i].name, v.ItemsGet[i].quantity)
--- 	end
+	playersProcessing[_source] = true
+
+	Citizen.Wait(process.Delay)
+	for i=1, #process.ItemsGive, 1 do
+		inventory.removeItem(process.ItemsGive[i].name, process.ItemsGive[i].quantity)
+	end
+	for i=1, #process.ItemsGet, 1 do
+		inventory.addItem(process.ItemsGet[i].name, process.ItemsGet[i].quantity)
+	end
 
 
--- 	playersProcessing[_source] = nil
--- end)
+	playersProcessing[_source] = nil
+end)
 
 
--- function CancelProcessing(playerID)
--- 	if playersProcessing[playerID] then
--- 		playersProcessing[playerID] = nil
--- 	end
--- end
+function CancelProcessing(playerID)
+	if playersProcessing[playerID] then
+		playersProcessing[playerID] = nil
+	end
+end
 
--- RegisterServerEvent('esx_ava_vigneronjob:cancelProcessing')
--- AddEventHandler('esx_ava_vigneronjob:cancelProcessing', function()
--- 	CancelProcessing(source)
--- end)
+RegisterServerEvent('esx_ava_jobs:cancelProcessing')
+AddEventHandler('esx_ava_jobs:cancelProcessing', function()
+	CancelProcessing(source)
+end)
 
--- AddEventHandler('esx:playerDropped', function(playerID, reason)
--- 	CancelProcessing(playerID)
--- end)
+AddEventHandler('esx:playerDropped', function(playerID, reason)
+	CancelProcessing(playerID)
+end)
 
--- RegisterServerEvent('esx:onPlayerDeath')
--- AddEventHandler('esx:onPlayerDeath', function(data)
--- 	CancelProcessing(source)
--- end)
+RegisterServerEvent('esx:onPlayerDeath')
+AddEventHandler('esx:onPlayerDeath', function(data)
+	CancelProcessing(source)
+end)
 
 
 
