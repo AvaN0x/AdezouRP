@@ -315,6 +315,26 @@ Citizen.CreateThread(function()
                     end
 				end
 			end
+            if job.SellZones ~= nil then
+                for k, v in pairs(job.SellZones) do
+                    if (#(playerCoords - v.Pos) < 2) then
+                        isInMarker = true
+                        zoneCategoryPlayerIsIn = "SellZones"
+                        zoneNamePlayerIsIn = k
+                        zonePlayerIsIn = v
+                    end
+				end
+			end
+            -- if job.BuyZones ~= nil then
+            --     for k, v in pairs(job.BuyZones) do
+            --         if (#(playerCoords - v.Pos) < 2) then
+            --             isInMarker = true
+            --             zoneCategoryPlayerIsIn = "BuyZones"
+            --             zoneNamePlayerIsIn = k
+            --             zonePlayerIsIn = v
+            --         end
+			-- 	end
+			-- end
 
 		end
 
@@ -382,6 +402,7 @@ Citizen.CreateThread(function()
                     end
 
 
+
                 elseif CurrentZoneCategory == "ProcessZones" then
 					if not CurrentZoneValue.NoInterim or
                     (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
@@ -391,6 +412,7 @@ Citizen.CreateThread(function()
 					else
 						ESX.ShowHelpNotification(_U('no_interim'))
 					end
+
 
 
                 elseif CurrentZoneCategory == "ProcessMenuZones" then
@@ -447,6 +469,62 @@ Citizen.CreateThread(function()
                         menu.close()
                         CurrentActionEnabled = true
                     end)
+
+
+
+                elseif CurrentZoneCategory == "SellZones" then
+                    ESX.TriggerServerCallback('esx_ava_jobs:GetSellElements', function(elements)
+                        ESX.UI.Menu.CloseAll()
+                        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_seller',
+                        {
+                            title = "Acheteur " .. job.LabelName,
+                            align = 'left',
+                            elements = elements
+                        },
+                        function(data,menu)
+                            local count = false
+                            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much',
+                            {
+                                title = "Combien voulez-vous vendre ? [Max : " .. data.current.owned .. "]"
+                            },
+                            function(data2, menu2)
+                                local quantity = tonumber(data2.value)
+
+                                if quantity == nil then
+                                    ESX.ShowNotification(_U('amount_invalid'))
+                                else
+                                    count = quantity
+                                    menu2.close()
+                                end
+                            end,
+                            function(data2, menu2)
+                                menu2.close()
+                            end)
+
+
+                            while not count do
+                                Citizen.Wait(0);
+                            end
+                            if tonumber(count) > tonumber(data.current.owned) then
+                                ESX.ShowNotification("Tu n'as pas autant de " .. data.current.itemLabel .. ".")
+                            else
+                                TriggerServerEvent('esx_ava_jobs:SellItems', CurrentJobName, CurrentZoneName, job.jobIndex, data.current.name, count)
+                                menu.close()
+                                CurrentActionEnabled = true
+                                Citizen.Wait(1500)
+                            end
+                        end,
+                        function(data,menu)
+                            menu.close()
+                            CurrentActionEnabled = true
+                        end)
+                    end, CurrentZoneValue.Items)
+
+
+                elseif CurrentZoneCategory == "BuyZones" then
+
+
+
 
                 end
 
@@ -761,9 +839,9 @@ end
 -- TRAITEMENT --
 ----------------
 
-local isProcessing = false
+-- local isProcessing = false
 
-Citizen.CreateThread(function()
+-- Citizen.CreateThread(function()
 	-- while true do
 	-- 	Citizen.Wait(0)
 	-- 	local playerPed = PlayerPedId()
@@ -796,9 +874,9 @@ Citizen.CreateThread(function()
 	-- 		Citizen.Wait(10000)
 	-- 	end
 	-- end
-end)
+-- end)
 
-Citizen.CreateThread(function()
+-- Citizen.CreateThread(function()
 	-- while true do
 	-- 	Citizen.Wait(0)
 	-- 	local playerPed = PlayerPedId()
@@ -866,7 +944,7 @@ Citizen.CreateThread(function()
 	-- 		Citizen.Wait(10000)
 	-- 	end
 	-- end
-end)
+-- end)
 
 
 

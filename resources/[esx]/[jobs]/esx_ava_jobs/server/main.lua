@@ -158,69 +158,89 @@ end)
 -- -------------
 
 
--- RegisterNetEvent('esx_ava_vigneronjob:SellItems')
--- AddEventHandler('esx_ava_vigneronjob:SellItems', function(item,price,count) 
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	while not xPlayer do 
--- 		xPlayer = ESX.GetPlayerFromId(source); 
--- 		Citizen.Wait(0); 
--- 	end
--- 	local xItem = xPlayer.getInventoryItem(item)
--- 	if xItem.count and xItem.count >= count then
--- 		local totalFromSell = tonumber(count)*tonumber(price)
--- 		local total = nil
--- 		TriggerEvent('esx_statejob:getTaxed', Config.SocietyName, totalFromSell, function(toSociety)
--- 			total = toSociety
--- 		end)
-		
--- 		local playerMoney
--- 		local societyMoney
+RegisterNetEvent('esx_ava_jobs:SellItems')
+AddEventHandler('esx_ava_jobs:SellItems', function(jobName, zoneName, jobIndex, item, count) 
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.SellZones[zoneName]
 
--- 		-- if he is an interim, he must earn less than the society
--- 		if ((xPlayer.job ~= nil and xPlayer.job.name == Config.JobName and xPlayer.job.grade_name == 'interim') 
--- 		or (xPlayer.job2 ~= nil and xPlayer.job2.name == Config.JobName and xPlayer.job2.grade_name == 'interim')) then
--- 			playerMoney = math.floor(total / 100 * 40)
--- 			societyMoney = math.floor(total / 100 * 60)
--- 		else
--- 			playerMoney = math.floor(total / 100 * 60)
--- 			societyMoney = math.floor(total / 100 * 40)
--- 		end
+	if zone and inventory.canRemoveItem(item, count) then
+        local price = nil
+        for k,v in ipairs(zone.Items) do
+            if v.name == item then
+                price = v.price
+                break
+            end
+        end
+        if price == nil then
+            return
+        end
 
--- 		xPlayer.removeInventoryItem(item, count)
--- 		local societyAccount = nil
+		local totalFromSell = tonumber(count) * tonumber(price)
+		local total = nil
+		TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalFromSell, function(toSociety)
+			total = toSociety
+		end)
+		local playerMoney
+		local societyMoney
 
--- 		TriggerEvent('esx_addonaccount:getSharedAccount', Config.SocietyName, function(account)
--- 			societyAccount = account
--- 		end)
--- 		if societyAccount ~= nil then
--- 			TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, xPlayer.identifier, Config.SocietyName, Config.SocietyName, "job_selling", societyMoney)
+		-- if he is an interim, he must earn less than the society
+		if xPlayer['job' .. (jobIndex ~= 1 and jobIndex or '')].grade_name == 'interim' then
+			playerMoney = math.floor(total * 0.2)
+			societyMoney = math.floor(total * 0.4)
+			local stateMoney = math.floor(total * 0.4)
 
+            local stateAccount = nil
+            TriggerEvent('esx_addonaccount:getSharedAccount', "society_state", function(account)
+                stateAccount = account
+            end)
+            if stateAccount ~= nil then
+                TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, xPlayer.identifier, "society_state", "society_state", "interim_selling", stateMoney)
 
--- 			xPlayer.addMoney(playerMoney)
--- 			societyAccount.addMoney(societyMoney)
--- 			TriggerClientEvent('esx:showNotification', xPlayer.source, _U('have_earned') .. playerMoney)
--- 			TriggerClientEvent('esx:showNotification', xPlayer.source, _U('comp_earned') .. societyMoney)
--- 		end
--- 	end
--- end)
+                stateAccount.addMoney(stateMoney)
+            end
+		else
+			playerMoney = math.floor(total / 100 * 60)
+			societyMoney = math.floor(total / 100 * 40)
+		end
 
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:GetSellElements', function(source, cb, items) 
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	while not xPlayer do 
--- 		xPlayer = ESX.GetPlayerFromId(source); 
--- 		Citizen.Wait(0); 
--- 	end
--- 	local elements = {}
--- 	for k,v in pairs(items) do
--- 		local xItem = xPlayer.getInventoryItem(v.name)
--- 		local itemOwned = 0
--- 		if xItem and xItem.count then 
--- 			itemOwned = xItem.count; 
--- 		end
--- 		table.insert(elements, {itemLabel = xItem.label, label = xItem.label..' : '..itemOwned..' unité(s)', price = v.price, name = v.name, owned = itemOwned})
--- 	end
--- 	cb(elements)
--- end)
+		inventory.removeItem(item, count)
+
+		local societyAccount = nil
+
+		TriggerEvent('esx_addonaccount:getSharedAccount', job.SocietyName, function(account)
+			societyAccount = account
+		end)
+		if societyAccount ~= nil then
+			TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, xPlayer.identifier, job.SocietyName, job.SocietyName, "job_selling", societyMoney)
+
+			xPlayer.addMoney(playerMoney)
+			societyAccount.addMoney(societyMoney)
+			TriggerClientEvent('esx:showNotification', xPlayer.source, _('have_earned') .. playerMoney)
+			TriggerClientEvent('esx:showNotification', xPlayer.source, _('comp_earned') .. societyMoney)
+		end
+	end
+end)
+
+ESX.RegisterServerCallback('esx_ava_jobs:GetSellElements', function(source, cb, items)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+    local elements = {}
+	for k, v in pairs(items) do
+		local item = inventory.getItem(v.name)
+
+		table.insert(elements, {
+            itemLabel = item.label,
+            label = item.label .. ' : ' .. item.count .. ' unité(s)',
+            price = v.price,
+            name = v.name,
+            owned = item.count
+        })
+	end
+	cb(elements)
+end)
 
 
 
