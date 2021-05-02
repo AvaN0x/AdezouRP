@@ -149,42 +149,42 @@ function createBlips()
 		if job.Zones ~= nil then
             for k, v in pairs(job.Zones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
                 if v.Blip then
-                    addJobBlip(v.Pos, job.LabelName, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
