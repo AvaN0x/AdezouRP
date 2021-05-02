@@ -325,16 +325,16 @@ Citizen.CreateThread(function()
                     end
 				end
 			end
-            -- if job.BuyZones ~= nil then
-            --     for k, v in pairs(job.BuyZones) do
-            --         if (#(playerCoords - v.Pos) < 2) then
-            --             isInMarker = true
-            --             zoneCategoryPlayerIsIn = "BuyZones"
-            --             zoneNamePlayerIsIn = k
-            --             zonePlayerIsIn = v
-            --         end
-			-- 	end
-			-- end
+            if job.BuyZones ~= nil then
+                for k, v in pairs(job.BuyZones) do
+                    if (#(playerCoords - v.Pos) < 2) then
+                        isInMarker = true
+                        zoneCategoryPlayerIsIn = "BuyZones"
+                        zoneNamePlayerIsIn = k
+                        zonePlayerIsIn = v
+                    end
+				end
+			end
 
 		end
 
@@ -411,7 +411,7 @@ Citizen.CreateThread(function()
                     SellZone(job)
 
                 elseif CurrentZoneCategory == "BuyZones" then
-
+                    BuyZone(job)
 
 
 
@@ -636,11 +636,53 @@ function SellZone(job)
             menu.close()
             CurrentActionEnabled = true
         end)
-    end, CurrentZoneValue.Items)
+    end, CurrentJobName, CurrentZoneName)
 
 end
 
+function BuyZone(job)
+    ESX.TriggerServerCallback('esx_ava_jobs:GetBuyElements', function(elements)
+        ESX.UI.Menu.CloseAll()
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_buyer',
+        {
+            title = "Vendeur pour " .. job.LabelName,
+            align = 'left',
+            elements = elements
+        },
+        function(data,menu)
+            local count = false
+            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'esx_ava_jobs_how_much', 
+            {
+                title = "Combien voulez-vous en acheter ?"
+            },
+            function(data2, menu2)
+                local quantity = tonumber(data2.value)
 
+                if quantity == nil then
+                    ESX.ShowNotification(_U('amount_invalid'))
+                else
+                    count = quantity
+                    menu2.close()
+                end
+            end,
+            function(data2, menu2)
+                menu2.close()
+            end)
+
+            while not count do
+                Citizen.Wait(0);
+            end
+
+            TriggerServerEvent('esx_ava_jobs:BuyItem', CurrentJobName, CurrentZoneName, data.current.name, count)
+            Citizen.Wait(1500)
+        end,
+        function(data,menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end, CurrentJobName, CurrentZoneName)
+
+end
 
 
 

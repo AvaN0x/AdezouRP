@@ -220,78 +220,108 @@ AddEventHandler('esx_ava_jobs:SellItems', function(jobName, zoneName, jobIndex, 
 			TriggerClientEvent('esx:showNotification', xPlayer.source, _('have_earned') .. playerMoney)
 			TriggerClientEvent('esx:showNotification', xPlayer.source, _('comp_earned') .. societyMoney)
 		end
-	end
+    else
+        print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
+    end
 end)
 
-ESX.RegisterServerCallback('esx_ava_jobs:GetSellElements', function(source, cb, items)
+ESX.RegisterServerCallback('esx_ava_jobs:GetSellElements', function(source, cb, jobName, zoneName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.SellZones[zoneName]
+
+    if zone then
+        local elements = {}
+        for k, v in pairs(zone.Items) do
+            local item = inventory.getItem(v.name)
+            
+            table.insert(elements, {
+                itemLabel = item.label,
+                label = item.label .. ' : ' .. item.count .. ' unité(s)',
+                price = v.price,
+                name = v.name,
+                owned = item.count
+            })
+        end
+        cb(elements)
+    end
+end)
+
+
+
+
+
+
+------------
+-- buying --
+------------
+
+RegisterNetEvent('esx_ava_jobs:BuyItem')
+AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.BuyZones[zoneName]
+
+    if zone then
+        local price = nil
+        for k,v in ipairs(zone.Items) do
+            if v.name == item then
+                price = v.price
+                break
+            end
+        end
+        if price == nil then
+            return
+        end
+
+        local totalprice = tonumber(count)*tonumber(price)
+        
+        if not inventory.canAddItem(item, count) then
+            TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
+        elseif xPlayer.getMoney() < totalprice then
+            TriggerClientEvent('esx:showNotification', source, _U('buy_cant_afford'))
+        else
+            TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
+            end)
+            
+            xPlayer.removeMoney(totalprice)
+            inventory.addItem(item, count)
+            TriggerClientEvent('esx:showNotification', source, _U('buy_you_paid')..totalprice)
+        end
+    else
+        print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
+    end
+end)
+
+ESX.RegisterServerCallback('esx_ava_jobs:GetBuyElements', function(source, cb, jobName, zoneName)
 	local xPlayer = ESX.GetPlayerFromId(source)
     local inventory = xPlayer.getInventory()
 
-    local elements = {}
-	for k, v in pairs(items) do
-		local item = inventory.getItem(v.name)
+    local job = Config.Jobs[jobName]
+    local zone = job.BuyZones[zoneName]
 
-		table.insert(elements, {
-            itemLabel = item.label,
-            label = item.label .. ' : ' .. item.count .. ' unité(s)',
-            price = v.price,
-            name = v.name,
-            owned = item.count
-        })
-	end
-	cb(elements)
+    if zone then
+        local elements = {}
+        for k,v in pairs(zone.Items) do
+            local item = inventory.getItem(v.name)
+            table.insert(elements, {itemLabel = item.label, label = item.label..' : $'..v.price, price = v.price, name = v.name})
+        end
+        cb(elements)
+    end
 end)
 
 
 
+----------------
+-- JOBS ITEMS --
+----------------
 
 
-
--- ------------
--- -- buying --
--- ------------
-
-
--- RegisterNetEvent('esx_ava_vigneronjob:BuyItems')
--- AddEventHandler('esx_ava_vigneronjob:BuyItems', function(item,price,count) 
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	while not xPlayer do 
--- 		xPlayer = ESX.GetPlayerFromId(source); 
--- 		Citizen.Wait(0); 
--- 	end
--- 	local xItem = xPlayer.getInventoryItem(item)
--- 	local totalprice = tonumber(count)*tonumber(price)
-
--- 	if xItem.limit ~= -1 and (xItem.count + count) > xItem.limit then
--- 		TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
--- 	elseif (xPlayer.getMoney() < totalprice) then
--- 		TriggerClientEvent('esx:showNotification', source, _U('buy_cant_afford'))
--- 	else
--- 		TriggerEvent('esx_statejob:getTaxed', Config.SocietyName, totalprice, function(toSociety)
--- 		end)    
--- 		xPlayer.removeMoney(totalprice)
--- 		xPlayer.addInventoryItem(item, count)
--- 		TriggerClientEvent('esx:showNotification', source, _U('buy_you_paid')..totalprice)
--- 	end
--- end)
-
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:GetBuyElements', function(source, cb, items) 
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	while not xPlayer do 
--- 		xPlayer = ESX.GetPlayerFromId(source); 
--- 		Citizen.Wait(0); 
--- 	end
-
--- 	local elements = {}
--- 	for k,v in pairs(items) do
--- 		local item = xPlayer.getInventoryItem(v.name)
--- 		table.insert(elements, {itemLabel = item.label, label = item.label..' : $'..v.price, price = v.price, name = v.name})
--- 	end
--- 	cb(elements)
--- end)
-
-
-
+--------------
+-- Vigneron --
+--------------
 
 -- USE WOODEN BOXES
 RegisterNetEvent('esx_ava_jobs:UseBox')
