@@ -146,13 +146,12 @@ function CreateInventory(name, label, max_weight, identifier, items, playerSourc
 		end
 		local item = self.getItem(name)
 
-		local fromWeight = (self.max_weight - self.actual_weight) % item.weight
+		local fromWeight = math.floor((self.max_weight - self.actual_weight) / item.weight)
 		if self.identifier ~= nil and item.limit ~= -1 then -- only check limit if not shared inventory
 			local fromLimit = item.limit - item.count
 			if fromLimit < 0 then
 				fromLimit = 0
 			end
-
 			return fromLimit < fromWeight and fromLimit or fromWeight
 		else
 			return fromWeight
