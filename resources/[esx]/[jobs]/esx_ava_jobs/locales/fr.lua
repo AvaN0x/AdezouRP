@@ -33,6 +33,15 @@ Locales['fr'] = {
 
 	['access_chest'] = 'Coffre',
 
+	['sell_label'] = '%s : %s unité(s)',
+	['sell_not_that_much'] = 'Tu n\'as pas autant de %s.',
+	['sell_how_much'] = 'Combien voulez-vous vendre ? [Max : %s]s',
+	['seller_for'] = 'Vendeur %s',
+    
+	['buy_label'] = '%s : $%s',
+	['buy_how_much'] = 'Combien voulez-vous en acheter ?',
+	['buyer_for'] = 'Acheteur %s',
+
 	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
 	['buy_you_paid'] = 'Vous avez payé ~r~$',
@@ -43,21 +52,9 @@ Locales['fr'] = {
 
 
 	-- General
-	['amount_invalid'] = 'montant invalide',
-	['billing'] = 'facuration',
-	['invoice_amount'] = 'montant de la facture',
-	['no_players_near'] = 'aucun joueur à proximité',
-	['take_stock'] = 'Prendre Stock',
-	['boss_actions'] = 'action Patron',
-	['quantity'] = 'Quantité',
-	['quantity_invalid'] = '~r~Quantité invalide~w~',
-	['inventory'] = 'Inventaire',
-	['have_withdrawn'] = 'Vous avez retiré x',
-	['added'] = 'Vous avez ajouté x',
+	['boss_actions'] = 'Action Patron',
 
 	-- A modifier selon l'entreprise
-	-- ['process_society_not_enough'] = 'La société n\'a plus ce qu\'il faut dans son coffre',
-	['no_product_sale'] = 'Vous n\'avez plus de produits',
 	['inventoryfull'] = 'Vous n\'avez plus de place',
 
 

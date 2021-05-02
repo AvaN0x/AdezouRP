@@ -10,7 +10,7 @@ local playersProcessing = {}
 
 Citizen.CreateThread(function()
     for jobName, job in pairs(Config.Jobs) do
-        TriggerEvent('esx_phone:registerNumber', jobName, _U('job_client', job.LabelName), true, true)
+        TriggerEvent('esx_phone:registerNumber', jobName, _('job_client', job.LabelName), true, true)
         TriggerEvent('esx_society:registerSociety', jobName, Config.LabelName, job.SocietyName, job.SocietyName, job.SocietyName, {type = 'private'})
     end
 end)
@@ -242,10 +242,10 @@ ESX.RegisterServerCallback('esx_ava_jobs:GetSellElements', function(source, cb, 
         local elements = {}
         for k, v in pairs(zone.Items) do
             local item = inventory.getItem(v.name)
-            
+
             table.insert(elements, {
                 itemLabel = item.label,
-                label = item.label .. ' : ' .. item.count .. ' unité(s)',
+                label = _('sell_label', item.label, item.count),
                 price = v.price,
                 name = v.name,
                 owned = item.count
@@ -286,16 +286,16 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
         local totalprice = tonumber(count)*tonumber(price)
         
         if not inventory.canAddItem(item, count) then
-            TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
+            TriggerClientEvent('esx:showNotification', source, _('buy_cant_carry'))
         elseif xPlayer.getMoney() < totalprice then
-            TriggerClientEvent('esx:showNotification', source, _U('buy_cant_afford'))
+            TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
         else
             TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
             end)
             
             xPlayer.removeMoney(totalprice)
             inventory.addItem(item, count)
-            TriggerClientEvent('esx:showNotification', source, _U('buy_you_paid')..totalprice)
+            TriggerClientEvent('esx:showNotification', source, _('buy_you_paid')..totalprice)
         end
     else
         print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
@@ -313,7 +313,7 @@ ESX.RegisterServerCallback('esx_ava_jobs:GetBuyElements', function(source, cb, j
         local elements = {}
         for k,v in pairs(zone.Items) do
             local item = inventory.getItem(v.name)
-            table.insert(elements, {itemLabel = item.label, label = item.label..' : $'..v.price, price = v.price, name = v.name})
+            table.insert(elements, {itemLabel = item.label, label = _('buy_label', item.label, v.price), price = v.price, name = v.name})
         end
         cb(elements)
     end
@@ -339,7 +339,7 @@ AddEventHandler('esx_ava_jobs:UseBox', function(source, itembox, item)
     local inventory = xPlayer.getInventory()
 
 	if not inventory.canAddItem(item, 6) or not inventory.canAddItem('woodenbox', 6) then
-		TriggerClientEvent('esx:showNotification', source, _U('buy_cant_carry'))
+		TriggerClientEvent('esx:showNotification', source, _('buy_cant_carry'))
 	else
 		inventory.removeItem(itembox, 1)
 		inventory.addItem(item, 6)

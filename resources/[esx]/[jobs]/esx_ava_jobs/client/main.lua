@@ -440,7 +440,7 @@ function OpenJobActionsMenu(jobName)
 	}
 
 	if job.grade == "boss" then
-		table.insert(elements, {label = _U('boss_actions'), value = 'boss_actions'})
+		table.insert(elements, {label = _('boss_actions'), value = 'boss_actions'})
 	end
 
 	ESX.UI.Menu.CloseAll()
@@ -602,7 +602,7 @@ function SellZone(job)
         ESX.UI.Menu.CloseAll()
         ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_seller',
         {
-            title = "Acheteur " .. job.LabelName,
+            title = _('buyer_for', job.LabelName),
             align = 'left',
             elements = elements
         },
@@ -610,7 +610,7 @@ function SellZone(job)
             local count = false
             ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much',
             {
-                title = "Combien voulez-vous vendre ? [Max : " .. data.current.owned .. "]"
+                title = _('sell_how_much', data.current.owned)
             },
             function(data2, menu2)
                 local quantity = tonumber(data2.value)
@@ -631,7 +631,7 @@ function SellZone(job)
                 Citizen.Wait(0);
             end
             if tonumber(count) > tonumber(data.current.owned) then
-                ESX.ShowNotification("Tu n'as pas autant de " .. data.current.itemLabel .. ".")
+                ESX.ShowNotification(_('sell_not_that_much', data.current.itemLabel))
             else
                 TriggerServerEvent('esx_ava_jobs:SellItems', CurrentJobName, CurrentZoneName, job.jobIndex, data.current.name, count)
                 menu.close()
@@ -652,7 +652,7 @@ function BuyZone(job)
         ESX.UI.Menu.CloseAll()
         ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_buyer',
         {
-            title = "Vendeur pour " .. job.LabelName,
+            title = _('seller_for', job.LabelName),
             align = 'left',
             elements = elements
         },
@@ -660,7 +660,7 @@ function BuyZone(job)
             local count = false
             ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'esx_ava_jobs_how_much', 
             {
-                title = "Combien voulez-vous en acheter ?"
+                title = _('buy_how_much')
             },
             function(data2, menu2)
                 local quantity = tonumber(data2.value)
@@ -769,7 +769,7 @@ Citizen.CreateThread(function()
 							spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
                             TriggerServerEvent('esx_ava_jobs:pickUp', nearbyObject.jobName, nearbyObject.name)
 						else
-							ESX.ShowNotification(_U('inventoryfull'))
+							ESX.ShowNotification(_('inventoryfull'))
 						end
 
 						isPickingUp = false
