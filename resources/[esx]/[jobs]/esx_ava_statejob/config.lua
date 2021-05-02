@@ -8,7 +8,7 @@ Config.FacturesDays = 3 -- nb jours pour afficher les factures
 
 Config.ParkingSlotsLimits = {
 	car = {
-		min = 2,
+		min = 3,
 		max = 8
 	},
 	boat = {
