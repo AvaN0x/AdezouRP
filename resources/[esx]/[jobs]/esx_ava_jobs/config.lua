@@ -192,135 +192,143 @@ Config.Jobs = {
             }
         }
     },
-    -- tailor = {
-    --     SocietyName = 'society_tailor',
-    --     LabelName = 'Couturier',
-    --     Blip = {
-    --         Sprite = 366,
-    --         Colour = 0
-    --     },
-    --     Zones = {
-    --         JobActions = {
-    --             Pos = vector3(708.48, -966.69, 29.42),
-    --             Size  = {x = 1.5, y = 1.5, z = 1.0},
-    --             Color = {r = 136, g = 243, b = 216},
-    --             Name  = "Point d'action",
-    --             Marker = 27
-    --         },
-    --         Dressing = {
-    --             Pos = vector3(708.91, -959.63, 29.42),
-    --             Size  = {x = 1.5, y = 1.5, z = 1.0},
-    --             Color = {r = 136, g = 243, b = 216},
-    --             Name  = "Dressing",
-    --             Marker = 27,
-    --             Blip = true
-    --         },
-    --         SocietyGarage = {
-    --             Name  = "Garage véhicule",
-    --             Pos = vector3(719.11, -989.22, 24.12),
-    --             Size  = {x = 2.0, y = 2.0, z = 2.0},
-    --             Color = {r = 0, g = 255, b = 0},
-    --             Marker = 36,
-    --             Type = "car",
-    --             SpawnPoint = {
-    --                 Pos = vector3(719.11, -989.22, 23.12),
-    --                 Heading = 279.0
-    --             },
-    --             Blip = true
-    --         },
-    --     },
-    --     FieldZones = {
-    --         WoolField = {
-    --             Items = {
-    --                 {name = 'wool', quantity = 8}
-    --             },
-    --             Prop = 'prop_mk_race_chevron_02',
-    --             Pos = vector3(1887.45, 4630.05, 37.12),
-    --             GroundCheckHeights = {36, 37, 38, 39, 40, 41},
-    --             Name  = "1. Récolte",
-    --             Blip = true
-    --         },
-    --     },
-    --     ProcessZones = {
-    --         FabricProcess = {
-    --             ItemsGive = {
-    --                 {name = 'wool', quantity = 10}
-    --             },
-    --             ItemsGet = {
-    --                 {name = 'fabric', quantity = 4}
-    --             },
-    --             Delay = 4000,
-    --             Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-    --             Pos = vector3(712.75, -973.78, 29.42),
-    --             Size  = {x = 2.5, y = 2.5, z = 1.5},
-    --             Color = {r = 252, g = 186, b = 3},
-    --             Name  = "2. Traitement laine",
-    --             Marker = 27,
-    --             Blip = true
-    --         },
-    --         ClotheProcess = {
-    --             ItemsGive = {
-    --                 {name = 'fabric', quantity = 2}
-    --             },
-    --             ItemsGet = {
-    --                 {name = 'clothe', quantity = 1}
-    --             },
-    --             Delay = 4000,
-    --             Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-    --             Pos = vector3(716.5, -961.82, 29.42),
-    --             Size  = {x = 2.5, y = 2.5, z = 1.5},
-    --             Color = {r = 252, g = 186, b = 3},
-    --             Name  = "3. Traitement du tissu",
-    --             NoInterim = false,
-    --             Marker = 27,
-    --             Blip = true
-    --         },
-    --         ClothesBoxProcess = {
-    --             ItemsGive = {
-    --                 {name = 'clothe', quantity = 9},
-    --                 {name = 'cardboardbox', quantity = 1}
-    --             },
-    --             ItemsGet = {
-    --                 {name = 'clothebox', quantity = 1}
-    --             },
-    --             Delay = 3000,
-    --             Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-    --             Pos = vector3(718.73, -973.74, 29.42),
-    --             Size  = {x = 2.5, y = 2.5, z = 1.5},
-    --             Color = {r = 252, g = 186, b = 3},
-    --             Name  = "5. Mise en caisse des vetements",
-    --             NoInterim = false,
-    --             Marker = 27,
-    --             Blip = true
-    --         }
-    --     },
-    --     SellZones = {
-    --         ClothesSell = {
-    --             Items = {
-    --                 {name = 'clothebox', price = 1420}
-    --             },
-    --             Pos = vector3(71.67, -1390.47, 28.4),
-    --             Size  = {x = 1.5, y = 1.5, z = 1.5},
-    --             Color = {r = 136, g = 232, b = 9},
-    --             Name  = "6. Vente des produits",
-    --             Marker = 27,
-    --             Blip = true
-    --         }
-    --     },
-    --     BuyZones = {
-    --         BuyBox = {
-    --             Items = {
-    --                 {name = 'cardboardbox', price = 20}
-    --             },
-    --             Pos = vector3(406.5, -350.02, 45.84),
-    --             Size  = {x = 1.5, y = 1.5, z = 1.5},
-    --             Color = {r = 136, g = 232, b = 9},
-    --             Name  = "4. Achat de cartons",
-    --             Marker = 27,
-    --             Blip = true
-    --         }
-    --     }
-    -- },
+    tailor = {
+        SocietyName = 'society_tailor',
+        LabelName = 'Couturier',
+        Blip = {
+            Sprite = 366,
+            Colour = 0
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(708.48, -966.69, 29.42),
+                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name  = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27
+            },
+            Dressing = {
+                Pos = vector3(708.91, -959.63, 29.42),
+                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name  = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Blip = true
+            },
+            SocietyGarage = {
+                Name  = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(719.11, -989.22, 24.12),
+                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 255, b = 0},
+                Marker = 36,
+                Type = "car",
+                SpawnPoint = {
+                    Pos = vector3(719.11, -989.22, 23.12),
+                    Heading = 279.0
+                },
+                Blip = true
+            },
+        },
+        FieldZones = {
+            WoolField = {
+                Items = {
+                    {name = 'wool', quantity = 8}
+                },
+                Prop = 'prop_mk_race_chevron_02',
+                Pos = vector3(1887.45, 4630.05, 37.12),
+                GroundCheckHeights = {36, 37, 38, 39, 40, 41},
+                Name  = "1. Récolte",
+                Blip = true
+            },
+        },
+        ProcessZones = {
+            FabricProcess = {
+                ItemsGive = {
+                    {name = 'wool', quantity = 10}
+                },
+                ItemsGet = {
+                    {name = 'fabric', quantity = 4}
+                },
+                Delay = 4000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(712.75, -973.78, 29.42),
+                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Color = {r = 252, g = 186, b = 3},
+                Name  = "2. Traitement laine",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = true
+            },
+            ClotheProcess = {
+                ItemsGive = {
+                    {name = 'fabric', quantity = 2}
+                },
+                ItemsGet = {
+                    {name = 'clothe', quantity = 1}
+                },
+                Delay = 4000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(716.5, -961.82, 29.42),
+                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Color = {r = 252, g = 186, b = 3},
+                Name  = "3. Traitement du tissu",
+                HelpText = _('press_traitement'),
+                NoInterim = false,
+                Marker = 27,
+                Blip = true
+            },
+            ClothesBoxProcess = {
+                ItemsGive = {
+                    {name = 'clothe', quantity = 9},
+                    {name = 'cardboardbox', quantity = 1}
+                },
+                ItemsGet = {
+                    {name = 'clothebox', quantity = 1}
+                },
+                Delay = 3000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(718.73, -973.74, 29.42),
+                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Color = {r = 252, g = 186, b = 3},
+                Name  = "5. Mise en caisse des vetements",
+                HelpText = _('press_traitement'),
+                NoInterim = false,
+                Marker = 27,
+                Blip = true
+            }
+        },
+        SellZones = {
+            ClothesSell = {
+                Items = {
+                    {name = 'clothebox', price = 1420}
+                },
+                Pos = vector3(71.67, -1390.47, 28.4),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 136, g = 232, b = 9},
+                Name  = "6. Vente des produits",
+                HelpText = _('press_sell'),
+                Marker = 27,
+                Blip = true
+            }
+        },
+        BuyZones = {
+            BuyBox = {
+                Items = {
+                    {name = 'cardboardbox', price = 20}
+                },
+                Pos = vector3(406.5, -350.02, 45.84),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 136, g = 232, b = 9},
+                Name  = "4. Achat de cartons",
+                HelpText = _('press_buy'),
+                Marker = 27,
+                Blip = true
+            }
+        }
+    },
 
 }
 

@@ -277,7 +277,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(200)
+		Wait(100)
         local isInMarker  = false
         local zoneNamePlayerIsIn = nil
         local zoneCategoryPlayerIsIn = nil
@@ -285,13 +285,12 @@ Citizen.CreateThread(function()
         local zoneJob = nil
 
         for jobName, job in pairs(playerJobs) do
-            zoneJob = jobName
-            
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
                     if (k ~= 'JobActions' or job.grade ~= 'interim') then
                         if (#(playerCoords - v.Pos) < v.Size.x) then
                             isInMarker = true
+                            zoneJob = jobName
                             zoneCategoryPlayerIsIn = "Zones"
                             zoneNamePlayerIsIn = k
                             zonePlayerIsIn = v
@@ -303,6 +302,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.ProcessZones) do
                     if (#(playerCoords - v.Pos) < 2) then
                         isInMarker = true
+                        zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessZones"
                         zoneNamePlayerIsIn = k
                         zonePlayerIsIn = v
@@ -313,6 +313,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.ProcessMenuZones) do
                     if (#(playerCoords - v.Pos) < 2) then
                         isInMarker = true
+                        zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessMenuZones"
                         zoneNamePlayerIsIn = k
                         zonePlayerIsIn = v
@@ -323,6 +324,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.SellZones) do
                     if (#(playerCoords - v.Pos) < 2) then
                         isInMarker = true
+                        zoneJob = jobName
                         zoneCategoryPlayerIsIn = "SellZones"
                         zoneNamePlayerIsIn = k
                         zonePlayerIsIn = v
@@ -333,6 +335,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.BuyZones) do
                     if (#(playerCoords - v.Pos) < 2) then
                         isInMarker = true
+                        zoneJob = jobName
                         zoneCategoryPlayerIsIn = "BuyZones"
                         zoneNamePlayerIsIn = k
                         zonePlayerIsIn = v
@@ -715,7 +718,7 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
 			for k, v in pairs(job.FieldZones) do
 				if #(playerCoords - v.Pos) < 20 then
-					Spawnplants(k, v)
+					Spawnplants(jobName, k, v)
 					Citizen.Wait(500)
 				else
 					Citizen.Wait(500)
@@ -764,14 +767,14 @@ Citizen.CreateThread(function()
 
 							local sPIndex = spawnedPlantsFindName(nearbyObject.name)
 							spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
-                            TriggerServerEvent('esx_ava_jobs:pickUp', jobName, nearbyObject.name)
+                            TriggerServerEvent('esx_ava_jobs:pickUp', nearbyObject.jobName, nearbyObject.name)
 						else
 							ESX.ShowNotification(_U('inventoryfull'))
 						end
 
 						isPickingUp = false
 
-					end, jobName, nearbyObject.name)
+					end, nearbyObject.jobName, nearbyObject.name)
 				end
 
 			else
@@ -783,10 +786,10 @@ Citizen.CreateThread(function()
 
 end)
 
-function Spawnplants(k, v)
+function Spawnplants(jobName, k, v)
 	local sPIndex = spawnedPlantsFindName(k)
 	if sPIndex == nil then
-		table.insert(spawnedPlants, {name = k, quantity = 0})
+		table.insert(spawnedPlants, {jobName = jobName, name = k, quantity = 0})
 		sPIndex = spawnedPlantsFindName(k)
 	end
 
@@ -798,7 +801,7 @@ function Spawnplants(k, v)
 			PlaceObjectOnGroundProperly(obj)
 			FreezeEntityPosition(obj, true)
 
-			table.insert(plants, {obj = obj, name = k})
+			table.insert(plants, {obj = obj, jobName = jobName, name = k})
 			spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity + 1
 		end)
 	end
