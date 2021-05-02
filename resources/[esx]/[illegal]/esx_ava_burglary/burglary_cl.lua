@@ -79,7 +79,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(10)
+		Citizen.Wait(5)
 		if thisHouse and not isInside then
 			if thisHouse.state == 0 then
 				DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, _U('house_weak_door'), 0.3)
@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
 					LoopExit()
 					ResetBurglary()
 					while isInside do
-						Citizen.Wait(10)
+						Citizen.Wait(5)
 						local playerPed = PlayerPedId()
 						local coords = GetEntityCoords(playerPed)
 						for k, v in ipairs(Config.Furnitures) do
