@@ -21,6 +21,9 @@ local CurrentHelpText = nil
 local CurrentJobName = nil
 local CurrentActionEnabled = false
 
+local spawnedPlants = {}
+local plants = {}
+
 
 
 Citizen.CreateThread(function()
@@ -71,11 +74,12 @@ end)
 
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
-        -- if plants then
-        --     for k, v in pairs(plants) do
-        --         ESX.Game.DeleteObject(v.obj)
-        --     end
-        -- end
+        if plants then
+            for k, v in pairs(plants) do
+                ESX.Game.DeleteObject(v.obj)
+                print(k)
+            end
+        end
         if mainBlips then
             for _, blip in ipairs(mainBlips) do
                 RemoveBlip(blip)
@@ -693,8 +697,6 @@ end
 -- récolte --
 -------------
 
-local spawnedPlants = {}
-local plants = {}
 local isPickingUp = false
 
 local function spawnedPlantsFindName(name)
@@ -708,87 +710,76 @@ local function spawnedPlantsFindName(name)
 end
 
 Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(10)
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-	-- 		local coords = GetEntityCoords(PlayerPedId())
-	-- 		for k,v in pairs(Config.FieldZones) do
-
-	-- 			if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 20 then
-	-- 				Spawnplants(k, v)
-	-- 				Citizen.Wait(500)
-	-- 			else
-	-- 				Citizen.Wait(500)
-	-- 			end
-	-- 		end
-	-- 		-- for debug
-	-- 		-- for i=1, #spawnedPlants, 1 do
-	-- 		-- 	print(spawnedPlants[i].name ..' : '.. spawnedPlants[i].quantity)
-	-- 		-- end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
-	-- end
+	while true do
+		Citizen.Wait(200)
+        for jobName, job in pairs(playerJobs) do
+			for k, v in pairs(job.FieldZones) do
+				if #(playerCoords - v.Pos) < 20 then
+					Spawnplants(k, v)
+					Citizen.Wait(500)
+				else
+					Citizen.Wait(500)
+				end
+			end
+			-- for debug
+			-- for i=1, #spawnedPlants, 1 do
+			-- 	print(spawnedPlants[i].name ..' : '.. spawnedPlants[i].quantity)
+			-- end
+		end
+	end
 end)
 
 Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(0)
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
+	while true do
+		Citizen.Wait(0)
+        for jobName, job in pairs(playerJobs) do
+			local playerPed = PlayerPedId()
+			local nearbyObject, nearbyID
 
-	-- 		local playerPed = PlayerPedId()
-	-- 		local coords = GetEntityCoords(playerPed)
-	-- 		local nearbyObject, nearbyID
+			for i=1, #plants, 1 do
+				if #(playerCoords - GetEntityCoords(plants[i].obj)) < 1 then
+					nearbyObject, nearbyID = plants[i], i
+				end
+			end
 
-	-- 		for i=1, #plants, 1 do
-	-- 			if GetDistanceBetweenCoords(coords, GetEntityCoords(plants[i].obj), false) < 1 then
-	-- 				nearbyObject, nearbyID = plants[i], i
-	-- 			end
-	-- 		end
+			if nearbyObject and nearbyObject.obj and IsPedOnFoot(playerPed) then
 
-	-- 		if nearbyObject and nearbyObject.obj and IsPedOnFoot(playerPed) then
+				if not isPickingUp then
+					ESX.ShowHelpNotification(_('press_collect'))
+				end
 
-	-- 			if not isPickingUp then
-	-- 				ESX.ShowHelpNotification(_U('press_collect'))
-	-- 			end
+				if IsControlJustReleased(0, 38) and not isPickingUp then -- E
+					isPickingUp = true
 
-	-- 			if IsControlJustReleased(0, Keys['E']) and not isPickingUp then
-	-- 				isPickingUp = true
+					ESX.TriggerServerCallback('esx_ava_jobs:canPickUp', function(canPickUp)
+						if canPickUp then
+							TaskStartScenarioInPlace(playerPed, 'world_human_gardener_plant', 0, false)
 
-	-- 				ESX.TriggerServerCallback('esx_ava_vigneronjob:canPickUp', function(canPickUp)
+							Citizen.Wait(2000)
+							ClearPedTasks(playerPed)
 
-	-- 					if canPickUp then
-	-- 						TaskStartScenarioInPlace(playerPed, 'world_human_gardener_plant', 0, false)
+                            ESX.Game.DeleteObject(nearbyObject.obj)
 
-	-- 						Citizen.Wait(2000)
-	-- 						ClearPedTasks(playerPed)
-			
-	-- 						ESX.Game.DeleteObject(nearbyObject.obj)
-			
-	-- 						table.remove(plants, nearbyID)
+                            table.remove(plants, nearbyID)
 
-	-- 						local sPIndex = spawnedPlantsFindName(nearbyObject.name)
-	-- 						spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
-	-- 						for i=1, #nearbyObject.items, 1 do
-	-- 							TriggerServerEvent('esx_ava_vigneronjob:pickUp', nearbyObject.items[i])
-	-- 						end
-	-- 					else
-	-- 						ESX.ShowNotification(_U('inventoryfull'))
-	-- 					end
+							local sPIndex = spawnedPlantsFindName(nearbyObject.name)
+							spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
+                            TriggerServerEvent('esx_ava_jobs:pickUp', jobName, nearbyObject.name)
+						else
+							ESX.ShowNotification(_U('inventoryfull'))
+						end
 
-	-- 					isPickingUp = false
+						isPickingUp = false
 
-	-- 				end, nearbyObject.items)
-	-- 			end
+					end, jobName, nearbyObject.name)
+				end
 
-	-- 		else
-	-- 			Citizen.Wait(500)
-	-- 		end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
+			else
+				Citizen.Wait(500)
+			end
+		end
 
-	-- end
+	end
 
 end)
 
@@ -807,7 +798,7 @@ function Spawnplants(k, v)
 			PlaceObjectOnGroundProperly(obj)
 			FreezeEntityPosition(obj, true)
 
-			table.insert(plants, {obj = obj, items = v.Items, name = k})
+			table.insert(plants, {obj = obj, name = k})
 			spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity + 1
 		end)
 	end
@@ -845,12 +836,12 @@ function ValidateplantCoord(plantCoord, k, v)
 		local validate = true
 
 		for k, v in pairs(plants) do
-			if GetDistanceBetweenCoords(plantCoord, GetEntityCoords(v.obj), true) < 5 then
+			if #(plantCoord - GetEntityCoords(v.obj)) < 5 then
 				validate = false
 			end
 		end
 
-		if GetDistanceBetweenCoords(plantCoord, v.Pos.x, v.Pos.y, v.Pos.z, false) > 50 then
+		if #(plantCoord - v.Pos) > 50 then
 			validate = false
 		end
 
@@ -877,257 +868,3 @@ end
 
 
 
-----------------
--- TRAITEMENT --
-----------------
-
--- local isProcessing = false
-
--- Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(0)
-	-- 	local playerPed = PlayerPedId()
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-	-- 		local coords = GetEntityCoords(PlayerPedId())
-	-- 		local foundZone = false
-	-- 		for k,v in pairs(Config.ProcessZones) do
-	-- 			if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 2 then
-	-- 				foundZone = true
-	-- 				if not v.NoInterim or 
-	-- 				(v.NoInterim and (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName and PlayerData.job.grade_name ~= 'interim') 
-	-- 				or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName and PlayerData.job2.grade_name ~= 'interim'))
-	-- 				then
-	-- 					if not isProcessing then
-	-- 						ESX.ShowHelpNotification(_U('press_traitement'))
-	-- 					end
-
-	-- 					if IsControlJustReleased(0, Keys['E']) and not isProcessing then
-	-- 						Process(v)
-	-- 					end
-	-- 				else
-	-- 					ESX.ShowHelpNotification(_U('no_interim'))
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 		if not foundZone then
-	-- 			Citizen.Wait(500)
-	-- 		end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
-	-- end
--- end)
-
--- Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(0)
-	-- 	local playerPed = PlayerPedId()
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-	-- 		local coords = GetEntityCoords(PlayerPedId())
-	-- 		local foundZone = false
-	-- 		for k,v in pairs(Config.ProcessMenuZones) do
-	-- 			if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 2 then
-	-- 				foundZone = true
-	-- 				if not isProcessing then
-	-- 					ESX.ShowHelpNotification(_U('press_traitement'))
-	-- 				end
-
-	-- 				if IsControlJustReleased(0, Keys['E']) and not isProcessing then
-	-- 					local elements = {}
-	-- 					for k2, v2 in pairs(v.Process) do
-	-- 						table.insert(elements, {label = v2.Name, delay = v2.Delay, value = v2})
-	-- 					end
-	-- 					ESX.UI.Menu.CloseAll()
-	-- 					isProcessing = true
-	-- 					ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_process',{ title = v.Title, align = 'left', elements = elements },
-	-- 						function(data,menu) 
-	-- 							local count = false 
-	-- 							ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much', {title = "Combien voulez-vous en traiter ? [Max : "..v.MaxProcess.."]"}, 
-	-- 								function(data2, menu2)
-	-- 									local quantity = tonumber(data2.value)
-					
-	-- 									if quantity == nil or quantity < 1 or quantity > v.MaxProcess then
-	-- 										ESX.ShowNotification(_U('amount_invalid'))
-	-- 									else
-	-- 										count = quantity
-	-- 										menu2.close()
-	-- 									end
-	-- 								end, 
-	-- 								function(data2, menu2)
-	-- 									menu2.close()
-	-- 								end
-	-- 							)
-	-- 							while not count do 
-	-- 								Citizen.Wait(0); 
-	-- 							end
-	-- 							menu.close()
-
-	-- 							for i = 1, count, 1 do
-	-- 								Process(data.current.value)
-	-- 								Citizen.Wait(data.current.delay + 500)
-	-- 							end
-	-- 							ClearPedTasks(playerPed)
-
-	-- 							isProcessing = false
-	-- 							Citizen.Wait(1500)
-	-- 						end,
-	-- 						function(data,menu)
-	-- 							menu.close()
-	-- 							isProcessing = false
-	-- 						end
-	-- 					)
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 		if not foundZone then
-	-- 			Citizen.Wait(500)
-	-- 		end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
-	-- end
--- end)
-
-
-
-
-
--------------
--- selling --
--------------
-
-local isSelling = false
-
-Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(0)
-	-- 	local playerPed = PlayerPedId()
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-	-- 		local coords = GetEntityCoords(PlayerPedId())
-	-- 		local foundZone = false
-	-- 		for k,v in pairs(Config.SellZones) do
-	-- 			if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 2 then
-	-- 				foundZone = true
-	-- 				if not isSelling then
-	-- 					ESX.ShowHelpNotification(_U('press_sell'))
-	-- 				end
-
-	-- 				if IsControlJustReleased(0, Keys['E']) then
-	-- 					ESX.TriggerServerCallback('esx_ava_vigneronjob:GetSellElements', function(elements)
-	-- 						ESX.UI.Menu.CloseAll()
-	-- 						isSelling = true
-	-- 						ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_seller',{ title = "Acheteur "..Config.LabelName, align = 'left', elements = elements },
-	-- 							function(data,menu) 
-	-- 								local count = false 
-	-- 								ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much', {title = "Combien voulez-vous vendre ? [Max : "..data.current.owned.."]"}, 
-	-- 									function(data2, menu2)
-	-- 										local quantity = tonumber(data2.value)
-						
-	-- 										if quantity == nil then
-	-- 											ESX.ShowNotification(_U('amount_invalid'))
-	-- 										else
-	-- 											count = quantity
-	-- 											menu2.close()
-	-- 										end
-	-- 									end, 
-	-- 									function(data2, menu2)
-	-- 										menu2.close()
-	-- 									end
-	-- 								)
-	-- 								while not count do 
-	-- 									Citizen.Wait(0); 
-	-- 								end
-	-- 								if tonumber(count) > tonumber(data.current.owned) then 
-	-- 									ESX.ShowNotification("Tu n'as pas autant de "..data.current.itemLabel..".")
-	-- 								else 
-	-- 									TriggerServerEvent('esx_ava_vigneronjob:SellItems',data.current.name,data.current.price,count)
-	-- 									menu.close()
-	-- 									isSelling = false
-	-- 									Citizen.Wait(1500)
-	-- 								end
-	-- 							end,
-	-- 							function(data,menu)
-	-- 								menu.close()
-	-- 								isSelling = false
-	-- 							end
-	-- 						)
-	-- 					end, v.Items)
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 		if not foundZone then
-	-- 			Citizen.Wait(500)
-	-- 		end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
-	-- end
-end)
-
-
--------------
--- buying --
--------------
-
-local isBuying = false
-
-Citizen.CreateThread(function()
-	-- while true do
-	-- 	Citizen.Wait(0)
-	-- 	local playerPed = PlayerPedId()
-	-- 	if (PlayerData.job ~= nil and PlayerData.job.name == Config.JobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == Config.JobName) then
-	-- 		local coords = GetEntityCoords(PlayerPedId())
-	-- 		local foundZone = false
-	-- 		for k,v in pairs(Config.BuyZones) do
-	-- 			if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < 2 then
-	-- 				foundZone = true
-	-- 				if not isBuying then
-	-- 					ESX.ShowHelpNotification(_U('press_buy'))
-	-- 				end
-
-	-- 				if IsControlJustReleased(0, Keys['E']) then
-	-- 					ESX.TriggerServerCallback('esx_ava_vigneronjob:GetBuyElements', function(elements)
-	-- 						ESX.UI.Menu.CloseAll()
-	-- 						isBuying = true
-	-- 						ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_buyer',{ title = "Vendeur pour "..Config.LabelName, align = 'left', elements = elements },
-	-- 							function(data,menu) 
-	-- 								local count = false 
-	-- 								ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much', {title = "Combien voulez-vous en acheter ?"}, 
-	-- 									function(data2, menu2)
-	-- 										local quantity = tonumber(data2.value)
-						
-	-- 										if quantity == nil then
-	-- 											ESX.ShowNotification(_U('amount_invalid'))
-	-- 										else
-	-- 											count = quantity
-	-- 											menu2.close()
-	-- 										end
-	-- 									end, 
-	-- 									function(data2, menu2)
-	-- 										menu2.close()
-	-- 									end
-	-- 								)
-	-- 								while not count do 
-	-- 									Citizen.Wait(0); 
-	-- 								end
-	-- 								TriggerServerEvent('esx_ava_vigneronjob:BuyItems',data.current.name,data.current.price,count)
-	-- 								isBuying = false
-	-- 								Citizen.Wait(1500)
-	-- 							end,
-	-- 							function(data,menu)
-	-- 								menu.close()
-	-- 								isBuying = false
-	-- 							end
-	-- 						)
-	-- 					end, v.Items)
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 		if not foundZone then
-	-- 			Citizen.Wait(500)
-	-- 		end
-	-- 	else 
-	-- 		Citizen.Wait(10000)
-	-- 	end
-	-- end
-end)

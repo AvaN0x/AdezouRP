@@ -27,41 +27,48 @@ end)
 -- -------------
 
 
--- ESX.RegisterServerCallback('esx_ava_vigneronjob:canPickUp', function(source, cb, items)
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	local result = false
--- 	for i=1, #items, 1 do
+ESX.RegisterServerCallback('esx_ava_jobs:canPickUp', function(source, cb, jobName, zoneName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+	local result = false
 
--- 		local xItem = xPlayer.getInventoryItem(items[i].name)
+    local job = Config.Jobs[jobName]
+    local zone = job.FieldZones[zoneName]
 
--- 		if not (xItem.limit ~= -1 and xItem.count >= xItem.limit) then
--- 			if not result then
--- 				result = true
--- 			end
--- 		end
--- 	end
--- 	cb(result)
--- end)
+    if zone then
+        for k, item in ipairs(zone.Items) do
+            if inventory.canTake(item.name) > 0 then
+                result = true
+            end
+        end
+    end
+    cb(result)
+end)
 
--- RegisterServerEvent('esx_ava_vigneronjob:pickUp')
--- AddEventHandler('esx_ava_vigneronjob:pickUp', function(item)
--- 	local xPlayer = ESX.GetPlayerFromId(source)
--- 	local xItem = xPlayer.getInventoryItem(item.name)
+RegisterServerEvent('esx_ava_jobs:pickUp')
+AddEventHandler('esx_ava_jobs:pickUp', function(jobName, zoneName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
 
--- 	if xItem.limit ~= -1 and (xItem.count + item.quantity) > xItem.limit then
--- 		if xItem.count < xItem.limit then
--- 			xPlayer.addInventoryItem(xItem.name, xItem.limit - xItem.count)
--- 		end
--- 	else
--- 		xPlayer.addInventoryItem(xItem.name, item.quantity)
--- 	end
--- end)
+    local job = Config.Jobs[jobName]
+    local zone = job.FieldZones[zoneName]
+
+    if zone then
+        for k, item in ipairs(zone.Items) do
+            local canTake = inventory.canTake(item.name)
+            if canTake > 0 then
+                inventory.addItem(item.name, (canTake > item.quantity and item.quantity or canTake))
+            end
+        end
+    end
+
+end)
 
 
 
--- ----------------
--- -- TRAITEMENT --
--- ----------------
+----------------
+-- TRAITEMENT --
+----------------
 
 local function canCarryAll(source, items)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -153,9 +160,9 @@ end)
 
 
 
--- -------------
--- -- selling --
--- -------------
+-------------
+-- selling --
+-------------
 
 
 RegisterNetEvent('esx_ava_jobs:SellItems')
@@ -311,6 +318,8 @@ ESX.RegisterServerCallback('esx_ava_jobs:GetBuyElements', function(source, cb, j
         cb(elements)
     end
 end)
+
+
 
 
 
