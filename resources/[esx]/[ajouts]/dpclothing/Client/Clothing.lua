@@ -73,7 +73,7 @@ local Extras = {
 	["Shirt"] = {
 		Drawable = 11,
 		Table = {
-			Standalone = true, Male = 252, Female = 74,
+			Standalone = true, Male = 252, Female = 15,
 			Extra = { 
 						{ Drawable = 8, Id = 15, Tex = 0, Name = "Extra Undershirt"},
 			 			{ Drawable = 3, Id = 15, Tex = 0, Name = "Extra Gloves"},
@@ -84,7 +84,7 @@ local Extras = {
 	},
 	["Pants"] = {
 		Drawable = 4,
-		Table = { Standalone = true, Male = 61, Female = 14 },
+		Table = { Standalone = true, Male = 21, Female = 15 },
 		Emote = { Dict = "re@construction", Anim = "out_of_breath", Move = 51, Dur = 1300 }
 	},
 	["Bagoff"] = {
