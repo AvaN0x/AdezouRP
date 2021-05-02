@@ -396,130 +396,19 @@ Citizen.CreateThread(function()
                     if CurrentZoneName == 'JobActions' then
                         OpenJobActionsMenu(CurrentJobName)
                     elseif CurrentZoneName == 'Dressing' then
-                        OpenCloakroomMenu(playerJobs[CurrentJobName].jobIndex)
+                        OpenCloakroomMenu(job.jobIndex)
                     elseif CurrentZoneName == 'SocietyGarage' then
-                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', playerJobs[CurrentJobName].SocietyName, playerJobs[CurrentJobName].Zones.SocietyGarage)
+                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, job.Zones.SocietyGarage)
                     end
-
-
 
                 elseif CurrentZoneCategory == "ProcessZones" then
-					if not CurrentZoneValue.NoInterim or
-                    (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
-					then
-                        Process(CurrentZoneValue)
-                        CurrentActionEnabled = true
-					else
-						ESX.ShowHelpNotification(_U('no_interim'))
-					end
-
-
+                    ProcessZone(job)
 
                 elseif CurrentZoneCategory == "ProcessMenuZones" then
-                    local playerPed = PlayerPedId()
-
-                    local elements = {}
-                    for k, v in pairs(CurrentZoneValue.Process) do
-                        table.insert(elements, {label = v.Name, delay = v.Delay, value = v})
-                    end
-
-                    ESX.UI.Menu.CloseAll()
-                    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_process',
-                    {
-                        title = CurrentZoneValue.Title,
-                        align = 'left',
-                        elements = elements
-                    },
-                    function(data,menu)
-                        local count = false
-                        ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'esx_ava_jobs_how_much',
-                        {
-                            title = _('process_how_much', CurrentZoneValue.MaxProcess)
-                        },
-                        function(data2, menu2)
-                            local quantity = tonumber(data2.value)
-
-                            if quantity == nil or quantity < 1 or quantity > CurrentZoneValue.MaxProcess then
-                                ESX.ShowNotification(_U('amount_invalid'))
-                            else
-                                count = quantity
-                                menu2.close()
-                            end
-                        end,
-                        function(data2, menu2)
-                            menu2.close()
-                        end)
-
-
-                        while not count do
-                            Citizen.Wait(0);
-                        end
-                        menu.close()
-
-                        for i = 1, count, 1 do
-                            Process(data.current.value)
-                            Citizen.Wait(data.current.delay + 500)
-                        end
-                        ClearPedTasks(playerPed)
-
-                        CurrentActionEnabled = true
-                        Citizen.Wait(1500)
-                    end,
-                    function(data,menu)
-                        menu.close()
-                        CurrentActionEnabled = true
-                    end)
-
-
+                    ProcessMenuZone(job)
 
                 elseif CurrentZoneCategory == "SellZones" then
-                    ESX.TriggerServerCallback('esx_ava_jobs:GetSellElements', function(elements)
-                        ESX.UI.Menu.CloseAll()
-                        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_seller',
-                        {
-                            title = "Acheteur " .. job.LabelName,
-                            align = 'left',
-                            elements = elements
-                        },
-                        function(data,menu)
-                            local count = false
-                            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much',
-                            {
-                                title = "Combien voulez-vous vendre ? [Max : " .. data.current.owned .. "]"
-                            },
-                            function(data2, menu2)
-                                local quantity = tonumber(data2.value)
-
-                                if quantity == nil then
-                                    ESX.ShowNotification(_U('amount_invalid'))
-                                else
-                                    count = quantity
-                                    menu2.close()
-                                end
-                            end,
-                            function(data2, menu2)
-                                menu2.close()
-                            end)
-
-
-                            while not count do
-                                Citizen.Wait(0);
-                            end
-                            if tonumber(count) > tonumber(data.current.owned) then
-                                ESX.ShowNotification("Tu n'as pas autant de " .. data.current.itemLabel .. ".")
-                            else
-                                TriggerServerEvent('esx_ava_jobs:SellItems', CurrentJobName, CurrentZoneName, job.jobIndex, data.current.name, count)
-                                menu.close()
-                                CurrentActionEnabled = true
-                                Citizen.Wait(1500)
-                            end
-                        end,
-                        function(data,menu)
-                            menu.close()
-                            CurrentActionEnabled = true
-                        end)
-                    end, CurrentZoneValue.Items)
-
+                    SellZone(job)
 
                 elseif CurrentZoneCategory == "BuyZones" then
 
@@ -608,8 +497,6 @@ function OpenCloakroomMenu(jobIndex)
 
 end
 
-
-
 function Process(process)
 	ESX.TriggerServerCallback('esx_ava_jobs:canprocess', function(canProcess)
 		if canProcess then
@@ -634,11 +521,124 @@ function Process(process)
 	end, process)
 end
 
+function ProcessZone(job)
+    if not CurrentZoneValue.NoInterim or
+        (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
+    then
+        Process(CurrentZoneValue)
+        Citizen.Wait(CurrentZoneValue.Delay + 1000)
+        CurrentActionEnabled = true
+    else
+        ESX.ShowHelpNotification(_U('no_interim'))
+    end
+end
+
+function ProcessMenuZone(job)
+    local playerPed = PlayerPedId()
+
+    local elements = {}
+    for k, v in pairs(CurrentZoneValue.Process) do
+        table.insert(elements, {label = v.Name, delay = v.Delay, value = v})
+    end
+
+    ESX.UI.Menu.CloseAll()
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_process',
+    {
+        title = CurrentZoneValue.Title,
+        align = 'left',
+        elements = elements
+    },
+    function(data,menu)
+        local count = false
+        ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'esx_ava_jobs_how_much',
+        {
+            title = _('process_how_much', CurrentZoneValue.MaxProcess)
+        },
+        function(data2, menu2)
+            local quantity = tonumber(data2.value)
+
+            if quantity == nil or quantity < 1 or quantity > CurrentZoneValue.MaxProcess then
+                ESX.ShowNotification(_U('amount_invalid'))
+            else
+                count = quantity
+                menu2.close()
+            end
+        end,
+        function(data2, menu2)
+            menu2.close()
+        end)
 
 
+        while not count do
+            Citizen.Wait(0);
+        end
+        menu.close()
+
+        for i = 1, count, 1 do
+            Process(data.current.value)
+            Citizen.Wait(data.current.delay + 500)
+        end
+        ClearPedTasks(playerPed)
+
+        CurrentActionEnabled = true
+        Citizen.Wait(1500)
+    end,
+    function(data,menu)
+        menu.close()
+        CurrentActionEnabled = true
+    end)
+
+end
+
+function SellZone(job)
+    ESX.TriggerServerCallback('esx_ava_jobs:GetSellElements', function(elements)
+        ESX.UI.Menu.CloseAll()
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_seller',
+        {
+            title = "Acheteur " .. job.LabelName,
+            align = 'left',
+            elements = elements
+        },
+        function(data,menu)
+            local count = false
+            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'how_much',
+            {
+                title = "Combien voulez-vous vendre ? [Max : " .. data.current.owned .. "]"
+            },
+            function(data2, menu2)
+                local quantity = tonumber(data2.value)
+
+                if quantity == nil then
+                    ESX.ShowNotification(_U('amount_invalid'))
+                else
+                    count = quantity
+                    menu2.close()
+                end
+            end,
+            function(data2, menu2)
+                menu2.close()
+            end)
 
 
+            while not count do
+                Citizen.Wait(0);
+            end
+            if tonumber(count) > tonumber(data.current.owned) then
+                ESX.ShowNotification("Tu n'as pas autant de " .. data.current.itemLabel .. ".")
+            else
+                TriggerServerEvent('esx_ava_jobs:SellItems', CurrentJobName, CurrentZoneName, job.jobIndex, data.current.name, count)
+                menu.close()
+                CurrentActionEnabled = true
+                Citizen.Wait(1500)
+            end
+        end,
+        function(data,menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end, CurrentZoneValue.Items)
 
+end
 
 
 
