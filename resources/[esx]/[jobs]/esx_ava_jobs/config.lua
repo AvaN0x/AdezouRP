@@ -17,7 +17,7 @@ Config.Jobs = {
         },
         Zones = {
             JobActions = {
-                Pos = vector3(-1876.1, 2062.52, 144.59),
+                Pos = vector3(-1895.18, 2063.98, 140.03),
                 Size  = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name  = "Point d'action",
