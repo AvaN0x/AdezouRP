@@ -25,7 +25,7 @@ Config.Jobs = {
                 Marker = 27
             },
             Dressing = {
-                Pos = vector3(-1870.68, 2056.32, 140.0),
+                Pos = vector3(-1874.90, 2054.53, 140.09),
                 Size  = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name  = "Dressing",
@@ -71,7 +71,7 @@ Config.Jobs = {
                 },
                 Delay = 6000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-1928.48, 2060.74, 139.86),
+                Pos = vector3(-1930.97, 2055.08, 139.83),
                 Size  = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name  = "2. Traitement vin",
@@ -89,7 +89,7 @@ Config.Jobs = {
                 },
                 Delay = 8000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-1855.59, 2060.92, 140.05),
+                Pos = vector3(-1866.50, 2058.95, 140.02),
                 Size  = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name  = "Traitement champagne et grand cru",
