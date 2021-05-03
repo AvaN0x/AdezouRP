@@ -681,6 +681,11 @@ Config.Uniforms = {
 		female = {
 			['bproof_1'] = 12,  ['bproof_2'] = 3
 		}
+	},
+
+	bike_suit = {
+		male = json.decode(''),
+		female = json.decode('{"torso_2":2,"tshirt_2":0,"chain_1":1,"bags_2":0,"bags_1":42,"helmet_1":47,"chain_2":0,"bproof_1":0,"shoes_2":0,"arms":31,"helmet_2":0,"pants_1":31,"tshirt_1":51,"torso_1":84,"shoes_1":10,"pants_2":1,"bproof_2":0}')
 	}
 
 }

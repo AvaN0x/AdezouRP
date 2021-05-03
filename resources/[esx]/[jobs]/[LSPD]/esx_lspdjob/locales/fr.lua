@@ -5,6 +5,7 @@ Locales['fr'] = {
   ['police_wear'] = 'tenue Policier Grade',
   ['cadet_wear_short'] = 'Cadet Manche Court',
   ['cadet_wear_long'] = 'Cadet Manche Long',
+  ['bike_suit'] = 'Tenue vélo',
   ['gilet_wear'] = 'gilet orange',
   ['bullet_wear'] = 'gilet pare-balles',
   ['no_outfit'] = 'il n\'y a pas d\'uniforme à votre taille...',
