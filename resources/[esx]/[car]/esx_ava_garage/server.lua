@@ -274,22 +274,24 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_state', 'society_state', "pay_pound", toState)
 			account.addMoney(toState)
 		end
     end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_police', 'society_police', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_mecano', 'society_mecano', "pay_pound", toMecano)
 			account.addMoney(toMecano)
 		end
     end)
 	
 	TriggerClientEvent('esx:showNotification', source, 'Vous avez payé ' .. exitPrice .. '$')
-	
 end)
 
 
@@ -308,16 +310,19 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_state', 'society_state', "pay_pound", toState)
 			account.addMoney(toState)
 		end
     end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_police', 'society_police', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
 		if account ~= nil then
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_mecano', 'society_mecano', "pay_pound", toMecano)
 			account.addMoney(toMecano)
 		end
     end)
