@@ -99,9 +99,6 @@ end)
 
 
 
-
--- TODO ajouter joueur dans cette table que lorsqu'il a passé le permis pour la 1ere fois
--- TODO donner la asbo au joueur gratos
 ESX.RegisterServerCallback('esx_ava_garage:getParkingSlots', function(source, cb, slot)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
