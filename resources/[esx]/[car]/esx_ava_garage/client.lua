@@ -225,12 +225,7 @@ function StockVehicleMenu(target)
 			ESX.TriggerServerCallback('esx_ava_garage:stockv', function(valid)
 
 				if (valid) then
-					if engineHealth < 1000 then
-						local fraisRep= math.floor((1000 - engineHealth)*100)
-						reparation(fraisRep, vehicle, vehicleProps, target)
-					else
-						ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
-					end
+                    ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
 				else
 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule ici')
 				end
@@ -239,44 +234,6 @@ function StockVehicleMenu(target)
 	else
 		TriggerEvent('esx:showNotification', 'Il n\'y a pas de vehicule à rentrer')
 	end
-end
-
-
-
-
-
-function reparation(prix, vehicle, vehicleProps, target)
-	
-	ESX.UI.Menu.CloseAll()
-
-	local elements = {
-		{label = "Rentrer le vehicule cassés", value = 'yes'},
-		{label = "Aller voir un mécanicien", value = 'no'},
-	}
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'delete_menu',
-		{
-			css	  = 'garage',
-			title	= 'vehicule endomagé',
-			align	= 'right',
-			elements = elements,
-		},
-		function(data, menu)
-
-			menu.close()
-			if(data.current.value == 'yes') then
-				-- TriggerServerEvent('esx_ava_garage:payhealth1', prix)
-				ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
-			end
-			if(data.current.value == 'no') then
-				ESX.ShowNotification('Passez voir le mécano')
-			end
-
-		end,
-		function(data, menu)
-			menu.close()
-		end
-	)
 end
 
 
