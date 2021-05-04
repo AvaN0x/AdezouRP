@@ -192,7 +192,7 @@ function ListVehiclesMenu(type, target)
 					menu.close()
 
 					SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
-					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target)
+					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true)
 				elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere')
 				else
@@ -240,7 +240,7 @@ end
 
 function ranger(vehicle, vehicleProps, gIdentifier, target)
 	DeleteEntity(vehicle)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target, true)
 	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans ce garage')
 end
 
@@ -314,7 +314,7 @@ function ReturnVehicleMenu(target, isGov)
 
 			for i=1, #VehiclesList, 1 do
 				if v.vehicle.model == GetHashKey(VehiclesList[i].model) then
-					exitPrice = math.ceil(VehiclesList[i].price * 0.07)
+					exitPrice = math.ceil(VehiclesList[i].price * Config.PoundPriceMultiplier)
 					if exitPrice < Config.MinPrice then
 						exitPrice = Config.MinPrice
 					elseif exitPrice > Config.MaxPrice then

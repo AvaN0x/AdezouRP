@@ -5,6 +5,7 @@ RegisterServerEvent('esx_ava_garage:payhealth1')
 
 ESX = nil
 local Vehicles = nil -- vehicles prices from the carshoop
+local playerCautions = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
@@ -186,15 +187,11 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
-AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target)
-	local identifier = nil
-	if target then
-		identifier = target
-	else
-		local _source = source
-		local xPlayer = ESX.GetPlayerFromId(_source)
-		identifier = xPlayer.getIdentifier()
-	end
+AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local playerIdentifier = xPlayer.getIdentifier()
+	local identifier = target or playerIdentifier
 
 	local vehicules = getPlayerVehicles(identifier)
 	local plate = vehicleProps.plate
@@ -203,6 +200,64 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, t
 	for _,v in pairs(vehicules) do
 		if(plate == v.plate)then
 			MySQL.Sync.execute("UPDATE owned_vehicles SET location=@location WHERE plate=@plate",{['@location'] = location , ['@plate'] = plate})
+
+            if inOrFromGarage and target then
+                -- We check if the player is in interim before adding it to cautions list
+                -- We don't check to remove it, for the player to still be able to get his/her caution back after being ranked up in the society
+                if location == "garage_POUND" and 
+                    ((xPlayer.job ~= nil and "society_" .. xPlayer.job.name == target and xPlayer.job.grade_name == 'interim') 
+                    or (xPlayer.job2 ~= nil and "society_" .. xPlayer.job2.name == target and xPlayer.job2.grade_name == 'interim'))
+                then
+                    local exitPrice = -1
+                    -- Out of garage
+                    for i=1, #Vehicles, 1 do
+                        if vehicleProps.model == GetHashKey(Vehicles[i].model) then
+                            exitPrice = math.ceil(Vehicles[i].price * Config.PoundPriceMultiplier)
+                            if exitPrice < Config.MinPrice then
+                                exitPrice = Config.MinPrice
+                            elseif exitPrice > Config.MaxPrice then
+                                exitPrice = Config.MaxPrice
+                            end
+                        end
+                    end
+
+                    if exitPrice ~= -1 then
+                        playerCautions[plate] = {
+                            identifier = playerIdentifier,
+                            society = target,
+                            price = exitPrice
+                        }
+                        TriggerEvent('esx_addonaccount:getSharedAccount', target, function(account)
+                            if account ~= nil then
+                                TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', playerCautions[plate].society, playerCautions[plate].society, "pay_caution", playerCautions[plate].price)
+                                xPlayer.removeMoney(playerCautions[plate].price)
+                                account.addMoney(playerCautions[plate].price)
+
+                                TriggerClientEvent('esx:showNotification', _source, 'Vous avez ~r~payé~w~ une caution de ' .. exitPrice .. '$')
+                            end
+                        end)
+
+                        print(playerIdentifier .. " should pay $" .. exitPrice .. " to " .. playerCautions[plate].society)
+                    end
+                else
+                    -- Into garage
+                    if playerCautions[plate] and playerCautions[plate].identifier == playerIdentifier then
+                        print(playerIdentifier .. " should get $" .. playerCautions[plate].price .. " back from " .. playerCautions[plate].society)
+                        TriggerEvent('esx_addonaccount:getSharedAccount', target, function(account)
+                            if account ~= nil then
+                                TriggerEvent('esx_avan0x:logTransaction', playerCautions[plate].society, playerCautions[plate].society, xPlayer.identifier, 'money', "get_caution_back", playerCautions[plate].price)
+                                xPlayer.addMoney(playerCautions[plate].price)
+                                account.removeMoney(playerCautions[plate].price)
+
+                                TriggerClientEvent('esx:showNotification', _source, 'Vous avez ~g~récupéré~w~ votre caution de ' .. playerCautions[plate].price .. '$')
+                            end
+                        end)
+
+                        playerCautions[plate] = nil
+                    end
+
+                end
+            end
 			break
 		end
 	end

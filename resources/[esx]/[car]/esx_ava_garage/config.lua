@@ -4,6 +4,7 @@ Config = {
 	MinPrice = 300,
 	MaxPrice = 20000,
 	DamageMultiplier = 1,
+    PoundPriceMultiplier = 0.07
 }
 
 Config.Garages = {
