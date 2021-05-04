@@ -203,7 +203,7 @@ AddEventHandler('esx_ava_jobs:SellItems', function(jobName, zoneName, jobIndex, 
                 stateAccount = account
             end)
             if stateAccount ~= nil then
-                TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, xPlayer.identifier, "society_state", "society_state", "interim_selling", stateMoney)
+                TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', "society_state", "society_state", "interim_selling", stateMoney)
 
                 stateAccount.addMoney(stateMoney)
             end
@@ -220,7 +220,8 @@ AddEventHandler('esx_ava_jobs:SellItems', function(jobName, zoneName, jobIndex, 
 			societyAccount = account
 		end)
 		if societyAccount ~= nil then
-			TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, xPlayer.identifier, job.SocietyName, job.SocietyName, "job_selling", societyMoney)
+			TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', job.SocietyName, job.SocietyName, "job_selling", tonumber(playerMoney + societyMoney))
+			TriggerEvent('esx_avan0x:logTransaction', job.SocietyName, job.SocietyName, xPlayer.identifier, 'money', "job_selling", societyMoney)
 
 			xPlayer.addMoney(playerMoney)
 			societyAccount.addMoney(societyMoney)
