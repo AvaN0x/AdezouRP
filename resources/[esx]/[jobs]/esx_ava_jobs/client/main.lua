@@ -107,14 +107,14 @@ function setJobsToUse()
 	createBlips()
 end
 
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(5000)
-        for jobName, job in pairs(playerJobs) do
-            print(jobName .. " : " .. job.SocietyName .. " - " .. job.grade)
-        end
-    end
-end)
+-- Citizen.CreateThread(function()
+-- 	while true do
+-- 		Citizen.Wait(5000)
+--         for jobName, job in pairs(playerJobs) do
+--             print(jobName .. " : " .. job.SocietyName .. " - " .. job.grade)
+--         end
+--     end
+-- end)
 
 
 
@@ -797,7 +797,7 @@ function Spawnplants(jobName, k, v)
 		Citizen.Wait(0)
 		local plantCoords = GeneratePlantCoords(k, v)
 
-		ESX.Game.SpawnLocalObject(v.Prop, plantCoords, function(obj)
+		ESX.Game.SpawnLocalObject(v.PropHash, plantCoords, function(obj)
 			PlaceObjectOnGroundProperly(obj)
 			FreezeEntityPosition(obj, true)
 
