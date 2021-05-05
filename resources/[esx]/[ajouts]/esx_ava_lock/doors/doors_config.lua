@@ -667,25 +667,25 @@ Config.Doors = {
         },
 
 
-		-- ORGA CELTIC
-		{
-			textCoords = vector3(-1864.00, 2060.55, 140.98),
-			authorizedGangs = { 'orga_celtic' },
-			locked = true,
-			distance = 0.8,
-			doors = {
-				{
-					objHash = 988364535,
-					objCoords = vector3(-1864.64, 2060.55, 140.98),
-					objYaw = 270.0
-				},
-				{
-					objHash = -1141522158,
-					objCoords = vector3(-1864.64, 2060.55, 140.98),
-					objYaw = 270.0
-				}
-			}
-		},
+		-- -- ORGA CELTIC
+		-- {
+		-- 	textCoords = vector3(-1864.00, 2060.55, 140.98),
+		-- 	authorizedGangs = { 'orga_celtic' },
+		-- 	locked = true,
+		-- 	distance = 0.8,
+		-- 	doors = {
+		-- 		{
+		-- 			objHash = 988364535,
+		-- 			objCoords = vector3(-1864.64, 2060.55, 140.98),
+		-- 			objYaw = 270.0
+		-- 		},
+		-- 		{
+		-- 			objHash = -1141522158,
+		-- 			objCoords = vector3(-1864.64, 2060.55, 140.98),
+		-- 			objYaw = 270.0
+		-- 		}
+		-- 	}
+		-- },
 
 
 		-- BIKER LOST

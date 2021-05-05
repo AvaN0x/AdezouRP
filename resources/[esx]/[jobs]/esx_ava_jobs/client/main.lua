@@ -716,18 +716,20 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(200)
         for jobName, job in pairs(playerJobs) do
-			for k, v in pairs(job.FieldZones) do
-				if #(playerCoords - v.Pos) < 20 then
-					Spawnplants(jobName, k, v)
-					Citizen.Wait(500)
-				else
-					Citizen.Wait(500)
-				end
-			end
-			-- for debug
-			-- for i=1, #spawnedPlants, 1 do
-			-- 	print(spawnedPlants[i].name ..' : '.. spawnedPlants[i].quantity)
-			-- end
+            if job.FieldZones then
+                for k, v in pairs(job.FieldZones) do
+                    if #(playerCoords - v.Pos) < 20 then
+                        Spawnplants(jobName, k, v)
+                        Citizen.Wait(500)
+                    else
+                        Citizen.Wait(500)
+                    end
+                end
+                -- for debug
+                -- for i=1, #spawnedPlants, 1 do
+                -- 	print(spawnedPlants[i].name ..' : '.. spawnedPlants[i].quantity)
+                -- end
+            end
 		end
 	end
 end)

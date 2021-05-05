@@ -129,6 +129,24 @@ Config.Teleports = {
 		},
 	
 
+		{ -- bahama
+			tpEnter = {
+				pos = vector3(-1389.31, -592.07, 29.34),
+				heading = 30.0,
+                size  = {x = 1.2, y = 1.2, z = 1.0},
+				label = "Entrer au bar"
+			},
+			tpExit = {
+				pos = vector3(-1385.06, -606.44, 29.34),
+				heading = 120.0,
+                size  = {x = 1.2, y = 1.2, z = 1.0},
+				label = "Sortir du bar"
+			},
+            authorizedJobs = { 'bahama' },
+			locked = true
+		},
+	
+
 		-- bunker
 		{ -- arcade vehicle entry
 			tpEnter = {
