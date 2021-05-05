@@ -514,7 +514,7 @@ Config.Jobs = {
         SellZones = {
             ChickenSell = {
                 Items = {
-                    {name = 'raw_chicken', price = 50}
+                    {name = 'raw_chicken', price = 100}
                 },
                 Pos = vector3(-138.13, -256.69, 42.61),
                 Size  = {x = 1.5, y = 1.5, z = 1.5},
