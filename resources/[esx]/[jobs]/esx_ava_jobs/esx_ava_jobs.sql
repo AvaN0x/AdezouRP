@@ -1,3 +1,10 @@
+CREATE TABLE `user_pickups_count` (
+    `count` int(3) NOT NULL,
+    `identifier` varchar(50) NOT NULL,
+
+    PRIMARY KEY (`identifier`)
+);
+
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
     -- vigneron
     ('society_vigneron','Vigneron',1)

@@ -755,7 +755,7 @@ Citizen.CreateThread(function()
 					isPickingUp = true
 
 					ESX.TriggerServerCallback('esx_ava_jobs:canPickUp', function(canPickUp)
-						if canPickUp then
+						if canPickUp == true then
 							TaskStartScenarioInPlace(playerPed, 'world_human_gardener_plant', 0, false)
 
 							Citizen.Wait(2000)
@@ -768,7 +768,9 @@ Citizen.CreateThread(function()
 							local sPIndex = spawnedPlantsFindName(nearbyObject.name)
 							spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
                             TriggerServerEvent('esx_ava_jobs:pickUp', nearbyObject.jobName, nearbyObject.name)
-						else
+                        elseif canPickUp == 'max_count' then
+							ESX.ShowNotification(_('max_pickup_day'))
+                        else
 							ESX.ShowNotification(_('inventoryfull'))
 						end
 

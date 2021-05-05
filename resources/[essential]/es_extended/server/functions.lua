@@ -108,6 +108,10 @@ ESX.SavePlayers = function(cb)
 	local asyncTasks = {}
 	local xPlayers   = ESX.GetPlayers()
 
+    table.insert(asyncTasks, function(cb)
+        TriggerEvent('esx_ava_jobs:savePickUpCounts')
+    end)
+
 	table.insert(asyncTasks, function(cb)
 		TriggerEvent('esx_ava_inventories:saveSharedInventories')
 	end)

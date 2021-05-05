@@ -6,6 +6,7 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+local playersPickUpCount = {}
 local playersProcessing = {}
 
 Citizen.CreateThread(function()
@@ -17,15 +18,34 @@ end)
 
 
 
+AddEventHandler('onMySQLReady', function()
+    -- This need to have a reboot at 8 am
+    local timestamp = os.time()
+    local hour = tonumber(os.date('%H', timestamp))
+    if hour == 8 then
+        MySQL.Async.execute('DELETE FROM `user_pickups_count`')
+    end
+end)
+
+RegisterServerEvent("esx_ava_jobs:savePickUpCounts")
+AddEventHandler("esx_ava_jobs:savePickUpCounts", function()
+	for identifier, pickupCount in pairs(playersPickUpCount) do
+        if pickupCount.modified == true then
+            MySQL.Async.execute('INSERT INTO user_pickups_count (identifier, count) VALUES (@identifier, @count) ON DUPLICATE KEY UPDATE count = @count', {
+                ['@identifier'] = identifier;
+                ['@count'] = pickupCount.count
+            })
+            pickupCount.modified = false
+        end
+    end
+end)
 
 
 
 
-
--- -------------
--- -- RECOLTE --
--- -------------
-
+-------------
+-- RECOLTE --
+-------------
 
 ESX.RegisterServerCallback('esx_ava_jobs:canPickUp', function(source, cb, jobName, zoneName)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -36,10 +56,21 @@ ESX.RegisterServerCallback('esx_ava_jobs:canPickUp', function(source, cb, jobNam
     local zone = job.FieldZones[zoneName]
 
     if zone then
-        for k, item in ipairs(zone.Items) do
-            if inventory.canTake(item.name) > 0 then
-                result = true
+        if not playersPickUpCount[xPlayer.identifier] then
+            playersPickUpCount[xPlayer.identifier] = {
+                count = Config.MaxPickUp,
+                modified = false
+            }
+        end
+
+        if playersPickUpCount[xPlayer.identifier].count > 0 then
+            for k, item in ipairs(zone.Items) do
+                if inventory.canTake(item.name) > 0 then
+                    result = true
+                end
             end
+        else
+            result = "max_count"
         end
     end
     cb(result)
@@ -60,8 +91,9 @@ AddEventHandler('esx_ava_jobs:pickUp', function(jobName, zoneName)
                 inventory.addItem(item.name, (canTake > item.quantity and item.quantity or canTake))
             end
         end
+        playersPickUpCount[xPlayer.identifier].modified = true
+        playersPickUpCount[xPlayer.identifier].count = playersPickUpCount[xPlayer.identifier].count - 1
     end
-
 end)
 
 
