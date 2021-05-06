@@ -168,6 +168,23 @@ Config.Teleports = {
 		},
 
 
+        { -- télésiege
+        tpEnter = {
+            pos = vector3(-741.06, 5593.22, 40.67),
+            heading = 0.0,
+            -- size  = {x = 1.5, y = 1.5, z = 1.0},
+            -- color = {r = 255, g = 0, b = 255},
+            label = "Monter"
+        },
+        tpExit = {
+            pos = vector3(446.35, 5569.02, 780.21),
+            heading = 0.0,
+            label = "Descendre"
+        },
+        locked = false
+    },
+
+
 		-- { -- maze bank arena
 		-- 	tpEnter = {
 		-- 		pos = vector3(-366.0, -1867.94, 19.55),
