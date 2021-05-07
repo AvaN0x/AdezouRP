@@ -458,12 +458,7 @@ function OpenTakeInventory(inventoryName)
         local elements = {}
         for k, item in ipairs(inventory.items) do
             if item.count > 0 then
-                local label
-                if item.limit ~= -1 then
-                    label = _('label_count_limit', item.label, item.count, item.limit)
-                else
-                    label = _('label_count', item.label, item.count)
-                end
+                local label = _('label_count', item.label, item.count)
                 local detail = _('item_detail', string.format("%.3f", item.weight / 1000))
                 table.insert(elements, {label = label, value = "item_standard", item = item, detail = detail})
             end
