@@ -110,14 +110,14 @@ Citizen.CreateThread(function()
 				})
 
 				GUI.Time = GetGameTimer()
-			elseif IsControlPressed(0, Keys['LEFT']) and (GetGameTimer() - GUI.Time) > 150 then
+			elseif IsControlPressed(0, Keys['LEFT']) and (GetGameTimer() - GUI.Time) > 120 then
 				SendNUIMessage({
 					action  = 'controlPressed',
 					control = 'LEFT'
 				})
 
 				GUI.Time = GetGameTimer()
-			elseif IsControlPressed(0, Keys['RIGHT']) and (GetGameTimer() - GUI.Time) > 150 then
+			elseif IsControlPressed(0, Keys['RIGHT']) and (GetGameTimer() - GUI.Time) > 120 then
 				SendNUIMessage({
 					action  = 'controlPressed',
 					control = 'RIGHT'
