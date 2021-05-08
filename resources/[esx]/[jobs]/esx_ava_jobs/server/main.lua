@@ -25,7 +25,14 @@ AddEventHandler('onMySQLReady', function()
     if hour == 8 then
         MySQL.Async.execute('DELETE FROM `user_pickups_count`')
     else
-        -- TODO URGENT, recup les données dans playersPickUpCount
+        local result = MySQL.Sync.fetchAll('SELECT * FROM user_pickups_count')
+
+        for i=1, #result, 1 do
+            playersPickUpCount[result[i].identifier] = {
+                count = result[i].count,
+                modified = false
+            }
+        end
     end
 end)
 
