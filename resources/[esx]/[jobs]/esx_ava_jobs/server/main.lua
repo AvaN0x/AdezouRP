@@ -24,6 +24,8 @@ AddEventHandler('onMySQLReady', function()
     local hour = tonumber(os.date('%H', timestamp))
     if hour == 8 then
         MySQL.Async.execute('DELETE FROM `user_pickups_count`')
+    else
+        -- TODO URGENT, recup les données dans playersPickUpCount
     end
 end)
 

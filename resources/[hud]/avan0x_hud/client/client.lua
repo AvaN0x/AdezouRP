@@ -104,6 +104,33 @@ AddEventHandler('avan0x_hud:inventoryItemNotification', function(add, itemLabel,
 end)
 
 
+
+
+-- KEYMAPPING
+
+RegisterCommand('+keyToggleBelt', function()
+    local ped = GetPlayerPed(-1)
+    if(IsPedInAnyVehicle(ped)) then
+        local car = GetVehiclePedIsIn(ped, false)
+        local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
+        if car and isAccepted then
+            beltOn = not beltOn
+            SendNUIMessage({
+                action = 'setbelt',
+                isAccepted = isAccepted,
+                belt = beltOn
+            })
+        end
+    end
+end, false)
+
+RegisterKeyMapping('+keyToggleBelt', 'Ceinture', 'keyboard', 'X')
+
+
+
+
+
+
 -- clause menu when active
 Citizen.CreateThread(function()
     local isPauseMenu = false
@@ -119,22 +146,6 @@ Citizen.CreateThread(function()
 			if isPauseMenu then
 				isPauseMenu = not isPauseMenu
 				SendNUIMessage({ action = 'toggle', show = true })
-			end
-
-			if IsControlJustReleased(0, 73) then -- X
-				local ped = GetPlayerPed(-1)
-				if(IsPedInAnyVehicle(ped)) then
-					local car = GetVehiclePedIsIn(ped, false)
-					local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
-					if car and isAccepted then
-						beltOn = not beltOn
-						SendNUIMessage({
-							action = 'setbelt',
-							isAccepted = isAccepted,
-							belt = beltOn
-						})
-					end
-				end
 			end
 
 			HideHudComponentThisFrame(1)  -- Wanted Stars

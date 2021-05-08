@@ -6,7 +6,7 @@
 Config = {}
 Config.Locale = 'fr'
 
-Config.OpenControl = 289 -- Key for opening inventory. Edit html/js/config.js to change key for closing it.
+Config.OpenControl = "F2" -- Key for opening inventory (RegisterKeyMapping). Edit html/js/config.js to change key for closing it.
 
 -- Items that should close the menu when used
 Config.CloseMenuItems = {

@@ -75,15 +75,12 @@ AddEventHandler("playerSpawned", function(spawn)
 	IsDead = false
 end)
 
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-		if IsControlJustReleased(0, Config.MenuKey) and not IsDead then
-			OpenPersonalMenu()
-		end
-	end
-end)
 
+RegisterCommand('+keyPersonalMenu', function()
+	OpenPersonalMenu()
+end, false)
+
+RegisterKeyMapping('+keyPersonalMenu', 'Menu personnel', 'keyboard', Config.MenuKey)
 
 
 

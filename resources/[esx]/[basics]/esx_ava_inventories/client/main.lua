@@ -11,14 +11,12 @@ Citizen.CreateThread(function()
 	end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if IsControlJustReleased(0, Config.OpenControl) then
-            OpenMyInventory()
-        end
-    end
-end)
+RegisterCommand('+keyInventory', function()
+	OpenMyInventory()
+end, false)
+
+RegisterKeyMapping('+keyInventory', 'Inventaire', 'keyboard', Config.OpenControl)
+
 
 function OpenMyInventory()
     ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)

@@ -203,21 +203,21 @@ function EnterReason(cb)
 end
 
 
+
 function AdminLoop()
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-		Citizen.CreateThread(function()
-			while true do
-				Citizen.Wait(10)
-				if IsControlJustReleased(0, Config.AdminMenuKey) then
-					if IsDead then
-						TriggerEvent('esx_ava_emsjob:revive2')
-						Citizen.Wait(1000)
-						ToggleAdminMode(true)
-					end
-					OpenAdminMenu()
-				end
-			end
-		end)
+        RegisterCommand('+keyAdminMenu', function()
+            if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+                if IsDead then
+                    TriggerEvent('esx_ava_emsjob:revive2')
+                    Citizen.Wait(1000)
+                    ToggleAdminMode(true)
+                end
+                OpenAdminMenu()
+            end
+        end, false)
+
+        RegisterKeyMapping('+keyAdminMenu', 'Menu admin', 'keyboard', Config.AdminMenuKey)
 
 		Citizen.CreateThread(function()
 			while true do
