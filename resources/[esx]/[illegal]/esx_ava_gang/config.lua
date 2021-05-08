@@ -116,4 +116,16 @@ Config.Gangs = {
 			},
 		}
 	},
+	orga_hapf = {
+	Name = "HAPF",
+		Zones = {
+			Stock = {
+				Pos   = {x = -1108.60, y =-1643.52, z = 4.64},
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+				Marker = 27
+			},
+		}
+	},
 }

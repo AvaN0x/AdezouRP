@@ -1,4 +1,6 @@
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUE
+	('orga_hapf','HAPF', 1),
+	('orga_hapf_black','HAPF', 1),
 	('orga_mafia','Mafia', 1),
 	('orga_mafia_black','Mafia', 1),
 	('orga_cartel','Cartel', 1),
@@ -20,6 +22,7 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUE
 ;
 
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
+	('orga_hapf','HAPF', 1),
 	('orga_mafia','Mafia', 1),
     ('orga_cartel','Cartel', 1),
     ('gang_marabunta','Marabunta', 1), 

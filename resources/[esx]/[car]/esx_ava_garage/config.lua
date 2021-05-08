@@ -326,7 +326,7 @@ Config.Garages = {
 	},
 	Garage_Mafia = {
 		Name = "hide",
-		Pos = {x = -888.37, y = -50.98, z = 38.05},
+		Pos = {x = -871.18, y = -54.99, z = 38.03},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -340,6 +340,23 @@ Config.Garages = {
 			Heading = 288.73
 		},
 		Identifier = "garage_mafia"
+	},
+	Garage_Hapf = {
+		Name = "hide",
+		Pos = {x = -1070.73, y = -1670.35, z = 4.44},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		SpawnPoint = {
+			Pos = {x = -1070.73, y = -1670.35, z = 4.44},
+			Heading = 35.32
+		},
+		Identifier = "garage_hapf"
 	},
 
 
