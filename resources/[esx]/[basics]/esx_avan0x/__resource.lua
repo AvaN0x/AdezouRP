@@ -20,3 +20,8 @@ data_file 'VEHICLE_METADATA_FILE' 'vehicles/*.meta'
 files {
 	'handling.meta'
 }
+
+server_export {
+    "SendWebhookMessage",
+    "SendWebhookEmbedMessage"
+}

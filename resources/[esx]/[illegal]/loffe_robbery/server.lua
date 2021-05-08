@@ -44,14 +44,15 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
             cops = cops + 1
         end
     end
-    print("cops value : " .. cops .. " its type is " .. type(cops))
-    print("Config.Shops[store].cops value : " .. Config.Shops[store].cops .. " its type is " .. type(Config.Shops[store].cops))
-    print("cops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "true" or "false"))
+
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "id `" .. source .. "` [loffe_robbery]", "cops value : `" .. cops .. "`\nConfig.Shops[store].cops value : `" .. Config.Shops[store].cops .. "`\ncops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "`true`" or "`false`"), 15902015)
     if tonumber(cops) >= tonumber(Config.Shops[store].cops) then
         if Config.Shops[store].robbed == 'wait' then
             cb('wait')
         elseif not Config.Shops[store].robbed and not deadPeds[store] then
             Config.Shops[store].robbed = true
+            exports.esx_avan0x:SendWebhookMessage("avan0x_wh_dev", "Le braquage peut se lancer")
+
             cb(true)
         else
             cb(false)
