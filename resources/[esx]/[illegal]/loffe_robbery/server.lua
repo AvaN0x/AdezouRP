@@ -38,14 +38,18 @@ end)
 ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
     local cops = 0
     local xPlayers = ESX.GetPlayers()
+
+    local debugString = ""
+
     for i = 1, #xPlayers do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if xPlayer.job.name == 'police' then
+        if (xPlayer.job ~= nil and xPlayer.job.name == 'police') then
             cops = cops + 1
+            debugString = debugString .. tostring(xPlayers[i]) .. " "
         end
     end
 
-    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "id `" .. source .. "` [loffe_robbery]", "cops value : `" .. cops .. "`\nConfig.Shops[store].cops value : `" .. Config.Shops[store].cops .. "`\ncops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "`true`" or "`false`"), 15902015)
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "id `" .. source .. "` [loffe_robbery]", "ID des flics : " .. debugString .. "\ncops value : `" .. cops .. "`\nConfig.Shops[store].cops value : `" .. Config.Shops[store].cops .. "`\ncops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "`true`" or "`false`"), 15902015)
     if tonumber(cops) >= tonumber(Config.Shops[store].cops) then
         if Config.Shops[store].robbed == 'wait' then
             cb('wait')
@@ -93,8 +97,6 @@ AddEventHandler('loffe_robbery:rob', function(store)
         for k,v in pairs(Config.Shops) do
             if k ~= store then
                 Config.Shops[k].robbed = false
-
-                TriggerClientEvent('loffe_robbery:resetStore', -1, store)
             end
         end
     end)

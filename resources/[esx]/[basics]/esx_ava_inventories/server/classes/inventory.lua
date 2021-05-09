@@ -169,6 +169,9 @@ function CreateInventory(name, label, max_weight, identifier, items, playerSourc
 
 	self.clearInventory = function()
 		for k, item in ipairs(self.items) do
+            if self.playerSource and item.count > 0 then
+                TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.playerSource, false, item.label, item.count)
+            end
 			item.count = 0
 		end
 		self.actual_weight = 0

@@ -59,6 +59,7 @@ ESX.SavePlayer = function(xPlayer, cb)
 
 	table.insert(asyncTasks, function(cb)
 		TriggerEvent('esx_ava_inventories:saveInventories', xPlayer.identifier)
+        cb()
 	end)
 
 	-- -- Inventory items
@@ -110,10 +111,12 @@ ESX.SavePlayers = function(cb)
 
     table.insert(asyncTasks, function(cb)
         TriggerEvent('esx_ava_jobs:savePickUpCounts')
+        cb()
     end)
 
 	table.insert(asyncTasks, function(cb)
 		TriggerEvent('esx_ava_inventories:saveSharedInventories')
+        cb()
 	end)
 
 	for i=1, #xPlayers, 1 do

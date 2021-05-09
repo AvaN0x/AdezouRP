@@ -339,14 +339,16 @@ function CreateExtendedPlayer(player, accounts, job, job2, loadout, name, lastPo
 	self.addInventoryItem = function(name, count)
 		local item = self.getInventoryItem(name)
 
-		self.inventory.addItem(name, count)
+        self.inventory.addItem(name, count)
+        -- temp
+        self.reloadInventory()
 		-- TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, true, item.label, count)
 	end
 
 	self.removeInventoryItem = function(name, count)
 		local item = self.getInventoryItem(name)
 
-		self.inventory.removeItem(name, count)
+        self.inventory.removeItem(name, count)
         -- temp
         self.reloadInventory()
 		-- TriggerClientEvent('avan0x_hud:inventoryItemNotification', self.source, false, item.label, count)

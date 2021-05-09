@@ -756,6 +756,24 @@ Config.Weapons = {
 		components = {}
 	},
 	
+	{
+		name = 'WEAPON_MILITARYRIFLE',
+		label = _U('weapon_militaryrifle '),
+		components = {}
+	},
+
+	{
+		name = 'WEAPON_COMBATSHOTGUN',
+		label = _U('weapon_combatshotgun '),
+		components = {}
+	},
+	
+	{
+		name = 'WEAPON_GADGETPISTOL',
+		label = _U('weapon_gadgetpistol '),
+		components = {}
+	},
+	
 
 
 }

@@ -381,3 +381,14 @@ ESX.RegisterUsableItem("weapon_rayminigun", function(source)
 	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_rayminigun")
 end)
 
+ESX.RegisterUsableItem("weapon_gadgetpistol", function(source)
+	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_gadgetpistol")
+end)
+
+ESX.RegisterUsableItem("weapon_combatshotgun", function(source)
+	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatshotgun")
+end)
+
+ESX.RegisterUsableItem("weapon_militaryrifle", function(source)
+	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_militaryrifle")
+end)

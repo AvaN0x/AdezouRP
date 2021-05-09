@@ -128,7 +128,7 @@ AddEventHandler('esx:playerLoaded', function(source)
 			end
 		end
 
-		local inventory = CreateInventory(name, label, max_weight, identifier, items, source)
+		local inventory = CreateInventory(name, label, max_weight, identifier, items, _source)
 
 		table.insert(Inventories[name], inventory)
 		table.insert(ava_inventories, inventory) -- add inventory to player inventories
