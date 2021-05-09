@@ -225,7 +225,11 @@ function StockVehicleMenu(target)
 			ESX.TriggerServerCallback('esx_ava_garage:stockv', function(valid)
 
 				if (valid) then
-                    ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
+                    if (GetPedInVehicleSeat(vehicle, -1) == playerPed) then
+                        ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
+                    else
+                        TriggerEvent('esx:showNotification', 'Vous devez être le conducteur pour ranger un véhicule.')
+                    end
 				else
 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule ici')
 				end
