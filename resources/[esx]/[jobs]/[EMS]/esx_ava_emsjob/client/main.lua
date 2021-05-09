@@ -220,9 +220,7 @@ function StartDeathTimer()
 			text = text .. _U('respawn_respawn_prompt')
 
             if IsControlPressed(0, 38) and timeHeld > 60 then
-                if Config.EarlyRespawnFineAmount then
-                    TriggerServerEvent('esx_billing:sendBillWithId', PlayerData.identifier, 'society_ems', "Unité X", Config.EarlyRespawnFineAmount)
-                end
+                TriggerServerEvent('esx_ava_emsjob:uniteX')
                 RPDeathRespawn()
                 break
             end

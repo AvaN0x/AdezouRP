@@ -5,7 +5,7 @@ Config.DrawDistance               = 30.0
 
 Config.Marker                     = { type = 1, x = 1.5, y = 1.5, z = 0.5, r = 102, g = 0, b = 102, a = 100, rotate = false }
 
-Config.ReviveReward               = 250  -- revive reward for ems job
+Config.ReviveReward               = 300  -- revive reward for ems job
 
 
 -- Config.EarlyRespawnTimer          = 15 * 60 * 1000  -- Time til respawn is available
@@ -16,8 +16,8 @@ Config.RemoveWeaponsAfterRPDeath  = false
 Config.RemoveCashAfterRPDeath     = false
 Config.RemoveItemsAfterRPDeath    = false
 
--- Let the player pay for respawning early, only if he can afford it.
-Config.EarlyRespawnFineAmount     = 2000
+Config.EarlyRespawnFineAmount          = 8000
+Config.EarlyRespawnFineAmountNoEMS     = 2000
 
 Config.RespawnPoint = {
 	coords = vector3(323.15, -582.64, 42.3),
