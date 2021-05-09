@@ -187,6 +187,9 @@ Locales['fr'] = {
   ['weapon_combatmg_mk2'] = 'MG de Combat MK2',
   ['weapon_heavysniper_mk2'] = 'Sniper lourd MK2',
   ['weapon_marksmanrifle_mk2'] = 'Sniper Marksman MK2',
+  ['weapon_militaryrifle '] = 'Fusil militaire',
+  ['weapon_combatshotgun '] = 'Pompe de combat',
+  ['weapon_gadgetpistol '] = 'Pistolet gadget',
 
 
   -- Weapon Components
