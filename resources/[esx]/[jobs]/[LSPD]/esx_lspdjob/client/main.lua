@@ -80,6 +80,7 @@ function OpenCloakroomMenu()
 		{ label = 'Tenue SWAT Lourd', value = 'tenu_swatgr'},
 		{ label = 'Tenue DOA', value = 'tenu_doag' },
 		{ label = _('bike_suit'), value = 'bike_suit' },
+		{ label = _('motorbike_suit'), value = 'motorbike_suit' },
 		-- { label = _U('bullet_wear'), value = 'bullet_wear' },
 	}
 
@@ -223,6 +224,7 @@ function OpenCloakroomMenu()
 			data.current.value == 'tenu_lspd' or
 			data.current.value == 'tenu_sahp' or
 			data.current.value == 'tenu_sahpg' or
+			data.current.value == 'motorbike_suit' or
 			data.current.value == 'bike_suit'
 		then
 			setUniform(data.current.value, playerPed)
