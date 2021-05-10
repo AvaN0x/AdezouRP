@@ -11,8 +11,10 @@ local playersProcessing = {}
 
 Citizen.CreateThread(function()
     for jobName, job in pairs(Config.Jobs) do
-        TriggerEvent('esx_phone:registerNumber', jobName, _('job_client', job.LabelName), true, true)
-        TriggerEvent('esx_society:registerSociety', jobName, Config.LabelName, job.SocietyName, job.SocietyName, job.SocietyName, {type = 'private'})
+        if not job.isIllegal then
+            TriggerEvent('esx_phone:registerNumber', jobName, _('job_client', job.LabelName), true, true)
+            TriggerEvent('esx_society:registerSociety', jobName, Config.LabelName, job.SocietyName, job.SocietyName, job.SocietyName, {type = 'private'})
+        end
     end
 end)
 
@@ -30,6 +32,7 @@ AddEventHandler('onMySQLReady', function()
         for i=1, #result, 1 do
             playersPickUpCount[result[i].identifier] = {
                 count = result[i].count,
+                illegalCount = result[i].illegalCount,
                 modified = false
             }
         end
@@ -68,11 +71,12 @@ ESX.RegisterServerCallback('esx_ava_jobs:canPickUp', function(source, cb, jobNam
         if not playersPickUpCount[xPlayer.identifier] then
             playersPickUpCount[xPlayer.identifier] = {
                 count = Config.MaxPickUp,
+                illegalCount = Config.MaxPickUpIllegal,
                 modified = false
             }
         end
 
-        if playersPickUpCount[xPlayer.identifier].count > 0 then
+        if (not job.isIllegal and playersPickUpCount[xPlayer.identifier].count > 0) or (job.isIllegal and playersPickUpCount[xPlayer.identifier].illegalCount > 0) then
             for k, item in ipairs(zone.Items) do
                 if inventory.canTake(item.name) > 0 then
                     result = true
@@ -101,7 +105,11 @@ AddEventHandler('esx_ava_jobs:pickUp', function(jobName, zoneName)
             end
         end
         playersPickUpCount[xPlayer.identifier].modified = true
-        playersPickUpCount[xPlayer.identifier].count = playersPickUpCount[xPlayer.identifier].count - 1
+        if not job.isIllegal then
+            playersPickUpCount[xPlayer.identifier].count = playersPickUpCount[xPlayer.identifier].count - 1
+        else
+            playersPickUpCount[xPlayer.identifier].illegalCount = playersPickUpCount[xPlayer.identifier].illegalCount - 1
+        end
     end
 end)
 
@@ -113,11 +121,10 @@ end)
 
 local function canCarryAll(source, items)
 	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
 	for i=1, #items, 1 do
-
-		local xItem = xPlayer.getInventoryItem(items[i].name)
-
-		if xItem.limit ~= -1 and xItem.count >= xItem.limit then
+        if not inventory.canAddItem(items[i].name, items[i].quantity) then
 			TriggerClientEvent('esx:showNotification', source, _U('process_cant_carry'))
 			return false
 		end
@@ -142,12 +149,26 @@ local function hasEnoughItems(source, items)
 	else
 		return true
 	end
-
 end
 
-ESX.RegisterServerCallback('esx_ava_jobs:canprocess', function(source, cb, process)
+local function hasKey(source, keyName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+    local hasOne = inventory.getItem(keyName).count > 0
+
+    if not hasOne then
+        TriggerClientEvent('esx:showNotification', source, _U('dont_have_keychain'))
+    end
+    return hasOne
+end
+
+ESX.RegisterServerCallback('esx_ava_jobs:canprocess', function(source, cb, process, jobName)
     if not playersProcessing[source] then
-		if hasEnoughItems(source, process.ItemsGive) and canCarryAll(source, process.ItemsGet) then
+        local job = Config.Jobs[jobName]
+        if (job.isIllegal ~= true or not process.NeedKey or hasKey(source, job.KeyName))
+            and hasEnoughItems(source, process.ItemsGive) and canCarryAll(source, process.ItemsGet)
+        then
 			cb(true)
 		else
 			cb(false)

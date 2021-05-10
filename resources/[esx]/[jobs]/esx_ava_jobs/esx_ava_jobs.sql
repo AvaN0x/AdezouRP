@@ -1,5 +1,6 @@
 CREATE TABLE `user_pickups_count` (
     `count` int(3) NOT NULL,
+    `illegalCount` int(3) NOT NULL,
     `identifier` varchar(50) NOT NULL,
 
     PRIMARY KEY (`identifier`)

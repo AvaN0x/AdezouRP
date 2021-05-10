@@ -40,18 +40,20 @@ Citizen.CreateThread(function()
     setJobsToUse()
 
     for _, job in pairs(Config.Jobs) do
-        local blip = AddBlipForCoord(job.Zones.JobActions.Pos)
-        SetBlipSprite (blip, job.Blip.Sprite)
-        SetBlipDisplay(blip, 4)
-        SetBlipScale  (blip, 1.0)
-        SetBlipColour (blip, job.Blip.Colour)
-        SetBlipAsShortRange(blip, true)
+        if not job.isIllegal then
+            local blip = AddBlipForCoord(job.Zones.JobActions.Pos)
+            SetBlipSprite (blip, job.Blip.Sprite)
+            SetBlipDisplay(blip, 4)
+            SetBlipScale  (blip, 1.0)
+            SetBlipColour (blip, job.Blip.Colour)
+            SetBlipAsShortRange(blip, true)
 
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString(job.LabelName)
-        EndTextCommandSetBlipName(blip)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentString(job.LabelName)
+            EndTextCommandSetBlipName(blip)
 
-        table.insert(mainBlips, blip)
+            table.insert(mainBlips, blip)
+        end
     end
 end)
 
@@ -102,6 +104,11 @@ function setJobsToUse()
         playerJobs[PlayerData.job2.name] = Config.Jobs[PlayerData.job2.name]
         playerJobs[PlayerData.job2.name].jobIndex = 2
         playerJobs[PlayerData.job2.name].grade = PlayerData.job2.grade_name
+    end
+    for name, farm in pairs(Config.Jobs) do
+        if farm.isIllegal == true then
+            playerJobs[name] = farm
+        end
     end
     clearJobBlips()
 	createBlips()
@@ -199,11 +206,12 @@ end
 
 
 local playerCoords = nil
-
+local playerPed = nil
 
 Citizen.CreateThread(function()
 	while true do
-		playerCoords = GetEntityCoords(GetPlayerPed(-1))
+        playerPed = PlayerPedId()
+		playerCoords = GetEntityCoords(playerPed)
 		Wait(500)
     end
 end)
@@ -509,7 +517,6 @@ function Process(process)
 		if canProcess then
 			TriggerServerEvent('esx_ava_jobs:process', process)
 			local timeLeft = process.Delay / 1000
-			local playerPed = PlayerPedId()
 
 			exports['progressBars']:startUI(process.Delay, _U('process_in_progress'))
 			TaskStartScenarioInPlace(playerPed, process.Scenario, 0, true)
@@ -525,7 +532,7 @@ function Process(process)
 			Citizen.Wait(1500)
 			ClearPedTasks(playerPed)
 		end
-	end, process)
+	end, process, CurrentJobName)
 end
 
 function ProcessZone(job)
@@ -541,8 +548,6 @@ function ProcessZone(job)
 end
 
 function ProcessMenuZone(job)
-    local playerPed = PlayerPedId()
-
     local elements = {}
     for k, v in pairs(CurrentZoneValue.Process) do
         table.insert(elements, {label = v.Name, delay = v.Delay, value = v})
@@ -738,11 +743,10 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
         for jobName, job in pairs(playerJobs) do
-			local playerPed = PlayerPedId()
 			local nearbyObject, nearbyID
 
 			for i=1, #plants, 1 do
-				if #(playerCoords - GetEntityCoords(plants[i].obj)) < 1 then
+				if #(playerCoords - GetEntityCoords(plants[i].obj)) < 1.3 then
 					nearbyObject, nearbyID = plants[i], i
 				end
 			end
@@ -750,7 +754,9 @@ Citizen.CreateThread(function()
 			if nearbyObject and nearbyObject.obj and IsPedOnFoot(playerPed) then
 
 				if not isPickingUp then
-					ESX.ShowHelpNotification(_('press_collect'))
+                    SetTextComponentFormat('STRING')
+                    AddTextComponentString(_('press_collect'))
+                    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 				end
 
 				if IsControlJustReleased(0, 38) and not isPickingUp then -- E
@@ -798,6 +804,7 @@ function Spawnplants(jobName, k, v)
 	end
 
 	while spawnedPlants[sPIndex].quantity < 5 do
+        print(spawnedPlants[sPIndex].quantity)
 		Citizen.Wait(0)
 		local plantCoords = GeneratePlantCoords(k, v)
 
@@ -817,13 +824,17 @@ function GeneratePlantCoords(k, v)
 
 		local plantCoordX, plantCoordY
 
+        if (v.Radius == nil) then
+            v.Radius = 8
+        end
+
 		math.randomseed(GetGameTimer())
-		local modX = math.random(-8, 8)
+        local modX = math.random(- v.Radius,  v.Radius)
 
 		Citizen.Wait(100)
 
 		math.randomseed(GetGameTimer())
-		local modY = math.random(-8, 8)
+		local modY = math.random(- v.Radius,  v.Radius)
 
 		plantCoordX = v.Pos.x + modX
 		plantCoordY = v.Pos.y + modY
@@ -841,9 +852,12 @@ function ValidateplantCoord(plantCoord, k, v)
 	local sPIndex = spawnedPlantsFindName(k)
 	if spawnedPlants[sPIndex].quantity > 0 then
 		local validate = true
+        if not v.DistanceValidate then
+            v.DistanceValidate = v.Radius / 2
+        end
 
-		for k, v in pairs(plants) do
-			if #(plantCoord - GetEntityCoords(v.obj)) < 5 then
+		for k2, v2 in pairs(plants) do
+			if #(plantCoord - GetEntityCoords(v2.obj)) < v.DistanceValidate then
 				validate = false
 			end
 		end

@@ -7,6 +7,7 @@ Config = {}
 Config.DrawDistance = 30.0
 Config.Locale = 'fr'
 Config.MaxPickUp = 70
+Config.MaxPickUpIllegal = 70
 
 Config.Jobs = {
     vigneron = {
@@ -678,7 +679,180 @@ Config.Jobs = {
         }
     },
 
+
+    weed = {
+        isIllegal = true,
+        KeyName = 'keyweed',
+        FieldZones = {
+            CannaField = {
+                Items = {
+                    {name = 'cannabis', quantity = 5}
+                },
+                PropHash = GetHashKey('prop_weed_01'),
+                Pos = vector3(3824.07, 4429.46, 3.0),
+                GroundCheckHeights = {1.0, 2.0, 3.0, 4.0},
+                Radius = 4
+            }
+        },
+        ProcessZones = {
+            BagProcess = {
+                ItemsGive = {
+                    {name = 'cannabis', quantity = 5},
+                    {name = 'dopebag', quantity = 1}
+                },
+                ItemsGet = {
+                    {name = 'bagweed', quantity = 1}
+                },
+                Delay = 8000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(859.08, 2877.4, 57.98),
+                NeedKey = true
+            },
+        },
+    },
+    coke = {
+        isIllegal = true,
+        KeyName = 'keycoke',
+        FieldZones = {
+            CokeField = {
+                Items = {
+                    {name = 'cokeleaf', quantity = 5}
+                },
+                PropHash = GetHashKey('prop_plant_fern_02a'),
+                Pos = vector3(-294.48, 2524.97, 74.62),
+                GroundCheckHeights = {74.0, 75.0},
+                Radius = 5
+            }
+        },
+        ProcessZones = {
+            CokeProcess = {
+                ItemsGive = {
+                    {name = 'cokeleaf', quantity = 2}
+                },
+                ItemsGet = {
+                    {name = 'coke', quantity = 2}
+                },
+                Delay = 10000,
+                Scenario = 'world_human_clipboard', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(1019.13, -2511.48, 28.48),
+                NeedKey = true
+            },
+            BagProcess = {
+                ItemsGive = {
+                    {name = 'coke', quantity = 5},
+                    {name = 'dopebag', quantity = 1}
+                },
+                ItemsGet = {
+                    {name = 'bagcoke', quantity = 1}
+                },
+                Delay = 15000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(1017.72, -2529.39, 28.3),
+                NeedKey = true
+            }
+        },
+    },
+    meth = {
+        isIllegal = true,
+        KeyName = 'keymeth',
+        FieldZones = {
+            MethyField = {
+                Items = {
+                    {name = 'methylamine', quantity = 15}
+                },
+                PropHash = GetHashKey('prop_barrel_exp_01c'),
+                Pos = vector3(1595.49, -1702.09, 88.12),
+                GroundCheckHeights = {88.0, 89.0},
+                Radius = 5
+            },
+            PseudoField = {
+                Items = {
+                    {name = 'methpseudophedrine', quantity = 15}
+                },
+                PropHash = GetHashKey('prop_barrel_01a'),
+                Pos = vector3(1762.37, -1654.8, 112.68),
+                GroundCheckHeights = {112.0, 113.0},
+                Radius = 5
+            },
+            MethaField = {
+                Items = {
+                    {name = 'methacide', quantity = 15}
+                },
+                PropHash = GetHashKey('prop_barrel_exp_01c'),
+                Pos = vector3(1112.49, -2299.49, 30.5),
+                GroundCheckHeights = {30.0, 31.0},
+                Radius = 4
+            }
+        },
+        ProcessZones = {
+            BagProcess = {
+                ItemsGive = {
+                    {name = 'methylamine', quantity = 5},
+                    {name = 'methpseudophedrine', quantity = 5},
+                    {name = 'methacide', quantity = 5},
+                    {name = 'dopebag', quantity = 1},
+                },
+                ItemsGet = {
+                    {name = 'methamphetamine', quantity = 1}
+                },
+                Delay = 10000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(1390.33, 3608.5, 38.94),
+                NeedKey = true
+            }
+        },
+    },
+    exta = {
+        isIllegal = true,
+        KeyName = 'keyexta',
+        FieldZones = {
+            MdmaField = {
+                Items = {
+                    {name = 'extamdma', quantity = 10}
+                },
+                PropHash = GetHashKey('prop_drug_package_02'),
+                Pos = vector3(-1063.23, -1113.14, 2.16),
+                GroundCheckHeights = {2.0},
+                Radius = 3
+            },
+            AmphetField = {
+                Items = {
+                    {name = 'extaamphetamine', quantity = 10}
+                },
+                PropHash = GetHashKey('ex_office_swag_pills2'),
+                Pos = vector3(177.98, 306.6, 105.37),
+                GroundCheckHeights = {105.0, 106.0},
+                Radius = 3
+            }
+        },
+        ProcessZones = {
+            ExtaProcess = {
+                ItemsGive = {
+                    {name = 'extamdma', quantity = 2},
+                    {name = 'extaamphetamine', quantity = 2}
+                },
+                ItemsGet = {
+                    {name = 'extazyp', quantity = 10}
+                },
+                Delay = 10000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(1983.23, 3026.61, 47.69),
+                NeedKey = true
+            },
+            BagProcess = {
+                ItemsGive = {
+                    {name = 'extazyp', quantity = 5},
+                    {name = 'dopebag', quantity = 1},
+                },
+                ItemsGet = {
+                    {name = 'bagexta', quantity = 1}
+                },
+                Delay = 10000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(1984.5, 3054.88, 47.22),
+                NeedKey = true
+            }
+        },
+    },
+
 }
-
-
-

@@ -58,5 +58,7 @@ Locales['fr'] = {
 	['inventoryfull'] = 'Vous n\'avez plus de place',
 	['max_pickup_day'] = 'Votre employeur vous interdit de récolter plus pour aujourd\'hui, veuillez revenir demain.',
 
+    -- Illegal
+    ['dont_have_keychain'] = "Vous n'avez pas la clé",
 
 }
