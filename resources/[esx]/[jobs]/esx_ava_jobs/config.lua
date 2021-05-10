@@ -19,26 +19,26 @@ Config.Jobs = {
         Zones = {
             JobActions = {
                 Pos = vector3(-1895.18, 2063.98, 140.03),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Point d'action",
+                Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
                 Pos = vector3(-1874.90, 2054.53, 140.09),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Dressing",
+                Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true
             },
             SocietyGarage = {
-                Name  = "Garage véhicule",
+                Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-1888.97, 2045.06, 140.87),
-                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
@@ -57,7 +57,7 @@ Config.Jobs = {
                 PropHash = GetHashKey('prop_mk_race_chevron_02'),
                 Pos = vector3(-1809.662, 2210.119, 90.681),
                 GroundCheckHeights = {88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0},
-                Name  = "1. Récolte",
+                Name = "1. Récolte",
                 Blip = true
             }
         },
@@ -73,9 +73,9 @@ Config.Jobs = {
                 Delay = 6000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(-1930.97, 2055.08, 139.83),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "2. Traitement vin",
+                Name = "2. Traitement vin",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -91,9 +91,9 @@ Config.Jobs = {
                 Delay = 8000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(-1866.50, 2058.95, 140.02),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "Traitement champagne et grand cru",
+                Name = "Traitement champagne et grand cru",
                 HelpText = _('press_traitement'),
                 NoInterim = true,
                 Marker = 27,
@@ -155,9 +155,9 @@ Config.Jobs = {
                 },
                 MaxProcess = 3,
                 Pos = vector3(-1933.06, 2061.9, 139.86),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "4. Traitement en caisses",
+                Name = "4. Traitement en caisses",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -170,9 +170,9 @@ Config.Jobs = {
                     {name = 'jus_raisinbox', price = 650}
                 },
                 Pos = vector3(-158.737, -54.651, 53.42),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "5. Vente des produits",
+                Name = "5. Vente des produits",
                 HelpText = _('press_sell'),
                 Marker = 27,
                 Blip = true
@@ -184,9 +184,9 @@ Config.Jobs = {
                     {name = 'woodenbox', price = 20}
                 },
                 Pos = vector3(396.77, -345.88, 45.86),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "3. Achat de caisses",
+                Name = "3. Achat de caisses",
                 HelpText = _('press_buy'),
                 Marker = 27,
                 Blip = true
@@ -203,26 +203,26 @@ Config.Jobs = {
         Zones = {
             JobActions = {
                 Pos = vector3(708.48, -966.69, 29.42),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Point d'action",
+                Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
                 Pos = vector3(708.91, -959.63, 29.42),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Dressing",
+                Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true
             },
             SocietyGarage = {
-                Name  = "Garage véhicule",
+                Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(719.11, -989.22, 24.12),
-                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
@@ -241,7 +241,7 @@ Config.Jobs = {
                 PropHash = GetHashKey('prop_mk_race_chevron_02'),
                 Pos = vector3(1887.45, 4630.05, 37.12),
                 GroundCheckHeights = {36, 37, 38, 39, 40, 41},
-                Name  = "1. Récolte",
+                Name = "1. Récolte",
                 Blip = true
             },
         },
@@ -256,9 +256,9 @@ Config.Jobs = {
                 Delay = 4000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(712.75, -973.78, 29.42),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "2. Traitement laine",
+                Name = "2. Traitement laine",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -273,9 +273,9 @@ Config.Jobs = {
                 Delay = 4000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(716.5, -961.82, 29.42),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "3. Traitement du tissu",
+                Name = "3. Traitement du tissu",
                 HelpText = _('press_traitement'),
                 NoInterim = false,
                 Marker = 27,
@@ -292,9 +292,9 @@ Config.Jobs = {
                 Delay = 3000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(718.73, -973.74, 29.42),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "5. Mise en caisse des vetements",
+                Name = "5. Mise en caisse des vetements",
                 HelpText = _('press_traitement'),
                 NoInterim = false,
                 Marker = 27,
@@ -307,9 +307,9 @@ Config.Jobs = {
                     {name = 'clothebox', price = 1420}
                 },
                 Pos = vector3(71.67, -1390.47, 28.4),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "6. Vente des produits",
+                Name = "6. Vente des produits",
                 HelpText = _('press_sell'),
                 Marker = 27,
                 Blip = true
@@ -321,9 +321,9 @@ Config.Jobs = {
                     {name = 'cardboardbox', price = 20}
                 },
                 Pos = vector3(406.5, -350.02, 45.84),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "4. Achat de cartons",
+                Name = "4. Achat de cartons",
                 HelpText = _('press_buy'),
                 Marker = 27,
                 Blip = true
@@ -340,26 +340,26 @@ Config.Jobs = {
         Zones = {
             JobActions = {
                 Pos = vector3(-513.13, -699.59, 32.19),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Point d'action",
+                Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
                 Pos = vector3(-510.19, -700.42, 32.19),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Dressing",
+                Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true
             },
             SocietyGarage = {
-                Name  = "Garage véhicule",
+                Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-465.3, -619.36, 31.17),
-                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
@@ -378,8 +378,7 @@ Config.Jobs = {
                 PropHash = 610857585,
                 Pos = vector3(85.95, 6331.61, 30.25),
                 GroundCheckHeights = {29, 30, 31, 32},
-                Name  = "1. Récolte",
-                Marker = -1,
+                Name = "1. Récolte",
                 Blip = true
             },
         },
@@ -394,9 +393,9 @@ Config.Jobs = {
                 Delay = 8000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(-91.05, 6240.41, 30.11),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "2. Déplumage",
+                Name = "2. Déplumage",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -411,9 +410,9 @@ Config.Jobs = {
                 Delay = 10000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(-103.89, 6206.29, 30.05),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "3. Découpe",
+                Name = "3. Découpe",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -503,9 +502,9 @@ Config.Jobs = {
                 },
                 MaxProcess = 5,
                 Pos = vector3(-520.07, -701.52, 32.19),
-                Size  = {x = 2.5, y = 2.5, z = 1.5},
+                Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
-                Name  = "Cuisine",
+                Name = "Cuisine",
                 HelpText = _('press_traitement'),
                 Marker = 27,
                 Blip = true
@@ -517,9 +516,9 @@ Config.Jobs = {
                     {name = 'raw_chicken', price = 100}
                 },
                 Pos = vector3(-138.13, -256.69, 42.61),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "4. Vente des produits",
+                Name = "4. Vente des produits",
                 HelpText = _('press_sell'),
                 Marker = 27,
                 Blip = true
@@ -535,9 +534,9 @@ Config.Jobs = {
                     {name = 'cocacola', price = 20}
                 },
                 Pos = vector3(406.5, -350.02, 45.84),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "Achat de boissons",
+                Name = "Achat de boissons",
                 HelpText = _('press_buy'),
                 Marker = 27,
                 Blip = true
@@ -554,26 +553,26 @@ Config.Jobs = {
         Zones = {
             JobActions = {
                 Pos = vector3(-1390.48, -600.57, 29.34),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Point d'action",
+                Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
                 Pos = vector3(-1386.81, -608.41, 29.34),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Dressing",
+                Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true
             },
             SocietyGarage = {
-                Name  = "Garage véhicule",
+                Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-1419.26, -596.3, 30.45),
-                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
@@ -602,9 +601,9 @@ Config.Jobs = {
                     {name = 'whisky', price = 20}
                 },
                 Pos = vector3(376.81, -362.84, 45.85),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "Achat de boissons",
+                Name = "Achat de boissons",
                 HelpText = _('press_buy'),
                 Marker = 27,
                 Blip = true
@@ -621,26 +620,26 @@ Config.Jobs = {
         Zones = {
             JobActions = {
                 Pos = vector3(132.14, -1290.15, 28.29),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Point d'action",
+                Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
                 Pos = vector3(106.71, -1299.75, 27.79),
-                Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name  = "Dressing",
+                Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true
             },
             SocietyGarage = {
-                Name  = "Garage véhicule",
+                Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(143.47, -1285.09, 29.34),
-                Size  = {x = 2.0, y = 2.0, z = 2.0},
+                Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
@@ -669,9 +668,9 @@ Config.Jobs = {
                     {name = 'whisky', price = 20}
                 },
                 Pos = vector3(387.02, -343.28, 45.85),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
-                Name  = "Achat de boissons",
+                Name = "Achat de boissons",
                 HelpText = _('press_buy'),
                 Marker = 27,
                 Blip = true
