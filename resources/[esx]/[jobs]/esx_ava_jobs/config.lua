@@ -6,8 +6,8 @@
 Config = {}
 Config.DrawDistance = 30.0
 Config.Locale = 'fr'
-Config.MaxPickUp = 5
-Config.MaxPickUpIllegal = 5
+Config.MaxPickUp = 70
+Config.MaxPickUpIllegal = 70
 
 Config.Jobs = {
     vigneron = {
