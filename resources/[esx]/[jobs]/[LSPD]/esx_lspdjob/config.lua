@@ -689,8 +689,8 @@ Config.Uniforms = {
 	},
 
 	motorbike_suit = {
-		male = json.decode('{"shoes_1":13,"chain_2":0,"arms":24,"pants_1":32,"tshirt_2":0,"pants_2":1,"bproof_1":0,"bags_2":0,"bproof_2":0,"helmet_2":1,"chain_1":0,"torso_1":101,"helmet_1":79,"torso_2":0,"shoes_2":0,"bags_1":0,"tshirt_1":38}'),
-		female = json.decode('')
+		male = json.decode('{"shoes_1":13,"chain_2":0,"arms":22,"pants_1":32,"tshirt_2":0,"pants_2":1,"bproof_1":0,"bags_2":0,"bproof_2":0,"helmet_2":1,"chain_1":0,"torso_1":154,"helmet_1":79,"torso_2":0,"shoes_2":0,"bags_1":0,"tshirt_1":13}'),
+		female = json.decode('{"shoes_1":40,"arms":32,"tshirt_1":27,"bags_1":48,"pants_1":31,"bproof_1":0,"chain_1":0,"torso_2":3,"bproof_2":0,"torso_1":21,"shoes_2":0,"pants_2":1,"bags_2":0,"chain_2":0,"tshirt_2":0,"helmet_1":78,"helmet_2":0}')
 	}
 
 }
