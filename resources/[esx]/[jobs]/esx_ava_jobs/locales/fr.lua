@@ -57,6 +57,7 @@ Locales['fr'] = {
 	-- A modifier selon l'entreprise
 	['inventoryfull'] = 'Vous n\'avez plus de place',
 	['max_pickup_day'] = 'Votre employeur vous interdit de récolter plus pour aujourd\'hui, veuillez revenir demain.',
+	['max_pickup_day_illegal'] = 'Dégage sacam, il y a plus rien pour toi aujourd\'hui.',
 
     -- Illegal
     ['dont_have_keychain'] = "Vous n'avez pas la clé",

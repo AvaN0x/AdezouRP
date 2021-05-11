@@ -79,7 +79,6 @@ AddEventHandler('onResourceStop', function(resource)
         if plants then
             for k, v in pairs(plants) do
                 ESX.Game.DeleteObject(v.obj)
-                print(k)
             end
         end
         if mainBlips then
@@ -778,6 +777,8 @@ Citizen.CreateThread(function()
                             TriggerServerEvent('esx_ava_jobs:pickUp', nearbyObject.jobName, nearbyObject.name)
                         elseif canPickUp == 'max_count' then
 							ESX.ShowNotification(_('max_pickup_day'))
+                        elseif canPickUp == 'max_countillegal' then
+							ESX.ShowNotification(_('max_pickup_day_illegal'))
                         else
 							ESX.ShowNotification(_('inventoryfull'))
 						end
@@ -804,7 +805,6 @@ function Spawnplants(jobName, k, v)
 	end
 
 	while spawnedPlants[sPIndex].quantity < 5 do
-        print(spawnedPlants[sPIndex].quantity)
 		Citizen.Wait(0)
 		local plantCoords = GeneratePlantCoords(k, v)
 

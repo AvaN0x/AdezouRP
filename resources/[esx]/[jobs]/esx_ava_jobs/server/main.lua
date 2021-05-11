@@ -43,9 +43,10 @@ RegisterServerEvent("esx_ava_jobs:savePickUpCounts")
 AddEventHandler("esx_ava_jobs:savePickUpCounts", function()
 	for identifier, pickupCount in pairs(playersPickUpCount) do
         if pickupCount.modified == true then
-            MySQL.Async.execute('INSERT INTO user_pickups_count (identifier, count) VALUES (@identifier, @count) ON DUPLICATE KEY UPDATE count = @count', {
-                ['@identifier'] = identifier;
-                ['@count'] = pickupCount.count
+            MySQL.Async.execute('INSERT INTO user_pickups_count (identifier, count, illegalCount) VALUES (@identifier, @count, @illegalCount) ON DUPLICATE KEY UPDATE count = @count, illegalCount = @illegalCount', {
+                ['@identifier'] = identifier,
+                ['@count'] = pickupCount.count,
+                ['@illegalCount'] = pickupCount.illegalCount
             })
             pickupCount.modified = false
         end
@@ -76,14 +77,17 @@ ESX.RegisterServerCallback('esx_ava_jobs:canPickUp', function(source, cb, jobNam
             }
         end
 
-        if (not job.isIllegal and playersPickUpCount[xPlayer.identifier].count > 0) or (job.isIllegal and playersPickUpCount[xPlayer.identifier].illegalCount > 0) then
+        if (not job.isIllegal and playersPickUpCount[xPlayer.identifier].count <= 0) then
+            result = "max_count"
+        elseif (job.isIllegal and playersPickUpCount[xPlayer.identifier].illegalCount <= 0) then
+            result = "max_countillegal"
+        else
             for k, item in ipairs(zone.Items) do
                 if inventory.canTake(item.name) > 0 then
                     result = true
+                    break
                 end
             end
-        else
-            result = "max_count"
         end
     end
     cb(result)
