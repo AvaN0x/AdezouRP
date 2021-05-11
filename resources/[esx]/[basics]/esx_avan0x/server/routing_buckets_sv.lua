@@ -18,27 +18,27 @@ end, function(source, args, user)
 end)
 
 
-TriggerEvent('es:addGroupCommand', 'addrb', 'mod', function(source, args, user)
-    if args[1] ~= nil then
-        if namedRoutingBuckets[args[1]] == nil then
+RegisterServerEvent("esx_avan0x:addRB")
+AddEventHandler("esx_avan0x:addRB", function(name)
+    local _source = source
+    if name ~= nil then
+        if namedRoutingBuckets[name] == nil then
             rbCount = rbCount + 1
-            namedRoutingBuckets[args[1]] = rbCount
+            namedRoutingBuckets[name] = rbCount
         end
-        SetPlayerRoutingBucket(source, namedRoutingBuckets[args[1]])
-        print(source .. " is moved in " .. namedRoutingBuckets[args[1]] .. " named '" .. args[1] .. "'")
+        SetPlayerRoutingBucket(_source, namedRoutingBuckets[name])
+        print(_source .. " is moved in " .. namedRoutingBuckets[name] .. " named '" .. name .. "'")
         print(ESX.DumpTable(namedRoutingBuckets))
     else
         rbCount = rbCount + 1
-        SetPlayerRoutingBucket(source, rbCount)
-        print(source .. " is moved in " .. rbCount)
+        SetPlayerRoutingBucket(_source, rbCount)
+        print(_source .. " is moved in " .. rbCount)
     end
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
 end)
 
-TriggerEvent('es:addGroupCommand', 'leaverb', 'mod', function(source, args, user)
-	SetPlayerRoutingBucket(source, 0)
-    print(source .. " is moved in " .. 0)
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+RegisterServerEvent("esx_avan0x:leaveRB")
+AddEventHandler("esx_avan0x:leaveRB", function()
+    local _source = source
+	SetPlayerRoutingBucket(_source, 0)
+    print(_source .. " is moved in 0")
 end)

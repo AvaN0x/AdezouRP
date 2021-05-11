@@ -26,6 +26,29 @@ Citizen.CreateThread(function()
 	end)
 end)
 
+local playerCoords = nil
+local playerPed = nil
+
+Citizen.CreateThread(function()
+	while true do
+        playerPed = PlayerPedId()
+		playerCoords = GetEntityCoords(playerPed)
+		Wait(500)
+    end
+end)
+
+AddEventHandler('onResourceStop', function(resource)
+    local isIn, house = isInside, thisHouse
+	if resource == GetCurrentResourceName() then
+		if isIn then
+            TriggerServerEvent('esx_avan0x:leaveRB')
+            local coords = house and house.coord or vector3(296.81, -769.55, 28.35)
+            RequestCollisionAtCoord(coords)
+
+            SetEntityCoords(playerPed, coords)
+        end
+	end
+end)
 
 RegisterNetEvent('esx_ava_lockpick:onUse')
 AddEventHandler('esx_ava_lockpick:onUse', function(xPlayer)
@@ -36,7 +59,6 @@ end)
 
 RegisterNetEvent('avan0x_lockpicking:LockpickingComplete')
 AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
-	local playerPed = GetPlayerPed(-1)
 	ClearPedTasksImmediately(playerPed)
 	if result then
 		lockpicking = true
@@ -68,9 +90,7 @@ end)
 
 function getClosestHouse()
 	for k, v in ipairs(Config.coords) do
-		local playerPed = PlayerPedId()
-		local coords = GetEntityCoords(playerPed)
-		if GetDistanceBetweenCoords(v.coord.x, v.coord.y, v.coord.z, coords.x, coords.y, coords.z, false) <= 2.0 then
+		if #(v.coord - playerCoords) <= 2.0 then
 			return k, v
 		end
 	end
@@ -85,7 +105,6 @@ Citizen.CreateThread(function()
 				DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, _U('house_weak_door'), 0.3)
 
 				if canLockPick == true then
-					local playerPed = PlayerPedId()
 					TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
 					TriggerEvent('avan0x_lockpicking:StartLockPicking')
 					canLockPick = false
@@ -94,43 +113,36 @@ Citizen.CreateThread(function()
 				if lockpicking == true then
 					isInside = true
 					lockpicking = false
+                    TriggerServerEvent('esx_avan0x:addRB')
 					TriggerServerEvent('esx_ava_burglary:enterHouse', thisHouseID)
-					Teleport({x = Config.Appartment.coord.x, y = Config.Appartment.coord.y, z = Config.Appartment.coord.z - 0.98, h = Config.Appartment.coord.h})
+					Teleport(Config.Appartment.coord, Config.Appartment.heading)
 					TryCallCops()
 					LoopExit()
 					ResetBurglary()
 					while isInside do
-						Citizen.Wait(5)
-						local playerPed = PlayerPedId()
-						local coords = GetEntityCoords(playerPed)
+						Citizen.Wait(0)
 						for k, v in ipairs(Config.Furnitures) do
-							if GetDistanceBetweenCoords(v.x, v.y, v.z, coords.x, coords.y, coords.z, false) <= 0.7 then
-								local loop = 1000
-								while loop > 0 do
-									Citizen.Wait(10)
-									loop = loop - 10
-									if v.empty then
-										DrawText3D(v.x, v.y, v.z, _U('empty'), 0.3)
+							if #(v.coord - playerCoords) <= 0.7 then
+                                if v.empty then
+                                    DrawText3D(v.coord.x, v.coord.y, v.coord.z, _U('empty'), 0.3)
 
-									else
-										DrawText3D(v.x, v.y, v.z, _U('press_search'), 0.3)
+                                else
+                                    DrawText3D(v.coord.x, v.coord.y, v.coord.z, _U('press_search'), 0.3)
 
-										if IsControlJustReleased(0, 38) then
-											loop = 0
-											local item = Config.StealableItems[math.random(#Config.StealableItems)]
-											FreezeEntityPosition(playerPed, true)
-											TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+                                    if IsControlJustReleased(0, 38) then
+                                        local item = Config.StealableItems[math.random(#Config.StealableItems)]
+                                        FreezeEntityPosition(playerPed, true)
+                                        TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
 
-											exports['progressBars']:startUI(3000, _U('searching'))
-											Citizen.Wait(3000)
+                                        exports['progressBars']:startUI(3000, _U('searching'))
+                                        Citizen.Wait(3000)
 
-											TriggerServerEvent('esx_ava_burglary:giveItem', item, 1)
-											ESX.ShowHelpNotification(_U('found_in_furniture'))
-											v.empty = true
+                                        TriggerServerEvent('esx_ava_burglary:giveItem', item, 1)
+                                        ESX.ShowHelpNotification(_U('found_in_furniture'))
+                                        v.empty = true
 
-											ClearPedTasksImmediately(playerPed)
-											FreezeEntityPosition(playerPed, false)
-										end
+                                        ClearPedTasksImmediately(playerPed)
+                                        FreezeEntityPosition(playerPed, false)
 									end
 								end
 							end
@@ -159,26 +171,19 @@ end
 function LoopExit()
 	Citizen.CreateThread(function()
 		while isInside do
-			Citizen.Wait(10)
-			local playerPed = PlayerPedId()
-			local coords = GetEntityCoords(playerPed)
-			if GetDistanceBetweenCoords(Config.Appartment.coord.x, Config.Appartment.coord.y, Config.Appartment.coord.z, coords.x, coords.y, coords.z, false) <= 2.0 then
-				local loop = 1000
-				while loop > 0 do
-					Citizen.Wait(10)
-					loop = loop - 10
-					DrawText3D(Config.Appartment.coord.x, Config.Appartment.coord.y, Config.Appartment.coord.z, _U('press_exit'), 0.3)
+			Citizen.Wait(0)
+			if #(Config.Appartment.coord - playerCoords) <= 2.0 then
+                DrawText3D(Config.Appartment.coord.x, Config.Appartment.coord.y, Config.Appartment.coord.z, _U('press_exit'), 0.3)
 
-					if IsControlJustReleased(0, 38) then
-						loop = 0
-						if thisHouse then
-							Teleport({x = thisHouse.coord.x, y = thisHouse.coord.y, z = thisHouse.coord.z - 0.98, h = thisHouse.coord.h})
-							TriggerServerEvent('esx_ava_burglary:updateState', thisHouseID, 2)
-						else
-							Teleport({x = 296.81, y = -769.55, z = 28.35, h = 330.0})
-						end
-						isInside = false
-					end
+                if IsControlJustReleased(0, 38) then
+                    TriggerServerEvent('esx_avan0x:leaveRB')
+                    if thisHouse then
+                        Teleport(thisHouse.coord, thisHouse.heading)
+                        TriggerServerEvent('esx_ava_burglary:updateState', thisHouseID, 2)
+                    else
+                        Teleport(vector3(296.81, -769.55, 28.35), 330.0)
+                    end
+                    isInside = false
 				end
 			else
 				Citizen.Wait(500)
@@ -199,16 +204,17 @@ function TryCallCops()
 	end
 end
 
-function Teleport(coords)
+function Teleport(coords, heading)
 	local playerPed = GetPlayerPed(-1)
+    RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
 	DoScreenFadeOut(100)
 		Citizen.Wait(250)
 		FreezeEntityPosition(playerPed, true)
 
 		SetEntityCoords(playerPed, coords.x, coords.y, coords.z)
-		if coords.h then
-			SetEntityHeading(playerPed, coords.h)
+		if heading then
+			SetEntityHeading(playerPed, heading)
 		end
 
 		Citizen.Wait(1000)

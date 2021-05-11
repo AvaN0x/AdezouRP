@@ -28,7 +28,6 @@ AddEventHandler('esx_ava_burglary:giveItem', function(item, quantity)
 	end
 end)
 
--- TODO put player in rooting bucket
 RegisterServerEvent('esx_ava_burglary:enterHouse')
 AddEventHandler('esx_ava_burglary:enterHouse', function(houseID)
 	houseInfos[houseID] = 1
