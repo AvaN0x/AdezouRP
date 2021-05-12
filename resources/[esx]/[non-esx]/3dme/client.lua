@@ -9,6 +9,8 @@ local background = {
 local chatMessage = true
 local dropShadow = false
 
+local configDistance = 50
+
 -- Don't touch
 local nbrDisplaying = 1
 
@@ -34,8 +36,8 @@ function Display(mePlayer, text, offset)
     if chatMessage then
         local coordsMe = GetEntityCoords(GetPlayerPed(mePlayer), false)
         local coords = GetEntityCoords(PlayerPedId(), false)
-        local dist = Vdist2(coordsMe, coords)
-        if dist < 2500 then
+        local dist = #(coordsMe - coords)
+        if dist < configDistance then
             TriggerEvent('chat:addMessage', {
                 color = { color.r, color.g, color.b },
                 multiline = true,
@@ -55,9 +57,9 @@ function Display(mePlayer, text, offset)
             Wait(0)
             local coordsMe = GetEntityCoords(GetPlayerPed(mePlayer), false)
             local coords = GetEntityCoords(PlayerPedId(), false)
-            local dist = Vdist2(coordsMe, coords)
-            if dist < 2500 then
-                DrawText3D(coordsMe['x'], coordsMe['y'], coordsMe['z']+offset, text)
+            local dist = #(coordsMe - coords)
+            if dist < configDistance then
+                DrawText3D(coordsMe.x, coordsMe.y, coordsMe.z + offset, text)
             end
         end
         nbrDisplaying = nbrDisplaying - 1
