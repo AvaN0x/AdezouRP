@@ -35,7 +35,7 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             },
-            SocietyGarage = {
+            CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-1888.97, 2045.06, 140.87),
@@ -219,7 +219,7 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             },
-            SocietyGarage = {
+            CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(719.11, -989.22, 24.12),
@@ -356,7 +356,7 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             },
-            SocietyGarage = {
+            CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-465.3, -619.36, 31.17),
@@ -569,7 +569,7 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             },
-            SocietyGarage = {
+            CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(-1419.26, -596.3, 30.45),
@@ -636,7 +636,7 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             },
-            SocietyGarage = {
+            CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
                 Pos = vector3(143.47, -1285.09, 29.34),

@@ -411,8 +411,8 @@ Citizen.CreateThread(function()
                         OpenJobActionsMenu(CurrentJobName)
                     elseif CurrentZoneName == 'Dressing' then
                         OpenCloakroomMenu(job.jobIndex)
-                    elseif CurrentZoneName == 'SocietyGarage' then
-                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, job.Zones.SocietyGarage)
+                    elseif string.match(CurrentZoneName, "Garage$") then
+                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
                     end
 
                 elseif CurrentZoneCategory == "ProcessZones" then
