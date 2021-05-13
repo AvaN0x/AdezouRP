@@ -19,7 +19,7 @@ Locales['fr'] = {
 	['comp_earned'] = 'Votre société a gagné ~g~$',
 	['have_earned'] = 'Vous avez gagné ~g~$',
 
-	['process_cant_carry'] = 'Traitement terminé',
+	['process_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['press_traitement'] = 'Appuyez sur ~INPUT_CONTEXT~ pour traiter',
 	['press_collect'] = 'Appuyez sur ~INPUT_CONTEXT~ pour récolter',
 	['press_sell'] = 'Appuyez sur ~INPUT_CONTEXT~ pour vendre vos produits',
