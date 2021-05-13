@@ -76,9 +76,9 @@ AddEventHandler("esx_avan0x:moveToDriverSeat", function()
 end)
 
 
--------------------------------------------
--------- CAN'T MOVE TO DRIVER SEAT --------
--------------------------------------------
+-----------
+-- OTHER --
+-----------
 
 RegisterCommand("v", function(source, args, rawCommand)
     local playerPed = GetPlayerPed(-1)

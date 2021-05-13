@@ -4,11 +4,11 @@
 -------------------------------------------
 
 Config = {}
--- ped types : 
-    -- PED_TYPE_PLAYER_0,// michael
-    -- PED_TYPE_PLAYER_1,// franklin
-    -- PED_TYPE_NETWORK_PLAYER,  // mp character
-    -- PED_TYPE_PLAYER_2,// trevor
+-- ped types :
+    -- PED_TYPE_PLAYER_0, // michael
+    -- PED_TYPE_PLAYER_1, // franklin
+    -- PED_TYPE_PLAYER_2, // trevor
+    -- PED_TYPE_NETWORK_PLAYER, // mp character
     -- PED_TYPE_CIVMALE,
     -- PED_TYPE_CIVFEMALE,
     -- PED_TYPE_COP,
@@ -41,63 +41,160 @@ Config = {}
 Config.Peds = {
     -- Superettes = {
     --     Name = "mp_m_shopkeep_01",
-    --     Type= "PED_TYPE_CIVMALE",
+    --     Type = "PED_TYPE_CIVMALE",
     --     PosList = {
-    --         {x = 24.129, y = -1345.156, z = 28.497, h = 266.946},
-    --         {x = 2557.14, y = 380.53, z = 107.622, h = 2.0},
-    --         {x = -3038.87, y = 584.37, z = 6.97, h = 23.0},
-    --         {x = -3242.28, y = 999.72, z = 11.850, h = 354.8},
-    --         {x = 549.4, y = 2671.39, z = 41.176, h = 96.5},
-    --         {x = 1959.76, y = 3739.87, z = 31.363, h = 289.7},
-    --         {x = 2677.86, y = 3279.12, z = 54.261, h = 332.8},
-    --         {x = 1727.61, y = 6415.37, z = 34.057, h = 246.5},
-    --         {x = 1134.04, y = -982.48, z = 45.45, h = 277.0},
-    --         {x = -1221.79, y = -908.63, z = 11.35, h = 41.0},
-    --         {x = -1486.06, y = -377.75, z = 39.163, h = 124.0},
-    --         {x = -2966.22, y = 390.79, z = 14.054, h = 87.0},
-    --         {x = 1166.05, y = 2710.94, z = 37.167, h = 181.0},
-    --         {x = 1392.39, y = 3606.44, z = 33.995, h = 203.0},
-    --         {x = -46.49, y = -1758.17, z = 28.47, h = 48.0},
-    --         {x = 1165.04, y = -323.00, z = 68.27, h = 104.0},
-    --         {x = -705.89, y = -913.97, z = 18.26, h = 97.0},
-    --         {x = -1819.79, y = 794.18, z = 137.20, h = 138.0},
-    --         {x = 1697.71, y = 4922.87, z = 41.08, h = 317.0},
-    --         {x = 372.48, y = 326.44, z = 102.59, h = 252.22},
-
+    --         {
+    --             pos = vector3(24.129, -1345.156, 28.497),
+    --             heading = 266.946
+    --         },
+    --         {
+    --             pos = vector3(2557.14, 380.53, 107.622),
+    --             heading = 2.0
+    --         },
+    --         {
+    --             pos = vector3(-3038.87, 584.37, 6.97),
+    --             heading = 23.0
+    --         },
+    --         {
+    --             pos = vector3(-3242.28, 999.72, 11.850),
+    --             heading = 354.8
+    --         },
+    --         {
+    --             pos = vector3(549.4, 2671.39, 41.176),
+    --             heading = 96.5
+    --         },
+    --         {
+    --             pos = vector3(1959.76, 3739.87, 31.363),
+    --             heading = 289.7
+    --         },
+    --         {
+    --             pos = vector3(2677.86, 3279.12, 54.261),
+    --             heading = 332.8
+    --         },
+    --         {
+    --             pos = vector3(1727.61, 6415.37, 34.057),
+    --             heading = 246.5
+    --         },
+    --         {
+    --             pos = vector3(1134.04, -982.48, 45.45),
+    --             heading = 277.0
+    --         },
+    --         {
+    --             pos = vector3(-1221.79, -908.63, 11.35),
+    --             heading = 41.0
+    --         },
+    --         {
+    --             pos = vector3(-1486.06, -377.75, 39.163),
+    --             heading = 124.0
+    --         },
+    --         {
+    --             pos = vector3(-2966.22, 390.79, 14.054),
+    --             heading = 87.0
+    --         },
+    --         {
+    --             pos = vector3(1166.05, 2710.94, 37.167),
+    --             heading = 181.0
+    --         },
+    --         {
+    --             pos = vector3(1392.39, 3606.44, 33.995),
+    --             heading = 203.0
+    --         },
+    --         {
+    --             pos = vector3(-46.49, -1758.17, 28.47),
+    --             heading = 48.0
+    --         },
+    --         {
+    --             pos = vector3(1165.04, -323.00, 68.27),
+    --             heading = 104.0
+    --         },
+    --         {
+    --             pos = vector3(-705.89, -913.97, 18.26),
+    --             heading = 97.0
+    --         },
+    --         {
+    --             pos = vector3(-1819.79, 794.18, 137.20),
+    --             heading = 138.0
+    --         },
+    --         {
+    --             pos = vector3(1697.71, 4922.87, 41.08),
+    --             heading = 317.0
+    --         },
+    --         {
+    --             pos = vector3(372.48, 326.44, 102.59),
+    --             heading = 252.22
+    --         },
     --     }
     -- },
     Gouv = {
-        -- Name = "a_f_y_business_01",
         Name = "ig_agatha",
-        Type= "PED_TYPE_CIVFEMALE",
+        Type = "PED_TYPE_CIVFEMALE",
         PosList = {
-            {x = -550.76, y = -190.07, z = 36.72, h = 193.6, scenario = "PROP_HUMAN_SEAT_ARMCHAIR"},
+            {
+                pos = vector3(-550.76, -190.07, 36.72),
+                heading = 193.6,
+                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
+                name = "Cindy"
+            },
         }
     },
     Pacifique = {
         Name = "a_m_y_business_02",
-        Type= "PED_TYPE_CIVMALE",
+        Type = "PED_TYPE_CIVMALE",
         PosList = {
-            {x = 248.95, y = 224.51, z = 104.97, h = 166.76, scenario = "PROP_HUMAN_SEAT_BENCH"},
-            {x = 243.71, y = 226.4, z = 104.97, h = 166.76, scenario = "PROP_HUMAN_SEAT_BENCH"},
+            {
+                pos = vector3(248.95, 224.51, 104.97),
+                heading = 166.76,
+                scenario = "PROP_HUMAN_SEAT_BENCH",
+                name = "Philippe"
+            },
+            {
+                pos = vector3(243.71, 226.4, 104.97),
+                heading = 166.76,
+                scenario = "PROP_HUMAN_SEAT_BENCH",
+                name = "Robert"
+            },
         }
     },
     -- Ammunation = {
     --     Name = "s_m_y_ammucity_01",
-    --     Type= "PED_TYPE_CIVMALE",
+    --     Type = "PED_TYPE_CIVMALE",
     --     PosList = {
-    --         {x = 22.07, y = -1104.93, z = 28.82, h = 158.97, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
+    --         {
+    --             pos = vector3(22.07, -1104.93, 28.82),
+    --             heading = 158.97,
+    --             scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+    --         },
     --     }
     -- },
     Tatoo = {
         Name = "a_m_y_ktown_01",
-        Type= "PED_TYPE_CIVMALE",
+        Type = "PED_TYPE_CIVMALE",
         PosList = {
-            {x = 319.71, y = 180.9, z = 102.61, h = 254.42, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
-            {x = -1152.14, y = -1424.01, z = 3.97, h = 128.46, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
-            {x = -3170.54, y = 1073.1, z = 19.85, h = 20.83, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
-            {x = 1862.45, y = 3748.43, z = 32.05, h = 24.46, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
-            {x = -292.04, y = 6199.83, z = 30.50, h = 228.9, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
+            {
+                pos = vector3(319.71, 180.9, 102.61),
+                heading = 254.42,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-1152.14, -1424.01, 3.97),
+                heading = 128.46,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-3170.54, 1073.1, 19.85),
+                heading = 20.83,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(1862.45, 3748.43, 32.05),
+                heading = 24.46,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-292.04, 6199.83, 30.50),
+                heading = 228.9,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
         }
 
     },
