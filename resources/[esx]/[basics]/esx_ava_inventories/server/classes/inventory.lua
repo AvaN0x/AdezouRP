@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-function CreateInventory(name, label, max_weight, identifier, items, playerSource)
+function CreateInventory(name, label, max_weight, identifier, items, money, dirtyMoney, playerSource)
 	local self = {}
 
 	self.identifier = identifier
@@ -14,6 +14,14 @@ function CreateInventory(name, label, max_weight, identifier, items, playerSourc
 	self.modified = false
     self.playerSource = playerSource
 
+	self.money = money
+    self.dirtyMoney = dirtyMoney
+    self.modifiedMoney = false
+
+    
+    -----------
+    -- Items --
+    -----------
 	self.updateWeight = function()
 		self.actual_weight = 0
 		for k, v in ipairs(items) do
@@ -43,32 +51,6 @@ function CreateInventory(name, label, max_weight, identifier, items, playerSourc
 			return item
 		else
 			return nil
-		end
-	end
-
-	self.saveInventory = function()
-		if self.modified == true then
-			if self.identifier == nil then
-				print("Save inventory for ".. self.name)
-				for k, item in ipairs(items) do
-					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count) VALUES (@name, @item, @count) ON DUPLICATE KEY UPDATE count = @count', {
-						['@name'] = self.name,
-						['@item'] = item.name,
-						['@count'] = item.count
-					})
-				end
-			else
-				print("Save inventory for ".. self.name .. " of " .. self.identifier)
-				for k, item in ipairs(items) do
-					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count, identifier) VALUES (@name, @item, @count, @identifier) ON DUPLICATE KEY UPDATE count = @count', {
-						['@name'] = self.name,
-						['@item'] = item.name,
-						['@count'] = item.count,
-						['@identifier'] = self.identifier
-					})
-				end
-			end
-			self.modified = false
 		end
 	end
 
@@ -177,6 +159,123 @@ function CreateInventory(name, label, max_weight, identifier, items, playerSourc
 		self.actual_weight = 0
 		self.modified = true
 	end
+
+
+
+    -----------
+    -- Money --
+    -----------
+    self.addMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.money = self.money + amount
+        
+        self.modifiedMoney = true
+    end
+
+    self.removeMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.money = self.money - amount
+
+        self.modifiedMoney = true
+    end
+
+    self.setMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.money = amount
+
+        self.modifiedMoney = true
+    end
+
+
+    -----------
+    -- DirtyMoney --
+    -----------
+    self.addDirtyMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.dirtyMoney = self.dirtyMoney + amount
+
+        self.modifiedMoney = true
+    end
+
+    self.removeDirtyMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.dirtyMoney = self.dirtyMoney - amount
+
+        self.modifiedMoney = true
+    end
+
+    self.setDirtyMoney = function(amount)
+        if self.identifier ~= nil then
+            print(self.identifier .. " tried to add money to its account (" .. amount .. ")")
+            return
+        end
+
+        self.dirtyMoney = amount
+
+        self.modifiedMoney = true
+    end
+
+
+    ----------
+    -- SAVE --
+    ----------
+
+	self.saveInventory = function()
+		if self.modified == true then
+			if self.identifier == nil then
+				print("Save inventory for ".. self.name)
+				for k, item in ipairs(items) do
+					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count) VALUES (@name, @item, @count) ON DUPLICATE KEY UPDATE count = @count', {
+						['@name'] = self.name,
+						['@item'] = item.name,
+						['@count'] = item.count
+					})
+				end
+			else
+				print("Save inventory for ".. self.name .. " of " .. self.identifier)
+				for k, item in ipairs(items) do
+					MySQL.Async.execute('INSERT INTO inventories_items (name, item, count, identifier) VALUES (@name, @item, @count, @identifier) ON DUPLICATE KEY UPDATE count = @count', {
+						['@name'] = self.name,
+						['@item'] = item.name,
+						['@count'] = item.count,
+						['@identifier'] = self.identifier
+					})
+				end
+			end
+			self.modified = false
+		end
+
+        if self.modifiedMoney == true and self.identifier == nil then
+            print("Save money inventory for ".. self.name)
+            MySQL.Async.execute('UPDATE inventories SET money = @money, dirty_money= @dirtyMoney WHERE name = @name', {
+                ['@name'] = self.name,
+                ['@money'] = self.money,
+                ['@dirtyMoney'] = self.dirtyMoney
+            })
+            self.modifiedMoney = false
+        end
+	end
+
 
 	return self
 end

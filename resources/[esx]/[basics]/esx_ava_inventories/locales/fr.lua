@@ -7,6 +7,7 @@ Locales["fr"] = {
 
 	['label_cash'] = "Liquide : <span style='color: #0cc421'>%s $</span>",
 	['label_account_black_money'] = "Argent sale : <span style='color: #eb4034'>%s $</span>",
+	['label_dirty_money'] = "Argent sale : <span style='color: #eb4034'>%s $</span>",
 
 	['label_weapon'] = "<span style='color: #eb4034'>%s</span>",
 	['weapon_ammo_amount'] = "%s munitions",

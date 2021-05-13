@@ -306,116 +306,19 @@ function OpenOtherInventory(inventory)
 end
 
 
--- function OpenPutStocksMenu()
--- 	ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
--- 		local elements = {}
--- 		table.insert(elements, {label = "Argent " .. inventory.money .. '$', type = 'cash'})
---         for k, acc in pairs(inventory.accounts) do
---             if acc.name == "black_money" then
--- 				table.insert(elements, {label = "Argent sale " .. acc.money .. '$', type = 'black_cash'})
--- 				break
--- 			end
---         end
-
--- 		for i=1, #inventory.items, 1 do
--- 			local item = inventory.items[i]
--- 			if item.count > 0 then
--- 				table.insert(elements, {label = item.label .. ' x' .. item.count, type = 'item_standard', value = item.name})
--- 			end
--- 		end
-
--- 		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'stocks_menu',
--- 		{
--- 			title    = _U('inventory'),
--- 			elements = elements
--- 		},
--- 		function(data, menu)
--- 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'stocks_menu_put_item_count',
--- 			{
--- 				title = _U('quantity')
--- 			},
--- 			function(data2, menu2)
--- 				local count = tonumber(data2.value)
--- 				if count == nil or count <= 0 then
--- 					ESX.ShowNotification(_U('quantity_invalid'))
--- 				else
--- 					menu2.close()
--- 					menu.close()
--- 					if data.current.type == "item_standard" then
--- 						TriggerServerEvent('esx_ava_gang:putStockItems', data.current.value, count, actualGang.name)
--- 					elseif data.current.type == "cash" then
--- 						TriggerServerEvent('esx_ava_gang:depositMoney', actualGang.name, count)
--- 					elseif data.current.type == "black_cash" then
--- 						TriggerServerEvent('esx_ava_gang:depositMoneyDirty', actualGang.name, count)
--- 					end
--- 					OpenPutStocksMenu()
--- 				end
--- 			end,
--- 			function(data2, menu2)
--- 				menu2.close()
--- 			end)
--- 		end,
--- 		function(data, menu)
--- 			menu.close()
--- 		end)
--- 	end)
--- end
-
--- function OpenGetStocksMenu()
--- 	ESX.TriggerServerCallback('esx_ava_gang:getStockItems', function(inventory)
--- 		local elements = {}
--- 		table.insert(elements, {label = "Argent " .. inventory.cash .. '$', type = 'cash'})
--- 		table.insert(elements, {label = "Argent sale " .. inventory.black_cash .. '$', type = 'black_cash'})
-
--- 		for i=1, #inventory.items, 1 do
--- 			if (inventory.items[i].count ~= 0) then
--- 				table.insert(elements, {label = 'x' .. inventory.items[i].count .. ' ' .. inventory.items[i].label, value = inventory.items[i].name, type = 'item_standard'})
--- 			end
--- 		end
-
--- 		ESX.UI.Menu.Open(
--- 		'default', GetCurrentResourceName(), 'stocks_menu',
--- 		{
--- 			title    = actualGang.data.Name .. ' Stock',
--- 			align    = 'left',
--- 			css 	 = 'gang',
--- 			elements = elements
--- 		},
--- 		function(data, menu)
--- 			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'stocks_menu_get_item_count',
--- 			{
--- 				title = _U('quantity')
--- 			},
--- 			function(data2, menu2)
--- 				local count = tonumber(data2.value)
--- 				if count == nil or count <= 0 then
--- 					ESX.ShowNotification(_U('quantity_invalid'))
--- 				else
--- 					menu2.close()
--- 					menu.close()
--- 					if data.current.type == "item_standard" then
--- 						TriggerServerEvent('esx_ava_gang:getStockItem', data.current.value, count, actualGang.name)
--- 					elseif data.current.type == "cash" then
--- 						TriggerServerEvent('esx_ava_gang:withdrawMoney', actualGang.name, count)
--- 					elseif data.current.type == "black_cash" then
--- 						TriggerServerEvent('esx_ava_gang:withdrawMoneyDirty', actualGang.name, count)
--- 					end
--- 					OpenGetStocksMenu()
--- 				end
--- 			end,
--- 			function(data2, menu2)
--- 				menu2.close()
--- 			end)
--- 		end,
--- 		function(data, menu)
--- 			menu.close()
--- 		end)
--- 	end, actualGang.name)
--- end
 
 function OpenPutInventory(inventoryName)
     ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
         local elements = {}
+
+        table.insert(elements, {label = _('label_cash', ESX.Math.GroupDigits(inventory.money)), value = "item_money", item = {name = "money", count = inventory.money}})
+
+        for k, acc in pairs(inventory.accounts) do
+            if acc.name == "black_money" and acc.money > 0 then
+                table.insert(elements, {label = _('label_dirty_money', ESX.Math.GroupDigits(acc.money)), value = "item_dirty_money", item = {name = 'dirty_money', count = acc.money}})
+            end
+        end
+
         for k, item in ipairs(inventory.items) do
             if item.count > 0 then
                 local label
@@ -454,6 +357,15 @@ end
 function OpenTakeInventory(inventoryName)
     ESX.TriggerServerCallback("esx_ava_inventories:getSharedInventory", function(inventory)
         local elements = {}
+
+        if inventory.money > 0 then
+            table.insert(elements, {label = _('label_cash', ESX.Math.GroupDigits(inventory.money)), value = "item_money", item = {name = "money", count = inventory.money}})
+        end
+
+        if inventory.dirtyMoney > 0 then
+            table.insert(elements, {label = _('label_dirty_money', ESX.Math.GroupDigits(inventory.dirtyMoney)), value = "item_dirty_money", item = {name = "dirty_money", count = inventory.dirtyMoney}})
+        end
+
         for k, item in ipairs(inventory.items) do
             if item.count > 0 then
                 local label = _('label_count', item.label, item.count)
