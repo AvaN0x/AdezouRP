@@ -33,6 +33,7 @@ Citizen.CreateThread(function()
 	-- TriggerServerEvent("esx_ava_gang:requestGang") -- already triggered in esx_ava_gang
 
 	AdminLoop()
+    DevLoop()
 
 	RefreshMoney()
 	RefreshDirtyMoney()
