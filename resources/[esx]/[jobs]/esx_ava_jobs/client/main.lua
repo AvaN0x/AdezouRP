@@ -9,6 +9,7 @@ local GUI = {
 }
 local PlayerData = {}
 local playerJobs = {}
+actualGang = nil
 
 local mainBlips = {}
 local JobBlips = {}
@@ -40,7 +41,7 @@ Citizen.CreateThread(function()
     setJobsToUse()
 
     for _, job in pairs(Config.Jobs) do
-        if not job.isIllegal then
+        if not job.isIllegal and not job.isGang then
             local blip = AddBlipForCoord(job.Zones.JobActions.Pos)
             SetBlipSprite (blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
@@ -55,6 +56,9 @@ Citizen.CreateThread(function()
             table.insert(mainBlips, blip)
         end
     end
+
+    Citizen.Wait(1000)
+    TriggerServerEvent("esx_ava_jobs:requestGang")
 end)
 
 RegisterNetEvent('esx:playerLoaded')
@@ -71,6 +75,16 @@ end)
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
+    setJobsToUse()
+end)
+
+RegisterNetEvent('esx_ava_jobs:setGang')
+AddEventHandler('esx_ava_jobs:setGang', function(gang)
+	if gang and gang.name and Config.Jobs[gang.name] then
+		actualGang = {name = gang.name, grade = gang.grade}
+	else
+		actualGang = nil
+	end
     setJobsToUse()
 end)
 
@@ -103,6 +117,10 @@ function setJobsToUse()
         playerJobs[PlayerData.job2.name] = Config.Jobs[PlayerData.job2.name]
         playerJobs[PlayerData.job2.name].jobIndex = 2
         playerJobs[PlayerData.job2.name].grade = PlayerData.job2.grade_name
+    end
+    if actualGang and Config.Jobs[actualGang.name] ~= nil then
+        playerJobs[actualGang.name] = Config.Jobs[actualGang.name]
+        playerJobs[actualGang.name].grade = actualGang.grade
     end
     for name, farm in pairs(Config.Jobs) do
         if farm.isIllegal == true then
@@ -411,6 +429,8 @@ Citizen.CreateThread(function()
                         OpenJobActionsMenu(CurrentJobName)
                     elseif CurrentZoneName == 'Dressing' then
                         OpenCloakroomMenu(job.jobIndex)
+                    elseif string.match(CurrentZoneName, "Stock$") then
+                        TriggerEvent('esx_ava_inventories:OpenSharedInventory', CurrentZoneValue.StockName)
                     elseif string.match(CurrentZoneName, "Garage$") then
                         TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
                     end

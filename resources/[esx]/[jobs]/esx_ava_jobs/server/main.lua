@@ -11,7 +11,7 @@ local playersProcessing = {}
 
 Citizen.CreateThread(function()
     for jobName, job in pairs(Config.Jobs) do
-        if not job.isIllegal then
+        if not job.isIllegal and not job.isGang then
             TriggerEvent('esx_phone:registerNumber', jobName, _('job_client', job.LabelName), true, true)
             TriggerEvent('esx_society:registerSociety', jobName, Config.LabelName, job.SocietyName, job.SocietyName, job.SocietyName, {type = 'private'})
         end

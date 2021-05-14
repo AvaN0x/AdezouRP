@@ -39,8 +39,8 @@ AddEventHandler('esx:setJob2', function(job2)
 	SetAllDoorsAuthorized()
 end)
 
-RegisterNetEvent('esx_ava_gang:setGang')
-AddEventHandler('esx_ava_gang:setGang', function(gang)
+RegisterNetEvent('esx_ava_jobs:setGang')
+AddEventHandler('esx_ava_jobs:setGang', function(gang)
 	actualGang = gang
 	SetAllDoorsAuthorized()
 end)

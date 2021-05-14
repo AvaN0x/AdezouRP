@@ -855,4 +855,125 @@ Config.Jobs = {
         },
     },
 
+    gang_vagos = {
+        isGang = true,
+		LabelName = "Vagos",
+		Zones = {
+			Stock = {
+				Pos = vector3(338.3, -2012.73, 21.41),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "gang_vagos",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	gang_ballas = {
+        isGang = true,
+		LabelName = "Ballas",
+		Zones = {
+			Stock = {
+				Pos = vector3(118.93, -1966.05, 20.35),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "gang_ballas",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	gang_families = {
+        isGang = true,
+		LabelName = "Families",
+		Zones = {
+			Stock = {
+				Pos = vector3(-157.71, -1603.08, 34.06),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "gang_families",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	gang_marabunta = {
+        isGang = true,
+		LabelName = "Marabunta",
+		Zones = {
+			Stock = {
+				Pos = vector3(1294.62, -1745.05, 53.30),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "gang_marabunta",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	biker_lost = {
+        isGang = true,
+		LabelName = "The Lost",
+		Zones = {
+			Stock = {
+				Pos = vector3(986.63, -92.71, 73.87),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "biker_lost",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	orga_cartel = {
+        isGang = true,
+		LabelName = "Cartel",
+		Zones = {
+			Stock = {
+				Pos = vector3(1402.51, 1152.79, 114.33),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "orga_cartel",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	orga_mafia = {
+        isGang = true,
+		LabelName = "Mafia",
+		Zones = {
+			Stock = {
+				Pos = vector3(-854.99, 26.75, 40.56),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "orga_mafia",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+	orga_hapf = {
+        isGang = true,
+        LabelName = "HAPF",
+		Zones = {
+			Stock = {
+				Pos = vector3(-1108.60, 1643.52, 4.64),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "orga_hapf",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+		}
+	},
+
 }

@@ -279,7 +279,11 @@ end
 RegisterNetEvent('esx_ava_inventories:OpenSharedInventory')
 AddEventHandler('esx_ava_inventories:OpenSharedInventory', function(name)
     ESX.TriggerServerCallback("esx_ava_inventories:getSharedInventory", function(inventory)
-        OpenOtherInventory(inventory)
+        if inventory then
+            OpenOtherInventory(inventory)
+        else
+            print("ERROR: inventory ".. name .. " does not exist")
+        end
     end, name)
 end)
 
