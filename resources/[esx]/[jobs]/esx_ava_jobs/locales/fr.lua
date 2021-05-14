@@ -35,7 +35,7 @@ Locales['fr'] = {
 
 	['sell_label'] = '%s : %s unité(s)',
 	['sell_not_that_much'] = 'Tu n\'as pas autant de %s.',
-	['sell_how_much'] = 'Combien voulez-vous vendre ? [Max : %s]s',
+	['sell_how_much'] = 'Combien voulez-vous vendre ? [Max : %s]',
 	['seller_for'] = 'Vendeur %s',
     
 	['buy_label'] = '%s : $%s',

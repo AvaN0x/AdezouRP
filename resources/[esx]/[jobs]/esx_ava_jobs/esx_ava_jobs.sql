@@ -106,7 +106,12 @@ INSERT INTO `items` (`name`, `label`, `limit`) VALUES
 	('doublechickenburger', 'Double Chicken Burger', 20),
 	('potatoes', 'Potatoes', 20),
 	('tenders', 'Tenders', 20),
-	('chickenwrap', 'Wrap au poulet', 20)
+	('chickenwrap', 'Wrap au poulet', 20),
+
+    -- unicorn
+	('orange', '🍊 Orange', -1)
+
+
 ;
 
 

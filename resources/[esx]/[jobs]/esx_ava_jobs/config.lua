@@ -651,6 +651,32 @@ Config.Jobs = {
                 Blip = true
             },
         },
+        FieldZones = {
+            OrangesField = {
+                Items = {
+                    {name = 'orange', quantity = 8}
+                },
+                PropHash = GetHashKey('ex_mp_h_acc_fruitbowl_01'),
+                Pos = vector3(373.23, 6511.44, 28.31),
+                GroundCheckHeights = {27.0, 28.0, 29.0},
+                Name = "1. Récolte d'oranges",
+                Blip = true
+            }
+        },
+        SellZones = {
+            OrangeSell = {
+                Items = {
+                    {name = 'orange', price = 40},
+                },
+                Pos = vector3(106.17, -1280.60, 28.27),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 136, g = 232, b = 9},
+                Name = "2. Vente d'oranges",
+                HelpText = _('press_sell'),
+                Marker = 27,
+                Blip = true
+            }
+        },
         BuyZones = {
             BuyBox = {
                 Items = {
