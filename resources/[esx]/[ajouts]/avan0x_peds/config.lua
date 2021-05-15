@@ -148,6 +148,18 @@ Config.Peds = {
             },
         }
     },
+    EMS = {
+        Name = "s_m_m_doctor_01",
+        Type = "PED_TYPE_MEDIC",
+        PosList = {
+            {
+                pos = vector3(309.28, -594.70, 41.80),
+                heading = 45.0,
+                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
+                name = "Albert"
+            },
+        }
+    },
     Pacifique = {
         Name = "a_m_y_business_02",
         Type = "PED_TYPE_CIVMALE",
