@@ -15,8 +15,9 @@ jobs:
         with:
           host: ${{secrets.HOST}}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          # key: ${{ secrets.KEY }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd Adezou/server-data
             git pull
