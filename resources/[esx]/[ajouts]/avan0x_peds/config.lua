@@ -125,6 +125,17 @@ Config.Peds = {
     --         },
     --     }
     -- },
+    LSPD = {
+        Name = "s_f_y_cop_01",
+        Type = "PED_TYPE_COP",
+        PosList = {
+            {
+                pos = vector3(440.05, -978.86, 29.71),
+                heading = 183.6,
+                name = "Jessica"
+            },
+        }
+    },
     Gouv = {
         Name = "ig_agatha",
         Type = "PED_TYPE_CIVFEMALE",
@@ -133,7 +144,7 @@ Config.Peds = {
                 pos = vector3(-550.76, -190.07, 36.72),
                 heading = 193.6,
                 scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
-                name = "Cindy"
+                name = "Agatha"
             },
         }
     },
