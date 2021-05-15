@@ -1,0 +1,22 @@
+name: AdezouRP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-front:
+    name: Deploy App - ssh pull
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd Adezou/server-data
+            git pull
