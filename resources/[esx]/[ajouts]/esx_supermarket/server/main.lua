@@ -95,7 +95,7 @@ AddEventHandler('esx_shops:buyItem', function(itemName, amount, zone, shopName)
 				TriggerClientEvent('esx:showNotification', _source, _U('player_cannot_hold'))
 			end
 		else
-			local missingMoney = price - xPlayer.getMoney()
+			local missingMoney = price - xPlayer.getAccount('black_money').money
 			TriggerClientEvent('esx:showNotification', _source, _U('not_enough_dirty', missingMoney))
 		end
 

@@ -88,8 +88,8 @@ AddEventHandler('esx:setAccountMoney', function(account)
 	end
 end)
 
-RegisterNetEvent('esx_ava_gang:setGang')
-AddEventHandler('esx_ava_gang:setGang', function(gang)
+RegisterNetEvent('esx_ava_jobs:setGang')
+AddEventHandler('esx_ava_jobs:setGang', function(gang)
 	SendNUIMessage({action = "setValue", key = "gang", value = gang.label, name = gang.name})
 end)
 

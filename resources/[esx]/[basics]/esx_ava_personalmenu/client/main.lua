@@ -30,7 +30,7 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 	end
 
-	-- TriggerServerEvent("esx_ava_gang:requestGang") -- already triggered in esx_ava_gang
+	-- TriggerServerEvent("esx_ava_jobs:requestGang") -- already triggered in esx_ava_gang
 
 	AdminLoop()
     DevLoop()
@@ -63,8 +63,8 @@ AddEventHandler("esx:setJob2", function(job2)
 	RefreshDirtyMoney2()
 end)
 
-RegisterNetEvent('esx_ava_gang:setGang')
-AddEventHandler('esx_ava_gang:setGang', function(gang)
+RegisterNetEvent('esx_ava_jobs:setGang')
+AddEventHandler('esx_ava_jobs:setGang', function(gang)
 	actualGang = gang
 end)
 
@@ -174,7 +174,7 @@ function OpenPersonalMenu()
 			OpenSocietyMenu(PlayerData.job2, society2Money, society2DirtyMoney)
 
 		elseif data.current.value == "gang_menu" then
-			TriggerEvent("esx_ava_gang:openMenu")
+			TriggerEvent("esx_ava_jobs:openGangMenu")
 
 		elseif data.current.value == "admin_menu" then
 			OpenAdminMenu()

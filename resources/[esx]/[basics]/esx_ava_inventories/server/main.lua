@@ -9,6 +9,8 @@ local playerInventoriesNames = {} -- inventories shared = 0
 local Inventories = {}
 local SharedInventories = {}
 
+-- maybe use a shared type of 2 for properties ? investigate later
+
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 AddEventHandler('onMySQLReady', function()
@@ -27,6 +29,8 @@ AddEventHandler('onMySQLReady', function()
 		local label = inventories[i].label
 		local max_weight = inventories[i].max_weight
 		local shared = inventories[i].shared
+		local money = inventories[i].money or 0
+		local dirtyMoney = inventories[i].dirty_money or 0
 
 		if shared == false then -- player inventory
 			table.insert(playerInventoriesNames, {name = name, label = label, max_weight = max_weight})
@@ -50,7 +54,7 @@ AddEventHandler('onMySQLReady', function()
 					})
 				end
 			end
-			SharedInventories[name] = CreateInventory(name, label, max_weight, nil, items)
+			SharedInventories[name] = CreateInventory(name, label, max_weight, nil, items, money, dirtyMoney)
 		end
 	end
 	TriggerEvent('esx_ava_inventories:reloadUsableItems')
@@ -128,7 +132,7 @@ AddEventHandler('esx:playerLoaded', function(source)
 			end
 		end
 
-		local inventory = CreateInventory(name, label, max_weight, identifier, items, _source)
+		local inventory = CreateInventory(name, label, max_weight, identifier, items, nil, nil, _source)
 
 		table.insert(Inventories[name], inventory)
 		table.insert(ava_inventories, inventory) -- add inventory to player inventories
@@ -423,14 +427,23 @@ AddEventHandler('esx_ava_inventories:takeStockItem', function(itemName, count, n
 	local xPlayer = ESX.GetPlayerFromId(_source)
     local inventory = GetSharedInventory(name)
     local playerInventory = GetInventory('inventory', xPlayer.identifier)
-    local item = inventory.getItem(itemName)
-    if inventory.canRemoveItem(itemName, count) then
+
+    if itemName == "money" and inventory.money >= count then
+        inventory.removeMoney(count)
+        xPlayer.addMoney(count)
+
+    elseif itemName == "dirty_money" and inventory.dirtyMoney >= count then
+        inventory.removeDirtyMoney(count)
+        xPlayer.addAccountMoney('black_money', count)
+
+    elseif inventory.canRemoveItem(itemName, count) then
         if playerInventory.canAddItem(itemName, count) then
             inventory.removeItem(itemName, count)
             playerInventory.addItem(itemName, count)
         else
-            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place_stock'))
+            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
         end
+
     else
         TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
     end
@@ -443,14 +456,23 @@ AddEventHandler('esx_ava_inventories:putStockItems', function(itemName, count, n
 	local xPlayer = ESX.GetPlayerFromId(_source)
     local inventory = GetSharedInventory(name)
     local playerInventory = GetInventory('inventory', xPlayer.identifier)
-    local sourceItem = inventory.getItem(itemName)
-    if playerInventory.canRemoveItem(itemName, count) then
+
+    if itemName == "money" and xPlayer.getMoney() >= count then
+        inventory.addMoney(count)
+        xPlayer.removeMoney(count)
+
+    elseif itemName == "dirty_money" and xPlayer.getAccount('black_money').money >= count then
+        inventory.addDirtyMoney(count)
+        xPlayer.removeAccountMoney('black_money', count)
+
+    elseif playerInventory.canRemoveItem(itemName, count) then
         if inventory.canAddItem(itemName, count) then
             playerInventory.removeItem(itemName, count)
             inventory.addItem(itemName, count)
         else
-            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place'))
+            TriggerClientEvent('esx:showNotification', _source, _('not_enough_place_stock'))
         end
+
     else
         TriggerClientEvent('esx:showNotification', _source, _('invalid_quantity'))
     end
