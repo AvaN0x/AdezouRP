@@ -38,7 +38,15 @@ end)
 ESX.RegisterUsableItem("raisin", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "raisin")
 
-    TriggerClientEvent("esx_status:add", source, "hunger", 200000)
+    TriggerClientEvent("esx_status:add", source, "hunger", 50000)
+
+	TriggerClientEvent("esx_ava_needs:onEat", source)
+end)
+
+ESX.RegisterUsableItem("orange", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "orange")
+
+    TriggerClientEvent("esx_status:add", source, "hunger", 50000)
 
 	TriggerClientEvent("esx_ava_needs:onEat", source)
 end)
