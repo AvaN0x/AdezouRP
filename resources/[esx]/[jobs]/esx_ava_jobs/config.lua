@@ -991,7 +991,7 @@ Config.Jobs = {
         LabelName = "HAPF",
 		Zones = {
 			Stock = {
-				Pos = vector3(-1108.60, 1643.52, 4.64),
+				Pos = vector3(-1108.60, -1643.52, 3.66),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
