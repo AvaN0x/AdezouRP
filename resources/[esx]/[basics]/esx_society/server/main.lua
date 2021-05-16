@@ -199,21 +199,29 @@ end
 
 RegisterServerEvent('esx_society:washMoney')
 AddEventHandler('esx_society:washMoney', function(amount)
-	local xPlayer 		= ESX.GetPlayerFromId(source)
-	local account 		= xPlayer.getAccount('black_money')
+    local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	local account = xPlayer.getAccount('black_money')
 
 	if amount > 0 and account.money >= amount then
-		
 		local washedMoney = math.floor(amount)	
 
 		xPlayer.removeAccountMoney('black_money', amount)
 		xPlayer.addMoney(washedMoney)
-		
-		TriggerClientEvent("esx_society:notify", source, "CHAR_LESTER_DEATHWISH", 1, _U('Notification'), false, _U('cash') .. washedMoney .. _U('cash1'))
-		
-		TriggerEvent("esx:washingmoneyalert",xPlayer.name,amount)
+
+		TriggerClientEvent("esx_society:notify", _source, "CHAR_LESTER_DEATHWISH", 1, _U('Notification'), false, _U('cash') .. washedMoney .. _U('cash1'))
+
+		-- TriggerEvent("esx:washingmoneyalert",xPlayer.name,amount)
+        MySQL.Async.fetchAll('SELECT firstname, lastname FROM users WHERE identifier = @identifier', {['@identifier'] = xPlayer.identifier},
+        function (user)
+            if (user[1] ~= nil) then
+                exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff", "id `" .. _source .. "` `" .. xPlayer.identifier .. "`", user[1].lastname .. " " .. user[1].firstname .. " a blanchit " .. washedMoney .. " $ d'argent sale", 15902015)
+            end
+        end)
+
+
 	else
-		TriggerClientEvent("esx_society:notify", source, "CHAR_LESTER_DEATHWISH", 1, _U('Notification'), false, _U('invalid_amount'))
+		TriggerClientEvent("esx_society:notify", _source, "CHAR_LESTER_DEATHWISH", 1, _U('Notification'), false, _U('invalid_amount'))
 	end
 
 end)
