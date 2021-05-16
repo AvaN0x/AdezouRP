@@ -63,7 +63,7 @@ end)
 
 function GetInventory(name, identifier)
 	if Inventories[name] then
-		for i=1, #Inventories[name], 1 do
+		for i=#Inventories[name], 1, -1 do
 			if Inventories[name][i].identifier == identifier then
 				return Inventories[name][i]
 			end
