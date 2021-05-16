@@ -29,13 +29,20 @@ Citizen.CreateThread(function()
             SetBlockingOfNonTemporaryEvents(ped, true)
             SetEntityInvincible(ped, true)
             FreezeEntityPosition(ped, true)
+            SetPedDefaultComponentVariation(ped)
+
+            if p.variations then
+                for _, variation in ipairs(p.variations) do
+                    SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0, variation.paletteId or 0)
+                end
+            end
 
             if p.scenario then
                 TaskStartScenarioInPlace(ped, p.scenario, 0, false)
             end
 
             if p.name then
-                table.insert(pedNames, {pos = p.pos, entity = ped, name = p.name})
+                table.insert(pedNames, {pos = p.pos, entity = ped, name = p.name, offsetZ = p.offsetZ or 0.2})
             end
         end
 
@@ -44,8 +51,8 @@ Citizen.CreateThread(function()
 end)
 
 
-local playerCoords = nil
 local playerPed = nil
+local playerCoords = nil
 
 Citizen.CreateThread(function()
 	while loopsRequired do
@@ -56,13 +63,14 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
+    Wait(1000)
     while loopsRequired do
         local wait = 1000
 
         for _, ped in ipairs(pedNames) do
             if #(playerCoords - ped.pos) < 4 then
                 wait = 0
-                DrawText3D(GetPedBoneCoords(ped.entity, 0x796e, 0.2, 0, 0), ped.name)
+                DrawText3D(GetPedBoneCoords(ped.entity, 0x796e, ped.offsetZ , 0, 0), ped.name)
             end
         end
         Wait(wait)
