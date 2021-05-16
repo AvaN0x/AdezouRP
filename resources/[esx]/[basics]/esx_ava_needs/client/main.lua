@@ -198,7 +198,7 @@ AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 
 
 			ESX.Streaming.RequestAnimDict('mp_player_intdrink', function()
-				TaskPlayAnim(playerPed, 'mp_player_intdrink', 'loop_bottle', 1.0, -1.0, 2000, 0, 1, true, true, true)
+				TaskPlayAnim(playerPed, 'mp_player_intdrink', 'loop_bottle', 8.0, -8, -1, 49, 0, 0, 0, 0)
 
 				Citizen.Wait(3000)
 				IsAnimated = false
