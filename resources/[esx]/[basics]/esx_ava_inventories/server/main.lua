@@ -63,7 +63,7 @@ end)
 
 function GetInventory(name, identifier)
 	if Inventories[name] then
-		for i=#Inventories[name], 1, -1 do
+		for i=1, #Inventories[name], 1 do
 			if Inventories[name][i].identifier == identifier then
 				return Inventories[name][i]
 			end
@@ -108,33 +108,39 @@ AddEventHandler('esx:playerLoaded', function(source)
 
 	for i=1, #playerInventoriesNames, 1 do
 		local name = playerInventoriesNames[i].name
-		local label = playerInventoriesNames[i].label
-		local max_weight = playerInventoriesNames[i].max_weight
 		local identifier = xPlayer.identifier
 
-		local inventories_items = MySQL.Sync.fetchAll('SELECT * FROM inventories_items WHERE name = @name AND identifier = @identifier', {
-			['@name'] = name,
-			['@identifier'] = identifier
-		})
+        local inventory = GetInventory(name, xPlayer.identifier)
+        if inventory == nil then
+            local label = playerInventoriesNames[i].label
+            local max_weight = playerInventoriesNames[i].max_weight
 
-		local items = {}
-		for j=1, #inventories_items, 1 do
-			local itemName = inventories_items[j].item
+            local inventories_items = MySQL.Sync.fetchAll('SELECT * FROM inventories_items WHERE name = @name AND identifier = @identifier', {
+                ['@name'] = name,
+                ['@identifier'] = identifier
+            })
 
-			if Items[itemName] then
-				table.insert(items, {
-					name  = itemName,
-					count = inventories_items[j].count,
-					label = Items[itemName].label,
-					limit = Items[itemName].limit,
-					weight = Items[itemName].weight
-				})
-			end
-		end
+            local items = {}
+            for j=1, #inventories_items, 1 do
+                local itemName = inventories_items[j].item
 
-		local inventory = CreateInventory(name, label, max_weight, identifier, items, nil, nil, _source)
+                if Items[itemName] then
+                    table.insert(items, {
+                        name  = itemName,
+                        count = inventories_items[j].count,
+                        label = Items[itemName].label,
+                        limit = Items[itemName].limit,
+                        weight = Items[itemName].weight
+                    })
+                end
+            end
 
-		table.insert(Inventories[name], inventory)
+            inventory = CreateInventory(name, label, max_weight, identifier, items, nil, nil, _source)
+            table.insert(Inventories[name], inventory)
+        else
+            inventory.playerSource = _source
+        end
+
 		table.insert(ava_inventories, inventory) -- add inventory to player inventories
 	end
 
