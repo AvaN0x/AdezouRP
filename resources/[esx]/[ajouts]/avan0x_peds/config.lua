@@ -38,8 +38,154 @@ Config = {}
 
 -- scenario list : https://pastebin.com/6mrYTdQv
 
+-- variations component Id :
+    -- 0: Face
+    -- 1: Mask
+    -- 2: Hair
+    -- 3: Torso
+    -- 4: Leg
+    -- 5: Parachute / bag
+    -- 6: Shoes
+    -- 7: Accessory
+    -- 8: Undershirt
+    -- 9: Kevlar
+    -- 10: Badge
+    -- 11: Torso 2
+
+
 Config.Peds = {
-    -- Superettes = {
+    LSPD = {
+        Name = "s_f_y_cop_01",
+        Type = "PED_TYPE_COP",
+        PosList = {
+            {
+                pos = vector3(440.05, -978.86, 29.71),
+                heading = 183.6,
+                name = "Jessica",
+                variations = {
+                    {componentId = 2, drawableId = 1},
+                    {componentId = 9, drawableId = 1}
+                }
+            },
+        }
+    },
+    Gouv = {
+        Name = "ig_agatha",
+        Type = "PED_TYPE_CIVFEMALE",
+        PosList = {
+            {
+                pos = vector3(-550.76, -190.07, 36.72),
+                heading = 193.6,
+                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
+                name = "Agatha"
+            },
+        }
+    },
+    EMS = {
+        Name = "s_m_m_doctor_01",
+        Type = "PED_TYPE_MEDIC",
+        PosList = {
+            {
+                pos = vector3(309.28, -594.70, 41.80),
+                heading = 45.0,
+                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
+                name = "Baker",
+                variations = {
+                    {componentId = 8, drawableId = 2}
+                }
+            },
+        }
+    },
+    Mecano = {
+        Name = "s_f_y_hooker_01",
+        Type = "PED_TYPE_CIVFEMALE",
+        PosList = {
+            {
+                pos = vector3(-347.38, -127.79, 38.03),
+                heading = 75.0,
+                name = "Maëlys",
+                offsetZ = 0.33,
+                variations = {
+                    {componentId = 0, drawableId = 1},
+                    {componentId = 2, drawableId = 2},
+                    {componentId = 3, drawableId = 0, textureId = 1},
+                    {componentId = 4, drawableId = 0, textureId = 2},
+                    {componentId = 8, drawableId = 0},
+                }
+            },
+        }
+    },
+    Pacifique = {
+        Name = "a_m_y_business_02",
+        Type = "PED_TYPE_CIVMALE",
+        PosList = {
+            {
+                pos = vector3(248.95, 224.51, 104.97),
+                heading = 166.76,
+                scenario = "PROP_HUMAN_SEAT_BENCH",
+                name = "Philippe",
+                variations = {
+                    {componentId = 8, drawableId = 0, textureId = 4}
+                }
+            },
+            {
+                pos = vector3(243.71, 226.4, 104.97),
+                heading = 166.76,
+                scenario = "PROP_HUMAN_SEAT_BENCH",
+                name = "Robert",
+                variations = {
+                    {componentId = 0, drawableId = 1, textureId = 1},
+                    {componentId = 2, drawableId = 1},
+                    {componentId = 8, drawableId = 0, textureId = 4}
+                }
+            },
+        }
+    },
+    Tatoo = {
+        Name = "a_m_y_ktown_01",
+        Type = "PED_TYPE_CIVMALE",
+        PosList = {
+            {
+                pos = vector3(319.71, 180.9, 102.61),
+                heading = 254.42,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-1152.14, -1424.01, 3.97),
+                heading = 128.46,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-3170.54, 1073.1, 19.85),
+                heading = 20.83,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(1862.45, 3748.43, 32.05),
+                heading = 24.46,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+            {
+                pos = vector3(-292.04, 6199.83, 30.50),
+                heading = 228.9,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+        }
+
+    },
+    Ammunation = {
+        Name = "s_m_y_ammucity_01",
+        Type = "PED_TYPE_CIVMALE",
+        PosList = {
+            {
+                pos = vector3(22.07, -1104.93, 28.82),
+                heading = 158.97,
+                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+            },
+        }
+    },
+
+        -- Superettes = {
     --     Name = "mp_m_shopkeep_01",
     --     Type = "PED_TYPE_CIVMALE",
     --     PosList = {
@@ -125,100 +271,4 @@ Config.Peds = {
     --         },
     --     }
     -- },
-    LSPD = {
-        Name = "s_f_y_cop_01",
-        Type = "PED_TYPE_COP",
-        PosList = {
-            {
-                pos = vector3(440.05, -978.86, 29.71),
-                heading = 183.6,
-                name = "Jessica"
-            },
-        }
-    },
-    Gouv = {
-        Name = "ig_agatha",
-        Type = "PED_TYPE_CIVFEMALE",
-        PosList = {
-            {
-                pos = vector3(-550.76, -190.07, 36.72),
-                heading = 193.6,
-                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
-                name = "Agatha"
-            },
-        }
-    },
-    EMS = {
-        Name = "s_m_m_doctor_01",
-        Type = "PED_TYPE_MEDIC",
-        PosList = {
-            {
-                pos = vector3(309.28, -594.70, 41.80),
-                heading = 45.0,
-                scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
-                name = "Albert"
-            },
-        }
-    },
-    Pacifique = {
-        Name = "a_m_y_business_02",
-        Type = "PED_TYPE_CIVMALE",
-        PosList = {
-            {
-                pos = vector3(248.95, 224.51, 104.97),
-                heading = 166.76,
-                scenario = "PROP_HUMAN_SEAT_BENCH",
-                name = "Philippe"
-            },
-            {
-                pos = vector3(243.71, 226.4, 104.97),
-                heading = 166.76,
-                scenario = "PROP_HUMAN_SEAT_BENCH",
-                name = "Robert"
-            },
-        }
-    },
-    -- Ammunation = {
-    --     Name = "s_m_y_ammucity_01",
-    --     Type = "PED_TYPE_CIVMALE",
-    --     PosList = {
-    --         {
-    --             pos = vector3(22.07, -1104.93, 28.82),
-    --             heading = 158.97,
-    --             scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-    --         },
-    --     }
-    -- },
-    Tatoo = {
-        Name = "a_m_y_ktown_01",
-        Type = "PED_TYPE_CIVMALE",
-        PosList = {
-            {
-                pos = vector3(319.71, 180.9, 102.61),
-                heading = 254.42,
-                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-            },
-            {
-                pos = vector3(-1152.14, -1424.01, 3.97),
-                heading = 128.46,
-                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-            },
-            {
-                pos = vector3(-3170.54, 1073.1, 19.85),
-                heading = 20.83,
-                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-            },
-            {
-                pos = vector3(1862.45, 3748.43, 32.05),
-                heading = 24.46,
-                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-            },
-            {
-                pos = vector3(-292.04, 6199.83, 30.50),
-                heading = 228.9,
-                scenario = "WORLD_HUMAN_HANG_OUT_STREET"
-            },
-        }
-
-    },
 }
