@@ -448,7 +448,6 @@ Citizen.CreateThread(function()
                     BuyZone(job)
 
 
-
                 end
 
 			end
