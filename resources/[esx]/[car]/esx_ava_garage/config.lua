@@ -127,7 +127,7 @@ Config.Garages = {
 		Job = 'state',
 		SpawnPoint = {
 			Pos = {x = -579.05,y = -170.05,z = 38.23},
-			Heading = 25.0
+			Heading = 292.0
 		},
 		Identifier = "garage_gouv"
 	},
