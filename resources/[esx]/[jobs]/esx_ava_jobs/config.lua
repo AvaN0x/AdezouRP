@@ -639,14 +639,14 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
-                Pos = vector3(143.47, -1285.09, 29.34),
+                Pos = vector3(144.25, -1284.85, 29.34),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
                 SpawnPoint = {
-                    Pos = vector3(143.47, -1285.09, 29.34),
-                    Heading = 293.0
+                    Pos = vector3(144.25, -1284.85, 29.34),
+                    Heading = 298.0
                 },
                 Blip = true
             },
@@ -1000,6 +1000,10 @@ Config.Jobs = {
 				Marker = 27
 			},
 		}
+	},
+	orga_illegal_custom = {
+        isGang = true,
+        LabelName = "Custom illégal"
 	},
 
 }

@@ -1,36 +1,41 @@
--- CONFIG --
-
--- AFK Kick Time Limit (in seconds)
-secondsUntilKick = 1200
-
--- Warn players if 3/4 of the Time Limit ran up
-kickWarning = true
-
--- CODE --
+local Config = {
+    secondsUntilKick = 1200,
+    secondsBeforeAlert = 300
+}
+local timer = Config.secondsUntilKick
+local prevPos = nil
 
 Citizen.CreateThread(function()
 	while true do
 		Wait(1000)
 
-		playerPed = GetPlayerPed(-1)
+		local playerPed = GetPlayerPed(-1)
 		if playerPed then
-			currentPos = GetEntityCoords(playerPed, true)
+			local currentPos = GetEntityCoords(playerPed, true)
 
 			if currentPos == prevPos then
-				if time > 0 then
-					if kickWarning and time == math.ceil(secondsUntilKick / 4) then
-						TriggerEvent("chatMessage", "WARNING", {255, 0, 0}, "^1Tu vas te faire kick dans " .. time .. " secondes pour AFK !")
+				if timer > 0 then
+					if timer == Config.secondsBeforeAlert then
+						TriggerEvent("chatMessage", "AFK", {255, 0, 0}, " Tu vas te faire kick dans " .. timer .. " secondes pour AFK !\nFait ^2/afk^7 pour reset le timer.")
 					end
 
-					time = time - 1
+                    timer = timer - 1
 				else
-					TriggerServerEvent("kickForBeingAnAFKDouchebag")
+					TriggerServerEvent("afkkick:kick")
 				end
 			else
-				time = secondsUntilKick
+				timer = Config.secondsUntilKick
 			end
 
 			prevPos = currentPos
 		end
 	end
 end)
+
+
+RegisterCommand("afk", function(source, args, rawCommand)
+    if timer <= Config.secondsBeforeAlert then
+        timer = Config.secondsUntilKick
+        TriggerEvent("chatMessage", "AFK", {0, 255, 0}, " Timer de kick AFK reset.")
+    end
+end, false)

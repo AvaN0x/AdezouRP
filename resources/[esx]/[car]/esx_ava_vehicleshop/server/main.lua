@@ -11,11 +11,13 @@ local Vehicles   = {}
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 function RemoveOwnedVehicle(plate)
-	MySQL.Async.execute('DELETE FROM owned_vehicles WHERE plate = @plate', {
+	-- MySQL.Async.execute('DELETE FROM owned_vehicles WHERE plate = @plate', {
+	-- 	['@plate'] = plate
+	-- })
+	MySQL.Async.execute('UPDATE owned_vehicles SET owner = "staff" WHERE plate =  @plate', {
 		['@plate'] = plate
 	})
 	TriggerEvent('esx_ava_keys:deleteKeys', plate)
-
 end
 
 MySQL.ready(function()

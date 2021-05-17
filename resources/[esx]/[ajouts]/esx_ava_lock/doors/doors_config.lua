@@ -428,7 +428,7 @@ Config.Doors = {
 			objHash = 270330101,
 			objCoords  = vector3( 723.24, -1088.95, 21.24),
 			textCoords = vector3( 723.24, -1088.95, 21.24),
-			authorizedGangs = { 'orga_ordre' },
+			authorizedGangs = { 'orga_illegal_custom' },
 			locked = true,
 			distance = 8
 		},
