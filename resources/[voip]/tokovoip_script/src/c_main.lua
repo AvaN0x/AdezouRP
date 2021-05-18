@@ -103,10 +103,10 @@ local function clientProcessing()
 		if NetworkIsInSpectatorMode() then --! modified to support player in spectator mode
 			localPos = GetGameplayCamCoord()
 		else
-			localPos = GetPedBoneCoords(ped, HeadBone)
+			localPos = GetEntityCoords(ped)
 		end
 	else
-		localPos = GetPedBoneCoords(targetPed, HeadBone)
+		localPos = GetEntityCoords(targetPed)
 	end
 
 
@@ -131,7 +131,7 @@ local function clientProcessing()
 		if (voip.serverId == playerServerId or not playerPed or not playerTalking or playerTalking == 0) then goto continue end
 
 		do
-			local playerPos = GetPedBoneCoords(playerPed, HeadBone);
+			local playerPos = GetEntityCoords(playerPed);
 			local dist = #(localPos - playerPos);
 			if (dist > voip.distance[3]) then goto continue end
 
