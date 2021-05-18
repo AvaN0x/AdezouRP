@@ -24,6 +24,12 @@ local HeadBone = 0x796e;
 local radioVolume = 0;
 local nuiLoaded = false
 
+
+
+tokodebug = false
+
+
+
 --------------------------------------------------------------------------------
 --	Plugin functions
 --------------------------------------------------------------------------------
@@ -102,6 +108,14 @@ local function clientProcessing()
 	else
 		localPos = GetPedBoneCoords(targetPed, HeadBone);
 	end
+
+
+
+    if tokodebug then
+        print("{ped = " .. ped .. ", pos = " .. localPos .. ", heading = " .. localHeading .. "}")
+    end
+
+
 
 	for i=1, #playerList do
 		local player = playerList[i];
@@ -428,3 +442,12 @@ exports("addPlayerToRadio", addPlayerToRadio);
 exports("removePlayerFromRadio", removePlayerFromRadio);
 exports("isPlayerInChannel", isPlayerInChannel);
 exports("setRadioVolume", setRadioVolume);
+
+
+
+
+
+
+RegisterCommand("tokodebug", function()
+	tokodebug = not tokodebug
+end);
