@@ -112,7 +112,7 @@ local function clientProcessing()
 
 
     if tokodebug then
-        print("{ped = " .. ped .. ", pos = " .. localPos .. ", heading = " .. localHeading .. "}")
+        print("{ped = " .. ped .. ", pos = " .. GetEntityCoords(ped) .. ", headPos = " .. localPos .. ", heading = " .. localHeading .. "}")
     end
 
 
