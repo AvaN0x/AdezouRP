@@ -106,13 +106,13 @@ local function clientProcessing()
 			localPos = GetPedBoneCoords(ped, HeadBone)
 		end
 	else
-		localPos = GetPedBoneCoords(targetPed, HeadBone);
+		localPos = GetPedBoneCoords(targetPed, HeadBone)
 	end
 
 
 
     if tokodebug then
-        print("{ped = " .. ped .. ", pos = " .. GetEntityCoords(ped) .. ", headPos = " .. localPos .. ", heading = " .. localHeading .. "}")
+        print("{ped = " .. ped .. ", pos = " .. GetEntityCoords(ped) .. ", headPos = " .. localPos .. ", nilBone = " .. GetPedBoneCoords(targetPed, nil) .. ", heading = " .. localHeading .. "}")
     end
 
 
