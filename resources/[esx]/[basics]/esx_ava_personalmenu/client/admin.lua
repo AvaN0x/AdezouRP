@@ -411,7 +411,7 @@ function admin_spectate_player(player)
 
         TriggerEvent("updateVoipTargetPed", targetPed, true) -- TOKOVOIP
 	else
-		NetworkSetInSpectatorMode(false, targetPed)
+		NetworkSetInSpectatorMode(false, playerPed)
 		SetEntityInvincible(playerPed, false)
 		SetEntityVisible(playerPed, true, 0)
 		SetEveryoneIgnorePlayer(playerPed, false)
@@ -648,6 +648,7 @@ function LoadPedModel(model)
 				GiveWeaponToPed(playerPed, v.hash, v.ammo, false, false)
 			end
 
+            NetworkSetInSpectatorMode(false, playerPed)
 		end
 
 		SetModelAsNoLongerNeeded(modelHash)
