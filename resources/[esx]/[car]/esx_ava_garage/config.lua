@@ -221,6 +221,25 @@ Config.Garages = {
 		},
 		Identifier = "garage_tailor"
 	},
+    Garage_UNICORN = {
+		Name = "hide",
+		Pos = {x = 151.42, y = -1308.48, z = 29.20},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		Job = 'unicorn',
+		SpawnPoint = {
+			Pos = {x = 151.42, y = -1308.48, z = 29.20},
+			Heading = 65.0
+		},
+		Identifier = "garage_unicorn"
+	},
+
 
 	Garage_VAGOS = {
 		Name = "hide",
