@@ -22,7 +22,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(10)
+		Citizen.Wait(0)
 		if vehicle then
 			if IsDisabledControlJustReleased(0, 58) then -- G
 				if state == 0 then

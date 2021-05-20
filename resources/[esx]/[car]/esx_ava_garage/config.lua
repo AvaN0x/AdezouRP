@@ -77,7 +77,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_sandy"
 	},
-	Garage_LSPD = {	
+	Garage_LSPD = {
 		Name = "hide",
 		Pos = {x = 442.53,y = -1026.09,z = 28.71 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -95,7 +95,25 @@ Config.Garages = {
 		},
 		Identifier = "garage_lspd"
 	},
-	Garage_TAXI = {	
+	Garage_EMS = {
+		Name = "hide",
+		Pos = {x = 317.56, y = -573.87, z = 28.8 },
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		Job = 'ems',
+		SpawnPoint = {
+			Pos = {x = 317.56, y = -573.87, z = 28.8 },
+			Heading = 250.0
+		},
+		Identifier = "garage_ems"
+	},
+	Garage_TAXI = {
 		Name = "hide",
 		Pos = {x = 900.67,y = -186.91,z = 73.79 },
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -113,7 +131,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_taxi"
 	},
-	Garage_GOUV = {	
+	Garage_GOUV = {
 		Name = "hide",
 		Pos = {x = -579.05,y = -170.05,z = 38.23},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
