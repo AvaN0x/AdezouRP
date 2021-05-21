@@ -496,15 +496,24 @@ end
 function OpenCloakroomMenu(jobIndex)
 	ESX.UI.Menu.CloseAll()
 
+    local outfits = CurrentZoneValue.Outfits
+    local elements = {
+        {label = _('vine_clothes_civil'), value = 'citizen_wear'},
+        {label = _('vine_clothes_vine'), value = 'job_wear'}
+    }
+
+    if outfits ~= nil then
+        for k, v in pairs(outfits) do
+            table.insert(elements, {label = v.Label, value = k})
+        end
+    end
+
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_cloakroom',
     {
-        title    = _U('cloakroom'),
+        title    = _('cloakroom'),
         align    = 'left',
         css 	 = 'vestiaire',
-        elements = {
-            {label = _U('vine_clothes_civil'), value = 'citizen_wear'},
-            {label = _U('vine_clothes_vine'), value = 'job_wear'}
-        },
+        elements = elements
     },
     function(data, menu)
         menu.close()
@@ -513,11 +522,13 @@ function OpenCloakroomMenu(jobIndex)
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadSkin', skin)
             end)
-        end
-
-        if data.current.value == 'job_wear' then
+        elseif data.current.value == 'job_wear' then
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin' .. (jobIndex ~= 1 and jobIndex or ''), function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and jobSkin.skin_male or jobSkin.skin_female)
+            end)
+        elseif outfits ~= nil and outfits[data.current.value] then
+            TriggerEvent('skinchanger:getSkin', function(skin)
+                TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and outfits[data.current.value].Male or outfits[data.current.value].Female)
             end)
         end
 

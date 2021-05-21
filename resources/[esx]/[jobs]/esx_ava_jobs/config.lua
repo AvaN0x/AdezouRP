@@ -34,7 +34,19 @@ Config.Jobs = {
                 Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
-                Blip = true
+                Blip = true,
+                Outfits = {
+                    bike_suit = {
+                        Label = "Tenue vélo",
+                        Male = json.decode(''),
+                        Female = json.decode('{"torso_2":2,"tshirt_2":0,"chain_1":1,"bags_2":0,"bags_1":42,"helmet_1":47,"chain_2":0,"bproof_1":0,"shoes_2":0,"arms":31,"helmet_2":0,"pants_1":31,"tshirt_1":51,"torso_1":84,"shoes_1":10,"pants_2":1,"bproof_2":0}')
+                    },
+                    motorbike_suit = {
+                        Label = "Tenue moto",
+                        Male = json.decode('{"shoes_1":13,"chain_2":0,"arms":22,"pants_1":32,"tshirt_2":0,"pants_2":1,"bproof_1":0,"bags_2":0,"bproof_2":0,"helmet_2":1,"chain_1":0,"torso_1":154,"helmet_1":79,"torso_2":0,"shoes_2":0,"bags_1":0,"tshirt_1":13}'),
+                        Female = json.decode('{"shoes_1":40,"arms":32,"tshirt_1":27,"bags_1":48,"pants_1":31,"bproof_1":0,"chain_1":0,"torso_2":3,"bproof_2":0,"torso_1":21,"shoes_2":0,"pants_2":1,"bags_2":0,"chain_2":0,"tshirt_2":0,"helmet_1":78,"helmet_2":0}')
+                    }
+                }
             },
             SeizureStock = {
 				Pos = vector3(472.63, -990.40, 23.93),
