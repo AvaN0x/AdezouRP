@@ -17,6 +17,7 @@ TriggerEvent("es:addGroupCommand", "heal", "admin", function(source, args, user)
 			-- is the number a valid player?
 			if GetPlayerName(playerId) then
 				print(("esx_ava_needs: %s healed %s"):format(GetPlayerIdentifier(source, 0), GetPlayerIdentifier(playerId, 0)))
+                exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(source) .. " healed " .. GetPlayerName(playerId), 15902015)
 				TriggerClientEvent("esx_ava_needs:healPlayer", playerId)
 				TriggerClientEvent("chat:addMessage", source, { args = { "^5HEAL", "Vous avez été soigné." } })
 			else
@@ -27,6 +28,7 @@ TriggerEvent("es:addGroupCommand", "heal", "admin", function(source, args, user)
 		end
 	else
 		print(("esx_ava_needs: %s healed self"):format(GetPlayerIdentifier(source, 0)))
+        exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(source) .. " healed himself", 15902015)
 		TriggerClientEvent("esx_ava_needs:healPlayer", source)
 	end
 end, function(source, args, user)
