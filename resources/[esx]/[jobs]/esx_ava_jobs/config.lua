@@ -10,6 +10,91 @@ Config.MaxPickUp = 70
 Config.MaxPickUpIllegal = 70
 
 Config.Jobs = {
+    lspd = {
+        SocietyName = 'society_lspd',
+        LabelName = 'LSPD',
+        Blip = {
+            Name = "~b~Commissariat",
+            Sprite = 60,
+            Colour = 3
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(465.16, -1009.08, 34.95),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+                Name = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27
+            },
+            Dressing = {
+                Pos = vector3(452.76, -992.84, 29.71),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Blip = true
+            },
+            SeizureStock = {
+				Pos = vector3(472.63, -990.40, 23.93),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+				Name  = "Coffre saisies",
+                StockName = "society_lspd_seizure",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(455.02, -1017.44, 28.44),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Marker = 36,
+                Type = "car",
+                SpawnPoint = {
+                    Pos = vector3(455.02, -1017.44, 28.44),
+                    Heading = 90.0
+                },
+                Blip = true
+            },
+            HeliGarage = {
+                Name  = "Héliport",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(449.57, -981.17, 43.69),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Distance = 3,
+                Marker = 34,
+                Type = "heli",
+                SpawnPoint = {
+                    Pos = vector3(449.57, -981.17, 43.69),
+                    Heading = 90.0
+                },
+                Blip = true
+            },
+            BoatGarage = {
+                Name  = "Marina",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-784.55, -1437.14, 1.40),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Distance = 5,
+                Marker = 35,
+                Type = "boat",
+                SpawnPoint = {
+                    Pos = vector3(-786.55, -1437.14, 1.40),
+                    Heading = 140.0
+                },
+                Blip = true
+            },
+        },
+
+
+
+    },
+
     vigneron = {
         SocietyName = 'society_vigneron',
         LabelName = 'Vigneron',
@@ -706,6 +791,7 @@ Config.Jobs = {
     },
 
 
+
     weed = {
         isIllegal = true,
         KeyName = 'keyweed',
@@ -880,6 +966,8 @@ Config.Jobs = {
             }
         },
     },
+
+
 
     gang_vagos = {
         isGang = true,

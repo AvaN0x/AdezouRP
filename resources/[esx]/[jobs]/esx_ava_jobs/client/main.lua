@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(job.LabelName)
+            AddTextComponentString(job.Blip.Name or job.LabelName)
             EndTextCommandSetBlipName(blip)
 
             table.insert(mainBlips, blip)
@@ -313,7 +313,7 @@ Citizen.CreateThread(function()
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
                     if (k ~= 'JobActions' or job.grade ~= 'interim') then
-                        if (#(playerCoords - v.Pos) < v.Size.x) then
+                        if (#(playerCoords - v.Pos) < (v.Distance or 1.5)) then
                             isInMarker = true
                             zoneJob = jobName
                             zoneCategoryPlayerIsIn = "Zones"

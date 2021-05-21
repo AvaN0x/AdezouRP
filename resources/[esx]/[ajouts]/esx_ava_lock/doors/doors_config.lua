@@ -14,7 +14,7 @@ Config.Doors = {
 		
 		{ -- Entrance Doors
 			textCoords = vector3(434.75, -981.92, 30.84),
-			authorizedJobs = { 'police', 'state' },
+			authorizedJobs = { 'lspd', 'state' },
 			locked = false,
 			doors = {
 				{
@@ -38,7 +38,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3(449.6, -986.4, 30.6),
 			textCoords = vector3(450.10, -986.94, 30.84),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{ -- Rooftop
@@ -46,7 +46,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3(464.3, -984.6, 43.69),
 			textCoords = vector3(464.36, -983.58, 43.83),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{ -- Captain Office
@@ -54,12 +54,12 @@ Config.Doors = {
 			objYaw = -180.0,
 			objCoords  = vector3(447.2, -980.6, 30.6),
 			textCoords = vector3(447.82, -980.05, 30.69),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{ -- To downstairs (double doors)
 			textCoords = vector3(444.71, -989.44, 30.84),
-			authorizedJobs = { 'police', 'state' },
+			authorizedJobs = { 'lspd', 'state' },
 			locked = true,
 			doors = {
 				{
@@ -79,7 +79,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords = vector3(452.67, -982.97, 30.6),
 			textCoords = vector3(453.05, -982.22, 30.8),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- Main Cells
@@ -87,7 +87,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(463.8, -992.6, 24.9),
 			textCoords = vector3(463.27, -992.66, 25.06),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- Cell 1
@@ -95,7 +95,7 @@ Config.Doors = {
 			objYaw = -90.0,
 			objCoords  = vector3(462.3, -993.6, 24.9),
 			textCoords = vector3(461.81, -993.11, 25.06),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- Cell 2
@@ -103,7 +103,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3(462.3, -998.1, 24.9),
 			textCoords = vector3(461.81, -998.96, 25.06),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- Cell 3
@@ -111,7 +111,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3(462.704, -1001.92, 24.9149),
 			textCoords = vector3(461.81, -1002.60, 25.06),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- To Back
@@ -119,12 +119,12 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(463.4, -1003.5, 25.0),
 			textCoords = vector3(464.68, -1003.54, 25.01),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- double porte escalier étage
 			textCoords = vector3(443.06, -993.22, 30.83931),
-			authorizedJobs = { 'police', 'state' },
+			authorizedJobs = { 'lspd', 'state' },
 			locked = true,
 			doors = {
 				{
@@ -144,7 +144,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(467.19220, -996.45940, 25.00599),
 			textCoords = vector3(468.23, -996.51, 25.00599),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -152,7 +152,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(471.47550, -996.45940, 25.00599),
 			textCoords = vector3(472.52, -996.35, 25.00599),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -160,7 +160,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(475.75430, -996.45940, 25.00599),
 			textCoords = vector3(476.8, -996.33, 25.00599),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -168,7 +168,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(480.03010, -996.45940, 25.00599),
 			textCoords = vector3(481.08, -996.39, 25.00599),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- Salle interview 
@@ -176,7 +176,7 @@ Config.Doors = {
 			objYaw = 360.0,
 			objCoords  = vector3(480.03010, -1003.53800, 25.00599),
 			textCoords = vector3(481.08, -1003.48, 25.00599),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -184,7 +184,7 @@ Config.Doors = {
 			objYaw = 180.0,
 			objCoords  = vector3(477.04970, -1003.55300, 25.01203),
 			textCoords = vector3(476.02, -1003.55, 25.01203),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -192,7 +192,7 @@ Config.Doors = {
 			objYaw = 0.0,
 			objCoords  = vector3(471.47470, -1003.53800, 25.01223),
 			textCoords = vector3(472.53, -1003.62, 25.01223),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{
@@ -200,12 +200,12 @@ Config.Doors = {
 			objYaw = 180.0,
 			objCoords  = vector3(467.82, -1003.51, 25.01203),
 			textCoords = vector3(467.43, -1003.61, 25.01203),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{-- double porte garage
 			textCoords = vector3(445.92, -998.9, 30.78942),
-			authorizedJobs = { 'police', 'state' },
+			authorizedJobs = { 'lspd', 'state' },
 			locked = true,
 			doors = {
 				{
@@ -224,14 +224,14 @@ Config.Doors = {
 			objName = 'prop_gate_airport_01',
 			objCoords  = vector3(416.58, -1024.52, 29.11),
 			textCoords = vector3(416.85, -1021.52, 29.56),
-			authorizedJobs = { 'police', 'state' },
+			authorizedJobs = { 'lspd', 'state' },
 			locked = true,
 			distance = 16,
 			size = 0.4
 		},
 		{-- Back (double doors)
 			textCoords = vector3(468.67, -1014.45, 26.54),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true,
 			doors = {
 				{
@@ -251,7 +251,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3(488.8, -1017.2, 27.1),
 			textCoords = vector3(488.89, -1022.81, 29.15),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true,
 			distance = 12
 		},
@@ -260,7 +260,7 @@ Config.Doors = {
 			objYaw = 90.0,
 			objCoords  = vector3( 475.42, -985.93, 24.10),
 			textCoords = vector3( 475.42, -985.93, 25.12),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 
@@ -273,7 +273,7 @@ Config.Doors = {
 			objOpenYaw = 30.0,
 			objCoords  = vector3( 255.59, 224.03, 101.88),
 			textCoords = vector3( 252.82, 228.64, 102.08),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 
@@ -288,7 +288,7 @@ Config.Doors = {
 			objName = 'prop_gate_prison_01',
 			objCoords  = vector3(1844.9, 2604.8, 44.6),
 			textCoords = vector3(1844.9, 2608.5, 48.0),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true,
 			distance = 12,
 			size = 0.4
@@ -297,7 +297,7 @@ Config.Doors = {
 			objName = 'prop_gate_prison_01',
 			objCoords  = vector3(1818.5, 2604.8, 44.6),
 			textCoords = vector3(1818.5, 2608.4, 48.0),
-			authorizedJobs = { 'police' },
+			authorizedJobs = { 'lspd' },
 			locked = true,
 			distance = 12,
 			size = 0.4
@@ -438,7 +438,7 @@ Config.Doors = {
 		-- GOUV
 		{
 			textCoords = vector3(-545.51, -203.39, 38.40), -- entrée
-			authorizedJobs = { 'state' },
+			authorizedJobs = { 'state', 'lspd' },
 			locked = true,
 			doors = {
 				{
