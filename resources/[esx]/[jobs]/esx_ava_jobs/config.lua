@@ -106,7 +106,6 @@ Config.Jobs = {
 
 
     },
-
     vigneron = {
         SocietyName = 'society_vigneron',
         LabelName = 'Vigneron',
@@ -730,6 +729,7 @@ Config.Jobs = {
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Dressing",
                 HelpText = _('press_to_open'),
+                NoJobDress = true,
                 Marker = 27,
                 Blip = true
             },
@@ -988,12 +988,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(338.3, -2012.73, 21.41),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 250, g = 197, b = 50},
 				Name  = "Coffre",
                 StockName = "gang_vagos",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(341.44, -2021.80, 24.61),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 250, g = 197, b = 50},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_ballas = {
@@ -1003,12 +1012,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(118.93, -1966.05, 20.35),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 152, g = 60, b = 137},
 				Name  = "Coffre",
                 StockName = "gang_ballas",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(117.25, -1964.02, 20.35),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 152, g = 60, b = 137},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_families = {
@@ -1018,12 +1036,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(-157.71, -1603.08, 34.06),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 72, g = 171, b = 57},
 				Name  = "Coffre",
                 StockName = "gang_families",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(-155.54, -1604.27, 34.06),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 72, g = 171, b = 57},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_marabunta = {
@@ -1039,6 +1066,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(1301.05, -1745.58, 53.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	biker_lost = {
@@ -1046,7 +1082,7 @@ Config.Jobs = {
 		LabelName = "The Lost",
 		Zones = {
 			Stock = {
-				Pos = vector3(986.63, -92.71, 73.87),
+				Pos = vector3(977.11, -104.00, 73.87),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
@@ -1054,6 +1090,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+				Pos = vector3(986.63, -92.71, 73.87),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	orga_cartel = {
@@ -1061,7 +1106,7 @@ Config.Jobs = {
 		LabelName = "Cartel",
 		Zones = {
 			Stock = {
-				Pos = vector3(1402.51, 1152.79, 114.33),
+				Pos = vector3(1402.51, 1152.79, 113.35),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
@@ -1069,6 +1114,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(1394.72, 1157.10, 113.35),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	orga_mafia = {
@@ -1093,12 +1147,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(-1108.60, -1643.52, 3.66),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 212, g = 0, b = 0},
 				Name  = "Coffre",
                 StockName = "orga_hapf",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+				Pos = vector3(-1109.53, -1640.54, 3.66),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 212, g = 0, b = 0},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	orga_illegal_custom = {

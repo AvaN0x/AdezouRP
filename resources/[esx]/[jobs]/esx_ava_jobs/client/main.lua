@@ -497,10 +497,13 @@ function OpenCloakroomMenu(jobIndex)
 	ESX.UI.Menu.CloseAll()
 
     local outfits = CurrentZoneValue.Outfits
-    local elements = {
-        {label = _('vine_clothes_civil'), value = 'citizen_wear'},
-        {label = _('vine_clothes_vine'), value = 'job_wear'}
-    }
+    local elements = {}
+
+    if not CurrentZoneValue.NoJobDress then
+        table.insert(elements, {label = _('vine_clothes_civil'), value = 'citizen_wear'})
+        table.insert(elements, {label = _('vine_clothes_vine'), value = 'job_wear'})
+    end
+    table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
 
     if outfits ~= nil then
         for k, v in pairs(outfits) do
@@ -518,7 +521,9 @@ function OpenCloakroomMenu(jobIndex)
     function(data, menu)
         menu.close()
 
-        if data.current.value == 'citizen_wear' then
+        if data.current.value == 'user_clothes' then
+            TriggerEvent("esx_ava_clotheshop:openOutfitsMenu")
+        elseif data.current.value == 'citizen_wear' then
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadSkin', skin)
             end)
