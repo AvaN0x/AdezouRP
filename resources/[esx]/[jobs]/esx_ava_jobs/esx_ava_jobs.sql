@@ -34,6 +34,7 @@ INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
 
 	('society_lspd','LSPD', 500000, 1),
 	('society_lspd_seizure','LSPD Saisies', 500000, 1),
+	('society_lspd_armory','LSPD Armurerie', 500000, 1),
 
 ;
 

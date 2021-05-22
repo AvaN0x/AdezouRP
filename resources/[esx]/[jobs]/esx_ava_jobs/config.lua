@@ -34,7 +34,6 @@ Config.Jobs = {
                 Name = "Dressing",
                 HelpText = _('press_to_open'),
                 Marker = 27,
-                Blip = true,
                 Outfits = {
                     bike_suit = {
                         Label = "Tenue vélo",
@@ -48,6 +47,15 @@ Config.Jobs = {
                     }
                 }
             },
+            ArmoryStock = {
+				Pos = vector3(452.28, -980.15, 29.71),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+				Name  = "Armurerie",
+                StockName = "society_lspd_armory",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
             SeizureStock = {
 				Pos = vector3(472.63, -990.40, 23.93),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
@@ -68,8 +76,7 @@ Config.Jobs = {
                 SpawnPoint = {
                     Pos = vector3(455.02, -1017.44, 28.44),
                     Heading = 90.0
-                },
-                Blip = true
+                }
             },
             HeliGarage = {
                 Name  = "Héliport",
@@ -83,8 +90,7 @@ Config.Jobs = {
                 SpawnPoint = {
                     Pos = vector3(449.57, -981.17, 43.69),
                     Heading = 90.0
-                },
-                Blip = true
+                }
             },
             BoatGarage = {
                 Name  = "Marina",
