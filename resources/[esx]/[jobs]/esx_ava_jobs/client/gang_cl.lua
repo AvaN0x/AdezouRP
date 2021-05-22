@@ -9,13 +9,13 @@ AddEventHandler('esx_ava_jobs:openGangMenu', function()
 	if actualGang and actualGang.name then
 		ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_gang_recruitment_menu",
 		{
-			title    = actualGang.data.Name,
+			title    = Config.Jobs[actualGang.name].LabelName,
 			align    = "left",
 			elements = {
-				{label = _U("gang_hire"), value = "gang_hire"},
-				{label = _U("gang_fire"), value = "gang_fire"},
-				{label = _U("gang_promote"), value = "gang_promote"},
-				{label = _U("gang_demote"), value = "gang_demote"}
+				{label = _("gang_hire"), value = "gang_hire"},
+				{label = _("gang_fire"), value = "gang_fire"},
+				{label = _("gang_promote"), value = "gang_promote"},
+				{label = _("gang_demote"), value = "gang_demote"}
 			}
 		}, function(data, menu)
 			closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
@@ -40,6 +40,6 @@ AddEventHandler('esx_ava_jobs:openGangMenu', function()
 			menu.close()
 		end)
 	else
-		ESX.ShowNotification(_U("not_in_a_gang"))
+		ESX.ShowNotification(_("not_in_a_gang"))
 	end
 end)

@@ -62,4 +62,12 @@ Locales['fr'] = {
     -- Illegal
     ['dont_have_keychain'] = "Vous n'avez pas la clé",
 
+    -- Gangs
+    ['not_in_a_gang'] = "Vous n'êtes dans aucun gang",
+
+	["no_players_nearby"] = "Aucun joueur à proximité",
+	["gang_hire"] = "Recruter",
+	["gang_fire"] = "Virer",
+	["gang_promote"] = "Autoriser à gérer",
+	["gang_demote"] = "Empécher de gérer",
 }
