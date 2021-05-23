@@ -147,6 +147,21 @@ Config.Jobs = {
                 },
                 Blip = true
             },
+            SeizedCarGarage = {
+                Name = "Garage saisies",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(447.44, -997.07, 25.76),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 221, g = 79, b = 67},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "seized_LSPD",
+                SpawnPoint = {
+                    Pos = vector3(447.44, -997.07, 24.78),
+                    Heading = 180.0
+                }
+            },
         },
 
 
