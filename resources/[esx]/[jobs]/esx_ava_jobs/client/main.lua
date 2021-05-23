@@ -506,8 +506,8 @@ function OpenCloakroomMenu(jobIndex)
     table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
 
     if outfits ~= nil then
-        for k, v in pairs(outfits) do
-            table.insert(elements, {label = v.Label, value = k})
+        for k, v in ipairs(outfits) do
+            table.insert(elements, {label = _('custom_clothe_format', v.Label), value = k})
         end
     end
 
@@ -519,8 +519,6 @@ function OpenCloakroomMenu(jobIndex)
         elements = elements
     },
     function(data, menu)
-        menu.close()
-
         if data.current.value == 'user_clothes' then
             TriggerEvent("esx_ava_clotheshop:openOutfitsMenu")
         elseif data.current.value == 'citizen_wear' then

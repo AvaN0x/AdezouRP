@@ -13,6 +13,7 @@ Locales['fr'] = {
     ['user_clothes'] = "Tenues personnelles",
 	['vine_clothes_civil'] = 'Tenue Civil',
 	['vine_clothes_vine'] = 'Tenue de travail',
+    ['custom_clothe_format'] = '<span style="color: #FFAE29">%s</span>',
 
 	['veh_menu'] = 'Garage',
 	['spawn_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',

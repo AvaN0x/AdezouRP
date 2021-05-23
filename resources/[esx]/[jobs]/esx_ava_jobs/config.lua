@@ -35,15 +35,55 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Outfits = {
-                    bike_suit = {
-                        Label = "Tenue vélo",
-                        Male = json.decode(''),
-                        Female = json.decode('{"torso_2":2,"tshirt_2":0,"chain_1":1,"bags_2":0,"bags_1":42,"helmet_1":47,"chain_2":0,"bproof_1":0,"shoes_2":0,"arms":31,"helmet_2":0,"pants_1":31,"tshirt_1":51,"torso_1":84,"shoes_1":10,"pants_2":1,"bproof_2":0}')
+                    -- {
+                    --     Label = "Cadet manches courtes",
+                    --     Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                    --     Female = ''
+                    -- },
+                    -- {
+                    --     Label = "Cadet manches longues",
+                    --     Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":101,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":20,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                    --     Female = ''
+                    -- },
+                    {
+                        Label = "Tenue manches courtes",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":102,"tshirt_1":53,"torso_2":0,"bproof_1":0,"arms":19,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":27,"torso_2":0,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
                     },
-                    motorbike_suit = {
+                    {
+                        Label = "Tenue manches longues",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":101,"tshirt_1":53,"torso_2":0,"bproof_1":0,"arms":20,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":92,"tshirt_1":27,"torso_2":0,"bproof_1":0,"helmet_2":0,"arms":3,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue hiver",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":103,"tshirt_1":65,"torso_2":0,"bproof_1":0,"arms":27,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":119,"tshirt_1":45,"torso_2":1,"bproof_1":0,"helmet_2":0,"arms":7,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue SWAT",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":53,"torso_2":1,"bproof_1":0,"arms":19,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":84,"tshirt_1":33,"torso_2":1,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue SWAT Lourd",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":1,"torso_1":219,"tshirt_1":44,"torso_2":2,"bproof_1":7,"arms":17,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":75,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":90,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":2,"chain_2":0,"torso_1":43,"tshirt_1":33,"torso_2":0,"bproof_1":11,"helmet_2":0,"arms":49,"shoes_1":25,"bproof_2":3,"shoes_2":0,"helmet_1":74,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue DOA",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":102,"tshirt_1":53,"torso_2":0,"bproof_1":7,"arms":19,"shoes_1":25,"bproof_2":4,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":27,"torso_2":0,"bproof_1":7,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":3,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue vélo",
+                        Male = json.decode('{"pants_1":32,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":93,"tshirt_1":15,"torso_2":0,"bproof_1":1,"arms":30,"shoes_1":13,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":49,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":31,"bags_2":0,"bags_1":42,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":84,"tshirt_1":51,"torso_2":2,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":10,"bproof_2":0,"shoes_2":0,"helmet_1":47,"chain_1":1}')
+                    },
+                    {
                         Label = "Tenue moto",
-                        Male = json.decode('{"shoes_1":13,"chain_2":0,"arms":22,"pants_1":32,"tshirt_2":0,"pants_2":1,"bproof_1":0,"bags_2":0,"bproof_2":0,"helmet_2":1,"chain_1":0,"torso_1":154,"helmet_1":79,"torso_2":0,"shoes_2":0,"bags_1":0,"tshirt_1":13}'),
-                        Female = json.decode('{"shoes_1":40,"arms":32,"tshirt_1":27,"bags_1":48,"pants_1":31,"bproof_1":0,"chain_1":0,"torso_2":3,"bproof_2":0,"torso_1":21,"shoes_2":0,"pants_2":1,"bags_2":0,"chain_2":0,"tshirt_2":0,"helmet_1":78,"helmet_2":0}')
+                        Male = json.decode('{"pants_1":32,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":154,"tshirt_1":13,"torso_2":0,"bproof_1":0,"arms":22,"shoes_1":13,"bproof_2":0,"shoes_2":0,"helmet_2":1,"helmet_1":79,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":31,"bags_2":0,"bags_1":48,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":21,"tshirt_1":27,"torso_2":3,"bproof_1":0,"helmet_2":0,"arms":32,"shoes_1":40,"bproof_2":0,"shoes_2":0,"helmet_1":78,"chain_1":0}')
                     }
                 }
             },

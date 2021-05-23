@@ -84,7 +84,7 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 	('cluckin',2,'boss','Patron', 500,'{"tshirt_1":57,"tshirt_2":0,"torso_1":13,"torso_2":5,"shoes_1":7,"shoes_2":2,"pants_1":9, "pants_2":7, "arms":11, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}','{"tshirt_1":15,"tshirt_2":0,"torso_1":14,"torso_2":15,"shoes_1":12,"shoes_2":0,"pants_1":9, "pants_2":5, "arms":1, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}'),
 
 
-    ('lspd', 0, 'recruit', 'Cadet', 200, '', ''),
+    ('lspd', 0, 'recruit', 'Cadet', 200, '{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}', ''),
     ('lspd', 1, 'officer', 'Officier', 200, '', ''),
     ('lspd', 2, 'sergeant', 'Sergent', 200, '', ''),
     ('lspd', 3, 'sergeant_chef', 'Sergent Chef', 200, '', ''),
