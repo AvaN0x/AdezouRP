@@ -128,3 +128,52 @@ for k, weaponName in ipairs(projectiles) do
         TriggerEvent("esx_avan0x:giveProjectile", source, weaponName)
     end)
 end
+
+
+RegisterServerEvent('esx_avan0x:useWeaponItem')
+AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+	if inventory.getItem(string.lower(weaponName)) then
+        if xPlayer.hasWeapon(weaponName) then
+            if not inventory.canAddItem(string.lower(weaponName), 1) then
+                TriggerClientEvent('esx:showNotification', source, "Vous n'avez plus de place pour cela")
+            else
+                inventory.addItem(string.lower(weaponName), 1)
+                xPlayer.removeWeapon(weaponName)
+            end
+        else
+            TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
+        end
+	else
+		TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
+		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
+	end
+end)
+
+
+-----------
+-- Clips --
+-----------
+RegisterServerEvent("esx_avan0x:removeClip")
+AddEventHandler("esx_avan0x:removeClip", function()
+	local xPlayer = ESX.GetPlayerFromId(source)
+	xPlayer.removeInventoryItem("clip", 1)
+end)
+
+ESX.RegisterUsableItem("clip", function(source)
+	TriggerClientEvent("esx_avan0x:useClip", source)
+end)
+
+RegisterServerEvent('esx_avan0x:checkClip')
+AddEventHandler('esx_avan0x:checkClip', function()
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+    if inventory.getItem('clip').count > 0 then
+        TriggerClientEvent('esx_avan0x:useClip', source)
+    else
+        TriggerClientEvent('esx_avan0x:useClip', source, true)
+    end
+end)
