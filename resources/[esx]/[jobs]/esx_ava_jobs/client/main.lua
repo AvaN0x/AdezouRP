@@ -151,39 +151,39 @@ function checkAuthorizations()
                     if k == "JobActions" and job.grade == "interim" then
                         job.Zones[k].GradeEnabled = false
                     else
-                        job.Zones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                            or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                        job.Zones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                            or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                     end
                 end
             end
             if job.FieldZones ~= nil then
                 for k, v in pairs(job.FieldZones) do
-                    job.FieldZones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                        or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                    job.FieldZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                 end
             end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    job.ProcessZones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                        or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                    job.ProcessZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                 end
             end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    job.ProcessMenuZones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                        or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                    job.ProcessMenuZones[k].GradeEnabled =not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                 end
             end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    job.SellZones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                        or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                    job.SellZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                 end
             end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    job.BuyZones[k].GradeEnabled = (v.ExcludeGrades and not tableHasValue(v.ExcludeGrades, job.grade))
-                        or (v.OnlyGrades and tableHasValue(v.OnlyGrades, job.grade))
+                    job.BuyZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
                 end
             end
 		end
