@@ -163,9 +163,21 @@ Config.Jobs = {
                 }
             },
         },
-
-
-
+        BuyZones = {
+            BuyItems = {
+                Items = {
+                    {name = 'bproof_vest', price = 15000},
+                },
+                Pos = vector3(812.26, -2153.55, 28.64),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 221, g = 79, b = 67},
+                Name = "Achat de protections et menottes",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"chef", "boss"},
+                Marker = 27,
+                Blip = true
+            }
+        }
     },
     vigneron = {
         SocietyName = 'society_vigneron',
@@ -253,7 +265,7 @@ Config.Jobs = {
                 Color = {r = 252, g = 186, b = 3},
                 Name = "Traitement champagne et grand cru",
                 HelpText = _('press_traitement'),
-                NoInterim = true,
+                ExcludeGrades = {"interim"},
                 Marker = 27,
                 Blip = true
             }
