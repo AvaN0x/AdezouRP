@@ -108,17 +108,17 @@ function OpenPersonalMenu()
 	table.insert(elements, {label = _("blue", _("others_menu")), value = "others_menu", type = "submenu"})
 
 	if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" and PlayerData.job.grade_name ~= "interim" then
-		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job.label)), value = "society", type = "submenu"})
+		table.insert(elements, {label = _("green", _("society_menu", PlayerData.job.label)), value = "society", type = "submenu"})
 	end
 	if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" and PlayerData.job2.grade_name ~= "interim" then
-		table.insert(elements, {label = _("red", _("society_menu", PlayerData.job2.label)), value = "society2", type = "submenu"})
+		table.insert(elements, {label = _("green", _("society_menu", PlayerData.job2.label)), value = "society2", type = "submenu"})
 	end
 
 	if actualGang and actualGang.name and actualGang.grade == 1 then
 		table.insert(elements, {label = _("bright_red", _("gang_menu", actualGang.label)), value = "gang_menu", type = "submenu"})
 	end
 
-    table.insert(elements, {label = _("pink", _("save_position")), value = "save_position"})
+    table.insert(elements, {label = _("bright_pink", _("save_position")), value = "save_position"})
 
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
 		table.insert(elements, {label = _("orange", _("admin_menu")), value = "admin_menu", detail = _("admin_menu_detail"), type = "submenu"})
@@ -407,10 +407,14 @@ function OpenSocietyMenu(job, money)
 	if job.grade_name == "boss" then
 		table.insert(elements, {label = _("society_money", money or 0)})
 	end
-    print(job.name)
 
 	-- todo, only if the user have a phone
 	table.insert(elements, {label = _("life_invader"), value = "life_invader", detail = _("society_life_invader_detail")})
+
+    if job.name == "lspd" then
+        table.insert(elements, {label = _("fine"), value = "fine", detail = _("fine_detail")})
+    end
+
 	table.insert(elements, {label = _("billing"), value = "billing", detail = _("billing_detail")})
 
 
@@ -450,7 +454,7 @@ function OpenSocietyMenu(job, money)
 						if closestPlayer == -1 or closestDistance > 3.0 then
 							ESX.ShowNotification(_('no_players_nearby'))
 						else
-							local playerPed = GetPlayerPed(-1)
+							local playerPed = PlayerPedId()
 
 							Citizen.CreateThread(function()
 								TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
@@ -464,6 +468,46 @@ function OpenSocietyMenu(job, money)
 				function(data, menu)
 					menu.close()
 				end)
+
+		elseif data.current.value == "fine" then
+			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'fine_amount',
+            {
+                title = _('fine_amount')
+            },
+            function(data, menu)
+                local amount = tonumber(data.value)
+                if amount == nil or amount <= 0 then
+                    ESX.ShowNotification(_('invalid_amount'))
+                else
+                    menu.close()
+                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "fine_reason", {
+                        title = _('fine_reason')
+                    }, function(data2, menu2)
+                        menu2.close()
+                        local reason = data2.value
+                        local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+                        if closestPlayer == -1 or closestDistance > 3.0 then
+                            ESX.ShowNotification(_('no_players_nearby'))
+                        else
+                            local playerPed = PlayerPedId()
+
+                            Citizen.CreateThread(function()
+                                TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
+                                Citizen.Wait(5000)
+                                ClearPedTasks(playerPed)
+                                TriggerServerEvent('esx_billing:sendBill1', GetPlayerServerId(closestPlayer), "society_"..job.name, string.len(reason) > 0 and "Amende : " .. reason or "Amende", amount)
+                            end)
+                        end
+
+                    end, function(data2, menu2)
+                        menu2.close()
+                    end)
+                end
+            end,
+            function(data, menu)
+                menu.close()
+            end)
+
 		elseif data.current.value == "society_first_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",
 			{
