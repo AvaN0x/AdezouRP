@@ -37,8 +37,8 @@ Config.ProcessMenuZones = {
 			ClipProcess = {
 				Name = 'Chargeurs',
 				ItemsGive = {
-					{name = 'steel', quantity = 2},
-					{name = 'gunpowder', quantity = 2}
+					{name = 'steel', quantity = 1},
+					{name = 'gunpowder', quantity = 4}
 				},
 				ItemsGet = {
 					{name = 'clip', quantity = 5}
