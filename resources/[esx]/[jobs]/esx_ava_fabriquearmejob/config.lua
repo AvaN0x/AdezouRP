@@ -63,7 +63,7 @@ Config.ProcessMenuZones = {
 			PistolProcess = {
 				Name = 'Pistolet 9mm',
 				ItemsGive = {
-					{name = 'steel', quantity = 50},
+					{name = 'steel', quantity = 40},
 					{name = 'plastic', quantity = 30},
 					{name = 'grease', quantity = 5}
 				},
