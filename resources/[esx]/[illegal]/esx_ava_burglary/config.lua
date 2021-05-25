@@ -270,9 +270,17 @@ Config.StealableItems = {
     'diamond',
     'diamond',
     'diamond',
+    'diamond',
+    'diamond',
     'gold',
     'gold',
     'gold',
-    'balisegps',
-    'lockpick'
+    'gold',
+    'gold',
+    'gold',
+    'gold',
+    'gold',
+    'gold',
+    'gold',
+    'balisegps'
 }
