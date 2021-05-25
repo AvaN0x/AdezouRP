@@ -13,6 +13,7 @@ Locales['fr'] = {
     ['user_clothes'] = "Tenues personnelles",
 	['vine_clothes_civil'] = 'Tenue Civil',
 	['vine_clothes_vine'] = 'Tenue de travail',
+    ['take_service'] = '<span style="color: #CF13A8">Prise de service</span>',
     ['custom_clothe_format'] = '<span style="color: #FFAE29">%s</span>',
 
 	['veh_menu'] = 'Garage',

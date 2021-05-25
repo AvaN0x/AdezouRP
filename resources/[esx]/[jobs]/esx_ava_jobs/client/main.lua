@@ -105,6 +105,8 @@ AddEventHandler('onResourceStop', function(resource)
 	end
 end)
 
+local playerServices = {}
+
 function setJobsToUse()
     CurrentZoneName = nil
     playerJobs = {}
@@ -125,6 +127,15 @@ function setJobsToUse()
     for name, farm in pairs(Config.Jobs) do
         if farm.isIllegal == true then
             playerJobs[name] = farm
+        end
+    end
+
+    for job, value in pairs(playerServices) do
+        if not playerJobs[job] then
+            if value then
+                TriggerServerEvent("esx_ava_jobs:setService", job, false)
+            end
+            playerServices[job] = nil
         end
     end
 
@@ -546,6 +557,7 @@ function OpenCloakroomMenu(jobIndex)
 	ESX.UI.Menu.CloseAll()
 
     local outfits = CurrentZoneValue.Outfits
+    local jobName = CurrentJobName
     local elements = {}
 
     if not CurrentZoneValue.NoJobDress then
@@ -553,6 +565,10 @@ function OpenCloakroomMenu(jobIndex)
         table.insert(elements, {label = _('vine_clothes_vine'), value = 'job_wear'})
     end
     table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
+
+    if Config.Jobs[jobName].ServiceCounter then
+        table.insert(elements, {label = _("take_service"), value = "take_service", type="checkbox", checked=playerServices[jobName]})
+    end
 
     if outfits ~= nil then
         for k, v in ipairs(outfits) do
@@ -578,13 +594,15 @@ function OpenCloakroomMenu(jobIndex)
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin' .. (jobIndex ~= 1 and jobIndex or ''), function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and jobSkin.skin_male or jobSkin.skin_female)
             end)
+        elseif data.current.value == "take_service" then
+            playerServices[jobName] = not playerServices[jobName]
+            TriggerServerEvent("esx_ava_jobs:setService", jobName, playerServices[jobName])
         elseif outfits ~= nil and outfits[data.current.value] then
             TriggerEvent('skinchanger:getSkin', function(skin)
                 TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and outfits[data.current.value].Male or outfits[data.current.value].Female)
             end)
         end
 
-        CurrentActionEnabled = true
     end,
     function(data, menu)
         menu.close()

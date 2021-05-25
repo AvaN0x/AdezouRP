@@ -13,6 +13,7 @@ Config.Jobs = {
     lspd = {
         SocietyName = 'society_lspd',
         LabelName = 'LSPD',
+        ServiceCounter = true,
         Blip = {
             Name = "~b~Commissariat",
             Sprite = 60,

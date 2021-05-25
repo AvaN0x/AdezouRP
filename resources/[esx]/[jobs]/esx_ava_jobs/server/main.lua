@@ -6,6 +6,8 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+local jobsServices = {}
+
 local playersPickUpCount = {}
 local playersProcessing = {}
 
@@ -54,6 +56,35 @@ AddEventHandler("esx_ava_jobs:savePickUpCounts", function()
 end)
 
 
+RegisterServerEvent("esx_ava_jobs:setService")
+AddEventHandler("esx_ava_jobs:setService", function(job, state)
+	if not jobsServices[job] then
+        jobsServices[job] = {}
+    end
+    jobsServices[job][source] = state and true or nil
+end)
+
+RegisterServerEvent("esx_ava_jobs:getCountInService")
+AddEventHandler("esx_ava_jobs:getCountInService", function(job, cb)
+    local count = 0
+    local xPlayers = ESX.GetPlayers()
+
+    local debugString = ""
+
+    if jobsServices[job] then
+        for i = 1, #xPlayers do
+            local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+            if ((xPlayer.job ~= nil and xPlayer.job.name == job) or (xPlayer.job2 ~= nil and xPlayer.job2.name == job)) and jobsServices[job][xPlayers[i]] ~= nil then
+                count = count + 1
+                debugString = debugString .. tostring(xPlayers[i]) .. " "
+            end
+        end
+    end
+
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "asked for count of " .. job, "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 15902015)
+
+    cb(tonumber(count))
+end)
 
 
 -------------
