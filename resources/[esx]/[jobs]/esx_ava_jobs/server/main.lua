@@ -357,8 +357,10 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
         elseif xPlayer.getMoney() < totalprice then
             TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
         else
-            TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
-            end)
+            if job.SocietyName then
+                TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
+                end)
+            end
             
             xPlayer.removeMoney(totalprice)
             inventory.addItem(item, count)
