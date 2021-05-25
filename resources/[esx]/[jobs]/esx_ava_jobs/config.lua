@@ -999,7 +999,20 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
-		}
+		},
+        BuyZones = {
+            BuyBox = {
+                Items = {
+                    {name = 'lockpick', price = 200}
+                },
+                Pos = vector3(-1108.25, -1637.40, 3.64),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+				Color = {r = 136, g = 243, b = 216},
+                Name = "Achat de lockpicks",
+                HelpText = _('press_buy'),
+                Marker = 27
+            }
+        }
 	},
 	orga_illegal_custom = {
         isGang = true,
