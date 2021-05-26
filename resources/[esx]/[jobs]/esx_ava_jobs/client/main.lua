@@ -558,6 +558,7 @@ function OpenCloakroomMenu(jobIndex)
 
     local outfits = CurrentZoneValue.Outfits
     local jobName = CurrentJobName
+    local jobGrade = playerJobs[jobName].grade
     local elements = {}
 
     if not CurrentZoneValue.NoJobDress then
@@ -572,7 +573,11 @@ function OpenCloakroomMenu(jobIndex)
 
     if outfits ~= nil then
         for k, v in ipairs(outfits) do
-            table.insert(elements, {label = _('custom_clothe_format', v.Label), value = k})
+            if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
+                or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+            then
+                table.insert(elements, {label = _('custom_clothe_format', v.Label), value = k})
+            end
         end
     end
 

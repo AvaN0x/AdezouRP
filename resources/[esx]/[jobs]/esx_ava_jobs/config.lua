@@ -36,16 +36,18 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Outfits = {
-                    -- {
-                    --     Label = "Cadet manches courtes",
-                    --     Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
-                    --     Female = ''
-                    -- },
-                    -- {
-                    --     Label = "Cadet manches longues",
-                    --     Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":101,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":20,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
-                    --     Female = ''
-                    -- },
+                    {
+                        Label = "Cadet manches courtes",
+                        Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                        Female = json.decode('{}'),
+                        OnlyGrades = {"recruit"}
+                    },
+                    {
+                        Label = "Cadet manches longues",
+                        Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":101,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":20,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                        Female = json.decode('{}'),
+                        OnlyGrades = {"recruit"}
+                    },
                     {
                         Label = "Tenue manches courtes",
                         Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":102,"tshirt_1":53,"torso_2":0,"bproof_1":0,"arms":19,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
