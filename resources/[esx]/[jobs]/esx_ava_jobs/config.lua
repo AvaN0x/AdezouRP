@@ -60,7 +60,39 @@ Config.Jobs = {
                         menu2.close()
                     end)
                 end
-            }
+            },
+            {
+                Label = _('search'),
+                Detail = _('search_detail'),
+                Action = function(data, menu, jobName)
+
+                end
+            },
+            {
+                Label = _('manage_bills'),
+                Detail = _('manage_bills_detail'),
+                Action = function(data, menu, jobName)
+
+                end
+            },
+            {
+                Label = _('manage_licences'),
+                Detail = _('manage_licences_detail'),
+                Type = "submenu",
+                Action = function(data, menu, jobName)
+
+                end,
+                ExcludeGrades = {"recruit"}
+            },
+            {
+                Label = _('manage_weapon_license'),
+                Detail = _('manage_weapon_license_detail'),
+                Type = "submenu",
+                Action = function(data, menu, jobName)
+
+                end,
+                OnlyGrades = {"sergeant_chef", "lieutenant", "chef", "boss"}
+            },
         },
         Zones = {
             JobActions = {

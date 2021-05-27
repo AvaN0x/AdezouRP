@@ -497,9 +497,15 @@ function OpenJobMenu()
 end
 
 function JobMenu(jobName)
+    local jobGrade = playerJobs[jobName].grade
+
     local elements = {}
     for k, v in pairs(playerJobs[jobName].JobMenu) do
-        table.insert(elements, {label = v.Label, value = k, detail = v.Detail})
+        if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
+            or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+        then
+            table.insert(elements, {label = v.Label, value = k, detail = v.Detail, type = v.Type})
+        end
     end
     ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_menu',
     {
