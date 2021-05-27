@@ -458,6 +458,66 @@ AddEventHandler('esx_ava_jobs:hasExitedMarker', function(jobName, zoneName, zone
 	CurrentZoneName = nil
 end)
 
+
+--------------
+-- Job Menu --
+--------------
+RegisterCommand('+keyJobMenu', function()
+	OpenJobMenu()
+end, false)
+
+RegisterKeyMapping('+keyJobMenu', _('job_menu'), 'keyboard', Config.JobMenuKey)
+
+function OpenJobMenu()
+    local elements = {}
+    for jobName, job in pairs(playerJobs) do
+        if not job.isIllegal and not job.isGang and job.JobMenu and #job.JobMenu > 0 then
+            table.insert(elements, {label = job.LabelName, value = jobName})
+        end
+    end
+
+    if #elements == 1 then
+        JobMenu(elements[1].value)
+    elseif #elements > 1 then
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_open_job_menu',
+        {
+            title = _('job_menu'),
+            align = 'left',
+            elements = elements
+        },
+        function(data, menu)
+            JobMenu(data.current.value)
+        end,
+        function(data, menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end
+
+end
+
+function JobMenu(jobName)
+    local elements = {}
+    for k, v in pairs(playerJobs[jobName].JobMenu) do
+        table.insert(elements, {label = v.Label, value = k, detail = v.Detail})
+    end
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_menu',
+    {
+        title = playerJobs[jobName].LabelName,
+        align = 'left',
+        elements = elements
+    },
+    function(data, menu)
+        if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value] then
+            playerJobs[jobName].JobMenu[data.current.value].Action(data, menu, jobName)
+        end
+    end,
+    function(data, menu)
+        menu.close()
+        CurrentActionEnabled = true
+    end)
+end
+
 ------------------
 -- Key Controls --
 ------------------

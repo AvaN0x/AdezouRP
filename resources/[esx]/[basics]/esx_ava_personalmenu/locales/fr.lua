@@ -61,10 +61,6 @@ Locales["fr"] = {
     ["others_toggle_hud"] = "Activer/Désactiver HUD",
     ["others_resize_minimap"] = "Taille de la map",
 
-    ["fine"] = "Amende",
-    ["fine_reason"] = "Raison de l'amende",
-    ["fine_amount"] = "Montant de l'amende",
-    ['fine_detail'] = "Rédiger une amende",
     ["billing"] = "Facture",
     ["billing_amount"] = "Montant de la facture",
     ['billing_detail'] = "Rédiger une facture au nom de l'entreprise",

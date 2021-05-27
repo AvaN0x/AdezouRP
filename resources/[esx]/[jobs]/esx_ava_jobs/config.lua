@@ -8,6 +8,7 @@ Config.DrawDistance = 30.0
 Config.Locale = 'fr'
 Config.MaxPickUp = 70
 Config.MaxPickUpIllegal = 70
+Config.JobMenuKey = "F6"
 
 Config.Jobs = {
     lspd = {
@@ -18,6 +19,48 @@ Config.Jobs = {
             Name = "~b~Commissariat",
             Sprite = 60,
             Colour = 3
+        },
+        JobMenu = {
+            {
+                Label = _('fine'),
+                Detail = _('fine_detail'),
+                Action = function(data, menu, jobName)
+                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'fine_amount',
+                    {
+                        title = _('fine_amount')
+                    },
+                    function(data2, menu2)
+                        local amount = tonumber(data2.value)
+                        if amount == nil or amount <= 0 then
+                            ESX.ShowNotification(_('amount_invalid'))
+                        else
+                            menu2.close()
+                            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "fine_reason", {
+                                title = _('fine_reason')
+                            }, function(data3, menu3)
+                                menu3.close()
+                                local reason = data3.value
+                                exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                                    local playerPed = PlayerPedId()
+
+                                    Citizen.CreateThread(function()
+                                        TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
+                                        Citizen.Wait(5000)
+                                        ClearPedTasks(playerPed)
+                                        TriggerServerEvent('esx_billing:sendBill1', targetId, Config.Jobs[jobName].SocietyName, string.len(reason) > 0 and "Amende : " .. reason or "Amende", amount)
+                                    end)
+                                end)
+
+                            end, function(data3, menu3)
+                                menu3.close()
+                            end)
+                        end
+                    end,
+                    function(data2, menu2)
+                        menu2.close()
+                    end)
+                end
+            }
         },
         Zones = {
             JobActions = {

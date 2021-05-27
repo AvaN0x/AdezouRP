@@ -411,10 +411,6 @@ function OpenSocietyMenu(job, money)
 	-- todo, only if the user have a phone
 	table.insert(elements, {label = _("life_invader"), value = "life_invader", detail = _("society_life_invader_detail")})
 
-    if job.name == "lspd" then
-        table.insert(elements, {label = _("fine"), value = "fine", detail = _("fine_detail")})
-    end
-
 	table.insert(elements, {label = _("billing"), value = "billing", detail = _("billing_detail")})
 
 
@@ -468,45 +464,6 @@ function OpenSocietyMenu(job, money)
 				function(data, menu)
 					menu.close()
 				end)
-
-		elseif data.current.value == "fine" then
-			ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'fine_amount',
-            {
-                title = _('fine_amount')
-            },
-            function(data, menu)
-                local amount = tonumber(data.value)
-                if amount == nil or amount <= 0 then
-                    ESX.ShowNotification(_('invalid_amount'))
-                else
-                    menu.close()
-                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "fine_reason", {
-                        title = _('fine_reason')
-                    }, function(data2, menu2)
-                        menu2.close()
-                        local reason = data2.value
-                        local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-                        if closestPlayer == -1 or closestDistance > 3.0 then
-                            ESX.ShowNotification(_('no_players_nearby'))
-                        else
-                            local playerPed = PlayerPedId()
-
-                            Citizen.CreateThread(function()
-                                TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
-                                Citizen.Wait(5000)
-                                ClearPedTasks(playerPed)
-                                TriggerServerEvent('esx_billing:sendBill1', GetPlayerServerId(closestPlayer), "society_"..job.name, string.len(reason) > 0 and "Amende : " .. reason or "Amende", amount)
-                            end)
-                        end
-
-                    end, function(data2, menu2)
-                        menu2.close()
-                    end)
-                end
-            end,
-            function(data, menu)
-                menu.close()
-            end)
 
 		elseif data.current.value == "society_first_job" then
 			ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_society_first_job",

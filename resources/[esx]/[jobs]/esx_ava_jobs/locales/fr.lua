@@ -5,7 +5,7 @@
 
 Locales['fr'] = {
 	['job_client'] = 'client %s',
-
+    ['job_menu'] = 'Menu de métier',
 
 	['press_to_open'] = 'Appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
 	['store_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour ranger le véhicule',
@@ -64,5 +64,12 @@ Locales['fr'] = {
 
     -- Illegal
     ['dont_have_keychain'] = "Vous n'avez pas la clé",
+
+
+    -- Police
+    ["fine"] = "Amende",
+    ['fine_detail'] = "Rédiger une amende",
+    ["fine_reason"] = "Raison de l'amende",
+    ["fine_amount"] = "Montant de l'amende",
 
 }
