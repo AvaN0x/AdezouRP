@@ -191,6 +191,7 @@ function OpenExtraMenu()
 		menu.refresh()
 	end, function(data, menu)
 		menu.close()
+        TriggerEvent('esx_lscustom:installMod')
 	end)
 end
 
