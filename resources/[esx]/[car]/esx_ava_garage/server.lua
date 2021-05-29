@@ -31,33 +31,54 @@ end)
 
 -- get vehicles from player or society
 -- allowed types : car | plane | heli | boat
-ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target)
+ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName)
 	local identifier = nil
 	local vehicules = {}
-	if target then
-		identifier = target
-	else
-		local _source = source
-		local xPlayer = ESX.GetPlayerFromId(_source)
-		identifier = xPlayer.getIdentifier()
-	end
+    if not onlyCheckGarage then
+        if target then
+            identifier = target
+        else
+            local _source = source
+            local xPlayer = ESX.GetPlayerFromId(_source)
+            identifier = xPlayer.getIdentifier()
+        end
 
-	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier and type = @type",
-	{
-		['@identifier'] = identifier,
-		['@type'] = type
-	}, function(data) 
-		for _,v in pairs(data) do
-			local vehicle = json.decode(v.vehicle)
-			table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
-		end
-		cb(vehicules)
-	end)
+        MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier and type = @type",
+        {
+            ['@identifier'] = identifier,
+            ['@type'] = type
+        }, function(data) 
+            for _,v in pairs(data) do
+                local vehicle = json.decode(v.vehicle)
+                table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
+            end
+            cb(vehicules)
+        end)
+    else
+        MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location and type = @type",
+        {
+            ['@location'] = garageName,
+            ['@type'] = type
+        }, function(data) 
+            for _,v in pairs(data) do
+                local vehicle = json.decode(v.vehicle)
+                table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
+            end
+            cb(vehicules)
+        end)
+
+
+    end
 end)
 
-function getPlayerVehicles(identifier)
+function getPlayerVehicles(identifier, onlyCheckGarage, garageName)
 	local vehicles = {}
-	local data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})	
+    local data
+    if not onlyCheckGarage then
+	    data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})
+    else
+        data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location",{['@location'] = garageName})
+    end
 	for _,v in pairs(data) do
 		local vehicle = json.decode(v.vehicle)
 		table.insert(vehicles, {id = v.id, plate = vehicle.plate, type = v.type})
@@ -66,33 +87,45 @@ function getPlayerVehicles(identifier)
 end
 
 
-ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source,cb, vehicleProps, fuel, type, gIdentifier, target)
+ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleProps, fuel, type, gIdentifier, target, onlyCheckGarage, garageName)
 	local isFound = false
-	local identifier = nil
-	if target then
-		identifier = target
-	else
-		local _source = source
-		local xPlayer = ESX.GetPlayerFromId(_source)
-		identifier = xPlayer.getIdentifier()
-	end
-	-- print(identifier)
-	local vehicles = getPlayerVehicles(identifier)
-	local plate = vehicleProps.plate
-	for _,v in pairs(vehicles) do
-		-- print(v.plate)
-		if plate == v.plate and type == v.type then
-			local vehprop = json.encode(vehicleProps)
-			MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel, location=@location WHERE plate=@plate",
-			{
-				['@vehprop'] = vehprop,
-				['@fuel'] = fuel,
-				['@plate'] = plate,
-				['@location'] = gIdentifier
-			})
-			isFound = true
-			break
-		end
+    local plate = vehicleProps.plate
+    if not onlyCheckGarage then
+        local identifier = nil
+        if target then
+            identifier = target
+        else
+            local _source = source
+            local xPlayer = ESX.GetPlayerFromId(_source)
+            identifier = xPlayer.getIdentifier()
+        end
+
+        local vehicles = getPlayerVehicles(identifier)
+        for _,v in pairs(vehicles) do
+            if plate == v.plate and type == v.type then
+                local vehprop = json.encode(vehicleProps)
+                MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle = @vehprop, fuel = @fuel, location = @location WHERE plate = @plate",
+                {
+                    ['@vehprop'] = vehprop,
+                    ['@fuel'] = fuel,
+                    ['@plate'] = plate,
+                    ['@location'] = gIdentifier
+                })
+                isFound = true
+                break
+            end
+        end
+
+    else
+        local vehprop = json.encode(vehicleProps)
+        isFound = MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle = @vehprop, fuel = @fuel, location = @location WHERE plate = @plate",
+        {
+            ['@vehprop'] = vehprop,
+            ['@fuel'] = fuel,
+            ['@plate'] = plate,
+            ['@location'] = garageName
+        }) == 1 and true or false
+
 	end
 	cb(isFound)
 end)
@@ -187,13 +220,13 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
-AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage)
+AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local playerIdentifier = xPlayer.getIdentifier()
 	local identifier = target or playerIdentifier
 
-	local vehicules = getPlayerVehicles(identifier)
+	local vehicules = getPlayerVehicles(identifier, onlyCheckGarage, garageName)
 	local plate = vehicleProps.plate
 	local location = location
 
@@ -333,9 +366,9 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 			account.addMoney(toState)
 		end
     end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_police', 'society_police', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
@@ -369,9 +402,9 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 			account.addMoney(toState)
 		end
     end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_police', 'society_police', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)

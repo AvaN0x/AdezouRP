@@ -88,7 +88,7 @@ Config.Garages = {
 			Color = 0
 		},
 		Type = "car",
-		Job = 'police',
+		Job = 'lspd',
 		SpawnPoint = {
 			Pos = {x = 442.53,y = -1026.09,z = 28.71 },
 			Heading = 5.0

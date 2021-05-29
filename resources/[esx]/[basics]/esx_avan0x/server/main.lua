@@ -77,7 +77,10 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 	end
 end
 
-
+RegisterServerEvent('esx_avan0x:showNotification')
+AddEventHandler('esx_avan0x:showNotification', function(target, message)
+	TriggerClientEvent('esx:showNotification', target, message)
+end)
 
 RegisterServerEvent('esx_avan0x:logTransaction')
 AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account_origin, identifier_target, account_target, type, amount)
@@ -147,27 +150,6 @@ end, {
 		}
 	}
 })
-
-RegisterServerEvent('esx_avan0x:useWeaponItem')
-AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	local xItem   = xPlayer.getInventoryItem(string.lower(weaponName))
-	if xItem then
-        if xPlayer.hasWeapon(weaponName) then
-            if xItem.limit ~= -1 and xItem.count >= xItem.limit then
-                TriggerClientEvent('esx:showNotification', source, "Vous n'avez plus de place pour cela")
-            else
-                xPlayer.addInventoryItem(string.lower(weaponName), 1)
-                xPlayer.removeWeapon(weaponName)
-            end
-        else
-            TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
-        end
-	else
-		TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
-		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
-	end
-end)
 
 
 --? death verification

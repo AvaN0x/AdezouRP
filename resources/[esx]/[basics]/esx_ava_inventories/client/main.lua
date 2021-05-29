@@ -93,9 +93,9 @@ function OpenMyInventory()
                     end
 
                 elseif data2.current.value == "give_item" then
-                    GetClosestPlayer(function(player)
-                        GiveItem(player, data.current.value, data.current.item.name)
-                    end)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        GiveItem(targetId, data.current.value, data.current.item.name)
+                    end, _('select_a_player'), 3.0)
 
                 elseif data2.current.value == "drop_item" then
                     DropItem(data.current.value, data.current.item.name)
@@ -112,40 +112,6 @@ function OpenMyInventory()
     end)
 end
 
-function GetClosestPlayer(cb)
-    local playerPed = PlayerPedId()
-    local playerId = PlayerId()
-    local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
-    local foundPlayers = false
-    local elements = {}
-
-    for k, player in ipairs(players) do
-        if player ~= playerId then
-            foundPlayers = true
-            -- todo draw player name and a line to them?
-            table.insert(elements, {
-                label = GetPlayerName(player),
-                player = GetPlayerServerId(player)
-            })
-        end
-    end
-
-    if foundPlayers then
-        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_ava_inventories_get_close_player",
-        {
-            title = _('select_a_player'),
-            align = "left",
-            elements = elements
-        }, function(data, menu)
-            menu.close()
-            cb(data.current.player)
-        end, function(data, menu)
-            menu.close()
-        end)
-    else
-        ESX.ShowNotification(_("no_players_near"))
-    end
-end
 
 --? my inventory
 function UseItem(itemName)

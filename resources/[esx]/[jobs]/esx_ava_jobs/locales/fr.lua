@@ -5,13 +5,16 @@
 
 Locales['fr'] = {
 	['job_client'] = 'client %s',
-
+    ['job_menu'] = 'Menu de métier',
 
 	['press_to_open'] = 'Appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
 	['store_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour ranger le véhicule',
 	['cloakroom'] = 'Vestiaire',
+    ['user_clothes'] = "Tenues personnelles",
 	['vine_clothes_civil'] = 'Tenue Civil',
 	['vine_clothes_vine'] = 'Tenue de travail',
+    ['take_service'] = '<span style="color: #CF13A8">Prise de service</span>',
+    ['custom_clothe_format'] = '<span style="color: #FFAE29">%s</span>',
 
 	['veh_menu'] = 'Garage',
 	['spawn_veh'] = 'Appuyez sur ~INPUT_CONTEXT~ pour sortir véhicule',
@@ -37,7 +40,7 @@ Locales['fr'] = {
 	['sell_not_that_much'] = 'Tu n\'as pas autant de %s.',
 	['sell_how_much'] = 'Combien voulez-vous vendre ? [Max : %s]',
 	['seller_for'] = 'Vendeur %s',
-    
+
 	['buy_label'] = '%s : $%s',
 	['buy_how_much'] = 'Combien voulez-vous en acheter ?',
 	['buyer_for'] = 'Acheteur %s',
@@ -53,6 +56,7 @@ Locales['fr'] = {
 
 	-- General
 	['boss_actions'] = 'Action Patron',
+    ["need_in_service"] = "Vous devez être en service pour faire cela",
 
 	-- A modifier selon l'entreprise
 	['inventoryfull'] = 'Vous n\'avez plus de place',
@@ -70,4 +74,31 @@ Locales['fr'] = {
 	["gang_fire"] = "Virer",
 	["gang_promote"] = "Autoriser à gérer",
 	["gang_demote"] = "Empécher de gérer",
+
+    -- LSPD
+    ["fine"] = "Amende",
+    ["fine_detail"] = "Rédiger une amende",
+    ["fine_reason"] = "Raison de l'amende",
+    ["fine_amount"] = "Montant de l'amende",
+
+    ["search"] = "Fouiller",
+    ["search_detail"] = "Fouiller l'individu",
+    ["being_searched"] = "Quelqu'un vous fouille",
+
+    ["manage_licences"] = "Voir les licenses",
+    ["manage_licences_detail"] = "Voir et révoquer les licenses",
+    ["license_revoke"] = "Révoquer la licence",
+    ["license_revoked"] = "Votre ~o~%s~s~ a été révoqué!",
+    ["licence_you_revoked"] = "Vous avez révoqué le ~o~%s~s~ qui appartenait à ~o~%s~s~",
+
+    ["manage_weapon_license"] = "Donner le PPA",
+    ["manage_weapon_license_detail"] = "Donner le PPA à l'individu",
+    ["you_gave_weapon_licence"] = "Vous avez donné le PPA à ~o~%s~s~",
+    ["already_own_weapon_licence"] = "~o~%s~s~ possède déjà un PPA",
+    ["license_weapon_gived"] = "Vous avez reçu votre PPA!",
+
+    ["check_bills"] = "Voir les factures",
+    ["check_bills_detail"] = "Voir les factures impayées de l'individu",
+    ["unpaid_bills"] = "Factures impayées",
+    ["unpaid_bill"] = '%s <span style="color:red;">%s $</span>',
 }

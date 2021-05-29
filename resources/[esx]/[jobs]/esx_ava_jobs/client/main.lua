@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(job.LabelName)
+            AddTextComponentString(job.Blip.Name or job.LabelName)
             EndTextCommandSetBlipName(blip)
 
             table.insert(mainBlips, blip)
@@ -105,6 +105,8 @@ AddEventHandler('onResourceStop', function(resource)
 	end
 end)
 
+local playerServices = {}
+
 function setJobsToUse()
     CurrentZoneName = nil
     playerJobs = {}
@@ -127,6 +129,17 @@ function setJobsToUse()
             playerJobs[name] = farm
         end
     end
+
+    for job, value in pairs(playerServices) do
+        if not playerJobs[job] then
+            if value then
+                TriggerServerEvent("esx_ava_jobs:setService", job, false)
+            end
+            playerServices[job] = nil
+        end
+    end
+
+    checkAuthorizations()
     clearJobBlips()
 	createBlips()
 end
@@ -141,6 +154,52 @@ end
 -- end)
 
 
+function checkAuthorizations()
+    for jobName, job in pairs(playerJobs) do
+        if not job.isIllegal then
+            if job.Zones ~= nil then
+                for k, v in pairs(job.Zones) do
+                    if k == "JobActions" and job.grade == "interim" then
+                        job.Zones[k].GradeEnabled = false
+                    else
+                        job.Zones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                            or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                    end
+                end
+            end
+            if job.FieldZones ~= nil then
+                for k, v in pairs(job.FieldZones) do
+                    job.FieldZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                end
+            end
+            if job.ProcessZones ~= nil then
+                for k, v in pairs(job.ProcessZones) do
+                    job.ProcessZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                end
+            end
+            if job.ProcessMenuZones ~= nil then
+                for k, v in pairs(job.ProcessMenuZones) do
+                    job.ProcessMenuZones[k].GradeEnabled =not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                end
+            end
+            if job.SellZones ~= nil then
+                for k, v in pairs(job.SellZones) do
+                    job.SellZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                end
+            end
+            if job.BuyZones ~= nil then
+                for k, v in pairs(job.BuyZones) do
+                    job.BuyZones[k].GradeEnabled = not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, job.grade))
+                        or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, job.grade)))
+                end
+            end
+		end
+	end
+end
 
 
 -----------
@@ -176,42 +235,42 @@ function createBlips()
     for jobName, job in pairs(playerJobs) do
 		if job.Zones ~= nil then
             for k, v in pairs(job.Zones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
 		end
 		if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
-                if v.Blip then
+                if v.Blip and v.GradeEnabled then
                     addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
@@ -247,17 +306,15 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
-                        if (k ~= 'JobActions' or job.grade ~= 'interim') then
-                            DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
-                            foundMarker = true
-                        end
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.GradeEnabled then
+                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                        foundMarker = true
                     end
                 end
             end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.GradeEnabled then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -265,7 +322,7 @@ Citizen.CreateThread(function()
             end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.GradeEnabled then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -273,7 +330,7 @@ Citizen.CreateThread(function()
             end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.GradeEnabled then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -281,7 +338,7 @@ Citizen.CreateThread(function()
             end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.GradeEnabled then
                         DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -312,20 +369,18 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
-                    if (k ~= 'JobActions' or job.grade ~= 'interim') then
-                        if (#(playerCoords - v.Pos) < v.Size.x) then
-                            isInMarker = true
-                            zoneJob = jobName
-                            zoneCategoryPlayerIsIn = "Zones"
-                            zoneNamePlayerIsIn = k
-                            zonePlayerIsIn = v
-                        end
+                    if (#(playerCoords - v.Pos) < (v.Distance or 1.5)) and v.GradeEnabled then
+                        isInMarker = true
+                        zoneJob = jobName
+                        zoneCategoryPlayerIsIn = "Zones"
+                        zoneNamePlayerIsIn = k
+                        zonePlayerIsIn = v
                     end
 				end
 			end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (#(playerCoords - v.Pos) < 2) then
+                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessZones"
@@ -336,7 +391,7 @@ Citizen.CreateThread(function()
 			end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (#(playerCoords - v.Pos) < 2) then
+                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessMenuZones"
@@ -347,7 +402,7 @@ Citizen.CreateThread(function()
 			end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (#(playerCoords - v.Pos) < 2) then
+                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "SellZones"
@@ -358,7 +413,7 @@ Citizen.CreateThread(function()
 			end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (#(playerCoords - v.Pos) < 2) then
+                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "BuyZones"
@@ -403,6 +458,76 @@ AddEventHandler('esx_ava_jobs:hasExitedMarker', function(jobName, zoneName, zone
 	CurrentZoneName = nil
 end)
 
+
+--------------
+-- Job Menu --
+--------------
+RegisterCommand('+keyJobMenu', function()
+	OpenJobMenu()
+end, false)
+
+RegisterKeyMapping('+keyJobMenu', _('job_menu'), 'keyboard', Config.JobMenuKey)
+
+function OpenJobMenu()
+    local elements = {}
+    for jobName, job in pairs(playerJobs) do
+        if not job.isIllegal and not job.isGang and job.JobMenu and #job.JobMenu > 0 then
+            table.insert(elements, {label = job.LabelName, value = jobName})
+        end
+    end
+
+    if #elements == 1 then
+        JobMenu(elements[1].value)
+    elseif #elements > 1 then
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_open_job_menu',
+        {
+            title = _('job_menu'),
+            align = 'left',
+            elements = elements
+        },
+        function(data, menu)
+            JobMenu(data.current.value)
+        end,
+        function(data, menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end
+
+end
+
+function JobMenu(jobName)
+    if playerJobs[jobName].ServiceCounter and not playerServices[jobName] then
+        ESX.ShowNotification(_("need_in_service"))
+    else
+        local jobGrade = playerJobs[jobName].grade
+
+        local elements = {}
+        for k, v in pairs(playerJobs[jobName].JobMenu) do
+            if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
+            or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+            then
+                table.insert(elements, {label = v.Label, value = k, detail = v.Detail, type = v.Type})
+            end
+        end
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_menu',
+        {
+            title = playerJobs[jobName].LabelName,
+            align = 'left',
+            elements = elements
+        },
+        function(data, menu)
+            if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value] then
+                playerJobs[jobName].JobMenu[data.current.value].Action(data, menu, jobName)
+            end
+        end,
+        function(data, menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end
+end
+
 ------------------
 -- Key Controls --
 ------------------
@@ -432,7 +557,12 @@ Citizen.CreateThread(function()
                     elseif string.match(CurrentZoneName, "Stock$") then
                         TriggerEvent('esx_ava_inventories:OpenSharedInventory', CurrentZoneValue.StockName)
                     elseif string.match(CurrentZoneName, "Garage$") then
-                        TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
+                        if CurrentZoneValue.IsNonProprietaryGarage then
+                            TriggerEvent('esx_ava_garage:openSpecialVehicleMenu', CurrentZoneValue)
+
+                        else
+                            TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
+                        end
                     end
 
                 elseif CurrentZoneCategory == "ProcessZones" then
@@ -496,32 +626,58 @@ end
 function OpenCloakroomMenu(jobIndex)
 	ESX.UI.Menu.CloseAll()
 
+    local outfits = CurrentZoneValue.Outfits
+    local jobName = CurrentJobName
+    local jobGrade = playerJobs[jobName].grade
+    local elements = {}
+
+    if not CurrentZoneValue.NoJobDress then
+        table.insert(elements, {label = _('vine_clothes_civil'), value = 'citizen_wear'})
+        table.insert(elements, {label = _('vine_clothes_vine'), value = 'job_wear'})
+    end
+    table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
+
+    if Config.Jobs[jobName].ServiceCounter then
+        table.insert(elements, {label = _("take_service"), value = "take_service", type="checkbox", checked=playerServices[jobName]})
+    end
+
+    if outfits ~= nil then
+        for k, v in ipairs(outfits) do
+            if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
+                or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+            then
+                table.insert(elements, {label = _('custom_clothe_format', v.Label), value = k})
+            end
+        end
+    end
+
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_cloakroom',
     {
-        title    = _U('cloakroom'),
+        title    = _('cloakroom'),
         align    = 'left',
         css 	 = 'vestiaire',
-        elements = {
-            {label = _U('vine_clothes_civil'), value = 'citizen_wear'},
-            {label = _U('vine_clothes_vine'), value = 'job_wear'}
-        },
+        elements = elements
     },
     function(data, menu)
-        menu.close()
-
-        if data.current.value == 'citizen_wear' then
+        if data.current.value == 'user_clothes' then
+            TriggerEvent("esx_ava_clotheshop:openOutfitsMenu")
+        elseif data.current.value == 'citizen_wear' then
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadSkin', skin)
             end)
-        end
-
-        if data.current.value == 'job_wear' then
+        elseif data.current.value == 'job_wear' then
             ESX.TriggerServerCallback('esx_skin:getPlayerSkin' .. (jobIndex ~= 1 and jobIndex or ''), function(skin, jobSkin)
                 TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and jobSkin.skin_male or jobSkin.skin_female)
             end)
+        elseif data.current.value == "take_service" then
+            playerServices[jobName] = not playerServices[jobName]
+            TriggerServerEvent("esx_ava_jobs:setService", jobName, playerServices[jobName])
+        elseif outfits ~= nil and outfits[data.current.value] then
+            TriggerEvent('skinchanger:getSkin', function(skin)
+                TriggerEvent('skinchanger:loadClothes', skin, skin.sex == 0 and outfits[data.current.value].Male or outfits[data.current.value].Female)
+            end)
         end
 
-        CurrentActionEnabled = true
     end,
     function(data, menu)
         menu.close()
@@ -554,15 +710,9 @@ function Process(process)
 end
 
 function ProcessZone(job)
-    if not CurrentZoneValue.NoInterim or
-        (CurrentZoneValue.NoInterim and job.grade ~= 'interim')
-    then
-        Process(CurrentZoneValue)
-        Citizen.Wait(CurrentZoneValue.Delay + 1000)
-        CurrentActionEnabled = true
-    else
-        ESX.ShowHelpNotification(_U('no_interim'))
-    end
+    Process(CurrentZoneValue)
+    Citizen.Wait(CurrentZoneValue.Delay + 1000)
+    CurrentActionEnabled = true
 end
 
 function ProcessMenuZone(job)
@@ -904,6 +1054,16 @@ function GetCoordZ(x, y, v)
 end
 
 
+
+function tableHasValue(table, val)
+    for k, value in ipairs(table) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
 
 
 

@@ -6,6 +6,8 @@
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+local jobsServices = {}
+
 local playersPickUpCount = {}
 local playersProcessing = {}
 
@@ -54,6 +56,35 @@ AddEventHandler("esx_ava_jobs:savePickUpCounts", function()
 end)
 
 
+RegisterServerEvent("esx_ava_jobs:setService")
+AddEventHandler("esx_ava_jobs:setService", function(job, state)
+	if not jobsServices[job] then
+        jobsServices[job] = {}
+    end
+    jobsServices[job][source] = state and true or nil
+end)
+
+RegisterServerEvent("esx_ava_jobs:getCountInService")
+AddEventHandler("esx_ava_jobs:getCountInService", function(job, cb)
+    local count = 0
+    local xPlayers = ESX.GetPlayers()
+
+    local debugString = ""
+
+    if jobsServices[job] then
+        for i = 1, #xPlayers do
+            local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+            if ((xPlayer.job ~= nil and xPlayer.job.name == job) or (xPlayer.job2 ~= nil and xPlayer.job2.name == job)) and jobsServices[job][xPlayers[i]] ~= nil then
+                count = count + 1
+                debugString = debugString .. tostring(xPlayers[i]) .. " "
+            end
+        end
+    end
+
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "asked for count of " .. job, "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 15902015)
+
+    cb(tonumber(count))
+end)
 
 
 -------------
@@ -430,4 +461,41 @@ end)
 
 ESX.RegisterUsableItem('grand_crubox', function(source)
 	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
+end)
+
+--------------
+-- LSPD --
+--------------
+ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, target)
+    local xPlayer = ESX.GetPlayerFromId(target)
+    local result = MySQL.Sync.fetchAll('SELECT firstname, lastname, sex FROM users WHERE identifier = @identifier', {
+        ['@identifier'] = xPlayer.identifier
+    })
+
+    local data = {
+        name      = GetPlayerName(target),
+        job       = xPlayer.job,
+        job2       = xPlayer.job2,
+        firstname = result[1].firstname or "",
+        lastname  = result[1].lastname or "",
+        sex       = result[1].sex or 0,
+    }
+
+    TriggerEvent('esx_status:getStatus', target, 'drunk', function(status)
+        if status ~= nil then
+            data.drunk = math.floor(status.percent)
+        end
+    end)
+
+    TriggerEvent('esx_status:getStatus', target, 'drugged', function(status)
+        if status ~= nil then
+            data.drugged = math.floor(status.percent)
+        end
+    end)
+
+    TriggerEvent('esx_license:getLicenses', target, function(licenses)
+        data.licenses = licenses
+        print(ESX.DumpTable(data))
+        cb(data)
+    end)
 end)

@@ -3,6 +3,106 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
+local weapons = {
+    "weapon_advancedrifle",
+    "weapon_appistol",
+    "weapon_assaultrifle",
+    "weapon_assaultrifle_mk2",
+    "weapon_assaultshotgun",
+    "weapon_assaultsmg",
+    "weapon_autoshotgun",
+    "weapon_bat",
+    "weapon_battleaxe",
+    "weapon_bottle",
+    "weapon_bullpuprifle",
+    "weapon_bullpuprifle_mk2",
+    "weapon_bullpupshotgun",
+    "weapon_carbinerifle",
+    "weapon_carbinerifle_mk2",
+    "weapon_combatmg",
+    "weapon_combatmg_mk2",
+    "weapon_combatpdw",
+    "weapon_combatpistol",
+    "weapon_compactlauncher",
+    "weapon_compactrifle",
+    "weapon_crowbar",
+    "weapon_dagger",
+    "weapon_dbshotgun",
+    "weapon_doubleaction",
+    "weapon_fireextinguisher",
+    "weapon_firework",
+    "weapon_flare",
+    "weapon_flaregun",
+    "weapon_flashlight",
+    "weapon_golfclub",
+    "weapon_grenade",
+    "weapon_grenadelauncher",
+    "weapon_gusenberg",
+    "weapon_hammer",
+    "weapon_hatchet",
+    "weapon_heavypistol",
+    "weapon_heavyshotgun",
+    "weapon_heavysniper",
+    "weapon_heavysniper_mk2",
+    "weapon_hominglauncher",
+    "weapon_knife",
+    "weapon_knuckle",
+    "weapon_machete",
+    "weapon_machinepistol",
+    "weapon_marksmanpistol",
+    "weapon_marksmanrifle",
+    "weapon_marksmanrifle_mk2",
+    "weapon_microsmg",
+    "weapon_minigun",
+    "weapon_minismg",
+    "weapon_musket",
+    "weapon_nightstick",
+    "gadget_parachute",
+    "weapon_petrolcan",
+    "weapon_pistol50",
+    "weapon_pistol",
+    "weapon_pistol_mk2",
+    "weapon_poolcue",
+    "weapon_pumpshotgun",
+    "weapon_pumpshotgun_mk2",
+    "weapon_railgun",
+    "weapon_revolver",
+    "weapon_revolver_mk2",
+    "weapon_rpg",
+    "weapon_sawnoffshotgun",
+    "weapon_smg",
+    "weapon_smg_mk2",
+    "weapon_sniperrifle",
+    "weapon_snspistol",
+    "weapon_snspistol_mk2",
+    "weapon_specialcarbine",
+    "weapon_specialcarbine_mk2",
+    "weapon_stickybomb",
+    "weapon_stungun",
+    "weapon_switchblade",
+    "weapon_vintagepistol",
+    "weapon_wrench",
+    "weapon_hazardcan",
+    "weapon_ceramicpistol",
+    "weapon_raypistol",
+    "weapon_navyrevolver",
+    "weapon_raycarbine",
+    "weapon_rayminigun",
+    "weapon_gadgetpistol",
+    "weapon_combatshotgun",
+    "weapon_militaryrifle",
+}
+
+local projectiles = {
+    "weapon_ball",
+    "weapon_bzgas",
+    "weapon_molotov",
+    "weapon_pipebomb",
+    "weapon_proxmine",
+    "weapon_smokegrenade",
+    "weapon_snowball",
+}
+
 RegisterServerEvent("esx_avan0x:giveWeapon")
 AddEventHandler('esx_avan0x:giveWeapon', function(weaponName)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -17,378 +117,63 @@ AddEventHandler('esx_avan0x:giveProjectile', function(source, weaponName)
 	xPlayer.addWeapon(weaponName, 1)
 end)
 
-ESX.RegisterUsableItem("weapon_advancedrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_advancedrifle")
-end)
-
-ESX.RegisterUsableItem("weapon_appistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_appistol")
-end)
-
-ESX.RegisterUsableItem("weapon_assaultrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_assaultrifle")
-end)
-
-ESX.RegisterUsableItem("weapon_assaultrifle_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_assaultrifle_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_assaultshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_assaultshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_assaultsmg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_assaultsmg")
-end)
-
-ESX.RegisterUsableItem("weapon_autoshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_autoshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_ball", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_ball")
-end)
-
-ESX.RegisterUsableItem("weapon_bat", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bat")
-end)
-
-ESX.RegisterUsableItem("weapon_battleaxe", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_battleaxe")
-end)
-
-ESX.RegisterUsableItem("weapon_bottle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bottle")
-end)
-
-ESX.RegisterUsableItem("weapon_bullpuprifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bullpuprifle")
-end)
-
-ESX.RegisterUsableItem("weapon_bullpuprifle_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bullpuprifle_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_bullpupshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_bullpupshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_bzgas", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_bzgas")
-end)
-
-ESX.RegisterUsableItem("weapon_carbinerifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_carbinerifle")
-end)
-
-ESX.RegisterUsableItem("weapon_carbinerifle_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_carbinerifle_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_combatmg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatmg")
-end)
-
-ESX.RegisterUsableItem("weapon_combatmg_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatmg_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_combatpdw", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatpdw")
-end)
-
-ESX.RegisterUsableItem("weapon_combatpistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatpistol")
-end)
-
-ESX.RegisterUsableItem("weapon_compactlauncher", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_compactlauncher")
-end)
-
-ESX.RegisterUsableItem("weapon_compactrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_compactrifle")
-end)
-
-ESX.RegisterUsableItem("weapon_crowbar", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_crowbar")
-end)
-
-ESX.RegisterUsableItem("weapon_dagger", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_dagger")
-end)
-
-ESX.RegisterUsableItem("weapon_dbshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_dbshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_doubleaction", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_doubleaction")
-end)
-
-ESX.RegisterUsableItem("weapon_fireextinguisher", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_fireextinguisher")
-end)
-
-ESX.RegisterUsableItem("weapon_firework", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_firework")
-end)
-
-ESX.RegisterUsableItem("weapon_flare", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_flare")
-end)
-
-ESX.RegisterUsableItem("weapon_flaregun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_flaregun")
-end)
-
-ESX.RegisterUsableItem("weapon_flashlight", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_flashlight")
-end)
-
-ESX.RegisterUsableItem("weapon_golfclub", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_golfclub")
-end)
-
-ESX.RegisterUsableItem("weapon_grenade", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_grenade")
-end)
-
-ESX.RegisterUsableItem("weapon_grenadelauncher", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_grenadelauncher")
-end)
-
-ESX.RegisterUsableItem("weapon_gusenberg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_gusenberg")
-end)
-
-ESX.RegisterUsableItem("weapon_hammer", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_hammer")
-end)
-
-ESX.RegisterUsableItem("weapon_hatchet", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_hatchet")
-end)
-
-ESX.RegisterUsableItem("weapon_heavypistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_heavypistol")
-end)
-
-ESX.RegisterUsableItem("weapon_heavyshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_heavyshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_heavysniper", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_heavysniper")
-end)
-
-ESX.RegisterUsableItem("weapon_heavysniper_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_heavysniper_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_hominglauncher", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_hominglauncher")
-end)
-
-ESX.RegisterUsableItem("weapon_knife", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_knife")
-end)
-
-ESX.RegisterUsableItem("weapon_knuckle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_knuckle")
-end)
-
-ESX.RegisterUsableItem("weapon_machete", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_machete")
-end)
-
-ESX.RegisterUsableItem("weapon_machinepistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_machinepistol")
-end)
-
-ESX.RegisterUsableItem("weapon_marksmanpistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_marksmanpistol")
-end)
-
-ESX.RegisterUsableItem("weapon_marksmanrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_marksmanrifle")
-end)
-
-ESX.RegisterUsableItem("weapon_marksmanrifle_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_marksmanrifle_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_microsmg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_microsmg")
-end)
-
-ESX.RegisterUsableItem("weapon_minigun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_minigun")
-end)
-
-ESX.RegisterUsableItem("weapon_minismg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_minismg")
-end)
-
-ESX.RegisterUsableItem("weapon_molotov", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_molotov")
-end)
-
-ESX.RegisterUsableItem("weapon_musket", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_musket")
-end)
-
-ESX.RegisterUsableItem("weapon_nightstick", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_nightstick")
-end)
-
-ESX.RegisterUsableItem("gadget_parachute", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "gadget_parachute")
-end)
-
-ESX.RegisterUsableItem("weapon_petrolcan", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_petrolcan")
-end)
-
-ESX.RegisterUsableItem("weapon_pipebomb", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_pipebomb")
-end)
-
-ESX.RegisterUsableItem("weapon_pistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pistol")
-end)
-
-ESX.RegisterUsableItem("weapon_pistol50", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pistol50")
-end)
-
-ESX.RegisterUsableItem("weapon_pistol_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pistol_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_poolcue", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_poolcue")
-end)
-
-ESX.RegisterUsableItem("weapon_proxmine", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_proxmine")
-end)
-
-ESX.RegisterUsableItem("weapon_pumpshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pumpshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_pumpshotgun_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_pumpshotgun_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_railgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_railgun")
-end)
-
-ESX.RegisterUsableItem("weapon_revolver", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_revolver")
-end)
-
-ESX.RegisterUsableItem("weapon_revolver_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_revolver_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_rpg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_rpg")
-end)
-
-ESX.RegisterUsableItem("weapon_sawnoffshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_sawnoffshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_smg", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_smg")
-end)
-
-ESX.RegisterUsableItem("weapon_smg_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_smg_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_smokegrenade", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_smokegrenade")
-end)
-
-ESX.RegisterUsableItem("weapon_sniperrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_sniperrifle")
-end)
-
-ESX.RegisterUsableItem("weapon_snowball", function(source)
-	TriggerEvent("esx_avan0x:giveProjectile", source, "weapon_snowball")
-end)
-
-ESX.RegisterUsableItem("weapon_snspistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_snspistol")
-end)
-
-ESX.RegisterUsableItem("weapon_snspistol_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_snspistol_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_specialcarbine", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_specialcarbine")
-end)
-
-ESX.RegisterUsableItem("weapon_specialcarbine_mk2", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_specialcarbine_mk2")
-end)
-
-ESX.RegisterUsableItem("weapon_stickybomb", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_stickybomb")
-end)
-
-ESX.RegisterUsableItem("weapon_stungun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_stungun")
-end)
-
-ESX.RegisterUsableItem("weapon_switchblade", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_switchblade")
-end)
-
-ESX.RegisterUsableItem("weapon_vintagepistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_vintagepistol")
-end)
-
-ESX.RegisterUsableItem("weapon_wrench", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_wrench")
-end)
-
-ESX.RegisterUsableItem("weapon_hazardcan", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_hazardcan")
-end)
-
-ESX.RegisterUsableItem("weapon_ceramicpistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_ceramicpistol")
-end)
-
-ESX.RegisterUsableItem("weapon_raypistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_raypistol")
-end)
-
-ESX.RegisterUsableItem("weapon_navyrevolver", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_navyrevolver")
-end)
-
-ESX.RegisterUsableItem("weapon_raycarbine", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_raycarbine")
-end)
-
-ESX.RegisterUsableItem("weapon_rayminigun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_rayminigun")
-end)
-
-ESX.RegisterUsableItem("weapon_gadgetpistol", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_gadgetpistol")
-end)
-
-ESX.RegisterUsableItem("weapon_combatshotgun", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_combatshotgun")
-end)
-
-ESX.RegisterUsableItem("weapon_militaryrifle", function(source)
-	TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, "weapon_militaryrifle")
+for k, weaponName in ipairs(weapons) do
+    ESX.RegisterUsableItem(weaponName, function(source)
+        TriggerClientEvent("esx_avan0x:checkGiveWeapon", source, weaponName)
+    end)
+end
+
+for k, weaponName in ipairs(projectiles) do
+    ESX.RegisterUsableItem(weaponName, function(source)
+        TriggerEvent("esx_avan0x:giveProjectile", source, weaponName)
+    end)
+end
+
+
+RegisterServerEvent('esx_avan0x:useWeaponItem')
+AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
+	local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+	if inventory.getItem(string.lower(weaponName)) then
+        if xPlayer.hasWeapon(weaponName) then
+            if not inventory.canAddItem(string.lower(weaponName), 1) then
+                TriggerClientEvent('esx:showNotification', source, "Vous n'avez plus de place pour cela")
+            else
+                inventory.addItem(string.lower(weaponName), 1)
+                xPlayer.removeWeapon(weaponName)
+            end
+        else
+            TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
+        end
+	else
+		TriggerClientEvent('esx:showNotification', source, "Vous ne pouvez pas faire cela")
+		SendWebhookMessage("L'arme `" .. weaponName .. "` n'est pas un item")
+	end
+end)
+
+
+-----------
+-- Clips --
+-----------
+RegisterServerEvent("esx_avan0x:removeClip")
+AddEventHandler("esx_avan0x:removeClip", function()
+	local xPlayer = ESX.GetPlayerFromId(source)
+	xPlayer.removeInventoryItem("clip", 1)
+end)
+
+ESX.RegisterUsableItem("clip", function(source)
+	TriggerClientEvent("esx_avan0x:useClip", source)
+end)
+
+RegisterServerEvent('esx_avan0x:checkClip')
+AddEventHandler('esx_avan0x:checkClip', function()
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
+
+    if inventory.getItem('clip').count > 0 then
+        TriggerClientEvent('esx_avan0x:useClip', source)
+    else
+        TriggerClientEvent('esx_avan0x:useClip', source, true)
+    end
 end)

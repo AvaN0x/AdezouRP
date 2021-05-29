@@ -26,7 +26,7 @@ Locales["fr"] = {
     ["life_invader"] = "💻 Life Invader",
     ['life_invader_detail'] = "Envoyer un message sur le LifeInvader",
     ["others_menu"] = "⚙️ Divers",
-    ["society_menu"] = "🏭 Gestion Entreprise: %s",
+    ["society_menu"] = "🏭 %s",
     ["gang_menu"] = "🔪 Gestion Gang: %s",
     ["admin_menu"] = "👑 Administration",
     ['admin_menu_detail'] = "Gérez les joueurs",
@@ -63,6 +63,7 @@ Locales["fr"] = {
 
     ["billing"] = "Facture",
     ["billing_amount"] = "Montant de la facture",
+    ['billing_detail'] = "Rédiger une facture au nom de l'entreprise",
     ["society_money"] = "Coffre Entreprise:<span style='color: #0cc421'>$%s</span>",
     ["society_dirty_money"] = "Coffre Argent Sale:<span style='color: #eb4034'>$%s</span>",
     ["society_first_job"] = "Gestion métier principal",
@@ -72,7 +73,6 @@ Locales["fr"] = {
     ["society_promote"] = "Promouvoir",
     ["society_demote"] = "Destituer",
 
-    ['billing_detail'] = "Rédigez une facture au nom de l'entreprise",
     ['society_life_invader_detail'] = "Envoyer un message sur le LifeInvader au nom de l'entreprise",
 
 

@@ -14,7 +14,7 @@ local Keys = {
 
 ESX               				= nil
 local PlayerData                = {}
-local PoliceJob 				= 'police'
+local PoliceJob 				= 'lspd'
 
 local isTackling				= false
 local isGettingTackled			= false

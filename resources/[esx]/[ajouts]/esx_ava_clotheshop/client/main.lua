@@ -176,11 +176,15 @@ function OpenShopMenu(shopName)
 	end)
 end
 
-function OpenOutfitsMenu(shopName)
-	local elements = {
-		{label = _U('add_outfits'), value = 'add_outfits'},
-		{label = _U('rem_outfits'), value = 'rem_outfits'}
-	}
+function OpenOutfitsMenu(shopName, only_outfits)
+    local elements = {}
+
+    if not only_outfits then 
+        elements = {
+            {label = _U('add_outfits'), value = 'add_outfits'},
+            {label = _U('rem_outfits'), value = 'rem_outfits'}
+        }
+    end
 	ESX.TriggerServerCallback('esx_ava_clotheshop:getPlayerDressing', function(dressing)
 		for i=1, #dressing, 1 do
 			table.insert(elements, {label = "- " .. dressing[i], value = "outfit", outfit = i})
@@ -252,3 +256,10 @@ function OpenOutfitsMenu(shopName)
 		end)
 	end)
 end
+
+RegisterNetEvent("esx_ava_clotheshop:openOutfitsMenu")
+AddEventHandler("esx_ava_clotheshop:openOutfitsMenu", function()
+    OpenOutfitsMenu("esx_ava_jobs", true)
+end)
+
+

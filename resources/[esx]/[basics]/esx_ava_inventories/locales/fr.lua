@@ -16,7 +16,6 @@ Locales["fr"] = {
 	['item_weapon_detail'] = "Utilisez l'item pour récupérer une arme utilisable",
 
 	["select_a_player"] = "A qui voulez-vous donner ?",
-	["no_players_near"] = "Aucun joueur proche",
 	["enter_amount"] = "Entrez un montant",
 	["use_item"] = "Utiliser",
 	["give_item"] = "Donner",

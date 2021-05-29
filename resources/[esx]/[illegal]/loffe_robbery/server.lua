@@ -36,34 +36,35 @@ AddEventHandler('loffe_robbery:pickUp', function(store)
 end)
 
 ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
-    local cops = 0
-    local xPlayers = ESX.GetPlayers()
+    -- local cops = 0
+    -- local xPlayers = ESX.GetPlayers()
 
-    local debugString = ""
+    -- local debugString = ""
 
-    for i = 1, #xPlayers do
-        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if (xPlayer.job ~= nil and xPlayer.job.name == 'police') then
-            cops = cops + 1
-            debugString = debugString .. tostring(xPlayers[i]) .. " "
-        end
-    end
+    -- for i = 1, #xPlayers do
+    --     local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+    --     if (xPlayer.job ~= nil and xPlayer.job.name == 'police') then
+    --         cops = cops + 1
+    --         debugString = debugString .. tostring(xPlayers[i]) .. " "
+    --     end
+    -- end
 
-    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "id `" .. source .. "` [loffe_robbery]", "ID des flics : " .. debugString .. "\ncops value : `" .. cops .. "`\nConfig.Shops[store].cops value : `" .. Config.Shops[store].cops .. "`\ncops >= Config.Shops[store].cops value : " .. (cops >= Config.Shops[store].cops and "`true`" or "`false`"), 15902015)
-    if tonumber(cops) >= tonumber(Config.Shops[store].cops) then
-        if Config.Shops[store].robbed == 'wait' then
-            cb('wait')
-        elseif not Config.Shops[store].robbed and not deadPeds[store] then
-            Config.Shops[store].robbed = true
-            exports.esx_avan0x:SendWebhookMessage("avan0x_wh_dev", "Le braquage peut se lancer")
-
-            cb(true)
+    TriggerEvent("esx_ava_jobs:getCountInService", "lspd", function(cops)
+        if cops >= tonumber(Config.Shops[store].cops) then
+            if Config.Shops[store].robbed == 'wait' then
+                cb('wait')
+            elseif not Config.Shops[store].robbed and not deadPeds[store] then
+                Config.Shops[store].robbed = true
+                exports.esx_avan0x:SendWebhookMessage("avan0x_wh_dev", "Le braquage de superettes peut se lancer")
+                
+                cb(true)
+            else
+                cb(false)
+            end
         else
-            cb(false)
+            cb('no_cops')
         end
-    else
-        cb('no_cops')
-    end
+    end)
 end)
 
 RegisterServerEvent('loffe_robbery:setRobbed')

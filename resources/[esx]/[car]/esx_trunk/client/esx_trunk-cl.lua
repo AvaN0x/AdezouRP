@@ -124,7 +124,7 @@ function openmenuvehicle()
     end
   end
 
-  if not Config.CheckOwnership or (Config.AllowPolice and PlayerData.job.name == 'police') or (Config.CheckOwnership and myVeh) then  
+  if not Config.CheckOwnership or (Config.AllowPolice and PlayerData.job.name == 'lspd') or (Config.CheckOwnership and myVeh) then  
     if globalplate ~= nil or globalplate ~= "" or globalplate ~= " " then
       -- CloseToVehicle = true
       local vehFront = VehicleInFront()

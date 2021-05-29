@@ -8,8 +8,324 @@ Config.DrawDistance = 30.0
 Config.Locale = 'fr'
 Config.MaxPickUp = 70
 Config.MaxPickUpIllegal = 70
+Config.JobMenuKey = "F6"
 
 Config.Jobs = {
+    lspd = {
+        SocietyName = 'society_lspd',
+        LabelName = 'LSPD',
+        ServiceCounter = true,
+        Blip = {
+            Name = "~b~Commissariat",
+            Sprite = 60,
+            Colour = 3
+        },
+        JobMenu = {
+            {
+                Label = _('fine'),
+                Detail = _('fine_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'fine_amount',
+                    {
+                        title = _('fine_amount')
+                    },
+                    function(data, menu)
+                        local amount = tonumber(data.value)
+                        if amount == nil or amount <= 0 then
+                            ESX.ShowNotification(_('amount_invalid'))
+                        else
+                            menu.close()
+                            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "fine_reason", {
+                                title = _('fine_reason')
+                            }, function(data2, menu2)
+                                menu2.close()
+                                local reason = data2.value
+                                exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                                    local playerPed = PlayerPedId()
+
+                                    Citizen.CreateThread(function()
+                                        TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TIME_OF_DEATH', 0, true)
+                                        Citizen.Wait(5000)
+                                        ClearPedTasks(playerPed)
+                                        TriggerServerEvent('esx_billing:sendBill1', targetId, Config.Jobs[jobName].SocietyName, string.len(reason) > 0 and "Amende : " .. reason or "Amende", amount)
+                                    end)
+                                end)
+
+                            end, function(data2, menu2)
+                                menu2.close()
+                            end)
+                        end
+                    end,
+                    function(data, menu)
+                        menu.close()
+                    end)
+                end
+            },
+            {
+                Label = _('search'),
+                Detail = _('search_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        TriggerServerEvent('esx_avan0x:showNotification', targetId, _('being_searched'))
+                        TriggerEvent("esx_ava_inventories:openPlayerInventory", targetId)
+                    end)
+                end
+            },
+            {
+                Label = _('check_bills'),
+                Detail = _('check_bills_detail'),
+                Type = "submenu",
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        ESX.TriggerServerCallback('esx_billing:getTargetBills', function(bills)
+                            local elements = {}
+                            for k, bill in ipairs(bills) do
+                                table.insert(elements, {label = _("unpaid_bill", bill.label, bill.amount)})
+                            end
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'billing', {
+                                title    = _('unpaid_bills'),
+                                align    = 'left',
+                                elements = elements
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                        end, targetId)
+                    end)
+                end
+            },
+            {
+                Label = _('manage_licences'),
+                Detail = _('manage_licences_detail'),
+                Type = "submenu",
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        local elements = {}
+
+                        ESX.TriggerServerCallback('esx_ava_jobs:getPlayerData', function(playerData)
+                            if playerData.licenses then
+                                for k, v in pairs(playerData.licenses) do
+                                    if v.label and v.type then
+                                        table.insert(elements, {label = v.label, type = v.type, detail = _('license_revoke')})
+                                    end
+                                end
+                            end
+
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'manage_licences', {
+                                title    = _('manage_licences'),
+                                align    = 'top-left',
+                                elements = elements,
+                            }, function(data, menu)
+                                ESX.ShowNotification(_('licence_you_revoked', data.current.label, playerData.firstname .. ' ' .. playerData.lastname))
+                                TriggerServerEvent('esx_avan0x:showNotification', targetId, _('license_revoked', data.current.label))
+
+                                TriggerServerEvent('esx_license:removeLicense', targetId, data.current.type)
+
+                                menu.close()
+                            end, function(data, menu)
+                                menu.close()
+                            end)
+
+                        end, targetId)
+                    end)
+                end,
+                ExcludeGrades = {"recruit"}
+            },
+            {
+                Label = _('manage_weapon_license'),
+                Detail = _('manage_weapon_license_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        ESX.TriggerServerCallback('esx_ava_jobs:getPlayerData', function(playerData)
+                            local alreadyOwn = false
+                            if playerData.licenses then
+                                for k, v in pairs(playerData.licenses) do
+                                    if v.type == "weapon" then
+                                        alreadyOwn = true
+                                    end
+                                end
+                            end
+
+                            if alreadyOwn then
+                                ESX.ShowNotification(_('already_own_weapon_licence', playerData.firstname .. ' ' .. playerData.lastname))
+                            else
+                                ESX.ShowNotification(_('you_gave_weapon_licence', playerData.firstname .. ' ' .. playerData.lastname))
+                                TriggerServerEvent('esx_license:addLicense', targetId, 'weapon')
+                            end
+
+
+                        end, targetId)
+                    end)
+
+                end,
+                OnlyGrades = {"sergeant_chef", "lieutenant", "chef", "boss"}
+            },
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(451.95, -973.39, 29.71),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+                Name = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27
+            },
+            Dressing = {
+                Pos = vector3(452.76, -992.84, 29.71),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Outfits = {
+                    {
+                        Label = "Cadet manches courtes",
+                        Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                        Female = json.decode('{}'),
+                        OnlyGrades = {"recruit"}
+                    },
+                    {
+                        Label = "Cadet manches longues",
+                        Male = json.decode('{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":101,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":20,"bproof_1":0,"tshirt_1":59,"shoes_1":25}'),
+                        Female = json.decode('{}'),
+                        OnlyGrades = {"recruit"}
+                    },
+                    {
+                        Label = "Tenue manches courtes",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":102,"tshirt_1":53,"torso_2":0,"bproof_1":0,"arms":19,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":27,"torso_2":0,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue manches longues",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":101,"tshirt_1":53,"torso_2":0,"bproof_1":0,"arms":20,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":92,"tshirt_1":27,"torso_2":0,"bproof_1":0,"helmet_2":0,"arms":3,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue hiver",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":103,"tshirt_1":65,"torso_2":0,"bproof_1":0,"arms":27,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":84,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":119,"tshirt_1":45,"torso_2":1,"bproof_1":0,"helmet_2":0,"arms":7,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue SWAT",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":53,"torso_2":1,"bproof_1":0,"arms":19,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":84,"tshirt_1":33,"torso_2":1,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue SWAT Lourd",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":1,"torso_1":219,"tshirt_1":44,"torso_2":2,"bproof_1":7,"arms":17,"shoes_1":25,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":75,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":90,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":2,"chain_2":0,"torso_1":43,"tshirt_1":33,"torso_2":0,"bproof_1":11,"helmet_2":0,"arms":49,"shoes_1":25,"bproof_2":3,"shoes_2":0,"helmet_1":74,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue DOA",
+                        Male = json.decode('{"pants_1":59,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":102,"tshirt_1":53,"torso_2":0,"bproof_1":7,"arms":19,"shoes_1":25,"bproof_2":4,"shoes_2":0,"helmet_2":0,"helmet_1":-1,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":61,"bags_2":0,"bags_1":74,"tshirt_2":0,"pants_2":0,"chain_2":0,"torso_1":93,"tshirt_1":27,"torso_2":0,"bproof_1":7,"helmet_2":0,"arms":31,"shoes_1":25,"bproof_2":3,"shoes_2":0,"helmet_1":-1,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue vélo",
+                        Male = json.decode('{"pants_1":32,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":93,"tshirt_1":15,"torso_2":0,"bproof_1":1,"arms":30,"shoes_1":13,"bproof_2":0,"shoes_2":0,"helmet_2":0,"helmet_1":49,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":31,"bags_2":0,"bags_1":42,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":84,"tshirt_1":51,"torso_2":2,"bproof_1":0,"helmet_2":0,"arms":31,"shoes_1":10,"bproof_2":0,"shoes_2":0,"helmet_1":47,"chain_1":1}')
+                    },
+                    {
+                        Label = "Tenue moto",
+                        Male = json.decode('{"pants_1":32,"bags_2":0,"bags_1":0,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":154,"tshirt_1":13,"torso_2":0,"bproof_1":0,"arms":22,"shoes_1":13,"bproof_2":0,"shoes_2":0,"helmet_2":1,"helmet_1":79,"chain_1":0}'),
+                        Female = json.decode('{"pants_1":31,"bags_2":0,"bags_1":48,"tshirt_2":0,"pants_2":1,"chain_2":0,"torso_1":21,"tshirt_1":27,"torso_2":3,"bproof_1":0,"helmet_2":0,"arms":32,"shoes_1":40,"bproof_2":0,"shoes_2":0,"helmet_1":78,"chain_1":0}')
+                    }
+                }
+            },
+            ArmoryStock = {
+				Pos = vector3(452.28, -980.15, 29.71),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+				Name  = "Armurerie",
+                StockName = "society_lspd_armory",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            SeizureStock = {
+				Pos = vector3(472.63, -990.40, 23.93),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 122, b = 204},
+				Name  = "Coffre saisies",
+                StockName = "society_lspd_seizure",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(455.02, -1017.44, 28.44),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Marker = 36,
+                Type = "car",
+                SpawnPoint = {
+                    Pos = vector3(455.02, -1017.44, 28.44),
+                    Heading = 90.0
+                }
+            },
+            HeliGarage = {
+                Name  = "Héliport",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(449.57, -981.17, 43.69),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Distance = 3,
+                Marker = 34,
+                Type = "heli",
+                SpawnPoint = {
+                    Pos = vector3(449.57, -981.17, 43.69),
+                    Heading = 90.0
+                }
+            },
+            BoatGarage = {
+                Name  = "Marina",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-784.55, -1437.14, 1.40),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 122, b = 204},
+                Distance = 5,
+                Marker = 35,
+                Type = "boat",
+                SpawnPoint = {
+                    Pos = vector3(-786.55, -1437.14, 1.40),
+                    Heading = 140.0
+                },
+                Blip = true
+            },
+            SeizedCarGarage = {
+                Name = "Garage saisies",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(447.44, -997.07, 25.76),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 221, g = 79, b = 67},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "seized_LSPD",
+                SpawnPoint = {
+                    Pos = vector3(447.44, -997.07, 24.78),
+                    Heading = 180.0
+                }
+            },
+        },
+        BuyZones = {
+            BuyItems = {
+                Items = {
+                    {name = 'bproof_vest', price = 15000},
+                    {name = 'handcuffs', price = 10000},
+                },
+                Pos = vector3(812.26, -2153.55, 28.64),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 221, g = 79, b = 67},
+                Name = "Achat de protections et menottes",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"chef", "boss"},
+                Marker = 27,
+                Blip = true
+            }
+        }
+    },
     vigneron = {
         SocietyName = 'society_vigneron',
         LabelName = 'Vigneron',
@@ -96,7 +412,7 @@ Config.Jobs = {
                 Color = {r = 252, g = 186, b = 3},
                 Name = "Traitement champagne et grand cru",
                 HelpText = _('press_traitement'),
-                NoInterim = true,
+                ExcludeGrades = {"interim"},
                 Marker = 27,
                 Blip = true
             }
@@ -633,6 +949,7 @@ Config.Jobs = {
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Dressing",
                 HelpText = _('press_to_open'),
+                NoJobDress = true,
                 Marker = 27,
                 Blip = true
             },
@@ -704,6 +1021,7 @@ Config.Jobs = {
             }
         }
     },
+
 
 
     weed = {
@@ -881,6 +1199,8 @@ Config.Jobs = {
         },
     },
 
+
+
     gang_vagos = {
         isGang = true,
 		LabelName = "Vagos",
@@ -888,12 +1208,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(338.3, -2012.73, 21.41),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 250, g = 197, b = 50},
 				Name  = "Coffre",
                 StockName = "gang_vagos",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(341.44, -2021.80, 24.61),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 250, g = 197, b = 50},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_ballas = {
@@ -903,12 +1232,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(118.93, -1966.05, 20.35),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 152, g = 60, b = 137},
 				Name  = "Coffre",
                 StockName = "gang_ballas",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(117.25, -1964.02, 20.35),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 152, g = 60, b = 137},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_families = {
@@ -918,12 +1256,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(-157.71, -1603.08, 34.06),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 72, g = 171, b = 57},
 				Name  = "Coffre",
                 StockName = "gang_families",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(-155.54, -1604.27, 34.06),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 72, g = 171, b = 57},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	gang_marabunta = {
@@ -939,6 +1286,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(1301.05, -1745.58, 53.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	biker_lost = {
@@ -946,7 +1302,7 @@ Config.Jobs = {
 		LabelName = "The Lost",
 		Zones = {
 			Stock = {
-				Pos = vector3(986.63, -92.71, 73.87),
+				Pos = vector3(977.11, -104.00, 73.87),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
@@ -954,6 +1310,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+				Pos = vector3(986.63, -92.71, 73.87),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	orga_cartel = {
@@ -961,7 +1326,7 @@ Config.Jobs = {
 		LabelName = "Cartel",
 		Zones = {
 			Stock = {
-				Pos = vector3(1402.51, 1152.79, 114.33),
+				Pos = vector3(1402.51, 1152.79, 113.35),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
 				Color = {r = 136, g = 243, b = 216},
 				Name  = "Coffre",
@@ -969,6 +1334,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+                Pos = vector3(1394.72, 1157.10, 113.35),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		}
 	},
 	orga_mafia = {
@@ -993,12 +1367,21 @@ Config.Jobs = {
 			Stock = {
 				Pos = vector3(-1108.60, -1643.52, 3.66),
 				Size  = {x = 1.5, y = 1.5, z = 1.0},
-				Color = {r = 136, g = 243, b = 216},
+				Color = {r = 212, g = 0, b = 0},
 				Name  = "Coffre",
                 StockName = "orga_hapf",
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            Dressing = {
+				Pos = vector3(-1109.53, -1640.54, 3.66),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 212, g = 0, b = 0},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                NoJobDress = true,
+                Marker = 27
+            },
 		},
         BuyZones = {
             BuyBox = {

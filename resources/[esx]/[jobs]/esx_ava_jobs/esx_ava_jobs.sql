@@ -16,6 +16,9 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
     -- cluckin
 	('society_cluckin','Cluckin Bell',1),
 
+
+	('society_lspd','LSPD',1),
+
 ;
 
 INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
@@ -26,7 +29,12 @@ INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
     ('society_tailor', 'Couturier', 500000, 1),
 
     -- cluckin
-	('society_cluckin','Cluckin Bell', 1),
+	('society_cluckin','Cluckin Bell', 500000, 1),
+
+
+	('society_lspd','LSPD', 500000, 1),
+	('society_lspd_seizure','LSPD Saisies', 500000, 1),
+	('society_lspd_armory','LSPD Armurerie', 500000, 1),
 
 ;
 
@@ -37,7 +45,9 @@ INSERT INTO `datastore` (`name`, `label`, `shared`) VALUES
     -- tailor
 	('society_tailor', 'Couturier', 1),
 
-    -- cluckin
+
+
+	('society_lspd','LSPD', 1),
 
 ;
 
@@ -50,6 +60,8 @@ INSERT INTO `jobs`(`name`, `label`, `whitelisted`) VALUES
 
     -- cluckin
 	('cluckin', 'Cluckin Bell', 1),
+
+	('lspd','LSPD', 1),
 
 ;
 
@@ -70,6 +82,15 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 	('cluckin',0,'employe','Employé', 200, '{"tshirt_1":57,"tshirt_2":0,"torso_1":13,"torso_2":5,"shoes_1":7,"shoes_2":2,"pants_1":9, "pants_2":7, "arms":11, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}','{"tshirt_1":0,"tshirt_2":0,"torso_1":56,"torso_2":0,"shoes_1":27,"shoes_2":0,"pants_1":36, "pants_2":0, "arms":63, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}'),
 	('cluckin',1,'chef','Chef', 400, '{"tshirt_1":57,"tshirt_2":0,"torso_1":13,"torso_2":5,"shoes_1":7,"shoes_2":2,"pants_1":9, "pants_2":7, "arms":11, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}','{"tshirt_1":0,"tshirt_2":0,"torso_1":56,"torso_2":0,"shoes_1":27,"shoes_2":0,"pants_1":36, "pants_2":0, "arms":63, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}'),
 	('cluckin',2,'boss','Patron', 500,'{"tshirt_1":57,"tshirt_2":0,"torso_1":13,"torso_2":5,"shoes_1":7,"shoes_2":2,"pants_1":9, "pants_2":7, "arms":11, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}','{"tshirt_1":15,"tshirt_2":0,"torso_1":14,"torso_2":15,"shoes_1":12,"shoes_2":0,"pants_1":9, "pants_2":5, "arms":1, "helmet_1":11, "helmet_2":0,"bags_1":0,"bags_2":0,"ears_1":0,"glasses_1":0,"ears_2":0,"glasses_2":0}'),
+
+
+    ('lspd', 0, 'recruit', 'Cadet', 200, '{"bags_2":0,"pants_1":59,"pants_2":0,"chain_2":0,"bags_1":0,"tshirt_2":0,"helmet_2":0,"torso_1":102,"shoes_2":0,"helmet_1":-1,"chain_1":0,"bproof_2":0,"torso_2":0,"arms":19,"bproof_1":0,"tshirt_1":59,"shoes_1":25}', ''),
+    ('lspd', 1, 'officer', 'Officier', 200, '', ''),
+    ('lspd', 2, 'sergeant', 'Sergent', 200, '', ''),
+    ('lspd', 3, 'sergeant_chef', 'Sergent Chef', 200, '', ''),
+    ('lspd', 4, 'lieutenant', 'Lieutenant', 200, '', ''),
+    ('lspd', 5, 'chef', 'Capitaine', 200, '', ''),
+    ('lspd', 6, 'boss', 'Commandant', 200, '', ''),
 
 ;
 
@@ -116,8 +137,23 @@ INSERT INTO `items` (`name`, `label`, `limit`) VALUES
 ;
 
 
-INSERT INTO `vehicles_society`(`name`, `model`, `price`, `society`) VALUES 
-    ('Benson', 'benson', 200000, 'society_cluckin'),
-    ('FoodTruck', 'taco', 200000, 'society_cluckin')
+INSERT INTO `vehicleshop_society` (`model`, `society`) VALUES 
+    ('fbi', 'society_lspd'),
+    ('pbus', 'society_lspd'),
+    ('polbuffalo', 'society_lspd'),
+    ('polbullet', 'society_lspd'),
+    ('polgauntlet', 'society_lspd'),
+    ('police', 'society_lspd'),
+    ('police2', 'society_lspd'),
+    ('police3', 'society_lspd'),
+    ('police4', 'society_lspd'),
+    ('policeb', 'society_lspd'),
+    ('policet', 'society_lspd'),
+    ('polmav', 'society_lspd'),
+    ('polvacca', 'society_lspd'),
+    ('predator', 'society_lspd'),
+    ('riot', 'society_lspd'),
+    ('riot2', 'society_lspd'),
+    ('umoracle', 'society_lspd')
 
 ;

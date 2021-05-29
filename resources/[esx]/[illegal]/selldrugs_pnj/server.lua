@@ -35,7 +35,7 @@ RegisterCommand('dealer', function(source, args, rawcommand)
         end
         
         if ESX.Table.SizeOf(Config.drugs) == drugToSell.i and drugToSell.count == 0 then
-            xPlayer.showNotification(Config.notify.nodrugs, 6)
+            TriggerClientEvent('esx:showNotification', source, Config.notify.nodrugs)
         end
     end
 end, false)
@@ -61,7 +61,7 @@ ESX.RegisterServerCallback('stasiek_selldrugsv2:getPoliceCount', function(source
 
     for _, playerId in pairs(ESX.GetPlayers()) do
         xPlayer = ESX.GetPlayerFromId(playerId)
-        if xPlayer.job.name == 'police' then
+        if xPlayer.job.name == 'lspd' then
             count = count + 1
         end
     end
