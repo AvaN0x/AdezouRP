@@ -68,12 +68,28 @@ Locales['fr'] = {
 
     -- LSPD
     ["fine"] = "Amende",
-    ['fine_detail'] = "Rédiger une amende",
+    ["fine_detail"] = "Rédiger une amende",
     ["fine_reason"] = "Raison de l'amende",
     ["fine_amount"] = "Montant de l'amende",
 
     ["search"] = "Fouiller",
     ["search_detail"] = "Fouiller l'individu",
-    ['being_searched'] = "Quelqu'un vous fouille",
+    ["being_searched"] = "Quelqu'un vous fouille",
 
+    ["manage_licences"] = "Voir les licenses",
+    ["manage_licences_detail"] = "Voir et révoquer les licenses",
+    ["license_revoke"] = "Révoquer la licence",
+    ["license_revoked"] = "Votre ~o~%s~s~ a été révoqué!",
+    ["licence_you_revoked"] = "Vous avez révoqué le ~o~%s~s~ qui appartenait à ~o~%s~s~",
+
+    ["manage_weapon_license"] = "Donner le PPA",
+    ["manage_weapon_license_detail"] = "Donner le PPA à l'individu",
+    ["you_gave_weapon_licence"] = "Vous avez donné le PPA à ~o~%s~s~",
+    ["already_own_weapon_licence"] = "~o~%s~s~ possède déjà un PPA",
+    ["license_weapon_gived"] = "Vous avez reçu votre PPA!",
+
+    ["check_bills"] = "Voir les factures",
+    ["check_bills_detail"] = "Voir les factures impayées de l'individu",
+    ["unpaid_bills"] = "Factures impayées",
+    ["unpaid_bill"] = '%s <span style="color:red;">%s $</span>',
 }

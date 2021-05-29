@@ -460,3 +460,40 @@ end)
 ESX.RegisterUsableItem('grand_crubox', function(source)
 	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
 end)
+
+--------------
+-- LSPD --
+--------------
+ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, target)
+    local xPlayer = ESX.GetPlayerFromId(target)
+    local result = MySQL.Sync.fetchAll('SELECT firstname, lastname, sex FROM users WHERE identifier = @identifier', {
+        ['@identifier'] = xPlayer.identifier
+    })
+
+    local data = {
+        name      = GetPlayerName(target),
+        job       = xPlayer.job,
+        job2       = xPlayer.job2,
+        firstname = result[1].firstname or "",
+        lastname  = result[1].lastname or "",
+        sex       = result[1].sex or 0,
+    }
+
+    TriggerEvent('esx_status:getStatus', target, 'drunk', function(status)
+        if status ~= nil then
+            data.drunk = math.floor(status.percent)
+        end
+    end)
+
+    TriggerEvent('esx_status:getStatus', target, 'drugged', function(status)
+        if status ~= nil then
+            data.drugged = math.floor(status.percent)
+        end
+    end)
+
+    TriggerEvent('esx_license:getLicenses', target, function(licenses)
+        data.licenses = licenses
+        print(ESX.DumpTable(data))
+        cb(data)
+    end)
+end)

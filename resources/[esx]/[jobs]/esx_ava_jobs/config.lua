@@ -24,22 +24,22 @@ Config.Jobs = {
             {
                 Label = _('fine'),
                 Detail = _('fine_detail'),
-                Action = function(data, menu, jobName)
+                Action = function(parentData, parentMenu, jobName)
                     ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'fine_amount',
                     {
                         title = _('fine_amount')
                     },
-                    function(data2, menu2)
-                        local amount = tonumber(data2.value)
+                    function(data, menu)
+                        local amount = tonumber(data.value)
                         if amount == nil or amount <= 0 then
                             ESX.ShowNotification(_('amount_invalid'))
                         else
-                            menu2.close()
+                            menu.close()
                             ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), "fine_reason", {
                                 title = _('fine_reason')
-                            }, function(data3, menu3)
-                                menu3.close()
-                                local reason = data3.value
+                            }, function(data2, menu2)
+                                menu2.close()
+                                local reason = data2.value
                                 exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
                                     local playerPed = PlayerPedId()
 
@@ -51,20 +51,20 @@ Config.Jobs = {
                                     end)
                                 end)
 
-                            end, function(data3, menu3)
-                                menu3.close()
+                            end, function(data2, menu2)
+                                menu2.close()
                             end)
                         end
                     end,
-                    function(data2, menu2)
-                        menu2.close()
+                    function(data, menu)
+                        menu.close()
                     end)
                 end
             },
             {
                 Label = _('search'),
                 Detail = _('search_detail'),
-                Action = function(data, menu, jobName)
+                Action = function(parentData, parentMenu, jobName)
                     exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
                         TriggerServerEvent('esx_avan0x:showNotification', targetId, _('being_searched'))
                         TriggerEvent("esx_ava_inventories:openPlayerInventory", targetId)
@@ -72,26 +72,91 @@ Config.Jobs = {
                 end
             },
             {
-                Label = _('manage_bills'),
-                Detail = _('manage_bills_detail'),
-                Action = function(data, menu, jobName)
-
+                Label = _('check_bills'),
+                Detail = _('check_bills_detail'),
+                Type = "submenu",
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        ESX.TriggerServerCallback('esx_billing:getTargetBills', function(bills)
+                            local elements = {}
+                            for k, bill in ipairs(bills) do
+                                table.insert(elements, {label = _("unpaid_bill", bill.label, bill.amount)})
+                            end
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'billing', {
+                                title    = _('unpaid_bills'),
+                                align    = 'left',
+                                elements = elements
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                        end, targetId)
+                    end)
                 end
             },
             {
                 Label = _('manage_licences'),
                 Detail = _('manage_licences_detail'),
                 Type = "submenu",
-                Action = function(data, menu, jobName)
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        local elements = {}
 
+                        ESX.TriggerServerCallback('esx_ava_jobs:getPlayerData', function(playerData)
+                            if playerData.licenses then
+                                for k, v in pairs(playerData.licenses) do
+                                    if v.label and v.type then
+                                        table.insert(elements, {label = v.label, type = v.type, detail = _('license_revoke')})
+                                    end
+                                end
+                            end
+
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'manage_licences', {
+                                title    = _('manage_licences'),
+                                align    = 'top-left',
+                                elements = elements,
+                            }, function(data, menu)
+                                ESX.ShowNotification(_('licence_you_revoked', data.current.label, playerData.firstname .. ' ' .. playerData.lastname))
+                                TriggerServerEvent('esx_avan0x:showNotification', targetId, _('license_revoked', data.current.label))
+
+                                TriggerServerEvent('esx_license:removeLicense', targetId, data.current.type)
+
+                                menu.close()
+                            end, function(data, menu)
+                                menu.close()
+                            end)
+
+                        end, targetId)
+                    end)
                 end,
                 ExcludeGrades = {"recruit"}
             },
             {
                 Label = _('manage_weapon_license'),
                 Detail = _('manage_weapon_license_detail'),
-                Type = "submenu",
-                Action = function(data, menu, jobName)
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        ESX.TriggerServerCallback('esx_ava_jobs:getPlayerData', function(playerData)
+                            local alreadyOwn = false
+                            if playerData.licenses then
+                                for k, v in pairs(playerData.licenses) do
+                                    if v.type == "weapon" then
+                                        alreadyOwn = true
+                                    end
+                                end
+                            end
+
+                            if alreadyOwn then
+                                ESX.ShowNotification(_('already_own_weapon_licence', playerData.firstname .. ' ' .. playerData.lastname))
+                            else
+                                ESX.ShowNotification(_('you_gave_weapon_licence', playerData.firstname .. ' ' .. playerData.lastname))
+                                TriggerServerEvent('esx_license:addLicense', targetId, 'weapon')
+                            end
+
+
+                        end, targetId)
+                    end)
 
                 end,
                 OnlyGrades = {"sergeant_chef", "lieutenant", "chef", "boss"}
