@@ -64,7 +64,7 @@ function OpenCuffsMenu()
                 local target_id = GetPlayerServerId(target)
                 TriggerServerEvent('esx_avan0x:handcuffs:requestrelease', target_id, playerheading, playerCoords, playerlocation)
                 Wait(5000)
-                TriggerServerEvent('esx_avan0x:handcuffs:handcuff', GetPlayerServerId(closestPlayer))
+                TriggerServerEvent('esx_avan0x:handcuffs:unhandcuff', GetPlayerServerId(closestPlayer))
             elseif action == 'drag' then
                 TriggerServerEvent('esx_avan0x:handcuffs:drag', GetPlayerServerId(closestPlayer))
             elseif action == 'put_in_vehicle' then
