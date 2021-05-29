@@ -12,7 +12,12 @@ Citizen.CreateThread(function()
 	end
 end)
 
-
+------------------------------------------------
+------------ CHANGE SOME HUD COLORS ------------
+------------------------------------------------
+Citizen.CreateThread(function()
+    ReplaceHudColour(116, 15)
+end)
 
 --------------------------------------
 ------------ ACTIVATE PVP ------------
