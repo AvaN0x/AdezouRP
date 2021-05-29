@@ -47,7 +47,6 @@ Citizen.CreateThread(function()
 
         if IsControlJustPressed(0, 45) then
             local playerPed = PlayerPedId()
-            print(isReloading)
             if IsPedArmed(playerPed, 4) and not isReloading then
                 local weaponHash = GetSelectedPedWeapon(playerPed)
 
@@ -56,7 +55,7 @@ Citizen.CreateThread(function()
                     local pedAmmo = GetAmmoInPedWeapon(playerPed, weaponHash)
                     local maxClipSize = GetMaxAmmoInClip(playerPed, weaponHash, true)
                     print(pedAmmo .. "/" .. maxClipSize)
-                    if pedAmmo < maxClipSize and not IsPedSwappingWeapon(playerPed) then
+                    if pedAmmo >= 0 and maxClipSize < 1000 and pedAmmo < maxClipSize and not IsPedSwappingWeapon(playerPed) then
                         isReloading = true
                         SetPedCanSwitchWeapon(playerPed, false)
                         TriggerServerEvent('esx_avan0x:checkClip')
