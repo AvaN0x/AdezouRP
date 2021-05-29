@@ -497,31 +497,35 @@ function OpenJobMenu()
 end
 
 function JobMenu(jobName)
-    local jobGrade = playerJobs[jobName].grade
+    if playerJobs[jobName].ServiceCounter and not playerServices[jobName] then
+        ESX.ShowNotification(_("need_in_service"))
+    else
+        local jobGrade = playerJobs[jobName].grade
 
-    local elements = {}
-    for k, v in pairs(playerJobs[jobName].JobMenu) do
-        if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
+        local elements = {}
+        for k, v in pairs(playerJobs[jobName].JobMenu) do
+            if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
             or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
-        then
-            table.insert(elements, {label = v.Label, value = k, detail = v.Detail, type = v.Type})
+            then
+                table.insert(elements, {label = v.Label, value = k, detail = v.Detail, type = v.Type})
+            end
         end
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_menu',
+        {
+            title = playerJobs[jobName].LabelName,
+            align = 'left',
+            elements = elements
+        },
+        function(data, menu)
+            if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value] then
+                playerJobs[jobName].JobMenu[data.current.value].Action(data, menu, jobName)
+            end
+        end,
+        function(data, menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
     end
-    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_job_menu',
-    {
-        title = playerJobs[jobName].LabelName,
-        align = 'left',
-        elements = elements
-    },
-    function(data, menu)
-        if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value] then
-            playerJobs[jobName].JobMenu[data.current.value].Action(data, menu, jobName)
-        end
-    end,
-    function(data, menu)
-        menu.close()
-        CurrentActionEnabled = true
-    end)
 end
 
 ------------------

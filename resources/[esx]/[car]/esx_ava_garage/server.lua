@@ -366,9 +366,9 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 			account.addMoney(toState)
 		end
     end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_police', 'society_police', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
@@ -402,9 +402,9 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 			account.addMoney(toState)
 		end
     end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_police', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_police', 'society_police', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)

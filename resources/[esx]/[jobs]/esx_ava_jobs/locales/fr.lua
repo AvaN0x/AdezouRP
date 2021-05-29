@@ -56,6 +56,7 @@ Locales['fr'] = {
 
 	-- General
 	['boss_actions'] = 'Action Patron',
+    ["need_in_service"] = "Vous devez être en service pour faire cela",
 
 	-- A modifier selon l'entreprise
 	['inventoryfull'] = 'Vous n\'avez plus de place',

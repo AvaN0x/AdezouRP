@@ -11,7 +11,7 @@ AddEventHandler('esx_radars:notifPolice', function(plate, speed, radarName, stol
     local xPlayers = ESX.GetPlayers()
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if (xPlayer.job ~= nil and xPlayer.job.name == 'police') then
+        if (xPlayer.job ~= nil and xPlayer.job.name == 'lspd') or (xPlayer.job2 ~= nil and xPlayer.job2.name == 'lspd') then
             TriggerClientEvent("esx:showAdvancedNotification", xPlayers[i],
                 'LSPD RADARS', 
                 radarName, 

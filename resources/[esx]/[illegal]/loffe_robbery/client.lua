@@ -244,7 +244,7 @@ Citizen.CreateThread(function()
                             if canRob == true then
                                 Citizen.CreateThread(function()
                                     Wait(2000)
-                                    TriggerServerEvent("esx_phone:sendEmergency", 'police', "Braquage de superette en cours !", true, { ["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z })
+                                    TriggerServerEvent("esx_phone:sendEmergency", 'lspd', "Braquage de superette en cours !", true, { ["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z })
                                 end)
 
                                 robbing = true

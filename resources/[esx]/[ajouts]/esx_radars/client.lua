@@ -98,12 +98,12 @@ function checkSpeed(maxspeed, radarName)
 
         ESX.TriggerServerCallback('esx_radars:getVehicleOwner', function(vowner)
             if vowner then
-                if vowner ~= 'society_police' and vowner ~= 'society_ems' then
+                if vowner ~= 'society_lspd' and vowner ~= 'society_ems' then
                     if PlayerData.job.grade_name == "interim" and vowner == "society_"..PlayerData.job.name 
                     or PlayerData.job2.grade_name == "interim" and vowner == "society_"..PlayerData.job2.name then
-                        TriggerServerEvent('esx_billing:sendBillWithId', PlayerData.identifier, 'society_police', finelevel, fineamount)
+                        TriggerServerEvent('esx_billing:sendBillWithId', PlayerData.identifier, 'society_lspd', finelevel, fineamount)
                     else
-                        TriggerServerEvent('esx_billing:sendBillWithId', vowner, 'society_police', finelevel, fineamount)
+                        TriggerServerEvent('esx_billing:sendBillWithId', vowner, 'society_lspd', finelevel, fineamount)
                     end
                 end
                 stolen = false
@@ -120,7 +120,7 @@ end
 
 function setBlips()
     -- add blips if police
-    if PlayerData.job ~= nil and PlayerData.job.name == 'police' then
+    if (PlayerData.job ~= nil and PlayerData.job.name == 'lspd') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'lspd') then
         if blips[1] ~= nil then
             for i=1, #blips, 1 do
                 RemoveBlip(blips[i])

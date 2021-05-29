@@ -80,12 +80,14 @@ RegisterNUICallback('joinRadio', function(data, cb)
 
     if tonumber(data.channel) ~= tonumber(getPlayerRadioChannel) then
         if tonumber(data.channel) <= Config.RestrictedChannels then
-          if(PlayerData.job.name == 'police' or PlayerData.job.name == 'ems') then
+          if (PlayerData.job and (PlayerData.job.name == 'lspd' or PlayerData.job.name == 'ems' or PlayerData.job.name == 'state'))
+            or (PlayerData.job2 and (PlayerData.job2.name == 'lspd' or PlayerData.job2.name == 'ems' or PlayerData.job2.name == 'state'))
+          then
             exports.tokovoip_script:removePlayerFromRadio(getPlayerRadioChannel)
             exports.tokovoip_script:setPlayerData(playerName, "radio:channel", tonumber(data.channel), true);
             exports.tokovoip_script:addPlayerToRadio(tonumber(data.channel))
             -- exports['mythic_notify']:DoHudText('inform', Config.messages['joined_to_radio'] .. data.channel .. '.00 MHz </b>')
-          elseif not (PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' or PlayerData.job.name == 'fire') then
+          else
             --- des informations auxquelles vous ne pouvez pas adhérer car vous n'êtes pas un policier
             -- exports['mythic_notify']:DoHudText('error', Config.messages['restricted_channel_error'])
           end
