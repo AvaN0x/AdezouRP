@@ -152,6 +152,7 @@ Config.Jobs = {
                             else
                                 ESX.ShowNotification(_('you_gave_weapon_licence', playerData.firstname .. ' ' .. playerData.lastname))
                                 TriggerServerEvent('esx_license:addLicense', targetId, 'weapon')
+                                TriggerServerEvent('esx_avan0x:showNotification', targetId, _('license_weapon_gived'))
                             end
 
 
