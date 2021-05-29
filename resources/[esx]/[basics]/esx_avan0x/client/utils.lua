@@ -42,7 +42,7 @@ function ChooseClosestPlayer(cb, title, distance)
                 end
             end
         end)
-        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_get_close_player",
+        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_player",
         {
             title = title,
             align = "left",
@@ -59,6 +59,63 @@ function ChooseClosestPlayer(cb, title, distance)
         ESX.ShowNotification(_("no_players_near"))
     end
 end
+
+function ChooseClosestVehicle(cb, title, distance)
+    local playerPed = PlayerPedId()
+
+    if not distance or not tonumber(distance) or tonumber(distance) < 0 then
+        distance = 3.0
+    end
+    if not title then
+        title = _('select_a_vehicle')
+    end
+    local elements = {}
+
+    local vehiclesCount = 0
+    local playerCoords = GetEntityCoords(playerPed)
+    for _, v in ipairs(GetGamePool("CVehicle")) do
+        local veh = GetObjectIndexFromEntityIndex(v)
+        local vehCoords = GetEntityCoords(veh)
+        if #(playerCoords - vehCoords) < distance + 0.0 then
+            vehiclesCount = vehiclesCount + 1
+            table.insert(elements, {
+                label = "Véhicule #" .. vehiclesCount,
+                vehicle = veh
+            })
+        end
+    end
+
+    if vehiclesCount > 0 then
+        local drawVehicles = true
+        Citizen.CreateThread(function()
+            while drawVehicles do
+                Citizen.Wait(0)
+                local playerCoords = GetEntityCoords(playerPed)
+                for k, v in ipairs(elements) do
+                    local vehCoords = GetEntityCoords(v.vehicle)
+                    DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.3, vehCoords.x, vehCoords.y, vehCoords.z + 0.3, 255, 0, 255, 128)
+                    DrawText3D(vehCoords.x, vehCoords.y, vehCoords.z + 0.3, v.label, 0.3)
+                end
+            end
+        end)
+        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_vehicle",
+        {
+            title = title,
+            align = "left",
+            elements = elements
+        }, function(data, menu)
+            drawVehicles = false
+            menu.close()
+            cb(data.current.vehicle)
+        end, function(data, menu)
+            drawVehicles = false
+            menu.close()
+        end)
+    else
+        ESX.ShowNotification(_("no_vehicles_near"))
+    end
+end
+
 
 function DrawText3D(x, y, z, text, size)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)

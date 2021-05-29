@@ -499,3 +499,29 @@ ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, ta
         cb(data)
     end)
 end)
+
+ESX.RegisterServerCallback('esx_ava_jobs:getVehicleInfos', function(source, cb, plate)
+	MySQL.Async.fetchAll('SELECT owner FROM owned_vehicles WHERE plate = @plate', {
+		['@plate'] = plate
+	}, function(result)
+		local vehicleInfos = {
+			plate = plate
+		}
+
+        if result[1] then
+            local request = string.match(result[1].owner, '^society_.*$')
+                and 'SELECT label as owner FROM addon_account WHERE name = @owner'
+                or 'SELECT CONCAT(firstname, " ", lastname) as owner FROM users WHERE identifier = @owner'
+
+			MySQL.Async.fetchAll(request, {
+				['@owner'] = result[1].owner
+			}, function(result2)
+                vehicleInfos.owner = result2[1].owner
+
+				cb(vehicleInfos)
+			end)
+        else
+			cb(vehicleInfos)
+		end
+	end)
+end)

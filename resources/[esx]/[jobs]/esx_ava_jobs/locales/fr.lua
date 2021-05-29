@@ -101,4 +101,10 @@ Locales['fr'] = {
     ["check_bills_detail"] = "Voir les factures impayées de l'individu",
     ["unpaid_bills"] = "Factures impayées",
     ["unpaid_bill"] = '%s <span style="color:red;">%s $</span>',
+    
+    ["info_vehicle"] = "Informations véhicule",
+    ["info_vehicle_detail"] = "Informations sur les véhicules proches",
+    ['vehicle_plate'] = 'Plaque: %s',
+    ['vehicle_owner'] = 'Propriétaire: %s',
+    ['vehicle_owner_unknown'] = 'Inconnu',
 }

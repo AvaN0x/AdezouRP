@@ -14,7 +14,7 @@ Config.Jobs = {
     lspd = {
         SocietyName = 'society_lspd',
         LabelName = 'LSPD',
-        ServiceCounter = true,
+        -- ServiceCounter = true,
         Blip = {
             Name = "~b~Commissariat",
             Sprite = 60,
@@ -161,6 +161,33 @@ Config.Jobs = {
 
                 end,
                 OnlyGrades = {"sergeant_chef", "lieutenant", "chef", "boss"}
+            },
+            {
+                Label = _('info_vehicle'),
+                Detail = _('info_vehicle_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestVehicle(function(vehicle)
+                        local vehicleData = ESX.Game.GetVehicleProperties(vehicle)
+                        ESX.TriggerServerCallback('esx_ava_jobs:getVehicleInfos', function(vehicleInfos)
+                            local elements = {
+                                {label = _('vehicle_plate', vehicleInfos.plate)}
+                            }
+
+                            table.insert(elements, {label = _('vehicle_owner', vehicleInfos.owner or _('vehicle_owner_unknown'))})
+
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'info_vehicle', {
+                                title = _('info_vehicle'),
+                                align = 'left',
+                                elements = elements
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                        end, vehicleData.plate)
+                    end)
+
+                end
             },
         },
         Zones = {

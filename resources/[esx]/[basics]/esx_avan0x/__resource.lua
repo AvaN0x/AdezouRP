@@ -29,7 +29,9 @@ files {
 }
 
 export {
-    "ChooseClosestPlayer"
+    "DrawText3D",
+    "ChooseClosestPlayer",
+    "ChooseClosestVehicle"
 }
 
 server_export {
