@@ -40,7 +40,7 @@ Locales['fr'] = {
 	['sell_not_that_much'] = 'Tu n\'as pas autant de %s.',
 	['sell_how_much'] = 'Combien voulez-vous vendre ? [Max : %s]',
 	['seller_for'] = 'Vendeur %s',
-    
+
 	['buy_label'] = '%s : $%s',
 	['buy_how_much'] = 'Combien voulez-vous en acheter ?',
 	['buyer_for'] = 'Acheteur %s',
@@ -66,10 +66,14 @@ Locales['fr'] = {
     ['dont_have_keychain'] = "Vous n'avez pas la clé",
 
 
-    -- Police
+    -- LSPD
     ["fine"] = "Amende",
     ['fine_detail'] = "Rédiger une amende",
     ["fine_reason"] = "Raison de l'amende",
     ["fine_amount"] = "Montant de l'amende",
+
+    ["search"] = "Fouiller",
+    ["search_detail"] = "Fouiller l'individu",
+    ['being_searched'] = "Quelqu'un vous fouille",
 
 }

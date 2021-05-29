@@ -77,7 +77,10 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 	end
 end
 
-
+RegisterServerEvent('esx_avan0x:showNotification')
+AddEventHandler('esx_avan0x:showNotification', function(target, message)
+	TriggerClientEvent('esx:showNotification', target, message)
+end)
 
 RegisterServerEvent('esx_avan0x:logTransaction')
 AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account_origin, identifier_target, account_target, type, amount)

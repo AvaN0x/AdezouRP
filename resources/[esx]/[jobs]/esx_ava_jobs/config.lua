@@ -65,7 +65,10 @@ Config.Jobs = {
                 Label = _('search'),
                 Detail = _('search_detail'),
                 Action = function(data, menu, jobName)
-
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        TriggerServerEvent('esx_avan0x:showNotification', targetId, _('being_searched'))
+                        TriggerEvent("esx_ava_inventories:openPlayerInventory", targetId)
+                    end)
                 end
             },
             {
