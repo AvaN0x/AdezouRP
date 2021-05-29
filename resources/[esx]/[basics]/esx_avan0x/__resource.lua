@@ -9,6 +9,7 @@ client_scripts {
     "locales/*.lua",
     'config.lua',
     'client/main.lua',
+    'client/utils.lua',
     '**/*_cl.lua'
 }
 

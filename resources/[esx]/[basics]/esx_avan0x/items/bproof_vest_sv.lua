@@ -4,7 +4,7 @@
 -------------------------------------------
 
 ESX.RegisterUsableItem('bproof_vest', function(source)
-    local xPlayer = ESX.GetPlayerFromId(source)
+    -- local xPlayer = ESX.GetPlayerFromId(source)
 
 	TriggerClientEvent('esx_avan0x:bproof_vest', source)
 end)
