@@ -25,7 +25,7 @@ AddEventHandler('esx_avan0x:handcuffs:unhandcuff', function(target)
     local inventory = xPlayer.getInventory()
     
     if inventory.canRemoveItem("handcuffs", 1) then
-        TriggerClientEvent('esx_avan0x:handcuffs:handcuff', target)
+        TriggerClientEvent('esx_avan0x:handcuffs:unrestrain', target)
     end
 end)
 
