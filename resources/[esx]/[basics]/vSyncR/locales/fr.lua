@@ -32,6 +32,11 @@ Locales['fr'] = {
     ['blackout_disabled'] = 'Le blackout est maintenant désactivé.',
     ['blackout_disabledc'] = 'Le blackout est maintenant ~b~désactivé~s~.',
 
+    ['iem_enabled'] = 'Le IEM est maintenant activé.',
+    ['iem_enabledc'] = 'Le IEM est maintenant ~b~activé~s~.',
+    ['iem_disabled'] = 'Le IEM est maintenant désactivé.',
+    ['iem_disabledc'] = 'Le IEM est maintenant ~b~désactivé~s~.',
+
     ['help_weathercommand'] = 'Change la météo.',
     ['help_weathertype'] = 'typemétéo',
     ['help_availableweather'] = 'Météos valables : extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas, halloween',
@@ -47,6 +52,7 @@ Locales['fr'] = {
     ['help_eveningcommand'] = 'Fixe l\'heure à 18:00',
     ['help_nightcommand'] = 'Fixe l\'heure à 23:00',
     ['help_blackoutcommand'] = 'Bascule en mode blackout.',
+    ['help_iemcommand'] = 'Bascule en mode IEM.',
 
     ['not_access'] = '^8Erreur : ^1vous n\'avez pas accès à cette commande.',
     ['not_allowed'] = '^8Erreur : ^1vous n\'êtes pas autorisé à utiliser cette commande.',

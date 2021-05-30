@@ -8,11 +8,12 @@ local baseTime = Config.BaseTime
 local timeOffset = Config.TimeOffset
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
+local iem = Config.IEM
 local newWeatherTimer = Config.NewWeatherTimer
 
 RegisterServerEvent('vSync:requestSync')
 AddEventHandler('vSync:requestSync', function()
-    TriggerClientEvent('vSync:updateWeather', -1, CurrentWeather, blackout)
+    TriggerClientEvent('vSync:updateWeather', -1, CurrentWeather, blackout, iem)
     TriggerClientEvent('vSync:updateTime', -1, baseTime, timeOffset, freezeTime)
 end)
 
@@ -142,6 +143,29 @@ RegisterCommand('blackout', function(source)
                 TriggerClientEvent('vSync:notify', source, _U('blackout_enabledc'))
             else
                 TriggerClientEvent('vSync:notify', source, _U('blackout_disabledc'))
+            end
+            TriggerEvent('vSync:requestSync')
+        end
+    end
+end)
+
+RegisterCommand('iem', function(source)
+    if source == 0 then
+        iem = not iem
+        blackout = iem
+        if iem then
+            print(_U('iem_enabled'))
+        else
+            print(_U('iem_disabled'))
+        end
+    else
+        if isAllowedToChange(source) then
+            iem = not iem
+            blackout = iem
+            if iem then
+                TriggerClientEvent('vSync:notify', source, _U('iem_enabledc'))
+            else
+                TriggerClientEvent('vSync:notify', source, _U('iem_disabledc'))
             end
             TriggerEvent('vSync:requestSync')
         end

@@ -5,11 +5,13 @@ local timeOffset = Config.TimeOffset
 local timer = 0
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
+local iem = Config.IEM
 
 RegisterNetEvent('vSync:updateWeather')
-AddEventHandler('vSync:updateWeather', function(NewWeather, newblackout)
+AddEventHandler('vSync:updateWeather', function(NewWeather, newblackout, newIem)
     CurrentWeather = NewWeather
     blackout = newblackout
+    iem = newIem
 end)
 
 Citizen.CreateThread(function()
@@ -20,7 +22,8 @@ Citizen.CreateThread(function()
             Citizen.Wait(15000)
         end
         Citizen.Wait(100) -- Wait 0 seconds to prevent crashing.
-        SetBlackout(blackout)
+        SetArtificialLightsState(blackout)
+        SetArtificialLightsStateAffectsVehicles(iem)
         ClearOverrideWeather()
         ClearWeatherTypePersist()
         SetWeatherTypePersist(lastWeather)
@@ -77,6 +80,7 @@ Citizen.CreateThread(function()
     TriggerEvent('chat:addSuggestion', '/evening', _U('help_eveningcommand'))
     TriggerEvent('chat:addSuggestion', '/night', _U('help_nightcommand'))
     TriggerEvent('chat:addSuggestion', '/blackout', _U('help_blackoutcommand'))
+    TriggerEvent('chat:addSuggestion', '/iem', _U('help_iemcommand'))
 end)
 
 -- Display a notification above the minimap.
