@@ -326,7 +326,7 @@ AddEventHandler('esx_ava_jobs:SellItems', function(jobName, zoneName, jobIndex, 
 			TriggerClientEvent('esx:showNotification', xPlayer.source, _('comp_earned') .. societyMoney)
 		end
     else
-        print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
+        print(('%s attempted to exploit selling!'):format(GetPlayerIdentifiers(source)[1]))
     end
 end)
 
@@ -398,7 +398,7 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
             TriggerClientEvent('esx:showNotification', source, _('buy_you_paid')..totalprice)
         end
     else
-        print(('%s attempted to exploit processing!'):format(GetPlayerIdentifiers(source)[1]))
+        print(('%s attempted to exploit buying!'):format(GetPlayerIdentifiers(source)[1]))
     end
 end)
 

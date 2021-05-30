@@ -129,6 +129,7 @@ for k, weaponName in ipairs(projectiles) do
     end)
 end
 
+local expectedToRequestClips = {}
 
 RegisterServerEvent('esx_avan0x:useWeaponItem')
 AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
@@ -140,6 +141,8 @@ AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
             if not inventory.canAddItem(string.lower(weaponName), 1) then
                 TriggerClientEvent('esx:showNotification', source, "Vous n'avez plus de place pour cela")
             else
+                expectedToRequestClips[xPlayer.identifier] = weaponName
+                TriggerClientEvent('esx_avan0x:checkIfClipsNeededBeforeRemove', source, weaponName)
                 inventory.addItem(string.lower(weaponName), 1)
                 xPlayer.removeWeapon(weaponName)
             end
@@ -152,6 +155,27 @@ AddEventHandler('esx_avan0x:useWeaponItem', function(weaponName)
 	end
 end)
 
+RegisterServerEvent('esx_avan0x:requestClipsAndRemove')
+AddEventHandler('esx_avan0x:requestClipsAndRemove', function(weaponName, clipCount)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+    if expectedToRequestClips[xPlayer.identifier] then
+        local inventory = xPlayer.getInventory()
+        if expectedToRequestClips[xPlayer.identifier] == weaponName then
+            if clipCount <= 10 then
+                local clipCanTake = inventory.canTake("clip")
+                if clipCanTake > 0 then
+                    inventory.addItem("clip", (clipCanTake > clipCount and clipCount or clipCanTake))
+                end
+            else
+                print(('%s attempted to exploit useWeaponItem!'):format(GetPlayerIdentifiers(source)[1]))
+            end
+        end
+        expectedToRequestClips[xPlayer.identifier] = nil
+    else
+        print(('%s attempted to exploit useWeaponItem!'):format(GetPlayerIdentifiers(source)[1]))
+    end
+end)
 
 -----------
 -- Clips --

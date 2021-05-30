@@ -15,6 +15,7 @@ end)
 -----------
 -- Clips --
 -----------
+local CLIP_SIZE = 25
 local isReloading = false
 
 RegisterNetEvent("esx_avan0x:useClip")
@@ -26,10 +27,10 @@ AddEventHandler("esx_avan0x:useClip", function(noClipsAvailable)
         if IsPedArmed(playerPed, 4) then
             local weaponHash = GetSelectedPedWeapon(playerPed)
             if weaponHash ~= nil then
-                if GetAmmoInPedWeapon(playerPed, weaponHash) <= 225 then
+                if GetAmmoInPedWeapon(playerPed, weaponHash) <= CLIP_SIZE * 9 then
                     TriggerServerEvent("esx_avan0x:removeClip")
-                    AddAmmoToPed(playerPed, weaponHash, 25)
-                    ESX.ShowNotification("Tu as utilisé un chargeur de 25 balles.")
+                    AddAmmoToPed(playerPed, weaponHash, CLIP_SIZE)
+                    ESX.ShowNotification("Tu as utilisé un chargeur de " .. CLIP_SIZE .. " balles.")
                 else
                     ESX.ShowNotification("Tu ne peux pas utiliser plus de chargeurs avec cette arme.")
                 end
@@ -67,5 +68,18 @@ Citizen.CreateThread(function()
                 end
             end
         end
+    end
+end)
+
+RegisterNetEvent("esx_avan0x:checkIfClipsNeededBeforeRemove")
+AddEventHandler("esx_avan0x:checkIfClipsNeededBeforeRemove", function(weaponName)
+    local playerPed = PlayerPedId()
+    local weaponHash = GetHashKey(weaponName)
+
+    if weaponHash ~= nil then
+        local pedAmmo = GetAmmoInPedWeapon(playerPed, weaponHash)
+        local equivalentInClips = math.floor(pedAmmo / CLIP_SIZE)
+        SetPedAmmo(playerPed, weaponHash, (pedAmmo - equivalentInClips * CLIP_SIZE))
+        TriggerServerEvent("esx_avan0x:requestClipsAndRemove", weaponName, equivalentInClips)
     end
 end)
