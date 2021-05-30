@@ -62,7 +62,7 @@ end)
 
 function DrawEntityBox(entity, r, g, b)
     local coords = GetEntityCoords(entity)
-    DrawText3D(coords.x, coords.y, coords.z - 0.1, GetEntityHeading(entity) or "", 0.3)
+    DrawText3D(coords.x, coords.y, coords.z - 0.1, string.format("%.2f", GetEntityHeading(entity)) or "", 0.3)
 
 	local min, max = GetModelDimensions(GetEntityModel(entity))
 

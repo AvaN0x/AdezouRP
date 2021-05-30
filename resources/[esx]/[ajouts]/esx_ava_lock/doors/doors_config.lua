@@ -37,7 +37,7 @@ Config.Doors = {
 			objName = 'v_ilev_ph_gendoor004',
 			objYaw = 90.0,
 			objCoords  = vector3(449.6, -986.4, 30.6),
-			textCoords = vector3(450.10, -986.94, 30.84),
+			textCoords = vector3(450.10, -986.94, 30.80),
 			authorizedJobs = { 'lspd' },
 			locked = true
 		},
@@ -53,12 +53,12 @@ Config.Doors = {
 			objName = 'v_ilev_ph_gendoor002',
 			objYaw = -180.0,
 			objCoords  = vector3(447.2, -980.6, 30.6),
-			textCoords = vector3(447.82, -980.05, 30.69),
+			textCoords = vector3(447.79, -980.01, 30.75),
 			authorizedJobs = { 'lspd' },
 			locked = true
 		},
 		{ -- To downstairs (double doors)
-			textCoords = vector3(444.71, -989.44, 30.84),
+			textCoords = vector3(444.71, -989.44, 30.80),
 			authorizedJobs = { 'lspd', 'state' },
 			locked = true,
 			doors = {
@@ -74,11 +74,11 @@ Config.Doors = {
 				}
 			}
 		},
-		{
+		{ -- Armory
 			objName = 'v_ilev_gtdoor',
 			objYaw = 90.0,
 			objCoords = vector3(452.67, -982.97, 30.6),
-			textCoords = vector3(453.05, -982.22, 30.8),
+			textCoords = vector3(453.09, -982.13, 30.80),
 			authorizedJobs = { 'lspd' },
 			locked = true
 		},
@@ -309,18 +309,18 @@ Config.Doors = {
 
 		-- Unicorn
 		{
-			objName = 'prop_strip_door_01', -- Entrer
+			objName = 'prop_strip_door_01', -- Main door
 			objYaw = 30.0,
 			objCoords  = vector3(127.9552, -1298.503, 29.41962),
-			textCoords = vector3(128.79, -1297.97, 29.27),
+			textCoords = vector3(128.99, -1297.90, 29.32),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
 		{
-			objName = 'v_ilev_door_orangesolid', -- Bureau 1
+			objName = 'v_ilev_door_orangesolid', -- Dressing
 			objYaw = -60.0,
 			objCoords  = vector3(113.9822, -1297.43, 29.41868),
-			textCoords = vector3(113.51, -1296.45, 29.41868),
+			textCoords = vector3(113.38, -1296.39, 29.42),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
@@ -328,7 +328,7 @@ Config.Doors = {
 			objName = 'v_ilev_roc_door2', -- Bureau 2
 			objYaw = 30.0,
 			objCoords  = vector3(99.08321, -1293.701, 29.41868),
-			textCoords = vector3(99.94, -1293.11, 29.41868),
+			textCoords = vector3(100.12, -1293.10, 29.42),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
@@ -336,7 +336,7 @@ Config.Doors = {
 			objName = 'prop_magenta_door', -- Derrière
 			objYaw = -150.0,
 			objCoords  = vector3(96.09197, -1284.854, 29.43878),
-			textCoords = vector3(95.24, -1285.45, 29.43878),
+			textCoords = vector3(95.05, -1285.45, 29.44),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
@@ -344,7 +344,7 @@ Config.Doors = {
 			objName = 'v_ilev_roc_door2', -- porte mapping intérieur, accès bar
 			objYaw = 30.0,
 			objCoords  = vector3(134.36, -1290.70, 29.27),
-			textCoords = vector3(134.36, -1290.70, 29.27),
+			textCoords = vector3(134.88, -1290.45, 29.41),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
@@ -352,7 +352,7 @@ Config.Doors = {
 			objName = 'v_ilev_roc_door2', -- porte sur le coté
 			objYaw = -60.0,
 			objCoords  = vector3(135.28, -1279.47, 29.42),
-			textCoords = vector3(135.28, -1279.47, 29.42),
+			textCoords = vector3(135.70, -1279.78, 29.57),
 			authorizedJobs = { 'unicorn' },
 			locked = true
 		},
@@ -363,7 +363,7 @@ Config.Doors = {
 
 		-- BAHAMAS
 		{
-			textCoords = vector3(-1388.22, -587.12, 30.64),
+			textCoords = vector3(-1388.11, -587.33, 30.50),
 			authorizedJobs = { 'bahama' },
 			locked = true,
 			doors = {
@@ -410,15 +410,15 @@ Config.Doors = {
 			objName = 'apa_v_ilev_ss_door8', -- porte sur le coté
 			objYaw = 70.0,
 			objCoords  = vector3(-347.98, -133.61, 39.01),
-			textCoords = vector3(-347.98, -133.61, 39.01),
+			textCoords = vector3(-345.63, -122.42, 39.05),
 			authorizedJobs = { 'mecano' },
 			distance = 1.5,
 			locked = true
 		},
 		{
 			objName = 'portels_3',
-			objCoords  = vector3( -321.84, -141.27, 39.01),
-			textCoords = vector3( -321.84, -141.27, 39.01),
+			objCoords  = vector3(-321.84, -141.27, 39.01),
+			textCoords = vector3(-321.67, -141.18, 39.00),
 			authorizedJobs = { 'mecano' },
 			locked = true,
 			distance = 6
@@ -456,7 +456,7 @@ Config.Doors = {
 			}
 		},
 		{ -- porte arrière vers garage OUEST
-			textCoords = vector3(-582.67, -195.17, 38.22), 
+			textCoords = vector3(-582.69, -195.25, 38.60),
 			authorizedJobs = { 'state' },
 			locked = true,
 			doors = {
@@ -473,7 +473,7 @@ Config.Doors = {
 			}
 		},
 		{ -- porte du bureau du gouverneur
-			textCoords = vector3(-549.59, -196.21, 47.4), -- entrée
+			textCoords = vector3(-549.37, -196.34, 47.54), -- entrée
 			authorizedJobs = { 'state' },
 			locked = true,
 			doors = {
@@ -493,7 +493,7 @@ Config.Doors = {
 
 		-- CLUCKIN
 		{
-			textCoords = vector3(-511.64, -683.79, 33.34),
+			textCoords = vector3(-511.63, -683.87, 33.41),
 			authorizedJobs = { 'cluckin' },
 			locked = true,
 			doors = {
@@ -512,7 +512,7 @@ Config.Doors = {
 		{
 			objHash = -738011261,
 			objCoords  = vector3( -512.26, -697.28, 33.17),
-			textCoords = vector3( -512.26, -697.28, 33.17),
+			textCoords = vector3(-512.21, -697.24, 33.41),
 			objYaw = 180.0,
 			authorizedJobs = { 'cluckin' },
 			locked = true,
@@ -569,26 +569,6 @@ Config.Doors = {
 			authorizedJobs = { 'taxi' },
 			locked = true,
 			distance = 5.0
-		},
-
-
-		-- VIGNERON
-		{ -- bedroom
-			textCoords = vector3(-1882.93, 2064.7, 145.5),
-			authorizedJobs = { 'vigneron' },
-			locked = true,
-			doors = {
-				{
-					objHash = 534758478,
-					objYaw = 340.0,
-					objCoords = vector3(-1882.16, 2064.15, 145.5)
-				},
-				{
-					objHash = 534758478,
-					objYaw = 160.0,
-					objCoords = vector3(-1883.77, 2064.75, 145.5)
-				}
-			}
 		},
 	
 		-- HOPITAL
