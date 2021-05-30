@@ -157,6 +157,7 @@ Citizen.CreateThread(function()
 			HideHudComponentThisFrame(8)  -- Vehicle Class
 			-- HideHudComponentThisFrame(9)  -- Street Name
 			HideHudComponentThisFrame(13) -- Cash Change
+			HideHudComponentThisFrame(14) -- Reticle
 			HideHudComponentThisFrame(17) -- Save Game
 			HideHudComponentThisFrame(20) -- Weapon Stats
 
