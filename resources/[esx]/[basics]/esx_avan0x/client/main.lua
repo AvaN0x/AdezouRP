@@ -39,6 +39,23 @@ Citizen.CreateThread(function()
     end
 end)
 
+---------------------------------------
+-------- REMOVE STATIC EMITTERS --------
+---------------------------------------
+Citizen.CreateThread(function()
+    local loop = true
+    while loop do
+        Citizen.Wait(0)
+        if NetworkIsSessionStarted() then
+            -- Remove unicorn ambiant sound
+            SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_01_STAGE', false)
+            SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_02_MAIN_ROOM', false)
+            SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_03_BACK_ROOM', false)
+            loop = false
+        end
+    end
+end)
+
 
 -------------------------------------------
 -------- CAN'T MOVE TO DRIVER SEAT --------
