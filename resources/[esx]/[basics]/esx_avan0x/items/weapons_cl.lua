@@ -26,9 +26,13 @@ AddEventHandler("esx_avan0x:useClip", function(noClipsAvailable)
         if IsPedArmed(playerPed, 4) then
             local weaponHash = GetSelectedPedWeapon(playerPed)
             if weaponHash ~= nil then
-                TriggerServerEvent("esx_avan0x:removeClip")
-                AddAmmoToPed(playerPed, weaponHash, 25)
-                ESX.ShowNotification("Tu as utilisé un chargeur de 25 balles.")
+                if GetAmmoInPedWeapon(playerPed, weaponHash) <= 225 then
+                    TriggerServerEvent("esx_avan0x:removeClip")
+                    AddAmmoToPed(playerPed, weaponHash, 25)
+                    ESX.ShowNotification("Tu as utilisé un chargeur de 25 balles.")
+                else
+                    ESX.ShowNotification("Tu ne peux pas utiliser plus de chargeurs avec cette arme.")
+                end
             else
                 ESX.ShowNotification("Tu n'as pas d'arme en main.")
             end
