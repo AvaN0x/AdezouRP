@@ -52,11 +52,17 @@ Config = {}
     -- 10: Badge
     -- 11: Torso 2
 
+-- props variations component Id :
+    -- 0: Hat
+    -- 1: Glasses
+    -- 2: Ear
+    -- 6: Watch
+    -- 7: Bracelet
 
 Config.Peds = {
     LSPD = {
         Name = "s_f_y_cop_01",
-        Type = "PED_TYPE_COP",
+        Type = "PED_TYPE_CIVFEMALE",
         PosList = {
             {
                 pos = vector3(440.05, -978.86, 29.71),
@@ -65,6 +71,24 @@ Config.Peds = {
                 variations = {
                     {componentId = 2, drawableId = 1},
                     {componentId = 9, drawableId = 1}
+                }
+            },
+        }
+    },
+    LSPD_ARMORY = {
+        Name = "s_m_y_cop_01",
+        Type = "PED_TYPE_CIVMALE",
+        PosList = {
+            {
+                pos = vector3(454.18, -980.11, 29.71),
+                heading = 90.0,
+                name = "George",
+                variations = {
+                    {componentId = 0, drawableId = 0, textureId = 1},
+                    {componentId = 9, drawableId = 2}
+                },
+                props = {
+                    {componentId = 1, drawableId = 1},
                 }
             },
         }

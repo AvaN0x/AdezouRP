@@ -36,6 +36,11 @@ Citizen.CreateThread(function()
                     SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0, variation.paletteId or 0)
                 end
             end
+            if p.props then
+                for _, prop in ipairs(p.props) do
+                    SetPedPropIndex(ped, prop.componentId, prop.drawableId or 0, prop.textureId or 0, true);
+                end
+            end
 
             if p.scenario then
                 TaskStartScenarioInPlace(ped, p.scenario, 0, false)
