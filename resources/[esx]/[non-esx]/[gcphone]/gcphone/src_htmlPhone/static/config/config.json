@@ -82,7 +82,7 @@
   },
   "serviceCall": [
     {
-      "display": "Police",
+      "display": "LSPD",
       "icon": "/html/static/img/icons_app/policier.png",
       "subMenu": [
         {
@@ -93,7 +93,7 @@
           }
         },
         {
-          "title": "Call Police Station",
+          "title": "Call LSPD Station",
           "eventName": "gcphone:autoCallNumber",
           "type": {
             "number": "911"
@@ -156,8 +156,8 @@
   ],
   "defaultContacts": [
     {
-      "number": "police",
-      "display": "Police",
+      "number": "lspd",
+      "display": "LSPD",
       "icon": "/html/static/img/icons_app/policier.png"
     },
     {

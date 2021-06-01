@@ -79,8 +79,8 @@ if (process.env.NODE_ENV !== 'production') {
     {id: 2, transmitter: numRandom, time, message: 'We will, Thank you for supporting our continued efforts!', isRead: 1, owner: 0},
     {id: 1, transmitter: numRandom, time, message: 'Our server makes money because of you guys, So you should also be supported!', isRead: 1, owner: 1},
     {id: 1, transmitter: numRandom, time, message: 'GPS: 244.21, -123.15', isRead: 1, owner: 0},
-    {id: 5, transmitter: 'police', time, message: 'How is this??', isRead: 1, owner: 1},
-    {id: 6, transmitter: 'ambulance', time, message: 'This looks good!', isRead: 1, owner: 1},
+    {id: 5, transmitter: 'lspd', time, message: 'How is this??', isRead: 1, owner: 1},
+    {id: 6, transmitter: 'ems', time, message: 'This looks good!', isRead: 1, owner: 1},
     {id: 7, transmitter: '01', time, message: 'Salut ça va ?', isRead: 1, owner: 0},
     {id: 8, transmitter: '01', time, message: 'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', isRead: 0, owner: 1},
     {id: 9, transmitter: '01', time, message: 'GPS: -1034.5810546875, -2734.1027832031', isRead: 1, owner: 0},
@@ -89,6 +89,6 @@ if (process.env.NODE_ENV !== 'production') {
     {id: 11, transmitter: '04', time, message: 'Salut ça va ?', isRead: 1, owner: 0},
     {id: 12, transmitter: '04', time, message: 'Salut ça va ?', isRead: 1, owner: 0},
     {id: 13, transmitter: '09', time, message: 'Tu sais pas !', isRead: 1, owner: 0},
-    {id: 14, transmitter: 'police', time, message: 'GPS: Live position', isRead: 1, owner: 1}
+    {id: 14, transmitter: 'lspd', time, message: 'GPS: Live position', isRead: 1, owner: 1}
   ]
 }

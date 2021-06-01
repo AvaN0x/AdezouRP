@@ -109,7 +109,7 @@ function MissionStart()
 				ESX.ShowNotification("Vous êtes proche de l'acheteur")
 
 				if math.random(1, 3) == 1 then
-					TriggerServerEvent("esx_phone:sendEmergency", "police", "Une personne suspecte a été aperçue proche de cette position.", true, { ["x"] = (playerCoords.x + math.random(-20, 20)), ["y"] = (playerCoords.y + math.random(-20, 20)), ["z"] = playerCoords.z })
+					TriggerServerEvent("esx_phone:sendEmergency", "lspd", "Une personne suspecte a été aperçue proche de cette position.", true, { ["x"] = (playerCoords.x + math.random(-20, 20)), ["y"] = (playerCoords.y + math.random(-20, 20)), ["z"] = playerCoords.z })
 				end
 			end
 
