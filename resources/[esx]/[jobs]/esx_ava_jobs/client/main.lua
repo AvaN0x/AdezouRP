@@ -41,8 +41,8 @@ Citizen.CreateThread(function()
     setJobsToUse()
 
     for _, job in pairs(Config.Jobs) do
-        if not job.isIllegal and not job.isGang then
-            local blip = AddBlipForCoord(job.Zones.JobActions.Pos)
+        if not job.isIllegal and not job.isGang and not job.Disabled then
+            local blip = AddBlipForCoord(job.Blip.Pos or job.Zones.JobActions.Pos)
             SetBlipSprite (blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale  (blip, 1.0)
@@ -110,22 +110,22 @@ local playerServices = {}
 function setJobsToUse()
     CurrentZoneName = nil
     playerJobs = {}
-    if Config.Jobs[PlayerData.job.name] ~= nil then
+    if Config.Jobs[PlayerData.job.name] ~= nil and not Config.Jobs[PlayerData.job.name].Disabled then
         playerJobs[PlayerData.job.name] = Config.Jobs[PlayerData.job.name]
         playerJobs[PlayerData.job.name].jobIndex = 1
         playerJobs[PlayerData.job.name].grade = PlayerData.job.grade_name
     end
-    if Config.Jobs[PlayerData.job2.name] ~= nil then
+    if Config.Jobs[PlayerData.job2.name] ~= nil and not Config.Jobs[PlayerData.job2.name].Disabled then
         playerJobs[PlayerData.job2.name] = Config.Jobs[PlayerData.job2.name]
         playerJobs[PlayerData.job2.name].jobIndex = 2
         playerJobs[PlayerData.job2.name].grade = PlayerData.job2.grade_name
     end
-    if actualGang and Config.Jobs[actualGang.name] ~= nil then
+    if actualGang and Config.Jobs[actualGang.name] ~= nil and not Config.Jobs[actualGang.name].Disabled then
         playerJobs[actualGang.name] = Config.Jobs[actualGang.name]
         playerJobs[actualGang.name].grade = actualGang.grade
     end
     for name, farm in pairs(Config.Jobs) do
-        if farm.isIllegal == true then
+        if farm.isIllegal == true and not farm.Disabled then
             playerJobs[name] = farm
         end
     end
