@@ -387,7 +387,7 @@ Config.Doors = {
 			textCoords = vector3( -356.09, -134.81, 39.01),
 			authorizedJobs = { 'mecano' },
 			locked = true,
-			distance = 1
+			distance = 12
 		},
 		{
 			objName = 'prop_com_ls_door_01',
@@ -395,7 +395,7 @@ Config.Doors = {
 			textCoords = vector3( -349.75, -117.25, 39.16),
 			authorizedJobs = { 'mecano' },
 			locked = true,
-			distance = 1
+			distance = 12
 		},
 		{
 			objName = 'apa_v_ilev_ss_door7', -- porte sur le coté
