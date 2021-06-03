@@ -35,7 +35,7 @@ INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
 	('society_cluckin','Cluckin Bell', 500000, 1),
 
     -- attackataco
-	('society_cluckin','Attack-A-Taco', 500000, 1),
+	('society_attackataco','Attack-A-Taco', 500000, 1),
 
 
 	('society_lspd','LSPD', 500000, 1),
@@ -147,6 +147,12 @@ INSERT INTO `items` (`name`, `label`, `limit`) VALUES
     -- unicorn
 	('orange', '🍊 Orange', -1)
 
+    -- attackataco
+	('cow_part', 'Morceau de boeuf', 20),
+	('minced_meat', 'Viande hachée', 20),
+	('tacos_odacious', 'Tacos Spicy Audacieux', 20),
+	('tacos_impensable', 'Tacos Impensable', 20),
+	('tacos_gourmet', 'Tacos Gourmet du chef', 20),
 
 ;
 

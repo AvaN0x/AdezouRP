@@ -380,7 +380,7 @@ Citizen.CreateThread(function()
 			end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
+                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessZones"
@@ -391,7 +391,7 @@ Citizen.CreateThread(function()
 			end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
+                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessMenuZones"
@@ -402,7 +402,7 @@ Citizen.CreateThread(function()
 			end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
+                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "SellZones"
@@ -413,7 +413,7 @@ Citizen.CreateThread(function()
 			end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (#(playerCoords - v.Pos) < 2) and v.GradeEnabled then
+                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.GradeEnabled then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "BuyZones"

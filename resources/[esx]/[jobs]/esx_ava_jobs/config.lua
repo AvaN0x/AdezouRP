@@ -1118,25 +1118,24 @@ Config.Jobs = {
         }
     },
     attackataco = {
-        Disabled = true,
         SocietyName = 'society_attackataco',
         LabelName = 'Attack-A-Taco',
         Blip = {
             Sprite = 468,
             Colour = 46
-                },
+        },
         Zones = {
             JobActions = {
-                Pos = vector3(445.92, -1242.19, 29.30),
-                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Pos = vector3(17.27, -1602.66, 28.40),
+                Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Point d'action",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
             Dressing = {
-                Pos = vector3(448.73, -1243.57, 29.28),
-                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Pos = vector3(20.20, -1601.98, 28.40),
+                Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Dressing",
                 HelpText = _('press_to_open'),
@@ -1146,172 +1145,135 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
-                Pos = vector3(456.89, -1230.16, 30.05),
+                Pos = vector3(17.83, -1595.44, 29.28),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 255, g = 217, b = 106},
                 Marker = 36,
                 Type = "car",
                 SpawnPoint = {
-                    Pos = vector3(456.89, -1230.16, 30.05),
-                    Heading = 86.0
+                    Pos = vector3(17.83, -1595.44, 29.28),
+                    Heading = 50.0
                 },
                 Blip = true
             },
         },
-        -- FieldZones = {
-        --     ChickenField = {
-        --         Items = {
-        --             {name = 'alive_chicken', quantity = 2}
-        --         },
-        --         PropHash = 610857585,
-        --         Pos = vector3(85.95, 6331.61, 30.25),
-        --         GroundCheckHeights = {29, 30, 31, 32},
-        --         Name = "1. Récolte",
-        --         Blip = true
-        --     },
-        -- },
-        -- ProcessZones = {
-        --     PluckProcess = {
-        --         ItemsGive = {
-        --             {name = 'alive_chicken', quantity = 2}
-        --         },
-        --         ItemsGet = {
-        --             {name = 'plucked_chicken', quantity = 2}
-        --         },
-        --         Delay = 8000,
-        --         Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-        --         Pos = vector3(-91.05, 6240.41, 30.11),
-        --         Size = {x = 2.5, y = 2.5, z = 1.5},
-        --         Color = {r = 252, g = 186, b = 3},
-        --         Name = "2. Déplumage",
-        --         HelpText = _('press_traitement'),
-        --         Marker = 27,
-        --         Blip = true
-        --     },
-        --     RawProcess = {
-        --         ItemsGive = {
-        --             {name = 'plucked_chicken', quantity = 2}
-        --         },
-        --         ItemsGet = {
-        --             {name = 'raw_chicken', quantity = 8}
-        --         },
-        --         Delay = 10000,
-        --         Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-        --         Pos = vector3(-103.89, 6206.29, 30.05),
-        --         Size = {x = 2.5, y = 2.5, z = 1.5},
-        --         Color = {r = 252, g = 186, b = 3},
-        --         Name = "3. Découpe",
-        --         HelpText = _('press_traitement'),
-        --         Marker = 27,
-        --         Blip = true
-        --     }
-        -- },
-        -- ProcessMenuZones = {
-        --     CookingProcess = {
-        --         Title = 'Cuisine',
-        --         Process = {
-        --             NuggetsProcess = {
-        --                 Name = 'Nuggets',
-        --                 ItemsGive = {
-        --                     {name = 'raw_chicken', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'nuggets', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             ChickenBurgerProcess = {
-        --                 Name = 'Chicken Burger',
-        --                 ItemsGive = {
-        --                     {name = 'raw_chicken', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'chickenburger', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             DoubleChickenBurgerProcess = {
-        --                 Name = 'Double Chicken Burger',
-        --                 ItemsGive = {
-        --                     {name = 'raw_chicken', quantity = 4}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'doublechickenburger', quantity = 1}
-        --                 },
-        --                 Delay = 3000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             TendersProcess = {
-        --                 Name = 'Tenders',
-        --                 ItemsGive = {
-        --                     {name = 'raw_chicken', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'tenders', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             ChickenWrapProcess = {
-        --                 Name = 'Wrap au poulet',
-        --                 ItemsGive = {
-        --                     {name = 'raw_chicken', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'chickenwrap', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             FritesProcess = {
-        --                 Name = 'Frites',
-        --                 ItemsGive = {
-        --                     {name = 'potato', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'frites', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             },
-        --             PotatoesProcess = {
-        --                 Name = 'Potatoes',
-        --                 ItemsGive = {
-        --                     {name = 'potato', quantity = 2}
-        --                 },
-        --                 ItemsGet = {
-        --                     {name = 'potatoes', quantity = 1}
-        --                 },
-        --                 Delay = 2000,
-        --                 Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
-        --             }
-        --         },
-        --         MaxProcess = 5,
-        --         Pos = vector3(-520.07, -701.52, 32.19),
-        --         Size = {x = 2.5, y = 2.5, z = 1.5},
-        --         Color = {r = 252, g = 186, b = 3},
-        --         Name = "Cuisine",
-        --         HelpText = _('press_traitement'),
-        --         Marker = 27,
-        --         Blip = true
-        --     }
-        -- },
-        -- SellZones = {
-        --     ChickenSell = {
-        --         Items = {
-        --             {name = 'raw_chicken', price = 100}
-        --         },
-        --         Pos = vector3(-138.13, -256.69, 42.61),
-        --         Size = {x = 1.5, y = 1.5, z = 1.5},
-        --         Color = {r = 136, g = 232, b = 9},
-        --         Name = "4. Vente des produits",
-        --         HelpText = _('press_sell'),
-        --         Marker = 27,
-        --         Blip = true
-        --     }
-        -- },
+        FieldZones = {
+            CowField = {
+                Items = {
+                    {name = 'cow_part', quantity = 2}
+                },
+                PropHash = GetHashKey('prop_mk_race_chevron_02'),
+                Pos = vector3(996.82, -2123.07, 30.48),
+                GroundCheckHeights = {29, 30},
+                Name = "1. Récolte",
+                Radius = 5,
+                Blip = true
+            },
+        },
+        ProcessZones = {
+            RawProcess = {
+                ItemsGive = {
+                    {name = 'cow_part', quantity = 2}
+                },
+                ItemsGet = {
+                    {name = 'minced_meat', quantity = 2}
+                },
+                Delay = 12000,
+                Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(994.46, -2162.40, 28.49),
+                Size = {x = 5.0, y = 5.0, z = 3.5},
+                Distance = 2.5,
+                Color = {r = 255, g = 217, b = 106},
+                Name = "2. Hachage",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = true
+            }
+        },
+        ProcessMenuZones = {
+            CookingProcess = {
+                Title = 'Cuisine',
+                Process = {
+                    ChickenBurgerProcess = {
+                        Name = 'Tacos Spicy Audacieux',
+                        ItemsGive = {
+                            {name = 'minced_meat', quantity = 2}
+                        },
+                        ItemsGet = {
+                            {name = 'tacos_odacious', quantity = 1}
+                        },
+                        Delay = 2000,
+                        Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+                    },
+                    DoubleChickenBurgerProcess = {
+                        Name = 'Tacos Impensable',
+                        ItemsGive = {
+                            {name = 'minced_meat', quantity = 2}
+                        },
+                        ItemsGet = {
+                            {name = 'tacos_impensable', quantity = 1}
+                        },
+                        Delay = 3000,
+                        Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+                    },
+                    TendersProcess = {
+                        Name = 'Tacos Gourmet du chef',
+                        ItemsGive = {
+                            {name = 'minced_meat', quantity = 3}
+                        },
+                        ItemsGet = {
+                            {name = 'tacos_gourmet', quantity = 1}
+                        },
+                        Delay = 2000,
+                        Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+                    },
+                    FritesProcess = {
+                        Name = 'Frites',
+                        ItemsGive = {
+                            {name = 'potato', quantity = 2}
+                        },
+                        ItemsGet = {
+                            {name = 'frites', quantity = 1}
+                        },
+                        Delay = 2000,
+                        Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+                    },
+                    PotatoesProcess = {
+                        Name = 'Potatoes',
+                        ItemsGive = {
+                            {name = 'potato', quantity = 2}
+                        },
+                        ItemsGet = {
+                            {name = 'potatoes', quantity = 1}
+                        },
+                        Delay = 2000,
+                        Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
+                    }
+                },
+                MaxProcess = 5,
+                Pos = vector3(11.50, -1599.42, 28.40),
+                Size = {x = 1.0, y = 1.0, z = 1.5},
+                Color = {r = 255, g = 217, b = 106},
+                Name = "Cuisine",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = true
+            }
+        },
+        SellZones = {
+            ChickenSell = {
+                Items = {
+                    {name = 'minced_meat', price = 80}
+                },
+                Pos = vector3(445.93, -1241.86, 29.30),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 255, g = 217, b = 106},
+                Name = "4. Vente des produits",
+                HelpText = _('press_sell'),
+                Marker = 27,
+                Blip = true
+            }
+        },
         BuyZones = {
             BuyDrinks = {
                 Items = {
@@ -1321,9 +1283,9 @@ Config.Jobs = {
                     {name = 'orangina', price = 20},
                     {name = 'cocacola', price = 20}
                 },
-                Pos = vector3(406.5, -350.02, 45.84),
+                Pos = vector3(388.90, -367.34, 45.84),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 136, g = 232, b = 9},
+                Color = {r = 255, g = 217, b = 106},
                 Name = "Achat de boissons",
                 HelpText = _('press_buy'),
                 Marker = 27,

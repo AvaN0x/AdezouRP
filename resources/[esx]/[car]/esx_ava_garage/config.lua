@@ -257,6 +257,24 @@ Config.Garages = {
 		},
 		Identifier = "garage_unicorn"
 	},
+    Garage_ATTACKATACO = {
+		Name = "hide",
+		Pos = {x = 23.76, y = -1589.26, z = 29.22},
+		Size  = {x = 2.0, y = 2.0, z = 2.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 36,
+		Blip = {
+			Sprite = 290,
+			Color = 0
+		},
+		Type = "car",
+		Job = 'attackataco',
+		SpawnPoint = {
+			Pos = {x = 23.76, y = -1589.26, z = 29.22},
+			Heading = 230.0
+		},
+		Identifier = "garage_attackataco"
+	},
 
 
 	Garage_VAGOS = {
