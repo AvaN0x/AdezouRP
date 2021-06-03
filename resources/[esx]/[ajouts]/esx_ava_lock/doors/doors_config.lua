@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 Config.Doors = {
-	Debug = true,
+	Debug = false,
 	DebugKey = 79,
 	ObjectDistance = 30,
 	DefaultDistance = 1.0,
