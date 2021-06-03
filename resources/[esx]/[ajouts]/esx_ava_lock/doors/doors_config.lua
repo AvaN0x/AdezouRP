@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 Config.Doors = {
-	Debug = false,
+	Debug = true,
 	DebugKey = 79,
 	ObjectDistance = 30,
 	DefaultDistance = 1.0,
@@ -676,6 +676,40 @@ Config.Doors = {
 			authorizedGangs = { 'biker_lost' },
 			objYaw = 42.65,
 			locked = false
+		},
+
+        -- attack a taco
+        {
+			objHash = -176100808,
+			objYaw = 50.0,
+			objCoords  = vector3(8.48, -1600.36, 29.39),
+			textCoords = vector3(8.55, -1600.87, 29.52),
+			authorizedJobs = { 'attackataco' },
+			locked = true
+		},
+        {
+			objHash = -176100808,
+            objYaw = 320.0,
+			objCoords  = vector3(12.93, -1604.84, 29.37),
+			textCoords = vector3(12.62, -1604.92, 29.52),
+			authorizedJobs = { 'attackataco' },
+			locked = true
+		},
+        {
+			objHash = -176100808,
+            objYaw = 50.0,
+			objCoords  = vector3(19.87, -1604.72, 29.37),
+			textCoords = vector3(19.57, -1604.90, 29.52),
+			authorizedJobs = { 'attackataco' },
+			locked = true
+		},
+        {
+			objHash = -176100808,
+            objYaw = 320.0,
+			objCoords  = vector3(18.87, -1599.13, 29.37),
+			textCoords = vector3(18.60, -1599.20, 29.52),
+			authorizedJobs = { 'attackataco' },
+			locked = true
 		},
 	}
 }
