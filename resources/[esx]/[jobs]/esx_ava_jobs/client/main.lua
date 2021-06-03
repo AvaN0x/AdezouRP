@@ -505,7 +505,8 @@ function JobMenu(jobName)
         local elements = {}
         for k, v in pairs(playerJobs[jobName].JobMenu) do
             if not ((v.ExcludeGrades and tableHasValue(v.ExcludeGrades, jobGrade))
-            or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+                or (v.OnlyGrades and not tableHasValue(v.OnlyGrades, jobGrade)))
+                and (not v.Condition or v.Condition(jobName, playerPed))
             then
                 table.insert(elements, {label = v.Label, value = k, detail = v.Detail, type = v.Type})
             end
@@ -517,7 +518,9 @@ function JobMenu(jobName)
             elements = elements
         },
         function(data, menu)
-            if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value] then
+            if playerJobs[jobName] and playerJobs[jobName].JobMenu[data.current.value]
+                and (not playerJobs[jobName].JobMenu[data.current.value].Condition or playerJobs[jobName].JobMenu[data.current.value].Condition(jobName, playerPed))
+            then
                 playerJobs[jobName].JobMenu[data.current.value].Action(data, menu, jobName)
             end
         end,

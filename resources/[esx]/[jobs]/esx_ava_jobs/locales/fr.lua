@@ -107,4 +107,11 @@ Locales['fr'] = {
     ['vehicle_plate'] = 'Plaque: %s',
     ['vehicle_owner'] = 'Propriétaire: %s',
     ['vehicle_owner_unknown'] = 'Inconnu',
+
+    ['police_megaphone'] = "Mégaphone de la voiture",
+    ['police_megaphone_detail'] = "Utiliser le mégaphone du véhicule",
+    ['police_megaphone_stop_vehicle'] = "Arrêtez le véhicule !",
+    ['police_megaphone_stop'] = "Arrêtez-vous !",
+    ['police_megaphone_clear'] = "Nettoyez la zone !",
+    ['police_megaphone_insult'] = "Insultes !",
 }

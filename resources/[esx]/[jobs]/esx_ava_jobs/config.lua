@@ -10,6 +10,119 @@ Config.MaxPickUp = 70
 Config.MaxPickUpIllegal = 70
 Config.JobMenuKey = "F6"
 
+Config.JobMenuElement = {
+    PoliceMegaphone = {
+        Label = _('police_megaphone'),
+        Detail = _('police_megaphone_detail'),
+        AllowedVehicles = {
+            GetHashKey('police'),
+            GetHashKey('police2'),
+            GetHashKey('police3'),
+            GetHashKey('police4'),
+            GetHashKey('fbi'),
+            GetHashKey('fbi2'),
+            GetHashKey('riot'),
+            GetHashKey('riot2'),
+            GetHashKey('policet'),
+            GetHashKey('sheriff'),
+            GetHashKey('sheriff2'),
+            GetHashKey('riot'),
+            GetHashKey('pranger'),
+            GetHashKey('bcat'),
+            GetHashKey('pbus'),
+            GetHashKey('polbuffalo'),
+            GetHashKey('polgauntlet'),
+            GetHashKey('polbullet'),
+            GetHashKey('polvacca'),
+            GetHashKey('predator'),
+            GetHashKey('umoracle')
+        },
+        Condition = function(jobName, playerPed)
+            local veh = GetVehiclePedIsIn(playerPed, false)
+            if veh ~= 0 and (GetPedInVehicleSeat(veh, -1) == playerPed or GetPedInVehicleSeat(veh, 0) == playerPed) then
+                for k, vehicleHash in ipairs(Config.JobMenuElement.PoliceMegaphone.AllowedVehicles) do
+                    if IsVehicleModel(veh, vehicleHash) then
+                        return true
+                    end
+                end
+            end
+            return false
+        end,
+        Action = function(parentData, parentMenu, jobName)
+            local elements = {
+                {
+                    label = _('police_megaphone_stop_vehicle'), type = "submenu", elements = {
+                        {label = "LSPD! Stop...", detail = "LSPD! Stop your vehicle now!", distance = 30.0, volume = 0.6, soundName = "stop_vehicle"},
+                        {label = "Driver! Stop...", detail = "Driver! Stop your vehicle", distance = 30.0, volume = 0.6, soundName = "stop_vehicle-2"},
+                        {label = "Stop the fucking car...", detail = "This is the LSPD! Stop the fucking car immediately!", distance = 30.0, volume = 0.6, soundName = "stop_the_f_car"},
+                        {label = "Stop or executed...", detail = "LSPD! Stop your vehicle now or you'll be executed!", distance = 30.0, volume = 0.6, soundName = "stop_or_executed"},
+                        {label = "Stop or I kill ya...", detail = "Stop your vehicle right fucking now! Or I swear I am going to kill ya!", distance = 30.0, volume = 0.6, soundName = "stop_or_i_kill"}
+                    }
+                },
+                {
+                    label = _('police_megaphone_stop'), type = "submenu", elements = {
+                        {label = "Dont make me...", detail = "Stop! Don't make me shoot ya! Give yourself up!", distance = 30.0, volume = 0.6, soundName = "dont_make_me"},
+                        {label = "Dont move a muscle...", detail = "Stop and dont move a muscle, or you'll be shot by the LSPD!", distance = 30.0, volume = 0.6, soundName = "stop_dont_move"},
+                        {label = "Give yourself up...", detail = "LSPD! If you give yourself up I'll be a lot nicer shithead!", distance = 30.0, volume = 0.6, soundName = "give_yourself_up"},
+                        {label = "Stay right there...", detail = "LSPD! Stay right there and don't move, fucker!", distance = 30.0, volume = 0.6, soundName = "stay_right_there"},
+                        {label = "Freeze...", detail = "Freeze! LSPD!", distance = 30.0, volume = 0.6, soundName = "freeze_lspd"},
+                    }
+                },
+                {
+                    label = _('police_megaphone_clear'), type = "submenu", elements = {
+                        {label = "Clear the area...", detail = "This is the LSPD! Clear the area. Now!", distance = 30.0, volume = 0.6, soundName = "clear_the_area"},
+                        {label = "Go away now...", detail = "This is the LSPD! Go away now or there will be trouble.", distance = 30.0, volume = 0.6, soundName = "this_is_the_lspd"},
+                        {label = "Move along people...", detail = "Move along people. We don't want trouble.", distance = 30.0, volume = 0.6, soundName = "move_along_people"},
+                        {label = "Get out of here...", detail = "Get out of here now. This is the LSPD.", distance = 30.0, volume = 0.6, soundName = "get_out_of_here_now"},
+                        {label = "Disperse now...", detail = "This is the LSPD! Disperse, now!", distance = 30.0, volume = 0.6, soundName = "disperse_now"},
+                    }
+                },
+                {
+                    label = _('police_megaphone_insult'), type = "submenu", elements = {
+                        {label = "It's over...", detail = "It's over for you! This is the police!", distance = 30.0, volume = 0.6, soundName = "its_over_for_you"},
+                        {label = "You are finished...", detail = "You are finished dickhead! Stop!", distance = 30.0, volume = 0.6, soundName = "you_are_finished_dhead"},
+                        {label = "You can't hide boy...", detail = "You can't hide boy. We will track you down!", distance = 30.0, volume = 0.6, soundName = "cant_hide_boi"},
+                        {label = "Drop a missile...", detail = "Can't we just drop a missile on this moron?!", distance = 30.0, volume = 0.6, soundName = "drop_a_missile"},
+                        {label = "Shoot to kill...", detail = "This is the LSPD! I'm gonna shoot to kill!", distance = 30.0, volume = 0.6, soundName = "shoot_to_kill"},
+                    }
+                },
+
+            }
+            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_megaphone_menu',
+            {
+                title = _('police_megaphone'),
+                align = 'left',
+                elements = elements
+            },
+            function(data, menu)
+                ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_jobs_megaphone_submenu',
+                {
+                    title = _('police_megaphone'),
+                    align = 'left',
+                    elements = data.current.elements
+                },
+                function(data2, menu2)
+                    if Config.JobMenuElement.PoliceMegaphone.Condition(jobName, PlayerPedId()) then
+                        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", data2.current.distance, data2.current.soundName, data2.current.volume)
+                    else
+                        menu2.close()
+                        menu.close()
+                    end
+                end,
+                function(data2, menu2)
+                    menu2.close()
+                    CurrentActionEnabled = true
+                end)
+            end,
+            function(data, menu)
+                menu.close()
+                CurrentActionEnabled = true
+            end)
+        end
+    },
+}
+
+
 Config.Jobs = {
     lspd = {
         SocietyName = 'society_lspd',
@@ -189,6 +302,7 @@ Config.Jobs = {
 
                 end
             },
+            Config.JobMenuElement.PoliceMegaphone
         },
         Zones = {
             JobActions = {
@@ -1294,7 +1408,7 @@ Config.Jobs = {
         }
     },
 
-    
+
 
     weed = {
         isIllegal = true,
@@ -1675,3 +1789,4 @@ Config.Jobs = {
 	},
 
 }
+
