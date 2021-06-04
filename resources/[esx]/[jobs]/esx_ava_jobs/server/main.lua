@@ -473,25 +473,13 @@ ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, ta
     })
 
     local data = {
-        name      = GetPlayerName(target),
-        job       = xPlayer.job,
-        job2       = xPlayer.job2,
+        name = GetPlayerName(target),
+        job = xPlayer.job,
+        job2 = xPlayer.job2,
         firstname = result[1].firstname or "",
-        lastname  = result[1].lastname or "",
-        sex       = result[1].sex or 0,
+        lastname = result[1].lastname or "",
+        sex = result[1].sex or 0,
     }
-
-    TriggerEvent('esx_status:getStatus', target, 'drunk', function(status)
-        if status ~= nil then
-            data.drunk = math.floor(status.percent)
-        end
-    end)
-
-    TriggerEvent('esx_status:getStatus', target, 'drugged', function(status)
-        if status ~= nil then
-            data.drugged = math.floor(status.percent)
-        end
-    end)
 
     TriggerEvent('esx_license:getLicenses', target, function(licenses)
         data.licenses = licenses
