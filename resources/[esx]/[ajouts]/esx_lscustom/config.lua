@@ -7,25 +7,16 @@ Config.EnableJobLogs   = false -- only turn this on if you are using esx_joblogs
 Config.Zones = {
 
 	ls1 = {
-		Pos   = { x = -319.29, y = -119.48, z = 38.03},
+		Pos   = { x = -322.82, y = -132.22, z = 38.03},
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
-		Marker= 0,
+		Marker= 1,
 		Name  = _U('blip_name'),
 		Hint  = _U('press_custom')
 	},
 
 	ls2 = {
-		Pos   = { x = -320.21, y = -126.32, z = 38.03},
-		Size  = {x = 3.0, y = 3.0, z = 0.2},
-		Color = {r = 204, g = 204, b = 0},
-		Marker= 0,
-		Name  = _U('blip_name'),
-		Hint  = _U('press_custom')
-	},
-
-	ls3 = {
-		Pos   = { x = -322.82, y = -132.22, z = 38.03},
+		Pos   = { x = -316.49, y = -113.86, z = 38.03},
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,

@@ -390,38 +390,28 @@ Config.Doors = {
 			distance = 12
 		},
 		{
-			objName = 'prop_com_ls_door_01',
-			objCoords  = vector3( -349.75, -117.25, 39.16),
-			textCoords = vector3( -349.75, -117.25, 39.16),
+			objHash = -58137547,
+			objYaw = 340.0,
+			objCoords  = vector3(-347.91, -125.0, 39.01),
+			textCoords = vector3(-348.17, -124.92, 39.16),
 			authorizedJobs = { 'mecano' },
-			locked = true,
-			distance = 12
+			locked = true
 		},
 		{
-			objName = 'apa_v_ilev_ss_door7', -- porte sur le coté
+			objHash = -58137547,
 			objYaw = 250.0,
-			objCoords  = vector3(-345.69, -122.54, 39.01),
-			textCoords = vector3(-345.63, -122.42, 39.05),
+			objCoords  = vector3(-346.00, -122.4, 39.01),
+			textCoords = vector3(-345.65, -122.38, 39.15),
 			authorizedJobs = { 'mecano' },
-			distance = 1.5,
 			locked = true
 		},
 		{
-			objName = 'apa_v_ilev_ss_door8', -- porte sur le coté
+			objHash = -58137547,
 			objYaw = 70.0,
-			objCoords  = vector3(-347.98, -133.61, 39.01),
-			textCoords = vector3(-348.01, -133.75, 39.07),
+			objCoords  = vector3(-322.06, -120.90, 39.01),
+			textCoords = vector3(-321.77, -121.36, 39.16),
 			authorizedJobs = { 'mecano' },
-			distance = 1.5,
 			locked = true
-		},
-		{
-			objName = 'portels_3',
-			objCoords  = vector3(-321.84, -141.27, 39.01),
-			textCoords = vector3(-321.67, -141.18, 39.00),
-			authorizedJobs = { 'mecano' },
-			locked = true,
-			distance = 6
 		},
 
 		{ -- hidden custom

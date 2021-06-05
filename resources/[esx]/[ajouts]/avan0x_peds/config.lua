@@ -125,7 +125,7 @@ Config.Peds = {
         Type = "PED_TYPE_CIVFEMALE",
         PosList = {
             {
-                pos = vector3(-347.38, -127.79, 38.03),
+                pos = vector3(-347.04, -128.53, 38.03),
                 heading = 75.0,
                 name = "Maëlys",
                 offsetZ = 0.33,
