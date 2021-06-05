@@ -64,14 +64,14 @@ Config.Zones = {
 
 	SocietyGarage = {	
 		Name = "society_mecano",
-		Pos   = { x = -362.35, y = -145.63, z = 38.25 },
+		Pos   = { x = -356.24, y = -115.14, z = 38.19 },
 		Size  = { x = 1.5, y = 1.5, z = 1.5 },
 		Color = { r = 0, g = 255, b = 0 },
 		Marker = 36,
 		Type = 'car',
 		SpawnPoint = {
-			Pos = {x = -362.35, y = -145.63, z = 38.25},
-			Heading = 50.0
+			Pos = { x = -356.24, y = -115.14, z = 38.19 },
+			Heading = 70.0
 		}
 	},
 

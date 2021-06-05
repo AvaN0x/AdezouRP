@@ -169,7 +169,7 @@ Config.Garages = {
 	},
 	Garage_MECANO = {
 		Name = "hide",
-		Pos = {x = -326.24,y = -152.57,z = 36.3},
+		Pos = {x = -362.35, y = -145.63, z = 38.25},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
 		Color = {r = 255, g = 255, b = 255},
 		Marker = 36,
@@ -180,8 +180,8 @@ Config.Garages = {
 		Type = "car",
 		Job = 'mecano',
 		SpawnPoint = {
-			Pos = {x = -326.24,y = -152.57,z = 36.3},
-			Heading = 258.71
+			Pos = {x = -362.35, y = -145.63, z = 38.25},
+			Heading = 50.0
 		},
 		Identifier = "garage_mecano"
 	},
