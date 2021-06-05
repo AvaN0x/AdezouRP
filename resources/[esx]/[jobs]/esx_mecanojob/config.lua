@@ -80,7 +80,7 @@ Config.Zones = {
 		Pos   = { x = -370.25, y = -109.21, z = 37.7 },
 		Size  = { x = 12.0, y = 12.0, z = 3.0 },
 		Color = { r = 204, g = 204, b = 0 },
-		Marker = 25,
+		Marker = -1,
 	}
 
 }
