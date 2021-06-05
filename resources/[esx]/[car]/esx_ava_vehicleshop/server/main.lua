@@ -163,6 +163,7 @@ ESX.RegisterServerCallback('esx_vehicleshop:resellVehicle', function (source, cb
 					if vehicle.plate == plate then
 						xPlayer.addMoney(resellPrice)
 						RemoveOwnedVehicle(plate)
+                        exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff", "id `" .. _source .. "` `" .. xPlayer.identifier .. "`", "Sold vehicle with plate number `" .. plate .. "` for " .. resellPrice .. " $", 16114216)
 						cb(true)
 					else
 						print(('esx_vehicleshop: %s attempted to sell an vehicle with plate mismatch!'):format(xPlayer.identifier))
@@ -185,6 +186,7 @@ ESX.RegisterServerCallback('esx_vehicleshop:resellVehicle', function (source, cb
 								if vehicle.plate == plate then
 									xPlayer.addMoney(resellPrice)
 									RemoveOwnedVehicle(plate)
+                                    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff", "id `" .. _source .. "` `" .. xPlayer.identifier .. "`", "Sold vehicle with plate number `" .. plate .. "` for " .. resellPrice .. " $", 16114216)
 									cb(true)
 								else
 									print(('esx_vehicleshop: %s attempted to sell an vehicle with plate mismatch!'):format(xPlayer.identifier))
@@ -210,6 +212,7 @@ ESX.RegisterServerCallback('esx_vehicleshop:resellVehicle', function (source, cb
 								if vehicle.plate == plate then
 									xPlayer.addMoney(resellPrice)
 									RemoveOwnedVehicle(plate)
+                                    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff", "id `" .. _source .. "` `" .. xPlayer.identifier .. "`", "Sold vehicle with plate number `" .. plate .. "` for " .. resellPrice .. " $", 16114216)
 									cb(true)
 								else
 									print(('esx_vehicleshop: %s attempted to sell an vehicle with plate mismatch!'):format(xPlayer.identifier))
