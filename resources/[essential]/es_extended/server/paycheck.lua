@@ -40,8 +40,8 @@ ESX.StartPayCheck = function()
 
             ---SECONDJOB INCLUDED
 			if salary2 > 0 then
-				if job2 == 'unemployed2' then -- unemployed
-				xPlayer.addAccountMoney('bank', salary2)
+				if job2 == 'rsa' then -- unemployed2
+                    xPlayer.addAccountMoney('bank', salary2)
 					TriggerClientEvent('esx:showAdvancedNotification', xPlayer.source, _U('bank'), _U('received_paycheck2'), _U('received_help2', salary2), 'CHAR_BANK_MAZE', 9)
 				elseif Config.EnableSocietyPayouts then -- possibly a society
 					TriggerEvent('esx_society:getSociety', xPlayer.job2.name, function (society)
