@@ -841,7 +841,7 @@ AddEventHandler('esx_mecanojob:hasEnteredMarker', function(zone)
 		CurrentActionData = {}
 	elseif zone == 'SocietyGarage' then
 		CurrentAction     = 'mecano_garage_menu'
-		CurrentActionMsg  = _U('harvest_menu')
+		CurrentActionMsg  = _U('open_actions')
 		CurrentActionData = {}
 
 	-- elseif zone == 'VehicleDeleter' then
@@ -980,8 +980,8 @@ Citizen.CreateThread(function()
 
 			for k,v in pairs(Config.Zones) do
 				if (k ~= 'MecanoBlip' and GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x) then
-				isInMarker  = true
-				currentZone = k
+                    isInMarker  = true
+                    currentZone = k
 				end
 			end
 
