@@ -30,7 +30,8 @@
     position: relative;
     left: -15px;
     justify-content: left;
-    margin: 6px 0
+    margin: 6px 0;
+    flex-wrap: wrap;
 }
 
 .vert-stat {

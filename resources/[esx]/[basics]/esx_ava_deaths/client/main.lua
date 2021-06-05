@@ -78,13 +78,6 @@ function OnPlayerDeath()
 end
 
 
-function Normal()
-    local playerPed = GetPlayerPed(-1)
-    ClearTimecycleModifier()
-    ResetScenarioTypesEnabled()
-    -- SetPedMovementClipset(playerPed, "move_m@multiplayer", true)
-    SetPedMotionBlur(playerPed, false)
-end
 
 function getClosestHospital(playerPed)
     local coords = GetEntityCoords(playerPed)
@@ -92,7 +85,6 @@ function getClosestHospital(playerPed)
 
     for k, v in ipairs(Config.RespawnPoints) do
         local distance = #(coords - v.Pos)
-        print(distance)
         if not closestDistance or distance < closestDistance then
             closestDistance = distance
             closest = v
@@ -113,34 +105,27 @@ function RPDeathRespawn()
 		end
 
         local closestHospital = getClosestHospital(playerPed)
-        print(ESX.DumpTable(closestHospital))
 		ESX.SetPlayerData('lastPosition', closestHospital.Pos)
 		TriggerServerEvent('esx:updateLastPosition', closestHospital.Pos)
 		RespawnPed(playerPed, closestHospital.Pos, closestHospital.Heading)
 
-		StopScreenEffect('DeathFailOut')
 		DoScreenFadeIn(800)
 		Citizen.Wait(10)
 		ClearPedTasksImmediately(playerPed)
-		SetTimecycleModifier("spectator5") -- Je sait pas se que ça fait lel
-		SetPedMotionBlur(playerPed, true)
-		RequestAnimSet("move_injured_generic")
-			while not HasAnimSetLoaded("move_injured_generic") do
-				Citizen.Wait(0)
-			end
-		-- SetPedMovementClipset(playerPed, "move_injured_generic", true) // trouver une anim pour remettre l'anim de base ensuite dans Normal()
-		PlaySoundFrontend(-1, "1st_Person_Transition", "PLAYER_SWITCH_CUSTOM_SOUNDSET", 0)
+
+        PlaySoundFrontend(-1, "1st_Person_Transition", "PLAYER_SWITCH_CUSTOM_SOUNDSET", 0)
         PlaySoundFrontend(-1, "1st_Person_Transition", "PLAYER_SWITCH_CUSTOM_SOUNDSET", 0)
 
-        ESX.ShowAdvancedNotification('REANIMATION X', 'Unité X réanimation', 'Vous avez été réanimé par l\'unité X.', 'CHAR_CALL911', 1) -- todo local
+        ESX.ShowAdvancedNotification('', 'Unité X réanimation', 'Vous avez été réanimé par l\'unité X.', 'CHAR_CALL911', 1)
 
-        local ped = GetPlayerPed(PlayerId())
-		local coords = GetEntityCoords(ped, false)
-		local name = GetPlayerName(PlayerId())
-		local x, y, z = table.unpack(GetEntityCoords(ped, false))
-		TriggerServerEvent('esx_ambulance:NotificationBlipsX', x, y, z, name)
-		Citizen.Wait(60*1000) -- Effets de la réanimation pendant 1 minute ( 60 seconde )
-		Normal()
+        for i = 1, 10, 1 do
+            DoScreenFadeOut(200)
+            Wait(200)
+            DoScreenFadeIn(200)
+            Wait(5000)
+        end
+
+		StopScreenEffect('DeathFailOut')
 	end)
 end
 
@@ -381,8 +366,8 @@ AddEventHandler('esx_ava_deaths:revive', function()
 	end)
 end)
 
-RegisterNetEvent('esx_ava_deaths:revive2')
-AddEventHandler('esx_ava_deaths:revive2', function(debug)
+RegisterNetEvent('esx_ava_deaths:admin:revive')
+AddEventHandler('esx_ava_deaths:admin:revive', function(debug)
 	local playerPed = PlayerPedId()
 	
 	ESX.TriggerServerCallback('esx_ava_deaths:getDeathStatus', function(isDead)

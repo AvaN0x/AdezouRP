@@ -14,9 +14,10 @@ Citizen.CreateThread(function()
 	end
 end)
 
-AddEventHandler('esx_ava_needs:resetStatus', function()
-	TriggerEvent('esx_status:set', 'hunger', 500000)
-	TriggerEvent('esx_status:set', 'thirst', 500000)
+AddEventHandler('esx_ava_needs:onRevive', function()
+	TriggerEvent('esx_status:set', 'hunger', 200000)
+	TriggerEvent('esx_status:set', 'thirst', 200000)
+	TriggerEvent("esx_status:add", "injured", 200000)
 end)
 
 RegisterNetEvent('esx_ava_needs:healPlayer')
@@ -26,6 +27,7 @@ AddEventHandler('esx_ava_needs:healPlayer', function()
 	TriggerEvent('esx_status:set', 'thirst', 1000000)
 	TriggerEvent('esx_status:set', 'drunk', 0)
 	TriggerEvent('esx_status:set', 'drugged', 0)
+	TriggerEvent('esx_status:set', 'injured', 0)
 
 	-- restore hp
 	local playerPed = PlayerPedId()
@@ -38,7 +40,7 @@ end)
 
 AddEventHandler('playerSpawned', function(spawn)
 	if IsDead then
-		TriggerEvent('esx_ava_needs:resetStatus')
+		TriggerEvent('esx_ava_needs:onRevive')
 	end
 
 	IsDead = false
@@ -68,6 +70,12 @@ AddEventHandler('esx_status:loaded', function(status)
         return false
     end, function(status)
 		status.remove(1000)
+    end)
+
+	TriggerEvent('esx_status:registerStatus', 'injured', 0, '#03bdae', function(status)
+        return false
+    end, function(status)
+		status.remove(150)
     end)
 
 	Citizen.CreateThread(function()
@@ -100,10 +108,7 @@ AddEventHandler('esx_status:loaded', function(status)
 
 			TriggerEvent('esx_status:getStatus', 'drunk', function(status)
 				if status.val > 0 then
-					local start = true
-					if IsAlreadyDrunk then
-						start = false
-					end
+					local start = not IsAlreadyDrunk
 
 					local level = 0
 					if status.val <= 250000 then
@@ -117,23 +122,19 @@ AddEventHandler('esx_status:loaded', function(status)
 						Drunk(level, start)
 					end
 					IsAlreadyDrunk = true
-					DrunkLevel     = level
-				end
-				if status.val == 0 then
+					DrunkLevel = level
+				else
 					if IsAlreadyDrunk then
 						Reality()
 					end
 					IsAlreadyDrunk = false
-					DrunkLevel     = -1
+					DrunkLevel = -1
 				end
 			end)
 
 			TriggerEvent('esx_status:getStatus', 'drugged', function(status)
 				if status.val > 0 then
-					local start = true
-					if IsAlreadyDrugged then
-						start = false
-					end
+					local start = not IsAlreadyDrugged
 					
 					Drugged(start)
 					IsAlreadyDrugged = true
@@ -145,6 +146,33 @@ AddEventHandler('esx_status:loaded', function(status)
 					IsAlreadyDrugged = false
 				end
 			end)
+
+			TriggerEvent('esx_status:getStatus', 'injured', function(status)
+				if status.val > 0 then
+					local start = not IsAlreadyInjured
+
+					local level = 0
+					if status.val <= 200000 then
+						level = 0
+					elseif status.val <= 500000 then
+						level = 1
+					else
+						level = 2
+					end
+					if level ~= InjureLevel then
+						Injured(level, start, InjureLevel)
+					end
+					IsAlreadyInjured = true
+					InjureLevel = level
+                else
+					if IsAlreadyInjured then
+						Reality(true)
+					end
+					IsAlreadyInjured = false
+					InjureLevel = -1
+				end
+			end)
+
 
 			if health ~= prevHealth then
 				SetEntityHealth(playerPed, health)
@@ -210,6 +238,19 @@ AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 	end
 end)
 
+RegisterNetEvent('esx_ava_needs:onSmokeDrug')
+AddEventHandler('esx_ava_needs:onSmokeDrug', function()
+    if not IsAnimated then
+        IsAnimated = true
+        local playerPed = PlayerPedId()
+
+        
+        TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
+        Citizen.Wait(3000)
+        ClearPedTasksImmediately(playerPed)
+        IsAnimated = false
+    end
+end)
 
 
 
@@ -218,7 +259,7 @@ end)
 
 function Drunk(level, start)
 	Citizen.CreateThread(function()
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		if start then
 			DoScreenFadeOut(800)
 			Wait(1000)
@@ -258,7 +299,7 @@ end
 
 function Drugged(start)
 	Citizen.CreateThread(function()
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 
 		if start then
 			DoScreenFadeOut(1000)
@@ -275,13 +316,58 @@ function Drugged(start)
 	end)
 end
 
-function Reality()
+-- injured effect
+
+function Injured(level, start, oldLevel)
 	Citizen.CreateThread(function()
+		local playerPed = PlayerPedId()
+		if start then
+			DoScreenFadeOut(800)
+			Wait(1000)
+		end
+
+        RequestAnimSet("move_injured_generic")
+        while not HasAnimSetLoaded("move_injured_generic") do
+            Citizen.Wait(0)
+        end
+		SetPedMovementClipset(playerPed, "move_injured_generic", true)
+
+		if level == 0 then
+
+        elseif level == 1 then
+            -- old level was 2
+            if oldLevel == 2 then
+                ClearTimecycleModifier()
+            end
+
+        elseif level == 2 then
+            SetTimecycleModifier("spectator5")
+
+        end
+
+
+
+		SetPedMotionBlur(playerPed, true)
+		-- SetPedIsDrunk(playerPed, true)
+
+		if start then
+			DoScreenFadeIn(800)
+		end
+	end)
+end
+
+
+
+-- back to reality
+
+function Reality(noFade)
+	Citizen.CreateThread(function()
+		local playerPed = PlayerPedId()
 	
-		local playerPed = GetPlayerPed(-1)
-	
-		DoScreenFadeOut(800)
-		Wait(1000)
+        if not noFade then
+            DoScreenFadeOut(800)
+            Wait(1000)
+        end
 	
 		ClearTimecycleModifier()
 		ResetScenarioTypesEnabled()
@@ -289,15 +375,8 @@ function Reality()
 		SetPedIsDrunk(playerPed, false)
 		SetPedMotionBlur(playerPed, false)
 	
-		DoScreenFadeIn(800)
+        if not noFade then
+            DoScreenFadeIn(800)
+        end
 	end)
 end
-
-RegisterNetEvent('esx_ava_needs:onSmokeDrug')
-AddEventHandler('esx_ava_needs:onSmokeDrug', function()
-	local playerPed = GetPlayerPed(-1)
-	
-	TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
-	Citizen.Wait(3000)
-	ClearPedTasksImmediately(playerPed)
-end)

@@ -8,9 +8,6 @@ local playersHealing = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-TriggerEvent('esx_phone:registerNumber', 'ems', _U('alert_ems'), true, true)
-TriggerEvent('esx_society:registerSociety', 'ems', 'EMS', 'society_ems', 'society_ems', 'society_ems', {type = 'public'})
-
 RegisterServerEvent('esx_ava_deaths:revive')
 AddEventHandler('esx_ava_deaths:revive', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -24,68 +21,28 @@ AddEventHandler('esx_ava_deaths:revive', function(target)
 			xPlayer.addMoney(Config.ReviveReward)
 			TriggerClientEvent('esx_ava_deaths:revive', target)
 			societyAccount.addMoney(Config.ReviveReward)
-			print('EMS : '..Config.ReviveReward..'$ ajouté au coffre')
+			print('EMS : ' .. Config.ReviveReward .. '$ ajouté au coffre')
 		end
 	else
 		print(('esx_ava_deaths: %s attempted to revive!'):format(xPlayer.identifier))
 	end
 end)
 
-RegisterServerEvent('esx_ava_deaths:revive2')
-AddEventHandler('esx_ava_deaths:revive2', function(target, debug)
+RegisterServerEvent('esx_ava_deaths:admin:revive')
+AddEventHandler('esx_ava_deaths:admin:revive', function(target, debug)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xPlayers = ESX.GetPlayers()
-	TriggerClientEvent('esx_ava_deaths:revive2', target, debug)
-end)
-
-TriggerEvent('es:addGroupCommand', 'revive', 'mod', function(source, args, user)
-	if args[1] ~= nil then
-		if GetPlayerName(tonumber(args[1])) ~= nil then
-			print(('esx_ava_deaths: %s used admin revive'):format(GetPlayerIdentifiers(source)[1]))
-			TriggerClientEvent('esx_ava_deaths:revive2', tonumber(args[1]))
-		end
-	else
-		TriggerClientEvent('esx_ava_deaths:revive2', source)
-	end
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
-end, { help = _U('revive_help'), params = {{ name = 'id' }} })
-
-
-ESX.RegisterUsableItem('medikit', function(source)
-	if not playersHealing[source] then
-		local xPlayer = ESX.GetPlayerFromId(source)
-		xPlayer.removeInventoryItem('medikit', 1)
-
-		playersHealing[source] = true
-		TriggerClientEvent('esx_ava_deaths:useItem', source, 'medikit')
-
-		Citizen.Wait(10000)
-		playersHealing[source] = nil
-	end
-end)
-
-ESX.RegisterUsableItem('bandage', function(source)
-	if not playersHealing[source] then
-		local xPlayer = ESX.GetPlayerFromId(source)
-		xPlayer.removeInventoryItem('bandage', 1)
-	
-		playersHealing[source] = true
-		TriggerClientEvent('esx_ava_deaths:useItem', source, 'bandage')
-
-		Citizen.Wait(10000)
-		playersHealing[source] = nil
-	end
+	TriggerClientEvent('esx_ava_deaths:admin:revive', target, debug)
 end)
 
 ESX.RegisterServerCallback('esx_ava_deaths:getDeathStatus', function(source, cb)
-	local identifier = GetPlayerIdentifiers(source)[1]
+	local xPlayer = ESX.GetPlayerFromId(source)
 
 	MySQL.Async.fetchScalar('SELECT is_dead FROM users WHERE identifier = @identifier', {
-		['@identifier'] = identifier
+		['@identifier'] = xPlayer.identifier
 	}, function(isDead)
 		if isDead then
-			print(('esx_ava_deaths: %s attempted combat logging!'):format(identifier))
+			print(('esx_ava_deaths: %s spawned dead!'):format(identifier))
 		end
 
 		cb(isDead)
@@ -94,7 +51,7 @@ end)
 
 RegisterServerEvent('esx_ava_deaths:setDeathStatus')
 AddEventHandler('esx_ava_deaths:setDeathStatus', function(isDead)
-	local identifier = GetPlayerIdentifiers(source)[1]
+	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if type(isDead) ~= 'boolean' then
 		print(('esx_ava_deaths: %s attempted to parse something else than a boolean to setDeathStatus!'):format(identifier))
@@ -102,49 +59,9 @@ AddEventHandler('esx_ava_deaths:setDeathStatus', function(isDead)
 	end
 
 	MySQL.Sync.execute('UPDATE users SET is_dead = @isDead WHERE identifier = @identifier', {
-		['@identifier'] = identifier,
+		['@identifier'] = xPlayer.identifier,
 		['@isDead'] = isDead
 	})
-end)
-
-RegisterServerEvent('esx_ava_deaths:giveItem')
-AddEventHandler('esx_ava_deaths:giveItem', function(itemName)
-	local xPlayer = ESX.GetPlayerFromId(source)
-
-	if xPlayer.job.name ~= 'ems' and xPlayer.job2.name ~= 'ems' then
-		print(('esx_ava_deaths: %s attempted to spawn in an item!'):format(xPlayer.identifier))
-		return
-	elseif (itemName ~= 'medikit' and itemName ~= 'bandage') then
-		print(('esx_ava_deaths: %s attempted to spawn in an item!'):format(xPlayer.identifier))
-		return
-	end
-
-	local xItem = xPlayer.getInventoryItem(itemName)
-	local count = 1
-
-	if xItem.limit ~= -1 and xItem.count < xItem.limit then
-		xPlayer.addInventoryItem(itemName, xItem.limit - xItem.count)
-	else
-		TriggerClientEvent('esx:showNotification', source, _U('max_item'))
-	end
-end)
-
-ESX.RegisterServerCallback('esx_ava_deaths:getItemAmount', function(source, cb, item)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	local quantity = xPlayer.getInventoryItem(item).count
-
-	cb(quantity)
-end)
-
-RegisterServerEvent('esx_ava_deaths:heal')
-AddEventHandler('esx_ava_deaths:heal', function(target, type)
-	local xPlayer = ESX.GetPlayerFromId(source)
-
-	if xPlayer.job.name == 'ems' or xPlayer.job2.name == 'ems' then
-		TriggerClientEvent('esx_ava_deaths:heal', target, type)
-	else
-		print(('esx_ambulancejob: %s attempted to heal!'):format(xPlayer.identifier))
-	end
 end)
 
 RegisterServerEvent('esx_ava_deaths:uniteX')
@@ -161,9 +78,19 @@ AddEventHandler('esx_ava_deaths:uniteX', function(target, debug)
         end
     end
 
-    if ems > 0 then
-        TriggerEvent('esx_billing:sendBillWithId', xPlayer.identifier, 'society_ems', "Unité X", Config.RespawnFineAmount)
-    else
-        TriggerEvent('esx_billing:sendBillWithId', xPlayer.identifier, 'society_ems', "Unité X", Config.RespawnFineAmountNoEMS)
-    end
+    TriggerEvent('esx_billing:sendBillWithId', xPlayer.identifier, 'society_ems', "Unité X", ems > 0 and Config.RespawnFineAmount or Config.RespawnFineAmountNoEMS)
 end)
+
+
+TriggerEvent('es:addGroupCommand', 'revive', 'mod', function(source, args, user)
+	if args[1] ~= nil then
+		if GetPlayerName(tonumber(args[1])) ~= nil then
+			print(('esx_ava_deaths: %s used admin revive'):format(GetPlayerIdentifiers(source)[1]))
+			TriggerClientEvent('esx_ava_deaths:admin:revive', tonumber(args[1]))
+		end
+	else
+		TriggerClientEvent('esx_ava_deaths:admin:revive', source)
+	end
+end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+end, { help = _U('revive_help'), params = {{ name = 'id' }} })
