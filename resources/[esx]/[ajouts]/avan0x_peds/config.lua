@@ -68,6 +68,7 @@ Config.Peds = {
                 pos = vector3(440.05, -978.86, 29.71),
                 heading = 183.6,
                 name = "Jessica",
+                bubble = "Quelle est votre urgence ?",
                 variations = {
                     {componentId = 2, drawableId = 1},
                     {componentId = 9, drawableId = 1}
@@ -83,6 +84,7 @@ Config.Peds = {
                 pos = vector3(454.18, -980.11, 29.71),
                 heading = 90.0,
                 name = "George",
+                bubble = "T'as besoin de quoi ?",
                 variations = {
                     {componentId = 0, drawableId = 0, textureId = 1},
                     {componentId = 9, drawableId = 2}
@@ -101,7 +103,8 @@ Config.Peds = {
                 pos = vector3(-550.76, -190.07, 36.72),
                 heading = 193.6,
                 scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
-                name = "Agatha"
+                -- name = "Agatha",
+                bubble = "Bonjour, je suis ~y~Agatha~s~, que puis-je faire pour vous ?"
             },
         }
     },
@@ -148,6 +151,7 @@ Config.Peds = {
                 heading = 166.76,
                 scenario = "PROP_HUMAN_SEAT_BENCH",
                 name = "Philippe",
+                bubble = "Besoin de déposer de l'argent sur le compte de votre entreprise ?",
                 variations = {
                     {componentId = 8, drawableId = 0, textureId = 4}
                 }
@@ -157,6 +161,7 @@ Config.Peds = {
                 heading = 166.76,
                 scenario = "PROP_HUMAN_SEAT_BENCH",
                 name = "Robert",
+                bubble = "Ici pour un retrait ?",
                 variations = {
                     {componentId = 0, drawableId = 1, textureId = 1},
                     {componentId = 2, drawableId = 1},

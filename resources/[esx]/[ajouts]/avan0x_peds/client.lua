@@ -46,8 +46,8 @@ Citizen.CreateThread(function()
                 TaskStartScenarioInPlace(ped, p.scenario, 0, false)
             end
 
-            if p.name then
-                table.insert(pedNames, {pos = p.pos, entity = ped, name = p.name, offsetZ = p.offsetZ or 0.2})
+            if p.name or p.bubble then
+                table.insert(pedNames, {pos = p.pos, entity = ped, name = p.name, bubble = p.bubble, offsetZ = p.offsetZ or 0.2})
             end
         end
 
@@ -75,18 +75,25 @@ Citizen.CreateThread(function()
         for _, ped in ipairs(pedNames) do
             if #(playerCoords - ped.pos) < 4 then
                 wait = 0
-                DrawText3D(GetPedBoneCoords(ped.entity, 0x796e, ped.offsetZ , 0, 0), ped.name)
+                local boneCoord = GetPedBoneCoords(ped.entity, 0x796e, ped.offsetZ , 0, 0)
+                if ped.name then
+                    DrawText3D(boneCoord.x, boneCoord.y, boneCoord.z, ped.name, 0.25)
+                end
+                if ped.bubble then
+                    DrawBubbleText3D(boneCoord.x, boneCoord.y, boneCoord.z, ped.bubble)
+                end
             end
         end
         Wait(wait)
     end
 end)
 
-function DrawText3D(vector, text)
-    local onScreen, _x, _y = World3dToScreen2d(vector.x, vector.y, vector.z)
+
+function DrawText3D(x, y, z, text, size)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
     if onScreen then
-        SetTextScale(0.25, 0.25)
+        SetTextScale(0.35, size or 0.35)
         SetTextFont(0)
         SetTextProportional(1)
         SetTextColour(255, 255, 255, 215)
@@ -97,4 +104,23 @@ function DrawText3D(vector, text)
         AddTextComponentString(text)
         DrawText(_x, _y)
     end
+end
+
+
+function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
+    AddTextEntry(GetCurrentResourceName(), text)
+    BeginTextCommandDisplayHelp(GetCurrentResourceName())
+    EndTextCommandDisplayHelp(2, false, false, -1)
+    SetFloatingHelpTextWorldPosition(1, x, y, z)
+
+
+    local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+    local bubbleStyle = bubbleStyle or 3
+    -- -1 centered, no triangles
+    -- 0 left, no triangles
+    -- 1 centered, triangle top
+    -- 2 left, triangle left
+    -- 3 centered, triangle bottom
+    -- 4 right, triangle right
+    SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
 end
