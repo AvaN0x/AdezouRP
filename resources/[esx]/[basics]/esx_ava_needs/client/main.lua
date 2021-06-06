@@ -7,6 +7,10 @@ ESX          = nil
 local IsDead = false
 local IsAnimated = false
 
+local IsAlreadyDrunk, DrunkLevel = nil, nil
+local IsAlreadyDrugged = nil
+local IsAlreadyInjured, InjureLevel, InjureLoop = nil, nil, 0
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -147,7 +151,7 @@ AddEventHandler('esx_status:loaded', function(status)
 				end
 			end)
 
-			TriggerEvent('esx_status:getStatus', 'injured', function(status)
+            TriggerEvent('esx_status:getStatus', 'injured', function(status)
 				if status.val > 0 then
 					local start = not IsAlreadyInjured
 
@@ -159,11 +163,13 @@ AddEventHandler('esx_status:loaded', function(status)
 					else
 						level = 2
 					end
-					if level ~= InjureLevel then
+					if level ~= InjureLevel or InjureLoop == 10 then
+                        InjureLoop = 0
 						Injured(level, start, InjureLevel)
 					end
 					IsAlreadyInjured = true
 					InjureLevel = level
+                    InjureLoop = InjureLoop + 1
                 else
 					if IsAlreadyInjured then
 						Reality(true)
