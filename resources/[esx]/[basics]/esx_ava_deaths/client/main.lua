@@ -118,14 +118,18 @@ function RPDeathRespawn()
 
         ESX.ShowAdvancedNotification('', 'Unité X réanimation', 'Vous avez été réanimé par l\'unité X.', 'CHAR_CALL911', 1)
 
-        for i = 1, 10, 1 do
+        for i = 1, 8, 1 do
             DoScreenFadeOut(200)
             Wait(200)
             DoScreenFadeIn(200)
             Wait(5000)
         end
+        Wait(10000)
 
+        DoScreenFadeOut(600)
+        Wait(1000)
 		StopScreenEffect('DeathFailOut')
+        DoScreenFadeIn(600)
 	end)
 end
 
@@ -138,9 +142,6 @@ function RespawnPed(ped, coords, heading)
 
 	ESX.UI.Menu.CloseAll()
 end
-
-
-
 
 function StartDeathTimer()
 	local earlySpawnTimer = ESX.Math.Round(Config.WaitBeforeRespawnAvailableTimer / 1000)
