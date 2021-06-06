@@ -1382,7 +1382,7 @@ Config.Jobs = {
                 Pos = vector3(445.93, -1241.86, 29.30),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
-                Name = "4. Vente des produits",
+                Name = "3. Vente des produits",
                 HelpText = _('press_sell'),
                 Marker = 27,
                 Blip = true
