@@ -13,16 +13,16 @@ AddEventHandler('esx_ava_deaths:revive', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if xPlayer.job.name == 'ems' or xPlayer.job2.name  == 'ems' then
-		local societyAccount = nil
-		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ems', function(account)
-			societyAccount = account
-		end)
-		if societyAccount ~= nil then
-			xPlayer.addMoney(Config.ReviveReward)
+		-- local societyAccount = nil
+		-- TriggerEvent('esx_addonaccount:getSharedAccount', 'society_ems', function(account)
+		-- 	societyAccount = account
+		-- end)
+		-- if societyAccount ~= nil then
+			-- xPlayer.addMoney(Config.ReviveReward)
 			TriggerClientEvent('esx_ava_deaths:revive', target)
-			societyAccount.addMoney(Config.ReviveReward)
-			print('EMS : ' .. Config.ReviveReward .. '$ ajouté au coffre')
-		end
+			-- societyAccount.addMoney(Config.ReviveReward)
+			-- print('EMS : ' .. Config.ReviveReward .. '$ ajouté au coffre')
+		-- end
 	else
 		print(('esx_ava_deaths: %s attempted to revive!'):format(xPlayer.identifier))
 	end
@@ -41,8 +41,9 @@ ESX.RegisterServerCallback('esx_ava_deaths:getDeathStatus', function(source, cb)
 	MySQL.Async.fetchScalar('SELECT is_dead FROM users WHERE identifier = @identifier', {
 		['@identifier'] = xPlayer.identifier
 	}, function(isDead)
+        print(('esx_ava_deaths: %s get status %s'):format(xPlayer.identifier, (isDead and "dead" or "alive")))
 		if isDead then
-			print(('esx_ava_deaths: %s spawned dead!'):format(identifier))
+			print(('esx_ava_deaths: %s spawned dead!'):format(xPlayer.identifier))
 		end
 
 		cb(isDead)
@@ -62,6 +63,8 @@ AddEventHandler('esx_ava_deaths:setDeathStatus', function(isDead)
 		['@identifier'] = xPlayer.identifier,
 		['@isDead'] = isDead
 	})
+    print(('esx_ava_deaths: %s is set %s'):format(xPlayer.identifier, (isDead and "dead" or "alive")))
+
 end)
 
 RegisterServerEvent('esx_ava_deaths:uniteX')

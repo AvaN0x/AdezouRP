@@ -54,9 +54,12 @@ AddEventHandler('playerSpawned', function()
 				while not PlayerLoaded do
 					Citizen.Wait(1000)
 				end
+                local playerPed = PlayerPedId()
 				Citizen.Wait(1000)
-				SetEntityHealth(PlayerPedId(), 0)
+				SetEntityHealth(playerPed, 0)
 				OnPlayerDeath()
+				Citizen.Wait(5000)
+				SetEntityHealth(playerPed, 0)
 			end
 		end)
 	end

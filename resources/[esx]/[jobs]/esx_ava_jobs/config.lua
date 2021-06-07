@@ -468,6 +468,102 @@ Config.Jobs = {
             }
         }
     },
+    ems = {
+        SocietyName = 'society_ems',
+        LabelName = 'EMS',
+        ServiceCounter = true,
+        Blip = {
+            Name = "~b~Hopital",
+            Pos = vector3(298.48, -584.48, 43.28),
+            Sprite = 61,
+            Colour = 26
+        },
+        JobMenu = {
+            {
+                Label = _('ems_get_health_status'),
+                Detail = _('ems_get_health_status_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        -- TriggerServerEvent('esx_avan0x:showNotification', targetId, _('being_searched'))
+                        -- TriggerEvent("esx_ava_inventories:openPlayerInventory", targetId)
+                    end)
+                end
+            },
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(339.21, -595.63, 42.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Blip = true,
+                NoStock = true,
+                OnlyGrades = {"boss"}
+            },
+            Dressing = {
+                Pos = vector3(299.03, -598.51, 42.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+            },
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(337.34, -579.28, 28.80),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 139, b = 90},
+                Marker = 36,
+                Type = "car",
+                SpawnPoint = {
+                    Pos = vector3(337.34, -579.28, 28.80),
+                    Heading = 340.0
+                }
+            },
+            KitchenStock = {
+				Pos = vector3(306.89, -601.61, 42.30),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+				Name  = "Cuisine",
+                StockName = "society_ems",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            HeliGarage = {
+                Name  = "Héliport",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(351.05, -588.07, 74.17),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 139, b = 90},
+                Distance = 3,
+                Marker = 34,
+                Type = "heli",
+                SpawnPoint = {
+                    Pos = vector3(351.05, -588.07, 74.17),
+                    Heading = 245.0
+                }
+            },
+        },
+        BuyZones = {
+            BuyItems = {
+                Items = {
+                    {name = 'ethylotest', price = 15000},
+                    {name = 'handcuffs', price = 10000},
+                },
+                Pos = vector3(812.26, -2153.55, 28.64),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Achat de protections et menottes",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"doctor", "boss"},
+                Marker = 27,
+                Blip = true
+            }
+        }
+    },
     vigneron = {
         SocietyName = 'society_vigneron',
         LabelName = 'Vigneron',
