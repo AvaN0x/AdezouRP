@@ -447,16 +447,16 @@ function admin_noclip()
 	noclip = not noclip
 	local playerPed = PlayerPedId()
 
+    FreezeEntityPosition(playerPed, noclip)
+    SetEntityVisible(playerPed, not noclip, false)
 	if noclip then
 		-- SetPlayerInvincible(playerPed, true)
-		SetEntityVisible(playerPed, false, false)
 		ESX.ShowNotification("NoClip ~g~Activé")
         ClearPedTasksImmediately(playerPed)
 	else
 		-- if not admin_mode then
 			-- SetPlayerInvincible(playerPed, false)
 		-- end
-		SetEntityVisible(playerPed, true, false)
 		ESX.ShowNotification("NoClip ~r~Désactivé")
 	end
 end
