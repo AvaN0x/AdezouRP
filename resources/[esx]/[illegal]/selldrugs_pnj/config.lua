@@ -3,9 +3,9 @@ Config = {
     npcFightOnReject = true,
     account = 'black_money', --change to 'money' if you want
     drugs = {
-        ['bagweed'] = 110,
+        ['bagweed'] = 90,
         ['bagcoke'] = 195,
-        ['bagexta'] = 90,
+        ['bagexta'] = 110,
         ['methamphetamine'] = 290,
         --add as much as you want
     },
