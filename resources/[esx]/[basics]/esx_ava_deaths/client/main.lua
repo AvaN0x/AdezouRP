@@ -103,6 +103,7 @@ function RPDeathRespawn()
 		while not IsScreenFadedOut() do
 			Citizen.Wait(10)
 		end
+        StartScreenEffect('DeathFailOut', 10 * 60 * 1000, false) -- longer than needed
 
         local closestHospital = getClosestHospital(playerPed)
 		ESX.SetPlayerData('lastPosition', closestHospital.Pos)
@@ -120,9 +121,9 @@ function RPDeathRespawn()
 
         for i = 1, 8, 1 do
             DoScreenFadeOut(200)
-            Wait(200)
+            Wait(math.random(2, 4) * 100)
             DoScreenFadeIn(200)
-            Wait(5000)
+            Wait(math.random(5, 10) * 1000)
         end
         Wait(10000)
 
