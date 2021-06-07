@@ -114,4 +114,13 @@ Locales['fr'] = {
     ['police_megaphone_stop'] = "Arrêtez-vous !",
     ['police_megaphone_clear'] = "Nettoyez la zone !",
     ['police_megaphone_insult'] = "Insultes !",
+
+    -- EMS
+    ["ems_check_injuries"] = "Blessures",
+    ["ems_check_injuries_detail"] = "Observer les blessures de l'individu",
+    ["ems_injuries_label"] = 'Etat <span style="color: %s">%s</span>',
+    ["ems_injuries_healthy"] = "Sain",
+    ["ems_injuries_injured_high"] = "Blessé grave",
+    ["ems_injuries_injured"] = "Blessé",
+    ["ems_injuries_injured_low"] = "Blessé faible",
 }

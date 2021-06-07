@@ -463,9 +463,9 @@ ESX.RegisterUsableItem('grand_crubox', function(source)
 	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
 end)
 
---------------
+----------
 -- LSPD --
---------------
+----------
 ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, target)
     local xPlayer = ESX.GetPlayerFromId(target)
     local result = MySQL.Sync.fetchAll('SELECT firstname, lastname, sex FROM users WHERE identifier = @identifier', {
@@ -512,4 +512,16 @@ ESX.RegisterServerCallback('esx_ava_jobs:getVehicleInfos', function(source, cb, 
 			cb(vehicleInfos)
 		end
 	end)
+end)
+
+---------
+-- EMS --
+---------
+ESX.RegisterServerCallback('esx_ava_jobs:ems:getTargetData', function(source, cb, target)
+    local data = {}
+
+    TriggerEvent('esx_status:getStatus', target, 'injured', function(status)
+        data.injured = math.floor(status.percent or 0)
+        cb(data)
+    end)
 end)

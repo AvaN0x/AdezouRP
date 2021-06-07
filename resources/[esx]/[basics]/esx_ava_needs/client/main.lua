@@ -347,7 +347,12 @@ function Injured(level, start, oldLevel)
             end
 
         elseif level == 2 then
-            SetTimecycleModifier("spectator5")
+            -- SetTimecycleModifier("phone_cam5")
+
+            -- SetTimecycleModifier("pulse")
+
+            SetTimecycleModifier("redmist")
+            SetTimecycleModifierStrength(0.7)
 
         end
 

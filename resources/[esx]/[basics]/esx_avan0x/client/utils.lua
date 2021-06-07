@@ -42,6 +42,12 @@ function ChooseClosestPlayer(cb, title, distance)
                 end
             end
         end)
+        Citizen.CreateThread(function()
+            while drawPlayers do
+                Citizen.Wait(500)
+                drawPlayers = ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'esx_avan0x_choose_closest_player')
+            end
+        end)
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_player",
         {
             title = title,
@@ -96,6 +102,12 @@ function ChooseClosestVehicle(cb, title, distance)
                     DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.3, vehCoords.x, vehCoords.y, vehCoords.z + 0.3, 255, 0, 255, 128)
                     DrawText3D(vehCoords.x, vehCoords.y, vehCoords.z + 0.3, v.label, 0.3)
                 end
+            end
+        end)
+        Citizen.CreateThread(function()
+            while drawVehicles do
+                Citizen.Wait(500)
+                drawVehicles = ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'esx_avan0x_choose_closest_vehicle')
             end
         end)
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_vehicle",

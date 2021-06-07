@@ -480,13 +480,37 @@ Config.Jobs = {
         },
         JobMenu = {
             {
-                Label = _('ems_get_health_status'),
-                Detail = _('ems_get_health_status_detail'),
+                Label = _('ems_check_injuries'),
+                Detail = _('ems_check_injuries_detail'),
                 Action = function(parentData, parentMenu, jobName)
                     exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
-                        -- TriggerServerEvent('esx_avan0x:showNotification', targetId, _('being_searched'))
-                        -- TriggerEvent("esx_ava_inventories:openPlayerInventory", targetId)
+                        ESX.TriggerServerCallback('esx_ava_jobs:ems:getTargetData', function(playerData)
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ems_check_injuries', {
+                                title = _('ems_check_injuries'),
+                                align = 'left',
+                                elements = {
+                                    {
+                                        label = _('ems_injuries_label',
+                                            playerData.injured > 0 and "#c92e2e" or "#329171",
+                                            playerData.injured > 50
+                                                and _('ems_injuries_injured_high')
+                                                or playerData.injured > 30
+                                                    and _('ems_injuries_injured')
+                                                    or playerData.injured > 0
+                                                        and _('ems_injuries_injured_low')
+                                                        or _('ems_injuries_healthy')
+                                        )
+                                    }
+                                }
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                
+                        end, targetId)
                     end)
+                
                 end
             },
         },
