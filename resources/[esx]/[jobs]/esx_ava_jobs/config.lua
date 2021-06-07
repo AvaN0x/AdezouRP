@@ -1290,7 +1290,7 @@ Config.Jobs = {
                     {name = 'cow_part', quantity = 2}
                 },
                 ItemsGet = {
-                    {name = 'minced_meat', quantity = 2}
+                    {name = 'minced_meat', quantity = 8}
                 },
                 Delay = 12000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
