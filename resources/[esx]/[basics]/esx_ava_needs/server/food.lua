@@ -83,14 +83,6 @@ ESX.RegisterUsableItem("tacos_impensable", function(source)
 	TriggerClientEvent("esx_ava_needs:onEat", source)
 end)
 
-ESX.RegisterUsableItem("tacos_gourmet", function(source)
-	TriggerEvent("esx_ava_needs:useItem", source, "tacos_gourmet")
-
-	TriggerClientEvent("esx_status:add", source, "hunger", 600000)
-
-	TriggerClientEvent("esx_ava_needs:onEat", source)
-end)
-
 ESX.RegisterUsableItem("frites", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "frites")
 
@@ -131,3 +123,14 @@ ESX.RegisterUsableItem("chickenwrap", function(source)
 	TriggerClientEvent("esx_ava_needs:onEat", source)
 end)
 
+
+
+
+ESX.RegisterUsableItem("tacos_gourmet", function(source)
+	TriggerEvent("esx_ava_needs:useItem", source, "tacos_gourmet")
+
+	TriggerClientEvent("esx_status:add", source, "hunger", 400000)
+	TriggerClientEvent("esx_status:add", source, "drugged", 50000)
+
+	TriggerClientEvent("esx_ava_needs:onEat", source)
+end)
