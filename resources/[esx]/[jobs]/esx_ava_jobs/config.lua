@@ -1309,7 +1309,7 @@ Config.Jobs = {
                 Title = 'Cuisine',
                 Process = {
                     ChickenBurgerProcess = {
-                        Name = 'Tacos Spicy Audacieux',
+                        Name = 'Taco Spicy Audacieux',
                         ItemsGive = {
                             {name = 'minced_meat', quantity = 2}
                         },
@@ -1320,7 +1320,7 @@ Config.Jobs = {
                         Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
                     },
                     DoubleChickenBurgerProcess = {
-                        Name = 'Tacos Impensable',
+                        Name = 'Taco Impensable',
                         ItemsGive = {
                             {name = 'minced_meat', quantity = 2}
                         },
@@ -1331,7 +1331,7 @@ Config.Jobs = {
                         Scenario = 'PROP_HUMAN_BBQ', -- https://pastebin.com/6mrYTdQv
                     },
                     TendersProcess = {
-                        Name = 'Tacos Gourmet du chef',
+                        Name = 'Taco Gourmet du chef',
                         ItemsGive = {
                             {name = 'minced_meat', quantity = 3}
                         },
