@@ -41,6 +41,24 @@ Config.Teleports = {
 			authorizedJobs = { 'ems' },
 			locked = false
 		},
+		{ -- morgue
+			tpEnter = {
+				pos = vector3(240.65, -1379.29, 32.76),
+				heading = 140.0,
+				-- size  = {x = 1.5, y = 1.5, z = 1.0},
+				-- color = {r = 255, g = 0, b = 255},
+				label = "Entrer dans la morgue"
+			},
+			tpExit = {
+				pos = vector3(248.99, -1369.80, 28.67),
+				heading = 330.0,
+				label = "Sortir de la morgue"
+			},
+			authorizedJobs = { 'ems' },
+			locked = true
+		},
+
+
 		{ -- nightclub entry
 			tpEnter = {
 				pos = vector3(-676.83, -2458.72, 12.96),
