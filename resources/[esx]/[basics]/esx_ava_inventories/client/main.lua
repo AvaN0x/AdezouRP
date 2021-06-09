@@ -113,7 +113,7 @@ function OpenMyInventory()
 end
 
 
---? my inventory
+-- my inventory
 function UseItem(itemName)
     TriggerServerEvent("esx:useItem", itemName)
     for k, item in ipairs(Config.CloseMenuItems) do

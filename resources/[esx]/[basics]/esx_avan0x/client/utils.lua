@@ -4,24 +4,26 @@
 -------------------------------------------
 
 
-function ChooseClosestPlayer(cb, title, distance)
+function ChooseClosestPlayer(cb, title, distance, allowMyself)
     local playerPed = PlayerPedId()
     local playerId = PlayerId()
-    if not distance or not tonumber(distance) or tonumber(distance) < 0 then
-        distance = 3.0
-    end
-    if not title then
+
+    if not title or title == "" then
         title = _('select_a_player')
     end
+    if not distance or not tonumber(distance) or tonumber(distance) <= 0 then
+        distance = 3.0
+    end
+
     local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), distance + 0.0)
     local elements = {}
 
     local playersCount = 0
     for k, player in ipairs(players) do
-        if player ~= playerId then
+        if player ~= playerId or allowMyself then
             playersCount = playersCount + 1
             table.insert(elements, {
-                label = "Personne #" .. playersCount,
+                label = player ~= playerId and "Personne #" .. playersCount or "Moi",
                 localId = player,
                 serverId = GetPlayerServerId(player)
             })

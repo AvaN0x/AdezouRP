@@ -51,7 +51,7 @@ AddEventHandler('esx_avan0x:ethylotest', function()
             end)
 
         end, targetId)
-    end)
+    end, "", nil, true)
 end)
 
 

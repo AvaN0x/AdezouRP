@@ -8,20 +8,6 @@ local playersHealing = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-RegisterServerEvent('esx_ava_deaths:revive')
-AddEventHandler('esx_ava_deaths:revive', function(target)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	local xTarget = ESX.GetPlayerFromId(target)
-    local inventory = xPlayer.getInventory()
-    
-    if inventory.canRemoveItem("defibrillator", 1) and getDeathStatus(xTarget.identifier) then
-        inventory.removeItem("defibrillator", 1)
-        TriggerClientEvent('esx_ava_deaths:revive', target)
-	else
-		print(('esx_ava_deaths: %s attempted to revive %s !'):format(xPlayer.identifier, xTarget.identifier))
-	end
-end)
-
 function getDeathStatus(identifier)
     return MySQL.Sync.fetchScalar('SELECT is_dead FROM users WHERE identifier = @identifier', {
 		['@identifier'] = identifier
