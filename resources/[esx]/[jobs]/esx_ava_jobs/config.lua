@@ -534,6 +534,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 Marker = 27,
             },
+            PharmacyStock = {
+				Pos = vector3(309.77, -568.66, 42.30),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+				Name  = "Pharmacie",
+                StockName = "society_ems_pharmacy",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = _('spawn_veh'),
@@ -575,12 +584,14 @@ Config.Jobs = {
             BuyItems = {
                 Items = {
                     {name = 'ethylotest', price = 15000},
-                    {name = 'handcuffs', price = 10000},
+                    {name = 'defibrillator', price = 15000},
+                    {name = 'bandage', price = 15000},
+                    {name = 'medikit', price = 15000},
                 },
-                Pos = vector3(812.26, -2153.55, 28.64),
+                Pos = vector3(-447.57, -341.08, 33.52),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 0, g = 139, b = 90},
-                Name = "Achat de protections et menottes",
+                Name = "Pharmacie",
                 HelpText = _('press_buy'),
                 OnlyGrades = {"doctor", "boss"},
                 Marker = 27,
