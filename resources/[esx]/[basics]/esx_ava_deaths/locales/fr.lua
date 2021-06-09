@@ -6,4 +6,5 @@ Locales['fr'] = {
 
     ['revive_help'] = 'Reanimer un joueur',
 
+    ['got_healed'] = "Vous avez été soigné",
 }

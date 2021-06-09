@@ -20,7 +20,10 @@ AddEventHandler('esx_ava_deaths:bandage:heal', function()
             ClearPedTasks(playerPed)
 
             local newHealth = math.min(maxHealth, math.floor(health + maxHealth / 8))
-            SetEntityHealth(playerPed, newHealth)        end
+            SetEntityHealth(playerPed, newHealth)
+
+            ESX.ShowNotification(_('got_healed'))
+        end
     else
         ESX.ShowNotification(_('you_re_not_conscious'))
     end
@@ -42,11 +45,11 @@ AddEventHandler('esx_ava_deaths:medikit', function()
         if health > 0 then
             if health < maxHealth then
                 local playerPed = PlayerPedId()
-                
+
                 TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
                 Citizen.Wait(10000)
                 ClearPedTasks(playerPed)
-                
+
                 TriggerServerEvent('esx_ava_deaths:medikit:heal', targetId)
             else
                 ESX.ShowNotification(_('player_is_fine'))
@@ -63,6 +66,8 @@ AddEventHandler('esx_ava_deaths:medikit:heal', function()
 	local maxHealth = GetEntityMaxHealth(playerPed)
 
     SetEntityHealth(playerPed, maxHealth)
+
+    ESX.ShowNotification(_('got_healed'))
 end)
 
 
@@ -97,6 +102,6 @@ AddEventHandler('esx_ava_deaths:defibrillator', function()
             ESX.ShowNotification(_('player_not_unconscious'))
         end
 
-    end, "", nil, true)
+    end)
 end)
 
