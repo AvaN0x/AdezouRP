@@ -1784,10 +1784,6 @@ Config.Jobs = {
             }
         }
 	},
-	orga_illegal_custom = {
-        isGang = true,
-        LabelName = "Custom illégal"
-	},
 
 }
 
