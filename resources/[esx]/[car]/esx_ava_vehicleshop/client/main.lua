@@ -530,7 +530,7 @@ Citizen.CreateThread(function()
 					if CurrentActionData.category == CurrentActionData.shopdata.JobOthers or has_value(CurrentActionData.shopdata.Categories, CurrentActionData.category) then
 						ESX.TriggerServerCallback('esx_vehicleshop:resellVehicle', function(vehicleSold)
 							if vehicleSold then
-								ESX.Game.DeleteVehicle(CurrentActionData.vehicle)
+                                DeleteEntity(CurrentActionData.vehicle)
 								ESX.ShowNotification(_U('vehicle_sold_for', CurrentActionData.label, ESX.Math.GroupDigits(CurrentActionData.price)))
 							else
 								ESX.ShowNotification(_U('not_yours'))

@@ -136,6 +136,7 @@ end)
 
 
 ESX.RegisterServerCallback('esx_vehicleshop:resellVehicle', function (source, cb, plate, model)
+    local _source = source
 	local resellPrice = 0
 
 	-- calculate the resell price
