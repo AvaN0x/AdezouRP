@@ -108,6 +108,10 @@ Locales['fr'] = {
     ['vehicle_owner'] = 'Propriétaire: %s',
     ['vehicle_owner_unknown'] = 'Inconnu',
 
+    ["info_vehicle_search"] = "Recherche plaque",
+    ["info_vehicle_search_detail"] = "Informations sur un véhicule par sa plaque",
+    ["info_vehicle_enter_plate"] = "Entrez une plaque",
+
     ['police_megaphone'] = "Mégaphone de la voiture",
     ['police_megaphone_detail'] = "Utiliser le mégaphone du véhicule",
     ['police_megaphone_stop_vehicle'] = "Arrêtez le véhicule !",

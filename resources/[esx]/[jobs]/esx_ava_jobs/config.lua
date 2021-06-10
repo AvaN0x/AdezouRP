@@ -302,6 +302,42 @@ Config.Jobs = {
 
                 end
             },
+            {
+                Label = _('info_vehicle_search'),
+                Detail = _('info_vehicle_search_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'info_vehicle_enter_plate',
+                    {
+                        title = _('info_vehicle_enter_plate')
+                    },
+                    function(data, menu)
+                        menu.close()
+                        local plate = data.value
+
+                        ESX.TriggerServerCallback('esx_ava_jobs:getVehicleInfos', function(vehicleInfos)
+                            local elements = {
+                                {label = _('vehicle_plate', vehicleInfos.plate)}
+                            }
+
+                            table.insert(elements, {label = _('vehicle_owner', vehicleInfos.owner or _('vehicle_owner_unknown'))})
+
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'info_vehicle', {
+                                title = _('info_vehicle'),
+                                align = 'left',
+                                elements = elements
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                        end, plate)
+                    end,
+                    function(data, menu)
+                        menu.close()
+                    end)
+
+                end
+            },
             Config.JobMenuElement.PoliceMegaphone
         },
         Zones = {
