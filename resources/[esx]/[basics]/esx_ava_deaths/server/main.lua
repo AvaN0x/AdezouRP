@@ -38,8 +38,6 @@ AddEventHandler('esx_ava_deaths:setDeathStatus', function(isDead)
 		['@identifier'] = xPlayer.identifier,
 		['@isDead'] = isDead
 	})
-    print(('esx_ava_deaths: %s is set %s'):format(xPlayer.identifier, (isDead and "dead" or "alive")))
-
 end)
 
 RegisterServerEvent('esx_ava_deaths:uniteX')

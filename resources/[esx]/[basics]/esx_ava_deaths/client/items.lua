@@ -15,6 +15,7 @@ AddEventHandler('esx_ava_deaths:bandage:heal', function()
 
     if health > 0 then
         if health < maxHealth then
+            TriggerServerEvent("esx_ava_deaths:bandage:remove")
             TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
             Citizen.Wait(5000)
             ClearPedTasks(playerPed)

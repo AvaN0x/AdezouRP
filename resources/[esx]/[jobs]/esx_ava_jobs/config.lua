@@ -581,14 +581,28 @@ Config.Jobs = {
             },
         },
         BuyZones = {
-            BuyItems = {
+            DorsetDriveItems = {
                 Items = {
-                    {name = 'ethylotest', price = 15000},
-                    {name = 'defibrillator', price = 15000},
-                    {name = 'bandage', price = 15000},
-                    {name = 'medikit', price = 15000},
+                    {name = 'ethylotest', price = 300},
+                    {name = 'defibrillator', price = 1000},
+                    {name = 'bandage', price = 300},
+                    {name = 'medikit', price = 500},
+                    {name = 'dolizou', price = 100},
                 },
                 Pos = vector3(-447.57, -341.08, 33.52),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Pharmacie",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"doctor", "boss"},
+                Marker = 27,
+                Blip = true
+            },
+            TailorItems = {
+                Items = {
+                    {name = 'bandage', price = 100},
+                },
+                Pos = vector3(740.00, -970.21, 23.48),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Pharmacie",

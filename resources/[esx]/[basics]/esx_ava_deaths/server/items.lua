@@ -12,7 +12,6 @@ ESX.RegisterUsableItem('bandage', function(source)
     local inventory = xPlayer.getInventory()
 
     if inventory.canRemoveItem("bandage", 1) then
-        inventory.removeItem("bandage", 1)
         TriggerClientEvent('esx_ava_deaths:bandage:heal', source)
 	else
 		print(('esx_ava_deaths: %s attempted to heal !'):format(xPlayer.identifier))
@@ -20,7 +19,18 @@ ESX.RegisterUsableItem('bandage', function(source)
 	end
 end)
 
+RegisterServerEvent('esx_ava_deaths:bandage:remove')
+AddEventHandler('esx_ava_deaths:bandage:remove', function()
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local inventory = xPlayer.getInventory()
 
+    if inventory.canRemoveItem("bandage", 1) then
+        inventory.removeItem("bandage", 1)
+    else
+		print(('esx_ava_deaths: %s used a bandage while he have none !'):format(xPlayer.identifier))
+        exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "", ('esx_ava_deaths: %s used a bandage while he have none !'):format(xPlayer.identifier), 5233787)
+    end
+end)
 
 -------------
 -- medikit --

@@ -7,4 +7,12 @@ Locales['fr'] = {
     ['revive_help'] = 'Reanimer un joueur',
 
     ['got_healed'] = "Vous avez été soigné",
+
+    -- Death
+    ['respawn_available_in'] = 'Réanimation possible dans ~b~%s minutes %s secondes~s~',
+    ['respawn_respawn_timer'] = 'Vous allez être réanimé par l\'unité X dans ~b~%s minutes et %s secondes~s~\n',
+    ['respawn_respawn_prompt'] = 'Maintenez [~b~E~s~] pour être réanimé à l\'hopital',
+    ['distress_message'] = 'Intervention requise: citoyen inconscient!',
+    ['distress_send'] = 'Appuyez sur [~b~G~s~] pour envoyer un signal de détresse',
+
 }

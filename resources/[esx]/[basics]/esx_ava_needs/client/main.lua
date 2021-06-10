@@ -7,6 +7,9 @@ ESX          = nil
 local IsDead = false
 local IsAnimated = false
 
+local STATUS_MAX = 1000000
+
+
 local IsAlreadyDrunk, DrunkLevel = nil, nil
 local IsAlreadyDrugged = nil
 local IsAlreadyInjured, InjureLevel, InjureLoop = nil, nil, 0
@@ -21,7 +24,9 @@ end)
 AddEventHandler('esx_ava_needs:onRevive', function()
 	TriggerEvent('esx_status:set', 'hunger', 200000)
 	TriggerEvent('esx_status:set', 'thirst', 200000)
-	TriggerEvent("esx_status:add", "injured", 200000)
+    TriggerEvent("esx_status:remove", "drunk", STATUS_MAX * 0.2)
+    TriggerEvent("esx_status:remove", "drugged", STATUS_MAX * 0.2)
+	TriggerEvent("esx_status:add", "injured", 250000)
 end)
 
 RegisterNetEvent('esx_ava_needs:healPlayer')
@@ -67,13 +72,13 @@ AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'drunk', 0, '#8F15A5', function(status)
         return false
     end, function(status)
-		status.remove(1000)
+		status.remove(500)
 	end)
-	
+
 	TriggerEvent('esx_status:registerStatus', 'drugged', 0, '#15A517', function(status)
         return false
     end, function(status)
-		status.remove(1000)
+		status.remove(500)
     end)
 
 	TriggerEvent('esx_status:registerStatus', 'injured', 0, '#03bdae', function(status)
@@ -97,7 +102,9 @@ AddEventHandler('esx_status:loaded', function(status)
 					else
 						health = health - 1
 					end
-				end
+				elseif status.val > 0.99 * STATUS_MAX then
+                    TriggerEvent("esx_status:add", "injured", 300)
+                end
 			end)
 
 			TriggerEvent('esx_status:getStatus', 'thirst', function(status)
@@ -107,7 +114,9 @@ AddEventHandler('esx_status:loaded', function(status)
 					else
 						health = health - 1
 					end
-				end
+				elseif status.val > 0.99 * STATUS_MAX then
+                    TriggerEvent("esx_status:add", "injured", 300)
+                end
 			end)
 
 			TriggerEvent('esx_status:getStatus', 'drunk', function(status)
@@ -120,6 +129,9 @@ AddEventHandler('esx_status:loaded', function(status)
 					elseif status.val <= 500000 then
 						level = 1
 					else
+                        if status.val > 0.95 * STATUS_MAX then
+                            health = health - 1
+                        end
 						level = 2
 					end
 					if level ~= DrunkLevel then
@@ -139,7 +151,11 @@ AddEventHandler('esx_status:loaded', function(status)
 			TriggerEvent('esx_status:getStatus', 'drugged', function(status)
 				if status.val > 0 then
 					local start = not IsAlreadyDrugged
-					
+
+                    if status.val > 0.95 * STATUS_MAX then
+                        health = health - 1
+                    end
+
 					Drugged(start)
 					IsAlreadyDrugged = true
 				end
@@ -250,11 +266,26 @@ AddEventHandler('esx_ava_needs:onSmokeDrug', function()
         IsAnimated = true
         local playerPed = PlayerPedId()
 
-        
         TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
         Citizen.Wait(3000)
         ClearPedTasksImmediately(playerPed)
         IsAnimated = false
+    end
+end)
+
+RegisterNetEvent('esx_ava_needs:onTakePill')
+AddEventHandler('esx_ava_needs:onTakePill', function()
+    if not IsAnimated then
+        IsAnimated = true
+        local playerPed = PlayerPedId()
+
+        ESX.Streaming.RequestAnimDict('mp_player_intdrink', function()
+            TaskPlayAnim(playerPed, 'mp_player_intdrink', 'loop_bottle', 8.0, -8, -1, 49, 0, 0, 0, 0)
+
+            Citizen.Wait(1000)
+            IsAnimated = false
+            ClearPedSecondaryTask(playerPed)
+        end)
     end
 end)
 
@@ -349,10 +380,10 @@ function Injured(level, start, oldLevel)
         elseif level == 2 then
             -- SetTimecycleModifier("phone_cam5")
 
-            -- SetTimecycleModifier("pulse")
+            SetTimecycleModifier("pulse")
 
-            SetTimecycleModifier("redmist")
-            SetTimecycleModifierStrength(0.7)
+            -- SetTimecycleModifier("redmist")
+            -- SetTimecycleModifierStrength(0.7)
 
         end
 
