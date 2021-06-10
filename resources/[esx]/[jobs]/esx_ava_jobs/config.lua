@@ -1632,7 +1632,7 @@ Config.Jobs = {
                 PropHash = GetHashKey('prop_plant_fern_02a'),
                 Pos = vector3(-294.48, 2524.97, 74.62),
                 GroundCheckHeights = {74.0, 75.0},
-                Radius = 5
+                Radius = 4
             }
         },
         ProcessZones = {
