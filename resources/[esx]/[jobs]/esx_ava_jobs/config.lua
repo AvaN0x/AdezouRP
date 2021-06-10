@@ -1643,7 +1643,7 @@ Config.Jobs = {
                 ItemsGet = {
                     {name = 'coke', quantity = 2}
                 },
-                Delay = 10000,
+                Delay = 8000,
                 Scenario = 'world_human_clipboard', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(1019.13, -2511.48, 28.48),
                 NeedKey = true
@@ -1656,7 +1656,7 @@ Config.Jobs = {
                 ItemsGet = {
                     {name = 'bagcoke', quantity = 1}
                 },
-                Delay = 15000,
+                Delay = 10000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(1017.72, -2529.39, 28.3),
                 NeedKey = true
