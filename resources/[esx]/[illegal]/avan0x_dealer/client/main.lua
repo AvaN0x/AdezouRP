@@ -59,29 +59,43 @@ Citizen.CreateThread(function()
 
 					Citizen.Wait(1000)
 
-					TriggerServerEvent('3dme:shareDisplay', "* L'individu remarque un petit morceau de papier glissé sous la porte *")
+                    TriggerServerEvent('3dme:shareDisplay', "* L'individu remarque un petit morceau de papier glissé sous la porte *")
 
 					ClearPedTasksImmediately(playerPed)
 
-					local randNum = math.random(1, #Config.SalesLocations)
-					local spawnLoc = Config.SalesLocations[randNum]
+                    ESX.TriggerServerCallback('avan0x_dealer:askCanStart', function(canStart)
+                        if canStart then
 
-					MissionStarted = spawnLoc
-                    print(spawnLoc)
-					zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)), (spawnLoc.y + math.random(-45, 45)), spawnLoc.z, 120.0)
-						SetBlipSprite(zoneBlip, 9)
-						SetBlipColour(zoneBlip, 1)
-						SetBlipAlpha(zoneBlip, 95)
-						SetBlipRoute(zoneBlip, true)
+                            local randNum = math.random(1, #Config.SalesLocations)
+                            local spawnLoc = Config.SalesLocations[randNum]
 
-					DrawMissionText("Tu as ~y~10~s~ minutes, ne sois pas en retard.", 5000)
-					MissionStart()
+                            MissionStarted = spawnLoc
+
+                            zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)), (spawnLoc.y + math.random(-45, 45)), spawnLoc.z, 120.0)
+                                SetBlipSprite(zoneBlip, 9)
+                                SetBlipColour(zoneBlip, 1)
+                                SetBlipAlpha(zoneBlip, 95)
+                                SetBlipRoute(zoneBlip, true)
+
+                                DrawMissionText("Tu as ~y~10~s~ minutes, ne sois pas en retard.", 5000)
+                            MissionStart()
+                        else
+                            DrawMissionText("Personne n'est dispo maintenant, ~y~dégage~s~.", 5000)
+
+                        end
+                    end)
+
 				end
 			end
 		else
 			Citizen.Wait(1000)
 		end
 	end
+end)
+
+RegisterNetEvent('avan0x_dealer:startMission')
+AddEventHandler('avan0x_dealer:startMission', function(canStart)
+
 end)
 
 function MissionStart()

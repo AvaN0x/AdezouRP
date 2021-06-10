@@ -34,3 +34,10 @@ ESX.RegisterServerCallback('avan0x_dealer:GetDrugCount', function(source,cb)
 	cb(drugs)
 end)
 
+
+ESX.RegisterServerCallback('avan0x_dealer:askCanStart', function(source, cb)
+    TriggerEvent("esx_ava_jobs:getCountInService", "lspd", function(cops)
+        cb(cops > 0)
+    end)
+end)
+
