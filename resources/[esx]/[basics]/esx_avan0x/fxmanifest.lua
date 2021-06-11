@@ -31,6 +31,7 @@ files {
 
 export {
     "DrawText3D",
+    "DrawBubbleText3D",
     "ChooseClosestPlayer",
     "ChooseClosestVehicle"
 }

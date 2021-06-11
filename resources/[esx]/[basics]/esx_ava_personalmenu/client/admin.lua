@@ -164,9 +164,9 @@ function PlayerManagment(player)
 		elseif data.current.value == "admin_bring" then
 			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
         elseif data.current.value == "admin_revive" then
-            TriggerServerEvent("esx_ava_emsjob:revive2", serverID)
+            TriggerServerEvent("esx_ava_deaths:admin:revive", serverID)
         elseif data.current.value == "admin_debug" then
-			TriggerServerEvent("esx_ava_emsjob:revive2", serverID, true)
+			TriggerServerEvent("esx_ava_deaths:admin:revive", serverID, true)
 		elseif data.current.value == "admin_spectate" then
 			admin_spectate_player(player)
         elseif data.current.value == "admin_kill" then
@@ -205,7 +205,7 @@ function AdminLoop()
         RegisterCommand('+keyAdminMenu', function()
             if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
                 if IsDead then
-                    TriggerEvent('esx_ava_emsjob:revive2')
+                    TriggerEvent('esx_ava_deaths:admin:revive')
                     Citizen.Wait(1000)
                     ToggleAdminMode(true)
                 end
@@ -447,16 +447,16 @@ function admin_noclip()
 	noclip = not noclip
 	local playerPed = PlayerPedId()
 
+    FreezeEntityPosition(playerPed, noclip)
+    SetEntityVisible(playerPed, not noclip, false)
 	if noclip then
 		-- SetPlayerInvincible(playerPed, true)
-		SetEntityVisible(playerPed, false, false)
 		ESX.ShowNotification("NoClip ~g~Activé")
         ClearPedTasksImmediately(playerPed)
 	else
 		-- if not admin_mode then
 			-- SetPlayerInvincible(playerPed, false)
 		-- end
-		SetEntityVisible(playerPed, true, false)
 		ESX.ShowNotification("NoClip ~r~Désactivé")
 	end
 end
@@ -477,7 +477,7 @@ end
 RegisterNetEvent('esx_ava_personalmenu:toggle_admin_mode')
 AddEventHandler('esx_ava_personalmenu:toggle_admin_mode', function()
 	if IsDead then
-		TriggerEvent('esx_ava_emsjob:revive2')
+		TriggerEvent('esx_ava_deaths:admin:revive')
 	end
 	ToggleAdminMode()
 end)
@@ -525,7 +525,7 @@ function ReviveAllClose()
 	local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 15.0)
 
 	for k, player in ipairs(players) do
-		TriggerServerEvent("esx_ava_emsjob:revive2", GetPlayerServerId(player))
+		TriggerServerEvent("esx_ava_deaths:admin:revive", GetPlayerServerId(player))
 	end
 end
 

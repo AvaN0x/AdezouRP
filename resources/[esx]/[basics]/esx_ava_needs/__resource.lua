@@ -20,7 +20,8 @@ server_scripts {
 	'server/drink.lua',
 	'server/food.lua',
 	'server/alcohol.lua',
-	'server/drug.lua'
+	'server/drug.lua',
+	'server/medicine.lua'
 }
 
 dependencies {

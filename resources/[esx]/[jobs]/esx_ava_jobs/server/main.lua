@@ -463,9 +463,9 @@ ESX.RegisterUsableItem('grand_crubox', function(source)
 	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
 end)
 
---------------
+----------
 -- LSPD --
---------------
+----------
 ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, target)
     local xPlayer = ESX.GetPlayerFromId(target)
     local result = MySQL.Sync.fetchAll('SELECT firstname, lastname, sex FROM users WHERE identifier = @identifier', {
@@ -473,25 +473,13 @@ ESX.RegisterServerCallback('esx_ava_jobs:getPlayerData', function(source, cb, ta
     })
 
     local data = {
-        name      = GetPlayerName(target),
-        job       = xPlayer.job,
-        job2       = xPlayer.job2,
+        name = GetPlayerName(target),
+        job = xPlayer.job,
+        job2 = xPlayer.job2,
         firstname = result[1].firstname or "",
-        lastname  = result[1].lastname or "",
-        sex       = result[1].sex or 0,
+        lastname = result[1].lastname or "",
+        sex = result[1].sex or 0,
     }
-
-    TriggerEvent('esx_status:getStatus', target, 'drunk', function(status)
-        if status ~= nil then
-            data.drunk = math.floor(status.percent)
-        end
-    end)
-
-    TriggerEvent('esx_status:getStatus', target, 'drugged', function(status)
-        if status ~= nil then
-            data.drugged = math.floor(status.percent)
-        end
-    end)
 
     TriggerEvent('esx_license:getLicenses', target, function(licenses)
         data.licenses = licenses
@@ -524,4 +512,16 @@ ESX.RegisterServerCallback('esx_ava_jobs:getVehicleInfos', function(source, cb, 
 			cb(vehicleInfos)
 		end
 	end)
+end)
+
+---------
+-- EMS --
+---------
+ESX.RegisterServerCallback('esx_ava_jobs:ems:getTargetData', function(source, cb, target)
+    local data = {}
+
+    TriggerEvent('esx_status:getStatus', target, 'injured', function(status)
+        data.injured = math.floor(status.percent or 0)
+        cb(data)
+    end)
 end)

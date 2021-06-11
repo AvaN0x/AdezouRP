@@ -302,6 +302,42 @@ Config.Jobs = {
 
                 end
             },
+            {
+                Label = _('info_vehicle_search'),
+                Detail = _('info_vehicle_search_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'info_vehicle_enter_plate',
+                    {
+                        title = _('info_vehicle_enter_plate')
+                    },
+                    function(data, menu)
+                        menu.close()
+                        local plate = data.value
+
+                        ESX.TriggerServerCallback('esx_ava_jobs:getVehicleInfos', function(vehicleInfos)
+                            local elements = {
+                                {label = _('vehicle_plate', vehicleInfos.plate)}
+                            }
+
+                            table.insert(elements, {label = _('vehicle_owner', vehicleInfos.owner or _('vehicle_owner_unknown'))})
+
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'info_vehicle', {
+                                title = _('info_vehicle'),
+                                align = 'left',
+                                elements = elements
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                        end, plate)
+                    end,
+                    function(data, menu)
+                        menu.close()
+                    end)
+
+                end
+            },
             Config.JobMenuElement.PoliceMegaphone
         },
         Zones = {
@@ -463,6 +499,151 @@ Config.Jobs = {
                 Name = "Achat de protections et menottes",
                 HelpText = _('press_buy'),
                 OnlyGrades = {"chef", "boss"},
+                Marker = 27,
+                Blip = true
+            }
+        }
+    },
+    ems = {
+        SocietyName = 'society_ems',
+        LabelName = 'EMS',
+        ServiceCounter = true,
+        Blip = {
+            Name = "~b~Hopital",
+            Pos = vector3(298.48, -584.48, 43.28),
+            Sprite = 61,
+            Colour = 26
+        },
+        JobMenu = {
+            {
+                Label = _('ems_check_injuries'),
+                Detail = _('ems_check_injuries_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                        ESX.TriggerServerCallback('esx_ava_jobs:ems:getTargetData', function(playerData)
+                            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ems_check_injuries', {
+                                title = _('ems_check_injuries'),
+                                align = 'left',
+                                elements = {
+                                    {
+                                        label = _('ems_injuries_label',
+                                            playerData.injured > 0 and "#c92e2e" or "#329171",
+                                            playerData.injured > 50
+                                                and _('ems_injuries_injured_high')
+                                                or playerData.injured > 30
+                                                    and _('ems_injuries_injured')
+                                                    or playerData.injured > 0
+                                                        and _('ems_injuries_injured_low')
+                                                        or _('ems_injuries_healthy')
+                                        )
+                                    }
+                                }
+                            },
+                            nil,
+                            function(data, menu)
+                                menu.close()
+                            end)
+                
+                        end, targetId)
+                    end)
+                
+                end
+            },
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(339.21, -595.63, 42.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Blip = true,
+                NoStock = true,
+                OnlyGrades = {"boss"}
+            },
+            Dressing = {
+                Pos = vector3(299.03, -598.51, 42.30),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+            },
+            PharmacyStock = {
+				Pos = vector3(309.77, -568.66, 42.30),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+				Name  = "Pharmacie",
+                StockName = "society_ems_pharmacy",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(337.34, -579.28, 28.80),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 139, b = 90},
+                Marker = 36,
+                Type = "car",
+                SpawnPoint = {
+                    Pos = vector3(337.34, -579.28, 28.80),
+                    Heading = 340.0
+                }
+            },
+            KitchenStock = {
+				Pos = vector3(306.89, -601.61, 42.30),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 0, g = 139, b = 90},
+				Name  = "Cuisine",
+                StockName = "society_ems",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            HeliGarage = {
+                Name  = "Héliport",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(351.05, -588.07, 74.17),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 0, g = 139, b = 90},
+                Distance = 3,
+                Marker = 34,
+                Type = "heli",
+                SpawnPoint = {
+                    Pos = vector3(351.05, -588.07, 74.17),
+                    Heading = 245.0
+                }
+            },
+        },
+        BuyZones = {
+            DorsetDriveItems = {
+                Items = {
+                    {name = 'ethylotest', price = 300},
+                    {name = 'defibrillator', price = 1000},
+                    {name = 'bandage', price = 300},
+                    {name = 'medikit', price = 500},
+                    {name = 'dolizou', price = 100},
+                },
+                Pos = vector3(-447.57, -341.08, 33.52),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Pharmacie",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"doctor", "boss"},
+                Marker = 27,
+                Blip = true
+            },
+            TailorItems = {
+                Items = {
+                    {name = 'bandage', price = 100},
+                },
+                Pos = vector3(740.00, -970.21, 23.48),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 0, g = 139, b = 90},
+                Name = "Pharmacie",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"doctor", "boss"},
                 Marker = 27,
                 Blip = true
             }
@@ -1452,7 +1633,7 @@ Config.Jobs = {
                 PropHash = GetHashKey('prop_plant_fern_02a'),
                 Pos = vector3(-294.48, 2524.97, 74.62),
                 GroundCheckHeights = {74.0, 75.0},
-                Radius = 5
+                Radius = 4
             }
         },
         ProcessZones = {
@@ -1463,7 +1644,7 @@ Config.Jobs = {
                 ItemsGet = {
                     {name = 'coke', quantity = 2}
                 },
-                Delay = 10000,
+                Delay = 8000,
                 Scenario = 'world_human_clipboard', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(1019.13, -2511.48, 28.48),
                 NeedKey = true
@@ -1476,7 +1657,7 @@ Config.Jobs = {
                 ItemsGet = {
                     {name = 'bagcoke', quantity = 1}
                 },
-                Delay = 15000,
+                Delay = 10000,
                 Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(1017.72, -2529.39, 28.3),
                 NeedKey = true

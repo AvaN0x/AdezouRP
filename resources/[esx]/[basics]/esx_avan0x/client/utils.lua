@@ -4,24 +4,26 @@
 -------------------------------------------
 
 
-function ChooseClosestPlayer(cb, title, distance)
+function ChooseClosestPlayer(cb, title, distance, allowMyself)
     local playerPed = PlayerPedId()
     local playerId = PlayerId()
-    if not distance or not tonumber(distance) or tonumber(distance) < 0 then
-        distance = 3.0
-    end
-    if not title then
+
+    if not title or title == "" then
         title = _('select_a_player')
     end
+    if not distance or not tonumber(distance) or tonumber(distance) <= 0 then
+        distance = 3.0
+    end
+
     local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), distance + 0.0)
     local elements = {}
 
     local playersCount = 0
     for k, player in ipairs(players) do
-        if player ~= playerId then
+        if player ~= playerId or allowMyself then
             playersCount = playersCount + 1
             table.insert(elements, {
-                label = "Personne #" .. playersCount,
+                label = player ~= playerId and "Personne #" .. playersCount or "Moi",
                 localId = player,
                 serverId = GetPlayerServerId(player)
             })
@@ -40,6 +42,12 @@ function ChooseClosestPlayer(cb, title, distance)
                     DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.3, targetCoords.x, targetCoords.y, targetCoords.z + 0.3, 255, 0, 255, 128)
                     DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 0.3, v.label, 0.3)
                 end
+            end
+        end)
+        Citizen.CreateThread(function()
+            while drawPlayers do
+                Citizen.Wait(500)
+                drawPlayers = ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'esx_avan0x_choose_closest_player')
             end
         end)
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_player",
@@ -98,6 +106,12 @@ function ChooseClosestVehicle(cb, title, distance)
                 end
             end
         end)
+        Citizen.CreateThread(function()
+            while drawVehicles do
+                Citizen.Wait(500)
+                drawVehicles = ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'esx_avan0x_choose_closest_vehicle')
+            end
+        end)
         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_vehicle",
         {
             title = title,
@@ -132,4 +146,23 @@ function DrawText3D(x, y, z, text, size)
         AddTextComponentString(text)
         DrawText(_x, _y)
     end
+end
+
+
+function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
+    AddTextEntry(GetCurrentResourceName(), text)
+    BeginTextCommandDisplayHelp(GetCurrentResourceName())
+    EndTextCommandDisplayHelp(2, false, false, -1)
+    SetFloatingHelpTextWorldPosition(1, x, y, z)
+
+
+    local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+    local bubbleStyle = bubbleStyle or 3
+    -- -1 centered, no triangles
+    -- 0 left, no triangles
+    -- 1 centered, triangle top
+    -- 2 left, triangle left
+    -- 3 centered, triangle bottom
+    -- 4 right, triangle right
+    SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
 end

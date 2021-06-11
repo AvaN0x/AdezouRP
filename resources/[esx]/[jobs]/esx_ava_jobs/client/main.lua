@@ -594,9 +594,11 @@ end)
 
 function OpenJobActionsMenu(jobName)
     local job = playerJobs[jobName]
-	local elements = {
-		{label = _U('access_chest'), value = 'access_chest'},
-	}
+	local elements = {}
+
+    if not CurrentZoneValue.NoStock then
+        table.insert(elements, {label = _U('access_chest'), value = 'access_chest'})
+    end
 
 	if job.grade == "boss" then
 		table.insert(elements, {label = _('boss_actions'), value = 'boss_actions'})

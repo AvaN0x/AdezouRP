@@ -16,5 +16,6 @@ files {
 	'html/ui.html',
 	'html/style.css',
 	'html/main.js',
-	'html/img/**/*.png'
+	'html/img/**/*.png',
+	'html/img/**/*.svg'
 }

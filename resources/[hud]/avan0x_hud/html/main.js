@@ -103,10 +103,12 @@ function updateStatus(status) {
     var thirst = status[1]
     var drunk = status[2]
     var drugged = status[3]
+    var injured = status[4]
     $('#hunger .bg').css('height', hunger.percent + '%')
     $('#water .bg').css('height', thirst.percent + '%')
     $('#drunk .bg').css('height', drunk.percent + '%');
     $('#drugged .bg').css('height', drugged.percent + '%');
+    $('#injured .bg').css('height', injured.percent + '%');
     if (drunk.percent > 0) {
         $('#drunk').show();
     } else {
@@ -116,6 +118,11 @@ function updateStatus(status) {
         $('#drugged').show();
     } else {
         $('#drugged').hide();
+    }
+    if (injured.percent > 0) {
+        $('#injured').show();
+    } else {
+        $('#injured').hide();
     }
 
 }
