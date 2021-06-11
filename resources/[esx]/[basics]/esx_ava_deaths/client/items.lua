@@ -41,7 +41,7 @@ AddEventHandler('esx_ava_deaths:medikit', function()
     exports.esx_avan0x:ChooseClosestPlayer(function(targetId, localId)
         local targetPed = GetPlayerPed(localId)
         local health = GetEntityHealth(targetPed)
-        local maxHealth = GetEntityMaxHealth(playerPed)
+        local maxHealth = GetEntityMaxHealth(targetPed)
 
         if health > 0 then
             if health < maxHealth then
