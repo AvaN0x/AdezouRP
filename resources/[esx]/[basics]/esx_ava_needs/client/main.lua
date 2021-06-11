@@ -22,8 +22,16 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler('esx_ava_needs:onRevive', function()
-	TriggerEvent('esx_status:set', 'hunger', 200000)
-	TriggerEvent('esx_status:set', 'thirst', 200000)
+    TriggerEvent('esx_status:getStatus', 'hunger', function(status)
+        if status.val < 0.05 * STATUS_MAX then
+            TriggerEvent("esx_status:add", "hunger", 10000)
+        end
+    end)
+    TriggerEvent('esx_status:getStatus', 'thirst', function(status)
+        if status.val < 0.05 * STATUS_MAX then
+            TriggerEvent("esx_status:add", "thirst", 10000)
+        end
+    end)
     TriggerEvent("esx_status:remove", "drunk", STATUS_MAX * 0.2)
     TriggerEvent("esx_status:remove", "drugged", STATUS_MAX * 0.2)
 	TriggerEvent("esx_status:add", "injured", 250000)
