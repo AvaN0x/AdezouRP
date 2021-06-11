@@ -620,9 +620,9 @@ Config.Jobs = {
             DorsetDriveItems = {
                 Items = {
                     {name = 'ethylotest', price = 300},
-                    {name = 'defibrillator', price = 1000},
+                    {name = 'defibrillator', price = 550},
                     {name = 'bandage', price = 300},
-                    {name = 'medikit', price = 500},
+                    {name = 'medikit', price = 400},
                     {name = 'dolizou', price = 100},
                 },
                 Pos = vector3(-447.57, -341.08, 33.52),
