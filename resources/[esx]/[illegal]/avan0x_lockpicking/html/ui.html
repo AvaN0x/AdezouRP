@@ -83,7 +83,7 @@
 
       var unghi = $('#circle').rotationDegrees(); // Current rotation stored in a variable
 
-      if (unghi > (angle - 9) && unghi < (angle + 9)) { // If current rotation matches the random point rotation by a margin of +- 2digits, the player "hit" it and continues
+      if (unghi > (angle - 12) && unghi < (angle + 12)) { // If current rotation matches the random point rotation by a margin of +- 2digits, the player "hit" it and continues
         digits--;
         if (!digits) // If game over, hide the game, display end of game options
           Win()
