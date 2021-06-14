@@ -28,12 +28,13 @@ end)
 
 local playerCoords = nil
 local playerPed = nil
+local coordsLoop = 500
 
 Citizen.CreateThread(function()
 	while true do
         playerPed = PlayerPedId()
 		playerCoords = GetEntityCoords(playerPed)
-		Wait(500)
+		Wait(coordsLoop)
     end
 end)
 
@@ -112,6 +113,8 @@ Citizen.CreateThread(function()
 
 				if lockpicking == true then
 					isInside = true
+                    coordsLoop = Config.CoordsLoopInside
+
 					lockpicking = false
                     TriggerServerEvent('esx_avan0x:addRB')
 					TriggerServerEvent('esx_ava_burglary:enterHouse', thisHouseID)
@@ -184,6 +187,7 @@ function LoopExit()
                         Teleport(vector3(296.81, -769.55, 28.35), 330.0)
                     end
                     isInside = false
+                    coordsLoop = Config.CoordsLoop
 				end
 			else
 				Citizen.Wait(500)

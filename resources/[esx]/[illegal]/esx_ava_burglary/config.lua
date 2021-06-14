@@ -4,6 +4,8 @@
 -------------------------------------------
 Config = {}
 Config.Locale = 'fr'
+Config.CoordsLoop = 500
+Config.CoordsLoopInside = 200
 
 --? states :
 --?  - 0 = can be burglarized
