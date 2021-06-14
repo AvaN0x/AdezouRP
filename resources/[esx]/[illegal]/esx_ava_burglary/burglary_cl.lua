@@ -196,7 +196,7 @@ function TryCallCops()
 	local random = math.random(0, 100)
 	if random <= 65 then
 		Citizen.CreateThread(function()
-			Citizen.Wait(math.random(5000, 10000))
+			Citizen.Wait(math.random(18000, 23000))
 			if isInside then -- only call the cops, if the user is still in the house
 				TriggerServerEvent("esx_phone:sendEmergency", "lspd", "Un cambriolage est suspecté dans cette maison.", true, { ["x"] = thisHouse.coord.x, ["y"] = thisHouse.coord.y, ["z"] = thisHouse.coord.z })
 			end
