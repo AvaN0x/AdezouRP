@@ -52,29 +52,37 @@ ESX.SetPlayerData = function(key, val)
 end
 
 ESX.ShowNotification = function(msg)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentSubstringPlayerName(msg)
+	-- SetNotificationTextEntry('STRING')
+	-- AddTextComponentSubstringPlayerName(msg)
+    AddTextEntry("STRING", msg)
+    SetNotificationTextEntry('STRING')
 	DrawNotification(false, true)
 end
 
 ESX.ShowAdvancedNotification = function(title, subject, msg, icon, iconType)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentSubstringPlayerName(msg)
+    AddTextEntry("STRING", msg)
+    SetNotificationTextEntry('STRING')
+	-- SetNotificationTextEntry('STRING')
+	-- AddTextComponentSubstringPlayerName(msg)
 	SetNotificationMessage(icon, icon, false, iconType, title, subject)
 	DrawNotification(false, false)
 end
 
 ESX.ShowColoredNotification = function(msg,color)
 	SetNotificationBackgroundColor(color)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentSubstringPlayerName(msg)
+	-- SetNotificationTextEntry('STRING')
+	-- AddTextComponentSubstringPlayerName(msg)
+    AddTextEntry("STRING", msg)
+    SetNotificationTextEntry('STRING')
 	DrawNotification(false, true)
 end
 
 ESX.ShowAdvancedColoredNotification = function(title, subject, msg, icon, iconType, color)
 	SetNotificationBackgroundColor(color)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentSubstringPlayerName(msg)
+	-- SetNotificationTextEntry('STRING')
+	-- AddTextComponentSubstringPlayerName(msg)
+    AddTextEntry("STRING", msg)
+    SetNotificationTextEntry('STRING')
 	SetNotificationMessage(icon, icon, false, iconType, title, subject)
 	DrawNotification(false, false)
 end
