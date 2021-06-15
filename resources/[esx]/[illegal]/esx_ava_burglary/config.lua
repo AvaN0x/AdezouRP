@@ -256,15 +256,15 @@ Config.Appartment = {
 
 -- TODO better coords for this
 Config.Furnitures = {
-    {coord = vector3(342.23, -1003.29, -99.0),  empty = true},
-    {coord = vector3(338.14, -997.69,  -99.2),  empty = true},
-    {coord = vector3(350.91, -999.26,  -99.2),  empty = true},
-    {coord = vector3(349.19, -994.83,  -99.2),  empty = true},
-    {coord = vector3(345.30, -995.76,  -99.2),  empty = true},
-    {coord = vector3(346.14, -1001.55, -99.2),  empty = true},
-    {coord = vector3(347.23, -994.09,  -99.2),  empty = true},
-    {coord = vector3(339.23, -1003.35, -99.2),  empty = true},
-    {coord = vector3(351.24, -993.53,  -99.2),  empty = true}
+    {coord = vector3(345.78, -1001.48, -99.30),  empty = true},
+    {coord = vector3(339.27, -1003.83, -99.40),  empty = true},
+    {coord = vector3(337.62, -998.35, -99.40),  empty = true},
+    {coord = vector3(337.67, -995.00, -99.40),  empty = true},
+    {coord = vector3(345.83, -995.70, -99.50),  empty = true},
+    {coord = vector3(351.29, -999.74, -99.30),  empty = true},
+    {coord = vector3(351.29, -992.99, -99.20),  empty = true},
+    {coord = vector3(348.64, -994.84, -99.40),  empty = true},
+    {coord = vector3(346.68, -994.22, -99.40),  empty = true}
 }
 
 -- TODO do it in a better way

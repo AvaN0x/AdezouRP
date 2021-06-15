@@ -10,6 +10,7 @@ Locales ['fr'] = {
 	['press_exit'] = "~g~[E]~w~ Sortir",
 	['press_search'] = "~g~[E]~w~ Chercher",
 	['empty'] = "~r~Vide",
+	['search_in_distance'] = "📍",
 	['searching'] = "Rercherche en cours",
 	['found_in_furniture'] = 'Tu as trouvé un objet dans le meuble',
 }

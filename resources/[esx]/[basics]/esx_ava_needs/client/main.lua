@@ -110,7 +110,7 @@ AddEventHandler('esx_status:loaded', function(status)
 					else
 						health = health - 1
 					end
-				elseif status.val > 0.99 * STATUS_MAX then
+				elseif status.val > 0.995 * STATUS_MAX then
                     TriggerEvent("esx_status:add", "injured", 300)
                 end
 			end)
@@ -122,7 +122,7 @@ AddEventHandler('esx_status:loaded', function(status)
 					else
 						health = health - 1
 					end
-				elseif status.val > 0.99 * STATUS_MAX then
+				elseif status.val > 0.995 * STATUS_MAX then
                     TriggerEvent("esx_status:add", "injured", 300)
                 end
 			end)

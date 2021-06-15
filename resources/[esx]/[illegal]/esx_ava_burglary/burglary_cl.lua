@@ -125,7 +125,9 @@ Citizen.CreateThread(function()
 					while isInside do
 						Citizen.Wait(0)
 						for k, v in ipairs(Config.Furnitures) do
-							if #(v.coord - playerCoords) <= 0.7 then
+                            local distance = #(v.coord - playerCoords)
+
+							if distance <= 0.7 then
                                 if v.empty then
                                     DrawText3D(v.coord.x, v.coord.y, v.coord.z, _U('empty'), 0.3)
 
@@ -148,7 +150,10 @@ Citizen.CreateThread(function()
                                         FreezeEntityPosition(playerPed, false)
 									end
 								end
-							end
+                            elseif distance <= 4.0 and not v.empty then
+                                DrawText3D(v.coord.x, v.coord.y, v.coord.z, _('search_in_distance'), 0.3)
+
+                            end
 						end
 					end
 				end

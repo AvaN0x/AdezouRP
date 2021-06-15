@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local show_object_hash, show_vehicle_hash, show_ped_hash = false, false, false
+local show_object_hash, show_vehicle_hash, show_ped_hash, show_coord_helper = false, false, false, false
 local show_coords = false
 local visibleHash = {}
 
@@ -12,6 +12,7 @@ function OpenDevMenu()
             {label = _("blue", _("dev_show_object_hash")), value = "show_object_hash", type="checkbox", checked=show_object_hash},
             {label = _("blue", _("dev_show_vehicle_hash")), value = "show_vehicle_hash", type="checkbox", checked=show_vehicle_hash},
             {label = _("blue", _("dev_show_ped_hash")), value = "show_ped_hash", type="checkbox", checked=show_ped_hash},
+            {label = _("pink", _("dev_show_coord_helper")), value = "show_coord_helper", type="checkbox", checked=show_coord_helper},
             {label = _("orange", _("dev_show_coords")), value = "show_coords", type="checkbox", checked=show_coords},
         }
 
@@ -27,6 +28,8 @@ function OpenDevMenu()
                 show_vehicle_hash = not show_vehicle_hash
             elseif data.current.value == "show_ped_hash" then
                 show_ped_hash = not show_ped_hash
+            elseif data.current.value == "show_coord_helper" then
+                show_coord_helper = not show_coord_helper
             elseif data.current.value == "show_coords" then
                 show_coords = not show_coords
             end
@@ -167,6 +170,43 @@ function DevLoop()
 					SetTextEntry("STRING")
 					AddTextComponentString("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y) .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t" .. string.format("%.2f", GetEntityHeading(playerPed)))
 					DrawText(0.9, 0.88)
+				else
+					Citizen.Wait(5000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+            local xAxis, yAxis = 0, 1
+			while true do
+				Citizen.Wait(0)
+				if show_coord_helper then
+                    AddTextEntry("show_coord_helper", "Press ~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~ or ~INPUT_CELLPHONE_DOWN~ to control the pointer position~n~~INPUT_RELOAD~ to reset positions~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard")
+                    BeginTextCommandDisplayHelp("show_coord_helper")
+                    EndTextCommandDisplayHelp(false, false, false, -1)
+
+					local playerPed = PlayerPedId()
+
+                    if IsControlPressed(1, 172) and yAxis < 2 then  -- up
+                        yAxis = yAxis + 0.01
+                    elseif IsControlPressed(1, 173) and yAxis > -2 then  -- down
+                        yAxis = yAxis - 0.01
+                    elseif IsControlPressed(1, 174) and xAxis > -2 then  -- left
+                        xAxis = xAxis - 0.01
+                    elseif IsControlPressed(1, 175) and xAxis < 2 then  -- right
+                        xAxis = xAxis + 0.01
+                    elseif IsControlJustReleased(0, 45) then -- r
+                        xAxis = 0
+                        yAxis = 1
+                    end
+
+                    local pointerCoords = GetOffsetFromEntityInWorldCoords(playerPed, xAxis + 0.0, yAxis + 0.0, 0.0);
+                    local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", " .. string.format("%.2f", pointerCoords.z) .. ")"
+
+                    DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 0, 255)
+                    if IsControlJustReleased(0, 79) then -- c
+                        TriggerEvent('avan0x_hud:copyToClipboard', coordString)
+                    end
 				else
 					Citizen.Wait(5000)
 				end

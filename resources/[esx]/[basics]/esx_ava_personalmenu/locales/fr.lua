@@ -130,6 +130,7 @@ Locales["fr"] = {
     ["dev_show_object_hash"] = "Toggle hash des props",
     ["dev_show_vehicle_hash"] = "Toggle hash des véhicules",
     ["dev_show_ped_hash"] = "Toggle hash des peds",
+    ["dev_show_coord_helper"] = "Toggle aide coordonnées",
     ["dev_show_coords"] = "Toggle coordonnées",
 
 }
