@@ -31,10 +31,10 @@ end)
 
 -- get vehicles from player or society
 -- allowed types : car | plane | heli | boat
-ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName, onlyOwnedVehicles)
+ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName, IsGangGarage)
 	local identifier = nil
 	local vehicules = {}
-    if not onlyCheckGarage or onlyOwnedVehicles then
+    if not onlyCheckGarage then
         if target then
             identifier = target
         else
@@ -71,11 +71,13 @@ ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, ty
     end
 end)
 
-function getPlayerVehicles(identifier, onlyCheckGarage, garageName, onlyOwnedVehicles)
+function getPlayerVehicles(identifier, onlyCheckGarage, garageName, IsGangGarage)
 	local vehicles = {}
     local data
-    if not onlyCheckGarage or onlyOwnedVehicles then
+    if not onlyCheckGarage then
 	    data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})
+    elseif IsGangGarage then
+	    data = MySQL.Sync.fetchAll("SELECT * FROM user_gang JOIN owned_vehicles ON user_gang.identifier = owned_vehicles.owner WHERE user_gang.name = @identifier",{['@identifier'] = identifier})
     else
         data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location",{['@location'] = garageName})
     end
@@ -87,10 +89,10 @@ function getPlayerVehicles(identifier, onlyCheckGarage, garageName, onlyOwnedVeh
 end
 
 
-ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleProps, fuel, type, gIdentifier, target, onlyCheckGarage, garageName, onlyOwnedVehicles)
+ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleProps, fuel, type, gIdentifier, target, onlyCheckGarage, garageName, IsGangGarage)
 	local isFound = false
     local plate = vehicleProps.plate
-    if not onlyCheckGarage or onlyOwnedVehicles then
+    if not onlyCheckGarage or IsGangGarage then
         local identifier = nil
         if target then
             identifier = target
@@ -100,7 +102,7 @@ ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleP
             identifier = xPlayer.getIdentifier()
         end
 
-        local vehicles = getPlayerVehicles(identifier)
+        local vehicles = getPlayerVehicles(identifier, onlyCheckGarage, garageName, IsGangGarage)
         for _,v in pairs(vehicles) do
             if plate == v.plate and type == v.type then
                 local vehprop = json.encode(vehicleProps)
@@ -220,13 +222,13 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
-AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName, onlyOwnedVehicles)
+AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName, IsGangGarage)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local playerIdentifier = xPlayer.getIdentifier()
 	local identifier = target or playerIdentifier
 
-	local vehicules = getPlayerVehicles(identifier, onlyCheckGarage, garageName, onlyOwnedVehicles)
+	local vehicules = getPlayerVehicles(identifier, onlyCheckGarage, garageName, IsGangGarage)
 	local plate = vehicleProps.plate
 	local location = location
 
