@@ -77,7 +77,7 @@ function getPlayerVehicles(identifier, onlyCheckGarage, garageName, IsGangGarage
     if not onlyCheckGarage then
 	    data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})
     elseif IsGangGarage then
-	    data = MySQL.Sync.fetchAll("SELECT * FROM user_gang JOIN owned_vehicles ON user_gang.identifier = owned_vehicles.owner WHERE user_gang.name = @identifier",{['@identifier'] = identifier})
+	    data = MySQL.Sync.fetchAll("SELECT owned_vehicles.* FROM user_gang JOIN owned_vehicles ON user_gang.identifier = owned_vehicles.owner WHERE user_gang.name = @identifier",{['@identifier'] = identifier})
     else
         data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location",{['@location'] = garageName})
     end
