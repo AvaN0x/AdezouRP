@@ -504,9 +504,10 @@ RegisterNetEvent("esx_ava_garage:openSpecialVehicleMenu")
 AddEventHandler("esx_ava_garage:openSpecialVehicleMenu", function(garage, societyName)
 	this_Garage = garage
     this_Garage.onlyCheckGarage = true
-	if this_Garage.OnlyOwnedVehicles == nil then
-		this_Garage.OnlyOwnedVehicles = true
-	end
+	-- if this_Garage.OnlyOwnedVehicles == nil then
+		-- this_Garage.OnlyOwnedVehicles = true
+	-- end
+    this_Garage.OnlyOwnedVehicles = false
 	if not this_Garage.Type then
 		this_Garage.Type = 'car'
 	end
