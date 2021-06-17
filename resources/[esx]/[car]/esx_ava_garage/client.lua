@@ -126,19 +126,13 @@ function OpenMenuGarage(PointType, target)
 				ListVehiclesMenu(this_Garage.Type, target)
 			elseif data.current.value == 'stock_vehicle' then
 				StockVehicleMenu(target)
-				if target == nil then
-					CurrentAction = 'open_garage_menu'
-				end
 			elseif data.current.value == 'return_vehicle' then
 				ReturnVehicleMenu(data.current.job)
 			end
 		end,
 		function(data, menu)
 			menu.close()
-			if target == nil then
-				CurrentAction = 'open_garage_menu'
-			end
-		end
+        end
 	)
 end
 
@@ -194,7 +188,7 @@ function ListVehiclesMenu(type, target)
 					menu.close()
 
 					SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
-					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 				elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere.')
                 elseif string.match(data.current.value.location, "^seized_") then
@@ -211,7 +205,7 @@ function ListVehiclesMenu(type, target)
 			end)
 		end, this_Garage.Type)
 
-	end, type, target, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+	end, type, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 end
 
 
@@ -238,7 +232,7 @@ function StockVehicleMenu(target)
 				else
 					TriggerEvent('esx:showNotification', 'Vous ne pouvez pas stocker ce véhicule ici')
 				end
-			end, vehicleProps, fuel, this_Garage.Type, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+			end, vehicleProps, fuel, this_Garage.Type, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 		end)
 	else
 		TriggerEvent('esx:showNotification', 'Il n\'y a pas de vehicule à rentrer')
@@ -249,7 +243,7 @@ end
 
 function ranger(vehicle, vehicleProps, gIdentifier, target)
 	DeleteEntity(vehicle)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicleProps, gIdentifier, target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 	TriggerEvent('esx:showNotification', 'Ce véhicule est maintenant dans ce garage')
 end
 
@@ -301,10 +295,10 @@ function SpawnPoundedVehicle(vehicle, target)
 	if target then
 		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 
 	Citizen.Wait(10000)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND", target, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND", target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 
 end
 
@@ -361,7 +355,7 @@ function ReturnVehicleMenu(target, isGov)
 							times=0
 						else
 							ESX.ShowNotification('Le véhicule est sorti de la fourrière')
-							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.Identifier)
+							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.OnlyOwnedVehicles)
 						end
 					elseif times > 0 then
 						ESX.ShowNotification('Veuillez patienter une minute')
@@ -507,11 +501,14 @@ end)
 
 -- used for seized vehicles
 RegisterNetEvent("esx_ava_garage:openSpecialVehicleMenu")
-AddEventHandler("esx_ava_garage:openSpecialVehicleMenu", function(garage)
+AddEventHandler("esx_ava_garage:openSpecialVehicleMenu", function(garage, societyName)
 	this_Garage = garage
     this_Garage.onlyCheckGarage = true
+	if this_Garage.OnlyOwnedVehicles == nil then
+		this_Garage.OnlyOwnedVehicles = true
+	end
 	if not this_Garage.Type then
 		this_Garage.Type = 'car'
 	end
-	OpenMenuGarage('open_garage_menu', tostring(societyName))
+	OpenMenuGarage('open_garage_menu', societyName)
 end)

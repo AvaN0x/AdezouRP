@@ -31,10 +31,10 @@ end)
 
 -- get vehicles from player or society
 -- allowed types : car | plane | heli | boat
-ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName)
+ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName, onlyOwnedVehicles)
 	local identifier = nil
 	local vehicules = {}
-    if not onlyCheckGarage then
+    if not onlyCheckGarage or onlyOwnedVehicles then
         if target then
             identifier = target
         else
@@ -71,10 +71,10 @@ ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, ty
     end
 end)
 
-function getPlayerVehicles(identifier, onlyCheckGarage, garageName)
+function getPlayerVehicles(identifier, onlyCheckGarage, garageName, onlyOwnedVehicles)
 	local vehicles = {}
     local data
-    if not onlyCheckGarage then
+    if not onlyCheckGarage or onlyOwnedVehicles then
 	    data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})
     else
         data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location",{['@location'] = garageName})
@@ -87,10 +87,10 @@ function getPlayerVehicles(identifier, onlyCheckGarage, garageName)
 end
 
 
-ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleProps, fuel, type, gIdentifier, target, onlyCheckGarage, garageName)
+ESX.RegisterServerCallback('esx_ava_garage:stockv',function(source, cb, vehicleProps, fuel, type, gIdentifier, target, onlyCheckGarage, garageName, onlyOwnedVehicles)
 	local isFound = false
     local plate = vehicleProps.plate
-    if not onlyCheckGarage then
+    if not onlyCheckGarage or onlyOwnedVehicles then
         local identifier = nil
         if target then
             identifier = target
@@ -220,13 +220,13 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:modifystate')
-AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName)
+AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName, onlyOwnedVehicles)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local playerIdentifier = xPlayer.getIdentifier()
 	local identifier = target or playerIdentifier
 
-	local vehicules = getPlayerVehicles(identifier, onlyCheckGarage, garageName)
+	local vehicules = getPlayerVehicles(identifier, onlyCheckGarage, garageName, onlyOwnedVehicles)
 	local plate = vehicleProps.plate
 	local location = location
 

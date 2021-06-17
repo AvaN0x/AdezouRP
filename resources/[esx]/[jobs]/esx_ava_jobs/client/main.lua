@@ -561,7 +561,7 @@ Citizen.CreateThread(function()
                         TriggerEvent('esx_ava_inventories:OpenSharedInventory', CurrentZoneValue.StockName)
                     elseif string.match(CurrentZoneName, "Garage$") then
                         if CurrentZoneValue.IsNonProprietaryGarage then
-                            TriggerEvent('esx_ava_garage:openSpecialVehicleMenu', CurrentZoneValue)
+                            TriggerEvent('esx_ava_garage:openSpecialVehicleMenu', CurrentZoneValue, job.SocietyName)
 
                         else
                             TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)

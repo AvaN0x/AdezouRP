@@ -480,6 +480,7 @@ Config.Jobs = {
                 Marker = 36,
                 Type = "car",
                 IsNonProprietaryGarage = true,
+                OnlyOwnedVehicles = false,
                 Identifier = "seized_LSPD",
                 SpawnPoint = {
                     Pos = vector3(447.44, -997.07, 24.78),
@@ -1791,7 +1792,22 @@ Config.Jobs = {
                 NoJobDress = true,
                 Marker = 27
             },
-		}
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(335.46, -2039.61, 21.13),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 250, g = 197, b = 50},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_vagos",
+                SpawnPoint = {
+                    Pos = vector3(335.46, -2039.61, 21.13),
+                    Heading = 50.0
+                }
+            },
+		},
 	},
 	gang_ballas = {
         isGang = true,
@@ -1815,7 +1831,22 @@ Config.Jobs = {
                 NoJobDress = true,
                 Marker = 27
             },
-		}
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(91.82, -1964.06, 20.75),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 152, g = 60, b = 137},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_ballas",
+                SpawnPoint = {
+                    Pos = vector3(91.82, -1964.06, 20.75),
+                    Heading = 321.59
+                },
+            },
+        }
 	},
 	gang_families = {
         isGang = true,
@@ -1838,6 +1869,21 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 NoJobDress = true,
                 Marker = 27
+            },
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-109.22, -1599.54, 31.64),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 72, g = 171, b = 57},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_families",
+                SpawnPoint = {
+                    Pos = vector3(-109.22, -1599.54, 31.64),
+                    Heading = 316.36
+                },
             },
 		}
 	},
@@ -1863,6 +1909,21 @@ Config.Jobs = {
                 NoJobDress = true,
                 Marker = 27
             },
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(1329.94, -1724.45, 56.04),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 136, g = 243, b = 216},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_marabunta",
+                SpawnPoint = {
+                    Pos = vector3(1329.94, -1724.45, 56.04),
+                    Heading = 10.77
+                },
+            },
 		}
 	},
 	biker_lost = {
@@ -1886,6 +1947,21 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 NoJobDress = true,
                 Marker = 27
+            },
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(975.37, -140.63, 74.23),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 136, g = 243, b = 216},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_lost",
+                SpawnPoint = {
+                    Pos = vector3(975.37, -140.63, 74.23),
+                    Heading = 50.0
+                },
             },
 		}
 	},
@@ -1911,6 +1987,21 @@ Config.Jobs = {
                 NoJobDress = true,
                 Marker = 27
             },
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(1404.57, 1114.41, 114.84),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 136, g = 243, b = 216},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_cartel",
+                SpawnPoint = {
+                    Pos = vector3(1406.34, 1117.52, 114.84),
+                    Heading = 63.56
+                },
+            },
 		}
 	},
 	orga_mafia = {
@@ -1926,6 +2017,21 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-871.18, -54.99, 38.03),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 136, g = 243, b = 216},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_mafia",
+                SpawnPoint = {
+                    Pos = vector3(-871.18, -54.99, 38.03),
+                    Heading = 288.73
+                },
+            },
 		}
 	},
 	orga_hapf = {
@@ -1949,6 +2055,21 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
                 NoJobDress = true,
                 Marker = 27
+            },
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-1070.73, -1670.35, 4.44),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 212, g = 0, b = 0},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_hapf",
+                SpawnPoint = {
+                    Pos = vector3(-1070.73, -1670.35, 4.44),
+                    Heading = 35.32
+                },
             },
 		},
         BuyZones = {
