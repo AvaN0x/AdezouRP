@@ -89,38 +89,38 @@ Citizen.CreateThread(function()
 end)
 
 
-function DrawText3D(x, y, z, text, size)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+-- function DrawText3D(x, y, z, text, size)
+--     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
-    if onScreen then
-        SetTextScale(0.35, size or 0.35)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 215)
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        SetTextOutline()
+--     if onScreen then
+--         SetTextScale(0.35, size or 0.35)
+--         SetTextFont(0)
+--         SetTextProportional(1)
+--         SetTextColour(255, 255, 255, 215)
+--         SetTextEntry("STRING")
+--         SetTextCentre(1)
+--         SetTextOutline()
 
-        AddTextComponentString(text)
-        DrawText(_x, _y)
-    end
-end
-
-
-function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
-    AddTextEntry(GetCurrentResourceName(), text)
-    BeginTextCommandDisplayHelp(GetCurrentResourceName())
-    EndTextCommandDisplayHelp(2, false, false, -1)
-    SetFloatingHelpTextWorldPosition(1, x, y, z)
+--         AddTextComponentString(text)
+--         DrawText(_x, _y)
+--     end
+-- end
 
 
-    local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
-    local bubbleStyle = bubbleStyle or 3
-    -- -1 centered, no triangles
-    -- 0 left, no triangles
-    -- 1 centered, triangle top
-    -- 2 left, triangle left
-    -- 3 centered, triangle bottom
-    -- 4 right, triangle right
-    SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
-end
+-- function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
+--     AddTextEntry(GetCurrentResourceName(), text)
+--     BeginTextCommandDisplayHelp(GetCurrentResourceName())
+--     EndTextCommandDisplayHelp(2, false, false, -1)
+--     SetFloatingHelpTextWorldPosition(1, x, y, z)
+
+
+--     local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+--     local bubbleStyle = bubbleStyle or 3
+--     -- -1 centered, no triangles
+--     -- 0 left, no triangles
+--     -- 1 centered, triangle top
+--     -- 2 left, triangle left
+--     -- 3 centered, triangle bottom
+--     -- 4 right, triangle right
+--     SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+-- end

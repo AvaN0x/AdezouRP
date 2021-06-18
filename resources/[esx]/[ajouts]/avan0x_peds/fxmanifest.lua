@@ -7,5 +7,6 @@ description 'Ped spawner'
 
 client_scripts {
     'config.lua',
+    '@esx_avan0x/client/utils.lua',
     'client.lua'
 }
