@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
             local newWeap = GetSelectedPedWeapon(playerPed)
 			if currWeapon ~= newWeap then
                 local inParachute = IsPedInParachuteFreeFall(playerPed) or GetPedParachuteState(playerPed) ~= -1
-                if not IsPedInParachuteFreeFall(playerPed) and GetPedParachuteState(playerPed) == -1 then
+                if not inParachute then
                     local playerCoords = GetEntityCoords(playerPed, true)
                     local rot = GetEntityHeading(playerPed)
 
@@ -159,6 +159,8 @@ Citizen.CreateThread(function()
                             currWeapon = newWeap
                         end
                     end
+                else
+                    currWeapon = newWeap
                 end
 			end
 		end
