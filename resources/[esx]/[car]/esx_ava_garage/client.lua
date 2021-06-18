@@ -186,8 +186,10 @@ function ListVehiclesMenu(type, target)
 				if data.current.value.location == 'any' or data.current.value.location == this_Garage.Identifier then
 					menu.close()
 
-					SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
-					TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+                    if not IsPedInAnyVehicle(PlayerPedId(), false) then
+                        SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
+                        TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+                    end
 				elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere.')
                 elseif string.match(data.current.value.location, "^seized_") then
@@ -209,14 +211,12 @@ end
 
 
 function StockVehicleMenu(target)
-	local playerPed  = GetPlayerPed(-1)
+	local playerPed  = PlayerPedId()
 	if IsPedInAnyVehicle(playerPed,  false) then
-
-		local playerPed = GetPlayerPed(-1)
 		local coords	= GetEntityCoords(playerPed)
 		local vehicle   = GetVehiclePedIsIn(playerPed,false)
 		local vehicleProps  = ESX.Game.GetVehicleProperties(vehicle)
-		local current 		= GetPlayersLastVehicle(GetPlayerPed(-1), true)
+		local current 		= GetPlayersLastVehicle(playerPed, true)
 		local engineHealth  = GetVehicleEngineHealth(current)
 		TriggerEvent('esx_legacyfuel:GetFuel', vehicle, function(fuel)
 			local vfuel = tonumber(string.format("%." .. 3 .. "f", fuel))
@@ -256,7 +256,7 @@ function SpawnVehicle(vehicle, fuel, target)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
 		SetEntityAsMissionEntity(callback_vehicle)
-		TaskWarpPedIntoVehicle(GetPlayerPed(-1), callback_vehicle, -1)
+		TaskWarpPedIntoVehicle(PlayerPedId(), callback_vehicle, -1)
 		TriggerEvent('esx_legacyfuel:SetFuel', callback_vehicle, fuel)
 		local vhealth = vehicle.health
 		if (vhealth <= 950) then
@@ -379,7 +379,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		local coords = GetEntityCoords(GetPlayerPed(-1))
+		local coords = GetEntityCoords(PlayerPedId())
 		local found = false
 
 		for k,v in pairs(Config.Garages) do
@@ -424,7 +424,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(50)
-		local coords	  = GetEntityCoords(GetPlayerPed(-1))
+		local coords	  = GetEntityCoords(PlayerPedId())
 		local isInMarker  = false
 
 		for _,v in pairs(Config.Garages) do
