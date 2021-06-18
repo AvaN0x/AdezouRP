@@ -168,7 +168,7 @@ Config.Teleports = {
 		-- bunker
 		{ -- arcade vehicle entry
 			tpEnter = {
-				pos = vector3(2116.71, 3329.63, 45.58),
+				pos = vector3(2109.64, 3325.24, 44.38),
 				heading = 120.0,
 				size  = {x = 2.5, y = 2.5, z = 1.0},
 				-- color = {r = 255, g = 0, b = 255},
@@ -187,20 +187,20 @@ Config.Teleports = {
 
 
         { -- télésiege
-        tpEnter = {
-            pos = vector3(-741.06, 5593.22, 40.67),
-            heading = 0.0,
-            -- size  = {x = 1.5, y = 1.5, z = 1.0},
-            -- color = {r = 255, g = 0, b = 255},
-            label = "Monter"
+            tpEnter = {
+                pos = vector3(-741.06, 5593.22, 40.67),
+                heading = 0.0,
+                -- size  = {x = 1.5, y = 1.5, z = 1.0},
+                -- color = {r = 255, g = 0, b = 255},
+                label = "Monter"
+            },
+            tpExit = {
+                pos = vector3(446.35, 5569.02, 780.21),
+                heading = 0.0,
+                label = "Descendre"
+            },
+            locked = false
         },
-        tpExit = {
-            pos = vector3(446.35, 5569.02, 780.21),
-            heading = 0.0,
-            label = "Descendre"
-        },
-        locked = false
-    },
 
 
 		-- { -- maze bank arena
