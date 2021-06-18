@@ -24,6 +24,15 @@ Config.Zones = {
 		Hint  = _U('press_custom')
 	},
 
+	ls3 = {
+		Pos   = { x = -336.42, y = -130.03, z = 39.06},
+		Size  = {x = 3.0, y = 3.0, z = 0.2},
+		Color = {r = 204, g = 204, b = 0},
+		Marker= 1,
+		Name  = _U('blip_name'),
+		Hint  = _U('press_custom')
+	},
+
 	lsdehors = {
 		Pos   = { x = -369.84, y = -108.47, z = 37.70},
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
