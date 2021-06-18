@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
             local newWeap = GetSelectedPedWeapon(playerPed)
 			if currWeapon ~= newWeap then
                 local inParachute = IsPedInParachuteFreeFall(playerPed) or GetPedParachuteState(playerPed) ~= -1
-                if not inParachute then
+                if not inParachute and not IsPedInAnyVehicle(playerPed, false) then
                     local playerCoords = GetEntityCoords(playerPed, true)
                     local rot = GetEntityHeading(playerPed)
 
@@ -123,7 +123,7 @@ Citizen.CreateThread(function()
                             ClearPedTasks(playerPed)
                             holstered = false
                             canFire = true
-                        elseif newWeap ~= currWeapon then
+                        else
                             print(2)
                             canFire = false
                             TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
