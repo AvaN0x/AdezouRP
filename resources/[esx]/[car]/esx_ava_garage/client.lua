@@ -105,12 +105,11 @@ function OpenMenuGarage(PointType, target)
 		end
 	end
 
-	local title
-	if target then
-		title = 'Garage entreprise'
-	else
-		title = 'Garage'
-	end
+	local title = this_Garage.IsGangGarage
+        and "Garage de gang"
+        or target
+            and "Garage entreprise"
+            or "Garage"
 
 	ESX.UI.Menu.Open(
 		'default', GetCurrentResourceName(), 'garage_menu',
