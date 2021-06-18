@@ -6,6 +6,11 @@ Citizen.CreateThread(function()
 		-- SetRandomVehicleDensityMultiplierThisFrame(0.3)
 		-- SetParkedVehicleDensityMultiplierThisFrame(0.3)
 
+        --? values from another script
+        -- SetVehicleDensityMultiplierThisFrame(0.65)
+		-- SetParkedVehicleDensityMultiplierThisFrame(0.8)
+
+
 		--? These natives have to be called every frame.
         -- SetVehicleModelIsSuppressed(GetHashKey("taco"), true)
 		-- SetGarbageTrucks(false)
