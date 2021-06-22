@@ -1786,10 +1786,10 @@ Config.Jobs = {
         BuyZones = {
             BuyDrinks = {
                 Items = {
-                    {name = 'steel', price = 800},
-                    {name = 'plastic', price = 350},
-                    {name = 'gunpowder', price = 100},
-                    {name = 'grease', price = 60},
+                    {name = 'steel', price = 800, isDirtyMoney = true},
+                    {name = 'plastic', price = 350, isDirtyMoney = true},
+                    {name = 'gunpowder', price = 100, isDirtyMoney = true},
+                    {name = 'grease', price = 60, isDirtyMoney = true},
                 },
                 Pos = vector3(612.6, -3074.04, 5.09),
                 Size  = {x = 1.5, y = 1.5, z = 1.5},
