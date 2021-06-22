@@ -47,7 +47,9 @@ Locales['fr'] = {
 
 	['buy_cant_carry'] = 'Vous n\'avez pas assez de place',
 	['buy_cant_afford'] = 'Vous n\'avez pas assez d\'argent',
-	['buy_you_paid'] = 'Vous avez payé ~r~$',
+	['buy_cant_afford_dirty'] = 'Vous n\'avez pas assez d\'argent sale',
+	['buy_you_paid'] = 'Vous avez payé ~r~$ %s',
+	['buy_you_paid_dirty'] = 'Vous avez payé ~r~$%s~s~ d\'argent sale',
 
 	['no_interim'] = "Un intérimaire ne peut pas faire cela",
 
@@ -58,7 +60,6 @@ Locales['fr'] = {
 	['boss_actions'] = 'Action Patron',
     ["need_in_service"] = "Vous devez être en service pour faire cela",
 
-	-- A modifier selon l'entreprise
 	['inventoryfull'] = 'Vous n\'avez plus de place',
 	['max_pickup_day'] = 'Votre employeur vous interdit de récolter plus pour aujourd\'hui, veuillez revenir demain.',
 	['max_pickup_day_illegal'] = 'Dégage sacam, il y a plus rien pour toi aujourd\'hui.',

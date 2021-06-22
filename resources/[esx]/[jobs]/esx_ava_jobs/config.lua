@@ -2082,7 +2082,7 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {
-                    {name = 'lockpick', price = 200}
+                    {name = 'lockpick', price = 200, isDirtyMoney = true}
                 },
                 Pos = vector3(-1108.25, -1637.40, 3.64),
                 Size = {x = 1.5, y = 1.5, z = 1.5},

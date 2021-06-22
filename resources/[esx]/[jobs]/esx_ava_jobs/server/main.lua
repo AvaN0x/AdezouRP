@@ -371,9 +371,11 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
 
     if zone then
         local price = nil
+        local isIllegal = nil
         for k,v in ipairs(zone.Items) do
             if v.name == item then
                 price = v.price
+                isIllegal = v.isDirtyMoney
                 break
             end
         end
@@ -381,21 +383,34 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
             return
         end
 
-        local totalprice = tonumber(count)*tonumber(price)
+        local totalprice = tonumber(count) * tonumber(price)
         
         if not inventory.canAddItem(item, count) then
             TriggerClientEvent('esx:showNotification', source, _('buy_cant_carry'))
-        elseif xPlayer.getMoney() < totalprice then
-            TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
         else
-            if job.SocietyName then
-                TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
-                end)
+            if isIllegal == true then
+                if xPlayer.getAccount('black_money').money < totalprice then
+                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
+                else
+                    xPlayer.removeAccountMoney('black_money', totalprice)
+                    inventory.addItem(item, count)
+                    TriggerClientEvent('esx:showNotification', source, _('buy_you_paid_dirty', totalprice))
+                end
+            else
+                if xPlayer.getMoney() < totalprice then
+                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford_dirty'))
+                else
+                    if job.SocietyName then
+                        TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)
+                        end)
+                    end
+
+                    xPlayer.removeMoney(totalprice)
+                    inventory.addItem(item, count)
+                    TriggerClientEvent('esx:showNotification', source, _('buy_you_paid', totalprice))
+                end
+
             end
-            
-            xPlayer.removeMoney(totalprice)
-            inventory.addItem(item, count)
-            TriggerClientEvent('esx:showNotification', source, _('buy_you_paid')..totalprice)
         end
     else
         print(('%s attempted to exploit buying!'):format(GetPlayerIdentifiers(source)[1]))
