@@ -11,16 +11,16 @@ AddEventHandler('esx_lscustom:buyMod', function(price)
 	if Config.IsMecanoJobOnly then
 
 		local societyAccount = nil
-		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
+		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 			societyAccount = account
 		end)
 		if price < societyAccount.money then
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
-			local society = {name = "mecano"}
+			local society = {name = "mechanic"}
 			local mecanoPart = 0.18
 			-- TriggerEvent('esx_society:saveData',xPlayer,"purchase",society,price,(societyAccount.money-price))
-			TriggerEvent('esx_avan0x:logTransaction', 'society_mecano', 'society_mecano', 'CUSTOM', 'CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
+			TriggerEvent('esx_avan0x:logTransaction', 'society_mechanic', 'society_mechanic', 'CUSTOM', 'CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
 			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
 			end)
 			societyAccount.removeMoney(math.floor(tonumber(price * (1 - mecanoPart))))

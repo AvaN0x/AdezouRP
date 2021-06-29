@@ -22,7 +22,7 @@ INSERT INTO `inventories` (`name`, `label`, `max_weight`, `shared`) VALUES
 ('society_bahama', 'Bahamas', 200000, 1),
 ('society_cluckin', 'Cluckin', 200000, 1),
 ('society_ems', 'EMS', 200000, 1),
-('society_mecano', 'Mecano', 200000, 1),
+('society_mechanic', 'Mecano', 200000, 1),
 ('society_nightclub', 'Galaxy', 200000, 1),
 ('society_police', 'LSPD', 200000, 1),
 ('society_state', 'Gouv', 200000, 1),

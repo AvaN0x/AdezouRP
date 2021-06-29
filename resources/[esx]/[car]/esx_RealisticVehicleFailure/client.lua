@@ -206,7 +206,7 @@ AddEventHandler('iens:repair', function()
 				return
 			else
 				local mechNumb = math.random(1,3)
-				if PlayerData.job.name == 'mecano' then
+				if PlayerData.job.name == 'mechanic' then
 					SetVehicleUndriveable(vehicle,false)
 					SetVehicleFixed(vehicle)
 					healthBodyLast=1000.0

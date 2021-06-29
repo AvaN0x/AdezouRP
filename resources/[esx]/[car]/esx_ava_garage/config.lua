@@ -167,7 +167,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_vigneron"
 	},
-	Garage_MECANO = {
+	Garage_MECHANIC = {
 		Name = "hide",
 		Pos = {x = -362.35, y = -145.63, z = 38.25},
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -178,12 +178,12 @@ Config.Garages = {
 			Color = 0
 		},
 		Type = "car",
-		Job = 'mecano',
+		Job = 'mechanic',
 		SpawnPoint = {
 			Pos = {x = -362.35, y = -145.63, z = 38.25},
 			Heading = 50.0
 		},
-		Identifier = "garage_mecano"
+		Identifier = "garage_mechanic"
 	},
 	Garage_CLUCKIN = {
 		Name = "hide",

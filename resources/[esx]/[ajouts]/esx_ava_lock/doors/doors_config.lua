@@ -380,12 +380,12 @@ Config.Doors = {
 			}
 		},
 
-		-- mecano
+		-- mechanic : center city
 		{
 			objName = 'prop_com_ls_door_01',
 			objCoords  = vector3( -356.09, -134.81, 39.01),
 			textCoords = vector3( -356.09, -134.81, 39.01),
-			authorizedJobs = { 'mecano' },
+			authorizedJobs = { 'mechanic' },
 			locked = true,
 			distance = 12
 		},
@@ -394,7 +394,7 @@ Config.Doors = {
 			objYaw = 340.0,
 			objCoords  = vector3(-347.91, -125.0, 39.01),
 			textCoords = vector3(-348.17, -124.92, 39.16),
-			authorizedJobs = { 'mecano' },
+			authorizedJobs = { 'mechanic' },
 			locked = true
 		},
 		{
@@ -402,7 +402,7 @@ Config.Doors = {
 			objYaw = 250.0,
 			objCoords  = vector3(-346.00, -122.4, 39.01),
 			textCoords = vector3(-345.65, -122.38, 39.15),
-			authorizedJobs = { 'mecano' },
+			authorizedJobs = { 'mechanic' },
 			locked = true
 		},
 		{
@@ -410,9 +410,45 @@ Config.Doors = {
 			objYaw = 70.0,
 			objCoords  = vector3(-322.06, -120.90, 39.01),
 			textCoords = vector3(-321.77, -121.36, 39.16),
-			authorizedJobs = { 'mecano' },
+			authorizedJobs = { 'mechanic' },
 			locked = true
 		},
+
+
+		-- mechanic : airport
+		{
+			objName = 'prop_com_ls_door_01',
+			objCoords  = vector3(-1146.15, -1991.06, 13.19),
+			textCoords = vector3(-1145.90, -1991.14, 12.25),
+			authorizedJobs = { 'mechanic' },
+			locked = true,
+			distance = 12
+		},
+		{
+			objHash = -58137547,
+			objYaw = 225.0,
+			objCoords  = vector3(-1140.71, -2002.95, 13.19),
+			textCoords = vector3(-1140.31, -2002.49, 13.33),
+			authorizedJobs = { 'mechanic' },
+			locked = true
+		},
+		{
+			objHash = -58137547,
+			objYaw = 135.0,
+			objCoords  = vector3(-1139.49, -2005.42, 13.19),
+			textCoords = vector3(-1139.08, -2005.84, 13.32),
+			authorizedJobs = { 'mechanic' },
+			locked = true
+		},
+		{
+			objHash = -58137547,
+			objYaw = 315.0,
+			objCoords  = vector3(-1147.91, -2028.17, 13.19),
+			textCoords = vector3(-1148.24, -2027.92, 13.33),
+			authorizedJobs = { 'mechanic' },
+			locked = true
+		},
+
 
 		{ -- hidden custom
 			objHash = 270330101,

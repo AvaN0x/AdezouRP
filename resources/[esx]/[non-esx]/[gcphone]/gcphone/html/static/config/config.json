@@ -129,13 +129,13 @@
     },
     {
       "display": "Mécano",
-      "icon": "/html/static/img/icons_app/mecano.png",
+      "icon": "/html/static/img/icons_app/mechanic.png",
       "subMenu": [
         {
           "title": "Envoyer un message",
           "eventName": "esx_addons_gcphone:call",
           "type": {
-            "number": "mecano"
+            "number": "mechanic"
           }
         }
       ]
@@ -171,9 +171,9 @@
       "icon": "/html/static/img/icons_app/state.png"
     },
     {
-      "number": "mecano",
+      "number": "mechanic",
       "display": "Mécano",
-      "icon": "/html/static/img/icons_app/mecano.png"
+      "icon": "/html/static/img/icons_app/mechanic.png"
     },
     {
       "number": "taxi",

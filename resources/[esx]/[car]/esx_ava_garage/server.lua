@@ -360,7 +360,7 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	
 	local toState  = math.ceil(exitPrice * 0.4)
 	local toLSPD = math.floor(exitPrice * 0.35)
-	local toMecano = math.floor(exitPrice * 0.25)
+	local toMechanic = math.floor(exitPrice * 0.25)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
@@ -374,10 +374,10 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 			account.addMoney(toLSPD)
 		end
 	end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_mecano', 'society_mecano', "pay_pound", toMecano)
-			account.addMoney(toMecano)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_mechanic', 'society_mechanic', "pay_pound", toMechanic)
+			account.addMoney(toMechanic)
 		end
     end)
 	
@@ -396,7 +396,7 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 
 	local toState  = math.ceil(exitPrice * 0.4)
 	local toLSPD = math.floor(exitPrice * 0.35)
-	local toMecano = math.floor(exitPrice * 0.25)
+	local toMechanic = math.floor(exitPrice * 0.25)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
@@ -410,10 +410,10 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 			account.addMoney(toLSPD)
 		end
 	end)
-	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mecano', function(account)
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_mecano', 'society_mecano', "pay_pound", toMecano)
-			account.addMoney(toMecano)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_mechanic', 'society_mechanic', "pay_pound", toMechanic)
+			account.addMoney(toMechanic)
 		end
     end)
 	

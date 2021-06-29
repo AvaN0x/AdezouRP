@@ -273,7 +273,7 @@ Config.Jobs = {
                     end)
 
                 end,
-                OnlyGrades = {"sergeant_chef", "lieutenant", "chef", "boss"}
+                OnlyGrades = {"sergeant_chief", "lieutenant", "chief", "boss"}
             },
             {
                 Label = _('info_vehicle'),
@@ -498,7 +498,7 @@ Config.Jobs = {
                 Color = {r = 221, g = 79, b = 67},
                 Name = "Achat de protections et menottes",
                 HelpText = _('press_buy'),
-                OnlyGrades = {"chef", "boss"},
+                OnlyGrades = {"chief", "boss"},
                 Marker = 27,
                 Blip = true
             }
@@ -647,6 +647,72 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = true
             }
+        }
+    },
+    mechanic = {
+        SocietyName = 'society_mechanic',
+        LabelName = 'Mécano',
+        ServiceCounter = true,
+        Blip = {
+            Name = "~y~Garage Mécano",
+            Pos = vector3(-1145.49, -1990.55, 13.16),
+            Sprite = 446,
+            Colour = 5
+        },
+        Zones = {
+            JobActions = {
+                Pos = vector3(-1151.45, -2032.61, 12.21),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "Point d'action",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+                Blip = true,
+                NoStock = true,
+                OnlyGrades = {"boss"}
+            },
+            Dressing = {
+                Pos = vector3(-1137.33, -2001.94, 12.21),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+                Blip = true,
+                Name = "Dressing",
+                HelpText = _('press_to_open'),
+                Marker = 27,
+            },
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-1144.45, -1971.70, 13.16),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 207, g = 169, b = 47},
+                Marker = 36,
+                Type = "car",
+                Blip = true,
+                SpawnPoint = {
+                    Pos = vector3(-1144.45, -1971.70, 13.16),
+                    Heading = 190.0
+                }
+            },
+        },
+        BuyZones = {
+            DorsetDriveItems = {
+                Items = {
+                    {name = 'ethylotest', price = 300},
+                    {name = 'defibrillator', price = 550},
+                    {name = 'bandage', price = 300},
+                    {name = 'medikit', price = 400},
+                    {name = 'dolizou', price = 100},
+                },
+                Pos = vector3(-447.57, -341.08, 33.52),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "Pharmacie",
+                HelpText = _('press_buy'),
+                OnlyGrades = {"doctor", "boss"},
+                Marker = 27,
+                Blip = true
+            },
         }
     },
     vigneron = {

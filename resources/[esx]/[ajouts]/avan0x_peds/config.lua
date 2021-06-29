@@ -123,13 +123,13 @@ Config.Peds = {
             },
         }
     },
-    Mecano = {
+    Mechanic = {
         Name = "s_f_y_hooker_01",
         Type = "PED_TYPE_CIVFEMALE",
         PosList = {
             {
-                pos = vector3(-347.04, -128.53, 38.03),
-                heading = 75.0,
+                pos = vector3(-1144.08, -2001.85, 12.21),
+                heading = 320.0,
                 name = "Maëlys",
                 offsetZ = 0.33,
                 variations = {
