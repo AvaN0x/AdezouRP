@@ -197,8 +197,8 @@ function OpenBillsMenu()
 			elements = elements
 		}, function(data, menu)
 			if data.current.value == "pay_bill" then
+                menu.close()
 				ESX.TriggerServerCallback("esx_billing:payBill", function()
-					menu.close()
 					OpenBillsMenu()
 				end, data.current.billId)
 			end
