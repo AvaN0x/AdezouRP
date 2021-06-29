@@ -85,6 +85,15 @@ function getCountInService(job)
     return tonumber(count)
 end
 
+function isInService(source, job)
+    return jobsServices[job] and jobsServices[job][source] == true or false
+end
+
+function isInServiceOrHasJob(source, job)
+    local xPlayer = ESX.GetPlayerFromId(source)
+
+    return isInService(source, job) or (xPlayer.job ~= nil and xPlayer.job.name == job) or (xPlayer.job2 ~= nil and xPlayer.job2.name == job)
+end
 
 -------------
 -- RECOLTE --

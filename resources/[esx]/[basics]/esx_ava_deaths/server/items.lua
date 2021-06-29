@@ -3,6 +3,10 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
+local isAbleToUse = function(source)
+    return exports.esx_ava_jobs:getCountInService(Config.EMSJobName) == 0 or exports.esx_ava_jobs:isInServiceOrHasJob(source, Config.EMSJobName)
+end
+
 -------------
 -- bandage --
 -------------
@@ -37,9 +41,11 @@ end)
 -------------
 
 ESX.RegisterUsableItem('medikit', function(source)
-    -- local xPlayer = ESX.GetPlayerFromId(source)
-
-	TriggerClientEvent('esx_ava_deaths:medikit', source)
+    if isAbleToUse(source) then
+        TriggerClientEvent('esx_ava_deaths:medikit', source)
+    else
+        TriggerClientEvent('esx:showNotification', source, _('cant_use_now'))
+    end
 end)
 
 RegisterServerEvent('esx_ava_deaths:medikit:heal')
@@ -47,7 +53,6 @@ AddEventHandler('esx_ava_deaths:medikit:heal', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
     local inventory = xPlayer.getInventory()
 
-    print(source, target)
     if inventory.canRemoveItem("medikit", 1) then
         inventory.removeItem("medikit", 1)
         TriggerClientEvent('esx_ava_deaths:medikit:heal', target)
@@ -64,9 +69,11 @@ end)
 -------------------
 
 ESX.RegisterUsableItem('defibrillator', function(source)
-    -- local xPlayer = ESX.GetPlayerFromId(source)
-
-	TriggerClientEvent('esx_ava_deaths:defibrillator', source)
+    if isAbleToUse(source) then
+        TriggerClientEvent('esx_ava_deaths:defibrillator', source)
+    else
+        TriggerClientEvent('esx:showNotification', source, _('cant_use_now'))
+    end
 end)
 
 RegisterServerEvent('esx_ava_deaths:defibrillator:revive')

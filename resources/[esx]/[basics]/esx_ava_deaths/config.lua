@@ -7,6 +7,8 @@ Config = {}
 Config.Locale = 'fr'
 Config.DrawDistance = 30.0
 
+Config.EMSJobName = "ems"
+
 Config.WaitBeforeRespawnAvailableTimer = 10 * 60 * 1000  -- Time til respawn is available
 -- Config.WaitBeforeRespawnAvailableTimer = 1000  -- Time til respawn is available
 Config.ForceRespawnTimer = 20 * 60 * 1000 -- Time til the player bleeds out

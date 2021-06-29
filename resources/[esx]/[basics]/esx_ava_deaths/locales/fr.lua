@@ -14,5 +14,7 @@ Locales['fr'] = {
     ['respawn_respawn_prompt'] = 'Maintenez [~b~E~s~] pour être réanimé à l\'hopital',
     ['distress_message'] = 'Intervention requise: citoyen inconscient!',
     ['distress_send'] = 'Appuyez sur [~b~G~s~] pour envoyer un signal de détresse',
+    
+    ['cant_use_now'] = "Vous ne pouvez pas utiliser cela actuellement.",
 
 }
