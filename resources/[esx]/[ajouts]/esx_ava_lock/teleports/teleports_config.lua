@@ -221,6 +221,23 @@ Config.Teleports = {
 		},
 
 
+		{ -- insurance
+			tpEnter = {
+				pos = vector3(-116.64, -603.31, 35.30),
+				heading = 250.00,
+				-- size  = {x = 1.0, y = 1.0, z = 1.0},
+				-- color = {r = 255, g = 0, b = 255},
+                label = "Monter au Bureau d'assurances"
+			},
+			tpExit = {
+                pos = vector3(-141.72, -617.62, 167.84),
+				heading = 270.00,
+                label = "Descendre"
+			},
+			locked = false
+		},
+
+
 		-- { -- maze bank arena
 		-- 	tpEnter = {
 		-- 		pos = vector3(-366.0, -1867.94, 19.55),
