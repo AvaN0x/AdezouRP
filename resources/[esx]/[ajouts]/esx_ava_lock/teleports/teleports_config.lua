@@ -203,6 +203,24 @@ Config.Teleports = {
         },
 
 
+		{ -- fib
+			tpEnter = {
+				pos = vector3(136.08, -761.77, 44.77),
+				heading = 160.00,
+				-- size  = {x = 1.5, y = 1.5, z = 1.0},
+				-- color = {r = 255, g = 0, b = 255},
+                label = "Monter à l'étage"
+			},
+			tpExit = {
+                pos = vector3(136.05, -762.05, 241.17),
+				heading = 160.00,
+                label = "Descendre"
+			},
+			authorizedJobs = { 'lspd' },
+			locked = true
+		},
+
+
 		-- { -- maze bank arena
 		-- 	tpEnter = {
 		-- 		pos = vector3(-366.0, -1867.94, 19.55),
