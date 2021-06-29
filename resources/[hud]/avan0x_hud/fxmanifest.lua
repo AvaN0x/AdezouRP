@@ -1,5 +1,8 @@
-resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+fx_version 'cerulean'
+games { 'gta5' }
 
+version '1.0.0'
+author 'github.com/AvaN0x'
 description 'AvaN0x HUD and speedometer'
 
 ui_page 'html/ui.html'
@@ -18,4 +21,8 @@ files {
 	'html/main.js',
 	'html/img/**/*.png',
 	'html/img/**/*.svg'
+}
+
+export {
+    "copyToClipboard"
 }

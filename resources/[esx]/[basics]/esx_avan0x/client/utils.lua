@@ -144,7 +144,7 @@ function DrawText3D(x, y, z, text, size, r, g, b)
         SetTextOutline()
 
         AddTextComponentString(text)
-        DrawText(_x, _y)
+        EndTextCommandDisplayText(_x, _y)
     end
 end
 

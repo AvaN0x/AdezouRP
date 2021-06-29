@@ -169,7 +169,7 @@ function DevLoop()
 					SetTextOutline()
 					SetTextEntry("STRING")
 					AddTextComponentString("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y) .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t" .. string.format("%.2f", GetEntityHeading(playerPed)))
-					DrawText(0.9, 0.88)
+					EndTextCommandDisplayText(0.9, 0.88)
 				else
 					Citizen.Wait(5000)
 				end
@@ -201,11 +201,19 @@ function DevLoop()
                     end
 
                     local pointerCoords = GetOffsetFromEntityInWorldCoords(playerPed, xAxis + 0.0, yAxis + 0.0, 0.0);
-                    local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", " .. string.format("%.2f", pointerCoords.z) .. ")"
+                    SetTextColour(255, 99, 219, 255)
+                    SetTextFont(0)
+                    SetTextScale(0.34, 0.34)
+                    SetTextWrap(0.0, 1.0)
+                    SetTextOutline()
+                    SetTextEntry("STRING")
+                    AddTextComponentString("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t" .. string.format("%.2f", pointerCoords.z))
+                    DrawText(0.8, 0.88)
 
-                    DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 0, 255)
+                    DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)
                     if IsControlJustReleased(0, 79) then -- c
-                        TriggerEvent('avan0x_hud:copyToClipboard', coordString)
+                        local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", " .. string.format("%.2f", pointerCoords.z) .. ")"
+                        exports.avan0x_hud:copyToClipboard(coordString)
                     end
 				else
 					Citizen.Wait(5000)

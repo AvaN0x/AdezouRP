@@ -175,7 +175,7 @@ Citizen.CreateThread(function()
 					if type(offset) == "number" or type(offset) == "float" then
 						local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
 						doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x + offset, 0.0, 0.0)
-						TriggerEvent('avan0x_hud:copyToClipboard', "vector3(" .. string.format("%.2f", doorID.textCoords.x) .. ", " .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z) .. ")")
+						exports.avan0x_hud:copyToClipboard("vector3(" .. string.format("%.2f", doorID.textCoords.x) .. ", " .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z) .. ")")
 					end
 				end
 			end

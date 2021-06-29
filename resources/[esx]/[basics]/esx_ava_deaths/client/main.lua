@@ -180,7 +180,7 @@ function StartDeathTimer()
 
 			SetTextEntry("STRING")
 			AddTextComponentString(text)
-			DrawText(0.5, 0.8)
+			EndTextCommandDisplayText(0.5, 0.8)
 		end
 
 		-- bleedout timer
@@ -206,7 +206,7 @@ function StartDeathTimer()
 
 			SetTextEntry("STRING")
 			AddTextComponentString(text)
-			DrawText(0.5, 0.8)
+			EndTextCommandDisplayText(0.5, 0.8)
 		end
 
 		if ForceRespawnTimer < 1 and IsDead then

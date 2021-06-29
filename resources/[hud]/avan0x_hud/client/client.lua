@@ -253,10 +253,9 @@ function has_value(tab, val)
     return false
 end
 
-RegisterNetEvent('avan0x_hud:copyToClipboard')
-AddEventHandler('avan0x_hud:copyToClipboard', function(content)
+function copyToClipboard(content)
 	SendNUIMessage({action = "copyToClipboard", content = content})
-end)
+end
 
 
 
