@@ -21,3 +21,7 @@ server_scripts {
     'server/main.lua',
     '**/*_sv.lua'
 }
+
+server_export {
+    "getCountInService"
+}

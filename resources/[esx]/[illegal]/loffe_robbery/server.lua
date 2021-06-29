@@ -49,22 +49,21 @@ ESX.RegisterServerCallback('loffe_robbery:canRob', function(source, cb, store)
     --     end
     -- end
 
-    TriggerEvent("esx_ava_jobs:getCountInService", "lspd", function(cops)
-        if cops >= tonumber(Config.Shops[store].cops) then
-            if Config.Shops[store].robbed == 'wait' then
-                cb('wait')
-            elseif not Config.Shops[store].robbed and not deadPeds[store] then
-                Config.Shops[store].robbed = true
-                exports.esx_avan0x:SendWebhookMessage("avan0x_wh_dev", "Le braquage de superettes peut se lancer")
-                
-                cb(true)
-            else
-                cb(false)
-            end
+    local cops = exports.esx_ava_jobs:getCountInService("lspd")
+    if cops >= tonumber(Config.Shops[store].cops) then
+        if Config.Shops[store].robbed == 'wait' then
+            cb('wait')
+        elseif not Config.Shops[store].robbed and not deadPeds[store] then
+            Config.Shops[store].robbed = true
+            exports.esx_avan0x:SendWebhookMessage("avan0x_wh_dev", "Le braquage de superettes peut se lancer")
+            
+            cb(true)
         else
-            cb('no_cops')
+            cb(false)
         end
-    end)
+    else
+        cb('no_cops')
+    end
 end)
 
 RegisterServerEvent('loffe_robbery:setRobbed')

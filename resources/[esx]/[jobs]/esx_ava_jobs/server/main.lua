@@ -64,8 +64,7 @@ AddEventHandler("esx_ava_jobs:setService", function(job, state)
     jobsServices[job][source] = state and true or nil
 end)
 
-RegisterServerEvent("esx_ava_jobs:getCountInService")
-AddEventHandler("esx_ava_jobs:getCountInService", function(job, cb)
+function getCountInService(job)
     local count = 0
     local xPlayers = ESX.GetPlayers()
 
@@ -83,8 +82,8 @@ AddEventHandler("esx_ava_jobs:getCountInService", function(job, cb)
 
     exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_dev", "asked for count of " .. job, "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 15902015)
 
-    cb(tonumber(count))
-end)
+    return tonumber(count)
+end
 
 
 -------------
@@ -478,6 +477,8 @@ ESX.RegisterUsableItem('grand_crubox', function(source)
 	TriggerEvent('esx_ava_jobs:UseBox', source, 'grand_crubox', 'grand_cru')
 end)
 
+
+
 ----------
 -- LSPD --
 ----------
@@ -528,6 +529,7 @@ ESX.RegisterServerCallback('esx_ava_jobs:getVehicleInfos', function(source, cb, 
 		end
 	end)
 end)
+
 
 ---------
 -- EMS --
