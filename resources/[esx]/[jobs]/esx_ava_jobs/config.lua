@@ -279,7 +279,7 @@ Config.Jobs = {
                 Label = _('info_vehicle'),
                 Detail = _('info_vehicle_detail'),
                 Action = function(parentData, parentMenu, jobName)
-                    exports.esx_avan0x:ChooseClosestVehicle(function(vehicle)
+                    exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
                         local vehicleData = ESX.Game.GetVehicleProperties(vehicle)
                         ESX.TriggerServerCallback('esx_ava_jobs:getVehicleInfos', function(vehicleInfos)
                             local elements = {

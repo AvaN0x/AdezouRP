@@ -33,7 +33,8 @@ export {
     "DrawText3D",
     "DrawBubbleText3D",
     "ChooseClosestPlayer",
-    "ChooseClosestVehicle"
+    "ChooseClosestVehicle",
+    "GetVehicleInFrontOrChooseClosestVehicle"
 }
 
 server_export {

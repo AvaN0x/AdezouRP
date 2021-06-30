@@ -89,10 +89,14 @@ function isInService(source, job)
     return jobsServices[job] and jobsServices[job][source] == true or false
 end
 
-function isInServiceOrHasJob(source, job)
+function hasJob(source, job)
     local xPlayer = ESX.GetPlayerFromId(source)
 
-    return isInService(source, job) or (xPlayer.job ~= nil and xPlayer.job.name == job) or (xPlayer.job2 ~= nil and xPlayer.job2.name == job)
+    return (xPlayer.job ~= nil and xPlayer.job.name == job) or (xPlayer.job2 ~= nil and xPlayer.job2.name == job)
+end
+
+function isInServiceOrHasJob(source, job)
+    return isInService(source, job) or hasJob(source, job)
 end
 
 -------------

@@ -25,5 +25,6 @@ server_scripts {
 server_export {
     "getCountInService",
     "isInService",
+    "hasJob",
     "isInServiceOrHasJob"
 }

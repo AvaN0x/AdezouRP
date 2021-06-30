@@ -130,6 +130,24 @@ function ChooseClosestVehicle(cb, title, distance)
     end
 end
 
+function GetVehicleInFrontOrChooseClosestVehicle(cb, title, distance)
+    local yOffset = distance
+    if not distance or not tonumber(distance) or tonumber(distance) < 0 then
+        yOffset = 4
+    end
+
+    local playerPed = PlayerPedId()
+    local playerCoords = GetEntityCoords(playerPed)
+    local offsetCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, yOffset + 0.0, 0.0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z, offsetCoords.x, offsetCoords.y, offsetCoords.z, 10, playerPed, 0)
+    local _, _, _, _, vehicle = GetShapeTestResult(rayHandle)
+
+    if GetEntityType(vehicle) == 2 then
+        cb(vehicle)
+    else
+        ChooseClosestVehicle(cb, title, distance)
+    end
+end
 
 function DrawText3D(x, y, z, text, size, r, g, b)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
