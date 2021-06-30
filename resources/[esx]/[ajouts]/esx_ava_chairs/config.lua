@@ -6,7 +6,7 @@
 Config = {}
 Config.Locale = "fr"
 
-Config.Key = 38
+Config.Key = 23 -- F (38 is E)
 
 Config.Props = {
 	{hash = -1531508740, offX = 0.0, offY = 0.0, offZ = -1.0, offHeading = 180.0, type = "Chair"},

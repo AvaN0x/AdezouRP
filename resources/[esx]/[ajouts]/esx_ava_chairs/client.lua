@@ -22,14 +22,14 @@ Citizen.CreateThread(function()
             if chair and not isSitting then
                 DrawText3D(chair.x, chair.y, chair.z, _U("sit_down"))
 
-                if IsControlJustPressed(0, Config.Key) then -- E
+                if IsControlJustPressed(0, Config.Key) then
                     -- Animation(Config.Anims[chair.type])
                     TriggerServerEvent("esx_ava_chairs:sitDown", chair)
                 end
             elseif chair and isSitting then
                 DrawText3D(chair.x, chair.y, chair.z, _U("stand_up"))
 
-                if IsControlJustPressed(0, Config.Key) then -- E
+                if IsControlJustPressed(0, Config.Key) then
                     StandUp()
                 end
             end
