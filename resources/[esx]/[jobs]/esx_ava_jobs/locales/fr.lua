@@ -128,4 +128,13 @@ Locales['fr'] = {
     ["ems_injuries_injured_high"] = "Blessé grave",
     ["ems_injuries_injured"] = "Blessé",
     ["ems_injuries_injured_low"] = "Blessé faible",
+
+    -- MECHANIC
+    ['info_vehicle_engine_health'] = 'Etat du moteur: <span style="color: %s">%s%%</span>',
+    ['info_vehicle_body_health'] = 'Etat du véhicule: <span style="color: %s">%s%%</span>',
+    ['info_vehicle_dirt_level'] = 'Propreté: %s',
+    ['info_vehicle_dirt_level_above_10'] = '<span style="color: #c92e2e">Très sale</span>',
+    ['info_vehicle_dirt_level_above_5'] = '<span style="color: #c9712e">Sale</span>',
+    ['info_vehicle_dirt_level_above_0'] = '<span style="color: #329171">Propre</span>',
+
 }

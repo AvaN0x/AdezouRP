@@ -659,6 +659,64 @@ Config.Jobs = {
             Sprite = 446,
             Colour = 5
         },
+        JobMenu = {
+            {
+                Label = _('info_vehicle'),
+                Detail = _('info_vehicle_detail'),
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
+                        local plate = GetVehicleNumberPlateText(vehicle)
+                        local engineHealth = math.floor(GetVehicleEngineHealth(vehicle))
+                        local bodyHealth = math.floor(GetVehicleBodyHealth(vehicle))
+                        local dirtLevel = GetVehicleDirtLevel(vehicle)
+
+                        local elements = {
+                            {label = _('vehicle_plate', plate or _("info_vehicle_not_found"))},
+                            {
+                                label = _('info_vehicle_engine_health',
+                                    engineHealth > 950
+                                        and "#329171"
+                                        or engineHealth > 500
+                                            and "#c9712e"
+                                            or "#c92e2e",
+                                    math.floor(engineHealth / 10)
+                                )
+                            },
+                            {
+                                label = _('info_vehicle_body_health',
+                                    bodyHealth > 950
+                                        and "#329171"
+                                        or bodyHealth > 500
+                                            and "#c9712e"
+                                            or "#c92e2e",
+                                    math.floor(bodyHealth / 10)
+                                )
+                            },
+                            {
+                                label = _('info_vehicle_dirt_level',
+                                    dirtLevel > 10
+                                        and _("info_vehicle_dirt_level_above_10")
+                                        or dirtLevel > 5
+                                            and _("info_vehicle_dirt_level_above_5")
+                                            or _("info_vehicle_dirt_level_above_0")
+                                )
+                            },
+                        }
+
+                        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'info_vehicle', {
+                            title = _('info_vehicle'),
+                            align = 'left',
+                            elements = elements
+                        },
+                        nil,
+                        function(data, menu)
+                            menu.close()
+                        end)
+                    end)
+
+                end
+            },
+        },
         Zones = {
             JobActions = {
                 Pos = vector3(-1151.45, -2032.61, 12.21),
