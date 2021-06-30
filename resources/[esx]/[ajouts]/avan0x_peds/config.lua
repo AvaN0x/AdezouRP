@@ -164,6 +164,30 @@ Config.Peds = {
     },
 
 
+    -- insurance office
+    {
+        PedName = "a_f_y_femaleagent",
+        PedType = "PED_TYPE_CIVFEMALE",
+        pos = vector3(-138.81, -633.84, 167.84),
+        heading = 10.0,
+        name = "Christine",
+        bubble = "Bonjour, je vous laisse vous diriger vers le bureau au fond à gauche"
+    },
+    {
+        PedName = "ig_barry",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(-125.67, -641.90, 167.32),
+        heading = 50.0,
+        scenario = "PROP_HUMAN_SEAT_BENCH",
+        name = "Barry",
+        bubble = "Bonjour, que puis-je faire pour vous ?",
+        props = {
+            {componentId = 1, drawableId = 0},
+        }
+    },
+
+
+
     -- tattoo
     {
         PedName = "a_m_y_ktown_01",
