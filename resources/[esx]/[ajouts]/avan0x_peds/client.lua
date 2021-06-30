@@ -17,38 +17,36 @@ local pedNames = {}
 
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Peds) do
-        local hash = GetHashKey(v.Name)
+        local hash = GetHashKey(v.PedName)
         RequestModel(hash)
 
         while not HasModelLoaded(hash) do
             Wait(1)
         end
 
-        for _, p in pairs(v.PosList) do
-            local ped = CreatePed(v.Type, v.Name, p.pos, p.heading, false, true)
-            SetBlockingOfNonTemporaryEvents(ped, true)
-            SetEntityInvincible(ped, true)
-            FreezeEntityPosition(ped, true)
-            SetPedDefaultComponentVariation(ped)
+        local ped = CreatePed(v.PedType, v.PedName, v.pos, v.heading, false, true)
+        SetBlockingOfNonTemporaryEvents(ped, true)
+        SetEntityInvincible(ped, true)
+        FreezeEntityPosition(ped, true)
+        SetPedDefaultComponentVariation(ped)
 
-            if p.variations then
-                for _, variation in ipairs(p.variations) do
-                    SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0, variation.paletteId or 0)
-                end
+        if v.variations then
+            for _, variation in ipairs(v.variations) do
+                SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0, variation.paletteId or 0)
             end
-            if p.props then
-                for _, prop in ipairs(p.props) do
-                    SetPedPropIndex(ped, prop.componentId, prop.drawableId or 0, prop.textureId or 0, true);
-                end
+        end
+        if v.props then
+            for _, prop in ipairs(v.props) do
+                SetPedPropIndex(ped, prop.componentId, prop.drawableId or 0, prop.textureId or 0, true);
             end
+        end
 
-            if p.scenario then
-                TaskStartScenarioInPlace(ped, p.scenario, 0, false)
-            end
+        if v.scenario then
+            TaskStartScenarioInPlace(ped, v.scenario, 0, false)
+        end
 
-            if p.name or p.bubble then
-                table.insert(pedNames, {pos = p.pos, entity = ped, name = p.name, bubble = p.bubble, offsetZ = p.offsetZ or 0.2})
-            end
+        if v.name or v.bubble then
+            table.insert(pedNames, {pos = v.pos, entity = ped, name = v.name, bubble = v.bubble, offsetZ = v.offsetZ or 0.2})
         end
 
     end
