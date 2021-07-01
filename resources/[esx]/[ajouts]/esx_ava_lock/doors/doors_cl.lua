@@ -186,7 +186,7 @@ end)
 Citizen.CreateThread(function()
 	Citizen.Wait(1000)
 	while true do
-        local waitTime = 500
+        local waitTime = 100
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
