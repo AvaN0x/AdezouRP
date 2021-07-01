@@ -186,7 +186,7 @@ end)
 Citizen.CreateThread(function()
 	Citizen.Wait(1000)
 	while true do
-		Citizen.Wait(0)
+        local waitTime = 500
 		local playerCoords = GetEntityCoords(PlayerPedId())
 
 		for k,doorID in ipairs(Config.Doors.DoorList) do
@@ -223,28 +223,22 @@ Citizen.CreateThread(function()
 					end
 
 					if distance < doorID.distance then
-						local displayText = _U('doors_unlocked')
-						if doorID.locked then
-							displayText = _U('doors_locked')
-						end
+                        waitTime = 0
 
-						if doorID.authorized then
-							displayText = _U('doors_press_button', displayText)
-						end
-
-						DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
-
-						if IsControlJustReleased(0, 38) then
-							if doorID.authorized then
-								doorID.locked = not doorID.locked
-								TriggerEvent("esx_ava_lock:dooranim")
-								TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
-							end
-						end
+                        if doorID.authorized then
+                            local displayText = _U('doors_press_button', doorID.locked and _U('doors_locked') or _U('doors_unlocked'))
+                            DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
+                            if IsControlJustReleased(0, 38) then
+                                doorID.locked = not doorID.locked
+                                TriggerEvent("esx_ava_lock:dooranim")
+                                TriggerServerEvent('esx_ava_doors:updateState', k, doorID.locked)
+                            end
+                        end
 					end
 				end
 			end
 		end
+        Citizen.Wait(waitTime)
 	end
 end)
 

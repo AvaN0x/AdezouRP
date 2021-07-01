@@ -54,7 +54,7 @@ end)
 Citizen.CreateThread(function()
 	Citizen.Wait(1000)
 	while true do
-		Citizen.Wait(0)
+        local waitTime = 500
 		local playerCoords = GetEntityCoords(PlayerPedId())
 		for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 			for k2,tpID2 in ipairs({
@@ -64,6 +64,7 @@ Citizen.CreateThread(function()
 				local distance = #(playerCoords - tpID2.from.pos)
 
 				if distance < tpID2.from.distance then
+                    waitTime = 0
 					DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y, tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
 
 					if distance < tpID2.from.size.x then
@@ -85,8 +86,7 @@ Citizen.CreateThread(function()
 							if not tpID.locked then
 								Teleport(tpID2.to.pos, tpID.allowVehicles, tpID2.to.heading)
 							end
-						end
-						if IsControlJustReleased(0, 73) then -- X
+						elseif IsControlJustReleased(0, 73) then -- X
 							if isAuthorized then
 								tpID.locked = not tpID.locked
 								TriggerEvent("esx_ava_lock:dooranim")
@@ -97,6 +97,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
+        Citizen.Wait(waitTime)
 	end
 end)
 
