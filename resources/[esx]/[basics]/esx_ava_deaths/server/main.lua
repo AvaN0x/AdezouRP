@@ -43,18 +43,12 @@ end)
 RegisterServerEvent('esx_ava_deaths:uniteX')
 AddEventHandler('esx_ava_deaths:uniteX', function(target, debug)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local xPlayers = ESX.GetPlayers()
 
-    local ems = 0
-    for i = 1, #xPlayers do
-        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if (xPlayer.job ~= nil and xPlayer.job.name == 'ems') or (xPlayer.job2 ~= nil and xPlayer.job2.name == 'ems') then
-            ems = ems + 1
-            break
-        end
-    end
+    local fineAmount = (exports.esx_ava_jobs:getCountInService(Config.EMSJobName) == 0 or exports.esx_ava_jobs:isInService(source, Config.EMSJobName))
+        and Config.RespawnFineAmountNoEMS
+        or Config.RespawnFineAmount
 
-    TriggerEvent('esx_billing:sendBillWithId', xPlayer.identifier, 'society_ems', "Unité X", ems > 0 and Config.RespawnFineAmount or Config.RespawnFineAmountNoEMS)
+    TriggerEvent('esx_billing:sendBillWithId', xPlayer.identifier, 'society_ems', "Unité X", fineAmount)
 end)
 
 
