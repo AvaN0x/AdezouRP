@@ -474,7 +474,7 @@ Config.Jobs = {
             SeizedCarGarage = {
                 Name = "Garage saisies",
                 HelpText = _('spawn_veh'),
-                Pos = vector3(447.44, -997.07, 25.76),
+                Pos = vector3(832.75, -1370.28, 26.13),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 221, g = 79, b = 67},
                 Marker = 36,
@@ -482,9 +482,10 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 Identifier = "seized_LSPD",
                 SpawnPoint = {
-                    Pos = vector3(447.44, -997.07, 24.78),
-                    Heading = 180.0
-                }
+                    Pos = vector3(832.75, -1370.28, 26.13),
+                    Heading = 270.0
+                },
+                Blip = true
             },
         },
         BuyZones = {
@@ -543,10 +544,10 @@ Config.Jobs = {
                             function(data, menu)
                                 menu.close()
                             end)
-                
+
                         end, targetId)
                     end)
-                
+
                 end
             },
         },
@@ -751,6 +752,19 @@ Config.Jobs = {
                     Pos = vector3(-1144.45, -1971.70, 13.16),
                     Heading = 190.0
                 }
+            },
+            SeizedCarGarage = {
+                Name = "Garage saisies",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(822.47, -1365.20, 26.13),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 221, g = 79, b = 67},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "seized_LSPD",
+                OnlyParkCars = true,
+                Blip = true
             },
         },
         BuyZones = {

@@ -87,8 +87,10 @@ function OpenMenuGarage(PointType, target)
 	local elements = {}
 
 	if PointType == 'open_garage_menu' then
-		table.insert(elements,{label = "Liste des véhicules", value = 'list_vehicles'})
-		table.insert(elements,{label = "Rentrer vehicules", value = 'stock_vehicle'})
+        if not this_Garage.OnlyParkCars then
+            table.insert(elements,{label = "Liste des véhicules", value = 'list_vehicles'})
+        end
+        table.insert(elements,{label = "Rentrer vehicules", value = 'stock_vehicle'})
 
 	elseif PointType == 'pound' then
 		table.insert(elements,{label = "Retour vehicule personnel", value = 'return_vehicle'})
@@ -374,15 +376,15 @@ Citizen.CreateThread(function()
 		local found = false
 
 		for k,v in pairs(Config.Garages) do
-			if (GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance) 
+			if (GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance)
 				and (PlayerData and (v.Job == nil or (PlayerData.job ~= nil and PlayerData.job.name ==  v.Job) or (PlayerData.job2 ~= nil and PlayerData.job2.name ==  v.Job))) then
-				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)	
+				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				found = true
 			end
 		end
 		for k,v in pairs(Config.Pound) do
 			if(GetDistanceBetweenCoords(coords, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.MunicipalPoundPoint.Marker, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.MunicipalPoundPoint.Size.x, v.MunicipalPoundPoint.Size.y, v.MunicipalPoundPoint.Size.z, v.MunicipalPoundPoint.Color.r, v.MunicipalPoundPoint.Color.g, v.MunicipalPoundPoint.Color.b, 100, false, true, 2, false, false, false, false)	
+				DrawMarker(v.MunicipalPoundPoint.Marker, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.MunicipalPoundPoint.Size.x, v.MunicipalPoundPoint.Size.y, v.MunicipalPoundPoint.Size.z, v.MunicipalPoundPoint.Color.r, v.MunicipalPoundPoint.Color.g, v.MunicipalPoundPoint.Color.b, 100, false, true, 2, false, false, false, false)
 				found = true
 			end
 		end
@@ -496,6 +498,9 @@ AddEventHandler("esx_ava_garage:openSpecialVehicleMenu", function(garage, jobNam
     this_Garage.onlyCheckGarage = true
 	if this_Garage.IsGangGarage == nil then
 		this_Garage.IsGangGarage = false
+	end
+	if this_Garage.OnlyParkCars == nil then
+		this_Garage.OnlyParkCars = false
 	end
 	if not this_Garage.Type then
 		this_Garage.Type = 'car'
