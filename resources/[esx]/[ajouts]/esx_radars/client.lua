@@ -53,12 +53,12 @@ local radars = {
 
 Citizen.CreateThread(function()
     while true do
-        Wait(0)
+        Wait(20)
         
         for k,v in pairs(radars) do
             local player = GetPlayerPed(-1)
             local coords = GetEntityCoords(player, true)
-            if Vdist2(radars[k].x, radars[k].y, radars[k].z, coords["x"], coords["y"], coords["z"]) < radars[k].size then
+            if #(coords - vector3(radars[k].x, radars[k].y, radars[k].z)) < radars[k].size then
                 -- if PlayerData.job ~= nil and not (PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance') then
                 checkSpeed(radars[k].max, radars[k].name)
                 -- end
