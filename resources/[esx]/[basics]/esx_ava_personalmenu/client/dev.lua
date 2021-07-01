@@ -182,7 +182,7 @@ function DevLoop()
 			while true do
 				Citizen.Wait(0)
 				if show_coord_helper then
-                    AddTextEntry("show_coord_helper", "Press ~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ or ~INPUT_WEAPON_WHEEL_NEXT~ to control the pointer position~n~~INPUT_MAP_POI~ to put the pointer on the floor~n~~INPUT_RELOAD~ to reset positions~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard~n~~n~~INPUT_AIM~ to leave the coordinates helper")
+                    AddTextEntry("show_coord_helper", _("dev_show_coord_helper_display_text"))
                     BeginTextCommandDisplayHelp("show_coord_helper")
                     EndTextCommandDisplayHelp(false, false, false, -1)
 
