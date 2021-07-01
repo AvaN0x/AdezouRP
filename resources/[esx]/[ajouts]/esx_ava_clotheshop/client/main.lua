@@ -64,26 +64,23 @@ end)
 --* draw markers
 Citizen.CreateThread(function()
 	while true do
-		Wait(0)
-        local foundMarker = false
+        local waitTime = 500
 		for k,v in pairs(Config.Shops) do
 			for k2, v2 in ipairs(v.Coords) do
 				if (#(playerCoords - v2) < Config.DrawDistance) then
+                    waitTime = 0
 					DrawMarker(v.Marker, v2.x, v2.y, v2.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)	
-                    foundMarker = true
 				end
 			end
 		end
-        if not foundMarker then
-            Wait(500)
-        end
+        Citizen.Wait(waitTime)
 	end
 end)
 
 --* menu trigger managment
 Citizen.CreateThread(function()
 	while true do
-		Wait(100)
+		Citizen.Wait(100)
 		local isInMarker  = false
 
 		for k,v in pairs(Config.Shops) do
