@@ -30,6 +30,7 @@ function OpenDevMenu()
                 show_ped_hash = not show_ped_hash
             elseif data.current.value == "show_coord_helper" then
                 show_coord_helper = not show_coord_helper
+                SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
             elseif data.current.value == "show_coords" then
                 show_coords = not show_coords
             end
@@ -177,30 +178,53 @@ function DevLoop()
 		end)
 
 		Citizen.CreateThread(function()
-            local xAxis, yAxis = 0, 1
+            local xAxis, yAxis, zAxis = 0, 0, 0
 			while true do
 				Citizen.Wait(0)
 				if show_coord_helper then
-                    AddTextEntry("show_coord_helper", "Press ~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~ or ~INPUT_CELLPHONE_DOWN~ to control the pointer position~n~~INPUT_RELOAD~ to reset positions~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard")
+                    AddTextEntry("show_coord_helper", "Press ~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ or ~INPUT_WEAPON_WHEEL_NEXT~ to control the pointer position~n~~INPUT_MAP_POI~ to put the pointer on the floor~n~~INPUT_RELOAD~ to reset positions~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard~n~~n~~INPUT_AIM~ to leave the coordinates helper")
                     BeginTextCommandDisplayHelp("show_coord_helper")
                     EndTextCommandDisplayHelp(false, false, false, -1)
 
-					local playerPed = PlayerPedId()
+                    -- r
+                    DisableControlAction(0, 45, true)
 
-                    if IsControlPressed(1, 172) and yAxis < 2 then  -- up
+                    -- SCROLLWHEEL PRESS
+                    DisableControlAction(0, 348, true)
+                    -- SCROLLWHEEL UP
+                    DisableControlAction(0, 15, true)
+                    DisableControlAction(0, 17, true)
+                    -- SCROLLWHEEL DOWN
+                    DisableControlAction(0, 14, true)
+                    DisableControlAction(0, 16, true)
+
+
+                    if IsControlPressed(0, 172) and yAxis < 2 then  -- up
                         yAxis = yAxis + 0.01
-                    elseif IsControlPressed(1, 173) and yAxis > -2 then  -- down
+                    elseif IsControlPressed(0, 173) and yAxis > -2 then  -- down
                         yAxis = yAxis - 0.01
-                    elseif IsControlPressed(1, 174) and xAxis > -2 then  -- left
+                    end
+                    if IsControlPressed(0, 174) and xAxis > -2 then  -- left
                         xAxis = xAxis - 0.01
-                    elseif IsControlPressed(1, 175) and xAxis < 2 then  -- right
+                    elseif IsControlPressed(0, 175) and xAxis < 2 then  -- right
                         xAxis = xAxis + 0.01
-                    elseif IsControlJustReleased(0, 45) then -- r
+                    end
+                    if IsDisabledControlPressed(0, 14) and zAxis > -2 then  -- SCROLLWHEEL DOWN
+                        zAxis = zAxis - 0.02
+                    elseif IsDisabledControlPressed(0, 15) and zAxis < 2 then  -- SCROLLWHEEL UP
+                        zAxis = zAxis + 0.02
+                    end
+                    if IsDisabledControlJustReleased(0, 348) then -- SCROLLWHEEL PRESS
+                        zAxis = -0.98
+                    end
+                    if IsDisabledControlJustReleased(0, 45) then -- r
                         xAxis = 0
-                        yAxis = 1
+                        yAxis = 0
+                        zAxis = 0
                     end
 
-                    local pointerCoords = GetOffsetFromEntityInWorldCoords(playerPed, xAxis + 0.0, yAxis + 0.0, 0.0);
+                    local playerPed = PlayerPedId()
+                    local pointerCoords = GetOffsetFromEntityInWorldCoords(playerPed, xAxis + 0.0, yAxis + 0.0, zAxis + 0.0);
                     SetTextColour(255, 99, 219, 255)
                     SetTextFont(0)
                     SetTextScale(0.34, 0.34)
@@ -211,9 +235,16 @@ function DevLoop()
                     DrawText(0.8, 0.88)
 
                     DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)
+                    DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z - 1, pointerCoords.x, pointerCoords.y, pointerCoords.z + 1, 255, 99, 219, 256)
+                    if zAxis == -0.98 then
+                        DrawMarker(27, pointerCoords.x, pointerCoords.y, pointerCoords.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 99, 219, 100, false, true, 2, false, false, false, false)
+                    end
+
                     if IsControlJustReleased(0, 79) then -- c
                         local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", " .. string.format("%.2f", pointerCoords.z) .. ")"
                         exports.avan0x_hud:copyToClipboard(coordString)
+                    elseif IsControlPressed(0, 25) then -- right mouse button
+                        show_coord_helper = false
                     end
 				else
 					Citizen.Wait(5000)
