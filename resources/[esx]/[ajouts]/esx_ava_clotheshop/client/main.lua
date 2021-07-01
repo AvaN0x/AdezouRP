@@ -49,18 +49,34 @@ Citizen.CreateThread(function()
 	end
 end)
 
+local playerCoords = nil
+local playerPed = nil
+
+Citizen.CreateThread(function()
+	while true do
+        playerPed = PlayerPedId()
+		playerCoords = GetEntityCoords(playerPed)
+		Wait(500)
+    end
+end)
+
+
 --* draw markers
 Citizen.CreateThread(function()
 	while true do
 		Wait(0)
-		local coords = GetEntityCoords(GetPlayerPed(-1))
+        local foundMarker = false
 		for k,v in pairs(Config.Shops) do
 			for k2, v2 in ipairs(v.Coords) do
-				if (GetDistanceBetweenCoords(coords, v2.x, v2.y, v2.z, true) < Config.DrawDistance) then
+				if (#(playerCoords - v2) < Config.DrawDistance) then
 					DrawMarker(v.Marker, v2.x, v2.y, v2.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, Config.MarkerSize.x, Config.MarkerSize.y, Config.MarkerSize.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)	
+                    foundMarker = true
 				end
 			end
 		end
+        if not foundMarker then
+            Wait(500)
+        end
 	end
 end)
 
@@ -68,12 +84,11 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(100)
-		local coords	  = GetEntityCoords(GetPlayerPed(-1))
 		local isInMarker  = false
 
 		for k,v in pairs(Config.Shops) do
 			for k2, v2 in ipairs(v.Coords) do
-				if (GetDistanceBetweenCoords(coords, v2.x, v2.y, v2.z, true) < Config.MarkerSize.x) then
+				if (#(playerCoords - v2) < Config.MarkerSize.x) then
 					isInMarker  = true
 					this_shop = v
 					currentZone = k
@@ -117,6 +132,8 @@ Citizen.CreateThread(function()
 				CurrentAction = nil
 				GUI.Time = GetGameTimer()
 			end
+        else
+            Citizen.Wait(50)
 		end
 	end
 end)

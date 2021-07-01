@@ -584,6 +584,8 @@ Citizen.CreateThread(function()
                 end
 
 			end
+        else
+            Citizen.Wait(50)
 		end
 	end
 end)
