@@ -69,8 +69,19 @@ function setBlips()
 			EndTextCommandSetBlipName(blip)
 		end
 	end
-	for k, v in pairs(Config.Pound) do
-		local blip = AddBlipForCoord(v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z)
+	for k, v in pairs(Config.Insurance) do
+		local blip = AddBlipForCoord(v.Blip.Pos or v.Pos)
+		SetBlipSprite (blip, v.Blip.Sprite)
+		SetBlipDisplay(blip, 4)
+		SetBlipScale  (blip, 0.6)
+		SetBlipColour (blip, v.Blip.Color)
+		SetBlipAsShortRange(blip, true)
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString("Assurance")
+		EndTextCommandSetBlipName(blip)
+	end
+    for k, v in pairs(Config.Pound) do
+		local blip = AddBlipForCoord(v.Blip.Pos or v.Pos)
 		SetBlipSprite (blip, v.Blip.Sprite)
 		SetBlipDisplay(blip, 4)
 		SetBlipScale  (blip, 0.5)
@@ -92,13 +103,14 @@ function OpenMenuGarage(PointType, target)
         end
         table.insert(elements,{label = "Rentrer vehicules", value = 'stock_vehicle'})
 
-	elseif PointType == 'pound' then
-		table.insert(elements,{label = "Retour vehicule personnel", value = 'return_vehicle'})
+	elseif PointType == 'insurance' or PointType == 'pound' then
+        local isInsurance = PointType == 'insurance' and true or false
+		table.insert(elements, {label = "Retour vehicule personnel", value = 'return_vehicle', isInsurance = isInsurance})
 		if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" then
-			table.insert(elements, {label = "Retour vehicule "..PlayerData.job.label, value = 'return_vehicle', job = "society_"..PlayerData.job.name})
+			table.insert(elements, {label = "Retour vehicule "..PlayerData.job.label, value = 'return_vehicle', isInsurance = isInsurance, job = "society_"..PlayerData.job.name})
 		end
 		if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" then
-			table.insert(elements, {label = "Retour vehicule "..PlayerData.job2.label, value = 'return_vehicle', job = "society_"..PlayerData.job2.name})
+			table.insert(elements, {label = "Retour vehicule "..PlayerData.job2.label, value = 'return_vehicle', isInsurance = isInsurance, job = "society_"..PlayerData.job2.name})
 		end
 	end
 
@@ -117,7 +129,6 @@ function OpenMenuGarage(PointType, target)
 			elements = elements,
 		},
 		function(data, menu)
-			menu.close()
 			if data.current.value == 'list_vehicles' then
 				ListVehiclesMenu(this_Garage.Type, target)
 
@@ -125,7 +136,7 @@ function OpenMenuGarage(PointType, target)
 				StockVehicleMenu(target)
 
 			elseif data.current.value == 'return_vehicle' then
-				ReturnVehicleMenu(data.current.job)
+				ReturnVehicleMenu(data.current.isInsurance, data.current.job)
 
 			end
 		end,
@@ -146,17 +157,20 @@ function ListVehiclesMenu(type, target)
 			local hashVehicule = v.vehicle.model
 			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
 			local labelvehicle
-			if v.location == 'any' or v.location == this_Garage.Identifier then
+			if v.location == this_Garage.Identifier then
 				labelvehicle = vehicleName..' - '.. v.vehicle.plate
 
-			elseif v.location == "garage_POUND" then
-				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+			elseif v.location == "garage_INSURANCE" then
+				labelvehicle = "<span style=\"color: #c9712e;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+
+            elseif v.location == "garage_POUND" then
+				labelvehicle = "<span style=\"color: #c92e2e;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 
             elseif string.match(v.location, "^seized_") then
-				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+				labelvehicle = "<span style=\"color: #c92e2e;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 
 			else
-				labelvehicle = "<span style=\"color:darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+				labelvehicle = "<span style=\"color: darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 			end
 			table.insert(elements, {label = labelvehicle, detail = "Essence : " .. math.floor(v.fuel) .. " %", value = v})
 		end
@@ -185,10 +199,13 @@ function ListVehiclesMenu(type, target)
 
                     if not IsPedInAnyVehicle(PlayerPedId(), false) then
                         SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
-                        TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+                        TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_INSURANCE", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
                     end
 
-				elseif data.current.value.location == "garage_POUND" then
+				elseif data.current.value.location == "garage_INSURANCE" then
+					TriggerEvent('esx:showNotification', 'Ce véhicule est introuvable.')
+
+                elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere.')
 
                 elseif string.match(data.current.value.location, "^seized_") then
@@ -204,7 +221,7 @@ function ListVehiclesMenu(type, target)
 			end)
 		end, this_Garage.Type)
 
-	end, type, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+	end, type, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.IsGangGarage)
 end
 
 
@@ -246,10 +263,10 @@ end
 
 function SpawnVehicle(vehicle, fuel, target)
 	ESX.Game.SpawnVehicle(vehicle.model,{
-		x=this_Garage.SpawnPoint.Pos.x ,
-		y=this_Garage.SpawnPoint.Pos.y,
-		z=this_Garage.SpawnPoint.Pos.z + 1
-		},this_Garage.SpawnPoint.Heading, function(callback_vehicle)
+            x=this_Garage.SpawnPoint.Pos.x + 0.0,
+            y=this_Garage.SpawnPoint.Pos.y + 0.0,
+            z=this_Garage.SpawnPoint.Pos.z + 1.0
+		},this_Garage.SpawnPoint.Heading + 0.0, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
 		SetEntityAsMissionEntity(callback_vehicle)
@@ -275,10 +292,10 @@ end
 function SpawnPoundedVehicle(vehicle, target)
 
 	ESX.Game.SpawnVehicle(vehicle.model, {
-		x = this_Garage.SpawnMunicipalPoundPoint.Pos.x ,
-		y = this_Garage.SpawnMunicipalPoundPoint.Pos.y,
-		z = this_Garage.SpawnMunicipalPoundPoint.Pos.z + 1
-		}, this_Garage.SpawnMunicipalPoundPoint.Heading, function(callback_vehicle)
+		x = this_Garage.SpawnPoint.Pos.x + 0.0,
+		y = this_Garage.SpawnPoint.Pos.y + 0.0,
+		z = this_Garage.SpawnPoint.Pos.z + 1.0
+		}, this_Garage.SpawnPoint.Heading + 0.0, function(callback_vehicle)
 		ESX.Game.SetVehicleProperties(callback_vehicle, vehicle)
 		local plate = GetVehicleNumberPlateText(callback_vehicle)
 		SetVehRadioStation(callback_vehicle, "OFF")
@@ -292,79 +309,99 @@ function SpawnPoundedVehicle(vehicle, target)
 	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "no_garages", target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
 
 	Citizen.Wait(10000)
-	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND", target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+	TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_INSURANCE", target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
 
 end
 
 
 
-function ReturnVehicleMenu(target, isGov)
+function ReturnVehicleMenu(isInsurance, target, isGov)
 	ESX.TriggerServerCallback('esx_ava_garage:getOutVehicles', function(vehicles)
 		local elements = {}
 
+        local playerPed = PlayerPedId()
+        local lastVehicle = GetVehiclePedIsIn(playerPed, true)
+        local lastVehiclePlate = lastVehicle ~= 0 and GetVehicleNumberPlateText(lastVehicle) or ""
+
 		for _,v in pairs(vehicles) do
+            -- Do not display the plate of the last vehicle the player went in
+            if not isInsurance or v.vehicle.plate ~= lastVehiclePlate then
+                local hashVehicule = v.vehicle.model
+                local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
+                local labelvehicle
+                local exitPrice = -1
 
-			local hashVehicule = v.vehicle.model
-			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
-			local labelvehicle
-			local exitPrice = Config.MinPrice
-
-			for i=1, #VehiclesList, 1 do
-				if v.vehicle.model == GetHashKey(VehiclesList[i].model) then
-					exitPrice = math.ceil(VehiclesList[i].price * Config.PoundPriceMultiplier)
-					if exitPrice < Config.MinPrice then
-						exitPrice = Config.MinPrice
-					elseif exitPrice > Config.MaxPrice then
-						exitPrice = Config.MaxPrice
-					end
-					break
-				end
-			end
-			labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
-			table.insert(elements, {label = labelvehicle , value = v.vehicle, price = exitPrice, type = v.type})
+                for i=1, #VehiclesList, 1 do
+                    if v.vehicle.model == GetHashKey(VehiclesList[i].model) then
+                        if isInsurance then
+                            exitPrice = math.ceil(VehiclesList[i].price * Config.InsurancePriceMultiplier)
+                            if exitPrice < Config.InsuranceMinPrice then
+                                exitPrice = Config.InsuranceMinPrice
+                            elseif exitPrice > Config.InsuranceMaxPrice then
+                                exitPrice = Config.InsuranceMaxPrice
+                            end
+                        else
+                            exitPrice = math.ceil(VehiclesList[i].price * Config.PoundPriceMultiplier)
+                            if exitPrice < Config.PoundMinPrice then
+                                exitPrice = Config.PoundMinPrice
+                            elseif exitPrice > Config.PoundMaxPrice then
+                                exitPrice = Config.PoundMaxPrice
+                            end
+                        end
+                        break
+                    end
+                end
+                if exitPrice ~= -1 then
+                    labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
+                    table.insert(elements, {label = labelvehicle , value = v.vehicle, price = exitPrice, type = v.type})
+                else
+                    print("ERROR : " .. v.vehicle.model .. " is not a valid vehicle model.")
+                end
+            end
 		end
 
 		ESX.UI.Menu.Open(
 		'default', GetCurrentResourceName(), 'return_vehicle',
 		{
-			css	  = 'four',
-			title	= 'Fourrière',
-			align	= 'right',
+			title	= isInsurance and 'Assurance' or "Fourrière",
+			align	= 'left',
 			elements = elements,
 		},
 		function(data, menu)
 			menu.close()
 			ESX.TriggerServerCallback('esx_ava_garage:checkMoney', function(hasEnoughMoney)
-				if hasEnoughMoney or (not hasEnoughMoney and isGov) then
-					if times == 0 then
-						if isGov then
-							TriggerServerEvent('esx_ava_garage:payByState', target, data.current.price)
-						else
-							TriggerServerEvent('esx_ava_garage:pay', data.current.price)
-						end
-						if data.current.type == "car" and not isGov then
-							SpawnPoundedVehicle(data.current.value, target)
-							times=times+1
+                if hasEnoughMoney or (not hasEnoughMoney and isGov) then
+                    if times == 0 then
+                        if isGov then
+                            TriggerServerEvent('esx_ava_garage:payByState', isInsurance, target, data.current.price)
+                        else
+                            TriggerServerEvent('esx_ava_garage:pay', isInsurance, data.current.price)
+                        end
+                        if not isInsurance and data.current.type == "car" and not isGov then
+                            SpawnPoundedVehicle(data.current.value, target)
+                            times = times + 1
 							Citizen.Wait(60000)
-							times=0
-						else
-							ESX.ShowNotification('Le véhicule est sorti de la fourrière')
-							TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, this_Garage.Identifier, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
-						end
-					elseif times > 0 then
-						ESX.ShowNotification('Veuillez patienter une minute')
-						Citizen.Wait(60000)
-							times=0
-					end
-				else
-					ESX.ShowNotification('Vous n\'avez pas assez d\'argent')
-				end
+							times = 0
+                        else
+                            if isInsurance then
+                                ESX.ShowNotification("L'assurance vient de remettre ce véhicule.")
+                            else
+                                ESX.ShowNotification("Le véhicule est sorti de la fourrière'")
+                            end
+                            TriggerServerEvent('esx_ava_garage:modifystate', data.current.value, Config.DefaultGarage, target, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
+                        end
+                    else
+                        ESX.ShowNotification('Veuillez patienter une minute')
+                    end
+                else
+                    ESX.ShowNotification('Vous n\'avez pas assez d\'argent')
+                end
 			end, data.current.price)
 		end,
 		function(data, menu)
 			menu.close()
 		end)
-	end, target)
+	end, isInsurance, target)
 end
 
 
@@ -376,15 +413,21 @@ Citizen.CreateThread(function()
 		local found = false
 
 		for k,v in pairs(Config.Garages) do
-			if (GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < Config.DrawDistance)
+			if (#(coords - v.Pos) < Config.DrawDistance)
 				and (PlayerData and (v.Job == nil or (PlayerData.job ~= nil and PlayerData.job.name ==  v.Job) or (PlayerData.job2 ~= nil and PlayerData.job2.name ==  v.Job))) then
 				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				found = true
 			end
 		end
+		for k,v in pairs(Config.Insurance) do
+			if (#(coords - v.Pos) < Config.DrawDistance) then
+				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+				found = true
+			end
+		end
 		for k,v in pairs(Config.Pound) do
-			if(GetDistanceBetweenCoords(coords, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, true) < Config.DrawDistance) then
-				DrawMarker(v.MunicipalPoundPoint.Marker, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.MunicipalPoundPoint.Size.x, v.MunicipalPoundPoint.Size.y, v.MunicipalPoundPoint.Size.z, v.MunicipalPoundPoint.Color.r, v.MunicipalPoundPoint.Color.g, v.MunicipalPoundPoint.Color.b, 100, false, true, 2, false, false, false, false)
+			if (#(coords - v.Pos) < Config.DrawDistance) then
+				DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
 				found = true
 			end
 		end
@@ -400,9 +443,15 @@ AddEventHandler('esx_ava_garage:hasEnteredMarker', function(zone)
 		CurrentAction	 = 'open_garage_menu'
 		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour ouvrir le garage"
 		CurrentActionData = {}
+
+	elseif zone == 'open_insurance_menu' then
+		CurrentAction	 = 'insurance_action_menu'
+		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour accéder à l'assurance"
+		CurrentActionData = {}
+
 	elseif zone == 'open_pound_menu' then
 		CurrentAction	 = 'pound_action_menu'
-		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour acceder a la fourriere"
+		CurrentActionMsg  = "Appuyer sur ~INPUT_PICKUP~ pour accéder à la fourrière"
 		CurrentActionData = {}
 	end
 end)
@@ -421,7 +470,7 @@ Citizen.CreateThread(function()
 		local isInMarker  = false
 
 		for _,v in pairs(Config.Garages) do
-			if(GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < (v.Distance or v.Size.x)) then
+			if (#(coords - v.Pos) < (v.Distance or v.Size.x)) then
 				if v.Job == nil or (PlayerData and ((PlayerData.job ~= nil and PlayerData.job.name ==  v.Job) or (PlayerData.job2 ~= nil and PlayerData.job2.name ==  v.Job))) then
 					isInMarker  = true
 					this_Garage = v
@@ -429,8 +478,15 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
+		for _,v in pairs(Config.Insurance) do
+			if (#(coords - v.Pos) < v.Size.x) then
+				isInMarker  = true
+				this_Garage = v
+				currentZone = 'open_insurance_menu'
+			end
+		end
 		for _,v in pairs(Config.Pound) do
-			if(GetDistanceBetweenCoords(coords, v.MunicipalPoundPoint.Pos.x, v.MunicipalPoundPoint.Pos.y, v.MunicipalPoundPoint.Pos.z, true) < v.MunicipalPoundPoint.Size.x) then
+			if (#(coords - v.Pos) < v.Size.x) then
 				isInMarker  = true
 				this_Garage = v
 				currentZone = 'open_pound_menu'
@@ -464,6 +520,10 @@ Citizen.CreateThread(function()
 			if IsControlPressed(0, 38) and (GetGameTimer() - GUI.Time) > 150 then
 				if CurrentAction == 'open_garage_menu' then
 					OpenMenuGarage('open_garage_menu')
+                    
+				elseif CurrentAction == 'insurance_action_menu' then
+					OpenMenuGarage('insurance')
+
 				elseif CurrentAction == 'pound_action_menu' then
 					OpenMenuGarage('pound')
 				end
@@ -488,7 +548,7 @@ end)
 
 RegisterNetEvent("esx_ava_garage:ReturnVehiclesMenuByState")
 AddEventHandler("esx_ava_garage:ReturnVehiclesMenuByState", function(societyName)
-	ReturnVehicleMenu(societyName, true)
+	ReturnVehicleMenu(true, societyName, true)
 end)
 
 -- used for seized vehicles

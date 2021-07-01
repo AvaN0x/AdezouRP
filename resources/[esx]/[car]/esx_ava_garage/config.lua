@@ -5,11 +5,15 @@
 
 Config = {}
 Config.DrawDistance = 30
-Config.MinPrice = 300
-Config.MaxPrice = 20000
 Config.DamageMultiplier = 1
-Config.PoundPriceMultiplier = 0.07
+Config.InsurancePriceMultiplier = 0.07
+Config.InsuranceMinPrice = 300
+Config.InsuranceMaxPrice = 20000
+Config.PoundPriceMultiplier = 0.12
+Config.PoundMinPrice = 1000
+Config.PoundMaxPrice = 30000
 
+Config.DefaultGarage = "first_opened"
 
 Config.Garages = {
 	-- cars
@@ -358,34 +362,39 @@ Config.Garages = {
 
 }
 
-Config.Pound = {
-	fourriere1 = {
-		Name = "Fourrière",
-		Pos = vector3(369.82, -1607.76, 29.29),
-		Size  = {x = 3.0, y = 3.0, z = 1.0},
+Config.Insurance = {
+	insurance_arcadius = {
+		Name = "Assurance",
+		Pos = vector3(-127.94, -641.77, 167.84),
+		Size  = {x = 1.5, y = 1.5, z = 1.0},
 		Color = {r = 255, g = 255, b = 255},
-		Marker = 1,
+		Marker = 27,
+		Blip = {
+            Pos = vector3(-116.68, -603.23, 36.28),
+			Sprite = 620,
+			Color = 64
+		},
+		Identifier = "garage_INSURANCE"
+	},
+}
+
+Config.Pound = {
+	pound = {
+		Name = "Fourrière",
+		Pos = vector3(369.74, -1607.73, 28.31),
+		Size  = {x = 1.5, y = 1.5, z = 1.0},
+		Color = {r = 255, g = 255, b = 255},
+		Marker = 27,
 		Blip = {
 			Sprite = 524,
 			Color = 64
 		},
-		MunicipalPoundPoint = {
-			Pos = vector3(369.82, -1607.76, 28.31),
-			Size  = {x = 1.5, y = 1.5, z = 1.0},
-			Color = {r=25,g=25,b=112},
-			Marker = 27
-		},
-		SpawnMunicipalPoundPoint = {
-			Pos = vector3(377.11, -1613.29, 28.31),
-			Size  = {x = 3.0, y = 3.0, z = 1.0},
-			Color = {r=0,g=255,b=0},
-			Heading = 230.0,
-			Marker = 27
+        SpawnPoint = {
+			Pos = vector3(375.72, -1611.87, 29.29),
+			Heading = 240.0
 		},
 		Identifier = "garage_POUND"
 	},
-
-
 }
 
 

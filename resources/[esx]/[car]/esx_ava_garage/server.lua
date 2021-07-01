@@ -30,7 +30,7 @@ end)
 
 -- get vehicles from player or society
 -- allowed types : car | plane | heli | boat
-ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, target, onlyCheckGarage, garageName, IsGangGarage)
+ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, type, garageName, target, onlyCheckGarage, IsGangGarage)
 	local identifier = nil
 	local vehicules = {}
     if not onlyCheckGarage then
@@ -47,9 +47,23 @@ ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, ty
             ['@identifier'] = identifier,
             ['@type'] = type
         }, function(data) 
-            for _,v in pairs(data) do
+            for _, v in pairs(data) do
                 local vehicle = json.decode(v.vehicle)
-                table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
+
+                if v.location == "any" then
+                    location = garageName
+                elseif v.location == "first_opened" then
+                    location = garageName
+                    MySQL.Sync.execute("UPDATE owned_vehicles SET location = @location WHERE plate = @plate",
+                    {
+                        ['@plate'] = v.plate,
+                        ['@location'] = location
+                    })
+                else
+                    location = v.location
+                end
+
+                table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = location})
             end
             cb(vehicules)
         end)
@@ -164,7 +178,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-	MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id AND type = @slot) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND' AND type = @slot) as parked_count FROM user_parking WHERE user_parking.identifier = @id",
+	MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id AND type = @slot) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_INSURANCE' AND type = @slot) as parked_count FROM user_parking WHERE user_parking.identifier = @id",
 	{
 		['@slot'] = slot,
 		['@id'] = xPlayer.getIdentifier()
@@ -176,7 +190,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb
 			{
 				['@identifier'] = xPlayer.getIdentifier()
 			}, function(rowsChanged)
-				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id AND type = @slot) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_POUND' AND type = @slot) as parked_count FROM user_parking WHERE user_parking.identifier = @id",
+				MySQL.Async.fetchAll("SELECT "..slot.." AS parking_slots, (SELECT COUNT(plate) FROM owned_vehicles WHERE owner = @id AND type = @slot) as owned_count, (SELECT COUNT(plate) FROM owned_vehicles JOIN user_parking ON user_parking.identifier=owned_vehicles.owner WHERE owner = @id AND location<>'garage_INSURANCE' AND type = @slot) as parked_count FROM user_parking WHERE user_parking.identifier = @id",
 				{
 					['@slot'] = slot,
 					['@id'] = xPlayer.getIdentifier()
@@ -207,7 +221,7 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, t
             if inOrFromGarage and target then
                 -- We check if the player is in interim before adding it to cautions list
                 -- We don't check to remove it, for the player to still be able to get his/her caution back after being ranked up in the society
-                if location == "garage_POUND" and 
+                if (location == "garage_INSURANCE" or location == "garage_POUND") and 
                     ((xPlayer.job ~= nil and "society_" .. xPlayer.job.name == target and xPlayer.job.grade_name == 'interim') 
                     or (xPlayer.job2 ~= nil and "society_" .. xPlayer.job2.name == target and xPlayer.job2.grade_name == 'interim'))
                 then
@@ -215,11 +229,20 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, t
                     -- Out of garage
                     for i=1, #Vehicles, 1 do
                         if vehicleProps.model == GetHashKey(Vehicles[i].model) then
-                            exitPrice = math.ceil(Vehicles[i].price * Config.PoundPriceMultiplier)
-                            if exitPrice < Config.MinPrice then
-                                exitPrice = Config.MinPrice
-                            elseif exitPrice > Config.MaxPrice then
-                                exitPrice = Config.MaxPrice
+                            if location == "garage_INSURANCE" then
+                                exitPrice = math.ceil(Vehicles[i].price * Config.InsurancePriceMultiplier)
+                                if exitPrice < Config.InsuranceMinPrice then
+                                    exitPrice = Config.InsuranceMinPrice
+                                elseif exitPrice > Config.InsuranceMaxPrice then
+                                    exitPrice = Config.InsuranceMaxPrice
+                                end
+                            else
+                                exitPrice = math.ceil(Vehicles[i].price * Config.InsurancePriceMultiplier)
+                                if exitPrice < Config.PoundMinPrice then
+                                    exitPrice = Config.PoundMinPrice
+                                elseif exitPrice > Config.PoundMaxPrice then
+                                    exitPrice = Config.PoundMaxPrice
+                                end
                             end
                         end
                     end
@@ -268,7 +291,7 @@ end)
 
 
 
-ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, target)	
+ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, isInsurance, target)	
 	local identifier = nil
 	local vehicules = {}
 	if target then
@@ -278,9 +301,10 @@ ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, 
 		local xPlayer = ESX.GetPlayerFromId(_source)
 		identifier = xPlayer.getIdentifier()
 	end
-	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier AND location='garage_POUND'",
+	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier AND location=@location",
 	{
-		['@identifier'] = identifier
+		['@identifier'] = identifier,
+		['@location'] = isInsurance and "garage_INSURANCE" or "garage_POUND",
 	}, function(data)
 		for _,v in pairs(data) do
 			local vehicle = json.decode(v.vehicle)
@@ -302,7 +326,7 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:pay')
-AddEventHandler('esx_ava_garage:pay', function(exitPrice)
+AddEventHandler('esx_ava_garage:pay', function(isInsurance, exitPrice)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
 	xPlayer.removeMoney(exitPrice)
@@ -313,19 +337,19 @@ AddEventHandler('esx_ava_garage:pay', function(exitPrice)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_state', 'society_state', "pay_pound", toState)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_state', 'society_state', isInsurance and "pay_insurance" or "pay_pound", toState)
 			account.addMoney(toState)
 		end
     end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_lspd', 'society_lspd', isInsurance and "pay_insurance" or "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_mechanic', 'society_mechanic', "pay_pound", toMechanic)
+            TriggerEvent('esx_avan0x:logTransaction', xPlayer.identifier, 'money', 'society_mechanic', 'society_mechanic', isInsurance and "pay_insurance" or "pay_pound", toMechanic)
 			account.addMoney(toMechanic)
 		end
     end)
@@ -335,7 +359,7 @@ end)
 
 
 RegisterServerEvent('esx_ava_garage:payByState')
-AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
+AddEventHandler('esx_ava_garage:payByState', function(isInsurance, society, exitPrice)
 	TriggerEvent('esx_addonaccount:getSharedAccount', society, function(account)
 		if account ~= nil then
 			account.removeMoney(exitPrice)
@@ -348,19 +372,19 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 	
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_state', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_state', 'society_state', "pay_pound", toState)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_state', 'society_state', isInsurance and "pay_insurance" or "pay_pound", toState)
 			account.addMoney(toState)
 		end
     end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_lspd', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_lspd', 'society_lspd', "pay_pound", toLSPD)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_lspd', 'society_lspd', isInsurance and "pay_insurance" or "pay_pound", toLSPD)
 			account.addMoney(toLSPD)
 		end
 	end)
 	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 		if account ~= nil then
-            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_mechanic', 'society_mechanic', "pay_pound", toMechanic)
+            TriggerEvent('esx_avan0x:logTransaction', society, society, 'society_mechanic', 'society_mechanic', isInsurance and "pay_insurance" or "pay_pound", toMechanic)
 			account.addMoney(toMechanic)
 		end
     end)

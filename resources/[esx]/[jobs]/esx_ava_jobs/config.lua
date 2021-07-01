@@ -487,6 +487,19 @@ Config.Jobs = {
                 },
                 Blip = true
             },
+            PoundCarGarage = {
+                Name = "Fourrière",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(381.76, -1625.40, 29.29),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 201, g = 113, b = 46},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_POUND",
+                OnlyParkCars = true,
+                Blip = true
+            },
         },
         BuyZones = {
             BuyItems = {
@@ -763,6 +776,19 @@ Config.Jobs = {
                 Type = "car",
                 IsNonProprietaryGarage = true,
                 Identifier = "seized_LSPD",
+                OnlyParkCars = true,
+                Blip = true
+            },
+            PoundCarGarage = {
+                Name = "Fourrière",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(383.76, -1623.09, 29.29),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 201, g = 113, b = 46},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+                Identifier = "garage_POUND",
                 OnlyParkCars = true,
                 Blip = true
             },
