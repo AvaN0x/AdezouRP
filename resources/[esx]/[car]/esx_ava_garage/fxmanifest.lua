@@ -1,11 +1,12 @@
-resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+fx_version 'cerulean'
+games { 'gta5' }
 
-version '1.0.0'
+version '2.0.0'
 author 'github.com/AvaN0x'
 description 'Garage'
 
 server_scripts {
-	'@mysql-async/lib/MySQL.lua',
+    '@es_extended/locale.lua',
 	'config.lua',
 	'server.lua'
 }

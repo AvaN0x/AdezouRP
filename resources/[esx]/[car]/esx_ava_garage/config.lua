@@ -1,15 +1,19 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
-Config = {
-	DrawDistance = 30,
-	MinPrice = 300,
-	MaxPrice = 20000,
-	DamageMultiplier = 1,
-    PoundPriceMultiplier = 0.07
-}
+Config = {}
+Config.DrawDistance = 30
+Config.MinPrice = 300
+Config.MaxPrice = 20000
+Config.DamageMultiplier = 1
+Config.PoundPriceMultiplier = 0.07
+
 
 Config.Garages = {
 	-- cars
-	Garage_car_01 = {	
+	Garage_car_01 = {
 		Name = "Garage",
 		Pos = vector3(229.700, -800.1149, 30.5722),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -26,7 +30,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_pillbox"
 	},
-	Garage_car_02 = {	
+	Garage_car_02 = {
 		Name = "Garage",
 		Pos = vector3(154.13, 6561.41, 31.83),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -43,7 +47,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_paleto"
 	},
-	Garage_car_03 = {	
+	Garage_car_03 = {
 		Name = "Garage",
 		Pos = vector3(1709.29, 4799.75, 41.33),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -60,7 +64,7 @@ Config.Garages = {
 		},
 		Identifier = "garage_grapeseed"
 	},
-	Garage_car_04 = {	
+	Garage_car_04 = {
 		Name = "Garage",
 		Pos = vector3(1520.39, 3765.16, 34.04),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -282,7 +286,7 @@ Config.Garages = {
 
 
 
-	Garage_boat_01 = {	
+	Garage_boat_01 = {
 		Name = "Marina",
 		Pos = vector3(-852.73, -1345.86, 1.61),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -309,7 +313,7 @@ Config.Garages = {
 
 
 
-	Garage_heli_01 = {	
+	Garage_heli_01 = {
 		Name = "Héliport",
 		Pos = vector3(-724.71, -1444.0, 5.0),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -332,7 +336,7 @@ Config.Garages = {
 
 
 
-	Garage_plane_01 = {	
+	Garage_plane_01 = {
 		Name = "Hangar",
 		Pos = vector3(-988.43, -3001.67, 13.95),
 		Size  = {x = 2.0, y = 2.0, z = 2.0},
@@ -355,7 +359,7 @@ Config.Garages = {
 }
 
 Config.Pound = {
-	fourriere1 = {	
+	fourriere1 = {
 		Name = "Fourrière",
 		Pos = vector3(369.82, -1607.76, 29.29),
 		Size  = {x = 3.0, y = 3.0, z = 1.0},

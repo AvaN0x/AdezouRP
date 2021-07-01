@@ -1,14 +1,13 @@
--- RegisterServerEvent('esx_ava_garage:modifySocietystate')
--- RegisterServerEvent('esx_ava_garage:modifySocietyStateByState')
-RegisterServerEvent('esx_ava_garage:payhealth1')
-
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
 ESX = nil
-local Vehicles = nil -- vehicles prices from the carshoop
+local Vehicles = nil -- vehicles prices from the vehicleshop
 local playerCautions = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
 
 ESX.RegisterServerCallback('esx_ava_garage:getVehiclesPrices', function(source, cb)
 	if Vehicles == nil then
@@ -77,7 +76,7 @@ function getPlayerVehicles(identifier, onlyCheckGarage, garageName, IsGangGarage
     if not onlyCheckGarage then
 	    data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE owner = @identifier",{['@identifier'] = identifier})
     elseif IsGangGarage then
-	    data = MySQL.Sync.fetchAll("SELECT owned_vehicles.* FROM user_gang JOIN owned_vehicles ON user_gang.identifier = owned_vehicles.owner WHERE user_gang.name = @identifier",{['@identifier'] = identifier})
+        data = MySQL.Sync.fetchAll("SELECT owned_vehicles.* FROM user_gang JOIN owned_vehicles ON user_gang.identifier = owned_vehicles.owner WHERE user_gang.name = @identifier",{['@identifier'] = identifier})
     else
         data = MySQL.Sync.fetchAll("SELECT * FROM owned_vehicles WHERE location = @location",{['@location'] = garageName})
     end
@@ -190,37 +189,6 @@ ESX.RegisterServerCallback('esx_ava_garage:getParkingInfos', function(source, cb
 end)
 
 
-
--- ESX.RegisterServerCallback('esx_ava_garage:getSocietyVehicles', function(source, cb, societyname)
--- 	local vehicules = {}
-
--- 	MySQL.Async.fetchAll("SELECT * FROM owned_vehicles WHERE owner=@identifier",{['@identifier'] = societyname}, function(data) 
--- 		for _,v in pairs(data) do
--- 			local vehicle = json.decode(v.vehicle)
--- 			table.insert(vehicules, {vehicle = vehicle, fuel = v.fuel, location = v.location})
--- 		end
--- 		cb(vehicules)
--- 	end)
--- end)
-
-
--- ESX.RegisterServerCallback('esx_ava_garage:stockSocietyv', function(source,cb, vehicleProps, societyname, fuel)
--- 	local isFound = false
--- 	local vehicules = getPlayerVehicles(societyname)
--- 	local plate = vehicleProps.plate
--- 	print(plate)
--- 	for _,v in pairs(vehicules) do
--- 		if(plate == v.plate)then
--- 			local vehprop = json.encode(vehicleProps)
--- 			MySQL.Sync.execute("UPDATE owned_vehicles SET vehicle =@vehprop, fuel = @fuel WHERE plate=@plate",{['@vehprop'] = vehprop, ['@fuel'] = fuel, ['@plate'] = plate})
--- 			isFound = true
--- 			break
--- 		end
--- 	end
--- 	cb(isFound)
--- end)
-
-
 RegisterServerEvent('esx_ava_garage:modifystate')
 AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, target, inOrFromGarage, onlyCheckGarage, garageName, IsGangGarage)
     local _source = source
@@ -298,21 +266,6 @@ AddEventHandler('esx_ava_garage:modifystate', function(vehicleProps, location, t
 	end
 end)
 
--- AddEventHandler('esx_ava_garage:modifySocietystate', function(vehicleProps, location, societyname)
--- 	-- local _source = source
--- 	-- local xPlayer = ESX.GetPlayerFromId(_source)
--- 	local vehicules = getPlayerVehicles(societyname)
--- 	local plate = vehicleProps.plate
--- 	local location = location
-
--- 	for _,v in pairs(vehicules) do
--- 		if(tostring(plate) == tostring(v.plate))then
--- 			-- local idveh = v.id
--- 			MySQL.Sync.execute("UPDATE owned_vehicles SET location =@location WHERE plate=@plate",{['@location'] = location , ['@plate'] = plate})
--- 			break
--- 		end		
--- 	end
--- end)	
 
 
 ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, target)	
@@ -338,22 +291,18 @@ ESX.RegisterServerCallback('esx_ava_garage:getOutVehicles',function(source, cb, 
 end)
 
 ESX.RegisterServerCallback('esx_ava_garage:checkMoney', function(source, cb, exitPrice)
-
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	-- print(tonumber(exitPrice))
 	if xPlayer.get('money') >= tonumber(exitPrice) then
 		cb(true)
 	else
 		cb(false)
 	end
-
 end)
 
 
 RegisterServerEvent('esx_ava_garage:pay')
 AddEventHandler('esx_ava_garage:pay', function(exitPrice)
-	-- print(exitPrice)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
 	xPlayer.removeMoney(exitPrice)
@@ -387,7 +336,6 @@ end)
 
 RegisterServerEvent('esx_ava_garage:payByState')
 AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
-	-- print(exitPrice)
 	TriggerEvent('esx_addonaccount:getSharedAccount', society, function(account)
 		if account ~= nil then
 			account.removeMoney(exitPrice)
@@ -416,13 +364,12 @@ AddEventHandler('esx_ava_garage:payByState', function(society, exitPrice)
 			account.addMoney(toMechanic)
 		end
     end)
-	
-	TriggerClientEvent('esx:showNotification', source, 'L\'entreprise a payé ' .. exitPrice .. '$')
 
+	TriggerClientEvent('esx:showNotification', source, 'L\'entreprise a payé ' .. exitPrice .. '$')
 end)
 
+RegisterServerEvent('esx_ava_garage:payhealth1')
 AddEventHandler('esx_ava_garage:payhealth1', function(price)
-
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	TriggerEvent('esx_statejob:getTaxed', 'GARAGE', price, function(toSociety)
@@ -430,7 +377,6 @@ AddEventHandler('esx_ava_garage:payhealth1', function(price)
 	xPlayer.removeMoney(price)
 
 	TriggerClientEvent('esx:showNotification', source, 'Vous avez payé ' .. price)
-
 end)
 
 

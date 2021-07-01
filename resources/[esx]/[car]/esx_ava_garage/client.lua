@@ -1,14 +1,8 @@
--- local Keys = {
--- 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
--- 	["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177, 
--- 	["TAB"] = 37, ["Q"] = 44, ["W"] = 32, ["E"] = 38, ["R"] = 45, ["T"] = 245, ["Y"] = 246, ["U"] = 303, ["P"] = 199, ["["] = 39, ["]"] = 40, ["ENTER"] = 18,
--- 	["CAPS"] = 137, ["A"] = 34, ["S"] = 8, ["D"] = 9, ["F"] = 23, ["G"] = 47, ["H"] = 74, ["K"] = 311, ["L"] = 182,
--- 	["LEFTSHIFT"] = 21, ["Z"] = 20, ["X"] = 73, ["C"] = 26, ["V"] = 0, ["B"] = 29, ["N"] = 249, ["M"] = 244, [","] = 82, ["."] = 81,
--- 	["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70, 
--- 	["HOME"] = 213, ["PAGEUP"] = 10, ["PAGEDOWN"] = 11, ["DELETE"] = 178,
--- 	["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
--- 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
--- }
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 
 local CurrentAction = nil
 local GUI					   = {}
@@ -91,17 +85,18 @@ end
 function OpenMenuGarage(PointType, target)
 	ESX.UI.Menu.CloseAll()
 	local elements = {}
-	
+
 	if PointType == 'open_garage_menu' then
 		table.insert(elements,{label = "Liste des véhicules", value = 'list_vehicles'})
 		table.insert(elements,{label = "Rentrer vehicules", value = 'stock_vehicle'})
+
 	elseif PointType == 'pound' then
 		table.insert(elements,{label = "Retour vehicule personnel", value = 'return_vehicle'})
 		if PlayerData.job ~= nil and PlayerData.job.name ~= "unemployed" then
-			table.insert(elements,{label = "Retour vehicule "..PlayerData.job.label, value = 'return_vehicle', job = "society_"..PlayerData.job.name})
+			table.insert(elements, {label = "Retour vehicule "..PlayerData.job.label, value = 'return_vehicle', job = "society_"..PlayerData.job.name})
 		end
 		if PlayerData.job2 ~= nil and PlayerData.job2.name ~= "unemployed2" then
-			table.insert(elements,{label = "Retour vehicule "..PlayerData.job2.label, value = 'return_vehicle', job = "society_"..PlayerData.job2.name})
+			table.insert(elements, {label = "Retour vehicule "..PlayerData.job2.label, value = 'return_vehicle', job = "society_"..PlayerData.job2.name})
 		end
 	end
 
@@ -123,10 +118,13 @@ function OpenMenuGarage(PointType, target)
 			menu.close()
 			if data.current.value == 'list_vehicles' then
 				ListVehiclesMenu(this_Garage.Type, target)
+
 			elseif data.current.value == 'stock_vehicle' then
 				StockVehicleMenu(target)
+
 			elseif data.current.value == 'return_vehicle' then
 				ReturnVehicleMenu(data.current.job)
+
 			end
 		end,
 		function(data, menu)
@@ -139,40 +137,37 @@ end
 -- Afficher les listes des vehicules
 function ListVehiclesMenu(type, target)
 	local elements = {}
-	
-	ESX.TriggerServerCallback('esx_ava_garage:getVehicles', function(vehicles)
-		
-		local count = 0
+
+    ESX.TriggerServerCallback('esx_ava_garage:getVehicles', function(vehicles)
 
 		for _,v in pairs(vehicles) do
-
 			local hashVehicule = v.vehicle.model
 			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
 			local labelvehicle
 			if v.location == 'any' or v.location == this_Garage.Identifier then
 				labelvehicle = vehicleName..' - '.. v.vehicle.plate
+
 			elseif v.location == "garage_POUND" then
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+
             elseif string.match(v.location, "^seized_") then
 				labelvehicle = "<span style=\"color:red;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
+
 			else
 				labelvehicle = "<span style=\"color:darkgray;\">"..vehicleName..' - '.. v.vehicle.plate ..'</span>'
 			end
 			table.insert(elements, {label = labelvehicle, detail = "Essence : " .. math.floor(v.fuel) .. " %", value = v})
-			count = count + 1
 		end
 
-		-- ESX.TriggerServerCallback('esx_ava_garage:getParkingSlots', function(parking_slots_count)
 		ESX.TriggerServerCallback('esx_ava_garage:getParkingInfos', function(data)
 			local parking_slots_count = data.parking_slots
-			print(data.parking_slots..'/'..data.owned_count..'/'..data.parked_count)
-			local title
+			-- print(data.parking_slots..'/'..data.owned_count..'/'..data.parked_count)
 
-			if target then
-				title = 'Garage entreprise'
-			else
-				title = 'Garage ('..count..'/'..parking_slots_count..')'
-			end
+            local title = this_Garage.IsGangGarage
+                and "Garage de gang"
+                or target
+                    and "Garage entreprise"
+                    or 'Garage (' .. #vehicles .. '/' .. parking_slots_count .. ')'
 
 			ESX.UI.Menu.Open(
 			'default', GetCurrentResourceName(), 'spawn_vehicle',
@@ -190,8 +185,10 @@ function ListVehiclesMenu(type, target)
                         SpawnVehicle(data.current.value.vehicle, data.current.value.fuel, target)
                         TriggerServerEvent('esx_ava_garage:modifystate', data.current.value.vehicle, "garage_POUND", target, true, this_Garage.onlyCheckGarage, this_Garage.Identifier, this_Garage.IsGangGarage)
                     end
+
 				elseif data.current.value.location == "garage_POUND" then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est à la fourriere.')
+
                 elseif string.match(data.current.value.location, "^seized_") then
 					TriggerEvent('esx:showNotification', 'Ce véhicule est a été saisi.')
 
@@ -201,7 +198,6 @@ function ListVehiclesMenu(type, target)
 			end,
 			function(data, menu)
 				menu.close()
-				-- CurrentAction = 'open_garage_menu'
 				OpenMenuGarage('open_garage_menu', target)
 			end)
 		end, this_Garage.Type)
@@ -212,16 +208,15 @@ end
 
 function StockVehicleMenu(target)
 	local playerPed  = PlayerPedId()
+
 	if IsPedInAnyVehicle(playerPed,  false) then
 		local coords	= GetEntityCoords(playerPed)
 		local vehicle   = GetVehiclePedIsIn(playerPed,false)
 		local vehicleProps  = ESX.Game.GetVehicleProperties(vehicle)
-		local current 		= GetPlayersLastVehicle(playerPed, true)
-		local engineHealth  = GetVehicleEngineHealth(current)
+
 		TriggerEvent('esx_legacyfuel:GetFuel', vehicle, function(fuel)
 			local vfuel = tonumber(string.format("%." .. 3 .. "f", fuel))
 			ESX.TriggerServerCallback('esx_ava_garage:stockv', function(valid)
-
 				if (valid) then
                     if (GetPedInVehicleSeat(vehicle, -1) == playerPed) then
                         ranger(vehicle, vehicleProps, this_Garage.Identifier, target)
@@ -272,8 +267,6 @@ function SpawnVehicle(vehicle, fuel, target)
 	if target then
 		TriggerServerEvent('esx_ava_keys:giveKey', vehicle.plate, 2)
 	end
-
-	-- TriggerServerEvent('esx_ava_garage:modifystate', vehicle, "garage_POUND")
 
 end
 
@@ -368,9 +361,7 @@ function ReturnVehicleMenu(target, isGov)
 		end,
 		function(data, menu)
 			menu.close()
-			--CurrentAction = 'open_garage_menu'
-		end
-		)
+		end)
 	end, target)
 end
 
@@ -506,7 +497,6 @@ AddEventHandler("esx_ava_garage:openSpecialVehicleMenu", function(garage, jobNam
 	if this_Garage.IsGangGarage == nil then
 		this_Garage.IsGangGarage = false
 	end
-    -- this_Garage.IsGangGarage = false
 	if not this_Garage.Type then
 		this_Garage.Type = 'car'
 	end
