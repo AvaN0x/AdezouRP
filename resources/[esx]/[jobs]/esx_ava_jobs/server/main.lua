@@ -57,11 +57,20 @@ end)
 
 
 RegisterServerEvent("esx_ava_jobs:setService")
-AddEventHandler("esx_ava_jobs:setService", function(job, state)
-	if not jobsServices[job] then
-        jobsServices[job] = {}
+AddEventHandler("esx_ava_jobs:setService", function(jobName, state)
+	if not jobsServices[jobName] then
+        jobsServices[jobName] = {}
     end
-    jobsServices[job][source] = state and true or nil
+    jobsServices[jobName][source] = state and true or nil
+end)
+
+AddEventHandler('playerDropped', function(reason)
+    local _source = source
+    for jobName, v in pairs(jobsServices) do
+        if v[source] ~= nil then
+            jobsServices[jobName][source] = nil
+        end
+    end
 end)
 
 function getCountInService(job)

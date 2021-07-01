@@ -159,7 +159,7 @@ AddEventHandler('playerDropped', function(reason)
         local member = DiscordRequest("GET", endpoint, {})
         if member.code == 200 then
 			local data = json.decode(member.data)
-			name = data.username .. "#" .. data.discriminator .. " (`" .. steamName .. "`)"
+			name = data.username .. "#" .. data.discriminator .. " (" .. steamName .. ")"
 		end
         namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 	end
