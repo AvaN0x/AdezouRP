@@ -122,42 +122,39 @@ local damageValues = {
     -- [GetHashKey("VEHICLE_WEAPON_RUINER_BULLET")] = 1.0,
 }
 
--- local playerPed
--- Citizen.CreateThread(function()
---     while true do
---         Wait(500)
---     end
--- end)
-
--- local currWeaponHash
-
--- Citizen.CreateThread(function()
---     while true do
---         currWeaponHash = GetSelectedPedWeapon(playerPed)
---         Wait(200)
---     end
--- end)
-
+--* old way of doing it
 -- Citizen.CreateThread(function()
 --     while true do
 --         Wait(0)
---         if currWeaponHash and damageValues[currWeaponHash] then
---             SetWeaponDamageModifierThisFrame(currWeaponHash, damageValues[currWeaponHash])
+--         -- TODO probably edit to only edit the actually equiped weapon
+--         for k, v in pairs(damageValues) do
+--             SetWeaponDamageModifierThisFrame(k, v)
 --         end
 --     end
 -- end)
 
+
+local playerPed
+local currWeaponHash
+
 Citizen.CreateThread(function()
     while true do
-        Wait(0)
-        -- TODO probably edit to only edit the actually equiped weapon
-        for k, v in pairs(damageValues) do
-            SetWeaponDamageModifierThisFrame(k, v)
-        end
+        playerPed = PlayerPedId()
+        currWeaponHash = GetSelectedPedWeapon(playerPed)
+        Wait(200)
     end
 end)
 
-
+Citizen.CreateThread(function()
+    while true do
+        Wait(0)
+        if currWeaponHash and damageValues[currWeaponHash] then
+            SetWeaponDamageModifierThisFrame(currWeaponHash, damageValues[currWeaponHash])
+        else
+            Wait(200)
+        end
+    end
+end)
 
 -- Citizen.CreateThread(function()
 --     while true do
@@ -166,7 +163,6 @@ end)
 --         SetPedSuffersCriticalHits(PlayerPedId(), false) -- headshot will not be a critical hit
 --     end
 -- end)
-
 
 
 --============================--
