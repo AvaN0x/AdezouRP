@@ -277,12 +277,12 @@ function GetAction(data)
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = false})
 				elseif v.modType == 'neonColor' or v.modType == 'tyreSmokeColor' then -- disable neon
 					table.insert(elements, {label = " " ..  _U('by_default'), modType = k, modNum = {0, 0, 0}})
-				elseif v.modType == 'color1' or v.modType == 'color2' or v.modType == 'pearlescentColor' or v.modType == 'wheelColor' then
+				elseif v.modType == 'color1' or v.modType == 'color2' or v.modType == 'pearlescentColor' or v.modType == 'wheelColor' or v.modType == 'modInteriorColor' or v.modType == 'modDashboardColor' then
 					local num = myCar[v.modType]
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = num})
 				elseif v.modType == 17 then
 					table.insert(elements, {label = " " .. _U('no_turbo'), modType = k, modNum = false})
- 				else
+                else
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = -1})
 				end
 
@@ -335,7 +335,7 @@ function GetAction(data)
 							modNum = { neons[i].r, neons[i].g, neons[i].b }
 						})
 					end
-				elseif v.modType == 'color1' or v.modType == 'color2' or v.modType == 'pearlescentColor' or v.modType == 'wheelColor' then -- RESPRAYS
+				elseif v.modType == 'color1' or v.modType == 'color2' or v.modType == 'pearlescentColor' or v.modType == 'wheelColor' or v.modType == 'modInteriorColor' or v.modType == 'modDashboardColor' then -- RESPRAYS
 					local colors = GetColors(data.color)
 					for j = 1, #colors, 1 do
 						local _label = ''
@@ -435,7 +435,7 @@ function GetAction(data)
 					end
 				end
 			else
-				if data.value == 'primaryRespray' or data.value == 'secondaryRespray' or data.value == 'pearlescentRespray' or data.value == 'modFrontWheelsColor' then
+				if data.value == 'primaryRespray' or data.value == 'secondaryRespray' or data.value == 'pearlescentRespray' or data.value == 'modFrontWheelsColor' or data.value == 'modInteriorRespray' or data.value == 'modDashboardRespray' then
 					for i=1, #Config.Colors, 1 do
 						if data.value == 'primaryRespray' then
 							table.insert(elements, {label = Config.Colors[i].label, value = 'color1', color = Config.Colors[i].value})
@@ -445,6 +445,10 @@ function GetAction(data)
 							table.insert(elements, {label = Config.Colors[i].label, value = 'pearlescentColor', color = Config.Colors[i].value})
 						elseif data.value == 'modFrontWheelsColor' then
 							table.insert(elements, {label = Config.Colors[i].label, value = 'wheelColor', color = Config.Colors[i].value})
+						elseif data.value == 'modInteriorRespray' then
+							table.insert(elements, {label = Config.Colors[i].label, value = 'modInteriorColor', color = Config.Colors[i].value})
+						elseif data.value == 'modDashboardRespray' then
+							table.insert(elements, {label = Config.Colors[i].label, value = 'modDashboardColor', color = Config.Colors[i].value})
 						end
 					end	
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
@@ -500,14 +504,14 @@ end
 -- Activate menu when player is inside marker
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(10)
+		Citizen.Wait(5)
 		local playerPed = PlayerPedId()
 		if IsPedInAnyVehicle(playerPed, false) then
 			local coords      = GetEntityCoords(PlayerPedId())
 			local currentZone = nil
 			local zone 		  = nil
 			local lastZone    = nil
-			if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or Config.IsMecanoJobOnly == false then
+			if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'mechanic') or Config.IsMecanoJobOnly == false then
 				for k,v in pairs(Config.Zones) do
 					--if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x then
 					if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x and not lsMenuIsShowed then
@@ -521,7 +525,7 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, Keys['E']) and not lsMenuIsShowed and isInLSMarker then
-				if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or Config.IsMecanoJobOnly == false then
+				if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'mechanic') or Config.IsMecanoJobOnly == false then
 					lsMenuIsShowed = true
 
 					local vehicle = GetVehiclePedIsIn(playerPed, false)

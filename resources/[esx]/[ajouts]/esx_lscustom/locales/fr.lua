@@ -222,6 +222,8 @@ Locales['fr'] = {
   ['primary'] = 'primaire',
   ['secondary'] = 'secondaire',
   ['pearlescent'] = 'nacré',
+  ['modInteriorRespray'] = 'Couleur intérieur',
+  ['modDashboardRespray'] = 'Couleur tableau de bord',
   -- Misc
   ['headlights'] = 'phares',
   ['licenseplates'] = 'plaque',

@@ -812,6 +812,8 @@ Config.Menus = {
 		primaryRespray = _U('primary'),
 		secondaryRespray = _U('secondary'),
 		pearlescentRespray = _U('pearlescent'),
+		modInteriorRespray = _U('modInteriorRespray'),
+		modDashboardRespray = _U('modDashboardRespray'),
 	},
 	primaryRespray = {
 		label = _U('primary'),
@@ -823,6 +825,14 @@ Config.Menus = {
 	},
 	pearlescentRespray = {
 		label = _U('pearlescent'),
+		parent = 'resprays',
+	},
+	modInteriorRespray = {
+		label = _U('modInteriorRespray'),
+		parent = 'resprays',
+	},
+	modDashboardRespray = {
+		label = _U('modDashboardRespray'),
 		parent = 'resprays',
 	},
 	color1 = {
@@ -841,6 +851,18 @@ Config.Menus = {
 		label = _U('pearlescent'),
 		parent = 'pearlescentRespray',
 		modType = 'pearlescentColor',
+		price = 0.39
+	},
+    modInteriorColor = {
+		label = _U('modInteriorRespray'),
+		parent = 'modInteriorRespray',
+		modType = 'modInteriorColor',
+		price = 0.39
+	},
+	modDashboardColor = {
+		label = _U('modDashboardRespray'),
+		parent = 'modDashboardRespray',
+		modType = 'modDashboardColor',
 		price = 0.39
 	},
 	modXenon = {
