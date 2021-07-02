@@ -152,7 +152,7 @@ Citizen.CreateThread(function()
         Wait(0)
         -- TODO probably edit to only edit the actually equiped weapon
         for k, v in pairs(damageValues) do
-            SetWeaponDamageModifier(GetHashKey(k), v)
+            SetWeaponDamageModifierThisFrame(k, v)
         end
     end
 end)
