@@ -85,84 +85,77 @@ local canfire = true
 local currWeapon = GetHashKey('WEAPON_UNARMED')
 
 local playerPed = nil
-local playerPed = nil
-local playerPed = nil
-local canCheck = nil
 
 Citizen.CreateThread(function()
 	while true do
         playerPed = PlayerPedId()
-        canCheck = DoesEntityExist( playerPed ) and not IsEntityDead( playerPed ) and not IsPedInAnyVehicle(playerPed, true)
-		Wait(500)
+		Wait(1000)
     end
 end)
 
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if canCheck then
+		if DoesEntityExist( playerPed ) and not IsEntityDead( playerPed ) and not IsPedInAnyVehicle(playerPed, true) and not (IsPedInParachuteFreeFall(playerPed) or GetPedParachuteState(playerPed) ~= -1) then
             local newWeap = GetSelectedPedWeapon(playerPed)
 			if currWeapon ~= newWeap then
-                local inParachute = IsPedInParachuteFreeFall(playerPed) or GetPedParachuteState(playerPed) ~= -1
-                if not inParachute and not IsPedInAnyVehicle(playerPed, false) then
-                    local playerCoords = GetEntityCoords(playerPed, true)
-                    local rot = GetEntityHeading(playerPed)
+                local playerCoords = GetEntityCoords(playerPed, true)
+                local rot = GetEntityHeading(playerPed)
 
-                    SetCurrentPedWeapon(playerPed, currWeapon, true)
-                    loadAnimDict( "reaction@intimidation@1h" )
+                SetCurrentPedWeapon(playerPed, currWeapon, true)
+                loadAnimDict( "reaction@intimidation@1h" )
 
-                    if CheckWeapon(newWeap) then
-                        if holstered then
-                            print(1)
-                            canFire = false
-                            TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
-                            Citizen.Wait(1000)
-                            SetCurrentPedWeapon(playerPed, newWeap, true)
-                            currWeapon = newWeap
-                            Citizen.Wait(2000)
-                            ClearPedTasks(playerPed)
-                            holstered = false
-                            canFire = true
-                        else
-                            print(2)
-                            canFire = false
-                            TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
-                            Citizen.Wait(1600)
-                            SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
-                            --ClearPedTasks(playerPed)
-                            TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
-                            Citizen.Wait(1000)
-                            SetCurrentPedWeapon(playerPed, newWeap, true)
-                            currWeapon = newWeap
-                            Citizen.Wait(2000)
-                            ClearPedTasks(playerPed)
-                            holstered = false
-                            canFire = true
-                        end
+                if CheckWeapon(newWeap) then
+                    if holstered then
+                        print(1)
+                        canFire = false
+                        TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                        Citizen.Wait(1000)
+                        SetCurrentPedWeapon(playerPed, newWeap, true)
+                        currWeapon = newWeap
+                        Citizen.Wait(2000)
+                        ClearPedTasks(playerPed)
+                        holstered = false
+                        canFire = true
                     else
-                        if not holstered and CheckWeapon(currWeapon) then
-                            print(3)
-                            canFire = false
-                            TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
-                            Citizen.Wait(1600)
-                            SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
-                            ClearPedTasks(playerPed)
-                            SetCurrentPedWeapon(playerPed, newWeap, true)
-                            holstered = true
-                            canFire = true
-                            currWeapon = newWeap
-                        else
-                            print(4)
-                            SetCurrentPedWeapon(playerPed, newWeap, true)
-                            holstered = false
-                            canFire = true
-                            currWeapon = newWeap
-                        end
+                        print(2)
+                        canFire = false
+                        TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                        Citizen.Wait(1600)
+                        SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
+                        --ClearPedTasks(playerPed)
+
+                        playerCoords = GetEntityCoords(playerPed, true) --* this is needed to prevent a rollback effect
+                        TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                        Citizen.Wait(1000)
+                        SetCurrentPedWeapon(playerPed, newWeap, true)
+                        currWeapon = newWeap
+                        Citizen.Wait(2000)
+                        ClearPedTasks(playerPed)
+                        holstered = false
+                        canFire = true
                     end
                 else
-                    currWeapon = newWeap
+                    if not holstered and CheckWeapon(currWeapon) then
+                        print(3)
+                        canFire = false
+                        TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                        Citizen.Wait(1600)
+                        SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
+                        ClearPedTasks(playerPed)
+                        SetCurrentPedWeapon(playerPed, newWeap, true)
+                        holstered = true
+                        canFire = true
+                        currWeapon = newWeap
+                    else
+                        print(4)
+                        SetCurrentPedWeapon(playerPed, newWeap, true)
+                        holstered = false
+                        canFire = true
+                        currWeapon = newWeap
+                    end
                 end
-			end
+            end
 		end
 	end
 end)
