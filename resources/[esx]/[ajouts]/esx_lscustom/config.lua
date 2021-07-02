@@ -69,6 +69,36 @@ Config.Zones = {
             "windowTint",
             "neonColor",
         }
+	},
+
+
+	ls_lspd = {
+		Pos   = vector3(871.67, -1350.52, 25.33),
+		Size  = {x = 3.0, y = 3.0, z = 0.2},
+		Color = {r = 204, g = 204, b = 0},
+		Marker= 1,
+		Name  = _U('blip_name'),
+		Hint  = _U('press_custom'),
+        WhiteList = {
+            "main",
+            "cosmetics",
+            "resprays",
+            "wheels",
+            "modFrontWheelsColor",
+            "wheelColor",
+            "primaryRespray",
+            "secondaryRespray",
+            "pearlescentRespray",
+            "color1",
+            "color2",
+            "pearlescentColor",
+            "modInteriorColor",
+            "modDashboardColor",
+            "modXenon",
+            "modXenonColour",
+            "windowTint",
+            "neonColor",
+        }
 	}
 
 }
