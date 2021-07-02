@@ -48,7 +48,27 @@ Config.Zones = {
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
 		Name  = _U('blip_name'),
-		Hint  = _U('press_custom')
+		Hint  = _U('press_custom'),
+        WhiteList = {
+            "main",
+            "cosmetics",
+            "resprays",
+            "wheels",
+            "modFrontWheelsColor",
+            "wheelColor",
+            "primaryRespray",
+            "secondaryRespray",
+            "pearlescentRespray",
+            "color1",
+            "color2",
+            "pearlescentColor",
+            "modInteriorColor",
+            "modDashboardColor",
+            "modXenon",
+            "modXenonColour",
+            "windowTint",
+            "neonColor",
+        }
 	}
 
 }
@@ -412,7 +432,7 @@ end
 
 function GetNeons()
 	local neons = {
-		{ label = _U('white'),		r = 255, 	g = 255, 	b = 255},
+		{ label = 'Blanc',		    r = 255, 	g = 255, 	b = 255},
 		{ label = "Slate Gray",		r = 112, 	g = 128, 	b = 144},
 		{ label = "Blue",			r = 0, 		g = 0, 		b = 255},
 		{ label = "Light Blue",		r = 0, 		g = 150, 	b = 255},
@@ -422,14 +442,14 @@ function GetNeons()
 		{ label = "Mint Green", 	r = 50, 	g = 255, 	b = 155},
 		{ label = "Lime Green", 	r = 0, 		g = 255, 	b = 0},
 		{ label = "Olive", 			r = 128, 	g = 128, 	b = 0},
-		{ label = _U('yellow'), 	r = 255, 	g = 255, 	b = 0},
-		{ label = _U('gold'), 		r = 255, 	g = 215, 	b = 0},
-		{ label = _U('orange'), 	r = 255, 	g = 165, 	b = 0},
-		{ label = _U('wheat'), 		r = 245, 	g = 222, 	b = 179},
-		{ label = _U('red'), 		r = 255, 	g = 0, 		b = 0},
-		{ label = _U('pink'), 		r = 255, 	g = 161, 	b = 211},
-		{ label = _U('brightpink'),	r = 255, 	g = 0, 		b = 255},
-		{ label = _U('purple'), 	r = 153, 	g = 0, 		b = 153},
+		{ label = 'Jaune', 	    r = 255, 	g = 255, 	b = 0},
+		{ label = 'Doré', 		    r = 255, 	g = 215, 	b = 0},
+		{ label = 'orange', 	    r = 255, 	g = 165, 	b = 0},
+		{ label = 'Blé', 		    r = 245, 	g = 222, 	b = 179},
+		{ label = 'Rouge', 		    r = 255, 	g = 0, 		b = 0},
+		{ label = 'Rose', 		    r = 255, 	g = 161, 	b = 211},
+		{ label = 'Rose brillant',	    r = 255, 	g = 0, 		b = 255},
+		{ label = 'Violet', 	    r = 153, 	g = 0, 		b = 153},
 		{ label = "Ivory", 			r = 41, 	g = 36, 	b = 33}
 	}
 

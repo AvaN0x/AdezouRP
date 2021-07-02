@@ -13,6 +13,8 @@ local Keys = {
 ESX =					nil
 local Vehicles =		{}
 local PlayerData		= {}
+local CurrentZoneName = nil
+local CurrentZone = {}
 local lsMenuIsShowed	= false
 local isInLSMarker		= false
 local myCar				= {}
@@ -264,15 +266,16 @@ function GetAction(data)
 	end
 
 	for k,v in pairs(Config.Menus) do
-
-		if data.value == k then
+		if data.value == k and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, k)) then
+		-- if data.value == k then
+            print(k)
 
 			menuName  = k
 			menuTitle = v.label
 			parent    = v.parent
 
 			if v.modType ~= nil then
-				print(v.modType)
+				-- print(v.modType)
 				if v.modType == 22 then
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = false})
 				elseif v.modType == 'neonColor' or v.modType == 'tyreSmokeColor' then -- disable neon
@@ -330,7 +333,7 @@ function GetAction(data)
 					price = math.floor(vehiclePrice * v.price / 100)
 					for i=1, #neons, 1 do
 						table.insert(elements, {
-							label = '<span style="color:rgb(' .. neons[i].r .. ',' .. neons[i].g .. ',' .. neons[i].b .. ');">' .. neons[i].label .. ' - <span style="color:green;">$' .. price .. '</span>',
+							label = neons[i].label .. ' - <span style="color:green;">$' .. price .. '</span>',
 							modType = k,
 							modNum = { neons[i].r, neons[i].g, neons[i].b }
 						})
@@ -449,22 +452,23 @@ function GetAction(data)
 					end	
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
 					for l,w in pairs(v) do
-						if l ~= 'label' and l ~= 'parent' then
-							if not Config.Menus[l].modType
+						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
+							if (not Config.Menus[l].modType
 							or Config.Menus[l].modType == 22
 							or Config.Menus[l].modType == 'windowTint'
 							or Config.Menus[l].modType == 'plateIndex'
 							or Config.Menus[l].modType == 'modXenonColour'
 							or Config.Menus[l].modType == 'neonColor'
 							or (Config.Menus[l].modType == 'modLivery' and GetVehicleLiveryCount(vehicle) > 0)
-							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0 then
+							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0)
+                            and (CurrentZone.WhiteList == nil or Config.Menus[l].modType == nil or array_contain_value(CurrentZone.WhiteList, Config.Menus[l].modType)) then
 								table.insert(elements, {label = w, value = l})
 							end
 						end
 					end
 				else
 					for l,w in pairs(v) do
-						if l ~= 'label' and l ~= 'parent' then
+						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
 							table.insert(elements, {label = w, value = l})
 							print(l)
 						end
@@ -506,21 +510,25 @@ Citizen.CreateThread(function()
             if IsPedInAnyVehicle(playerPed, false) then
                 local coords      = GetEntityCoords(PlayerPedId())
                 local currentZone = nil
-                local zone 		  = nil
-                local lastZone    = nil
-                    for k,v in pairs(Config.Zones) do
-                        --if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x then
-                        if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x and not lsMenuIsShowed then
-                            isInLSMarker  = true
-                            ESX.ShowHelpNotification(v.Hint)
-                            break
-                        else
-                            isInLSMarker  = false
-                        end
+                local currentZoneName = nil
+
+                for k,v in pairs(Config.Zones) do
+                    --if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x then
+                    if #(coords - v.Pos) < v.Size.x and not lsMenuIsShowed then
+                        isInLSMarker  = true
+                        currentZoneName = k
+                        currentZone = v
+                        ESX.ShowHelpNotification(v.Hint)
+                        break
+                    else
+                        isInLSMarker  = false
                     end
+                end
 
                 if IsControlJustReleased(0, Keys['E']) and not lsMenuIsShowed and isInLSMarker then
                         lsMenuIsShowed = true
+                        CurrentZoneName = currentZoneName
+                        CurrentZone = currentZone
 
                         local vehicle = GetVehiclePedIsIn(playerPed, false)
                         FreezeEntityPosition(vehicle, true)
@@ -565,6 +573,15 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
+function array_contain_value(array, value)
+	for k, v in pairs(array) do
+		if v == value then
+			return true
+		end
+	end
+	return false
+end
 ---------------------------------
 --------- ikNox#6088 ------------
 ---------------------------------
