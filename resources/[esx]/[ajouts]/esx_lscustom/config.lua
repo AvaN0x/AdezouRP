@@ -54,223 +54,233 @@ Config.Zones = {
 }
 
 Config.Colors = {
-	{ label = _U('black'), value = 'black'},
-	{ label = _U('white'), value = 'white'},
-	{ label = _U('grey'), value = 'grey'},
-	{ label = _U('red'), value = 'red'},
-	{ label = _U('pink'), value = 'pink'},
-	{ label = _U('blue'), value = 'blue'},
-	{ label = _U('yellow'), value = 'yellow'},
-	{ label = _U('green'), value = 'green'},
-	{ label = _U('orange'), value = 'orange'},
-	{ label = _U('brown'), value = 'brown'},
-	{ label = _U('purple'), value = 'purple'},
-	{ label = _U('chrome'), value = 'chrome'},
-	{ label = _U('gold'), value = 'gold'}
+	{ label = _U('classic'), value = 'classic'},
+	{ label = _U('matte'), value = 'matte'},
+	{ label = _U('metal'), value = 'metal'},
+	{ label = _U('util'), value = 'util'},
+	{ label = _U('worn'), value = 'worn'},
 }
 
-function GetColors(color)
+function GetColors(type)
 	local colors = {}
-	if color == 'black' then
-		colors = {
-			{ index = 0, label = _U('black')},
-			{ index = 1, label = _U('graphite')},
-			{ index = 2, label = _U('black_metallic')},
-			{ index = 3, label = _U('caststeel')},
-			{ index = 11, label = _U('black_anth')},
-			{ index = 12, label = _U('matteblack')},
-			{ index = 15, label = _U('darknight')},
-			{ index = 16, label = _U('deepblack')},
-			{ index = 21, label = _U('oil')},
-			{ index = 147, label = _U('carbon')}
-		}
-	elseif color == 'white' then
-		colors = {
-			{ index = 106, label = _U('vanilla')},
-			{ index = 107, label = _U('creme')},
-			{ index = 111, label = _U('white')},
-			{ index = 112, label = _U('polarwhite')},
-			{ index = 113, label = _U('beige')},
-			{ index = 121, label = _U('mattewhite')},
-			{ index = 122, label = _U('snow')},
-			{ index = 131, label = _U('cotton')},
-			{ index = 132, label = _U('alabaster')},
-			{ index = 134, label = _U('purewhite')}
-		}
-	elseif color == 'grey' then
-		colors = {
-			{ index = 4, label = _U('silver')},
-			{ index = 5, label = _U('metallicgrey')},
-			{ index = 6, label = _U('laminatedsteel')},
-			{ index = 7, label = _U('darkgray')},
-			{ index = 8, label = _U('rockygray')},
-			{ index = 9, label = _U('graynight')},
-			{ index = 10, label = _U('aluminum')},
-			{ index = 13, label = _U('graymat')},
-			{ index = 14, label = _U('lightgrey')},
-			{ index = 17, label = _U('asphaltgray')},
-			{ index = 18, label = _U('grayconcrete')},
-			{ index = 19, label = _U('darksilver')},
-			{ index = 20, label = _U('magnesite')},
-			{ index = 22, label = _U('nickel')},
-			{ index = 23, label = _U('zinc')},
-			{ index = 24, label = _U('dolomite')},
-			{ index = 25, label = _U('bluesilver')},
-			{ index = 26, label = _U('titanium')},
-			{ index = 66, label = _U('steelblue')},
-			{ index = 93, label = _U('champagne')},
-			{ index = 144, label = _U('grayhunter')},
-			{ index = 156, label = _U('grey')}
-		}
-	elseif color == 'red' then
-		colors = {
-			{ index = 27, label = _U('red')},
-			{ index = 28, label = _U('torino_red')},
-			{ index = 29, label = _U('poppy')},
-			{ index = 30, label = _U('copper_red')},
-			{ index = 31, label = _U('cardinal')},
-			{ index = 32, label = _U('brick')},
-			{ index = 33, label = _U('garnet')},
-			{ index = 34, label = _U('cabernet')},
-			{ index = 35, label = _U('candy')},
-			{ index = 39, label = _U('matte_red')},
-			{ index = 40, label = _U('dark_red')},
-			{ index = 43, label = _U('red_pulp')},
-			{ index = 44, label = _U('bril_red')},
-			{ index = 46, label = _U('pale_red')},
-			{ index = 143, label = _U('wine_red')},
-			{ index = 150, label = _U('volcano')}
-		}
-	elseif color == 'pink' then
-		colors = {
-			{ index = 135, label = _U('electricpink')},
-			{ index = 136, label = _U('salmon')},
-			{ index = 137, label = _U('sugarplum')}
-		}
-	elseif color == 'blue' then
-		colors = {
-			{ index = 54, label = _U('topaz')},
-			{ index = 60, label = _U('light_blue')},
-			{ index = 61, label = _U('galaxy_blue')},
-			{ index = 62, label = _U('dark_blue')},
-			{ index = 63, label = _U('azure')},
-			{ index = 64, label = _U('navy_blue')},
-			{ index = 65, label = _U('lapis')},
-			{ index = 67, label = _U('blue_diamond')},
-			{ index = 68, label = _U('surfer')},
-			{ index = 69, label = _U('pastel_blue')},
-			{ index = 70, label = _U('celeste_blue')},
-			{ index = 73, label = _U('rally_blue')},
-			{ index = 74, label = _U('blue_paradise')},
-			{ index = 75, label = _U('blue_night')},
-			{ index = 77, label = _U('cyan_blue')},
-			{ index = 78, label = _U('cobalt')},
-			{ index = 79, label = _U('electric_blue')},
-			{ index = 80, label = _U('horizon_blue')},
-			{ index = 82, label = _U('metallic_blue')},
-			{ index = 83, label = _U('aquamarine')},
-			{ index = 84, label = _U('blue_agathe')},
-			{ index = 85, label = _U('zirconium')},
-			{ index = 86, label = _U('spinel')},
-			{ index = 87, label = _U('tourmaline')},
-			{ index = 127, label = _U('paradise')},
-			{ index = 140, label = _U('bubble_gum')},
-			{ index = 141, label = _U('midnight_blue')},
-			{ index = 146, label = _U('forbidden_blue')},
-			{ index = 157, label = _U('glacier_blue')}
-		}
-	elseif color == 'yellow' then
-		colors = {
-			{ index = 42, label = _U('yellow')},
-			{ index = 88, label = _U('wheat')},
-			{ index = 89, label = _U('raceyellow')},
-			{ index = 91, label = _U('paleyellow')},
-			{ index = 126, label = _U('lightyellow')}
-		}
-	elseif color == 'green' then
-		colors = {
-			{ index = 49, label = _U('met_dark_green')},
-			{ index = 50, label = _U('rally_green')},
-			{ index = 51, label = _U('pine_green')},
-			{ index = 52, label = _U('olive_green')},
-			{ index = 53, label = _U('light_green')},
-			{ index = 55, label = _U('lime_green')},
-			{ index = 56, label = _U('forest_green')},
-			{ index = 57, label = _U('lawn_green')},
-			{ index = 58, label = _U('imperial_green')},
-			{ index = 59, label = _U('green_bottle')},
-			{ index = 92, label = _U('citrus_green')},
-			{ index = 125, label = _U('green_anis')},
-			{ index = 128, label = _U('khaki')},
-			{ index = 133, label = _U('army_green')},
-			{ index = 151, label = _U('dark_green')},
-			{ index = 152, label = _U('hunter_green')},
-			{ index = 155, label = _U('matte_foilage_green')}
-		}
-	elseif color == 'orange' then
-		colors = {
-			{ index = 36, label = _U('tangerine')},
-			{ index = 38, label = _U('orange')},
-			{ index = 41, label = _U('matteorange')},
-			{ index = 123, label = _U('lightorange')},
-			{ index = 124, label = _U('peach')},
-			{ index = 130, label = _U('pumpkin')},
-			{ index = 138, label = _U('orangelambo')}
-		}
-	elseif color == 'brown' then
-		colors = {
-			{ index = 45, label = _U('copper')},
-			{ index = 47, label = _U('lightbrown')},
-			{ index = 48, label = _U('darkbrown')},
-			{ index = 90, label = _U('bronze')},
-			{ index = 94, label = _U('brownmetallic')},
-			{ index = 95, label = _U('Expresso')},
-			{ index = 96, label = _U('chocolate')},
-			{ index = 97, label = _U('terracotta')},
-			{ index = 98, label = _U('marble')},
-			{ index = 99, label = _U('sand')},
-			{ index = 100, label = _U('sepia')},
-			{ index = 101, label = _U('bison')},
-			{ index = 102, label = _U('palm')},
-			{ index = 103, label = _U('caramel')},
-			{ index = 104, label = _U('rust')},
-			{ index = 105, label = _U('chestnut')},
-			{ index = 108, label = _U('brown')},
-			{ index = 109, label = _U('hazelnut')},
-			{ index = 110, label = _U('shell')},
-			{ index = 114, label = _U('mahogany')},
-			{ index = 115, label = _U('cauldron')},
-			{ index = 116, label = _U('blond')},
-			{ index = 129, label = _U('gravel')},
-			{ index = 153, label = _U('darkearth')},
-			{ index = 154, label = _U('desert')}
-		}
-	elseif color == 'purple' then
-		colors = {
-			{ index = 71, label = _U('indigo')},
-			{ index = 72, label = _U('deeppurple')},
-			{ index = 76, label = _U('darkviolet')},
-			{ index = 81, label = _U('amethyst')},
-			{ index = 142, label = _U('mysticalviolet')},
-			{ index = 145, label = _U('purplemetallic')},
-			{ index = 148, label = _U('matteviolet')},
-			{ index = 149, label = _U('mattedeeppurple')}
-		}
-	elseif color == 'chrome' then
-		colors = {
-			{ index = 117, label = _U('brushechrome')},
-			{ index = 118, label = _U('blackchrome')},
-			{ index = 119, label = _U('brushedaluminum')},
-			{ index = 120, label = _U('chrome')}
-		}
-	elseif color == 'gold' then
-		colors = {
-			{ index = 37, label = _U('gold')},
-			{ index = 158, label = _U('puregold')},
-			{ index = 159, label = _U('brushedgold')},
-			{ index = 160, label = _U('lightgold')}
-		}
-	end
+    if type == "classic" then
+        colors = {
+            {id = 0, name = "BLACK"},
+            {id = 1, name = "GRAPHITE"},
+            {id = 2, name = "BLACK_STEEL"},
+            {id = 3, name = "DARK_SILVER"},
+            {id = 4, name = "SILVER"},
+            {id = 5, name = "BLUE_SILVER"},
+            {id = 6, name = "ROLLED_STEEL"},
+            {id = 7, name = "SHADOW_SILVER"},
+            {id = 8, name = "STONE_SILVER"},
+            {id = 9, name = "MIDNIGHT_SILVER"},
+            {id = 10, name = "CAST_IRON_SIL"},
+            {id = 11, name = "ANTHR_BLACK"},
+
+            {id = 27, name = "RED"},
+            {id = 28, name = "TORINO_RED"},
+            {id = 29, name = "FORMULA_RED"},
+            {id = 30, name = "BLAZE_RED"},
+            {id = 31, name = "GRACE_RED"},
+            {id = 32, name = "GARNET_RED"},
+            {id = 33, name = "SUNSET_RED"},
+            {id = 34, name = "CABERNET_RED"},
+            {id = 35, name = "CANDY_RED"},
+            {id = 36, name = "SUNRISE_ORANGE"},
+            {id = 37, name = "GOLD"},
+            {id = 38, name = "ORANGE"},
+
+            {id = 49, name = "DARK_GREEN"},
+            {id = 50, name = "RACING_GREEN"},
+            {id = 51, name = "SEA_GREEN"},
+            {id = 52, name = "OLIVE_GREEN"},
+            {id = 53, name = "BRIGHT_GREEN"},
+            {id = 54, name = "PETROL_GREEN"},
+
+            {id = 61, name = "GALAXY_BLUE"},
+            {id = 62, name = "DARK_BLUE"},
+            {id = 63, name = "SAXON_BLUE"},
+            {id = 64, name = "BLUE"},
+            {id = 65, name = "MARINER_BLUE"},
+            {id = 66, name = "HARBOR_BLUE"},
+            {id = 67, name = "DIAMOND_BLUE"},
+            {id = 68, name = "SURF_BLUE"},
+            {id = 69, name = "NAUTICAL_BLUE"},
+            {id = 70, name = "ULTRA_BLUE"},
+            {id = 71, name = "PURPLE"},
+            {id = 72, name = "SPIN_PURPLE"},
+            {id = 73, name = "RACING_BLUE"},
+            {id = 74, name = "LIGHT_BLUE"},
+
+            {id = 88, name = "YELLOW"},
+            {id = 89, name = "RACE_YELLOW"},
+            {id = 90, name = "BRONZE"},
+            {id = 91, name = "FLUR_YELLOW"},
+            {id = 92, name = "LIME_GREEN"},
+
+            {id = 94, name = "UMBER_BROWN"},
+            {id = 95, name = "CREEK_BROWN"},
+            {id = 96, name = "CHOCOLATE_BROWN"},
+            {id = 97, name = "MAPLE_BROWN"},
+            {id = 98, name = "SADDLE_BROWN"},
+            {id = 99, name = "STRAW_BROWN"},
+            {id = 100, name = "MOSS_BROWN"},
+            {id = 101, name = "BISON_BROWN"},
+            {id = 102, name = "WOODBEECH_BROWN"},
+            {id = 103, name = "BEECHWOOD_BROWN"},
+            {id = 104, name = "SIENNA_BROWN"},
+            {id = 105, name = "SANDY_BROWN"},
+            {id = 106, name = "BLEECHED_BROWN"},
+            {id = 107, name = "CREAM"},
+
+            {id = 111, name = "WHITE"},
+            {id = 112, name = "FROST_WHITE"},
+
+            {id = 135, name = "HOT PINK"},
+            {id = 136, name = "SALMON_PINK"},
+            {id = 137, name = "PINK"},
+            {id = 138, name = "BRIGHT_ORANGE"},
+
+            {id = 141, name = "MIDNIGHT_BLUE"},
+            {id = 142, name = "MIGHT_PURPLE"},
+            {id = 143, name = "WINE_RED"},
+
+            {id = 145, name = "BRIGHT_PURPLE"},
+            {id = 146, name = "VERY_DARK_BLUE"},
+            {id = 147, name = "BLACK_GRAPHITE"},
+
+            {id = 150, name = "LAVA_RED"}
+        }
+
+    elseif type == "matte" then
+        colors = {
+            {id = 12, name = "BLACK"},
+            {id = 13, name = "GREY"},
+            {id = 14, name = "LIGHT_GREY"},
+
+            {id = 39, name = "RED"},
+            {id = 40, name = "DARK_RED"},
+            {id = 41, name = "ORANGE"},
+            {id = 42, name = "YELLOW"},
+
+            {id = 55, name = "LIME_GREEN"},
+
+            {id = 82, name = "DARK_BLUE"},
+            {id = 83, name = "BLUE"},
+            {id = 84, name = "MIDNIGHT_BLUE"},
+
+            {id = 128, name = "GREEN"},
+
+            {id = 148, name = "Purple"},
+            {id = 149, name = "MIGHT_PURPLE"},
+
+            {id = 151, name = "MATTE_FOR"},
+            {id = 152, name = "MATTE_OD"},
+            {id = 153, name = "MATTE_DIRT"},
+            {id = 154, name = "MATTE_DESERT"},
+            {id = 155, name = "MATTE_FOIL"}
+        }
+
+    elseif type == "metal" then
+        colors = {
+            {id = 117, name = "BR_STEEL"},
+            {id = 118, name = "BR BLACK_STEEL"},
+            {id = 119, name = "BR_ALUMINIUM"},
+
+            {id = 158, name = "GOLD_P"},
+            {id = 159, name = "GOLD_S"}
+        };
+
+    elseif type == "util" then
+        colors = {
+            {id = 15, name = "BLACK"},
+            {id = 16, name = "FMMC_COL1_1"},
+            {id = 17, name = "DARK_SILVER"},
+            {id = 18, name = "SILVER"},
+            {id = 19, name = "BLACK_STEEL"},
+            {id = 20, name = "SHADOW_SILVER"},
+
+            {id = 43, name = "DARK_RED"},
+            {id = 44, name = "RED"},
+            {id = 45, name = "GARNET_RED"},
+
+            {id = 56, name = "DARK_GREEN"},
+            {id = 57, name = "GREEN"},
+
+            {id = 75, name = "DARK_BLUE"},
+            {id = 76, name = "MIDNIGHT_BLUE"},
+            {id = 77, name = "SAXON_BLUE"},
+            {id = 78, name = "NAUTICAL_BLUE"},
+            {id = 79, name = "BLUE"},
+            {id = 80, name = "FMMC_COL1_13"},
+            {id = 81, name = "BRIGHT_PURPLE"},
+
+            {id = 93, name = "STRAW_BROWN"},
+
+            {id = 108, name = "UMBER_BROWN"},
+            {id = 109, name = "MOSS_BROWN"},
+            {id = 110, name = "SANDY_BROWN"},
+
+            {id = 122, name = "veh_color_off_white"},
+
+            {id = 125, name = "BRIGHT_GREEN"},
+
+            {id = 127, name = "HARBOR_BLUE"},
+
+            {id = 134, name = "FROST_WHITE"},
+
+            {id = 139, name = "LIME_GREEN"},
+            {id = 140, name = "ULTRA_BLUE"},
+
+            {id = 144, name = "GREY"},
+
+            {id = 157, name = "LIGHT_BLUE"},
+
+            {id = 160, name = "YELLOW"}
+        }
+
+    elseif type == "worn" then
+        colors = {
+            {id = 21, name = "BLACK"},
+            {id = 22, name = "GRAPHITE"},
+            {id = 23, name = "LIGHT_GREY"},
+            {id = 24, name = "SILVER"},
+            {id = 25, name = "BLUE_SILVER"},
+            {id = 26, name = "SHADOW_SILVER"},
+
+            {id = 46, name = "RED"},
+            {id = 47, name = "SALMON_PINK"},
+            {id = 48, name = "DARK_RED"},
+
+            {id = 58, name = "DARK_GREEN"},
+            {id = 59, name = "GREEN"},
+            {id = 60, name = "SEA_GREEN"},
+
+            {id = 85, name = "DARK_BLUE"},
+            {id = 86, name = "BLUE"},
+            {id = 87, name = "LIGHT_BLUE"},
+
+            {id = 113, name = "SANDY_BROWN"},
+            {id = 114, name = "BISON_BROWN"},
+            {id = 115, name = "CREEK_BROWN"},
+            {id = 116, name = "BLEECHED_BROWN"},
+
+            {id = 121, name = "veh_color_off_white"},
+
+            {id = 123, name = "ORANGE"},
+            {id = 124, name = "SUNRISE_ORANGE"},
+
+            {id = 126, name = "veh_color_taxi_yellow"},
+
+            {id = 129, name = "RACING_GREEN"},
+            {id = 130, name = "ORANGE"},
+            {id = 131, name = "WHITE"},
+            {id = 132, name = "FROST_WHITE"},
+            {id = 133, name = "OLIVE_GREEN"},
+        }
+    end
+
 	return colors
 end
 
@@ -812,8 +822,8 @@ Config.Menus = {
 		primaryRespray = _U('primary'),
 		secondaryRespray = _U('secondary'),
 		pearlescentRespray = _U('pearlescent'),
-		modInteriorRespray = _U('modInteriorRespray'),
-		modDashboardRespray = _U('modDashboardRespray'),
+		modInteriorColor = _U('modInteriorRespray'),
+		modDashboardColor = _U('modDashboardRespray'),
 	},
 	primaryRespray = {
 		label = _U('primary'),
@@ -825,14 +835,6 @@ Config.Menus = {
 	},
 	pearlescentRespray = {
 		label = _U('pearlescent'),
-		parent = 'resprays',
-	},
-	modInteriorRespray = {
-		label = _U('modInteriorRespray'),
-		parent = 'resprays',
-	},
-	modDashboardRespray = {
-		label = _U('modDashboardRespray'),
 		parent = 'resprays',
 	},
 	color1 = {
@@ -855,13 +857,13 @@ Config.Menus = {
 	},
     modInteriorColor = {
 		label = _U('modInteriorRespray'),
-		parent = 'modInteriorRespray',
+		parent = 'resprays',
 		modType = 'modInteriorColor',
 		price = 0.39
 	},
 	modDashboardColor = {
 		label = _U('modDashboardRespray'),
-		parent = 'modDashboardRespray',
+		parent = 'resprays',
 		modType = 'modDashboardColor',
 		price = 0.39
 	},

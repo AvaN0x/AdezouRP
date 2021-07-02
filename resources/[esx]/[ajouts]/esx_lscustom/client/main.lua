@@ -336,12 +336,12 @@ function GetAction(data)
 						})
 					end
 				elseif v.modType == 'color1' or v.modType == 'color2' or v.modType == 'pearlescentColor' or v.modType == 'wheelColor' or v.modType == 'modInteriorColor' or v.modType == 'modDashboardColor' then -- RESPRAYS
-					local colors = GetColors(data.color)
+					local colors = GetColors((v.modType == "modInteriorColor" or v.modType == "modDashboardColor") and "classic" or data.type)
 					for j = 1, #colors, 1 do
 						local _label = ''
 						price = math.floor(vehiclePrice * v.price / 100)
-						_label = colors[j].label .. ' - <span style="color:green;">$' .. price .. ' </span>'
-						table.insert(elements, {label = _label, modType = k, modNum = colors[j].index})
+						_label = (GetLabelText(colors[j].name) or colors[j].name) .. ' - <span style="color:green;">$' .. price .. ' </span>'
+						table.insert(elements, {label = _label, modType = k, modNum = colors[j].id})
 					end
 				elseif v.modType == 'windowTint' then -- WINDOWS TINT
 					for j = 1, 5, 1 do
@@ -435,20 +435,16 @@ function GetAction(data)
 					end
 				end
 			else
-				if data.value == 'primaryRespray' or data.value == 'secondaryRespray' or data.value == 'pearlescentRespray' or data.value == 'modFrontWheelsColor' or data.value == 'modInteriorRespray' or data.value == 'modDashboardRespray' then
+				if data.value == 'primaryRespray' or data.value == 'secondaryRespray' or data.value == 'pearlescentRespray' or data.value == 'modFrontWheelsColor' then
 					for i=1, #Config.Colors, 1 do
 						if data.value == 'primaryRespray' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'color1', color = Config.Colors[i].value})
+							table.insert(elements, {label = Config.Colors[i].label, value = 'color1', type = Config.Colors[i].value})
 						elseif data.value == 'secondaryRespray' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'color2', color = Config.Colors[i].value})
+							table.insert(elements, {label = Config.Colors[i].label, value = 'color2', type = Config.Colors[i].value})
 						elseif data.value == 'pearlescentRespray' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'pearlescentColor', color = Config.Colors[i].value})
+							table.insert(elements, {label = Config.Colors[i].label, value = 'pearlescentColor', type = Config.Colors[i].value})
 						elseif data.value == 'modFrontWheelsColor' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'wheelColor', color = Config.Colors[i].value})
-						elseif data.value == 'modInteriorRespray' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'modInteriorColor', color = Config.Colors[i].value})
-						elseif data.value == 'modDashboardRespray' then
-							table.insert(elements, {label = Config.Colors[i].label, value = 'modDashboardColor', color = Config.Colors[i].value})
+							table.insert(elements, {label = Config.Colors[i].label, value = 'wheelColor', type = Config.Colors[i].value})
 						end
 					end	
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
@@ -506,47 +502,47 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(5)
 		local playerPed = PlayerPedId()
-		if IsPedInAnyVehicle(playerPed, false) then
-			local coords      = GetEntityCoords(PlayerPedId())
-			local currentZone = nil
-			local zone 		  = nil
-			local lastZone    = nil
-			if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'mechanic') or Config.IsMecanoJobOnly == false then
-				for k,v in pairs(Config.Zones) do
-					--if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x then
-					if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x and not lsMenuIsShowed then
-						isInLSMarker  = true
-						ESX.ShowHelpNotification(v.Hint)
-						break
-					else
-						isInLSMarker  = false
-					end
-				end
-			end
+        if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'mechanic') or Config.IsMecanoJobOnly == false then
+            if IsPedInAnyVehicle(playerPed, false) then
+                local coords      = GetEntityCoords(PlayerPedId())
+                local currentZone = nil
+                local zone 		  = nil
+                local lastZone    = nil
+                    for k,v in pairs(Config.Zones) do
+                        --if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x then
+                        if GetDistanceBetweenCoords(coords, v.Pos.x, v.Pos.y, v.Pos.z, true) < v.Size.x and not lsMenuIsShowed then
+                            isInLSMarker  = true
+                            ESX.ShowHelpNotification(v.Hint)
+                            break
+                        else
+                            isInLSMarker  = false
+                        end
+                    end
 
-			if IsControlJustReleased(0, Keys['E']) and not lsMenuIsShowed and isInLSMarker then
-				if (PlayerData.job ~= nil and PlayerData.job.name == 'mechanic') or (PlayerData.job2 ~= nil and PlayerData.job2.name == 'mechanic') or Config.IsMecanoJobOnly == false then
-					lsMenuIsShowed = true
+                if IsControlJustReleased(0, Keys['E']) and not lsMenuIsShowed and isInLSMarker then
+                        lsMenuIsShowed = true
 
-					local vehicle = GetVehiclePedIsIn(playerPed, false)
-					FreezeEntityPosition(vehicle, true)
+                        local vehicle = GetVehiclePedIsIn(playerPed, false)
+                        FreezeEntityPosition(vehicle, true)
 
-					myCar = ESX.Game.GetVehicleProperties(vehicle)
+                        myCar = ESX.Game.GetVehicleProperties(vehicle)
 
-					ESX.UI.Menu.CloseAll()
-					GetAction({value = 'main'})
-				end
-			end
+                        ESX.UI.Menu.CloseAll()
+                        GetAction({value = 'main'})
+                    end
 
-			if isInLSMarker and not hasAlreadyEnteredMarker then
-				hasAlreadyEnteredMarker = true
-			end
+                if isInLSMarker and not hasAlreadyEnteredMarker then
+                    hasAlreadyEnteredMarker = true
+                end
 
-			if not isInLSMarker and hasAlreadyEnteredMarker then
-				hasAlreadyEnteredMarker = false
-			end
+                if not isInLSMarker and hasAlreadyEnteredMarker then
+                    hasAlreadyEnteredMarker = false
+                end
 
-		end
+            end
+        else
+            Wait(500)
+        end
 	end
 end)
 
