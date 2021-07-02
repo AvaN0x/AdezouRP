@@ -38,37 +38,50 @@ end)
 
 
 local radars = {
-    {x = 442.7, y = -510.11, z = 28.68-0.98, max = 130, size = 30, name = "Freeway Sud"},  --Entrée ville freeway
-    {x = 1869.47, y = 3612.34, z = 34.51-0.98, max = 90, size = 30, name = "Joshua Road Est"}, -- Panneau sandy shores senora ouest
-    {x = 310.2, y = 3426.03, z = 36.76-0.98, max = 90, size = 30, name = "Joshua Road Ouest"}, -- senora east
-    {x = 2065.84, y = 4682.78, z = 41.18-0.98, max = 90, size = 30, name = "Seaview Road"}, --mckenzie
-    {x = 386.21, y = 6577.61, z = 27.74-0.98, max = 130, size = 30, name = "Paleto Blvd Est"}, --Paleto est
-    {x = -427.96, y = 5929.92, z = 32.35-0.98, max = 130, size = 30, name = "Paleto Blvd Ouest"}, --Paleto ouest
-    {x = -1602.93, y = 1342.68, z = 132.58-0.98, max = 90, size = 30, name = "Route 11"}, --route vigneron jet ski
-    {x = 87.99, y = -1026.12, z = 29.49-0.98, max = 90, size = 30, name = "Elgin Avenue"}, --centre ammunation
-    {x = -210.82, y = -875.29, z = 29.58-0.98, max = 90, size = 30, name = "Vespucci Blvd"}, --parking rouge
-    {x = -2490.99, y = -216.1, z = 18.05-0.98, max = 130, size = 30, name = "Great ocean"}, --great ocean 
-    {x = -202.36, y = -483.42, z = 34.54-0.98, max = 90, size = 90, name = "Las Lagunas Blvd"}, --Las Lagunas Blvd
+    {x = 442.7, y = -510.11, z = 28.68-0.98,        max = 130,  size = 10, name = "Freeway Sud"},  --Entrée ville freeway
+    {x = 1869.47, y = 3612.34, z = 34.51-0.98,      max = 90,   size = 10, name = "Joshua Road Est"}, -- Panneau sandy shores senora ouest
+    {x = 310.2, y = 3426.03, z = 36.76-0.98,        max = 90,   size = 10, name = "Joshua Road Ouest"}, -- senora east
+    {x = 2065.84, y = 4682.78, z = 41.18-0.98,      max = 90,   size = 10, name = "Seaview Road"}, --mckenzie
+    {x = 386.21, y = 6577.61, z = 27.74-0.98,       max = 130,  size = 10, name = "Paleto Blvd Est"}, --Paleto est
+    {x = -427.96, y = 5929.92, z = 32.35-0.98,      max = 130,  size = 10, name = "Paleto Blvd Ouest"}, --Paleto ouest
+    {x = -1602.93, y = 1342.68, z = 132.58-0.98,    max = 90,   size = 10, name = "Route 11"}, --route vigneron jet ski
+    {x = 87.99, y = -1026.12, z = 29.49-0.98,       max = 90,   size = 10, name = "Elgin Avenue"}, --centre ammunation
+    {x = -210.82, y = -875.29, z = 29.58-0.98,      max = 90,   size = 10, name = "Vespucci Blvd"}, --parking rouge
+    {x = -2490.99, y = -216.1, z = 18.05-0.98,      max = 130,  size = 10, name = "Great ocean"}, --great ocean 
+    {x = -202.36, y = -483.42, z = 34.54-0.98,      max = 90,   size = 15, name = "Las Lagunas Blvd"}, --Las Lagunas Blvd
 }
+
+Citizen.CreateThread(function()
+    while Config.Debug do
+        Wait(0)
+        
+        for k, radar in pairs(radars) do
+            local player = PlayerPedId()
+            local coords = GetEntityCoords(player, true)
+            if #(coords - vector3(radar.x, radar.y, radar.z)) < 100 then
+                DrawMarker(1, radar.x, radar.y, radar.z - 2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, radar.size * 2 + 0.0, radar.size * 2 + 0.0, 4.0, 255, 255, 255, 256, false, true, 2, false, false, false, false)
+                DrawMarker(1, radar.x, radar.y, radar.z + 2, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, radar.size * 2 + 0.0, radar.size * 2 + 0.0, 4.0, 255, 255, 255, 256, false, true, 2, false, false, false, false)
+            end
+        end
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do
         Wait(20)
         
-        for k,v in pairs(radars) do
-            local player = GetPlayerPed(-1)
+        for k, radar in pairs(radars) do
+            local player = PlayerPedId()
             local coords = GetEntityCoords(player, true)
-            if #(coords - vector3(radars[k].x, radars[k].y, radars[k].z)) < radars[k].size then
-                -- if PlayerData.job ~= nil and not (PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance') then
-                checkSpeed(radars[k].max, radars[k].name)
-                -- end
+            if #(coords - vector3(radar.x, radar.y, radar.z)) < radar.size and math.abs(coords.z - radar.z) < 2 then -- we only want a height difference of maximum 2
+                checkSpeed(radar.max, radar.name)
             end
         end
     end
 end)
 
 function checkSpeed(maxspeed, radarName)
-    local pP = GetPlayerPed(-1)
+    local pP = PlayerPedId()
     local speed = GetEntitySpeed(pP)
     local vehicle = GetVehiclePedIsIn(pP, false)
     local driver = GetPedInVehicleSeat(vehicle, -1)
