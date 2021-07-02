@@ -7,7 +7,7 @@ Config.EnableJobLogs   = false -- only turn this on if you are using esx_joblogs
 Config.Zones = {
 
 	ls1 = {
-		Pos   = { x = -322.82, y = -132.22, z = 38.03},
+		Pos   = vector3(-1143.65, -2035.83, 12.14),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
@@ -16,7 +16,7 @@ Config.Zones = {
 	},
 
 	ls2 = {
-		Pos   = { x = -316.49, y = -113.86, z = 38.03},
+		Pos   = vector3(-1157.53, -2022.34, 12.14),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
@@ -25,7 +25,7 @@ Config.Zones = {
 	},
 
 	ls3 = {
-		Pos   = { x = -336.42, y = -130.03, z = 39.06},
+		Pos   = vector3(-1150.08, -2011.03, 12.25),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
@@ -34,7 +34,7 @@ Config.Zones = {
 	},
 
 	lsdehors = {
-		Pos   = { x = -369.84, y = -108.47, z = 37.70},
+		Pos   = vector3(-1149.95, -1983.33, 12.18),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
@@ -43,7 +43,7 @@ Config.Zones = {
 	},
 
 	lshidden = {
-		Pos   = { x = 733.98, y = -1081.08, z = 21.19},
+		Pos   = vector3(733.64, -1082.11, 21.19),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
