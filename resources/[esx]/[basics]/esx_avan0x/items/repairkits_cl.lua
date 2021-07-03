@@ -21,7 +21,7 @@ local isWorking = false
 ---------------
 
 RegisterNetEvent('esx_avan0x:repairkit')
-AddEventHandler('esx_avan0x:repairkit', function()
+AddEventHandler('esx_avan0x:repairkit', function(engineHealth)
     if isWorking then
         return
     end
@@ -51,8 +51,7 @@ AddEventHandler('esx_avan0x:repairkit', function()
             exports.progressBars:startUI(duration, _("repairkits_repairkit_using"))
             Citizen.Wait(duration)
 
-            -- TODO if is mechanic, full repair, if not, only repair the minimum
-            SetVehicleEngineHealth(vehicle, 1000.0)
+            SetVehicleEngineHealth(vehicle, engineHealth + 0.0)
             SetVehicleUndriveable(vehicle, false)
             ClearPedTasks(playerPed)
             FreezeEntityPosition(playerPed, false)

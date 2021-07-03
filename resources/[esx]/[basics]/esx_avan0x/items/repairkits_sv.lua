@@ -11,7 +11,7 @@ local MechanicJobName = "mechanic"
 
 ESX.RegisterUsableItem('repairkit', function(source)
     if exports.esx_ava_jobs:getCountInService(MechanicJobName) == 0 or exports.esx_ava_jobs:isInServiceOrHasJob(source, MechanicJobName) then
-        TriggerClientEvent('esx_avan0x:repairkit', source)
+        TriggerClientEvent('esx_avan0x:repairkit', source, exports.esx_ava_jobs:hasJob(source, MechanicJobName) and 1000.0 or 500.0)
     else
         TriggerClientEvent('esx:showNotification', source, _('repairkits_cant_use_now'))
     end
