@@ -743,6 +743,24 @@ Config.Jobs = {
                 NoStock = true,
                 OnlyGrades = {"boss"}
             },
+            MainStock = {
+				Pos = vector3(-1145.19, -2004.44, 12.21),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+				Name  = "Stockage",
+                StockName = "society_mechanic",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            FridgeStock = {
+				Pos = vector3(-1153.45, -2025.06, 12.21),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+				Name  = "Frigo",
+                StockName = "society_mechanic_fridge",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
             Dressing = {
                 Pos = vector3(-1137.33, -2001.94, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
