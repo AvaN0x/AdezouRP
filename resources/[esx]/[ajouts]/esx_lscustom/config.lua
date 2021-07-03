@@ -62,12 +62,8 @@ Config.Zones = {
             "color1",
             "color2",
             "pearlescentColor",
-            "modInteriorColor",
-            "modDashboardColor",
-            "modXenon",
-            "modXenonColour",
             "windowTint",
-            "neonColor",
+            "plateIndex",
         }
 	},
 
@@ -92,12 +88,8 @@ Config.Zones = {
             "color1",
             "color2",
             "pearlescentColor",
-            "modInteriorColor",
-            "modDashboardColor",
-            "modXenon",
-            "modXenonColour",
             "windowTint",
-            "neonColor",
+            "plateIndex",
         }
 	}
 
