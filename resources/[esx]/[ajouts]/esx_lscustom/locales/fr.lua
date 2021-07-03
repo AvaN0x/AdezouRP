@@ -13,7 +13,7 @@ Locales['fr'] = {
   ['matte'] = "Matte",
   ['metal'] = "Métalisée",
   ['util'] = "Utilitaire",
-  ['worn'] = "Chaud",
+  ['worn'] = "Terne",
 -- License Plates
   ['blue_on_white_1'] = 'bleu sur fond Blanc 1',
   ['yellow_on_black'] = 'jaune sur fond Noir',

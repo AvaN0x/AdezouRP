@@ -231,7 +231,9 @@ function GetColors(type)
             {id = 119, name = "BR_ALUMINIUM"},
 
             {id = 158, name = "GOLD_P"},
-            {id = 159, name = "GOLD_S"}
+            {id = 159, name = "GOLD_S"},
+
+            {id = 120, name = "CHROME"}
         };
 
     elseif type == "util" then
