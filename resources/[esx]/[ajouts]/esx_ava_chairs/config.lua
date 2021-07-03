@@ -15,6 +15,8 @@ Config.Props = {
 	{hash = GetHashKey("prop_bench_01a"), offX = 0.0, offY = 0.0, offZ = -0.4, offHeading = 180.0, type = "Chair"},
 	{hash = GetHashKey("prop_busstop_02"), offX = 0.0, offY = 0.5, offZ = -0.4, offHeading = 180.0, type = "Chair"},
 	{hash = GetHashKey("v_corp_offchair"), offX = 0.0, offY = 0.05, offZ = -0.4, offHeading = 180.0, type = "Chair"},
+	{hash = -853526657, offX = 0.0, offY = 0.05, offZ = -1.0, offHeading = 180.0, type = "Chair"}, -- ls custom office
+	{hash = 558578166, offX = 0.0, offY = 0.05, offZ = -0.9, offHeading = 180.0, type = "Chair"},
 
 }
 
