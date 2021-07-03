@@ -35,15 +35,27 @@ AddEventHandler('esx_avan0x:repairkit', function()
 
     exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
         isWorking = true
-        TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+        local duration = 20000
+        -- TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
         Citizen.CreateThread(function()
-            exports.progressBars:startUI(20000, _("repairkits_repairkit_using"))
-            Citizen.Wait(20000)
+            local animDirectory, animName = "amb@world_human_vehicle_mechanic@male@base", "base"
+            RequestAnimDict(animDirectory)
+            while not HasAnimDictLoaded(animDirectory) do
+                Citizen.Wait(0)
+            end
+            FreezeEntityPosition(playerPed, true)
+            SetEntityHeading(playerPed, (GetEntityHeading(playerPed) + 180) % 360)
+            TaskPlayAnim(playerPed, animDirectory, animName, 2.0, 2.0, duration, 1, 0, false, false, false)
+            RemoveAnimDict(animDirectory)
+
+            exports.progressBars:startUI(duration, _("repairkits_repairkit_using"))
+            Citizen.Wait(duration)
 
             -- TODO if is mechanic, full repair, if not, only repair the minimum
             SetVehicleEngineHealth(vehicle, 1000.0)
             SetVehicleUndriveable(vehicle, false)
             ClearPedTasks(playerPed)
+            FreezeEntityPosition(playerPed, false)
 
             TriggerServerEvent('esx_avan0x:repairkit:remove')
             ESX.ShowNotification(_('repairkits_repairkit_done'))
@@ -75,10 +87,20 @@ AddEventHandler('esx_avan0x:bodykit', function()
 
     exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
         isWorking = true
-        TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_HAMMERING", 0, true)
+        local duration = 20000
+        -- TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_HAMMERING", 0, true)
         Citizen.CreateThread(function()
-            exports.progressBars:startUI(20000, _("repairkits_bodykit_using"))
-            Citizen.Wait(20000)
+            local animDirectory, animName = "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer"
+            RequestAnimDict(animDirectory)
+            while not HasAnimDictLoaded(animDirectory) do
+                Citizen.Wait(0)
+            end
+            FreezeEntityPosition(playerPed, true)
+            TaskPlayAnim(playerPed, animDirectory, animName, 2.0, 2.0, duration, 1, 0, false, false, false)
+            RemoveAnimDict(animDirectory)
+
+            exports.progressBars:startUI(duration, _("repairkits_bodykit_using"))
+            Citizen.Wait(duration)
             local engineHealth = GetVehicleEngineHealth(vehicle)
 
             SetVehicleFixed(vehicle)
@@ -87,6 +109,7 @@ AddEventHandler('esx_avan0x:bodykit', function()
             SetVehicleEngineHealth(vehicle, engineHealth)
 
             ClearPedTasks(playerPed)
+            FreezeEntityPosition(playerPed, false)
             TriggerServerEvent('esx_avan0x:bodykit:remove')
             ESX.ShowNotification(_('repairkits_bodykit_done'))
 
@@ -117,10 +140,11 @@ AddEventHandler('esx_avan0x:cloth', function()
 
     exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
         isWorking = true
+        local duration = 20000
         TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_MAID_CLEAN", 0, true)
         Citizen.CreateThread(function()
-            exports.progressBars:startUI(20000, _("repairkits_cloth_using"))
-            Citizen.Wait(20000)
+            exports.progressBars:startUI(duration, _("repairkits_cloth_using"))
+            Citizen.Wait(duration)
 
             SetVehicleDirtLevel(vehicle, 0)
             ClearPedTasks(playerPed)
