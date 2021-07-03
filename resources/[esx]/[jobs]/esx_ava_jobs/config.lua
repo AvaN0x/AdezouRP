@@ -730,6 +730,67 @@ Config.Jobs = {
 
                 end
             },
+            {
+                Label = _('tow_vehicle'),
+                Detail = _('tow_vehicle_detail'),
+                Condition = function(jobName, playerPed)
+                    return GetVehiclePedIsIn(playerPed, false) == 0
+                end,
+                Action = function(parentData, parentMenu, jobName)
+                    exports.esx_avan0x:ChooseClosestVehicle(function(vehicle)
+                        if IsEntityAttachedToAnyVehicle(vehicle) then
+                            local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
+                            local flatbed = GetEntityAttachedTo(vehicle)
+
+                            local offsetLocation = vector3(-20.5, 0.0, -6.5 + vehicleDimMin.y)
+                            AttachEntityToEntity(vehicle, flatbed, offsetLocation, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+                            DetachEntity(vehicle)
+                            SetVehicleOnGroundProperly(vehicle)
+                        else
+                            exports.esx_avan0x:ChooseClosestVehicle(function(flatbed)
+                                if vehicle == flatbed then -- should never happen
+                                    return
+                                end
+                                -- flatbed can be a flatbed or slamtruck
+                                local isSlamTruck = GetEntityModel(flatbed) == GetHashKey('slamtruck')
+                                local towOffset = GetOffsetFromEntityInWorldCoords(flatbed, 0.0, -2.2, 0.4)
+                                local closestVehicleOnTopOfFlatbed = GetClosestVehicle(towOffset.x, towOffset.y, towOffset.z + 1.0, 4.0, 0, 71)
+                                local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
+
+                                if GetEntityModel(closestVehicleOnTopOfFlatbed) ~= GetEntityModel(flatbed) then
+                                    ESX.ShowNotification(_("tow_vehicle_flatbed_already_towed"))
+                                    return
+                                end
+                                if (isSlamTruck and (vehicleDimMin.y < -3 or vehicleDimMax.y > 3))
+                                    or (vehicleDimMin.y < -5 or vehicleDimMax.y > 5)
+                                then
+                                    -- we prevent big vehicles that does not fit on slamtruck
+                                    ESX.ShowNotification(_("tow_vehicle_too_long"))
+                                    return
+                                end
+
+                                -- we attach the vehicle on the flatbed
+                                local offsetLocation = vector3(0, -2.2, 0.4 - vehicleDimMin.z)
+                                AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0, 0, 0, 1, 1, 0, 1, 0, 1)
+
+                                -- We drop the vehicle for 500ms to get a valid rotation
+                                DetachEntity(vehicle)
+                                Citizen.Wait(500)
+                                local newPos = GetEntityCoords(vehicle, true)
+                                local vehRotation = GetEntityRotation(vehicle)
+                                local flatbedRotation = GetEntityRotation(flatbed)
+                                
+                                -- we attach the vehicle on the flatbed
+                                local attachPos = GetOffsetFromEntityGivenWorldCoords(flatbed, newPos.x, newPos.y, newPos.z)
+                                AttachEntityToEntity(vehicle, flatbed, -1, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 0, true)
+
+                            end, _("tow_vehicle_choose_flatbed"), 10, {GetHashKey('flatbed'), GetHashKey('slamtruck')})
+                        end
+
+                    end, _("tow_vehicle_choose_vehicle"), 6, {}, {GetHashKey('flatbed'), GetHashKey('slamtruck')})
+
+                end
+            },
         },
         Zones = {
             JobActions = {

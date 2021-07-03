@@ -68,13 +68,14 @@ function ChooseClosestPlayer(cb, title, distance, allowMyself)
     end
 end
 
-function ChooseClosestVehicle(cb, title, distance)
+-- whitelist and blacklist needs to be arrays of hashkeys
+function ChooseClosestVehicle(cb, title, distance, whitelist, blacklist)
     local playerPed = PlayerPedId()
 
     if not distance or not tonumber(distance) or tonumber(distance) < 0 then
         distance = 3.0
     end
-    if not title then
+    if not title or title == "" then
         title = _('select_a_vehicle')
     end
     local elements = {}
@@ -84,7 +85,11 @@ function ChooseClosestVehicle(cb, title, distance)
     for _, v in ipairs(GetGamePool("CVehicle")) do
         local veh = GetObjectIndexFromEntityIndex(v)
         local vehCoords = GetEntityCoords(veh)
-        if #(playerCoords - vehCoords) < distance + 0.0 then
+        local vehModel = GetEntityModel(veh)
+        if #(playerCoords - vehCoords) < distance + 0.0
+            and (whitelist == nil or #whitelist == 0 or ArrayContains(whitelist, vehModel))
+            and (blacklist == nil or #blacklist == 0 or not ArrayContains(blacklist, vehModel))
+        then
             vehiclesCount = vehiclesCount + 1
             table.insert(elements, {
                 label = "Véhicule #" .. vehiclesCount,
@@ -183,4 +188,13 @@ function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
     -- 3 centered, triangle bottom
     -- 4 right, triangle right
     SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+end
+
+function ArrayContains(array, value)
+	for k, v in pairs(array) do
+		if v == value then
+			return true
+		end
+	end
+	return false
 end

@@ -137,4 +137,10 @@ Locales['fr'] = {
     ['info_vehicle_dirt_level_above_5'] = '<span style="color: #c9712e">Sale</span>',
     ['info_vehicle_dirt_level_above_0'] = '<span style="color: #329171">Propre</span>',
 
+    ['tow_vehicle'] = "Attacher au plateau",
+    ['tow_vehicle_detail'] = "Attacher ou détacher un véhicule au plateau",
+    ['tow_vehicle_choose_flatbed'] = "Choisir un plateau",
+    ['tow_vehicle_choose_vehicle'] = "Choisir un véhicule",
+    ['tow_vehicle_too_long'] = "Le véhicule est trop long pour ce plateau.",
+    ['tow_vehicle_flatbed_already_towed'] = "Un véhicule est déjà attaché à ce plateau.",
 }
