@@ -712,6 +712,7 @@ function Process(process)
 			end
 			Citizen.Wait(1500)
 			ClearPedTasks(playerPed)
+            SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
 		end
 	end, process, CurrentJobName)
 end

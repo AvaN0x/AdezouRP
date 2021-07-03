@@ -811,6 +811,52 @@ Config.Jobs = {
                 Blip = true
             },
         },
+        FieldZones = {
+            BumperField = {
+                Items = {
+                    {name = 'bumber_part_worn', quantity = 1}
+                },
+                PropHash = GetHashKey('prop_mk_race_chevron_02'),
+                Pos = vector3(2364.53, 3074.66, 47.21),
+                GroundCheckHeights = {46.0, 47.0, 48.0, 49.0},
+                Name = "1. Récupération de pare-choc",
+                PickupCount = 5,
+                Blip = true
+            }
+        },
+        ProcessZones = {
+            BumperProcess = {
+                ItemsGive = {
+                    {name = 'bumber_part_worn', quantity = 1}
+                },
+                ItemsGet = {
+                    {name = 'bumber_part_revamped', quantity = 1}
+                },
+                Delay = 12000,
+                Scenario = 'WORLD_HUMAN_HAMMERING', -- https://pastebin.com/6mrYTdQv
+                Pos = vector3(-325.45, -109.06, 38.04),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "2. Retapage des pare-choc",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = true
+            }
+        },
+        SellZones = {
+            BumperSell = {
+                Items = {
+                    {name = 'bumber_part_revamped', price = 1600},
+                },
+                Pos = vector3(540.16, -196.75, 53.51),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "3. Vente des pare-choc",
+                HelpText = _('press_sell'),
+                Marker = 27,
+                Blip = true
+            }
+        },
         BuyZones = {
             DorsetDriveItems = {
                 Items = {

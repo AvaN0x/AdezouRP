@@ -162,9 +162,9 @@ AddEventHandler('esx_ava_jobs:pickUp', function(jobName, zoneName)
         end
         playersPickUpCount[xPlayer.identifier].modified = true
         if not job.isIllegal then
-            playersPickUpCount[xPlayer.identifier].count = playersPickUpCount[xPlayer.identifier].count - 1
+            playersPickUpCount[xPlayer.identifier].count = playersPickUpCount[xPlayer.identifier].count - (zone.PickupCount or 1)
         else
-            playersPickUpCount[xPlayer.identifier].illegalCount = playersPickUpCount[xPlayer.identifier].illegalCount - 1
+            playersPickUpCount[xPlayer.identifier].illegalCount = playersPickUpCount[xPlayer.identifier].illegalCount - (zone.PickupCount or 1)
         end
     end
 end)
