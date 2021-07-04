@@ -832,6 +832,7 @@ Config.Jobs = {
                 Color = {r = 207, g = 169, b = 47},
                 Blip = true,
                 Name = "Dressing",
+                OnlyJobClothes = true,
                 HelpText = _('press_to_open'),
                 Marker = 27,
             },

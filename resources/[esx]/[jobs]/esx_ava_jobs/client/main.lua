@@ -642,7 +642,9 @@ function OpenCloakroomMenu(jobIndex)
         table.insert(elements, {label = _('vine_clothes_civil'), value = 'citizen_wear'})
         table.insert(elements, {label = _('vine_clothes_vine'), value = 'job_wear'})
     end
-    table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
+    if not CurrentZoneValue.OnlyJobClothes then
+        table.insert(elements, {label = _('user_clothes'), value = 'user_clothes'})
+    end
 
     if Config.Jobs[jobName].ServiceCounter then
         table.insert(elements, {label = _("take_service"), value = "take_service", type="checkbox", checked=playerServices[jobName]})
