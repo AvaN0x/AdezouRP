@@ -666,7 +666,7 @@ Config.Jobs = {
     mechanic = {
         SocietyName = 'society_mechanic',
         LabelName = 'Mécano',
-        ServiceCounter = true,
+        -- ServiceCounter = true,
         Blip = {
             Name = "~y~Garage Mécano",
             Pos = vector3(-1145.49, -1990.55, 13.16),
@@ -742,8 +742,8 @@ Config.Jobs = {
                             local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
                             local flatbed = GetEntityAttachedTo(vehicle)
 
-                            local offsetLocation = vector3(-20.5, 0.0, -6.5 + vehicleDimMin.y)
-                            AttachEntityToEntity(vehicle, flatbed, offsetLocation, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+                            local offsetLocation = vector3(0.0, -6.5 + vehicleDimMin.y, 0.0)
+                            AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
                             DetachEntity(vehicle)
                             SetVehicleOnGroundProperly(vehicle)
                         else
@@ -769,9 +769,10 @@ Config.Jobs = {
                                     return
                                 end
 
+                                local boneIndex = GetEntityBoneIndexByName(flatbed, "bodyshell")
                                 -- we attach the vehicle on the flatbed
                                 local offsetLocation = vector3(0, -2.2, 0.4 - vehicleDimMin.z)
-                                AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0, 0, 0, 1, 1, 0, 1, 0, 1)
+                                AttachEntityToEntity(vehicle, flatbed, boneIndex, offsetLocation, 0, 0, 0, false, false, false, false, 20, true)
 
                                 -- We drop the vehicle for 500ms to get a valid rotation
                                 DetachEntity(vehicle)
@@ -782,7 +783,7 @@ Config.Jobs = {
                                 
                                 -- we attach the vehicle on the flatbed
                                 local attachPos = GetOffsetFromEntityGivenWorldCoords(flatbed, newPos.x, newPos.y, newPos.z)
-                                AttachEntityToEntity(vehicle, flatbed, -1, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 0, true)
+                                AttachEntityToEntity(vehicle, flatbed, boneIndex, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 20, true)
 
                             end, _("tow_vehicle_choose_flatbed"), 10, {GetHashKey('flatbed'), GetHashKey('slamtruck')})
                         end
