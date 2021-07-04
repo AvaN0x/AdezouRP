@@ -926,8 +926,8 @@ Config.Jobs = {
         BuyZones = {
             DorsetDriveItems = {
                 Items = {
-                    {name = 'repairkit', price = 500},
-                    {name = 'bodykit', price = 500},
+                    {name = 'repairkit', price = 250},
+                    {name = 'bodykit', price = 250},
                     {name = 'cloth', price = 100},
                 },
                 Pos = vector3(2747.39, 3472.98, 54.69),
