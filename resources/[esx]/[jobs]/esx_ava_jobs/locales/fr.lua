@@ -143,4 +143,6 @@ Locales['fr'] = {
     ['tow_vehicle_choose_vehicle'] = "Choisir un véhicule",
     ['tow_vehicle_too_long'] = "Le véhicule est trop long pour ce plateau.",
     ['tow_vehicle_flatbed_already_towed'] = "Un véhicule est déjà attaché à ce plateau.",
+    ['tow_vehicle_attached_with_success'] = "Véhicule attaché avec succès.",
+    ['tow_vehicle_detached_with_success'] = "Véhicule détaché avec succès.",
 }

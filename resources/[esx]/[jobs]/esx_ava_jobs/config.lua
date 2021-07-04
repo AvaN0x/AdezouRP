@@ -746,6 +746,8 @@ Config.Jobs = {
                             AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
                             DetachEntity(vehicle)
                             SetVehicleOnGroundProperly(vehicle)
+
+                            ESX.ShowNotification(_("tow_vehicle_detached_with_success"))
                         else
                             exports.esx_avan0x:ChooseClosestVehicle(function(flatbed)
                                 if vehicle == flatbed then -- should never happen
@@ -784,7 +786,8 @@ Config.Jobs = {
                                 -- we attach the vehicle on the flatbed
                                 local attachPos = GetOffsetFromEntityGivenWorldCoords(flatbed, newPos.x, newPos.y, newPos.z)
                                 AttachEntityToEntity(vehicle, flatbed, boneIndex, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 20, true)
-
+                                
+                                ESX.ShowNotification(_("tow_vehicle_attached_with_success"))
                             end, _("tow_vehicle_choose_flatbed"), 10, {GetHashKey('flatbed'), GetHashKey('slamtruck')})
                         end
 
