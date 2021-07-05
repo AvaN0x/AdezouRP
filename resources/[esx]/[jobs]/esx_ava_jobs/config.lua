@@ -506,6 +506,7 @@ Config.Jobs = {
                 Items = {
                     {name = 'bproof_vest', price = 15000},
                     {name = 'handcuffs', price = 10000},
+                    {name = 'balisegps', price = 2000},
                 },
                 Pos = vector3(812.26, -2153.55, 28.64),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
