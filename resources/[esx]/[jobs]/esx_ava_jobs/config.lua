@@ -2468,7 +2468,20 @@ Config.Jobs = {
                     Heading = 50.0
                 },
             },
-		}
+		},
+        BuyZones = {
+            BuyBox = {
+                Items = {
+                    {name = 'lockpick', price = 200, isDirtyMoney = true}
+                },
+                Pos = vector3(92.92, 3756.03, 39.79),
+                Size = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 136, g = 243, b = 216},
+                Name = "Achat de lockpicks",
+                HelpText = _('press_buy'),
+                Marker = 27
+            }
+        }
 	},
 	orga_cartel = {
         isGang = true,
@@ -2579,20 +2592,7 @@ Config.Jobs = {
                     Heading = 35.32
                 },
             },
-		},
-        BuyZones = {
-            BuyBox = {
-                Items = {
-                    {name = 'lockpick', price = 200, isDirtyMoney = true}
-                },
-                Pos = vector3(-1108.25, -1637.40, 3.64),
-                Size = {x = 1.5, y = 1.5, z = 1.5},
-				Color = {r = 136, g = 243, b = 216},
-                Name = "Achat de lockpicks",
-                HelpText = _('press_buy'),
-                Marker = 27
-            }
-        }
+		}
 	},
 
 }
