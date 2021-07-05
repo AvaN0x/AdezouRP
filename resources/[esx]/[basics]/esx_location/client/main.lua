@@ -140,6 +140,7 @@ end)
 
 -- Display markers
 Citizen.CreateThread(function()
+    Citizen.Wait(100)
 	while true do
         local waitTime = 500
 		for k,v in pairs(Config.Zones) do
