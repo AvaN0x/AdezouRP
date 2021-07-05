@@ -102,7 +102,7 @@ end)
 ESX.RegisterUsableItem("doublechickenburger", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "doublechickenburger")
 
-	TriggerClientEvent("esx_status:add", source, "hunger", 800000)
+	TriggerClientEvent("esx_status:add", source, "hunger", 700000)
 
 	TriggerClientEvent("esx_ava_needs:onEat", source)
 end)
