@@ -200,7 +200,7 @@ function OpenShopMenu()
 			if data2.current.value == 'yes' then
 				local playerData = ESX.GetPlayerData()
 
-				if playerData.job.grade_name == 'boss' or playerData.job2.grade_name == 'boss' and string.match(data.current.name, '^society_.*$') then
+				if (playerData.job.grade_name == 'boss' or playerData.job2.grade_name == 'boss') and string.match(data.current.name, '^society_.*$') then
 					local elements = {}
 
 					if (playerData.job ~= nil and playerData.job.grade_name == 'boss' and data.current.name == "society_"..playerData.job.name) then
