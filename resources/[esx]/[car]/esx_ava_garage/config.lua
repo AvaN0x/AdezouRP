@@ -13,7 +13,7 @@ Config.PoundPriceMultiplier = 0.12
 Config.PoundMinPrice = 1000
 Config.PoundMaxPrice = 30000
 
-Config.DefaultGarage = "first_opened"
+Config.DefaultGarage = "first"
 
 Config.Garages = {
 	-- cars

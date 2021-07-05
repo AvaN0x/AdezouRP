@@ -52,7 +52,7 @@ ESX.RegisterServerCallback('esx_ava_garage:getVehicles', function(source, cb, ty
 
                 if v.location == "any" then
                     location = garageName
-                elseif v.location == "first_opened" then
+                elseif v.location == "first" then
                     location = garageName
                     MySQL.Sync.execute("UPDATE owned_vehicles SET location = @location WHERE plate = @plate",
                     {
