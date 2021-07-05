@@ -384,7 +384,7 @@ function OpenOthersMenu()
 			DisplayRadar(interface)
 		elseif data.current.value == "resize_minimap" then
 			big_minimap = not big_minimap
-			SetRadarBigmapEnabled(big_minimap, false)
+			SetBigmapActive(big_minimap, false)
 			if interface or big_minimap then
 				TriggerEvent('ui:togglePlayerStats', not big_minimap)
 			end
