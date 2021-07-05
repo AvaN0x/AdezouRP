@@ -63,6 +63,7 @@ end)
 
 --* draw markers
 Citizen.CreateThread(function()
+    Citizen.Wait(1000)
 	while true do
         local waitTime = 500
 		for k,v in pairs(Config.Shops) do
@@ -79,6 +80,7 @@ end)
 
 --* menu trigger managment
 Citizen.CreateThread(function()
+    Citizen.Wait(1000)
 	while true do
 		Citizen.Wait(100)
 		local isInMarker  = false
