@@ -345,7 +345,7 @@ Config.Jobs = {
                 Pos = vector3(451.95, -973.39, 29.71),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -569,7 +569,7 @@ Config.Jobs = {
                 Pos = vector3(339.21, -595.63, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27,
                 Blip = true,
@@ -801,10 +801,9 @@ Config.Jobs = {
                 Pos = vector3(-1151.45, -2032.61, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27,
-                Blip = true,
                 NoStock = true,
                 OnlyGrades = {"boss"}
             },
@@ -952,7 +951,7 @@ Config.Jobs = {
                 Pos = vector3(-1895.18, 2063.98, 140.03),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1136,7 +1135,7 @@ Config.Jobs = {
                 Pos = vector3(708.48, -966.69, 29.42),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1273,7 +1272,7 @@ Config.Jobs = {
                 Pos = vector3(-513.13, -699.59, 32.19),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1487,7 +1486,7 @@ Config.Jobs = {
                 Pos = vector3(-1390.48, -600.57, 29.34),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1554,7 +1553,7 @@ Config.Jobs = {
                 Pos = vector3(132.14, -1290.15, 28.29),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1649,7 +1648,7 @@ Config.Jobs = {
                 Pos = vector3(-1583.19, -3014.04, -76.99),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 156, g = 110, b = 175},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
@@ -1715,7 +1714,7 @@ Config.Jobs = {
                 Pos = vector3(17.27, -1602.66, 28.40),
                 Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
-                Name = "Point d'action",
+                Name = "Actions patron",
                 HelpText = _('press_to_open'),
                 Marker = 27
             },
