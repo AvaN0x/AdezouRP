@@ -3,25 +3,26 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 local Vehicles = nil
 
 RegisterServerEvent('esx_lscustom:buyMod')
-AddEventHandler('esx_lscustom:buyMod', function(price)
+AddEventHandler('esx_lscustom:buyMod', function(price, zoneName)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	price = tonumber(price)
+    local isIllegal = Config.Zones[zoneName].IsIllegal
 
-	if Config.IsMecanoJobOnly then
+	if Config.IsMecanoJobOnly and not isIllegal and not Config.Zones[zoneName].IsOnlyCash then
 
 		local societyAccount = nil
 		TriggerEvent('esx_addonaccount:getSharedAccount', 'society_mechanic', function(account)
 			societyAccount = account
 		end)
-		if price < societyAccount.money then
+		if price <= societyAccount.money then
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
 			local society = {name = "mechanic"}
 			local mecanoPart = 0.18
 			-- TriggerEvent('esx_society:saveData',xPlayer,"purchase",society,price,(societyAccount.money-price))
-			TriggerEvent('esx_avan0x:logTransaction', 'society_mechanic', 'society_mechanic', 'CUSTOM', 'CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
-			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
+			TriggerEvent('esx_avan0x:logTransaction', 'society_mechanic', 'society_mechanic', 'LS_CUSTOM', 'LS_CUSTOM', "purchase_custom", tonumber(price * (1 - mecanoPart)))
+			TriggerEvent('esx_statejob:getTaxed', 'LS_CUSTOM', price, function(toSociety)
 			end)
 			societyAccount.removeMoney(math.floor(tonumber(price * (1 - mecanoPart))))
 		else
@@ -30,13 +31,20 @@ AddEventHandler('esx_lscustom:buyMod', function(price)
 		end
 
 	else
-
-		if price < xPlayer.getMoney() then
+        if isIllegal and price <= xPlayer.getAccount('black_money').money then
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
-			TriggerEvent('esx_statejob:getTaxed', 'CUSTOM', price, function(toSociety)
+			TriggerEvent('esx_statejob:getTaxed', 'CULS_CUSTOMSTOM', price, function(toSociety)
 			end)
-			xPlayer.removeMoney(price)
+            xPlayer.removeAccountMoney('black_money', price)
+            
+		elseif price <= xPlayer.getMoney() then
+			TriggerClientEvent('esx_lscustom:installMod', _source)
+			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
+			TriggerEvent('esx_statejob:getTaxed', 'LS_CUSTOM', price, function(toSociety)
+			end)
+            xPlayer.removeMoney(price)
+
 		else
 			TriggerClientEvent('esx_lscustom:cancelInstallMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('not_enough_money'))

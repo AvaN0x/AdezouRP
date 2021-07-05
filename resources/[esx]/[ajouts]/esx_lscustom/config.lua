@@ -49,6 +49,7 @@ Config.Zones = {
 		Marker= 1,
 		Name  = _U('blip_name'),
 		Hint  = _U('press_custom'),
+        IsIllegal = true,
         WhiteList = {
             "main",
             "cosmetics",
@@ -75,6 +76,7 @@ Config.Zones = {
 		Marker= 1,
 		Name  = _U('blip_name'),
 		Hint  = _U('press_custom'),
+        IsOnlyCash = true,
         WhiteList = {
             "main",
             "cosmetics",

@@ -94,31 +94,20 @@ function OpenLSMenu(elems, menuName, menuTitle, parent)
 						end
 					end
 
+                    local price
 					if isRimMod then
 						price = math.floor(vehiclePrice * data.current.price / 100)
-						TriggerServerEvent("esx_lscustom:buyMod", price)
-						if Config.EnableJobLogs then
-						TriggerServerEvent('esx_joblogs:AddInLog', "mechanic", "buy_mod", GetPlayerName(PlayerId()), price, vehicleData.plate)
-						end
 					elseif v.modType == 11 or v.modType == 12 or v.modType == 13 or v.modType == 15 or v.modType == 16 then
 						price = math.floor(vehiclePrice * v.price[data.current.modNum + 1] / 100)
-						TriggerServerEvent("esx_lscustom:buyMod", price)
-						if Config.EnableJobLogs then
-						TriggerServerEvent('esx_joblogs:AddInLog', "mechanic", "buy_mod" , GetPlayerName(PlayerId()), price, vehicleData.plate)
-						end
 					elseif v.modType == 17 then
 						price = math.floor(vehiclePrice * v.price[1] / 100)
-						TriggerServerEvent("esx_lscustom:buyMod", price)
-						if Config.EnableJobLogs then
-						TriggerServerEvent('esx_joblogs:AddInLog', "mechanic", "buy_mod", GetPlayerName(PlayerId()), price, vehicleData.plate)
-						end
 					else
 						price = math.floor(vehiclePrice * v.price / 100)
-						TriggerServerEvent("esx_lscustom:buyMod", price)
-						if Config.EnableJobLogs then
-						TriggerServerEvent('esx_joblogs:AddInLog', "mechanic", "buy_mod", GetPlayerName(PlayerId()), price, vehicleData.plate)
-						end
 					end
+                    TriggerServerEvent("esx_lscustom:buyMod", price, CurrentZoneName)
+                    if Config.EnableJobLogs then
+                        TriggerServerEvent('esx_joblogs:AddInLog', "mechanic", "buy_mod" , GetPlayerName(PlayerId()), price, vehicleData.plate)
+                    end
 				end
 
 				menu.close()
