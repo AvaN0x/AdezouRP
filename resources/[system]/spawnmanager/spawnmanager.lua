@@ -187,6 +187,10 @@ local function freezePlayer(id, freeze)
 end
 
 function loadScene(x, y, z)
+	if not NewLoadSceneStart then
+		return
+	end
+
     NewLoadSceneStart(x, y, z, 0.0, 0.0, 0.0, 20.0, 0)
 
     while IsNewLoadSceneActive() do
@@ -218,6 +222,13 @@ function spawnPlayer(spawnIdx, cb)
 
         if type(spawnIdx) == 'table' then
             spawn = spawnIdx
+
+            -- prevent errors when passing spawn table
+            spawn.x = spawn.x + 0.00
+            spawn.y = spawn.y + 0.00
+            spawn.z = spawn.z + 0.00
+
+            spawn.heading = spawn.heading and (spawn.heading + 0.00) or 0
         else
             spawn = spawnPoints[spawnIdx]
         end
@@ -258,14 +269,18 @@ function spawnPlayer(spawnIdx, cb)
 
             -- release the player model
             SetModelAsNoLongerNeeded(spawn.model)
+            
+            -- RDR3 player model bits
+            if N_0x283978a15512b2fe then
+				N_0x283978a15512b2fe(PlayerPedId(), true)
+            end
         end
 
         -- preload collisions for the spawnpoint
         RequestCollisionAtCoord(spawn.x, spawn.y, spawn.z)
 
         -- spawn the player
-        --ResurrectNetworkPlayer(GetPlayerId(), spawn.x, spawn.y, spawn.z, spawn.heading)
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
 
         -- V requires setting coords as well
         SetEntityCoordsNoOffset(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
@@ -328,13 +343,13 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(50)
 
-        local playerPed = GetPlayerPed(-1)
+        local playerPed = PlayerPedId()
 
         if playerPed and playerPed ~= -1 then
             -- check if we want to autospawn
             if autoSpawnEnabled then
                 if NetworkIsPlayerActive(PlayerId()) then
-                    if (diedAt and (GetTimeDifference(GetGameTimer(), diedAt) > 2000)) or respawnForced then
+                    if (diedAt and (math.abs(GetTimeDifference(GetGameTimer(), diedAt)) > 2000)) or respawnForced then
                         if autoSpawnCallback then
                             autoSpawnCallback()
                         else
@@ -361,3 +376,11 @@ function forceRespawn()
     spawnLock = false
     respawnForced = true
 end
+
+exports('spawnPlayer', spawnPlayer)
+exports('addSpawnPoint', addSpawnPoint)
+exports('removeSpawnPoint', removeSpawnPoint)
+exports('loadSpawns', loadSpawns)
+exports('setAutoSpawn', setAutoSpawn)
+exports('setAutoSpawnCallback', setAutoSpawnCallback)
+exports('forceRespawn', forceRespawn)

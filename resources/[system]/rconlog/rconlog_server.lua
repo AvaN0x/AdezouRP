@@ -1,30 +1,24 @@
-RconLog({ msgType = 'serverStart', hostname = 'lovely', maxplayers = 64 })
+RconLog({ msgType = 'serverStart', hostname = 'lovely', maxplayers = 32 })
 
 RegisterServerEvent('rlPlayerActivated')
 
 local names = {}
-local trustedPlayer
-
-local function SetTrustedPlayer()
-    trustedPlayer = nil
-    for k,_ in pairs(names) do
-        trustedPlayer = k
-        break
-    end
-end
 
 AddEventHandler('rlPlayerActivated', function()
     RconLog({ msgType = 'playerActivated', netID = source, name = GetPlayerName(source), guid = GetPlayerIdentifiers(source)[1], ip = GetPlayerEP(source) })
 
     names[source] = { name = GetPlayerName(source), id = source }
 
-    TriggerClientEvent('rlUpdateNames', trustedPlayer or source)
+	if GetHostId() then
+		TriggerClientEvent('rlUpdateNames', GetHostId())
+	end
 end)
 
 RegisterServerEvent('rlUpdateNamesResult')
 
 AddEventHandler('rlUpdateNamesResult', function(res)
-    if source ~= trustedPlayer then
+    if source ~= tonumber(GetHostId()) then
+        print('bad guy')
         return
     end
 
@@ -51,16 +45,14 @@ AddEventHandler('playerDropped', function()
     RconLog({ msgType = 'playerDropped', netID = source, name = GetPlayerName(source) })
 
     names[source] = nil
-
-    if source == trustedPlayer then
-        SetTrustedPlayer()
-    end
 end)
 
 AddEventHandler('chatMessage', function(netID, name, message)
     RconLog({ msgType = 'chatMessage', netID = netID, name = name, message = message, guid = GetPlayerIdentifiers(netID)[1] })
 end)
 
+-- NOTE: DO NOT USE THIS METHOD FOR HANDLING COMMANDS
+-- This resource has not been updated to use newer methods such as RegisterCommand.
 AddEventHandler('rconCommand', function(commandName, args)
     if commandName == 'status' then
         for netid, data in pairs(names) do
