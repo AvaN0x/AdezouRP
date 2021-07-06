@@ -20,7 +20,7 @@ RegisterKeyMapping('+keyInventory', 'Inventaire', 'keyboard', Config.OpenControl
 
 function OpenMyInventory()
     ESX.TriggerServerCallback('esx_ava_inventories:getMyInventory', function(inventory)
-        --? types : item_standard, item_weapon, item_money, item_account
+        --* types : item_standard, item_weapon, item_money, item_account
         table.sort(inventory.items, function(a,b)
             return a.label < b.label
         end)
@@ -171,7 +171,7 @@ end
 
 
 
---? other inventory
+--* other inventory
 RegisterNetEvent('esx_ava_inventories:openPlayerInventory')
 AddEventHandler('esx_ava_inventories:openPlayerInventory', function(serverId)
     OpenOtherPlayerInventory(serverId)

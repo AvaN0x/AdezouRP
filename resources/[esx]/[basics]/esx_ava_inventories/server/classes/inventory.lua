@@ -29,7 +29,7 @@ function CreateInventory(name, label, max_weight, identifier, items, money, dirt
 		end
 	end
 
-	self.updateWeight() --? init weight value
+	self.updateWeight() --* init weight value
 
 	self.getItem = function(name)
 		for i=1, #self.items, 1 do

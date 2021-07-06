@@ -536,7 +536,7 @@ AddEventHandler('esx:useItem', function(itemName)
 	end
 end)
 
-RegisterServerEvent('esx:onPickup') --? edited for esx_ava_inventories
+RegisterServerEvent('esx:onPickup') --* edited for esx_ava_inventories
 AddEventHandler('esx:onPickup', function(id)
 	local _source = source
 	local pickup  = ESX.Pickups[id]

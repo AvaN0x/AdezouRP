@@ -537,7 +537,7 @@ end)
 
 -- Societygarage
 RegisterNetEvent("esx_ava_garage:OpenSocietyVehiclesMenu")
-AddEventHandler("esx_ava_garage:OpenSocietyVehiclesMenu", function(societyName, garage, type) --? type is not used?
+AddEventHandler("esx_ava_garage:OpenSocietyVehiclesMenu", function(societyName, garage, type) --* type is not used?
 	this_Garage = garage
 	this_Garage.Identifier = "garage_SOCIETY"
 	if not this_Garage.Type then

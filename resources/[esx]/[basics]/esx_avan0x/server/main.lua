@@ -27,7 +27,7 @@ function DiscordRequest(method, endpoint, jsondata)
     return data
 end
 
---? init thread
+--* init thread
 Citizen.CreateThread(function()
 	local botToken = GetConvar("avan0x_bot_token", "avan0x_bot_token")
 	if botToken ~= "avan0x_bot_token" then
@@ -96,7 +96,7 @@ AddEventHandler('esx_avan0x:logTransaction', function(identifier_origin, account
 end)
 
 
---? sendskin command
+--* sendskin command
 TriggerEvent('es:addGroupCommand', 'sendskin', 'user', function(source, args)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local msg = table.concat(args, " ") or ""
@@ -155,7 +155,7 @@ end, {
 })
 
 
---? death verification
+--* death verification
 local deathCauses = {
 	Suicide = { Label = "Suicide", Hash = {0} },
 	Melee = { Label = "Melee", Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184} },
@@ -175,10 +175,10 @@ AddEventHandler("esx:onPlayerDeath", function(data)
 	local _source = source
 	local deathCauseLabel = GetDeathCauseLabel(data.deathCause)
 	if data.killedByPlayer then
-		TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. GetPlayerName(_source) .. "~s~ got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. ".")
+		TriggerEvent('esx_ava_personalmenu:notifStaff', "death", "~r~" .. GetPlayerName(_source) .. "~s~ got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. ".")
 		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " got killed by " .. GetPlayerName(data.killerServerId) .. " with " .. deathCauseLabel .. " (`" .. data.deathCause .. "`) at distance : " .. data.distance, 16711680) -- #ff0000
 	else
-		TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. GetPlayerName(_source) .. "~s~ died from " .. deathCauseLabel .. ".")
+		TriggerEvent('esx_ava_personalmenu:notifStaff', "death", "~r~" .. GetPlayerName(_source) .. "~s~ died from " .. deathCauseLabel .. ".")
 		SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(_source) .. " died from " .. deathCauseLabel .. " (`" .. data.deathCause .. "`).", 16711680) -- #ff0000
 	end
 end)
@@ -198,7 +198,7 @@ end
 -- TODO set this as convar
 local LifeInvaderChannelID = 831508116234960906
 local lastID = nil
---? life invader check last messages
+--* life invader check last messages
 Citizen.CreateThread(function()
     while true do
         local channel = DiscordRequest("GET", "channels/" .. LifeInvaderChannelID, {})

@@ -26,8 +26,8 @@ end, function(source, args, user)
 end, {help = "Repair vehicle", params = {}})
 
 RegisterServerEvent("esx_ava_personalmenu:notifStaff")
-AddEventHandler("esx_ava_personalmenu:notifStaff", function(content)
-	TriggerClientEvent("esx_ava_personalmenu:notifStaff", -1, content)
+AddEventHandler("esx_ava_personalmenu:notifStaff", function(type, content)
+	TriggerClientEvent("esx_ava_personalmenu:notifStaff", -1, type, content)
 end)
 
 RegisterServerEvent("esx_ava_personalmenu:privateMessage")

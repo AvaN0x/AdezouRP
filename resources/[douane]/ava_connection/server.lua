@@ -43,7 +43,7 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 	end
 end
 
---? init thread
+--* init thread
 Citizen.CreateThread(function()
 	local botToken = GetConvar("avan0x_bot_token", "avan0x_bot_token")
 	if botToken ~= "avan0x_bot_token" then
@@ -131,7 +131,7 @@ AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
 						local name = data.user.username .. "#" .. data.user.discriminator .. " (" .. steamName .. ")"
 						local namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 						print(name .. " se connecte.")
-						TriggerEvent('esx_ava_personalmenu:notifStaff', "~g~" .. name .. "~s~ se connecte.")
+						TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. name .. "~s~ se connecte.")
 						SendWebhookEmbedMessage("avan0x_wh_connections", "", namePing .. " se connecte.", 311891)
 						deferrals.done()
 						return
@@ -164,7 +164,7 @@ AddEventHandler('playerDropped', function(reason)
         namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 	end
 	print(name .. " a quitté.\n\tRaison : " .. reason)
-	TriggerEvent('esx_ava_personalmenu:notifStaff', "~r~" .. name .. "~s~ a quitté. (" .. reason .. ")")
+	TriggerEvent('esx_ava_personalmenu:notifStaff', "logout", "~r~" .. name .. "~s~ a quitté. (" .. reason .. ")")
 	SendWebhookEmbedMessage("avan0x_wh_connections", "", namePing .. " a quitté.\n\tRaison : " .. reason, 16733269)
 end)
 
@@ -239,6 +239,7 @@ end)
 
 RegisterServerEvent("ava_connection:unban")
 AddEventHandler("ava_connection:unban", function(license)
+    -- TODO check if user have rights
 	MySQL.Async.execute('DELETE FROM `ban_list` WHERE license = @license', {
 		['@license'] = license
 	})

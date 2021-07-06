@@ -8,7 +8,7 @@ Citizen.CreateThread(function()
 		SetParkedVehicleDensityMultiplierThisFrame(0.8)
 
 
-		--? These natives have to be called every frame.
+		--* These natives have to be called every frame.
         -- SetVehicleModelIsSuppressed(GetHashKey("taco"), true)
 		-- SetGarbageTrucks(false)
 		-- SetRandomBoats(false)
