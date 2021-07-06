@@ -2522,6 +2522,22 @@ Config.Jobs = {
                     Heading = 63.56
                 },
             },
+            GangHeliGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(1458.70, 1111.70, 114.33),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 136, g = 243, b = 216},
+                Marker = 34,
+                Type = "heli",
+                IsNonProprietaryGarage = true,
+				IsGangGarage = true,
+                Identifier = "garage_cartel",
+                SpawnPoint = {
+                    Pos = vector3(1458.70, 1111.70, 114.33),
+                    Heading = 63.56
+                },
+            },
 		}
 	},
 	orga_mafia = {
