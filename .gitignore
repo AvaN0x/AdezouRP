@@ -1,7 +1,6 @@
 desktop.ini
 
 server.cfg
-permissions.cfg
 *.sh
 /cache/
 /resources/\[textures\]/
