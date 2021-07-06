@@ -103,7 +103,7 @@ ESX.Round = function(value, numDecimalPlaces)
 	return ESX.Math.Round(value, numDecimalPlaces)
 end
 
---? added by AvaN0x
+--* added by AvaN0x
 ESX.KeyboardInput = function(textEntry, inputText, maxLength)
     AddTextEntry("FMMC_KEY_TIP1", textEntry)
     DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", '', inputText, '', '', '', maxLength)

@@ -7,10 +7,10 @@ Config.Locale = 'fr'
 Config.CoordsLoop = 500
 Config.CoordsLoopInside = 200
 
---? states :
---?  - 0 = can be burglarized
---?  - 1 = user inside and can't be burglarized
---?  - 2 = can't be burglarized
+--* states :
+--*  - 0 = can be burglarized
+--*  - 1 = user inside and can't be burglarized
+--*  - 2 = can't be burglarized
 Config.coords = {
     {
         coord = vector3(87.046157836914, -834.94946289063, 31.049072265625),

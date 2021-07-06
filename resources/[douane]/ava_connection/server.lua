@@ -43,7 +43,7 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 	end
 end
 
---? init thread
+--* init thread
 Citizen.CreateThread(function()
 	local botToken = GetConvar("avan0x_bot_token", "avan0x_bot_token")
 	if botToken ~= "avan0x_bot_token" then

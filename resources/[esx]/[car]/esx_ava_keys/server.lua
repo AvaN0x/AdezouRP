@@ -6,8 +6,8 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
---? 1 is main key
---? 2 is double key
+--* 1 is main key
+--* 2 is double key
 
 AddEventHandler('onMySQLReady', function()
 	MySQL.Async.execute('DELETE FROM owned_keys WHERE type = @type',
