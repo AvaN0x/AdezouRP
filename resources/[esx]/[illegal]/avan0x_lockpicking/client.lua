@@ -49,6 +49,11 @@ AddEventHandler('avan0x_lockpicking:StartLockPicking', function()
 end)
 
 
+AddEventHandler('onResourceStop', function(resource)
+    if resource == GetCurrentResourceName() then
+        SetNuiFocus(false, false)
+    end
+end)
 
 RegisterNetEvent('esx_ava_lockpick:onUse')
 AddEventHandler('esx_ava_lockpick:onUse', function()

@@ -128,6 +128,15 @@ function CloseBank()
 	inMenu = false
 end
 
+AddEventHandler('onResourceStop', function(resource)
+    if resource == GetCurrentResourceName() then
+        SetNuiFocus(false, false)
+        if atm then
+            ClearPedTasksImmediately(PlayerPedId())
+        end
+    end
+end)
+
 --===============================================
 --==             Map Blips	                   ==
 --===============================================
