@@ -128,7 +128,7 @@ AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
 						end
 					end
 					if gotRole then
-						local name = data.user.username .. "#" .. data.user.discriminator .. " (`" .. steamName .. "`)"
+						local name = data.user.username .. "#" .. data.user.discriminator .. " (" .. steamName .. ")"
 						local namePing = "<@" .. discordId .. ">" .. " (`" .. steamName .. "`)"
 						print(name .. " se connecte.")
 						TriggerEvent('esx_ava_personalmenu:notifStaff', "~g~" .. name .. "~s~ se connecte.")
