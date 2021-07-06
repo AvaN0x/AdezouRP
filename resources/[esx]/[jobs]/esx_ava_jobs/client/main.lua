@@ -545,7 +545,7 @@ Citizen.CreateThread(function()
                 DisplayHelpTextFromStringLabel(0, 0, 1, -1)
             end
 
-			if IsControlJustPressed(0, 38) -- E
+			if IsControlJustReleased(0, 38) -- E
                 and (GetGameTimer() - GUI.Time) > 300
             then
                 CurrentActionEnabled = false
@@ -937,7 +937,7 @@ Citizen.CreateThread(function()
                     DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 				end
 
-				if IsControlJustPressed(0, 38) and not isPickingUp then -- E
+				if IsControlJustReleased(0, 38) and not isPickingUp then -- E
 					isPickingUp = true
 
 					ESX.TriggerServerCallback('esx_ava_jobs:canPickUp', function(canPickUp)

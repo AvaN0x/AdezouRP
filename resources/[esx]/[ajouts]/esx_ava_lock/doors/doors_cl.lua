@@ -194,6 +194,7 @@ Citizen.CreateThread(function()
 				local distance = #(playerCoords - doorID.textCoords)
 
 				if distance < doorID.checkDistance then
+                    waitTime = 0
 					if doorID.doors then
 						for _,v in ipairs(doorID.doors) do
 							if not v.object or not DoesEntityExist(v.object) then
@@ -223,8 +224,6 @@ Citizen.CreateThread(function()
 					end
 
 					if distance < doorID.distance then
-                        waitTime = 0
-
                         if doorID.authorized then
                             local displayText = _U('doors_press_button', doorID.locked and _U('doors_locked') or _U('doors_unlocked'))
                             DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
