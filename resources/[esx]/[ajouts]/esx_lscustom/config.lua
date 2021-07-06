@@ -43,7 +43,7 @@ Config.Zones = {
 	},
 
 	lshidden = {
-		Pos   = vector3(733.64, -1082.11, 21.19),
+		Pos   = vector3(733.86, -1084.62, 21.19),
 		Size  = {x = 3.0, y = 3.0, z = 0.2},
 		Color = {r = 204, g = 204, b = 0},
 		Marker= 1,
