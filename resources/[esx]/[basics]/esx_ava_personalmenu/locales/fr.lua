@@ -92,6 +92,11 @@ Locales["fr"] = {
     ["not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
     ["not_in_passenger_seat"] = "Vous n'êtes pas sur le siège passager",
 
+    ['admin_config'] = "Configurations",
+    ['admin_notifications_death'] = "Notifications de mort",
+    ['admin_notifications_login'] = "Notifications de connexion",
+    ['admin_notifications_logout'] = "Notifications de déconnexion",
+
 
     ['all_players'] = "Tous les joueurs",
     ['players_list'] = "Liste",

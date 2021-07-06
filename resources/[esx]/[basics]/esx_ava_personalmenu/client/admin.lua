@@ -4,6 +4,155 @@
 -------------------------------------------
 local noclip, show_names, admin_mode = false, false, false
 
+local AdminConfig = {}
+
+
+function AdminLoop()
+	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+        RegisterCommand('+keyAdminMenu', function()
+            if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+                if IsDead then
+                    TriggerEvent('esx_ava_deaths:admin:revive')
+                    Citizen.Wait(1000)
+                    ToggleAdminMode(true)
+                end
+                OpenAdminMenu()
+            end
+        end, false)
+
+        RegisterKeyMapping('+keyAdminMenu', 'Menu admin', 'keyboard', Config.AdminMenuKey)
+
+        Citizen.CreateThread(function()
+            --* 1 mean disabled, because default value of GetResourceKvpInt is 0 ...
+            AdminConfig.Notifications = {
+                death = not (GetResourceKvpInt("admin_notifications_death") == 1),
+                login = not (GetResourceKvpInt("admin_notifications_login") == 1),
+                logout = not (GetResourceKvpInt("admin_notifications_logout") == 1),
+            }
+            print(ESX.DumpTable(AdminConfig))
+            print(json.encode(AdminConfig))
+        end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(10)
+				if noclip then
+					local playerPed = PlayerPedId()
+					local x, y, z = getPosition(playerPed)
+					local dx, dy, dz = getCamDirection(playerPed)
+					local speed = Config.noclip_speed
+
+					SetTextComponentFormat('STRING')
+					AddTextComponentString("~INPUT_AIM~ pour quitter, ~INPUT_SPRINT~ pour accélérer")
+					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+
+					SetEntityVelocity(playerPed, 0.0001, 0.0001, 0.0001)
+					if IsControlPressed(0, 21) then
+						speed = Config.noclip_speed_shift
+					end
+					if IsControlPressed(0, 32) then
+						x = x + speed * dx
+						y = y + speed * dy
+						z = z + speed * dz
+					end
+					if IsControlPressed(0, 269) then
+						x = x - speed * dx
+						y = y - speed * dy
+						z = z - speed * dz
+					end
+					SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
+
+					if IsControlPressed(0, 25) then
+						admin_noclip()
+					end
+				else
+					Citizen.Wait(500)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(10)
+				if show_names or admin_mode then
+					local playerPed = PlayerPedId()
+					for _, player in ipairs(GetActivePlayers()) do
+						if GetPlayerPed(player) ~= playerPed then
+							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
+						end
+					end
+				else
+					Citizen.Wait(4000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(0)
+				if admin_mode then
+					local playerPed = PlayerPedId()
+					local playerCoords = GetEntityCoords(playerPed)
+					for _, player in ipairs(GetActivePlayers()) do
+						local targetPed = GetPlayerPed(player)
+						if targetPed ~= playerPed then
+							local targetCoords = GetEntityCoords(targetPed)
+							DrawLine(playerCoords.x, playerCoords.y, playerCoords.z, targetCoords.x, targetCoords.y, targetCoords.z, 255, 0, 255, 128)
+						end
+					end
+				else
+					Citizen.Wait(4000)
+				end
+			end
+		end)
+
+		Citizen.CreateThread(function()
+			while true do
+				Citizen.Wait(0)
+				if noclip then
+					SetEntityInvincible(PlayerPedId(), true)
+				elseif admin_mode then
+					local playerPed = PlayerPedId()
+					SetEntityInvincible(playerPed, true)
+					SetSuperJumpThisFrame(PlayerId(-1))
+					SetPedMoveRateOverride(playerPed, 2.15)
+				else
+					SetEntityInvincible(PlayerPedId(), false)
+					Citizen.Wait(2000)
+				end
+			end
+		end)
+
+		
+		Citizen.CreateThread(function()
+			while true do
+				Wait(5000)
+				if show_names or admin_mode then
+					local playerPed = PlayerPedId()
+					for _, player in ipairs(GetActivePlayers()) do
+						if GetPlayerPed(player) ~= playerPed then
+							local targetPed = GetPlayerPed(player)
+							local blip = GetBlipFromEntity(targetPed)
+
+							if not DoesBlipExist(blip) then
+								blip = AddBlipForEntity(targetPed)
+								SetBlipSprite(blip, 1)
+								SetBlipColour(blip, 8)
+								SetBlipCategory(blip, 7)
+								SetBlipScale(blip, 0.7)
+								ShowHeadingIndicatorOnBlip(blip, true)
+								BeginTextCommandSetBlipName("STRING")
+								AddTextComponentString(GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player))
+								EndTextCommandSetBlipName(blip)
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+end
+
 function OpenAdminMenu()
     local elements
     if PlayerGroup ~= nil and (PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
@@ -16,6 +165,7 @@ function OpenAdminMenu()
             {label = _("green", _("admin_vehicle_menu")), value = "admin_vehicle_menu", type = "submenu"},
             {label = _("orange", _("admin_load_model")), value = "admin_load_model"},
             {label = _("red", _("admin_change_skin")), value = "change_skin"},
+            {label = _("blue", _("admin_config")), value = "admin_config", type = "submenu"},
             {label = _("bright_pink", _("dev_menu")), value = "dev_menu", type = "submenu"},
             {label = _("bright_red", _("admin_mode")), value = "admin_mode", detail = _('admin_mode_detail'), type="checkbox", checked=admin_mode},
         }
@@ -23,6 +173,7 @@ function OpenAdminMenu()
         elements = {
             {label = _("orange", _("players_list")), value = "players_list", type = "submenu"},
             {label = _("orange", _("all_players")), value = "all_players", type = "submenu"},
+            {label = _("blue", _("admin_config")), value = "admin_config", type = "submenu"},
         }
     end
 
@@ -49,6 +200,8 @@ function OpenAdminMenu()
 			EnterReason(function(value)
 				LoadPedModel(value)
 			end)
+		elseif data.current.value == "admin_config" then
+			OpenAdminConfigMenu()
 		elseif data.current.value == "dev_menu" then
 			OpenDevMenu()
 		elseif data.current.value == "change_skin" then
@@ -60,6 +213,44 @@ function OpenAdminMenu()
 		menu.close()
 	end)
 end
+
+
+RegisterNetEvent('esx_ava_personalmenu:notifStaff')
+AddEventHandler('esx_ava_personalmenu:notifStaff', function(type, content)
+	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+        --* type can be : "death", "login", "logout"
+        if AdminConfig.Notifications and (AdminConfig.Notifications[type] == true or AdminConfig.Notifications[type] == nil) then
+            ESX.ShowNotification(content)
+        end
+	end
+end)
+
+function OpenAdminConfigMenu()
+    local elements = {
+        {label = _("admin_notifications_death"), value="toggleable", type="checkbox", checked=AdminConfig.Notifications.death, toggleableName="death"},
+        {label = _("admin_notifications_login"), value="toggleable", type="checkbox", checked=AdminConfig.Notifications.login, toggleableName="login"},
+        {label = _("admin_notifications_logout"), value="toggleable", type="checkbox", checked=AdminConfig.Notifications.logout, toggleableName="logout"},
+    }
+
+	ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_config",
+	{
+		title    = _("admin_config"),
+		align    = "left",
+		elements = elements
+	}, function(data, menu)
+		if data.current.value == "toggleable" then
+            local toggleableName = data.current.toggleableName
+			AdminConfig.Notifications[toggleableName] = not AdminConfig.Notifications[toggleableName]
+            print("admin_notifications_" .. toggleableName)
+            SetResourceKvpInt("admin_notifications_" .. toggleableName, AdminConfig.Notifications[toggleableName] and 0 or 1) -- 1 is disabled
+            print(GetResourceKvpInt("admin_notifications_" .. toggleableName))
+		end
+	end, function(data, menu)
+		menu.close()
+	end)
+end
+
+
 
 function all_players()
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_allplayers",
@@ -198,142 +389,6 @@ function EnterReason(cb)
 	end)
 end
 
-
-
-function AdminLoop()
-	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-        RegisterCommand('+keyAdminMenu', function()
-            if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-                if IsDead then
-                    TriggerEvent('esx_ava_deaths:admin:revive')
-                    Citizen.Wait(1000)
-                    ToggleAdminMode(true)
-                end
-                OpenAdminMenu()
-            end
-        end, false)
-
-        RegisterKeyMapping('+keyAdminMenu', 'Menu admin', 'keyboard', Config.AdminMenuKey)
-
-		Citizen.CreateThread(function()
-			while true do
-				Citizen.Wait(10)
-				if noclip then
-					local playerPed = PlayerPedId()
-					local x, y, z = getPosition(playerPed)
-					local dx, dy, dz = getCamDirection(playerPed)
-					local speed = Config.noclip_speed
-
-					SetTextComponentFormat('STRING')
-					AddTextComponentString("~INPUT_AIM~ pour quitter, ~INPUT_SPRINT~ pour accélérer")
-					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-
-					SetEntityVelocity(playerPed, 0.0001, 0.0001, 0.0001)
-					if IsControlPressed(0, 21) then
-						speed = Config.noclip_speed_shift
-					end
-					if IsControlPressed(0, 32) then
-						x = x + speed * dx
-						y = y + speed * dy
-						z = z + speed * dz
-					end
-					if IsControlPressed(0, 269) then
-						x = x - speed * dx
-						y = y - speed * dy
-						z = z - speed * dz
-					end
-					SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
-
-					if IsControlPressed(0, 25) then
-						admin_noclip()
-					end
-				else
-					Citizen.Wait(500)
-				end
-			end
-		end)
-
-		Citizen.CreateThread(function()
-			while true do
-				Citizen.Wait(10)
-				if show_names or admin_mode then
-					local playerPed = PlayerPedId()
-					for _, player in ipairs(GetActivePlayers()) do
-						if GetPlayerPed(player) ~= playerPed then
-							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
-						end
-					end
-				else
-					Citizen.Wait(4000)
-				end
-			end
-		end)
-
-		Citizen.CreateThread(function()
-			while true do
-				Citizen.Wait(0)
-				if admin_mode then
-					local playerPed = PlayerPedId()
-					local playerCoords = GetEntityCoords(playerPed)
-					for _, player in ipairs(GetActivePlayers()) do
-						local targetPed = GetPlayerPed(player)
-						if targetPed ~= playerPed then
-							local targetCoords = GetEntityCoords(targetPed)
-							DrawLine(playerCoords.x, playerCoords.y, playerCoords.z, targetCoords.x, targetCoords.y, targetCoords.z, 255, 0, 255, 128)
-						end
-					end
-				else
-					Citizen.Wait(4000)
-				end
-			end
-		end)
-
-		Citizen.CreateThread(function()
-			while true do
-				Citizen.Wait(0)
-				if noclip then
-					SetEntityInvincible(PlayerPedId(), true)
-				elseif admin_mode then
-					local playerPed = PlayerPedId()
-					SetEntityInvincible(playerPed, true)
-					SetSuperJumpThisFrame(PlayerId(-1))
-					SetPedMoveRateOverride(playerPed, 2.15)
-				else
-					SetEntityInvincible(PlayerPedId(), false)
-					Citizen.Wait(2000)
-				end
-			end
-		end)
-
-		
-		Citizen.CreateThread(function()
-			while true do
-				Wait(5000)
-				if show_names or admin_mode then
-					local playerPed = PlayerPedId()
-					for _, player in ipairs(GetActivePlayers()) do
-						if GetPlayerPed(player) ~= playerPed then
-							local targetPed = GetPlayerPed(player)
-							local blip = GetBlipFromEntity(targetPed)
-
-							if not DoesBlipExist(blip) then
-								blip = AddBlipForEntity(targetPed)
-								SetBlipSprite(blip, 1)
-								SetBlipColour(blip, 8)
-								SetBlipCategory(blip, 7)
-								SetBlipScale(blip, 0.7)
-								ShowHeadingIndicatorOnBlip(blip, true)
-								BeginTextCommandSetBlipName("STRING")
-								AddTextComponentString(GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player))
-								EndTextCommandSetBlipName(blip)
-							end
-						end
-					end
-				end
-			end
-		end)
-	end
-end
 
 function getPosition(playerPed)
 	local x, y, z = table.unpack(GetEntityCoords(playerPed, true))
@@ -524,13 +579,6 @@ function ReviveAllClose()
 		TriggerServerEvent("esx_ava_deaths:admin:revive", GetPlayerServerId(player))
 	end
 end
-
-RegisterNetEvent('esx_ava_personalmenu:notifStaff')
-AddEventHandler('esx_ava_personalmenu:notifStaff', function(content)
-	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
-		ESX.ShowNotification(content)
-	end
-end)
 
 function admin_unban()
 	ESX.TriggerServerCallback('ava_connection:getBannedElements', function(elements)
