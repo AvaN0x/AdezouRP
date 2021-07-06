@@ -34,7 +34,7 @@ AddEventHandler('esx_lscustom:buyMod', function(price, zoneName)
         if isIllegal and price <= xPlayer.getAccount('black_money').money then
 			TriggerClientEvent('esx_lscustom:installMod', _source)
 			TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
-			TriggerEvent('esx_statejob:getTaxed', 'CULS_CUSTOMSTOM', price, function(toSociety)
+			TriggerEvent('esx_statejob:getTaxed', 'LS_CUSTOM', price, function(toSociety)
 			end)
             xPlayer.removeAccountMoney('black_money', price)
             
