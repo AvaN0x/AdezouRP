@@ -504,11 +504,7 @@ function ToggleAdminMode(bool)
 		SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_RAYPISTOL'), true)
 	else
 		ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
-			if skin.sex == 0 then
-				LoadPedModel('mp_m_freemode_01')
-			else
-				LoadPedModel('mp_f_freemode_01')
-			end
+            LoadPedModel(skin.sex == 0 and 'mp_m_freemode_01' or 'mp_f_freemode_01')
 			TriggerEvent('skinchanger:loadSkin', skin)
 			playerPed = PlayerPedId()
 			SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)

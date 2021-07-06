@@ -23,7 +23,7 @@ end)
 ------------ ACTIVATE PVP ------------
 --------------------------------------
 AddEventHandler("playerSpawned", function(spawn)
-	SetCanAttackFriendly(GetPlayerPed(-1), true, false)
+	SetCanAttackFriendly(PlayerPedId(), true, false)
 	NetworkSetFriendlyFireOption(true)
 end)
 
