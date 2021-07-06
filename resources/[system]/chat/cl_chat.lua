@@ -246,6 +246,8 @@ if not isRDR then
       chatHideState = CHAT_HIDE_STATES.ALWAYS_SHOW
     elseif chatHideState == CHAT_HIDE_STATES.ALWAYS_SHOW then
       chatHideState = CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE
+    else
+      chatHideState = CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE
     end
 
     isFirstHide = false
