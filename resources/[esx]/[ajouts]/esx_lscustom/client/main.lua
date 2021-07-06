@@ -193,9 +193,11 @@ function UpdateMods(data)
 
 	if data.modType ~= nil then
 		local props = {}
-		
 		if data.wheelType ~= nil then
 			props['wheels'] = data.wheelType
+            if data.wheelType == 6 then
+                props['modBackWheels'] = data.modNum
+            end
 			ESX.Game.SetVehicleProperties(vehicle, props)
 			props = {}
 		elseif data.modType == 'neonColor' then
@@ -257,7 +259,7 @@ function GetAction(data)
 	for k,v in pairs(Config.Menus) do
 		if data.value == k and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, k)) then
 		-- if data.value == k then
-            print(k)
+            -- print(k)
 
 			menuName  = k
 			menuTitle = v.label
@@ -373,10 +375,10 @@ function GetAction(data)
 						if j == currentMods[k] then
 							_label = _U('level', j+1) .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
 						else
-							print(vehiclePrice)
-							print(ESX.DumpTable(v))
-							print(ESX.DumpTable(v.price))
-							print(v.price[j+1])
+							-- print(vehiclePrice)
+							-- print(ESX.DumpTable(v))
+							-- print(ESX.DumpTable(v.price))
+							-- print(v.price[j+1])
 							price = math.floor(vehiclePrice * v.price[j+1] / 100)
 							_label = _U('level', j+1) .. ' - <span style="color:orange;">$' .. price .. ' </span>'
 						end
@@ -459,7 +461,7 @@ function GetAction(data)
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
 							table.insert(elements, {label = w, value = l})
-							print(l)
+							-- print(l)
 						end
 					end
 				end
