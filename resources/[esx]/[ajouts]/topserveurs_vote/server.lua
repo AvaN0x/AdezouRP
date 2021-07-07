@@ -10,7 +10,6 @@ local function getPlayerByName(playername)
         if xPlayer ~= nil
             and (
                 xPlayer.getName() == playername
-                or xPlayer.source == playername
                 or xPlayer.identifier == playername
             )
         then
