@@ -5,6 +5,10 @@ math.randomseed(os.time())
 
 local function getPlayerByName(playername)
     local xPlayers = ESX.GetPlayers()
+
+    -- fix steam hex as topserveurs returns "steam" instead of "steam:"
+    playername = string.gsub(playername, "^steam", "steam:")
+
     for i=1, #xPlayers, 1 do
         local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         if xPlayer ~= nil
@@ -34,7 +38,7 @@ AddEventHandler('onPlayerVote', function (playername, ip, date)
             xPlayer.addMoney(cashPrize)
 
             TriggerClientEvent("esx_ava_personalmenu:privateMessage", xPlayer.source, "Top Serveurs", "Pour te remercier de ton vote, nous venons de te donner ~y~" .. cashPrize .. " $~s~ en liquide." .. (bigLoot and " ~g~(JACKPOT)~s~" or ""))
-            exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_vote", xPlayer.identifier .. " a gagné **" .. cashPrize .. "** en votant pour le serveur.", 15902015)
+            exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_vote", "", "`" .. xPlayer.identifier .. "` " ..  GetPlayerName(xPlayer.source) .. " a gagné **" .. cashPrize .. "** en votant pour le serveur.", 15902015)
         end
     end
 end)
