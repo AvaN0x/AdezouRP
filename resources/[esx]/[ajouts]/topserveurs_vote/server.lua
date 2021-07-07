@@ -21,9 +21,14 @@ AddEventHandler('onPlayerVote', function (playername, ip, date)
         if xPlayer then
             local bigLoot = math.random(0, 100) < 5
             local cashPrize = math.random(200, 400)
+            if bigLoot then
+                cashPrize = cashPrize + 400
+            end
             print(xPlayer.identifier, bigLoot, cashPrize)
 
-            xPlayer.addMoney(bigLoot and (600 + cashPrize) or cashPrize)
+            xPlayer.addMoney(cashPrize)
+
+            TriggerClientEvent("esx_ava_personalmenu:privateMessage", xPlayer.source, "Top Serveurs", "Pour te remercier de ton vote, nous venons de te donner ~y~" .. cashPrize .. " $~s~ en liquide.")
         end
     end
 end)
