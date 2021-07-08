@@ -11,6 +11,7 @@ Config.Locale = 'fr'
 Config.Stores = {
     TwentyFourSeven = {
         Blip = {
+            Name = "Supérette",
             Sprite = 52,
             Colour = 4,
             Scale = 0.6  
@@ -46,6 +47,7 @@ Config.Stores = {
 
     RobsLiquor = {
         Blip = {
+            Name = "Supérette",
             Sprite = 52,
             Colour = 4,
             Scale = 0.6  
@@ -79,6 +81,7 @@ Config.Stores = {
 
     LTDgasoline = {
         Blip = {
+            Name = "Supérette",
             Sprite = 52,
             Colour = 4,
             Scale = 0.6  
@@ -176,6 +179,7 @@ Config.Stores = {
         Name = "Ammunation",
         HelpText = _('press_buy')
     },
+
 
     BlackMarket = {
         Pos = {

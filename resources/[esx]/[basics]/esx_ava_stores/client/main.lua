@@ -47,7 +47,7 @@ Citizen.CreateThread(function()
                 SetBlipAsShortRange(blip, true)
         
                 BeginTextCommandSetBlipName("STRING")
-                AddTextComponentString(v.Name)
+                AddTextComponentString(v.Blip.Name or v.Name)
                 EndTextCommandSetBlipName(blip)
         
                 table.insert(mainBlips, blip)
