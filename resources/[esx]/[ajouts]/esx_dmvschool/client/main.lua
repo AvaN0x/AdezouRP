@@ -205,7 +205,7 @@ end)
 Citizen.CreateThread(function()
 	local blip = AddBlipForCoord(Config.Zones.DMVSchool.Pos.x, Config.Zones.DMVSchool.Pos.y, Config.Zones.DMVSchool.Pos.z)
 
-	SetBlipSprite (blip, 408)
+	SetBlipSprite (blip, 764)
 	SetBlipDisplay(blip, 4)
 	SetBlipScale  (blip, 0.8)
 	SetBlipAsShortRange(blip, true)
