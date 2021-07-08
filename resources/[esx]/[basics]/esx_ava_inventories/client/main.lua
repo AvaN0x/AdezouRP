@@ -127,7 +127,7 @@ end
 function GiveItem(player, itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+        amount = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
     end
     if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
         TriggerServerEvent("esx_ava_inventories:giveItem", 'inventory', itemType, player, itemName, amount)
@@ -144,7 +144,7 @@ end
 function DropItem(itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+        amount = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
     end
     local playerPed = PlayerPedId()
     if IsPedSittingInAnyVehicle(playerPed) then
@@ -229,7 +229,7 @@ end
 function TakePlayerItem(player, itemType, itemName)
     local amount = 1
     if itemType ~= "item_weapon" then
-        amount = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+        amount = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
     end
     if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
         TriggerServerEvent("esx_ava_inventories:takePlayerItem", 'inventory', itemType, player, itemName, amount)
@@ -308,7 +308,7 @@ function OpenPutInventory(inventoryName)
             elements = elements
         },
         function(data, menu)
-            local count = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+            local count = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
             if type(count) == "number" and math.floor(count) == count and count > 0 then
                 menu.close()
                 TriggerServerEvent('esx_ava_inventories:putStockItems', data.current.item.name, count, inventoryName)
@@ -350,7 +350,7 @@ function OpenTakeInventory(inventoryName)
             elements = elements
         },
         function(data, menu)
-            local count = tonumber(ESX.KeyboardInput(_('enter_amount'), "", 10))
+            local count = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
             if type(count) == "number" and math.floor(count) == count and count > 0 then
                 menu.close()
                 TriggerServerEvent('esx_ava_inventories:takeStockItem', data.current.item.name, count, inventoryName)

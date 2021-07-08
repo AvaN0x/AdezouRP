@@ -103,24 +103,3 @@ ESX.Round = function(value, numDecimalPlaces)
 	return ESX.Math.Round(value, numDecimalPlaces)
 end
 
---* added by AvaN0x
-ESX.KeyboardInput = function(textEntry, inputText, maxLength)
-    AddTextEntry("FMMC_KEY_TIP1", textEntry)
-    DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", '', inputText, '', '', '', maxLength)
-    input = true
-
-    while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-        Citizen.Wait(10)
-    end
-
-    if UpdateOnscreenKeyboard() ~= 2 then
-        local result = GetOnscreenKeyboardResult()
-        Citizen.Wait(100)
-        input = false
-        return result or ''
-    else
-        Citizen.Wait(100)
-        input = false
-        return ''
-    end
-end
