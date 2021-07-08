@@ -5,9 +5,10 @@
 
 Locales["fr"] = {
     ["press_buy"] = "Appuyez sur ~INPUT_CONTEXT~ pour acheter des produits",
-	["store_item_label"] = "%s<span style='color: #0cc421'>$%s</span>",
+	["store_item_label"] = "%s<span style='color: %s'>$%s</span>",
 	["how_much_max"] = "Combien voulez-vous en acheter ? (Max : %s)",
     ["invalid_quantity"] = "Quantité non valide",
+	["nothing_can_buy"] = "Il n'y a rien que vous puissiez acheter ici.",
 
 	["cant_carry"] = "Vous n'avez pas assez de place",
 	["cant_afford"] = "Vous n'avez pas assez d'argent",

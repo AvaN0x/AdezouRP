@@ -35,7 +35,7 @@ AddEventHandler('esx_ava_stores:BuyItem', function(storeName, item, count)
         else
             if isIllegal == true then
                 if xPlayer.getAccount('black_money').money < totalprice then
-                    TriggerClientEvent('esx:showNotification', source, _('cant_afford'))
+                    TriggerClientEvent('esx:showNotification', source, _('cant_afford_dirty'))
                 else
                     xPlayer.removeAccountMoney('black_money', totalprice)
                     inventory.addItem(item, count)
@@ -43,7 +43,7 @@ AddEventHandler('esx_ava_stores:BuyItem', function(storeName, item, count)
                 end
             else
                 if xPlayer.getMoney() < totalprice then
-                    TriggerClientEvent('esx:showNotification', source, _('cant_afford_dirty'))
+                    TriggerClientEvent('esx:showNotification', source, _('cant_afford'))
                 else
                     TriggerEvent('esx_statejob:getTaxed', store.Name, totalprice, function(toSociety)
                     end)
@@ -60,24 +60,25 @@ AddEventHandler('esx_ava_stores:BuyItem', function(storeName, item, count)
     end
 end)
 
-ESX.RegisterServerCallback('esx_ava_stores:GetBuyElements', function(source, cb, storeName)
+ESX.RegisterServerCallback('esx_ava_stores:GetBuyItems', function(source, cb, storeName)
     local store = Config.Stores[storeName]
 
     if store and store.Items then
         local xPlayer = ESX.GetPlayerFromId(source)
         local inventory = xPlayer.getInventory()
     
-        local elements = {}
+        local items = {}
         for k,v in pairs(store.Items) do
             local item = inventory.getItem(v.name)
-            table.insert(elements, {
+            table.insert(items, {
                 label = item.label,
                 price = v.price,
                 name = v.name,
-                maxCanTake = inventory.canTake(v.name)
+                maxCanTake = inventory.canTake(v.name),
+                isDirtyMoney = v.isDirtyMoney
             })
         end
-        cb(elements)
+        cb(items)
     end
 end)
 

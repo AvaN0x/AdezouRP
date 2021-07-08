@@ -121,10 +121,12 @@ Citizen.CreateThread(function()
         for k, v in pairs(Config.Stores) do
             for _, coord in pairs(v.Pos) do
                 local distance = #(playerCoords - coord)
-                if v.Marker ~= nil and distance < Config.DrawDistance then
-                    DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                if distance < Config.DrawDistance then
+                    if v.Marker ~= nil then
+                        DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                    end
                     waitTimer = 0
-                    if distance < (v.Distance or v.Size.x) then
+                    if distance < (v.Distance or v.Size.x or 1.5) then
                         isInMarker = true
                         currentZoneName = k
                     end
@@ -202,43 +204,47 @@ end)
 function BuyZone()
     local store = Config.Stores[CurrentZoneName]
 
-    ESX.TriggerServerCallback('esx_ava_stores:GetBuyElements', function(items)
+    ESX.TriggerServerCallback('esx_ava_stores:GetBuyItems', function(items)
         local elements = {}
         for k, item in pairs(items) do
             table.insert(elements, {
-                label = _('store_item_label', item.label, item.price),
+                label = _('store_item_label', item.label, item.isDirtyMoney and "#eb4034" or "#0cc421", item.price),
                 price = item.price,
                 name = item.name,
                 maxCanTake = item.maxCanTake
             })
         end
 
-        ESX.UI.Menu.CloseAll()
-        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_stores_store',
-        {
-            title = store.Name,
-            align = 'left',
-            elements = elements
-        },
-        function(data, menu)
-            local count = tonumber(exports.esx_avan0x:KeyboardInput(_('how_much_max', data.current.maxCanTake or 0), "", 10))
+        if #elements > 0 then
+            ESX.UI.Menu.CloseAll()
+            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_stores_store',
+            {
+                title = store.Name,
+                align = 'left',
+                elements = elements
+            },
+            function(data, menu)
+                local count = tonumber(exports.esx_avan0x:KeyboardInput(_('how_much_max', data.current.maxCanTake or 0), "", 10))
 
-            if type(count) == "number" and math.floor(count) == count and count > 0 then
-                menu.close()
-                if count > data.current.maxCanTake then
-                    ESX.ShowNotification(_('cant_carry'))
+                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                    menu.close()
+                    if count > data.current.maxCanTake then
+                        ESX.ShowNotification(_('cant_carry'))
+                    else
+                        TriggerServerEvent('esx_ava_stores:BuyItem', CurrentZoneName, data.current.name, count)
+                    end
                 else
-                    TriggerServerEvent('esx_ava_stores:BuyItem', CurrentZoneName, data.current.name, count)
+                    ESX.ShowNotification(_('invalid_quantity'))
                 end
-            else
-                ESX.ShowNotification(_('invalid_quantity'))
-            end
-            CurrentActionEnabled = true
-        end,
-        function(data, menu)
-            menu.close()
-            CurrentActionEnabled = true
-        end)
+                CurrentActionEnabled = true
+            end,
+            function(data, menu)
+                menu.close()
+                CurrentActionEnabled = true
+            end)
+        else
+            ESX.ShowNotification(_('nothing_can_buy'))
+        end
     end, CurrentZoneName)
 
 end

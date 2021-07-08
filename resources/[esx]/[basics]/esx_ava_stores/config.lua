@@ -176,16 +176,19 @@ Config.Stores = {
         Name = "Ammunation",
         HelpText = _('press_buy')
     },
+
+    BlackMarket = {
+        Pos = {
+            vector3(1716.30, 3295.09, 40.32)
+        },
+        Items = {
+            {name = 'headbag', price = 200, isDirtyMoney = true},
+            {name = 'tenuecasa', price = 200, isDirtyMoney = true},
+            {name = 'balisegps', price = 200, isDirtyMoney = true},
+        },
+        Distance = 1,
+        Name = "Black Market",
+        HelpText = _('press_buy')
+    },
 }
 
-
-
-
--- BlackMarket = {
---     Name = "Black Market",
---     DirtyMoney = true,
---     Items = {},
---     Pos = {
---         {x = 1716.30, y = 3295.09, z = 40.32, blip = false, marker = false}
---     }
--- },
