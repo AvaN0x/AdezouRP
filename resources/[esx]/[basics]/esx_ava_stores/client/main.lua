@@ -7,16 +7,15 @@ ESX = nil
 local GUI = {
     Time = 0
 }
-local PlayerData = {}
-local mainBlips = {}
 
 local HasAlreadyEnteredMarker = false
+local LastZone = nil
 local CurrentZoneName = nil
-local CurrentZoneCategory = nil
-local CurrentZoneValue = nil
 local CurrentHelpText = nil
 local CurrentActionEnabled = false
 
+local PlayerData = {}
+local mainBlips = {}
 
 
 
@@ -116,17 +115,136 @@ end)
 Citizen.CreateThread(function()
 	while true do
         local waitTimer = 500
+        local isInMarker  = false
+        local currentZoneName = nil
 
-        for _, v in pairs(Config.Stores) do
+        for k, v in pairs(Config.Stores) do
             for _, coord in pairs(v.Pos) do
-                if v.Marker ~= nil and #(playerCoords - coord) < Config.DrawDistance then
+                local distance = #(playerCoords - coord)
+                if v.Marker ~= nil and distance < Config.DrawDistance then
                     DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                     waitTimer = 0
+                    if distance < (v.Distance or v.Size.x) then
+                        isInMarker = true
+                        currentZoneName = k
+                    end
                 end
             end
         end
             
         Wait(waitTimer)
+        if (isInMarker and not HasAlreadyEnteredMarker)
+            or (isInMarker and CurrentZoneName ~= currentZoneName)
+        then
+            HasAlreadyEnteredMarker = true
+            LastZone = currentZoneName
+            TriggerEvent('esx_ava_stores:hasEnteredMarker', currentZoneName)
+        end
+
+        if not isInMarker and HasAlreadyEnteredMarker then
+            HasAlreadyEnteredMarker = false
+            TriggerEvent('esx_ava_stores:hasExitedMarker', LastZone)
+        end
     end
 end)
+
+
+
+AddEventHandler('esx_ava_stores:hasEnteredMarker', function(zoneName)
+	if Config.Stores[zoneName].HelpText ~= nil then
+        CurrentHelpText = Config.Stores[zoneName].HelpText
+    end
+
+    CurrentZoneName = zoneName
+    CurrentActionEnabled = true
+end)
+
+AddEventHandler('esx_ava_stores:hasExitedMarker', function(zoneName)
+	ESX.UI.Menu.CloseAll()
+	CurrentZoneName = nil
+end)
+
+
+-----------------
+-- Key Control --
+-----------------
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+
+		if CurrentZoneName ~= nil and CurrentActionEnabled then
+            if CurrentHelpText ~= nil then
+                SetTextComponentFormat('STRING')
+                AddTextComponentString(CurrentHelpText)
+                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+            end
+
+			if IsControlJustReleased(0, 38) -- E
+                and (GetGameTimer() - GUI.Time) > 300
+            then
+                CurrentActionEnabled = false
+                GUI.Time = GetGameTimer()
+                local store = Config.Stores[CurrentZoneName]
+
+                if store.Items then
+                    BuyZone()
+                end
+
+			end
+        else
+            Citizen.Wait(50)
+		end
+	end
+end)
+
+
+
+function BuyZone()
+    local store = Config.Stores[CurrentZoneName]
+
+    ESX.TriggerServerCallback('esx_ava_stores:GetBuyElements', function(items)
+        local elements = {}
+        for k, item in pairs(items) do
+            table.insert(elements, {
+                label = _('store_item_label', item.label, item.price),
+                price = item.price,
+                name = item.name,
+                maxCanTake = item.maxCanTake
+            })
+        end
+
+        ESX.UI.Menu.CloseAll()
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_stores_store',
+        {
+            title = store.Name,
+            align = 'left',
+            elements = elements
+        },
+        function(data, menu)
+            local count = tonumber(exports.esx_avan0x:KeyboardInput(_('how_much_max', data.current.maxCanTake or 0), "", 10))
+
+            if type(count) == "number" and math.floor(count) == count and count > 0 then
+                menu.close()
+                if count > data.current.maxCanTake then
+                    ESX.ShowNotification(_('cant_carry'))
+                else
+                    TriggerServerEvent('esx_ava_stores:BuyItem', CurrentZoneName, data.current.name, count)
+                end
+            else
+                ESX.ShowNotification(_('invalid_quantity'))
+            end
+            CurrentActionEnabled = true
+        end,
+        function(data, menu)
+            menu.close()
+            CurrentActionEnabled = true
+        end)
+    end, CurrentZoneName)
+
+end
+
+
+
+
+
 

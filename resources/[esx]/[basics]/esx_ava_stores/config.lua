@@ -4,39 +4,40 @@
 -------------------------------------------
 
 Config = {}
-Config.DrawDistance = 30.0
+Config.DrawDistance = 15.0
 Config.Locale = 'fr'
 
 
 Config.Stores = {
-    -- TwentyFourSeven = {
-    --     Blip = {
-    --         Sprite = 52,
-    --         Colour = 4,
-    --         Scale = 0.6  
-    --     },
-    --     Pos = {
-    --         vector3(373.87, 325.87, 102.59), -- Clinton Ave
-    --         vector3(2557.45, 382.28, 107.64), -- Route 15
-    --         vector3(-3039.55, 586.05, 6.93), -- Inesedo Rd.
-    --         vector3(-3241.91, 1001.52, 11.85), -- Barberego Rd.
-    --         vector3(547.70, 2671.29, 41.18), -- Route 68
-    --         vector3(1961.46, 3740.67, 31.36), -- Alhambra Drive
-    --         vector3(2678.90, 3280.81, 54.26), -- Route 13
-    --         vector3(1729.06, 6414.20, 34.06), -- Route 1
-    --         vector3(26.12, -1345.49, 28.52), -- Innocence Blvd
-    --     },
-    --     Items = {
-    --         {name = 'bproof_vest', price = 15000},
-    --         {name = 'handcuffs', price = 10000},
-    --         {name = 'balisegps', price = 2000},
-    --     },
-    --     Marker = 27,
-    --     Size = {x = 1.0, y = 1.0, z = 1.0},
-    --     Color = {r = 134, g = 180, b = 84},
-    --     Name = "Twenty Four Seven",
-    --     HelpText = _('press_buy')
-    -- },
+    TwentyFourSeven = {
+        Blip = {
+            Sprite = 52,
+            Colour = 4,
+            Scale = 0.6  
+        },
+        Pos = {
+            vector3(373.87, 325.87, 102.59), -- Clinton Ave
+            vector3(2557.45, 382.28, 107.64), -- Route 15
+            vector3(-3039.55, 586.05, 6.93), -- Inesedo Rd.
+            vector3(-3241.91, 1001.52, 11.85), -- Barberego Rd.
+            vector3(547.70, 2671.29, 41.18), -- Route 68
+            vector3(1961.46, 3740.67, 31.36), -- Alhambra Drive
+            vector3(2678.90, 3280.81, 54.26), -- Route 13
+            vector3(1729.06, 6414.20, 34.06), -- Route 1
+            vector3(26.12, -1345.49, 28.52), -- Innocence Blvd
+        },
+        Items = {
+            {name = 'bproof_vest', price = 15000},
+            {name = 'handcuffs', price = 10000},
+            {name = 'balisegps', price = 2000},
+        },
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 134, g = 180, b = 84},
+        Distance = 1.5,
+        Name = "Twenty Four Seven",
+        HelpText = _('press_buy')
+    },
 
     RobsLiquor = {
         Blip = {
@@ -60,67 +61,92 @@ Config.Stores = {
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 134, g = 180, b = 84},
+        Distance = 1.5,
         Name = "Robs Liquor",
         HelpText = _('press_buy')
     },
 
 
-    -- LTDgasoline = {
-    --     Blip = {
-    --         Sprite = 52,
-    --         Colour = 4,
-    --         Scale = 0.6  
-    --     },
-    --     Pos = {
-    --         vector3(-48.51, -1757.51, 28.42),
-    --         vector3(1163.37, -323.80, 68.20),
-    --         vector3(-707.50, -914.26, 18.21),
-    --         vector3(-1820.52, 792.51, 137.11),
-    --         vector3(1698.38, 4924.40, 41.06),
-    --     },
-    --     Items = {
-    --         {name = 'bproof_vest', price = 15000},
-    --         {name = 'handcuffs', price = 10000},
-    --         {name = 'balisegps', price = 2000},
-    --     },
-    --     Marker = 27,
-    --     Size = {x = 1.0, y = 1.0, z = 1.0},
-    --     Color = {r = 134, g = 180, b = 84},
-    --     Name = "LTD gasoline",
-    --     HelpText = _('press_buy')
-    -- },
+    LTDgasoline = {
+        Blip = {
+            Sprite = 52,
+            Colour = 4,
+            Scale = 0.6  
+        },
+        Pos = {
+            vector3(-48.05, -1756.84, 28.44), -- Grove Street
+            vector3(1163.27, -323.11, 68.23), -- W Mirror Drive
+            vector3(-707.54, -913.97, 18.24), -- Little Seoul
+            vector3(-1820.84, 793.00, 137.13), -- North Rockford Drive
+            vector3(1698.63, 4924.23, 41.08), -- Grapeseed Ave
+        },
+        Items = {
+            {name = 'bproof_vest', price = 15000},
+            {name = 'handcuffs', price = 10000},
+            {name = 'balisegps', price = 2000},
+        },
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 134, g = 180, b = 84},
+        Distance = 1.5,
+        Name = "LTD gasoline",
+        HelpText = _('press_buy')
+    },
 
 
-    -- Ammunation = {
-    --     Blip = {
-    --         Sprite = 110,
-    --         Colour = 1,
-    --         Scale = 0.6  
-    --     },
-    --     Pos = {
-    --         vector3(-662.1, -935.3, 20.8),
-    --         vector3(810.2, -2157.3, 28.6),
-    --         vector3(1693.4, 3759.5, 33.7),
-    --         vector3(-330.2, 6083.8, 30.4),
-    --         vector3(252.3, -50.0, 68.9),
-    --         vector3(22.0, -1107.2, 28.8),
-    --         vector3(2567.6, 294.3, 107.7),
-    --         vector3(-1117.5, 2698.6, 17.5),
-    --         vector3(-1305.44, -394.43, 35.72),
-    --         vector3(-3172.03, 1087.97, 19.86),
-    --         vector3(842.4, -1033.4, 27.1),
-    --     },
-    --     Items = {
-    --         {name = 'bproof_vest', price = 15000},
-    --         {name = 'handcuffs', price = 10000},
-    --         {name = 'balisegps', price = 2000},
-    --     },
-    --     Marker = 27,
-    --     Size = {x = 1.0, y = 1.0, z = 1.0},
-    --     Color = {r = 134, g = 180, b = 84},
-    --     Name = "Ammunation",
-    --     HelpText = _('press_buy')
-    -- },
+    Ammunation = {
+        Blip = {
+            Sprite = 110,
+            Colour = 1,
+            Scale = 0.6  
+        },
+        Pos = {
+            vector3(-662.31, -935.17, 20.85), -- Little Seoul
+            vector3(1693.02, 3759.61, 33.73), -- Sandy Shores
+            vector3(-330.28, 6083.78, 30.47), -- Paleto
+            vector3(252.30, -50.00, 68.97), -- Spanish Ave
+            vector3(2568.04, 294.26, 107.75), -- Route 15
+            vector3(-1117.89, 2698.55, 17.57), -- Route 68
+            vector3(-1305.71, -394.37, 35.72), -- Del Perro
+            vector3(-3172.21, 1087.77, 19.86), -- Great Route 1
+            vector3(842.40, -1033.40, 27.21), -- Vespucci Blvd
+        },
+        Items = {
+            {name = 'bproof_vest', price = 15000},
+            {name = 'handcuffs', price = 10000},
+            {name = 'balisegps', price = 2000},
+        },
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 175, g = 0, b = 0},
+        Distance = 1.5,
+        Name = "Ammunation",
+        HelpText = _('press_buy')
+    },
+
+
+    ShootingAmmunation = {
+        Blip = {
+            Sprite = 313,
+            Colour = 1,
+            Scale = 0.6  
+        },
+        Pos = {
+            vector3(21.56, -1106.61, 28.82), -- Adam's Apple Blvd
+            vector3(810.37, -2157.41, 28.64), -- Dry Dock Street
+        },
+        Items = {
+            {name = 'bproof_vest', price = 15000},
+            {name = 'handcuffs', price = 10000},
+            {name = 'balisegps', price = 2000},
+        },
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 175, g = 0, b = 0},
+        Distance = 1.5,
+        Name = "Ammunation",
+        HelpText = _('press_buy')
+    },
 }
 
 
