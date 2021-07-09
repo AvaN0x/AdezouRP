@@ -32,7 +32,7 @@ AddEventHandler('esx_ava_jobs:gang_hire', function(target, gangName)
 	local targetXPlayer = ESX.GetPlayerFromId(target)
 	local targetGang = GetGang(targetXPlayer)
 	if not targetGang.name then
-		MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, 0)", {
+		MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, 0) ON DUPLICATE KEY UPDATE name = @name, grade = 0", {
 			['@identifier'] = targetXPlayer.identifier,
 			['@name'] = gangName
 		})
@@ -95,19 +95,11 @@ TriggerEvent('es:addGroupCommand', 'setgang', 'admin', function(source, args, us
 		if xPlayer then
 			if Config.Jobs[args[2]] ~= nil and Config.Jobs[args[2]].isGang then
 				if tonumber(args[3]) >= 0 and tonumber(args[3]) <=1 then
-					if GetGang(xPlayer).name then
-						MySQL.Sync.execute("UPDATE `user_gang` SET `name` = @name, `grade` = @grade WHERE `identifier` = @identifier", {
-							['@identifier'] = xPlayer.identifier,
-							['@name'] = args[2],
-							['@grade'] = tonumber(args[3])
-						})
-					else
-						MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, @grade)", {
-							['@identifier'] = xPlayer.identifier,
-							['@name'] = args[2],
-							['@grade'] = tonumber(args[3])
-						})
-					end
+                    MySQL.Sync.execute("INSERT INTO `user_gang`(`identifier`, `name`, `grade`) VALUES (@identifier, @name, @grade) ON DUPLICATE KEY UPDATE name = @name, grade = @grade", {
+                        ['@identifier'] = xPlayer.identifier,
+                        ['@name'] = args[2],
+                        ['@grade'] = tonumber(args[3])
+                    })
 					TriggerClientEvent('esx_ava_jobs:setGang', args[1], {name = args[2], label = Config.Jobs[args[2]].LabelName, grade = tonumber(args[3])})
 				else
 					TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That gang grade does not exist.' } })
