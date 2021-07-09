@@ -106,7 +106,7 @@ Citizen.CreateThread(function()
                 loadAnimDict( "reaction@intimidation@1h" )
 
                 if CheckWeapon(newWeap) then
-                    if holstered then
+                    if holstered or currWeapon == GetHashKey('WEAPON_UNARMED')then
                         print(1)
                         canFire = false
                         TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
