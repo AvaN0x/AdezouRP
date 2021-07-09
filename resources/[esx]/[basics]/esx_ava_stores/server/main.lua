@@ -61,25 +61,45 @@ AddEventHandler('esx_ava_stores:BuyItem', function(storeName, item, count)
 end)
 
 ESX.RegisterServerCallback('esx_ava_stores:GetBuyItems', function(source, cb, storeName)
+    local _source = source
     local store = Config.Stores[storeName]
 
     if store and store.Items then
         local xPlayer = ESX.GetPlayerFromId(source)
         local inventory = xPlayer.getInventory()
-    
+        local playerLicenses = nil
+
+
         local items = {}
-        for k,v in pairs(store.Items) do
-            local item = inventory.getItem(v.name)
-            table.insert(items, {
-                label = item.label,
-                price = v.price,
-                name = v.name,
-                maxCanTake = inventory.canTake(v.name),
-                isDirtyMoney = v.isDirtyMoney
-            })
+        for i = 1, #store.Items, 1 do
+            local item = inventory.getItem(store.Items[i].name)
+
+            if store.Items[i].license and not playerLicenses then
+                playerLicenses = exports.esx_license:GetUserLicenses(_source)
+            end
+
+            if not store.Items[i].license or has_value(playerLicenses, store.Items[i].license) then
+                table.insert(items, {
+                    label = item.label,
+                    price = store.Items[i].price,
+                    name = store.Items[i].name,
+                    maxCanTake = inventory.canTake(store.Items[i].name),
+                    isDirtyMoney = store.Items[i].isDirtyMoney
+                })
+            end
         end
         cb(items)
     end
 end)
 
+function has_value(table, val)
+	if table then
+		for k, v in ipairs(table) do
+			if v == val then
+				return true
+			end
+		end
+	end
+	return false
+end
 

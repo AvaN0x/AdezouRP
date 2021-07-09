@@ -9,3 +9,9 @@ server_scripts {
 	'@mysql-async/lib/MySQL.lua',
 	'server/main.lua'
 }
+
+
+--* added by AvaN0x
+server_exports {
+    "GetUserLicenses"
+}
