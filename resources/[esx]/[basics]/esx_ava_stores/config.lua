@@ -183,11 +183,19 @@ Config.Stores = {
             {name = 'headbag', price = 200, isDirtyMoney = true},
             {name = 'tenuecasa', price = 200, isDirtyMoney = true},
             {name = 'balisegps', price = 200, isDirtyMoney = true},
+            {name = 'lockpick', price = 200, isDirtyMoney = true},
         },
         Distance = 1,
         Name = "Black Market",
         HelpText = _('press_buy')
     },
+
+
+
+
+
+
+
 
 
     Carwash_InnocenceBlvd = {

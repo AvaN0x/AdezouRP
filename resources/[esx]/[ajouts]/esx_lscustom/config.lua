@@ -42,58 +42,58 @@ Config.Zones = {
 		Hint  = _U('press_custom')
 	},
 
-	lshidden = {
-		Pos   = vector3(733.86, -1084.62, 21.19),
-		Size  = {x = 3.0, y = 3.0, z = 0.2},
-		Color = {r = 204, g = 204, b = 0},
-		Marker= 1,
-		Name  = _U('blip_name'),
-		Hint  = _U('press_custom'),
-        IsIllegal = true,
-        WhiteList = {
-            "main",
-            "cosmetics",
-            "resprays",
-            "wheels",
-            "modFrontWheelsColor",
-            "wheelColor",
-            "primaryRespray",
-            "secondaryRespray",
-            "pearlescentRespray",
-            "color1",
-            "color2",
-            "pearlescentColor",
-            "windowTint",
-            "plateIndex",
-        }
-	},
+	-- lshidden = {
+	-- 	Pos   = vector3(733.86, -1084.62, 21.19),
+	-- 	Size  = {x = 3.0, y = 3.0, z = 0.2},
+	-- 	Color = {r = 204, g = 204, b = 0},
+	-- 	Marker= 1,
+	-- 	Name  = _U('blip_name'),
+	-- 	Hint  = _U('press_custom'),
+    --     IsIllegal = true,
+    --     WhiteList = {
+    --         "main",
+    --         "cosmetics",
+    --         "resprays",
+    --         "wheels",
+    --         "modFrontWheelsColor",
+    --         "wheelColor",
+    --         "primaryRespray",
+    --         "secondaryRespray",
+    --         "pearlescentRespray",
+    --         "color1",
+    --         "color2",
+    --         "pearlescentColor",
+    --         "windowTint",
+    --         "plateIndex",
+    --     }
+	-- },
 
 
-	ls_lspd = {
-		Pos   = vector3(871.67, -1350.52, 25.33),
-		Size  = {x = 3.0, y = 3.0, z = 0.2},
-		Color = {r = 204, g = 204, b = 0},
-		Marker= 1,
-		Name  = _U('blip_name'),
-		Hint  = _U('press_custom'),
-        IsOnlyCash = true,
-        WhiteList = {
-            "main",
-            "cosmetics",
-            "resprays",
-            "wheels",
-            "modFrontWheelsColor",
-            "wheelColor",
-            "primaryRespray",
-            "secondaryRespray",
-            "pearlescentRespray",
-            "color1",
-            "color2",
-            "pearlescentColor",
-            "windowTint",
-            "plateIndex",
-        }
-	}
+	-- ls_lspd = {
+	-- 	Pos   = vector3(871.67, -1350.52, 25.33),
+	-- 	Size  = {x = 3.0, y = 3.0, z = 0.2},
+	-- 	Color = {r = 204, g = 204, b = 0},
+	-- 	Marker= 1,
+	-- 	Name  = _U('blip_name'),
+	-- 	Hint  = _U('press_custom'),
+    --     IsOnlyCash = true,
+    --     WhiteList = {
+    --         "main",
+    --         "cosmetics",
+    --         "resprays",
+    --         "wheels",
+    --         "modFrontWheelsColor",
+    --         "wheelColor",
+    --         "primaryRespray",
+    --         "secondaryRespray",
+    --         "pearlescentRespray",
+    --         "color1",
+    --         "color2",
+    --         "pearlescentColor",
+    --         "windowTint",
+    --         "plateIndex",
+    --     }
+	-- }
 
 }
 
