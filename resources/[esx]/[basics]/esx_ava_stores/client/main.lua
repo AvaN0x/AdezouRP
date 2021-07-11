@@ -280,65 +280,72 @@ end
 
 
 function CarWash()
-    -- TODO check money and remove it
     local veh = GetVehiclePedIsUsing(playerPed)
     if veh == 0 then
         ESX.ShowNotification(_('carwash_not_in_vehicle'))
+        CurrentActionEnabled = true
     elseif math.ceil(GetEntitySpeed(veh) * 3.6) > 5 then
         ESX.ShowNotification(_('carwash_driving_too_fast'))
+        CurrentActionEnabled = true
     else
-        local carwash = Config.Stores[CurrentZoneName]
-        local particles = {}
-        local isWorking = true
+        ESX.TriggerServerCallback('esx_ava_stores:carwash:checkMoney', function(hasEnoughMoney)
+            if not hasEnoughMoney then
+                ESX.ShowNotification(_('cant_afford'))
+                CurrentActionEnabled = true
+            else
+                local carwash = Config.Stores[CurrentZoneName]
+                local particles = {}
+                local isWorking = true
 
-        Citizen.CreateThread(function()
-            while isWorking do
-                DisableAllControlActions(0)
-                EnableControlAction(0, 1, true) -- Enable horizontal cam
-                EnableControlAction(0, 2, true) -- Enable vertical cam
-                Citizen.Wait(0)
-            end
-        end)
+                Citizen.CreateThread(function()
+                    while isWorking do
+                        DisableAllControlActions(0)
+                        EnableControlAction(0, 1, true) -- Enable horizontal cam
+                        EnableControlAction(0, 2, true) -- Enable vertical cam
+                        Citizen.Wait(0)
+                    end
+                end)
 
-        FreezeEntityPosition(veh, true)
-        FreezeEntityPosition(playerPed, true)
-        if carwash.Carwash.Particles then
-            local assetName = "scr_carwash"
+                FreezeEntityPosition(veh, true)
+                FreezeEntityPosition(playerPed, true)
+                if carwash.Carwash.Particles then
+                    local assetName = "scr_carwash"
 
-            for i = 1, #carwash.Carwash.Particles do
-                RequestNamedPtfxAsset(assetName)
-                UseParticleFxAsset(assetName)
+                    for i = 1, #carwash.Carwash.Particles do
+                        RequestNamedPtfxAsset(assetName)
+                        UseParticleFxAsset(assetName)
 
-                while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
+                        while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
 
-                local particle = carwash.Carwash.Particles[i]
-                table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, particle.Heading, 0.0, 0.0, 1.0, 0, 0, 0))
-            end
-        end
-
-        exports.progressBars:startUI(carwash.Carwash.Duration or 5000, _('carwash_on_cleaning'))
-        Citizen.Wait(carwash.Carwash.Duration or 5000)
-
-        WashDecalsFromVehicle(veh, 1.0)
-        SetVehicleDirtLevel(veh)
-
-        if #particles > 0 then
-            for i = 1, #particles do
-                if DoesParticleFxLoopedExist(particles[i]) then
-                    StopParticleFxLooped(particles[i], 0)
-                    RemoveParticleFx(particles[i], 0)
+                        local particle = carwash.Carwash.Particles[i]
+                        table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, particle.Heading, 0.0, 0.0, 1.0, 0, 0, 0))
+                    end
                 end
+
+                exports.progressBars:startUI(carwash.Carwash.Duration or 5000, _('carwash_on_cleaning'))
+                Citizen.Wait(carwash.Carwash.Duration or 5000)
+
+                WashDecalsFromVehicle(veh, 1.0)
+                SetVehicleDirtLevel(veh)
+
+                if #particles > 0 then
+                    for i = 1, #particles do
+                        if DoesParticleFxLoopedExist(particles[i]) then
+                            StopParticleFxLooped(particles[i], 0)
+                            RemoveParticleFx(particles[i], 0)
+                        end
+                    end
+                    particles = nil
+                end
+
+                isWorking = false
+                FreezeEntityPosition(playerPed, false)
+                FreezeEntityPosition(veh, false)
+                CurrentActionEnabled = true
+                ESX.ShowNotification(_('carwash_vehicle_cleaned'))
             end
-            particles = nil
-        end
-
-        isWorking = false
-        FreezeEntityPosition(playerPed, false)
-        FreezeEntityPosition(veh, false)
-        ESX.ShowNotification(_('carwash_vehicle_cleaned'))
+        end, CurrentZoneName)
     end
-    CurrentActionEnabled = true
-
 end
 
 

@@ -231,7 +231,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Carwash",
-        HelpText = _('press_wash_car')
+        HelpText = _('press_wash_car', 80)
     },
 
 

@@ -92,6 +92,30 @@ ESX.RegisterServerCallback('esx_ava_stores:GetBuyItems', function(source, cb, st
     end
 end)
 
+
+
+
+ESX.RegisterServerCallback('esx_ava_stores:carwash:checkMoney', function(source, cb, storeName)
+    local _source = source
+    local store = Config.Stores[storeName]
+
+    if store and store.Carwash then
+        local price = store.Carwash.Price or 80
+        local xPlayer = ESX.GetPlayerFromId(_source)
+        print(price)
+        if xPlayer.get('money') >= price then
+            xPlayer.removeMoney(price)
+            cb(true)
+        else
+            cb(false)
+        end
+    else
+        cb(false)
+    end
+end)
+
+
+
 function has_value(table, val)
 	if table then
 		for k, v in ipairs(table) do

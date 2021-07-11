@@ -16,7 +16,7 @@ Locales["fr"] = {
 	["you_paid"] = "Vous avez payé ~r~$ %s",
 	["you_paid_dirty"] = "Vous avez payé ~r~$%s~s~ d'argent sale",
 
-    ["press_wash_car"] = "Appuyez sur ~INPUT_CONTEXT~ pour laver votre véhicule pour ~g~$80~s~",
+    ["press_wash_car"] = "Appuyez sur ~INPUT_CONTEXT~ pour laver votre véhicule pour ~g~$%s~s~",
     ["carwash_not_in_vehicle"] = "Vous n'êtes pas dans un véhicule",
     ["carwash_driving_too_fast"] = "Vous conduisez trop vite",
     ["carwash_on_cleaning"] = "Lavage en cours",
