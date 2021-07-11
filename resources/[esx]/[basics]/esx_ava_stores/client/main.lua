@@ -318,7 +318,7 @@ function CarWash()
                         while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
 
                         local particle = carwash.Carwash.Particles[i]
-                        table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, particle.Heading, 0.0, 0.0, 1.0, 0, 0, 0))
+                        table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0, particle.Heading + 0.0, 0.0, 1.0, 0.0, 0, 0))
                     end
                 end
 

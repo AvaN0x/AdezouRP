@@ -203,24 +203,97 @@ Config.Stores = {
                 {
                     Coord = vector3(29.15, -1389.88, 29.0),
                     Name = "ent_amb_car_wash_jet",
-                    Heading = 90.0
+                    Heading = 180.0
                 },
                 {
                     Coord = vector3(29.15, -1389.88, 30.0),
                     Name = "ent_amb_car_wash_jet",
-                    Heading = 90.0
+                    Heading = 180.0
                 },
 
                 --left
                 {
                     Coord = vector3(29.15, -1393.80, 29.0),
                     Name = "ent_amb_car_wash_jet",
-                    Heading = -90.0
+                    Heading = 0.0
                 },
                 {
                     Coord = vector3(29.15, -1393.80, 30.0),
                     Name = "ent_amb_car_wash_jet",
-                    Heading = -90.0
+                    Heading = 0.0
+                },
+            },
+            Price = 80,
+            Duration = 5000
+        },
+        Marker = 27,
+        Size = {x = 3.5, y = 3.5, z = 3.0},
+        Distance = 2,
+        Color = {r = 198, g = 183, b = 222},
+        Name = "Carwash",
+        HelpText = _('press_wash_car', 80)
+    },
+
+
+    Carwash_CarsonAve = {
+        Blip = {
+            Sprite = 100,
+            Colour = 0,
+            Scale = 0.6  
+        },
+        Coord = vector3(167.90, -1715.70, 28.31),
+        Carwash = {
+            Particles = {
+                -- right
+                {
+                    Coord = vector3(169.25, -1716.62, 29.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 310.0
+                },
+                {
+                    Coord = vector3(169.25, -1716.62, 29.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 310.0
+                },
+
+                --left
+                {
+                    Coord = vector3(166.44, -1714.57, 29.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 130.0
+                },
+                {
+                    Coord = vector3(166.44, -1714.57, 29.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 130.0
+                },
+            },
+            Price = 80,
+            Duration = 5000
+        },
+        Marker = 27,
+        Size = {x = 3.5, y = 3.5, z = 3.0},
+        Distance = 2,
+        Color = {r = 198, g = 183, b = 222},
+        Name = "Carwash",
+        HelpText = _('press_wash_car', 80)
+    },
+
+
+
+    Carwash_Paleto = {
+        Blip = {
+            Sprite = 100,
+            Colour = 0,
+            Scale = 0.6  
+        },
+        Coord = vector3(-75.27, 6424.31, 30.51),
+        Carwash = {
+            Particles = {
+                {
+                    Coord = vector3(-70.69, 6423.91, 31.68),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = -80.0
                 },
             },
             Price = 80,
@@ -237,3 +310,7 @@ Config.Stores = {
 
 }
 
+
+
+-- {-699.6325,  -932.7043,  17.0139},
+-- {1362.5385, 3592.1274, 33.9211}
