@@ -36,21 +36,29 @@ Citizen.CreateThread(function()
     TriggerServerEvent("esx_ava_stores:requestGang")
 
     for _, v in pairs(Config.Stores) do
-        if v.Blip then
-            for _, coord in pairs(v.Pos) do
-                local blip = AddBlipForCoord(coord)
+        local function CreateBlip(coord)
+            local blip = AddBlipForCoord(coord)
+                    
+            SetBlipSprite (blip, v.Blip.Sprite)
+            SetBlipDisplay(blip, 4)
+            SetBlipScale  (blip, v.Blip.Scale)
+            SetBlipColour (blip, v.Blip.Colour)
+            SetBlipAsShortRange(blip, true)
+            
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentString(v.Blip.Name or v.Name)
+            EndTextCommandSetBlipName(blip)
+            
+            table.insert(mainBlips, blip)
+        end
 
-                SetBlipSprite (blip, v.Blip.Sprite)
-                SetBlipDisplay(blip, 4)
-                SetBlipScale  (blip, v.Blip.Scale)
-                SetBlipColour (blip, v.Blip.Colour)
-                SetBlipAsShortRange(blip, true)
-        
-                BeginTextCommandSetBlipName("STRING")
-                AddTextComponentString(v.Blip.Name or v.Name)
-                EndTextCommandSetBlipName(blip)
-        
-                table.insert(mainBlips, blip)
+        if v.Blip then
+            if v.Coords then 
+                for _, coord in pairs(v.Coords) do
+                    CreateBlip(coord)
+                end
+            elseif v.Coord then
+                CreateBlip(v.Coord)
             end
         end
     end
@@ -118,12 +126,30 @@ Citizen.CreateThread(function()
         local isInMarker  = false
         local currentZoneName = nil
 
+        local function CheckCoord(coord)
+
+        end
+
         for k, v in pairs(Config.Stores) do
-            for _, coord in pairs(v.Pos) do
-                local distance = #(playerCoords - coord)
+            if v.Coords then
+                for _, coord in ipairs(v.Coords) do
+                    local distance = #(playerCoords - coord)
+                    if distance < Config.DrawDistance then
+                        if v.Marker ~= nil then
+                            DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                        end
+                        waitTimer = 0
+                        if distance < (v.Distance or v.Size.x or 1.5) then
+                            isInMarker = true
+                            currentZoneName = k
+                        end
+                    end
+                end
+            elseif v.Coord then
+                local distance = #(playerCoords - v.Coord)
                 if distance < Config.DrawDistance then
                     if v.Marker ~= nil then
-                        DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
                     end
                     waitTimer = 0
                     if distance < (v.Distance or v.Size.x or 1.5) then
@@ -190,6 +216,8 @@ Citizen.CreateThread(function()
 
                 if store.Items then
                     BuyZone()
+                elseif store.Carwash then
+                    CarWash()
                 end
 
 			end
@@ -251,6 +279,97 @@ end
 
 
 
+function CarWash()
+    -- TODO check money and remove it
+    local veh = GetVehiclePedIsUsing(playerPed)
+    if veh == 0 then
+        ESX.ShowNotification(_('carwash_not_in_vehicle'))
+    elseif math.ceil(GetEntitySpeed(veh) * 3.6) > 5 then
+        ESX.ShowNotification(_('carwash_driving_too_fast'))
+    else
+        local carwash = Config.Stores[CurrentZoneName]
+        local particles = {}
+        local isWorking = true
+
+        Citizen.CreateThread(function()
+            while isWorking do
+                DisableAllControlActions(0)
+                EnableControlAction(0, 1, true) -- Enable horizontal cam
+                EnableControlAction(0, 2, true) -- Enable vertical cam
+                Citizen.Wait(0)
+            end
+        end)
+
+        FreezeEntityPosition(veh, true)
+        FreezeEntityPosition(playerPed, true)
+        if carwash.Carwash.Particles then
+            local assetName = "scr_carwash"
+
+            for i = 1, #carwash.Carwash.Particles do
+                RequestNamedPtfxAsset(assetName)
+                UseParticleFxAsset(assetName)
+
+                while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
+
+                local particle = carwash.Carwash.Particles[i]
+                table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, particle.Heading, 0.0, 0.0, 1.0, 0, 0, 0))
+            end
+        end
+
+        exports.progressBars:startUI(carwash.Carwash.Duration or 5000, _('carwash_on_cleaning'))
+        Citizen.Wait(carwash.Carwash.Duration or 5000)
+
+        WashDecalsFromVehicle(veh, 1.0)
+        SetVehicleDirtLevel(veh)
+
+        if #particles > 0 then
+            for i = 1, #particles do
+                if DoesParticleFxLoopedExist(particles[i]) then
+                    StopParticleFxLooped(particles[i], 0)
+                    RemoveParticleFx(particles[i], 0)
+                end
+            end
+            particles = nil
+        end
+
+        isWorking = false
+        FreezeEntityPosition(playerPed, false)
+        FreezeEntityPosition(veh, false)
+        ESX.ShowNotification(_('carwash_vehicle_cleaned'))
+    end
+    CurrentActionEnabled = true
+
+end
 
 
+-- function Utils:StartWashParticle(actualZone)
+--     local asset = "scr_carwash"
+    
+--     for i = 1, #actualZone.particlesStart do
+--         local currentParticle = actualZone.particlesStart[i]
 
+--         RequestNamedPtfxAsset(asset)
+--         UseParticleFxAssetNextCall(asset)
+
+--         while not HasNamedPtfxAssetLoaded(asset) do
+--             Wait(100)
+--         end
+        
+--         actualZone.particlesStart[i].createdParticle = StartParticleFxLoopedAtCoord(currentParticle.particle, currentParticle.pos, currentParticle.xRot, 0.0, 0.0, 1.0, 0, 0, 0)
+        
+--         if (currentParticle.nextWait > 0) then 
+--             Wait(currentParticle.nextWait)
+--         end
+--     end
+-- end
+
+-- function Utils:StopAllParticles(actualZone)
+--     for i = 1, #actualZone.particlesStart do
+--         local particle = actualZone.particlesStart[i].createdParticle
+
+--         StopParticleFxLooped(particle, 0)
+--         RemoveParticleFx(particle, 0)
+
+--         actualZone.particlesStart[i].createdParticle = nil
+--     end
+-- end

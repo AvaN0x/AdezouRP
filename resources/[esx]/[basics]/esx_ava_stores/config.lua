@@ -16,7 +16,7 @@ Config.Stores = {
             Colour = 4,
             Scale = 0.6  
         },
-        Pos = {
+        Coords = {
             vector3(373.87, 325.87, 102.59), -- Clinton Ave
             vector3(2557.45, 382.28, 107.64), -- Route 15
             vector3(-3039.55, 586.05, 6.93), -- Inesedo Rd.
@@ -52,7 +52,7 @@ Config.Stores = {
             Colour = 4,
             Scale = 0.6  
         },
-        Pos = {
+        Coords = {
             vector3(1135.83, -982.10, 45.44), -- Vespucci Blvd
             vector3(-1222.91, -906.98, 11.34), -- San Andreas Ave
             vector3(-1487.55, -379.10, 39.18), -- Prosperity St
@@ -86,7 +86,7 @@ Config.Stores = {
             Colour = 4,
             Scale = 0.6  
         },
-        Pos = {
+        Coords = {
             vector3(-48.05, -1756.84, 28.44), -- Grove Street
             vector3(1163.27, -323.11, 68.23), -- W Mirror Drive
             vector3(-707.54, -913.97, 18.24), -- Little Seoul
@@ -118,7 +118,7 @@ Config.Stores = {
             Colour = 1,
             Scale = 0.6  
         },
-        Pos = {
+        Coords = {
             vector3(-662.31, -935.17, 20.85), -- Little Seoul
             vector3(1693.02, 3759.61, 33.73), -- Sandy Shores
             vector3(-330.28, 6083.78, 30.47), -- Paleto
@@ -154,7 +154,7 @@ Config.Stores = {
             Colour = 1,
             Scale = 0.6  
         },
-        Pos = {
+        Coords = {
             vector3(21.56, -1106.61, 28.82), -- Adam's Apple Blvd
             vector3(810.37, -2157.41, 28.64), -- Dry Dock Street
         },
@@ -178,9 +178,7 @@ Config.Stores = {
 
 
     BlackMarket = {
-        Pos = {
-            vector3(1716.30, 3295.09, 40.32)
-        },
+        Coord = vector3(1716.30, 3295.09, 40.32),
         Items = {
             {name = 'headbag', price = 200, isDirtyMoney = true},
             {name = 'tenuecasa', price = 200, isDirtyMoney = true},
@@ -190,5 +188,52 @@ Config.Stores = {
         Name = "Black Market",
         HelpText = _('press_buy')
     },
+
+
+    Carwash_InnocenceBlvd = {
+        Blip = {
+            Sprite = 100,
+            Colour = 0,
+            Scale = 0.6  
+        },
+        Coord = vector3(29.06, -1391.93, 28.38),
+        Carwash = {
+            Particles = {
+                -- right
+                {
+                    Coord = vector3(29.15, -1389.88, 29.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 90.0
+                },
+                {
+                    Coord = vector3(29.15, -1389.88, 30.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 90.0
+                },
+
+                --left
+                {
+                    Coord = vector3(29.15, -1393.80, 29.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = -90.0
+                },
+                {
+                    Coord = vector3(29.15, -1393.80, 30.0),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = -90.0
+                },
+            },
+            Price = 80,
+            Duration = 5000
+        },
+        Marker = 27,
+        Size = {x = 3.5, y = 3.5, z = 3.0},
+        Distance = 2,
+        Color = {r = 198, g = 183, b = 222},
+        Name = "Carwash",
+        HelpText = _('press_wash_car')
+    },
+
+
 }
 
