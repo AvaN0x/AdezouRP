@@ -230,7 +230,52 @@ Config.Stores = {
         Size = {x = 3.5, y = 3.5, z = 3.0},
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
-        Name = "Carwash",
+        Name = "Station de lavage",
+        HelpText = _('press_wash_car', 80)
+    },
+
+
+    Carwash_LittleSeoul = {
+        Blip = {
+            Sprite = 100,
+            Colour = 0,
+            Scale = 0.6  
+        },
+        Coord = vector3(-699.65, -933.13, 18.03),
+        Carwash = {
+            Particles = {
+                -- right
+                {
+                    Coord = vector3(-702.59, -933.14, 18.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 90.0
+                },
+                {
+                    Coord = vector3(-702.59, -933.14, 19.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 90.0
+                },
+
+                --left
+                {
+                    Coord = vector3(-697.40, -933.10, 18.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 270.0
+                },
+                {
+                    Coord = vector3(-697.40, -933.10, 19.5),
+                    Name = "ent_amb_car_wash_jet",
+                    Heading = 270.0
+                },
+            },
+            Price = 80,
+            Duration = 5000
+        },
+        Marker = 27,
+        Size = {x = 3.5, y = 3.5, z = 3.0},
+        Distance = 2,
+        Color = {r = 198, g = 183, b = 222},
+        Name = "Station de lavage",
         HelpText = _('press_wash_car', 80)
     },
 
@@ -275,7 +320,7 @@ Config.Stores = {
         Size = {x = 3.5, y = 3.5, z = 3.0},
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
-        Name = "Carwash",
+        Name = "Station de lavage",
         HelpText = _('press_wash_car', 80)
     },
 
@@ -303,7 +348,27 @@ Config.Stores = {
         Size = {x = 3.5, y = 3.5, z = 3.0},
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
-        Name = "Carwash",
+        Name = "Station de lavage",
+        HelpText = _('press_wash_car', 80)
+    },
+
+
+    Carwash_Sandy = {
+        Blip = {
+            Sprite = 100,
+            Colour = 0,
+            Scale = 0.6  
+        },
+        Coord = vector3(1362.08, 3592.20, 33.94),
+        Carwash = {
+            Price = 80,
+            Duration = 5000
+        },
+        Marker = 27,
+        Size = {x = 3.5, y = 3.5, z = 3.0},
+        Distance = 2,
+        Color = {r = 198, g = 183, b = 222},
+        Name = "Station de lavage",
         HelpText = _('press_wash_car', 80)
     },
 
