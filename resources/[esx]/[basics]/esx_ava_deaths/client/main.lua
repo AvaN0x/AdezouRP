@@ -398,6 +398,7 @@ AddEventHandler('esx_ava_deaths:admin:revive', function(debug)
 
 				StopScreenEffect('DeathFailOut')
 				DoScreenFadeIn(800)
+                TriggerEvent("esx_status:remove", "injured", 250000)
 
 				ESX.ShowAdvancedNotification('STAFF INFO', 'STAFF ~g~REVIVE', 'Tu as été revive par un staff.', 'CHAR_DEVIN', 8)
 			end)
