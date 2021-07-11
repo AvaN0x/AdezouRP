@@ -171,7 +171,7 @@ Citizen.CreateThread(function()
 				DrawText(0.8, 0.88)
 
 				if IsControlJustReleased(0, Config.Doors.DebugKey) then
-					local offset = tonumber(ESX.KeyboardInput(_('enter_x_offset'), 0, 10))
+					local offset = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_x_offset'), 0, 10))
 					if type(offset) == "number" or type(offset) == "float" then
 						local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
 						doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x + offset, 0.0, 0.0)

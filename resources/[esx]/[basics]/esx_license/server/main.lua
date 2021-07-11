@@ -166,3 +166,21 @@ end)
 ESX.RegisterServerCallback('esx_license:getLicensesList', function(source, cb)
 	GetLicensesList(cb)
 end)
+
+--* added by AvaN0x
+function GetUserLicenses(target)
+	local xPlayer = ESX.GetPlayerFromId(target)
+	local result = MySQL.Sync.fetchAll(
+        'SELECT type FROM user_licenses WHERE owner = @owner',
+        {
+            ['@owner'] = xPlayer.identifier
+        }
+    )
+    local licenses = {}
+
+    for i = 1, #result, 1 do 
+        table.insert(licenses, result[i].type)
+    end
+
+    return licenses
+end

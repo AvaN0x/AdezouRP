@@ -30,6 +30,7 @@ files {
 }
 
 export {
+    "KeyboardInput",
     "DrawText3D",
     "DrawBubbleText3D",
     "ChooseClosestPlayer",

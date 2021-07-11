@@ -30,7 +30,7 @@ end)
 ESX.RegisterUsableItem("donut", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "donut")
 
-	TriggerClientEvent("esx_status:add", source, "hunger", 200000)
+	TriggerClientEvent("esx_status:add", source, "hunger", 60000)
 
 	TriggerClientEvent("esx_ava_needs:onEat", source, "prop_amb_donut")
 end)

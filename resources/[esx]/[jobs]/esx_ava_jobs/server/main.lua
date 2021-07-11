@@ -411,7 +411,7 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
         else
             if isIllegal == true then
                 if xPlayer.getAccount('black_money').money < totalprice then
-                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
+                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford_dirty'))
                 else
                     xPlayer.removeAccountMoney('black_money', totalprice)
                     inventory.addItem(item, count)
@@ -419,7 +419,7 @@ AddEventHandler('esx_ava_jobs:BuyItem', function(jobName, zoneName, item, count)
                 end
             else
                 if xPlayer.getMoney() < totalprice then
-                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford_dirty'))
+                    TriggerClientEvent('esx:showNotification', source, _('buy_cant_afford'))
                 else
                     if job.SocietyName then
                         TriggerEvent('esx_statejob:getTaxed', job.SocietyName, totalprice, function(toSociety)

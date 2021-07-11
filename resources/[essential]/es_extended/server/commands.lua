@@ -1,7 +1,8 @@
 TriggerEvent('es:addGroupCommand', 'tp', 'admin', function(source, args, user)
-	local x = tonumber(args[1])
-	local y = tonumber(args[2])
-	local z = tonumber(args[3])
+    --* modified by AvaN0x
+	local x = tonumber((string.gsub(args[1], ",$", ""))) -- double parentheses are needed to only use first return of gsub
+	local y = tonumber((string.gsub(args[2], ",$", "")))
+	local z = tonumber((string.gsub(args[3], ",$", "")))
 	
 	if x and y and z then
 		TriggerClientEvent('esx:teleport', source, {
