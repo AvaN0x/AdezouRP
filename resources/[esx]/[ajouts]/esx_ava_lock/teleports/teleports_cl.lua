@@ -35,6 +35,12 @@ AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
 end)
 
+--* already in doors/doors_cl.lua
+-- RegisterNetEvent('esx_ava_jobs:setGang')
+-- AddEventHandler('esx_ava_jobs:setGang', function(gang)
+-- 	actualGang = gang
+-- end)
+
 Citizen.CreateThread(function()
 	for k,tpID in ipairs(Config.Teleports.TeleportersList) do
 		for k2,tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
@@ -111,6 +117,13 @@ function IsAuthorized(tpID)
 	if tpID.authorizedJobs then
 		for _,job in pairs(tpID.authorizedJobs) do
 			if job == PlayerData.job.name or job == PlayerData.job2.name then
+				return true
+			end
+		end
+	end
+	if tpID.authorizedGangs and actualGang then
+		for _,gang in pairs(tpID.authorizedGangs) do
+			if gang == actualGang.name then
 				return true
 			end
 		end

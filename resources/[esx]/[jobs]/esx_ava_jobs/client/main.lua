@@ -240,6 +240,11 @@ function createBlips()
                 end
             end
 		end
+		if job.Blips ~= nil then
+            for k, v in pairs(job.Blips) do
+                addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+            end
+		end
 		if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 if v.Blip and v.GradeEnabled then

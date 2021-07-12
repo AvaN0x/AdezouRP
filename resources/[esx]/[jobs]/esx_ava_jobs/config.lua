@@ -1880,218 +1880,6 @@ Config.Jobs = {
             }
         }
     },
-    fabriquearme = {
-        isGang = true,
-        SocietyName = 'society_fabriquearme',
-        LabelName = 'Fabricant d\'armes',
-        Blip = {
-            Sprite = 556,
-            Colour = 31
-        },
-        Zones = {
-            Bunker = {
-                Name  = "Bunker",
-                Pos = vector3(2109.59, 3325.00, 45.36),
-                Blip = true
-            },
-        },
-        ProcessMenuZones = {
-            -- clips
-            {
-                Title = "Fabrication de chargeurs",
-                Process = {
-                    ClipProcess = {
-                        Name = 'Chargeurs',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 1},
-                            {name = 'gunpowder', quantity = 4}
-                        },
-                        ItemsGet = {
-                            {name = 'clip', quantity = 5}
-                        },
-                        Delay = 2000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                },
-                MaxProcess = 5,
-                Pos = vector3(898.04, -3221.57, -99.23),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Fabrication de chargeurs",
-                HelpText = _('press_traitement'),
-                Marker = 27,
-                Blip = false
-            },
-
-            -- pistols
-            {
-                Title = "Fabrication de pistolets",
-                Process = {
-                    PistolProcess = {
-                        Name = 'Pistolet 9mm',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 40},
-                            {name = 'plastic', quantity = 30},
-                            {name = 'grease', quantity = 5}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_pistol', quantity = 1}
-                        },
-                        Delay = 20000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                },
-                MaxProcess = 5,
-                Pos = vector3(905.98, -3230.79, -99.27),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Fabrication de pistolets",
-                HelpText = _('press_traitement'),
-                Marker = 27,
-                Blip = false
-            },
-
-            -- smgs
-            {
-                Title = "Fabrication de pistolets mitrailleurs",
-                Process = {
-                    UZIProcess = {
-                        Name = 'Uzi',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 80},
-                            {name = 'plastic', quantity = 60},
-                            {name = 'grease', quantity = 10}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_microsmg', quantity = 1}
-                        },
-                        Delay = 20000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                    MachinePistolProcess = {
-                        Name = 'Tec-9',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 70},
-                            {name = 'plastic', quantity = 50},
-                            {name = 'grease', quantity = 5}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_machinepistol', quantity = 1}
-                        },
-                        Delay = 20000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                },
-                MaxProcess = 5,
-                Pos = vector3(896.58, -3217.3, -99.24),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Fabrication de pistolets mitrailleurs",
-                HelpText = _('press_traitement'),
-                Marker = 27,
-                Blip = false
-            },
-
-            -- shotguns
-            {
-                Title = "Fabrication de fusils à pompe",
-                Process = {
-                    SawnOffProcess = {
-                        Name = 'Fusil à pompe',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 80},
-                            {name = 'plastic', quantity = 60},
-                            {name = 'grease', quantity = 10}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_sawnoffshotgun', quantity = 1}
-                        },
-                        Delay = 40000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                },
-                MaxProcess = 5,
-                Pos = vector3(891.73, -3196.8, -99.18),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Fabrication de fusils à pompe",
-                HelpText = _('press_traitement'),
-                Marker = 27,
-                Blip = false
-            },
-
-            -- assault rifles
-            {
-                Title = "Fabrication de fusils d'assaut",
-                Process = {
-                    GusenbergProcess = {
-                        Name = 'Gusenberg',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 130},
-                            {name = 'plastic', quantity = 110},
-                            {name = 'grease', quantity = 15}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_gusenberg', quantity = 1}
-                        },
-                        Delay = 40000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                    ARProcess = {
-                        Name = 'AK-47',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 145},
-                            {name = 'plastic', quantity = 120},
-                            {name = 'grease', quantity = 15}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_assaultrifle', quantity = 1}
-                        },
-                        Delay = 50000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                    CompactARProcess = {
-                        Name = 'AK compact',
-                        ItemsGive = {
-                            {name = 'steel', quantity = 130},
-                            {name = 'plastic', quantity = 100},
-                            {name = 'grease', quantity = 10}
-                        },
-                        ItemsGet = {
-                            {name = 'weapon_compactrifle', quantity = 1}
-                        },
-                        Delay = 35000,
-                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
-                    },
-                },
-                MaxProcess = 5,
-                Pos = vector3(884.92, -3199.9, -99.18),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Fabrication de fusils d'assaut",
-                HelpText = _('press_traitement'),
-                Marker = 27,
-                Blip = false
-            }
-        },
-        BuyZones = {
-            BuyDrinks = {
-                Items = {
-                    {name = 'steel', price = 800, isDirtyMoney = true},
-                    {name = 'plastic', price = 350, isDirtyMoney = true},
-                    {name = 'gunpowder', price = 100, isDirtyMoney = true},
-                    {name = 'grease', price = 60, isDirtyMoney = true},
-                },
-                Pos = vector3(612.6, -3074.04, 5.09),
-                Size  = {x = 1.5, y = 1.5, z = 1.5},
-                Color = {r = 72, g = 34, b = 43},
-                Name  = "Achat de matériaux",
-                HelpText = _('press_buy'),
-                Marker = 27,
-                Blip = true
-            }
-        }
-    },
 
 
     weed = {
@@ -2434,6 +2222,16 @@ Config.Jobs = {
 	biker_lost = {
         isGang = true,
 		LabelName = "The Lost",
+        Blip = {
+            Sprite = 556,
+            Colour = 31
+        },
+        Blips = {
+            {
+                Name  = "Bunker",
+                Pos = vector3(2109.59, 3325.00, 45.36)
+            },
+        },
 		Zones = {
 			Stock = {
 				Pos = vector3(977.11, -104.00, 73.87),
@@ -2468,8 +2266,204 @@ Config.Jobs = {
                     Pos = vector3(975.37, -140.63, 74.23),
                     Heading = 50.0
                 },
+            }
+		},
+        ProcessMenuZones = {
+            -- clips
+            {
+                Title = "Fabrication de chargeurs",
+                Process = {
+                    ClipProcess = {
+                        Name = 'Chargeurs',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 1},
+                            {name = 'gunpowder', quantity = 4}
+                        },
+                        ItemsGet = {
+                            {name = 'clip', quantity = 5}
+                        },
+                        Delay = 2000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                },
+                MaxProcess = 5,
+                Pos = vector3(898.04, -3221.57, -99.23),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Fabrication de chargeurs",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = false
             },
-		}
+
+            -- pistols
+            {
+                Title = "Fabrication de pistolets",
+                Process = {
+                    PistolProcess = {
+                        Name = 'Pistolet 9mm',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 40},
+                            {name = 'plastic', quantity = 30},
+                            {name = 'grease', quantity = 5}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_pistol', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                },
+                MaxProcess = 5,
+                Pos = vector3(905.98, -3230.79, -99.27),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Fabrication de pistolets",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = false
+            },
+
+            -- smgs
+            {
+                Title = "Fabrication de pistolets mitrailleurs",
+                Process = {
+                    UZIProcess = {
+                        Name = 'Uzi',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 80},
+                            {name = 'plastic', quantity = 60},
+                            {name = 'grease', quantity = 10}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_microsmg', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                    MachinePistolProcess = {
+                        Name = 'Tec-9',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 70},
+                            {name = 'plastic', quantity = 50},
+                            {name = 'grease', quantity = 5}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_machinepistol', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                },
+                MaxProcess = 5,
+                Pos = vector3(896.58, -3217.3, -99.24),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Fabrication de pistolets mitrailleurs",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = false
+            },
+
+            -- shotguns
+            {
+                Title = "Fabrication de fusils à pompe",
+                Process = {
+                    SawnOffProcess = {
+                        Name = 'Fusil à pompe',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 80},
+                            {name = 'plastic', quantity = 60},
+                            {name = 'grease', quantity = 10}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_sawnoffshotgun', quantity = 1}
+                        },
+                        Delay = 40000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                },
+                MaxProcess = 5,
+                Pos = vector3(891.73, -3196.8, -99.18),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Fabrication de fusils à pompe",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = false
+            },
+
+            -- assault rifles
+            {
+                Title = "Fabrication de fusils d'assaut",
+                Process = {
+                    GusenbergProcess = {
+                        Name = 'Gusenberg',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 130},
+                            {name = 'plastic', quantity = 110},
+                            {name = 'grease', quantity = 15}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_gusenberg', quantity = 1}
+                        },
+                        Delay = 40000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                    ARProcess = {
+                        Name = 'AK-47',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 145},
+                            {name = 'plastic', quantity = 120},
+                            {name = 'grease', quantity = 15}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_assaultrifle', quantity = 1}
+                        },
+                        Delay = 50000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                    CompactARProcess = {
+                        Name = 'AK compact',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 130},
+                            {name = 'plastic', quantity = 100},
+                            {name = 'grease', quantity = 10}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_compactrifle', quantity = 1}
+                        },
+                        Delay = 35000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                },
+                MaxProcess = 5,
+                Pos = vector3(884.92, -3199.9, -99.18),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Fabrication de fusils d'assaut",
+                HelpText = _('press_traitement'),
+                Marker = 27,
+                Blip = false
+            }
+        },
+        BuyZones = {
+            BuyMaterials = {
+                Items = {
+                    {name = 'steel', price = 800, isDirtyMoney = true},
+                    {name = 'plastic', price = 350, isDirtyMoney = true},
+                    {name = 'gunpowder', price = 100, isDirtyMoney = true},
+                    {name = 'grease', price = 60, isDirtyMoney = true},
+                },
+                Pos = vector3(612.6, -3074.04, 5.09),
+                Size  = {x = 1.5, y = 1.5, z = 1.5},
+                Color = {r = 72, g = 34, b = 43},
+                Name  = "Achat de matériaux",
+                HelpText = _('press_buy'),
+                Marker = 27,
+                Blip = true
+            }
+        }
 	},
 	orga_cartel = {
         isGang = true,

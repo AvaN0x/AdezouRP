@@ -180,7 +180,7 @@ Config.Teleports = {
 				size  = {x = 2.5, y = 2.5, z = 1.0},
 				label = "Sortir"
 			},
-			authorizedJobs = { 'fabriquearme' },
+			authorizedGangs = { 'biker_lost' },
 			allowVehicles = true,
 			locked = true
 		},
