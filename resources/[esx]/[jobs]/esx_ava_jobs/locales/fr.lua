@@ -76,6 +76,20 @@ Locales['fr'] = {
 	["gang_promote"] = "Autoriser à gérer",
 	["gang_demote"] = "Empécher de gérer",
 
+
+    -- Job Center
+    ["job_center"] = "Pole Emploi",
+    ["job_center_choose_job"] = "Choisissez un emplacement",
+    ["job_center_primary"] = "Métier principal",
+    ["job_center_primary_detail"] = "Emplacement de métier principal",
+    ["job_center_secondary"] = "Métier Secondaire",
+    ["job_center_secondary_detail"] = "Emplacement de métier secondaire",
+    ["job_center_error_happened"] = "Vous avez été engagé en métier principal",
+    ["job_center_set_primary"] = "Vous avez été engagé en métier secondaire",
+    ["job_center_set_secondary"] = "Une erreur est survenue",
+
+
+
     -- LSPD
     ["fine"] = "Amende",
     ["fine_detail"] = "Rédiger une amende",

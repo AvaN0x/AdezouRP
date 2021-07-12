@@ -458,6 +458,33 @@ end)
 
 
 
+RegisterNetEvent('esx_ava_jobs:job_center:hire')
+AddEventHandler('esx_ava_jobs:job_center:hire', function(index, jobSlot)
+    local _source = source
+    if index == nil or jobSlot == nil then
+        return
+    end
+    local job = Config.JobCenter.JobList[index]
+    local notificationText = _("job_center_error_happened")
+
+    if job then
+        local xPlayer = ESX.GetPlayerFromId(_source)
+    
+        if jobSlot == 1 then
+            xPlayer.setJob(job.JobName, job.Grade or 0)
+            notificationText = _("job_center_set_primary")
+
+        elseif jobSlot == 2 then
+            xPlayer.setJob2(job.Job2Name or job.JobName, job.Grade2 or job.Grade or 0)
+            notificationText = _("job_center_set_secondary")
+
+        end
+    end
+
+
+    TriggerClientEvent('esx:showNotification', _source, notificationText)	
+end)
+
 
 ----------------
 -- JOBS ITEMS --

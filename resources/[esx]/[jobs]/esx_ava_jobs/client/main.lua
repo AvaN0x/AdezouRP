@@ -57,6 +57,20 @@ Citizen.CreateThread(function()
         end
     end
 
+    local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Pos)
+    SetBlipSprite (jobCenterBlip, Config.JobCenter.Blip.Sprite)
+    SetBlipDisplay(jobCenterBlip, 4)
+    SetBlipScale  (jobCenterBlip, 1.0)
+    SetBlipColour (jobCenterBlip, Config.JobCenter.Blip.Colour)
+    SetBlipAsShortRange(jobCenterBlip, true)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString(Config.JobCenter.Blip.Name)
+    EndTextCommandSetBlipName(jobCenterBlip)
+
+    table.insert(mainBlips, jobCenterBlip)
+
+
     Citizen.Wait(1000)
     TriggerServerEvent("esx_ava_jobs:requestGang")
 end)
@@ -350,6 +364,14 @@ Citizen.CreateThread(function()
                 end
             end
         end
+        if Config.JobCenter ~= nil then
+            local v = Config.JobCenter
+            if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100, false, true, 2, false, false, false, false)
+                foundMarker = true
+            end
+        end
+
         if not foundMarker then
             Wait(500)
         end
@@ -427,8 +449,18 @@ Citizen.CreateThread(function()
                     end
 				end
 			end
-
+            
 		end
+        if Config.JobCenter ~= nil then
+            local v = Config.JobCenter
+            if (#(playerCoords - v.Pos) < (v.Distance or 2)) then
+                isInMarker = true
+                zoneJob = "JobCenter"
+                zoneCategoryPlayerIsIn = "JobCenter"
+                zoneNamePlayerIsIn = "JobCenter"
+                zonePlayerIsIn = v
+            end
+        end
 
 
         if (isInMarker and not HasAlreadyEnteredMarker)
@@ -555,37 +587,40 @@ Citizen.CreateThread(function()
             then
                 CurrentActionEnabled = false
                 GUI.Time = GetGameTimer()
-                local job = playerJobs[CurrentJobName]
+                if CurrentZoneName == 'JobCenter' then
+                    JobCenterMenu()
+                else
+                    local job = playerJobs[CurrentJobName]
 
-                if CurrentZoneCategory == "Zones" then
-                    if CurrentZoneName == 'JobActions' then
-                        OpenJobActionsMenu(CurrentJobName)
-                    elseif CurrentZoneName == 'Dressing' then
-                        OpenCloakroomMenu(job.jobIndex)
-                    elseif string.match(CurrentZoneName, "Stock$") then
-                        TriggerEvent('esx_ava_inventories:OpenSharedInventory', CurrentZoneValue.StockName)
-                    elseif string.match(CurrentZoneName, "Garage$") then
-                        if CurrentZoneValue.IsNonProprietaryGarage then
-                            TriggerEvent('esx_ava_garage:openSpecialVehicleMenu', CurrentZoneValue, CurrentJobName)
+                    if CurrentZoneCategory == "Zones" then
+                        if CurrentZoneName == 'JobActions' then
+                            OpenJobActionsMenu(CurrentJobName)
+                        elseif CurrentZoneName == 'Dressing' then
+                            OpenCloakroomMenu(job.jobIndex)
+                        elseif string.match(CurrentZoneName, "Stock$") then
+                            TriggerEvent('esx_ava_inventories:OpenSharedInventory', CurrentZoneValue.StockName)
+                        elseif string.match(CurrentZoneName, "Garage$") then
+                            if CurrentZoneValue.IsNonProprietaryGarage then
+                                TriggerEvent('esx_ava_garage:openSpecialVehicleMenu', CurrentZoneValue, CurrentJobName)
 
-                        else
-                            TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
+                            else
+                                TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
+                            end
                         end
+
+                    elseif CurrentZoneCategory == "ProcessZones" then
+                        ProcessZone(job)
+
+                    elseif CurrentZoneCategory == "ProcessMenuZones" then
+                        ProcessMenuZone(job)
+
+                    elseif CurrentZoneCategory == "SellZones" then
+                        SellZone(job)
+
+                    elseif CurrentZoneCategory == "BuyZones" then
+                        BuyZone(job)
+
                     end
-
-                elseif CurrentZoneCategory == "ProcessZones" then
-                    ProcessZone(job)
-
-                elseif CurrentZoneCategory == "ProcessMenuZones" then
-                    ProcessMenuZone(job)
-
-                elseif CurrentZoneCategory == "SellZones" then
-                    SellZone(job)
-
-                elseif CurrentZoneCategory == "BuyZones" then
-                    BuyZone(job)
-
-
                 end
 
 			end
@@ -1069,6 +1104,62 @@ function GetCoordZ(x, y, v)
 end
 
 
+
+
+
+
+----------------
+-- Job Center --
+----------------
+
+
+function JobCenterMenu()
+    local elements = {}
+
+    for i = 1, #Config.JobCenter.JobList, 1 do
+        table.insert(elements, {index = i, label = Config.JobCenter.JobList[i].Label, detail = Config.JobCenter.JobList[i].Detail})
+    end
+        
+    ESX.UI.Menu.CloseAll()
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_center',
+    {
+        title = _('job_center'),
+        align = 'left',
+        elements = elements
+    },
+    function(data, menu)
+        ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'job_center_job',
+        {
+            title = _('job_center_choose_job'),
+            align = 'left',
+            elements = {
+                {label = _("job_center_primary"), value = 1, detail = _("job_center_primary_detail")},
+                {label = _("job_center_secondary"), value = 2, detail = _("job_center_secondary_detail")}
+            }
+        },
+        function(data2, menu2)
+            TriggerServerEvent('esx_ava_jobs:job_center:hire', data.current.index, data2.current.value)
+            menu2.close()
+            menu.close()
+            CurrentActionEnabled = true
+        end,
+        function(data2, menu2)
+            menu2.close()
+        end)
+    end,
+    function(data, menu)
+        menu.close()
+        CurrentActionEnabled = true
+    end)
+end
+
+
+
+
+
+-----------
+-- Utils --
+-----------
 
 function tableHasValue(table, val)
     for k, value in ipairs(table) do
