@@ -665,15 +665,13 @@ function LoadPedModel(model)
 	local playerId = PlayerId()
 	local modelHash = GetHashKey(model:gsub("\n", ""))
 
-	RequestModel(modelHash)
 	if IsModelInCdimage(modelHash) then
-		while not HasModelLoaded(modelHash) do
-			RequestModel(modelHash)
-			Citizen.Wait(0)
-		end
+        RequestModel(modelHash)
+        while not HasModelLoaded(modelHash) do
+            Citizen.Wait(0)
+        end
 
-		if GetEntityModel(playerId) ~= modelHash then
-			local playerPed = PlayerPedId()
+        if GetEntityModel(playerId) ~= modelHash then
 			local weapons = {}
 			for k, v in ipairs(ESX.GetWeaponList()) do
 				local weaponHash = GetHashKey(v.name)
@@ -692,10 +690,15 @@ function LoadPedModel(model)
 				GiveWeaponToPed(playerPed, v.hash, v.ammo, false, false)
 			end
 
+            SetPedDefaultComponentVariation(playerPed)
+            ClearAllPedProps(playerPed)
+            ClearPedDecorations(playerPed)
+            ClearPedFacialDecorations(playerPed)
+
             NetworkSetInSpectatorMode(false, playerPed)
 		end
 
-		SetModelAsNoLongerNeeded(modelHash)
+        SetModelAsNoLongerNeeded(modelHash)
 	else
 		TriggerEvent('esx_ava_personalmenu:privateMessage', GetPlayerName(playerId), _('model_not_found', model, modelHash))
 	end
