@@ -214,13 +214,12 @@ function DevLoop()
                     elseif IsDisabledControlPressed(0, 15) and zAxis < 2 then  -- SCROLLWHEEL UP
                         zAxis = zAxis + 0.02
                     end
+
                     if IsDisabledControlJustReleased(0, 348) then -- SCROLLWHEEL PRESS
                         zAxis = -0.98
                     end
                     if IsDisabledControlJustReleased(0, 45) then -- r
-                        xAxis = 0
-                        yAxis = 0
-                        zAxis = 0
+                        xAxis, yAxis, zAxis = 0, 0, 0
                     end
 
                     local playerPed = PlayerPedId()
@@ -235,7 +234,25 @@ function DevLoop()
                     DrawText(0.8, 0.88)
 
                     DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)
-                    DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z - 1, pointerCoords.x, pointerCoords.y, pointerCoords.z + 1, 255, 99, 219, 256)
+
+                    if IsControlPressed(0, 21) then -- shift
+                        -- Y axis
+                        DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y + 0.2, pointerCoords.z, 0, 255, 0, 256)
+                        DrawText3D(pointerCoords.x, pointerCoords.y + 0.2, pointerCoords.z + 0.1, "y", 0.3, 0, 255, 0)
+                        
+                        -- X axis
+                        DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x + 0.2, pointerCoords.y, pointerCoords.z, 255, 0, 0, 256)
+                        DrawText3D(pointerCoords.x + 0.2, pointerCoords.y, pointerCoords.z + 0.1, "x", 0.3, 255, 0, 0)
+                        
+                        -- Z axis
+                        DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y, pointerCoords.z + 0.2, 0, 0, 255, 256)
+                        DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z + 0.3, "z", 0.3, 0, 0, 255)
+                    else
+                        -- vertical line on Z axis for better a better view of the position
+                        DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z - 1, pointerCoords.x, pointerCoords.y, pointerCoords.z + 1, 255, 99, 219, 256)
+                    end
+
+
                     if zAxis == -0.98 then
                         DrawMarker(27, pointerCoords.x, pointerCoords.y, pointerCoords.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 99, 219, 100, false, true, 2, false, false, false, false)
                     end

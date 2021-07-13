@@ -136,8 +136,8 @@ Locales["fr"] = {
     ["dev_show_vehicle_hash"] = "Toggle hash des véhicules",
     ["dev_show_ped_hash"] = "Toggle hash des peds",
     ["dev_show_coord_helper"] = "Toggle aide coordonnées",
-    -- ["dev_show_coord_helper_display_text"] = "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ or ~INPUT_WEAPON_WHEEL_NEXT~ to control the pointer position~n~~INPUT_MAP_POI~ to put the pointer on the floor~n~~INPUT_RELOAD~ to reset positions~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard~n~~n~~INPUT_AIM~ to leave the coordinates helper",
-    ["dev_show_coord_helper_display_text"] = "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aides aux coordonnées",
+    -- ["dev_show_coord_helper_display_text"] = "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ or ~INPUT_WEAPON_WHEEL_NEXT~ to control the pointer position~n~~INPUT_MAP_POI~ to put the pointer on the floor~n~~INPUT_RELOAD~ to reset position~n~~INPUT_SPRINT~ to see different axis~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard~n~~n~~INPUT_AIM~ to leave the coordinates helper",
+    ["dev_show_coord_helper_display_text"] = "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_SPRINT~ pour voir les axes~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aides aux coordonnées",
     ["dev_show_coords"] = "Toggle coordonnées",
 
 }
