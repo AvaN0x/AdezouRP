@@ -137,11 +137,16 @@ Locales['fr'] = {
     -- EMS
     ["ems_check_injuries"] = "Blessures",
     ["ems_check_injuries_detail"] = "Observer les blessures de l'individu",
-    ["ems_injuries_label"] = 'Etat <span style="color: %s">%s</span>',
+    ["ems_injuries_label"] = 'Boitement <span style="color: %s">%s</span>',
     ["ems_injuries_healthy"] = "Sain",
     ["ems_injuries_injured_high"] = "Blessé grave",
     ["ems_injuries_injured"] = "Blessé",
     ["ems_injuries_injured_low"] = "Blessé faible",
+    ["ems_health_label"] = 'Santé <span style="color: %s">%s</span>',
+    -- ["ems_health_high"] = "Blessé grave",
+    -- ["ems_health_middle"] = "Blessé",
+    -- ["ems_health_low"] = "Blessé faible",
+    -- ["ems_health_full"] = "Sain",
 
     -- MECHANIC
     ['info_vehicle_engine_health'] = 'Etat du moteur: <span style="color: %s">%s%%</span>',

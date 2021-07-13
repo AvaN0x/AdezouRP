@@ -534,25 +534,48 @@ Config.Jobs = {
                 Label = _('ems_check_injuries'),
                 Detail = _('ems_check_injuries_detail'),
                 Action = function(parentData, parentMenu, jobName)
-                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId)
+                    exports.esx_avan0x:ChooseClosestPlayer(function(targetId, localId)
                         ESX.TriggerServerCallback('esx_ava_jobs:ems:getTargetData', function(playerData)
+                            local targetPed = GetPlayerPed(localId)
+                            local elements = {
+                                {
+                                    label = _('ems_injuries_label',
+                                        playerData.injured > 0 and "#c92e2e" or "#329171",
+                                        playerData.injured > 50
+                                            and _('ems_injuries_injured_high')
+                                            or playerData.injured > 30
+                                                and _('ems_injuries_injured')
+                                                or playerData.injured > 0
+                                                    and _('ems_injuries_injured_low')
+                                                    or _('ems_injuries_healthy')
+                                    )
+                                }
+                            }
+
+                            if DoesEntityExist(targetPed) then
+                                local health = GetEntityHealth(targetPed)
+                                local maxHealth = GetEntityMaxHealth(targetPed)
+                                local percentHealth = math.floor((health / maxHealth) * 100)
+                                print(health, maxHealth, percentHealth)
+                                table.insert(elements, {
+                                    label = _('ems_health_label',
+                                        percentHealth == 100 and "#329171" or "#c92e2e",
+                                        -- percentHealth == 100
+                                        --     and _('ems_health_full')
+                                        --     or percentHealth > 50
+                                        --         and _('ems_health_high')
+                                        --         or percentHealth > 30
+                                        --             and _('ems_health_middle')
+                                        --             or _('ems_health_low')
+                                            health .. "/" .. maxHealth
+                                        )
+                                })
+                            end
+
                             ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ems_check_injuries', {
                                 title = _('ems_check_injuries'),
                                 align = 'left',
-                                elements = {
-                                    {
-                                        label = _('ems_injuries_label',
-                                            playerData.injured > 0 and "#c92e2e" or "#329171",
-                                            playerData.injured > 50
-                                                and _('ems_injuries_injured_high')
-                                                or playerData.injured > 30
-                                                    and _('ems_injuries_injured')
-                                                    or playerData.injured > 0
-                                                        and _('ems_injuries_injured_low')
-                                                        or _('ems_injuries_healthy')
-                                        )
-                                    }
-                                }
+                                elements = elements
                             },
                             nil,
                             function(data, menu)
