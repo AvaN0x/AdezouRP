@@ -218,7 +218,10 @@ Citizen.CreateThread(function()
 			and speedBuffer[2] > (MinSpeed / 3.5)
 			and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
 				if not beltOn
-				and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0  then
+                    and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0
+                    and not IsScreenFadingOut()
+                    and not IsScreenFadedOut()
+                then
 					local co = GetEntityCoords(ped)
 					SetEntityCoords(ped, co.x, co.y, co.z - 0.47, true, true, true)
 					SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)

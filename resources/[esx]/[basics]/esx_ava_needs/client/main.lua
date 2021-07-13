@@ -191,7 +191,7 @@ AddEventHandler('esx_status:loaded', function(status)
                         InjureLoop = 0
 						Injured(level, start, InjureLevel)
 					end
-					IsAlreadyInjured = true
+                    IsAlreadyInjured = true
 					InjureLevel = level
                     InjureLoop = InjureLoop + 1
                 else
@@ -366,7 +366,7 @@ end
 function Injured(level, start, oldLevel)
 	Citizen.CreateThread(function()
 		local playerPed = PlayerPedId()
-		if start then
+		if (level == 2 and oldLevel ~= 2) or (level < 2 and oldLevel == 2) then
 			DoScreenFadeOut(800)
 			Wait(1000)
 		end
@@ -400,7 +400,7 @@ function Injured(level, start, oldLevel)
 		SetPedMotionBlur(playerPed, true)
 		-- SetPedIsDrunk(playerPed, true)
 
-		if start then
+		if (level == 2 and oldLevel ~= 2) or (level < 2 and oldLevel == 2) then
 			DoScreenFadeIn(800)
 		end
 	end)
@@ -418,8 +418,8 @@ function Reality(noFade)
             DoScreenFadeOut(800)
             Wait(1000)
         end
-	
-		ClearTimecycleModifier()
+
+        ClearTimecycleModifier()
 		ResetScenarioTypesEnabled()
 		ResetPedMovementClipset(playerPed, 0)
 		SetPedIsDrunk(playerPed, false)
