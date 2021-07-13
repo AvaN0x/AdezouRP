@@ -28,4 +28,4 @@ Config.UseTokoVoIP   = true
 
 Config.ShowNumberNotification = true -- Show Number or Contact Name when you receive new SMS
 
-Config.ShareRealtimeGPSDefaultTimeInMs = 1000 * 60 -- Set default realtime GPS sharing expiration time in milliseconds
+Config.ShareRealtimeGPSDefaultTimeInMs = 1000 * 120 -- Set default realtime GPS sharing expiration time in milliseconds
