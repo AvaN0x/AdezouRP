@@ -4,7 +4,7 @@
 -------------------------------------------
 
 Locales['fr'] = {
-	['job_client'] = 'client %s',
+	['job_client'] = 'Client %s',
     ['job_menu'] = 'Menu de métier',
 
 	['press_to_open'] = 'Appuyez sur ~INPUT_CONTEXT~ pour accéder au menu',
