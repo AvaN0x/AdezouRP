@@ -29,7 +29,6 @@ function AdminLoop()
                 login = not (GetResourceKvpInt("admin_notifications_login") == 1),
                 logout = not (GetResourceKvpInt("admin_notifications_logout") == 1),
             }
-            print(ESX.DumpTable(AdminConfig))
             print(json.encode(AdminConfig))
         end)
 
@@ -219,6 +218,7 @@ RegisterNetEvent('esx_ava_personalmenu:notifStaff')
 AddEventHandler('esx_ava_personalmenu:notifStaff', function(type, content)
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
         --* type can be : "death", "login", "logout"
+        print(type, AdminConfig.Notifications[type])
         if AdminConfig.Notifications and (AdminConfig.Notifications[type] == true or AdminConfig.Notifications[type] == nil) then
             ESX.ShowNotification(content)
         end
