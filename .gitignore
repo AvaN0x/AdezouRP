@@ -5,6 +5,7 @@ server.cfg
 /cache/
 /resources/\[textures\]/
 /resources/\[esx\]/\[test\]
+/resources/\[esx\]/\[purchased\]
 
 /resources/\[admin\]/vMenu/*.json
 /resources/\[esx\]/\[non-esx\]/es_mapper/data/mapsradar.xml
