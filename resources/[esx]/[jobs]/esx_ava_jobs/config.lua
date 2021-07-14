@@ -130,6 +130,7 @@ Config.Jobs = {
         ServiceCounter = true,
         Blip = {
             Name = "~b~Commissariat",
+            Pos = vector3(440.68, -981.63, 30.69),
             Sprite = 60,
             Colour = 3
         },
@@ -342,7 +343,7 @@ Config.Jobs = {
         },
         Zones = {
             JobActions = {
-                Pos = vector3(451.95, -973.39, 29.71),
+                Pos = vector3(465.03, -1009.06, 34.95),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
                 Name = "Actions patron",
@@ -855,7 +856,7 @@ Config.Jobs = {
                 Color = {r = 207, g = 169, b = 47},
                 Blip = true,
                 Name = "Dressing",
-                OnlyJobClothes = true,
+                -- OnlyJobClothes = true,
                 HelpText = _('press_to_open'),
                 Marker = 27,
             },
