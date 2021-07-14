@@ -788,9 +788,10 @@ Config.Jobs = {
                                     ESX.ShowNotification(_("tow_vehicle_flatbed_already_towed"))
                                     return
                                 end
-                                if (isSlamTruck and (vehicleDimMin.y < -3 or vehicleDimMax.y > 3))
-                                    or (vehicleDimMin.y < -5 or vehicleDimMax.y > 5)
+                                if (isSlamTruck and (vehicleDimMin.y < -3.5 or vehicleDimMax.y > 3.5))
+                                or (vehicleDimMin.y < -5 or vehicleDimMax.y > 5)
                                 then
+                                    print("vehicle size", vehicleDimMin.y, vehicleDimMax.y)
                                     -- we prevent big vehicles that does not fit on slamtruck
                                     ESX.ShowNotification(_("tow_vehicle_too_long"))
                                     return
