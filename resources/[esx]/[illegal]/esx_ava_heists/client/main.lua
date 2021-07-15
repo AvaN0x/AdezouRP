@@ -4,7 +4,7 @@
 -------------------------------------------
 
 ESX = nil
-local PlayerData = {}
+PlayerData = {}
 
 
 
@@ -73,3 +73,19 @@ end)
 --         end
 --     end
 -- end)
+
+
+
+
+
+Citizen.CreateThread(function()
+    local lastInterior = nil
+    while true do
+        Citizen.Wait(100)
+        local interior = GetInteriorFromEntity(PlayerPedId())
+        if lastInterior ~= interior then
+            print(interior)
+            lastInterior = interior
+        end
+    end
+end)
