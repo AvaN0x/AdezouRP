@@ -5,6 +5,7 @@
 
 Config = {}
 Config.Locale = 'fr'
+Config.DrawDistance = 15.0
 
 Config.Heists = {}
-Config.Debug = true -- wil not check the amount of cops
+Config.Debug = true -- wil not check the amount of cops and enable prints of interiors id
