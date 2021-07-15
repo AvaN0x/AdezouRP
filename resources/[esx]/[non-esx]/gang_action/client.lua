@@ -1,84 +1,92 @@
 local weapons = {
-	'WEAPON_KNIFE',
-	'WEAPON_HAMMER',
-	'WEAPON_BAT',
-	'WEAPON_GOLFCLUB',
-	'WEAPON_CROWBAR',
-	'WEAPON_BOTTLE',
-	'WEAPON_DAGGER',
-	'WEAPON_HATCHET',
-	'WEAPON_MACHETE',
-	-- 'WEAPON_SWITCHBLADE',
-	'WEAPON_BATTLEAXE',
-	'WEAPON_POOLCUE',
-	'WEAPON_WRENCH',
-	'WEAPON_PISTOL',
-	'WEAPON_APPISTOL',
-	'WEAPON_PISTOL50',
-	'WEAPON_REVOLVER',
-	'WEAPON_SNSPISTOL',
-	'WEAPON_HEAVYPISTOL',
-	'WEAPON_VINTAGEPISTOL',
-	'WEAPON_MICROSMG',
-	'WEAPON_SMG',
-	'WEAPON_ASSAULTSMG',
-	'WEAPON_MINISMG',
-	'WEAPON_MACHINEPISTOL',
-	'WEAPON_COMBATPDW',
-	'WEAPON_PUMPSHOTGUN',
-	'WEAPON_SAWNOFFSHOTGUN',
-	'WEAPON_ASSAULTSHOTGUN',
-	'WEAPON_BULLPUPSHOTGUN',
-	'WEAPON_HEAVYSHOTGUN',
-	'WEAPON_ASSAULTRIFLE',
-	'WEAPON_CARBINERIFLE',
-	'WEAPON_ADVANCEDRIFLE',
-	'WEAPON_SPECIALCARBINE',
-	'WEAPON_BULLPUPRIFLE',
-	'WEAPON_COMPACTRIFLE',
-	'WEAPON_MG',
-	'WEAPON_COMBATMG',
-	'WEAPON_GUSENBERG',
-	'WEAPON_SNIPERRIFLE',
-	'WEAPON_HEAVYSNIPER',
-	'WEAPON_MARKSMANRIFLE',
-	'WEAPON_GRENADELAUNCHER',
-	'WEAPON_RPG',
-	'WEAPON_STINGER',
-	'WEAPON_MINIGUN',
-	'WEAPON_DIGISCANNER',
-	'WEAPON_FIREWORK',
-	'WEAPON_MUSKET',
-	'WEAPON_HOMINGLAUNCHER',
-	'WEAPON_PROXMINE',
-	'WEAPON_FLAREGUN',
-	'WEAPON_MARKSMANPISTOL',
-	'WEAPON_RAILGUN',
-	'WEAPON_DBSHOTGUN',
-	'WEAPON_AUTOSHOTGUN',
-	'WEAPON_COMPACTLAUNCHER',
-	'WEAPON_PIPEBOMB',
-	'WEAPON_DOUBLEACTION',
-	'WEAPON_STUNGUN',
-	'WEAPON_COMBATPISTOL',
-	'WEAPON_CERAMICPISTOL',
-	-- 'WEAPON_RAYPISTOL',
-	'WEAPON_NAVYREVOLVER',
-	'WEAPON_RAYCARBINE',
-	'WEAPON_RAYMINIGUN',
-	'WEAPON_PISTOL_MK2',
-	'WEAPON_SNSPISTOL_MK2',
-	'WEAPON_REVOLVER_MK2',
-	'WEAPON_SMG_MK2',
-	'WEAPON_PUMPSHOTGUN_MK2',
-	'WEAPON_ASSAULTRIFLE_MK2',
-	'WEAPON_CARBINERIFLE_MK2',
-	'WEAPON_SPECIALCARBINE_MK2',
-	'WEAPON_BULLPUPRIFLE_MK2',
-	'WEAPON_COMBATMG_MK2',
-	'WEAPON_HEAVYSNIPER_MK2',
-	'WEAPON_MARKSMANRIFLE_MK2'
+	GetHashKey('WEAPON_KNIFE'),
+	GetHashKey('WEAPON_HAMMER'),
+	GetHashKey('WEAPON_BAT'),
+	GetHashKey('WEAPON_GOLFCLUB'),
+	GetHashKey('WEAPON_CROWBAR'),
+	GetHashKey('WEAPON_BOTTLE'),
+	GetHashKey('WEAPON_DAGGER'),
+	GetHashKey('WEAPON_HATCHET'),
+	GetHashKey('WEAPON_MACHETE'),
+	-- GetHashKey('WEAPON_SWITCHBLADE'),
+	GetHashKey('WEAPON_BATTLEAXE'),
+	GetHashKey('WEAPON_POOLCUE'),
+	GetHashKey('WEAPON_WRENCH'),
+	GetHashKey('WEAPON_PISTOL'),
+	GetHashKey('WEAPON_APPISTOL'),
+	GetHashKey('WEAPON_PISTOL50'),
+	GetHashKey('WEAPON_REVOLVER'),
+	GetHashKey('WEAPON_SNSPISTOL'),
+	GetHashKey('WEAPON_HEAVYPISTOL'),
+	GetHashKey('WEAPON_VINTAGEPISTOL'),
+	GetHashKey('WEAPON_MICROSMG'),
+	GetHashKey('WEAPON_SMG'),
+	GetHashKey('WEAPON_ASSAULTSMG'),
+	GetHashKey('WEAPON_MINISMG'),
+	GetHashKey('WEAPON_MACHINEPISTOL'),
+	GetHashKey('WEAPON_COMBATPDW'),
+	GetHashKey('WEAPON_PUMPSHOTGUN'),
+	GetHashKey('WEAPON_SAWNOFFSHOTGUN'),
+	GetHashKey('WEAPON_ASSAULTSHOTGUN'),
+	GetHashKey('WEAPON_BULLPUPSHOTGUN'),
+	GetHashKey('WEAPON_HEAVYSHOTGUN'),
+	GetHashKey('WEAPON_ASSAULTRIFLE'),
+	GetHashKey('WEAPON_CARBINERIFLE'),
+	GetHashKey('WEAPON_ADVANCEDRIFLE'),
+	GetHashKey('WEAPON_SPECIALCARBINE'),
+	GetHashKey('WEAPON_BULLPUPRIFLE'),
+	GetHashKey('WEAPON_COMPACTRIFLE'),
+	GetHashKey('WEAPON_MG'),
+	GetHashKey('WEAPON_COMBATMG'),
+	GetHashKey('WEAPON_GUSENBERG'),
+	GetHashKey('WEAPON_SNIPERRIFLE'),
+	GetHashKey('WEAPON_HEAVYSNIPER'),
+	GetHashKey('WEAPON_MARKSMANRIFLE'),
+	GetHashKey('WEAPON_GRENADELAUNCHER'),
+	GetHashKey('WEAPON_RPG'),
+	GetHashKey('WEAPON_STINGER'),
+	GetHashKey('WEAPON_MINIGUN'),
+	GetHashKey('WEAPON_DIGISCANNER'),
+	GetHashKey('WEAPON_FIREWORK'),
+	GetHashKey('WEAPON_MUSKET'),
+	GetHashKey('WEAPON_HOMINGLAUNCHER'),
+	GetHashKey('WEAPON_PROXMINE'),
+	GetHashKey('WEAPON_FLAREGUN'),
+	GetHashKey('WEAPON_MARKSMANPISTOL'),
+	GetHashKey('WEAPON_RAILGUN'),
+	GetHashKey('WEAPON_DBSHOTGUN'),
+	GetHashKey('WEAPON_AUTOSHOTGUN'),
+	GetHashKey('WEAPON_COMPACTLAUNCHER'),
+	GetHashKey('WEAPON_PIPEBOMB'),
+	GetHashKey('WEAPON_DOUBLEACTION'),
+	GetHashKey('WEAPON_STUNGUN'),
+	GetHashKey('WEAPON_COMBATPISTOL'),
+	GetHashKey('WEAPON_CERAMICPISTOL'),
+	-- GetHashKey('WEAPON_RAYPISTOL'),
+	GetHashKey('WEAPON_NAVYREVOLVER'),
+	GetHashKey('WEAPON_RAYCARBINE'),
+	GetHashKey('WEAPON_RAYMINIGUN'),
+	GetHashKey('WEAPON_PISTOL_MK2'),
+	GetHashKey('WEAPON_SNSPISTOL_MK2'),
+	GetHashKey('WEAPON_REVOLVER_MK2'),
+	GetHashKey('WEAPON_SMG_MK2'),
+	GetHashKey('WEAPON_PUMPSHOTGUN_MK2'),
+	GetHashKey('WEAPON_ASSAULTRIFLE_MK2'),
+	GetHashKey('WEAPON_CARBINERIFLE_MK2'),
+	GetHashKey('WEAPON_SPECIALCARBINE_MK2'),
+	GetHashKey('WEAPON_BULLPUPRIFLE_MK2'),
+	GetHashKey('WEAPON_COMBATMG_MK2'),
+	GetHashKey('WEAPON_HEAVYSNIPER_MK2'),
+	GetHashKey('WEAPON_MARKSMANRIFLE_MK2')
 }
+
+local reticleBlackList = {
+    GetHashKey('WEAPON_SNIPERRIFLE'),
+	GetHashKey('WEAPON_HEAVYSNIPER'),
+	GetHashKey('WEAPON_HEAVYSNIPER_MK2')
+}
+
+local hideReticle = true
 
 local holstered = true
 local canfire = true
@@ -105,7 +113,7 @@ Citizen.CreateThread(function()
                 SetCurrentPedWeapon(playerPed, currWeapon, true)
                 loadAnimDict( "reaction@intimidation@1h" )
 
-                if CheckWeapon(newWeap) then
+                if array_contain_value(weapons, newWeap) then
                     if holstered or currWeapon == GetHashKey('WEAPON_UNARMED')then
                         print(1)
                         canFire = false
@@ -136,7 +144,7 @@ Citizen.CreateThread(function()
                         canFire = true
                     end
                 else
-                    if not holstered and CheckWeapon(currWeapon) then
+                    if not holstered and array_contain_value(weapons, currWeapon) then
                         print(3)
                         canFire = false
                         TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", playerCoords, 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
@@ -155,6 +163,9 @@ Citizen.CreateThread(function()
                         currWeapon = newWeap
                     end
                 end
+
+                hideReticle = not array_contain_value(reticleBlackList, currWeapon)
+                print(hideReticle)
             end
 		end
 	end
@@ -167,21 +178,27 @@ Citizen.CreateThread(function()
 			DisableControlAction(0, 25, true)
 			DisablePlayerFiring(playerPed, true)
 		end
+
+        if hideReticle then
+            HideHudComponentThisFrame(14) -- Reticle
+        end
 	end
 end)
-
-function CheckWeapon(newWeap)
-	for i = 1, #weapons do
-		if GetHashKey(weapons[i]) == newWeap then
-			return true
-		end
-	end
-	return false
-end
 
 function loadAnimDict(dict)
 	while (not HasAnimDictLoaded(dict)) do
 		RequestAnimDict(dict)
 		Citizen.Wait(5)
 	end
+end
+
+function array_contain_value(array, value)
+    if array and value then
+        for i = 1, #array, 1 do
+            if array[i] == value then
+                return true
+            end
+        end
+	end
+	return false
 end
