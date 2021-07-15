@@ -6,7 +6,7 @@ Locales["fr"] = {
     
 	["ethylotest_menu"] = "Ethylotest",
     ["ethylotest_drunk"] = 'Alcoolémie <span style="color: %s">%s</span>',
-    ["ethylotest_drugged"] = 'Ivresse <span style="color: %s">%s</span>',
+    ["ethylotest_drugged"] = 'Stupéfiants <span style="color: %s">%s</span>',
 	["ethylotest_positive"] = "Positif",
 	["ethylotest_negative"] = "Négatif",
 	["ethylotest_really_high"] = "Très élevé",
