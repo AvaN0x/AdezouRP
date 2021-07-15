@@ -691,7 +691,7 @@ Config.Doors = {
 			textCoords = vector3(982.03, -102.44, 74.99),
 			authorizedGangs = { 'biker_lost' },
 			objYaw = 42.65,
-			locked = false
+			locked = true
 		},
 
         -- attack a taco
