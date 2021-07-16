@@ -17,6 +17,8 @@ Citizen.CreateThread(function()
 	end
 
 	PlayerData = ESX.GetPlayerData()
+
+    TriggerServerEvent("esx_ava_heists:data:fetch")
 end)
 
 RegisterNetEvent('esx:playerLoaded')
@@ -32,6 +34,22 @@ end)
 RegisterNetEvent('esx:setJob2')
 AddEventHandler('esx:setJob2', function(job2)
 	PlayerData.job2 = job2
+end)
+
+RegisterNetEvent('esx_ava_heists:data:get')
+AddEventHandler('esx_ava_heists:data:get', function(heists)
+    print(json.encode(heists))
+	for heistName, heist in pairs(heists) do
+        if heist.Started then
+            Config.Heists[heistName].Started = heist.Started
+        end
+        if heist.CurrentStage then
+            Config.Heists[heistName].CurrentStage = heist.CurrentStage
+        end
+        if heist.IsAlarmOn and Config.Heists[heistName].TriggerAlarm then
+            Config.Heists[heistName].TriggerAlarm()
+        end
+    end
 end)
 
 
@@ -107,8 +125,9 @@ Citizen.CreateThread(function()
 		local playerInterior = GetInteriorFromEntity(playerPed)
         local actualHeistName = nil
 
-		for k, heist in pairs(Config.Heists) do 
-            if heist.InteriorId and playerInterior == heist.InteriorId then
+		for k, heist in pairs(Config.Heists) do
+            if heist.Disabled then
+            elseif heist.InteriorId and playerInterior == heist.InteriorId then
                 actualHeistName = k
                 waitTime = 0
             elseif heist.InteriorIds then
@@ -155,6 +174,35 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
+RegisterNetEvent('esx_ava_heists:clientCallback')
+AddEventHandler("esx_ava_heists:clientCallback", function(heistName, options)
+    local heist = Config.Heists[heistName]
+    if not heist or heist.Disabled or not options then return end
+
+    if options.TriggerHeist and heist.TriggerHeist then
+        heist.Started = true
+        heist.TriggerHeist()
+    end
+    if options.Stage ~= nil then
+        heist.CurrentStage = options.Stage
+    end
+    if options.TriggerAlarm and heist.TriggerAlarm then
+        heist.TriggerAlarm()
+    end
+    if options.StopAlarm and heist.StopAlarm then
+        heist.StopAlarm()
+    end
+    if options.Reset then
+        if heist.Reset() then
+            heist.Started = false
+            heist.CurrentStage = 0
+            heist.Reset()
+        end
+    end
+end)
+
+
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
 		for k, heist in pairs(Config.Heists) do
@@ -164,3 +212,4 @@ AddEventHandler("onResourceStop", function(resource)
         end
     end
 end)
+

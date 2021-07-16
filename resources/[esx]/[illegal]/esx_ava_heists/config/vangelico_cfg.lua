@@ -3,34 +3,48 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-Config.Heists.Vangelico = {
+Config.Heists.vangelico = {
     -- Disabled = true,
     Started = false,
     InteriorId = 82690,
     -- InteriorIds = {82690},
     CopsCount = 4,
     CurrentStage = 0,
-    TriggerHeist = function()
-        Config.Heists.Vangelico.Started = true
-        Config.Heists.Vangelico.CurrentStage = 1
-        Config.Heists.Vangelico.TriggerAlarm()
-    end,
+    -- TriggerHeist = function()
+    -- end,
+    -- ServerTriggerHeist = function()
+    -- end,
     TriggerAlarm = function()
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", true)
-        TriggerServerEvent("esx_phone:sendEmergency",
+    end,
+    ServerTriggerAlarm = function()
+        TriggerEvent("esx_phone:sendEmergency",
             "lspd",
             "L'alarme de la bijouterie a été activée, rendez-vous y au plus vite !",
             true,
-            -- { ["x"] = -631.88, ["y"] = -237.82, ["z"] = 37.09 }
             vector3(-631.88, -237.82, 37.09)
         )
     end,
+    StopAlarm = function()
+        ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
+    end,
+    -- ServerStopAlarm = function()
+    -- end,
     Stages = {
         [0] = {
             Function = function(playerPed)
-                -- todo check lspd here ?
                 if IsPedShooting(playerPed) then
-                    Config.Heists.Vangelico.TriggerHeist()
+                    ESX.TriggerServerCallback("esx_ava_heists:canRob", function(canRob)
+                        if canRob then
+                            TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
+                                TriggerHeist = true,
+                                TriggerAlarm = true,
+                                Stage = 1
+                            })
+                        else
+                            ESX.ShowNotification("Il n'y a pas assez de policiers en service.")
+                        end
+                    end, "vangelico")
                 end
             end
         },
@@ -148,7 +162,9 @@ Config.Heists.Vangelico = {
             HelpText = "Appuyez sur ~INPUT_CONTEXT~ pour arrêter l'~y~alarme~s~.",
             Marker = 27,
             Action = function(playerPed)
-                ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
+                TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
+                    StopAlarm = true,
+                })
             end,
             JobNeeded = {"lspd"}
         }
@@ -161,7 +177,5 @@ Config.Heists.Vangelico = {
                 
         --     SetStateOfRayfireMapObject(object, 2)
         -- end
-        Config.Heists.Vangelico.CurrentStage = 0
-        Config.Heists.Vangelico.Started = false
     end
 }
