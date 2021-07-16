@@ -201,3 +201,19 @@ AddEventHandler('esx_avan0x:checkClip', function()
         TriggerClientEvent('esx_avan0x:useClip', source, true)
     end
 end)
+
+-- ESX.RegisterUsableItem("clip", function(source)
+-- 	TriggerClientEvent("esx_avan0x:useClip", source, true)
+-- end)
+
+-- RegisterServerEvent('esx_avan0x:checkClip')
+-- AddEventHandler('esx_avan0x:checkClip', function(weaponHash)
+--     local xPlayer = ESX.GetPlayerFromId(source)
+--     local inventory = xPlayer.getInventory()
+
+--     if inventory.getItem('clip').count > 0 then
+--         TriggerClientEvent('esx_avan0x:useClip', source, true, weaponHash)
+--     else
+--         TriggerClientEvent('esx_avan0x:useClip', source, false, weaponHash)
+--     end
+-- end)

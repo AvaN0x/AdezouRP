@@ -46,6 +46,9 @@ AddEventHandler("esx_avan0x:useClip", function(noClipsAvailable)
 end)
 
 Citizen.CreateThread(function()
+    SetWeaponsNoAutoreload(true)
+    SetWeaponsNoAutoswap(true)
+
     while true do
         Wait(0)
         DisableControlAction(0, 140, true) -- light melee attack
@@ -83,3 +86,101 @@ AddEventHandler("esx_avan0x:checkIfClipsNeededBeforeRemove", function(weaponName
         TriggerServerEvent("esx_avan0x:requestClipsAndRemove", weaponName, equivalentInClips)
     end
 end)
+
+
+
+-- local playerPed = nil
+
+-- Citizen.CreateThread(function()
+--     SetWeaponsNoAutoreload(true)
+--     SetWeaponsNoAutoswap(true)
+-- 	while true do
+--         playerPed = PlayerPedId()
+-- 		Wait(5000)
+--     end
+-- end)
+
+
+-- local reloadKeyIsPressed = false
+-- local isReloading = false
+-- local hasNoClips = false
+
+-- local noAmmo = false
+
+-- Citizen.CreateThread(function()
+--     while true do
+--         Wait(0)
+        
+--         if isReloading then
+--             Wait(100)
+--         elseif IsPedArmed(playerPed, 4) then
+--             local weaponHash = GetSelectedPedWeapon(playerPed)
+
+--             if weaponHash ~= nil then
+--                 local _, actualClipSize = GetAmmoInClip(playerPed, weaponHash)
+--                 DisableControlAction(0, 45, true) -- reload
+--                 DisableControlAction(0, 140, true) -- light melee attack
+
+--                 if (not noAmmo and actualClipSize == 0) and not IsPedSwappingWeapon(playerPed) then
+--                     -- isReloading = true
+--                     noAmmo = true
+--                     print(weaponHash)
+--                     ESX.ShowNotification(weaponHash)
+
+--                     TaskSwapWeapon(playerPed, false)
+--                     -- SetCurrentPedWeapon(playerPed, weaponHash, true)
+                    
+--                     -- SetPedCanSwitchWeapon(playerPed, false)
+--                     -- DisablePlayerFiring(playerPed, true) -- only one frame
+
+
+--                     -- TriggerServerEvent('esx_avan0x:checkClip', weaponHash)
+
+--                 elseif (IsDisabledControlPressed(0, 45) and actualClipSize < GetMaxAmmoInClip(playerPed, weaponHash, true)) and not IsPedSwappingWeapon(playerPed) then
+--                     isReloading = true
+--                     SetPedCanSwitchWeapon(playerPed, false)
+--                     -- DisablePlayerFiring(playerPed, true) -- only one frame
+--                     TriggerServerEvent('esx_avan0x:checkClip', weaponHash)
+--                 elseif actualClipSize > 0 then
+--                     noAmmo = false
+--                 end
+--             end
+--         end
+
+--     end
+-- end)
+
+
+-- RegisterNetEvent('esx_avan0x:useClip')
+-- AddEventHandler('esx_avan0x:useClip', function(canReload, weaponHash)
+--     local playerPed = PlayerPedId()
+--     if not weaponHash then
+--         weaponHash = GetSelectedPedWeapon(playerPed)
+--     end
+--     if canReload then
+--         local _, actualClipSize = GetAmmoInClip(playerPed, weaponHash)
+--         local maxClipSize = GetMaxAmmoInClip(playerPed, weaponHash, true)
+
+--         if (actualClipSize < maxClipSize) then
+--             SetCurrentPedWeapon(playerPed, weaponHash, true)
+--             TriggerServerEvent("esx_avan0x:removeClip")
+--             SetAmmoInClip(playerPed, weaponHash, 0)
+--             SetPedAmmo(playerPed, weaponHash, maxClipSize)
+--             MakePedReload(playerPed)
+--             -- TaskReloadWeapon(playerPed)
+
+--             print(weaponHash .. " : " ..  actualClipSize .. "/" .. maxClipSize)
+--             ESX.ShowNotification(weaponHash .. " : " .. actualClipSize .. "/" .. maxClipSize)
+
+--             Citizen.Wait(1000)
+--         end
+--     else
+--         hasNoClips = true
+--         print("Tu n'as plus de chargeurs")
+--         ESX.ShowNotification("Tu n'as plus de chargeurs")
+--     end
+--     SetPedCanSwitchWeapon(playerPed, true)
+--     Wait(500)
+--     isReloading = false
+-- end)
+
