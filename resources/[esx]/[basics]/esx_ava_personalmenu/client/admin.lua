@@ -573,12 +573,18 @@ end
 
 function ReviveAllClose()
 	local playerPed = PlayerPedId()
-	local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 15.0)
+	local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 30.0)
 
 	for k, player in ipairs(players) do
 		TriggerServerEvent("esx_ava_deaths:admin:revive", GetPlayerServerId(player))
 	end
 end
+
+RegisterCommand('ra', function()
+    if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+        ReviveAllClose()
+    end
+end, false)
 
 function admin_unban()
 	ESX.TriggerServerCallback('ava_connection:getBannedElements', function(elements)
