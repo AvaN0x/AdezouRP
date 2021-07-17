@@ -34,7 +34,7 @@ Config.Heists.vangelico = {
         [0] = {
             Function = function(playerPed)
                 if IsPedShooting(playerPed) then
-                    ESX.TriggerServerCallback("esx_ava_heists:canRob", function(canRob)
+                    ESX.TriggerServerCallback("esx_ava_heists:canStartHeist", function(canRob)
                         if canRob then
                             TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
                                 TriggerHeist = true,
@@ -139,16 +139,24 @@ Config.Heists.vangelico = {
                         }       
                     },
                     Loot = {
-                        'diamond',
-                        'gold'
+                        Items = {
+                            'diamond',
+                            'gold'
+                        },
+                        ItemCount = {
+                            Min = 1,
+                            Max = 3
+                        },
+                        -- ItemCount = 1,
                     },
                     Size = {x = 0.1, y = 0.1, z = 0.1},
                     Color = {r = 255, g = 255, b = 255},
                     MarkerRotation = vector3(180.0, 0.0, 0.0),
                     BobUpAndDown = true,
-                    Distance = 1.5,
-                    HelpText = "Appuyez sur ~INPUT_CONTEXT~ pour arrêter l'~y~alarme~s~.",
-                    Marker = 20
+                    Distance = 1.2,
+                    HelpText = "Appuyez sur ~INPUT_CONTEXT~ pour ~r~casser~s~ la vitrine.",
+                    Marker = 20,
+                    Type = Config.StealablesType.Tray
                 }
             }
         }
@@ -169,7 +177,9 @@ Config.Heists.vangelico = {
             JobNeeded = {"lspd"}
         }
     },
-    Reset = function()
+    -- Reset = function()
+    -- end,
+    ClientReset = function()
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
         
         -- for _, trayData in ipairs(Config.Trays) do
