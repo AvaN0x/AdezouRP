@@ -140,8 +140,26 @@ Config.Heists.vangelico = {
                     },
                     Loot = {
                         Items = {
-                            'diamond',
-                            'gold'
+                            'watch_gold',
+                            'watch_diamond',
+                            'watch_steel',
+                            'watch_emerald',
+                            'watch_ruby',
+                            'necklace_gold',
+                            'necklace_diamond',
+                            'necklace_steel',
+                            'necklace_emerald',
+                            'necklace_ruby',
+                            'ring_gold',
+                            'ring_diamond',
+                            'ring_steel',
+                            'ring_emerald',
+                            'ring_ruby',
+                            'bracelet_gold',
+                            'bracelet_diamond',
+                            'bracelet_steel',
+                            'bracelet_emerald',
+                            'bracelet_ruby'
                         },
                         ItemCount = {
                             Min = 1,
