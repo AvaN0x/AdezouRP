@@ -20,8 +20,8 @@ cfg = {
 	deformationExponent = 1.0,					-- How much should the handling file deformation setting be compressed toward 1.0. (Make cars more similar). A value of 1=no change. Lower values will compress more, values above 1 it will expand. Dont set to zero or negative.
 	collisionDamageExponent = 1.0,				-- How much should the handling file deformation setting be compressed toward 1.0. (Make cars more similar). A value of 1=no change. Lower values will compress more, values above 1 it will expand. Dont set to zero or negative.
 
-	damageFactorEngine = 4.1,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
-	damageFactorBody = 4.1,						-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
+	damageFactorEngine = 2.1,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
+	damageFactorBody = 2.1,						-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
 	damageFactorPetrolTank = 61.0,				-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 64
 	-- damageFactorEngine = 8.1,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
 	-- damageFactorBody = 8.1,						-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
@@ -55,7 +55,7 @@ cfg = {
 
 	chargeForRepairs = true,					-- if true fixing vehicle cost money
 	price = 100.0,									-- you may edit this to your liking. if "chargeForRepairs = false" ignore this one
-	DamageMultiplier = 5.0,						-- you may edit this to your liking. if "chargeForRepairs = false" ignore this one
+	DamageMultiplier = 3.0,						-- you may edit this to your liking. if "chargeForRepairs = false" ignore this one
 
 	-- Class Damagefactor Multiplier
 	-- The damageFactor for engine, body and Petroltank will be multiplied by this value, depending on vehicle class
