@@ -33,7 +33,7 @@ Config.Heists.vangelico = {
     Stages = {
         [0] = {
             Function = function(playerPed)
-                if IsPedShooting(playerPed) then
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun")then
                     ESX.TriggerServerCallback("esx_ava_heists:canStartHeist", function(canRob)
                         if canRob then
                             TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
