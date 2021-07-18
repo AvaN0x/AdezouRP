@@ -37,7 +37,7 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
     local animConfig = TrayAnimationConfig[tray.RayFireName]
     if animConfig == nil then return end
 
-    if not IsPedArmed(playerPed, 4) or GetSelectedPedWeapon(playerPed) == GetHashKey("weapon_stungun") then
+    if not IsPedArmed(playerPed, 4) then
         ESX.ShowNotification(_("vangelico_need_weapon"))
         return
     end
