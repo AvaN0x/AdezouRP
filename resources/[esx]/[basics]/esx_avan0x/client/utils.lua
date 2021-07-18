@@ -219,3 +219,26 @@ function KeyboardInput(textEntry, inputText, maxLength)
         return ''
     end
 end
+
+function CancelableGoStraightToCoord(ped, coords, speed, timeout, targetHeading , distanceToSlide)
+	TaskGoStraightToCoord(ped, coords.x, coords.y, coords.z, speed, timeout, targetHeading , distanceToSlide)
+
+    local checkControls = ped == PlayerPedId()
+    -- 0x7D8F4411 is TaskGoStraightToCoord
+	while GetScriptTaskStatus(ped, 0x7D8F4411) ~= 7 do
+		if checkControls then
+			if IsControlJustPressed(0, 32)
+                or IsControlJustPressed(0, 33)
+                or IsControlJustPressed(0, 34)
+                or IsControlJustPressed(0, 35)
+            then
+				ClearPedTasks(ped)
+                return false
+			end
+		end
+
+		Citizen.Wait(0)
+	end
+
+	return true
+end
