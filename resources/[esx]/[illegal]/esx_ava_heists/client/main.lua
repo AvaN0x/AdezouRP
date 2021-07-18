@@ -325,6 +325,9 @@ AddEventHandler("onResourceStop", function(resource)
                 heist.ClientReset()
             end
         end
+        if playerIsInAction then
+            ClearPedTasks(PlayerPedId())
+        end
     end
 end)
 
