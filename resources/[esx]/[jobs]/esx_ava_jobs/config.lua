@@ -2338,6 +2338,32 @@ Config.Jobs = {
                         Delay = 20000,
                         Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                     },
+                    PistolCal50Process = {
+                        Name = 'Pistolet Cal50',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 40},
+                            {name = 'plastic', quantity = 70},
+                            {name = 'grease', quantity = 13}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_pistol50', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                    VintagePistolProcess = {
+                        Name = 'Pistolet Vintage',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 32},
+                            {name = 'plastic', quantity = 10},
+                            {name = 'grease', quantity = 5}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_vintagepistol', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
                 },
                 MaxProcess = 5,
                 Pos = vector3(905.98, -3230.79, -99.27),
@@ -2379,6 +2405,19 @@ Config.Jobs = {
                         Delay = 20000,
                         Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
                     },
+                    MiniSmgProcess = {
+                        Name = 'Scorpion',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 58},
+                            {name = 'plastic', quantity = 35},
+                            {name = 'grease', quantity = 5}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_minismg', quantity = 1}
+                        },
+                        Delay = 20000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
                 },
                 MaxProcess = 5,
                 Pos = vector3(896.58, -3217.3, -99.24),
@@ -2403,6 +2442,19 @@ Config.Jobs = {
                         },
                         ItemsGet = {
                             {name = 'weapon_sawnoffshotgun', quantity = 1}
+                        },
+                        Delay = 40000,
+                        Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
+                    },
+                    DoubleBarrelProcess = {
+                        Name = 'Double canon scié',
+                        ItemsGive = {
+                            {name = 'steel', quantity = 55},
+                            {name = 'plastic', quantity = 40},
+                            {name = 'grease', quantity = 10}
+                        },
+                        ItemsGet = {
+                            {name = 'weapon_dbshotgun', quantity = 1}
                         },
                         Delay = 40000,
                         Scenario = 'WORLD_HUMAN_CLIPBOARD', -- https://pastebin.com/6mrYTdQv
