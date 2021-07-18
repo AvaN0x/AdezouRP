@@ -37,6 +37,11 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
     local animConfig = TrayAnimationConfig[tray.RayFireName]
     if animConfig == nil then return end
 
+    if not IsPedArmed(playerPed, 4) or GetSelectedPedWeapon(playerPed) == GetHashKey("weapon_stungun") then
+        ESX.ShowNotification("Tu dois être armé pour pouvoir casser la vitrine.")
+        return
+    end
+
     Citizen.CreateThread(function()
         playerIsInAction = true
         ESX.TriggerServerCallback("esx_ava_heists:stealables:canSteal", function(canSteal)
