@@ -99,8 +99,9 @@ AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
                                 if max < min then
                                     max = min
                                 end
-                                for i = min, math.random(min, max), 1 do
+                                for i = 1, math.random(min, max), 1 do
                                     local item = stealable.Loot.Items[math.random(#stealable.Loot.Items)]
+                                    print(item)
                                     if inventory.canAddItem(item, 1) then
                                         inventory.addItem(item, 1)
                                     end

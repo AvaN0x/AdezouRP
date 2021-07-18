@@ -26,7 +26,7 @@ server_scripts {
 data_file 'VEHICLE_METADATA_FILE' 'vehicles/*.meta'
 
 files {
-	'handling.meta'
+	'vehicles/handling.meta'
 }
 
 export {
@@ -35,7 +35,8 @@ export {
     "DrawBubbleText3D",
     "ChooseClosestPlayer",
     "ChooseClosestVehicle",
-    "GetVehicleInFrontOrChooseClosestVehicle"
+    "GetVehicleInFrontOrChooseClosestVehicle",
+    "CancelableGoStraightToCoord"
 }
 
 server_export {

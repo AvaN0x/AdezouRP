@@ -125,7 +125,7 @@ end)
 -- end)
 
 
-local playerPed = nil
+playerPed = nil
 
 Citizen.CreateThread(function()
 	while true do
@@ -176,24 +176,33 @@ Citizen.CreateThread(function()
                                 if stealable.Marker then
                                     DrawMarker(stealable.Marker, zone.MarkerCoord or zone.Coord, 0.0, 0.0, 0.0, stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0, stealable.Size.y or 1.0, stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255, stealable.Color.b or 255, 100, stealable.BobUpAndDown or false, true, 2, false, false, false, false)
                                 end
-                                
+
                                 if not playerIsInAction and distance < (stealable.Distance or stealable.Size.x or 1.0) then
                                     if stealable.HelpText ~= nil then
                                         SetTextComponentFormat('STRING')
                                         AddTextComponentString(stealable.HelpText)
                                         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
                                     end
-                                    
+
                                     if IsControlJustReleased(0, 38) -- E
                                         and (GetGameTimer() - GUI.Time) > 300
                                     then
                                         GUI.Time = GetGameTimer()
-                                        
+
                                         if stealable.Type and stealable.Type == Config.StealablesType.Tray then
                                             SmashTray(actualHeistName, heist.CurrentStage, stealableName, zoneIndex)
                                         end
                                     end
-                        
+                                end
+                            end
+                        else
+                            if stealable.Type then
+                                if stealable.Type == Config.StealablesType.Tray and not playerIsInAction then
+                                    local object = GetRayfireMapObject(zone.PropCoord, 1.0, zone.RayFireName)
+                                    if GetStateOfRayfireMapObject(object) < 6 then
+                                        SetStateOfRayfireMapObject(object, 4)
+                                        SetStateOfRayfireMapObject(object, 6)
+                                    end
                                 end
                             end
                         end
@@ -213,20 +222,38 @@ AddEventHandler("esx_ava_heists:clientCallback", function(heistName, options)
     local heist = Config.Heists[heistName]
     if not heist or heist.Disabled or not options then return end
 
-    if options.TriggerHeist and heist.TriggerHeist then
+    if options.TriggerHeist then
         heist.Started = true
-        heist.TriggerHeist()
+        if heist.TriggerHeist then
+            heist.TriggerHeist()
+        end
     end
     if options.Stage ~= nil then
         heist.CurrentStage = options.Stage
     end
-    if options.TriggerAlarm and heist.TriggerAlarm then
-        heist.TriggerAlarm()
+    if options.TriggerAlarm then
+        if heist.TriggerAlarm then
+            heist.TriggerAlarm()
+        end
     end
-    if options.StopAlarm and heist.StopAlarm then
-        heist.StopAlarm()
+    if options.StopAlarm then
+        if heist.StopAlarm then
+            heist.StopAlarm()
+        end
     end
-    if options.Steal and options.StageIndex and options.StealableName and options.TrayIndex then
+    -- if options.Steal and options.StageIndex and options.StealableName and options.TrayIndex then
+    --     local stage = heist.Stages[options.StageIndex]
+    --     if stage then
+    --         local stealable = stage.Stealables[options.StealableName]
+    --         if stealable then
+    --             local tray = stealable.Zones[options.TrayIndex]
+    --             if tray then
+    --                 tray.Stolen = true
+    --             end
+    --         end
+    --     end
+    -- end
+    if options.SmashTray and options.StageIndex and options.StealableName and options.TrayIndex then
         local stage = heist.Stages[options.StageIndex]
         if stage then
             local stealable = stage.Stealables[options.StealableName]
@@ -234,6 +261,7 @@ AddEventHandler("esx_ava_heists:clientCallback", function(heistName, options)
                 local tray = stealable.Zones[options.TrayIndex]
                 if tray then
                     tray.Stolen = true
+                    SmashTrayEvent(heistName, options)
                 end
             end
         end
