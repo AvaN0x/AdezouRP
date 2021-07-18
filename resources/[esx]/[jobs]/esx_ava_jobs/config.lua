@@ -2328,8 +2328,8 @@ Config.Jobs = {
                     PistolProcess = {
                         Name = 'Pistolet 9mm',
                         ItemsGive = {
-                            {name = 'steel', quantity = 40},
-                            {name = 'plastic', quantity = 30},
+                            {name = 'steel', quantity = 25},
+                            {name = 'plastic', quantity = 10},
                             {name = 'grease', quantity = 5}
                         },
                         ItemsGet = {
@@ -2356,8 +2356,8 @@ Config.Jobs = {
                     UZIProcess = {
                         Name = 'Uzi',
                         ItemsGive = {
-                            {name = 'steel', quantity = 80},
-                            {name = 'plastic', quantity = 60},
+                            {name = 'steel', quantity = 60},
+                            {name = 'plastic', quantity = 45},
                             {name = 'grease', quantity = 10}
                         },
                         ItemsGet = {
@@ -2369,8 +2369,8 @@ Config.Jobs = {
                     MachinePistolProcess = {
                         Name = 'Tec-9',
                         ItemsGive = {
-                            {name = 'steel', quantity = 70},
-                            {name = 'plastic', quantity = 50},
+                            {name = 'steel', quantity = 50},
+                            {name = 'plastic', quantity = 35},
                             {name = 'grease', quantity = 5}
                         },
                         ItemsGet = {
@@ -2397,8 +2397,8 @@ Config.Jobs = {
                     SawnOffProcess = {
                         Name = 'Fusil à pompe',
                         ItemsGive = {
-                            {name = 'steel', quantity = 80},
-                            {name = 'plastic', quantity = 60},
+                            {name = 'steel', quantity = 60},
+                            {name = 'plastic', quantity = 45},
                             {name = 'grease', quantity = 10}
                         },
                         ItemsGet = {
@@ -2438,8 +2438,8 @@ Config.Jobs = {
                     ARProcess = {
                         Name = 'AK-47',
                         ItemsGive = {
-                            {name = 'steel', quantity = 145},
-                            {name = 'plastic', quantity = 120},
+                            {name = 'steel', quantity = 125},
+                            {name = 'plastic', quantity = 100},
                             {name = 'grease', quantity = 15}
                         },
                         ItemsGet = {
@@ -2451,8 +2451,8 @@ Config.Jobs = {
                     CompactARProcess = {
                         Name = 'AK compact',
                         ItemsGive = {
-                            {name = 'steel', quantity = 130},
-                            {name = 'plastic', quantity = 100},
+                            {name = 'steel', quantity = 115},
+                            {name = 'plastic', quantity = 85},
                             {name = 'grease', quantity = 10}
                         },
                         ItemsGet = {
