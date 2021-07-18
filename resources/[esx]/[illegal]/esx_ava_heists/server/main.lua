@@ -22,6 +22,8 @@ ESX.RegisterServerCallback('esx_ava_heists:canStartHeist', function(source, cb, 
     end
 end)
 
+-- TODO add some sort of reset for heists
+
 RegisterNetEvent("esx_ava_heists:serverEvent")
 AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
     local _source = source
