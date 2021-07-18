@@ -135,6 +135,14 @@ Citizen.CreateThread(function()
 	end
 end)
 
+local function HasRequiredJob(jobs)
+    for k, jobName in ipairs(jobs) do
+        if (PlayerData.job ~= nil and PlayerData.job.name == jobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == jobName) then
+            return true
+        end
+    end
+    return false
+end
 
 Citizen.CreateThread(function()
 	while true do
@@ -207,7 +215,36 @@ Citizen.CreateThread(function()
                             end
                         end
                     end
+                end
+            end
+            if heist.Interactables then
+                for interactableName, interactable in pairs(heist.Interactables) do
+                    if not interactable.JobNeeded or HasRequiredJob(interactable.JobNeeded) then
+                        local distance = #(playerCoords - interactable.Coord)
+                        if distance < Config.DrawDistance then
+                            if interactable.Marker then
+                                DrawMarker(interactable.Marker, interactable.Coord, 0.0, 0.0, 0.0, interactable.MarkerRotation or vector3(0.0, 0.0, 0.0), interactable.Size.x or 1.0, interactable.Size.y or 1.0, interactable.Size.z or 1.0, interactable.Color.r or 255, interactable.Color.g or 255, interactable.Color.b or 255, 100, interactable.BobUpAndDown or false, true, 2, false, false, false, false)
+                            end
 
+                            if not playerIsInAction and distance < (interactable.Distance or interactable.Size.x or 1.0) then
+                                if interactable.HelpText ~= nil then
+                                    SetTextComponentFormat('STRING')
+                                    AddTextComponentString(interactable.HelpText)
+                                    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                                end
+
+                                if interactable.Action then
+                                    if IsControlJustReleased(0, 38) -- E
+                                        and (GetGameTimer() - GUI.Time) > 300
+                                    then
+                                        GUI.Time = GetGameTimer()
+                                        interactable.Action()
+                                        
+                                    end
+                                end
+                            end
+                        end
+                    end
                 end
             end
         end
@@ -215,6 +252,8 @@ Citizen.CreateThread(function()
 		Citizen.Wait(waitTime)
 	end
 end)
+
+
 
 
 RegisterNetEvent('esx_ava_heists:clientCallback')

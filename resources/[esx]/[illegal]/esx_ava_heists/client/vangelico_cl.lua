@@ -38,7 +38,7 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
     if animConfig == nil then return end
 
     if not IsPedArmed(playerPed, 4) or GetSelectedPedWeapon(playerPed) == GetHashKey("weapon_stungun") then
-        ESX.ShowNotification("Tu dois être armé pour pouvoir casser la vitrine.")
+        ESX.ShowNotification(_("vangelico_need_weapon"))
         return
     end
 
@@ -90,7 +90,7 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
                         })
                     else
                         tray.Stolen = false
-                        ESX.ShowNotification("Tu as annulé l'animation.")
+                        ESX.ShowNotification(_("canceled_animation"))
                     end
                 end
             else

@@ -20,7 +20,7 @@ Config.Heists.vangelico = {
     ServerTriggerAlarm = function()
         TriggerEvent("esx_phone:sendEmergency",
             "lspd",
-            "L'alarme de la bijouterie a été activée, rendez-vous y au plus vite !",
+            _("vangelico_alarm_notif"),
             true,
             vector3(-631.88, -237.82, 38.06)
         )
@@ -42,7 +42,7 @@ Config.Heists.vangelico = {
                                 Stage = 1
                             })
                         else
-                            ESX.ShowNotification("Il n'y a pas assez de policiers en service.")
+                            ESX.ShowNotification(_("not_enough_cops"))
                         end
                     end, "vangelico")
                 end
@@ -239,7 +239,7 @@ Config.Heists.vangelico = {
                     MarkerRotation = vector3(180.0, 0.0, 0.0),
                     BobUpAndDown = true,
                     Distance = 1.2,
-                    HelpText = "Appuyez sur ~INPUT_CONTEXT~ pour ~r~casser~s~ la vitrine.",
+                    HelpText = _("vangelico_press_break_tray"),
                     Marker = 20,
                     Type = Config.StealablesType.Tray
                 }
@@ -248,11 +248,12 @@ Config.Heists.vangelico = {
     },
     Interactables = {
         {
-            Pos = vector3(-631.59, -230.01, 37.08),
-            Size = {x = 1.5, y = 1.5, z = 1.0},
+            Coord = vector3(-631.59, -230.01, 37.08),
+            Size = {x = 1.0, y = 1.0, z = 1.0},
             Color = {r = 255, g = 255, b = 255},
-            Name = "Alarme",
-            HelpText = "Appuyez sur ~INPUT_CONTEXT~ pour arrêter l'~y~alarme~s~.",
+            Distance = 1.2,
+            Name = _("alarm"),
+            HelpText = _("press_stop_alarm"),
             Marker = 27,
             Action = function(playerPed)
                 TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
