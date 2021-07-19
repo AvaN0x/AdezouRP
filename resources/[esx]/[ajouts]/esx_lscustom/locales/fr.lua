@@ -73,7 +73,7 @@ Locales['fr'] = {
   ['highend'] = 'Jantes Haut de gamme',
 
   ['modplateholder'] = 'plaque - Arrière',
-  ['modvanityplate'] = 'plate - Avant',
+  ['modvanityplate'] = 'plaque - Avant',
   ['interior'] = 'intérieur',
   ['trim'] = 'accessoires',
   ['dashboard'] = 'tableau de bord',
