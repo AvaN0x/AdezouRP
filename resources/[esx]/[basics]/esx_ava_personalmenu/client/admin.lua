@@ -122,7 +122,7 @@ function AdminLoop()
 			end
 		end)
 
-		
+
 		Citizen.CreateThread(function()
 			while true do
 				Wait(5000)
@@ -480,7 +480,7 @@ end
 function admin_goto(player)
 	local targetPed = GetPlayerPed(player)
 	local targetVehicle = GetVehiclePedIsIn(targetPed, false)
-	
+
 	if targetVehicle ~= 0 then
 		if AreAnyVehicleSeatsFree(targetVehicle) then
 			SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
@@ -709,3 +709,67 @@ function LoadPedModel(model)
 		TriggerEvent('esx_ava_personalmenu:privateMessage', GetPlayerName(playerId), _('model_not_found', model, modelHash))
 	end
 end
+
+
+RegisterCommand('ava', function()
+    if PlayerGroup ~= nil and (PlayerGroup == "superadmin" or PlayerGroup == "owner") then
+        local playerPed = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(playerPed, false)
+        if vehicle == 0 then
+            return
+        end
+        SetVehicleModKit(vehicle, 0)
+
+        SetVehicleColours(vehicle, 135, 135)
+
+        local maxMod = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 25, 27, 28, 30, 33, 34, 35, 38}
+        for i = 1, #maxMod, 1 do
+            SetVehicleMod(vehicle, maxMod[i], GetNumVehicleMods(vehicle, maxMod[i]) - 1, false)
+        end
+
+        SetVehicleMod(vehicle, 14, 27, false) -- horn
+
+        ToggleVehicleMod(vehicle, 17, true) -- turbo
+        ToggleVehicleMod(vehicle, 18, true)
+        ToggleVehicleMod(vehicle, 19, true)
+        ToggleVehicleMod(vehicle, 20, true)
+        ToggleVehicleMod(vehicle, 21, true)
+        ToggleVehicleMod(vehicle, 22, true)
+
+        SetVehicleNeonLightEnabled(vehicle, 0, true)
+		SetVehicleNeonLightEnabled(vehicle, 1, true)
+		SetVehicleNeonLightEnabled(vehicle, 2, true)
+		SetVehicleNeonLightEnabled(vehicle, 3, true)
+
+        SetVehicleTyreSmokeColor(vehicle, 177, 18, 89)
+        SetVehicleDashboardColor(vehicle, 135)
+        SetVehicleInteriorColor(vehicle, 135)
+        -- SetVehicleNeonLightsColour(vehicle, 177, 18, 89)
+
+        SetVehicleHeadlightsColour(vehicle, 9)
+
+        SetVehicleExtraColours(vehicle, 135, 135) -- pearlescent, wheel color
+
+        Citizen.CreateThread(function()
+            local r, g, b = 255, 0, 0
+            while GetVehiclePedIsIn(playerPed) == vehicle do
+                Wait(10)
+                if r > 0 and b == 0 then
+                    r = r - 1
+                    g = g + 1
+                end
+                if g > 0 and r == 0 then
+                    g = g - 1
+                    b = b + 1
+                end
+                if b > 0 and g == 0 then
+                    r = r + 1
+                    b = b - 1
+                end
+
+                SetVehicleNeonLightsColour(vehicle, r, g, b)
+            end
+            SetVehicleNeonLightsColour(vehicle, 177, 18, 89)
+        end)
+    end
+end, false)
