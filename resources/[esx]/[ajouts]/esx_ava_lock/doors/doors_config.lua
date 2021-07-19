@@ -19,15 +19,11 @@ Config.Doors = {
 			doors = {
 				{
 					objHash = GetHashKey('v_ilev_ph_door01'),
-					-- or
-					-- objHash = -1215222675,
 					objYaw = -90.0,
 					objCoords = vector3(434.7, -980.6, 30.8)
 				},
 				{
 					objHash = GetHashKey('v_ilev_ph_door002'),
-					-- or
-					-- objHash = 320433149,
 					objYaw = -90.0,
 					objCoords = vector3(434.7, -983.2, 30.8)
 				}
