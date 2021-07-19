@@ -465,6 +465,9 @@ Citizen.CreateThread(function()
     for k, v in ipairs(ipls.mains) do
         RequestIpl(v)
     end
+    for k, v in ipairs(ipls.neededWhileClose) do
+        RequestIpl(v)
+    end
 
     -- remove snow
     SetZoneEnabled(GetZoneFromNameId("PrLog"), false)
@@ -506,17 +509,17 @@ Citizen.CreateThread(function()
             SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', isIslandLoaded, true)
             SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', not isIslandLoaded, true)
 
-            -- load the terrain of the island / los santos
-            Citizen.Wait(1000)
-            if isIslandLoaded then
-                for k, v in ipairs(ipls.neededWhileClose) do
-                    RequestIpl(v)
-                end
-            else
-                for k, v in ipairs(ipls.neededWhileClose) do
-                    RemoveIpl(v)
-                end
-            end
+            -- -- load the terrain of the island / los santos
+            -- Citizen.Wait(1000)
+            -- if isIslandLoaded then
+            --     for k, v in ipairs(ipls.neededWhileClose) do
+            --         RequestIpl(v)
+            --     end
+            -- else
+            --     for k, v in ipairs(ipls.neededWhileClose) do
+            --         RemoveIpl(v)
+            --     end
+            -- end
 
         end
 
