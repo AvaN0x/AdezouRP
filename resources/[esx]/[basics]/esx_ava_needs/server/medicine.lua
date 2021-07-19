@@ -18,7 +18,7 @@ ESX.RegisterUsableItem("dolizou", function(source)
 
         TriggerEvent("esx_ava_needs:useItem", source, "dolizou")
 
-        TriggerClientEvent("esx_status:remove", source, "injured", 50000)
+        TriggerClientEvent("esx_status:remove", source, "injured", 100000)
 
         TriggerClientEvent("esx_ava_needs:onTakePill", source)
 
