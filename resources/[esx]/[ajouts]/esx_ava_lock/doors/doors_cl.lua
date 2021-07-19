@@ -137,7 +137,7 @@ Citizen.CreateThread(function()
 				if doorID.doors then
 					for _,v in ipairs(doorID.doors) do
 						if not v.object or not DoesEntityExist(v.object) then
-							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
+							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
 						end
 						if distance < doorID.distance then
 							DrawEntityBox(v.object, 255, 255, 255)
@@ -147,7 +147,7 @@ Citizen.CreateThread(function()
 					end
 				else
 					if not doorID.object or not DoesEntityExist(doorID.object) then
-						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
+						doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
 					end
 					if distance < doorID.distance then
 						DrawEntityBox(doorID.object, 255, 255, 255)
@@ -198,7 +198,7 @@ Citizen.CreateThread(function()
 					if doorID.doors then
 						for _,v in ipairs(doorID.doors) do
 							if not v.object or not DoesEntityExist(v.object) then
-								v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash or GetHashKey(v.objName), false, false, false)
+								v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
 							end
 							FreezeEntityPosition(v.object, doorID.locked)
 
@@ -211,7 +211,7 @@ Citizen.CreateThread(function()
 						end
 					else
 						if not doorID.object or not DoesEntityExist(doorID.object) then
-							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash or GetHashKey(doorID.objName), false, false, false)
+							doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
 						end
 						FreezeEntityPosition(doorID.object, doorID.locked)
 
