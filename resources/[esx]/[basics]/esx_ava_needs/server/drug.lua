@@ -22,7 +22,7 @@ end)
 ESX.RegisterUsableItem("bagweed", function(source)
 	TriggerEvent("esx_ava_needs:useItem", source, "bagweed")
 
-	TriggerClientEvent("esx_status:add", source, "drugged", 100000)
+	TriggerClientEvent("esx_status:add", source, "drugged", 250000)
 
 	TriggerClientEvent("esx_ava_needs:onSmokeDrug", source)
 end)

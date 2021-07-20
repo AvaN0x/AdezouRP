@@ -50,6 +50,7 @@ AddEventHandler('esx_ava_needs:healPlayer', function()
 	-- restore hp
 	local playerPed = PlayerPedId()
 	SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+    StopLongAnimatedIfNeeded()
 end)
 
 AddEventHandler('esx:onPlayerDeath', function()
@@ -129,13 +130,13 @@ AddEventHandler('esx_status:loaded', function(status)
 			end)
 
 			TriggerEvent('esx_status:getStatus', 'drunk', function(status)
-				if status.val > 0 then
+				if status.val > 0.20 * STATUS_MAX then
 					local start = not IsAlreadyDrunk
 
 					local level = 0
-					if status.val <= 250000 then
+					if status.val <= 0.40 * STATUS_MAX then
 						level = 0
-					elseif status.val <= 500000 then
+					elseif status.val <= 0.60 * STATUS_MAX then
 						level = 1
 					else
                         if status.val > 0.95 * STATUS_MAX then
@@ -158,7 +159,7 @@ AddEventHandler('esx_status:loaded', function(status)
 			end)
 
 			TriggerEvent('esx_status:getStatus', 'drugged', function(status)
-				if status.val > 0 then
+				if status.val > 0.20 * STATUS_MAX then
 					local start = not IsAlreadyDrugged
 
                     if status.val > 0.95 * STATUS_MAX then
@@ -167,8 +168,7 @@ AddEventHandler('esx_status:loaded', function(status)
 
 					Drugged(start)
 					IsAlreadyDrugged = true
-				end
-				if status.val == 0 then
+				else
 					if IsAlreadyDrugged then
 						Reality()
 					end
@@ -221,7 +221,7 @@ AddEventHandler('esx_ava_needs:onEat', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_cs_burger_01'
 		IsAnimated = true
-        IsLongAnimated = false
+        StopLongAnimatedIfNeeded()
 
 		Citizen.CreateThread(function()
 			local playerPed = PlayerPedId()
@@ -248,7 +248,7 @@ AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_ld_flow_bottle'
 		IsAnimated = true
-        IsLongAnimated = false
+        StopLongAnimatedIfNeeded()
 
 		Citizen.CreateThread(function()
 			local playerPed = PlayerPedId()
@@ -275,7 +275,7 @@ RegisterNetEvent('esx_ava_needs:onSmokeDrug')
 AddEventHandler('esx_ava_needs:onSmokeDrug', function()
     if not IsAnimated then
         IsAnimated = true
-        IsLongAnimated = false
+        StopLongAnimatedIfNeeded()
 
         local playerPed = PlayerPedId()
 
@@ -302,7 +302,8 @@ RegisterNetEvent('esx_ava_needs:onTakePill')
 AddEventHandler('esx_ava_needs:onTakePill', function()
     if not IsAnimated then
         IsAnimated = true
-        IsLongAnimated = false
+        StopLongAnimatedIfNeeded()
+
         local playerPed = PlayerPedId()
 
         ESX.Streaming.RequestAnimDict('mp_player_intdrink', function()
@@ -336,6 +337,12 @@ function SetLongAnimated(prop)
             DeleteObject(prop)
         end
     end)
+end
+function StopLongAnimatedIfNeeded()
+    if IsLongAnimated then
+        IsLongAnimated = false
+        Wait(50)
+    end
 end
 
 
