@@ -242,3 +242,39 @@ function CancelableGoStraightToCoord(ped, coords, speed, timeout, targetHeading 
 
 	return true
 end
+
+
+-- use example : 
+-- ```lua
+--      local instructionalButtons = exports.esx_avan0x:GetScaleformInstructionalButtons({{control = "~INPUT_AIM~", label = "Aim"}})
+--      DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+-- ```
+-- to optimise it you can call the export outside of a loop
+function GetScaleformInstructionalButtons(buttons)
+    local instructionScaleform = RequestScaleformMovie("instructional_buttons")
+
+    while not HasScaleformMovieLoaded(instructionScaleform) do
+        Wait(0)
+    end
+
+    PushScaleformMovieFunction(instructionScaleform, "CLEAR_ALL")
+    PushScaleformMovieFunction(instructionScaleform, "TOGGLE_MOUSE_BUTTONS")
+    PushScaleformMovieFunctionParameterBool(0)
+    PopScaleformMovieFunctionVoid()
+
+    for i = 1, #buttons, 1 do
+        PushScaleformMovieFunction(instructionScaleform, "SET_DATA_SLOT")
+        PushScaleformMovieFunctionParameterInt(i - 1)
+        
+        PushScaleformMovieMethodParameterButtonName(buttons[i].control)
+        PushScaleformMovieFunctionParameterString(buttons[i].label)
+        PopScaleformMovieFunctionVoid()
+    end
+
+    PushScaleformMovieFunction(instructionScaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+    PushScaleformMovieFunctionParameterInt(-1)
+    PopScaleformMovieFunctionVoid()
+
+    return instructionScaleform
+end
+

@@ -6,6 +6,7 @@
 ESX          = nil
 local IsDead = false
 local IsAnimated = false
+local IsLongAnimated = false
 
 local STATUS_MAX = 1000000
 
@@ -220,6 +221,7 @@ AddEventHandler('esx_ava_needs:onEat', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_cs_burger_01'
 		IsAnimated = true
+        IsLongAnimated = false
 
 		Citizen.CreateThread(function()
 			local playerPed = PlayerPedId()
@@ -246,6 +248,7 @@ AddEventHandler('esx_ava_needs:onDrink', function(prop_name)
 	if not IsAnimated then
 		prop_name = prop_name or 'prop_ld_flow_bottle'
 		IsAnimated = true
+        IsLongAnimated = false
 
 		Citizen.CreateThread(function()
 			local playerPed = PlayerPedId()
@@ -272,11 +275,25 @@ RegisterNetEvent('esx_ava_needs:onSmokeDrug')
 AddEventHandler('esx_ava_needs:onSmokeDrug', function()
     if not IsAnimated then
         IsAnimated = true
+        IsLongAnimated = false
+
         local playerPed = PlayerPedId()
 
-        TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
-        Citizen.Wait(3000)
-        ClearPedTasksImmediately(playerPed)
+        local dict, anim = "amb@world_human_smoking_pot@male@base", "base"
+        while not HasAnimDictLoaded(dict) do
+            RequestAnimDict(dict)
+            Citizen.Wait(10)
+        end   
+
+        local x,y,z = table.unpack(GetEntityCoords(playerPed))
+        local prop = CreateObject(GetHashKey("p_amb_joint_01"), x, y, z + 0.2, true, true, true)
+        local boneIndex = GetPedBoneIndex(playerPed, 18905)
+        AttachEntityToEntity(prop, playerPed, boneIndex, 0.145, 0.038, 0.045, 0.0, 0.0, 80.0, true, true, false, true, 1, true)
+
+        TaskPlayAnim(playerPed, dict, anim, 8.0, -8, -1, 49, 0, 0, 0, 0)
+
+        SetLongAnimated(prop)
+
         IsAnimated = false
     end
 end)
@@ -285,6 +302,7 @@ RegisterNetEvent('esx_ava_needs:onTakePill')
 AddEventHandler('esx_ava_needs:onTakePill', function()
     if not IsAnimated then
         IsAnimated = true
+        IsLongAnimated = false
         local playerPed = PlayerPedId()
 
         ESX.Streaming.RequestAnimDict('mp_player_intdrink', function()
@@ -298,6 +316,27 @@ AddEventHandler('esx_ava_needs:onTakePill', function()
 end)
 
 
+function SetLongAnimated(prop)
+    Citizen.CreateThread(function()
+        IsLongAnimated = true
+        local instructionalButtons = exports.esx_avan0x:GetScaleformInstructionalButtons({
+            {control = "~INPUT_VEH_DUCK~", label = _("cancel_animation")}
+        })
+
+		while IsLongAnimated do
+			Citizen.Wait(0)
+            DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+            if IsControlJustPressed(1, 73) or IsControlJustPressed(1, 24) or IsControlJustPressed(1, 25) then -- X, RMB or LMB
+                IsLongAnimated = false
+            end
+        end
+        ClearPedSecondaryTask(PlayerPedId())
+
+        if prop then
+            DeleteObject(prop)
+        end
+    end)
+end
 
 
 -- drunk effect

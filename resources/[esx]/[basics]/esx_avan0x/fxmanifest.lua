@@ -36,7 +36,8 @@ export {
     "ChooseClosestPlayer",
     "ChooseClosestVehicle",
     "GetVehicleInFrontOrChooseClosestVehicle",
-    "CancelableGoStraightToCoord"
+    "CancelableGoStraightToCoord",
+    "GetScaleformInstructionalButtons"
 }
 
 server_export {
