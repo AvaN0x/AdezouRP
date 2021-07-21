@@ -154,8 +154,12 @@ function ListVehiclesMenu(type, target)
     ESX.TriggerServerCallback('esx_ava_garage:getVehicles', function(vehicles)
 
 		for _,v in pairs(vehicles) do
-			local hashVehicule = v.vehicle.model
-			local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
+			local hashVehicle = v.vehicle.model
+			local vehicleDisplayName = GetDisplayNameFromVehicleModel(hashVehicle) or v.vehicle.model
+			local vehicleName = GetLabelText(vehicleDisplayName)
+            if vehicleName == "NULL" then
+                vehicleName = vehicleDisplayName
+            end
 			local labelvehicle
 			if v.location == this_Garage.Identifier then
 				labelvehicle = vehicleName..' - '.. v.vehicle.plate
@@ -326,9 +330,12 @@ function ReturnVehicleMenu(isInsurance, target, isGov)
 		for _,v in pairs(vehicles) do
             -- Do not display the plate of the last vehicle the player went in
             if not isInsurance or v.vehicle.plate ~= lastVehiclePlate then
-                local hashVehicule = v.vehicle.model
-                local vehicleName = GetDisplayNameFromVehicleModel(hashVehicule)
-                local labelvehicle
+                local hashVehicle = v.vehicle.model
+                local vehicleDisplayName = GetDisplayNameFromVehicleModel(hashVehicle) or v.vehicle.model
+                local vehicleName = GetLabelText(vehicleDisplayName)
+                if vehicleName == "NULL" then
+                    vehicleName = vehicleDisplayName
+                end
                 local exitPrice = -1
 
                 for i=1, #VehiclesList, 1 do
@@ -352,7 +359,7 @@ function ReturnVehicleMenu(isInsurance, target, isGov)
                     end
                 end
                 if exitPrice ~= -1 then
-                    labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
+                    local labelvehicle = vehicleName..' - '.. v.vehicle.plate ..': $'..exitPrice
                     table.insert(elements, {label = labelvehicle , value = v.vehicle, price = exitPrice, type = v.type})
                 else
                     print("ERROR : " .. v.vehicle.model .. " is not a valid vehicle model.")
