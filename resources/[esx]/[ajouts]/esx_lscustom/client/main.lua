@@ -281,15 +281,16 @@ function GetAction(data)
 				end
 
 				if v.modType == 14 then -- HORNS
-					for j = 0, 57, 1 do
-						local _label = ''
-						if j == currentMods.modHorns then
-							_label = GetHornName(j) .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
-						else
-							price = math.floor(vehiclePrice * v.price / 100)
-							_label = GetHornName(j) .. ' - <span style="color:green;">$' .. price .. ' </span>'
-						end
-						table.insert(elements, {label = _label, modType = k, modNum = j})
+					-- for j = -1, (GetNumVehicleMods(vehicle, 14) - 1), 1 do
+					for j = 0, (GetNumVehicleMods(vehicle, 14) - 1), 1 do
+                        local _label = ''
+                        if j == currentMods.modHorns then
+                            _label = GetHornName(j) .. ' <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
+                        else
+                            price = math.floor(vehiclePrice * v.price / 100)
+                            _label = GetHornName(j) .. ' <span style="color:green;">$' .. price .. ' </span>'
+                        end
+                        table.insert(elements, {label = _label, modType = k, modNum = j})
 					end
 				elseif v.modType == 'plateIndex' then -- PLATES
 					for j = 0, 4, 1 do
@@ -340,7 +341,7 @@ function GetAction(data)
 				elseif v.modType == 'windowTint' then -- WINDOWS TINT
 					for j = 1, 5, 1 do
 						local _label = ''
-						if j == currentMods.modHorns then
+						if j == currentMods.windowTint then
 							_label = GetWindowName(j) .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
 						else
 							price = math.floor(vehiclePrice * v.price / 100)
@@ -445,14 +446,15 @@ function GetAction(data)
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
 							if (not Config.Menus[l].modType
-							or Config.Menus[l].modType == 22
-							or Config.Menus[l].modType == 'windowTint'
-							or Config.Menus[l].modType == 'plateIndex'
-							or Config.Menus[l].modType == 'modXenonColour'
-							or Config.Menus[l].modType == 'neonColor'
-							or (Config.Menus[l].modType == 'modLivery' and GetVehicleLiveryCount(vehicle) > 0)
-							or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0)
-                            and (CurrentZone.WhiteList == nil or Config.Menus[l].modType == nil or array_contain_value(CurrentZone.WhiteList, Config.Menus[l].modType)) then
+                                or Config.Menus[l].modType == 22
+                                or Config.Menus[l].modType == 'windowTint'
+                                or Config.Menus[l].modType == 'plateIndex'
+                                or Config.Menus[l].modType == 'modXenonColour'
+                                or Config.Menus[l].modType == 'neonColor'
+                                or (Config.Menus[l].modType == 'modLivery' and GetVehicleLiveryCount(vehicle) > 0)
+                                or GetNumVehicleMods(vehicle, Config.Menus[l].modType) > 0)
+                                and (CurrentZone.WhiteList == nil or Config.Menus[l].modType == nil or array_contain_value(CurrentZone.WhiteList, Config.Menus[l].modType))
+                            then
 								table.insert(elements, {label = w, value = l})
 							end
 						end
@@ -470,7 +472,7 @@ function GetAction(data)
 		end
 	end
 
-	if data.value ~= 'modFrontWheelsType8' or data.value ~= 'modFrontWheelsType9' then
+	if data.value == 'main' or data.value == 'cosmetics' or data.value == 'modFrontWheelsType8' or data.value == 'modFrontWheelsType9' then
 		table.sort(elements, function(a, b)
 			return a.label < b.label
 		end)

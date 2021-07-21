@@ -347,112 +347,126 @@ function GetWindowName(index)
 end
 
 function GetHornName(index)
-	if (index == 0) then
-		return "Truck Horn"
+	if (index == -1) then
+		return GetLabelText("CMOD_HRN_0")
+    elseif (index == 0) then
+		return GetLabelText("CMOD_HRN_TRK")
 	elseif (index == 1) then
-		return "Cop Horn"
+		return GetLabelText("CMOD_HRN_COP")
 	elseif (index == 2) then
-		return "Clown Horn"
+		return GetLabelText("CMOD_HRN_CLO")
 	elseif (index == 3) then
-		return "Musical Horn 1"
+		return GetLabelText("CMOD_HRN_MUS1")
 	elseif (index == 4) then
-		return "Musical Horn 2"
+		return GetLabelText("CMOD_HRN_MUS2")
 	elseif (index == 5) then
-		return "Musical Horn 3"
+		return GetLabelText("CMOD_HRN_MUS3")
 	elseif (index == 6) then
-		return "Musical Horn 4"
+		return GetLabelText("CMOD_HRN_MUS4")
 	elseif (index == 7) then
-		return "Musical Horn 5"
+		return GetLabelText("CMOD_HRN_MUS5")
 	elseif (index == 8) then
-		return "Sad Trombone"
+		return GetLabelText("CMOD_HRN_SAD")
 	elseif (index == 9) then
-		return "Classical Horn 1"
+		return GetLabelText("HORN_CLAS1")
 	elseif (index == 10) then
-		return "Classical Horn 2"
+		return GetLabelText("HORN_CLAS2")
 	elseif (index == 11) then
-		return "Classical Horn 3"
+		return GetLabelText("HORN_CLAS3")
 	elseif (index == 12) then
-		return "Classical Horn 4"
+		return GetLabelText("HORN_CLAS4")
 	elseif (index == 13) then
-		return "Classical Horn 5"
+		return GetLabelText("HORN_CLAS5")
 	elseif (index == 14) then
-		return "Classical Horn 6"
+		return GetLabelText("HORN_CLAS6")
 	elseif (index == 15) then
-		return "Classical Horn 7"
+		return GetLabelText("HORN_CLAS7")
 	elseif (index == 16) then
-		return "Scale - Do"
+		return GetLabelText("HORN_CNOTE_C0")
 	elseif (index == 17) then
-		return "Scale - Re"
+		return GetLabelText("HORN_CNOTE_D0")
 	elseif (index == 18) then
-		return "Scale - Mi"
+		return GetLabelText("HORN_CNOTE_E0")
 	elseif (index == 19) then
-		return "Scale - Fa"
+		return GetLabelText("HORN_CNOTE_F0")
 	elseif (index == 20) then
-		return "Scale - Sol"
+		return GetLabelText("HORN_CNOTE_G0")
 	elseif (index == 21) then
-		return "Scale - La"
+		return GetLabelText("HORN_CNOTE_A0")
 	elseif (index == 22) then
-		return "Scale - Ti"
+		return GetLabelText("HORN_CNOTE_B0")
 	elseif (index == 23) then
-		return "Scale - Do"
+		return GetLabelText("HORN_CNOTE_C1")
 	elseif (index == 24) then
-		return "Jazz Horn 1"
+		return GetLabelText("HORN_HIPS1")
 	elseif (index == 25) then
-		return "Jazz Horn 2"
+		return GetLabelText("HORN_HIPS2")
 	elseif (index == 26) then
-		return "Jazz Horn 3"
+		return GetLabelText("HORN_HIPS3")
 	elseif (index == 27) then
-		return "Jazz Horn Loop"
+		return GetLabelText("HORN_HIPS4")
 	elseif (index == 28) then
-		return "Star Spangled Banner 1"
+		return GetLabelText("HORN_INDI_1")
 	elseif (index == 29) then
-		return "Star Spangled Banner 2"
+		return GetLabelText("HORN_INDI_2")
 	elseif (index == 30) then
-		return "Star Spangled Banner 3"
+		return GetLabelText("HORN_INDI_3")
 	elseif (index == 31) then
-		return "Star Spangled Banner 4"
+		return GetLabelText("HORN_INDI_4")
 	elseif (index == 32) then
-		return "Classical Horn 8 Loop"
+		return GetLabelText("HORN_LUXE2")
 	elseif (index == 33) then
-		return "Classical Horn 9 Loop"
+		return GetLabelText("HORN_LUXE1")
 	elseif (index == 34) then
-		return "Classical Horn 10 Loop"
+		return GetLabelText("HORN_LUXE3")
 	elseif (index == 35) then
-		return "Classical Horn 8"
+		return GetLabelText("HORN_LUXE2") .. " (2)" -- same as 32, but this one auto stop on first loop
 	elseif (index == 36) then
-		return "Classical Horn 9"
+		return GetLabelText("HORN_LUXE1") .. " (2)" -- same as 33, but this one auto stop on first loop
 	elseif (index == 37) then
-		return "Classical Horn 10"
+		return GetLabelText("HORN_LUXE3") .. " (2)" -- same as 34, but this one auto stop on first loop
 	elseif (index == 38) then
-		return "Funeral Loop"
+		return GetLabelText("HORN_HWEEN1")
 	elseif (index == 39) then
-		return "Funeral"
+		return GetLabelText("HORN_HWEEN1") .. " (2)" -- same as 38, but this one auto stop on first loop
 	elseif (index == 40) then
-		return "Spooky Loop"
+		return GetLabelText("HORN_HWEEN2")
 	elseif (index == 41) then
-		return "Spooky"
+		return GetLabelText("HORN_HWEEN2") .. " (2)" -- same as 40, but this one auto stop on first loop
 	elseif (index == 42) then
-		return "San Andreas Loop"
+		return GetLabelText("HORN_LOWRDER1")
 	elseif (index == 43) then
-		return "San Andreas"
+		return GetLabelText("HORN_LOWRDER1") .. " (2)" -- same as 43, but this one auto stop on first loop
 	elseif (index == 44) then
-		return "Liberty City Loop"
+		return GetLabelText("HORN_LOWRDER2")
 	elseif (index == 45) then
-		return "Liberty City"
+		return GetLabelText("HORN_LOWRDER2") .. " (2)" -- same as 44, but this one auto stop on first loop
 	elseif (index == 46) then
-		return "Festive 1 Loop"
+		return GetLabelText("HORN_XM15_1")
 	elseif (index == 47) then
-		return "Festive 1"
+		return GetLabelText("HORN_XM15_1") .. " (2)" -- almost the same as 46, but this one auto stop on first loop
 	elseif (index == 48) then
-		return "Festive 2 Loop"
+		return GetLabelText("HORN_XM15_2")
 	elseif (index == 49) then
-		return "Festive 2"
+		return GetLabelText("HORN_XM15_2") .. " (2)" -- almost the same as 48, but this one auto stop on first loop
 	elseif (index == 50) then
-		return "Festive 3 Loop"
+		return GetLabelText("HORN_XM15_3")
 	elseif (index == 51) then
-		return "Festive 3"
+		return GetLabelText("HORN_XM15_3") .. " (2)" -- almost the same as 51, but this one auto stop on first loop
+	elseif (index == 52) then
+		return GetLabelText("CMOD_AIRHORN_01")
+	elseif (index == 53) then
+		return GetLabelText("CMOD_AIRHORN_01") .. " (2)" -- same as 52, but this one auto stop on first loop
+	elseif (index == 54) then
+		return GetLabelText("CMOD_AIRHORN_02")
+	elseif (index == 55) then
+		return GetLabelText("CMOD_AIRHORN_02") .. " (2)" -- same as 54, but this one auto stop on first loop
+	elseif (index == 56) then
+		return GetLabelText("CMOD_AIRHORN_03")
+	elseif (index == 57) then
+		return GetLabelText("CMOD_AIRHORN_03") .. " (2)" -- same as 56, but this one auto stop on first loop
 	else
-		return "Unknown Horn"
+		return "Klaxon #" .. index
 	end
 end
 
