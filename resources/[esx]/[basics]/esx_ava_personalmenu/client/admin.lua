@@ -73,15 +73,57 @@ function AdminLoop()
 		end)
 
 		Citizen.CreateThread(function()
+            local knownTags = {}
+
+            local MP_GAMER_TAG_COMPONENTS = {
+                GAMER_NAME = 0,
+                CREW_TAG = 1,
+                HEALTH_ARMOUR = 2,
+                BIG_TEXT = 3,
+                AUDIO_ICON = 4,
+                MP_USING_MENU = 5,
+                MP_PASSIVE_MODE = 6,
+                WANTED_STARS = 7,
+                MP_DRIVER = 8,
+                MP_CO_DRIVER = 9,
+                MP_TAGGED = 12,
+                GAMER_NAME_NEARBY = 13,
+                ARROW = 14,
+                MP_PACKAGES = 15,
+                INV_IF_PED_FOLLOWING = 16,
+                RANK_TEXT = 17,
+                MP_TYPING = 18
+            }
+
 			while true do
-				Citizen.Wait(10)
+				Citizen.Wait(50)
 				if show_names or admin_mode then
-					local playerPed = PlayerPedId()
-					for _, player in ipairs(GetActivePlayers()) do
-						if GetPlayerPed(player) ~= playerPed then
-							local headId = CreateFakeMpGamerTag(GetPlayerPed(player), (GetPlayerServerId(player) .. ' - ' .. GetPlayerName(player)), false, false, "", false)
-						end
-					end
+                    local playerCoords = GetEntityCoords(PlayerPedId())
+
+                    -- this will only get close players in Infinity
+                    for _, playerTarget in ipairs(GetActivePlayers()) do
+                        local targetPed = GetPlayerPed(playerTarget)
+                        -- check if tag does not exist or is not active
+                        if not knownTags[playerTarget] or not IsMpGamerTagActive(knownTags[playerTarget]) then
+                            knownTags[playerTarget] = CreateFakeMpGamerTag(targetPed, GetPlayerServerId(playerTarget) .. ' - ' .. GetPlayerName(playerTarget), false, false, "", 0)
+                        end
+
+                        if #(GetEntityCoords(targetPed) - playerCoords) <= 150 then -- 150 of distance to show player tag
+                            -- Name
+                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 1)
+
+                            -- Health
+                            SetMpGamerTagHealthBarColor(knownTags[playerTarget], 18)
+                            SetMpGamerTagAlpha(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 255)
+                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 1)
+                        else
+                            -- Hide name
+                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 0)
+
+                            -- Hide Health
+                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 0)
+                        end
+                    end
 				else
 					Citizen.Wait(4000)
 				end
