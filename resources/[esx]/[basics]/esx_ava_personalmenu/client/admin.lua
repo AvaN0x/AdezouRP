@@ -354,9 +354,9 @@ function PlayerManagment(player)
 				TriggerServerEvent("esx_ava_personalmenu:privateMessage", serverID, content)
 			end)
 		elseif data.current.value == "admin_goto" then
-			admin_goto(player)
+			TriggerServerEvent('esx_ava_personalmenu:goto_sv', serverID)
 		elseif data.current.value == "admin_bring" then
-			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID, GetEntityCoords(PlayerPedId()))
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID)
         elseif data.current.value == "admin_revive" then
             TriggerServerEvent("esx_ava_deaths:admin:revive", serverID)
         elseif data.current.value == "admin_debug" then
@@ -367,7 +367,7 @@ function PlayerManagment(player)
 			TriggerServerEvent('esx_ava_personalmenu:kill_sv', serverID)
 		elseif data.current.value == "admin_kick" then
 			EnterReason(function(reason)
-				TriggerServerEvent("esx_ava_personalmenu:kick", GetPlayerName(PlayerId()), serverID, reason)
+				TriggerServerEvent("esx_ava_personalmenu:kick", serverID, reason)
 			end)
 		elseif data.current.value == "admin_ban" then
 			EnterReason(function(reason)
@@ -424,10 +424,10 @@ function admin_tp_marker()
 	if DoesBlipExist(WaypointHandle) then
 		local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
 		for height = 1, 1000 do
-			SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
-			local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
+			SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords.x, waypointCoords.y, height + 0.0)
+			local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords.x, waypointCoords.y, height + 0.0)
 			if foundGround then
-				SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+				SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords.x, waypointCoords.y, height + 0.0)
 				break
 			end
 			Citizen.Wait(0)
@@ -446,8 +446,8 @@ AddEventHandler('esx_ava_personalmenu:privateMessage', function(name, content)
 	ESX.ShowAdvancedNotification(_('staff'), name, content, 'WEB_BITTERSWEETCELLPHONE', 2)
 end)
 
-RegisterNetEvent('esx_ava_personalmenu:bring_cl')
-AddEventHandler('esx_ava_personalmenu:bring_cl', function(playerPedCoords)
+RegisterNetEvent('esx_ava_personalmenu:teleport')
+AddEventHandler('esx_ava_personalmenu:teleport', function(playerPedCoords)
 	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
 end)
 
@@ -477,27 +477,6 @@ function admin_spectate_player(player)
 		FreezeEntityPosition(playerPed, false)
 
         -- TriggerEvent("updateVoipTargetPed", playerPed, false) -- TOKOVOIP
-	end
-end
-
-function admin_goto(player)
-	local targetPed = GetPlayerPed(player)
-	local targetVehicle = GetVehiclePedIsIn(targetPed, false)
-
-	if targetVehicle ~= 0 then
-		if AreAnyVehicleSeatsFree(targetVehicle) then
-			SetPedIntoVehicle(PlayerPedId(), targetVehicle, -2)
-		else
-			SetPedCoordsKeepVehicle(PlayerPedId(), GetEntityCoords(targetPed))
-		end
-	else
-		local playerPed = PlayerPedId()
-		local vehicle = GetVehiclePedIsIn(playerPed, false)
-		if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
-			SetEntityCoords(playerPed, GetEntityCoords(targetPed))
-		else
-			SetPedCoordsKeepVehicle(playerPed, GetEntityCoords(targetPed))
-		end
 	end
 end
 
