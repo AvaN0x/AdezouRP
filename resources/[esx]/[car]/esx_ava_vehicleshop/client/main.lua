@@ -30,6 +30,21 @@ local CurrentVehicleData      = nil
 ESX                           = nil
 local PlayerGroup = nil
 
+local function ProcessVehicles()
+	for i = 1, #Vehicles, 1 do
+        local hash = GetHashKey(Vehicles[i].model)
+        if IsModelInCdimage(hash) then
+            local vehicleDisplayName = GetDisplayNameFromVehicleModel(hash)
+            Vehicles[i].name = GetLabelText(vehicleDisplayName)
+            if Vehicles[i].name == "NULL" then
+                Vehicles[i].name = vehicleDisplayName
+            end
+        else
+            Vehicles[i].name = "unknown"
+        end
+    end
+end
+
 Citizen.CreateThread(function ()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -44,6 +59,7 @@ Citizen.CreateThread(function ()
 
 	ESX.TriggerServerCallback('esx_vehicleshop:getVehicles', function (vehicles)
 		Vehicles = vehicles
+        ProcessVehicles()
 	end)
 
 	while PlayerGroup == nil do
@@ -73,6 +89,7 @@ end)
 RegisterNetEvent('esx_vehicleshop:sendVehicles')
 AddEventHandler('esx_vehicleshop:sendVehicles', function (vehicles)
 	Vehicles = vehicles
+    ProcessVehicles()
 end)
 
 function DeleteShopInsideVehicles()
