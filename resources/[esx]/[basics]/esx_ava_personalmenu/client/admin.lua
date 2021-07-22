@@ -32,6 +32,8 @@ function AdminLoop()
             print(json.encode(AdminConfig))
         end)
 
+        DisplayPlayerNameTagsOnBlips(true)
+
 		Citizen.CreateThread(function()
 			while true do
 				Citizen.Wait(10)
@@ -135,6 +137,7 @@ function AdminLoop()
 
 							if not DoesBlipExist(blip) then
 								blip = AddBlipForEntity(targetPed)
+                                SetBlipDisplay(blip, 2)
 								SetBlipSprite(blip, 1)
 								SetBlipColour(blip, 8)
 								SetBlipCategory(blip, 7)
