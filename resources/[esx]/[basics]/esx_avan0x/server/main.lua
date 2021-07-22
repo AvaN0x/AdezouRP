@@ -70,7 +70,8 @@ function SendWebhookEmbedMessage(webhookName, title, description, color)
 					{
 						title = title,
 						description = description,
-						color = color
+						color = color,
+                        footer = GetConvar("DEV_SERVER", "false") ~= "false" and {text = "DEV SERVER"} or nil
 					}
 				}
 			}), {['Content-Type'] = 'application/json'})

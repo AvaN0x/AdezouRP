@@ -8,7 +8,7 @@ Config.Heists.vangelico = {
     Started = false,
     InteriorId = 82690,
     -- InteriorIds = {82690},
-    CopsCount = 4,
+    CopsCount = 3,
     CurrentStage = 0,
     -- TriggerHeist = function()
     -- end,
