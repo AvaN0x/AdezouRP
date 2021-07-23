@@ -490,7 +490,13 @@ end)
 
 RegisterNetEvent('esx_ava_personalmenu:teleport')
 AddEventHandler('esx_ava_personalmenu:teleport', function(playerPedCoords)
-	SetPedCoordsKeepVehicle(PlayerPedId(), playerPedCoords)
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+    if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
+        SetEntityCoords(playerPed, playerPedCoords)
+    else
+        SetPedCoordsKeepVehicle(playerPed, playerPedCoords)
+    end
 end)
 
 RegisterNetEvent('esx_ava_personalmenu:kill_cl')
