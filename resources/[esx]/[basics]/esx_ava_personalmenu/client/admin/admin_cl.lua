@@ -3,6 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local noclip, show_names, admin_mode = false, false, false
+local lastSpectateLocation = nil
 
 local AdminConfig = {}
 
@@ -168,6 +169,28 @@ function AdminLoop()
 
 
 		Citizen.CreateThread(function()
+            local instructionalButtons = exports.esx_avan0x:GetScaleformInstructionalButtons({
+                {control = "~INPUT_CELLPHONE_CANCEL~", label = _("cancel_spectate")}
+            })
+
+			while true do
+				Citizen.Wait(0)
+				if lastSpectateLocation then
+                    DisableControlAction(0, 24, true) -- Attack
+                    DisableControlAction(0, 257, true) -- Attack 2
+                    DisableControlAction(0, 25, true) -- Aim
+                    DisableControlAction(0, 263, true) -- Melee Attack 1
+
+                    DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+                    -- INPUT_CELLPHONE_CANCEL is pressed to go back in the menu
+                else
+					Citizen.Wait(500)
+				end
+			end
+		end)
+
+
+		Citizen.CreateThread(function()
 			while true do
 				Wait(5000)
 				if show_names or admin_mode then
@@ -325,95 +348,121 @@ function all_players()
 end
 
 function players_list()
-    local elements = {}
-	for k, player in ipairs(GetActivePlayers()) do
-		local serverID = GetPlayerServerId(player)
-        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player), type = "submenu"})
-	end
-	table.sort(elements, function(a,b)
-		return a.serverID < b.serverID
-	end)
-    if #elements >= 1 then
-        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
-        {
-            title    = _("admin_spectate"),
-            align    = "left",
-            elements = elements
-        }, function(data, menu)
-            PlayerManagment(data.current.value)
-		end, function(data, menu)
-            menu.close()
+    ESX.TriggerServerCallback("esx_ava_personalmenu:getPlayers", function(players)
+        local myId = GetPlayerServerId(PlayerId())
+        local elements = {}
+        for k, player in ipairs(players) do
+            if myId == player.id then
+                table.insert(elements, {label = _("orange", player.id .. ' - ' .. player.name), value = player, serverID = player.id, type = "submenu"})
+            else
+                table.insert(elements, {label = player.id .. ' - ' .. player.name, value = player, serverID = player.id, type = "submenu"})
+            end
+        end
+        table.sort(elements, function(a,b)
+            return a.serverID < b.serverID
         end)
-    end
+        if #elements >= 1 then
+            ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist",
+            {
+                title    = _("players_list"),
+                align    = "left",
+                elements = elements
+            }, function(data, menu)
+                PlayerManagment(data.current.value)
+            end, function(data, menu)
+                menu.close()
+            end)
+        end
+    end)
 end
 
 function players_list_spectate()
-    local elements = {}
-	for k, player in ipairs(GetActivePlayers()) do
-		local serverID = GetPlayerServerId(player)
-        table.insert(elements, {label = serverID .. ' - ' .. GetPlayerName(player), value = player, serverID = serverID, detail = _('local_id', player), type = "submenu"})
-	end
-	table.sort(elements, function(a,b)
-		return a.serverID < b.serverID
-	end)
-    if #elements >= 1 then
-        ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
-        {
-            title    = _("players_list"),
-            align    = "left",
-            elements = elements
-        }, function(data, menu)
-            PlayerManagment(data.current.value)
-		end, function(data, menu)
-			admin_spectate_player(-1)
-            menu.close()
-		end, function(data, menu)
-			admin_spectate_player(data.current.value)
+    ESX.TriggerServerCallback("esx_ava_personalmenu:getPlayers", function(players)
+        local myId = GetPlayerServerId(PlayerId())
+        local elements = {}
+        for k, player in ipairs(players) do
+            if myId == player.id then
+                table.insert(elements, {label = _("orange", player.id .. ' - ' .. player.name), value = player, serverID = player.id, type = "submenu"})
+            else
+                table.insert(elements, {label = player.id .. ' - ' .. player.name, value = player, serverID = player.id, type = "submenu"})
+            end
+        end
+        table.sort(elements, function(a,b)
+            return a.serverID < b.serverID
         end)
-    end
+        if #elements >= 1 then
+            admin_spectate_player(elements[1].value.id)
+            ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
+            {
+                title    = _("admin_spectate"),
+                align    = "left",
+                elements = elements
+            }, function(data, menu)
+                PlayerManagment(data.current.value)
+            end, function(data, menu)
+                admin_spectate_player(-1)
+                menu.close()
+            end, function(data, menu)
+                admin_spectate_player(data.current.value.id)
+            end)
+        end
+    end)
 end
 
 function PlayerManagment(player)
-	local serverID = GetPlayerServerId(player)
-    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. serverID,
+    local elements = {}
+    if player.id ~= GetPlayerServerId(PlayerId()) then
+        elements = {
+            {label = _("green", _("admin_private_message")), value = "admin_private_message"},
+            {label = _("blue", _("admin_goto")), value = "admin_goto"},
+            {label = _("blue", _("admin_bring")), value = "admin_bring"},
+            {label = _("pink", _("admin_revive")), value = "admin_revive"},
+            {label = _("pink", _("admin_debug")), value = "admin_debug"},
+            {label = _("orange", _("admin_spectate")), value = "admin_spectate"},
+            {label = _("bright_red", _("admin_kill")), value = "admin_kill"},
+            {label = _("bright_red", _("admin_kick")), value = "admin_kick"},
+            {label = _("bright_red", _("admin_ban")), value = "admin_ban", detail = _('admin_ban_detail')},
+        }
+    else
+        elements = {
+            {label = _("green", _("admin_private_message")), value = "admin_private_message"},
+            {label = _("pink", _("admin_revive")), value = "admin_revive"},
+            {label = _("pink", _("admin_debug")), value = "admin_debug"},
+            {label = _("bright_red", _("admin_kill")), value = "admin_kill"},
+            {label = _("bright_red", _("admin_kick")), value = "admin_kick"},
+            {label = _("bright_red", _("admin_ban")), value = "admin_ban", detail = _('admin_ban_detail')},
+        }
+    end
+
+    ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playermanagment_" .. player.id,
 	{
-		title    = serverID .. ' - ' .. GetPlayerName(player),
+		title    = player.id .. ' - ' .. player.name,
 		align    = "left",
-		elements = {
-			{label = _("green", _("admin_private_message")), value = "admin_private_message"},
-			{label = _("blue", _("admin_goto")), value = "admin_goto"},
-			{label = _("blue", _("admin_bring")), value = "admin_bring"},
-			{label = _("pink", _("admin_revive")), value = "admin_revive"},
-			{label = _("pink", _("admin_debug")), value = "admin_debug"},
-			{label = _("orange", _("admin_spectate")), value = "admin_spectate"},
-			{label = _("bright_red", _("admin_kill")), value = "admin_kill"},
-			{label = _("bright_red", _("admin_kick")), value = "admin_kick"},
-			{label = _("bright_red", _("admin_ban")), value = "admin_ban", detail = _('admin_ban_detail')},
-		}
+		elements = elements
 	}, function(data, menu)
 		if data.current.value == "admin_private_message" then
 			EnterReason(function(content)
-				TriggerServerEvent("esx_ava_personalmenu:privateMessage", serverID, content)
+				TriggerServerEvent("esx_ava_personalmenu:privateMessage", player.id, content)
 			end)
 		elseif data.current.value == "admin_goto" then
-			TriggerServerEvent('esx_ava_personalmenu:goto_sv', serverID)
+			TriggerServerEvent('esx_ava_personalmenu:goto_sv', player.id)
 		elseif data.current.value == "admin_bring" then
-			TriggerServerEvent('esx_ava_personalmenu:bring_sv', serverID)
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', player.id)
         elseif data.current.value == "admin_revive" then
-            TriggerServerEvent("esx_ava_deaths:admin:revive", serverID)
+            TriggerServerEvent("esx_ava_deaths:admin:revive", player.id)
         elseif data.current.value == "admin_debug" then
-			TriggerServerEvent("esx_ava_deaths:admin:revive", serverID, true)
+			TriggerServerEvent("esx_ava_deaths:admin:revive", player.id, true)
 		elseif data.current.value == "admin_spectate" then
-			admin_spectate_player(player)
+			admin_spectate_player(player.id)
         elseif data.current.value == "admin_kill" then
-			TriggerServerEvent('esx_ava_personalmenu:kill_sv', serverID)
+			TriggerServerEvent('esx_ava_personalmenu:kill_sv', player.id)
 		elseif data.current.value == "admin_kick" then
 			EnterReason(function(reason)
-				TriggerServerEvent("esx_ava_personalmenu:kick", serverID, reason)
+				TriggerServerEvent("esx_ava_personalmenu:kick", player.id, reason)
 			end)
 		elseif data.current.value == "admin_ban" then
 			EnterReason(function(reason)
-				TriggerServerEvent("ava_connection:banPlayer", serverID, reason)
+				TriggerServerEvent("ava_connection:banPlayer", player.id, reason)
 			end)
 		end
     end, function(data, menu)
@@ -492,11 +541,17 @@ RegisterNetEvent('esx_ava_personalmenu:teleport')
 AddEventHandler('esx_ava_personalmenu:teleport', function(playerPedCoords)
     local playerPed = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed, false)
+
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do Wait(0) end
+
     if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
         SetEntityCoords(playerPed, playerPedCoords)
     else
         SetPedCoordsKeepVehicle(playerPed, playerPedCoords)
     end
+
+    DoScreenFadeIn(500)
 end)
 
 RegisterNetEvent('esx_ava_personalmenu:kill_cl')
@@ -504,28 +559,65 @@ AddEventHandler('esx_ava_personalmenu:kill_cl', function()
 	SetEntityHealth(PlayerPedId(), 0)
 end)
 
-function admin_spectate_player(player)
-	local playerPed = GetPlayerPed(-1)
-	local targetPed = GetPlayerPed(player)
-	if targetPed ~= playerPed then
-		NetworkSetInSpectatorMode(true, targetPed)
-		SetEntityInvincible(playerPed, true)
-		SetEntityVisible(playerPed, false, 0)
-		SetEveryoneIgnorePlayer(playerPed, true)
-		SetEntityCollision(playerPed, false, false)
-		FreezeEntityPosition(playerPed, true)
+function admin_spectate_player(targetId)
+    local playerPed = PlayerPedId()
 
-        -- TriggerEvent("updateVoipTargetPed", targetPed, true) -- TOKOVOIP
-	else
-		NetworkSetInSpectatorMode(false, playerPed)
-		SetEntityInvincible(playerPed, false)
-		SetEntityVisible(playerPed, true, 0)
-		SetEveryoneIgnorePlayer(playerPed, false)
-		SetEntityCollision(playerPed, true, true)
-		FreezeEntityPosition(playerPed, false)
+    local function stop_spectate()
+        if NetworkIsInSpectatorMode() then
+            DoScreenFadeOut(500)
+            while not IsScreenFadedOut() do Wait(0) end
 
-        -- TriggerEvent("updateVoipTargetPed", playerPed, false) -- TOKOVOIP
-	end
+            NetworkSetInSpectatorMode(false, playerPed)
+            SetEntityInvincible(playerPed, false)
+            SetEntityVisible(playerPed, true, 0)
+            SetEveryoneIgnorePlayer(playerPed, false)
+            SetEntityCollision(playerPed, true, true)
+            FreezeEntityPosition(playerPed, false)
+
+            if lastSpectateLocation ~= nil then
+                RequestCollisionAtCoord(lastSpectateLocation)
+                SetEntityCoords(playerPed, lastSpectateLocation)
+                lastSpectateLocation = nil
+            end
+
+            -- TriggerEvent("updateVoipTargetPed", playerPed, false) -- TOKOVOIP
+            DoScreenFadeIn(500)
+        end
+    end
+    if targetId == nil or targetId == -1 or GetPlayerFromServerId(targetId) == PlayerId() then
+        stop_spectate()
+    else
+        ESX.TriggerServerCallback("esx_ava_personalmenu:getPlayerCoords", function(coords)
+            local localTargetId, targetPed = -1, nil
+
+            DoScreenFadeOut(500)
+            while not IsScreenFadedOut() do Wait(0) end
+
+            if lastSpectateLocation == nil then
+                lastSpectateLocation = GetEntityCoords(playerPed)
+            end
+
+            SetEntityInvincible(playerPed, true)
+            SetEntityVisible(playerPed, false, 0)
+            SetEveryoneIgnorePlayer(playerPed, true)
+            SetEntityCollision(playerPed, false, false)
+            FreezeEntityPosition(playerPed, true)
+
+            SetEntityCoords(playerPed, coords.x, coords.y, coords.z - 15.0, 0, 0, 0, false)
+
+            repeat
+                Wait(10)
+                localTargetId = GetPlayerFromServerId(targetId)
+                targetPed = GetPlayerPed(localTargetId)
+            until (targetPed > 0) and localTargetId ~= -1
+
+            NetworkSetInSpectatorMode(true, targetPed)
+
+            -- TriggerEvent("updateVoipTargetPed", targetPed, true) -- TOKOVOIP
+            DoScreenFadeIn(500)
+
+        end, targetId)
+    end
 end
 
 function admin_noclip()
@@ -683,14 +775,14 @@ function admin_vehicle_repair()
 end
 
 function admin_tp_nearest_vehicle()
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
 	local coords = GetEntityCoords(playerPed, true)
 	ClearPedTasksImmediately(playerPed)
 	TaskWarpPedIntoVehicle(playerPed, GetClosestVehicle(coords.x, coords.y, coords.z, 12.0, 0, 71), -1)
 end
 
 function admin_flip_vehicle()
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
 	local coords = GetEntityCoords(playerPed, true)
 
 	SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)

@@ -1,3 +1,30 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
+ESX.RegisterServerCallback('esx_ava_personalmenu:getPlayers', function(source, cb)
+	local players = {}
+	for _, playerId in ipairs(GetPlayers()) do
+		table.insert(players, {name = GetPlayerName(playerId), id = tonumber(playerId)})
+	end
+	cb(players)
+end)
+
+ESX.RegisterServerCallback('esx_ava_personalmenu:getPlayerCoords', function(source, cb, targetId)
+    if type(targetId) ~= 'string' and type(targetId) ~= 'number' then
+        return
+    end
+
+    local targetPed = GetPlayerPed(tonumber(targetId))
+
+    if not targetPed then
+        return
+    end
+
+    cb(GetEntityCoords(targetPed))
+end)
+
 RegisterServerEvent("esx_ava_personalmenu:kick")
 AddEventHandler("esx_ava_personalmenu:kick", function(targetId, label)
     local _source = source

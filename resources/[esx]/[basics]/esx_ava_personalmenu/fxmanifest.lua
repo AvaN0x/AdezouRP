@@ -1,4 +1,5 @@
-resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+fx_version 'cerulean'
+games { 'gta5' }
 
 version '1.0.0'
 author 'github.com/AvaN0x'
@@ -6,21 +7,19 @@ description 'ESX Personal menu'
 
 client_scripts {
 	'@es_extended/locale.lua',
-	'locales/fr.lua',
+	'locales/*.lua',
 	'config.lua',
-	'client/teb_speed_control/speedlimiter.lua',
 	'client/main.lua',
-	'client/admin.lua',
-	'client/dev.lua'
+	'client/**/*_cl.lua'
 }
 
 server_scripts {
 	'@mysql-async/lib/MySQL.lua',
 	'@es_extended/locale.lua',
-	'locales/fr.lua',
+	'locales/*.lua',
 	'config.lua',
 	'server/main.lua',
-	'server/admin.lua'
+	'server/**/*_sv.lua'
 }
 
 dependencies {
