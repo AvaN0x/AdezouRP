@@ -13,7 +13,7 @@ local SharedInventories = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-AddEventHandler('onMySQLReady', function()
+MySQL.ready(function()
 	local items = MySQL.Sync.fetchAll('SELECT * FROM items') -- get all items
 	for i=1, #items, 1 do -- get label and weight for all items
 		Items[items[i].name] = {

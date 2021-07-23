@@ -620,7 +620,7 @@ AddEventHandler('gcPhone:allUpdate', function()
 end)
 
 
-AddEventHandler('onMySQLReady', function ()
+MySQL.ready(function()
     -- MySQL.Async.fetchAll("DELETE FROM phone_messages WHERE (DATEDIFF(CURRENT_DATE,time) > 10)")
 end)
 

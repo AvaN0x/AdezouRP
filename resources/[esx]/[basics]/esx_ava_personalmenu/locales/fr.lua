@@ -79,6 +79,7 @@ Locales["fr"] = {
     -- staff
     ['staff'] = "STAFF",
     ["admin_spectate"] = "Spectate",
+    ["cancel_spectate"] = "Arrêter de spectate",
     ["admin_tp_marker"] = "TP sur le Marqueur",
     ['admin_clear_area'] = "Clear area",
     ["admin_noclip"] = "NoClip",

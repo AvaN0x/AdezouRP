@@ -9,7 +9,7 @@ local listPlate = Config.VehiclePlate
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-AddEventHandler('onMySQLReady', function()
+MySQL.ready(function()
   local result = MySQL.Sync.fetchAll('SELECT * FROM trunk_inventory')
   local data = nil
   if #result ~= 0 then

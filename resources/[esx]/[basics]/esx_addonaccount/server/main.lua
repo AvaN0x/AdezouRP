@@ -5,8 +5,7 @@ local SharedAccounts = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-AddEventHandler('onMySQLReady', function ()
-
+MySQL.ready(function()
 	local result = MySQL.Sync.fetchAll('SELECT * FROM addon_account')
 
 	for i=1, #result, 1 do

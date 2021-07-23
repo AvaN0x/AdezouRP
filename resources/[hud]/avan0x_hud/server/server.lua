@@ -1,3 +1,8 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 TriggerEvent('es:addCommand', 'togglehud', function(source, args)
 	if not args then 
 		TriggerClientEvent('chatMessage', source, "[SYNTAX]", {255, 0, 0}, "/togglehud [on/off]") 

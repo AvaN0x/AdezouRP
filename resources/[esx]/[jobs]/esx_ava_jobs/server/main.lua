@@ -22,7 +22,7 @@ end)
 
 
 
-AddEventHandler('onMySQLReady', function()
+MySQL.ready(function()
     -- This need to have a reboot at 8 am
     local timestamp = os.time()
     local hour = tonumber(os.date('%H', timestamp))
