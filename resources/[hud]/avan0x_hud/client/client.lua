@@ -1,3 +1,8 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+
 ESX = nil
 PlayerData = nil
 
@@ -128,6 +133,26 @@ RegisterKeyMapping('+keyToggleBelt', 'Ceinture', 'keyboard', 'X')
 
 
 
+local function SetPauseMenuTitle()
+    -- Ask for subtitle
+    BeginScaleformMovieMethodOnFrontendHeader("SHIFT_CORONA_DESC")
+    PushScaleformMovieFunctionParameterBool(true)
+    PushScaleformMovieFunctionParameterBool(true)
+    PopScaleformMovieFunction()
+
+    -- title
+    BeginScaleformMovieMethodOnFrontendHeader("SET_HEADER_TITLE")
+    PushScaleformMovieFunctionParameterString("~o~Adezou RôlePlay~s~ | ID: ~o~".. GetPlayerServerId(PlayerId()) .."~s~")
+    PushScaleformMovieFunctionParameterBool(true)
+
+    -- subtitle
+    PushScaleformMovieFunctionParameterString("~s~Discord : ~o~discord.gg/3Q8dvDT~s~")
+    PushScaleformMovieFunctionParameterBool(true)
+    PopScaleformMovieFunctionVoid()
+
+    EndScaleformMovieMethod()
+end
+
 
 
 
@@ -140,6 +165,7 @@ Citizen.CreateThread(function()
 		if IsPauseMenuActive() then -- ESC Key
 			if not isPauseMenu then
 				isPauseMenu = not isPauseMenu
+                SetPauseMenuTitle()
 				SendNUIMessage({ action = 'toggle', show = false })
 			end
 		else

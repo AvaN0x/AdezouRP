@@ -1,15 +1,11 @@
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(10000)
-		local id = GetPlayerServerId(PlayerId())
-		Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), 'FE_THDR_GTAO', "~o~Adezou RôlePlay~s~ | Discord : ~o~discord.gg/3Q8dvDT~s~ | ID: ~o~".. GetPlayerServerId(PlayerId()) .."~s~ | ~o~".. #GetActivePlayers() .." connecté(e)s")
-	end
-end)
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
 
 Citizen.CreateThread(function()
     AddTextEntry("PM_PANE_LEAVE", "Se déconnecter d'~o~Adezou")
-end)
-
-Citizen.CreateThread(function()
     AddTextEntry("PM_PANE_QUIT", "Quitter ~o~FiveM 🐌")
+
+    -- AddTextEntry('FE_THDR_GTAO', "~o~Adezou RôlePlay~s~ | ID: ~o~".. GetPlayerServerId(PlayerId()) .."~s~")
 end)
