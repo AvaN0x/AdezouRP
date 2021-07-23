@@ -7,8 +7,7 @@ local SharedInventories = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-AddEventHandler('onMySQLReady', function()
-
+MySQL.ready(function()
 	local items = MySQL.Sync.fetchAll('SELECT * FROM items')
 
 	for i=1, #items, 1 do

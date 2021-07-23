@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import '../ui/plugins/vuetify';
 import App from '../ui/Nui.vue';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
 
 new Vue({
-  render(h) { return h(App); },
+  render: (h) => h(App),
 }).$mount('#app');

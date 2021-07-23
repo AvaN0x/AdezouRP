@@ -9,7 +9,7 @@ TriggerEvent('esx:getSharedObject', function(obj)
   ESX = obj
 end)
 
-AddEventHandler('onMySQLReady', function ()
+MySQL.ready(function()
   MySQL.Async.fetchAll('SELECT * FROM items',{},function(result)
     if result ~= nil and #result > 0 then
         for _,v in pairs(result) do

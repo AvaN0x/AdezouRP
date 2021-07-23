@@ -2,6 +2,8 @@
 --  GNU AFFERO GENERAL PUBLIC LICENSE  --
 --     Version 3, 19 November 2007     --
 
+local enablePositionSending = true
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
@@ -14,12 +16,12 @@ Citizen.CreateThread(function()
 	end
 end)
 
-local loaded = false
+TriggerServerEvent('es:firstJoinProper')
+
 local oldPos
-local pvpEnabled = false
 
 Citizen.CreateThread(function()
-	while true do
+	while enablePositionSending do
 		Citizen.Wait(1000)
 		local pos = GetEntityCoords(PlayerPedId())
 
@@ -42,9 +44,6 @@ AddEventHandler("es:setPlayerDecorator", function(key, value, doNow)
 	end
 end)
 
-local enableNative = {}
-
-local firstSpawn = true
 AddEventHandler("playerSpawned", function()
 	for k,v in pairs(myDecorators)do
 		DecorSetInt(PlayerPedId(), k, v)
@@ -53,7 +52,7 @@ AddEventHandler("playerSpawned", function()
 	TriggerServerEvent('playerSpawn')
 end)
 
-RegisterNetEvent("es:enablePvp")
-AddEventHandler("es:enablePvp", function()
-	pvpEnabled = true
+RegisterNetEvent("es:disableClientPosition")
+AddEventHandler("es:disableClientPosition", function()
+	enablePositionSending = false
 end)
