@@ -541,6 +541,11 @@ end)
 
 RegisterNetEvent('esx_ava_personalmenu:teleport')
 AddEventHandler('esx_ava_personalmenu:teleport', function(playerPedCoords)
+    if lastSpectateLocation then
+        admin_spectate_player(-1)
+        Wait(500)
+    end
+
     local playerPed = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed, false)
 
