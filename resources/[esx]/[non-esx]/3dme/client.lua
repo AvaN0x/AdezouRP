@@ -25,8 +25,11 @@ end)
 
 RegisterNetEvent('3dme:triggerDisplay')
 AddEventHandler('3dme:triggerDisplay', function(text, source)
-    local offset = 1 + (nbrDisplaying*0.14)
-    Display(GetPlayerFromServerId(source), text, offset)
+    local id = GetPlayerFromServerId(source)
+    if id ~= -1 then
+        local offset = 1 + (nbrDisplaying*0.14)
+        Display(id, text, offset)
+    end
 end)
 
 function Display(mePlayer, text, offset)
