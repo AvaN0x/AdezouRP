@@ -40,7 +40,7 @@ function AdminLoop()
 
 		Citizen.CreateThread(function()
 			while true do
-				Citizen.Wait(10)
+				Citizen.Wait(0)
 				if noclip then
 					local playerPed = PlayerPedId()
 					local x, y, z = getPosition(playerPed)
@@ -543,7 +543,6 @@ RegisterNetEvent('esx_ava_personalmenu:teleport')
 AddEventHandler('esx_ava_personalmenu:teleport', function(playerPedCoords)
     if lastSpectateLocation then
         admin_spectate_player(-1)
-        Wait(500)
     end
 
     local playerPed = PlayerPedId()
@@ -633,6 +632,10 @@ function admin_spectate_player(targetId)
 end
 
 function admin_noclip()
+    if lastSpectateLocation then
+        admin_spectate_player(-1)
+    end
+
 	noclip = not noclip
 	local playerPed = PlayerPedId()
 
