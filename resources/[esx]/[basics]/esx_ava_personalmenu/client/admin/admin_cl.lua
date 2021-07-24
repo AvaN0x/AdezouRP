@@ -67,7 +67,7 @@ function AdminLoop()
 					end
 					SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
 
-					if IsControlPressed(0, 25) then
+					if IsControlJustPressed(0, 25) or IsDisabledControlJustPressed(0, 25) then
 						admin_noclip()
 					end
 				else
@@ -597,6 +597,7 @@ function admin_spectate_player(targetId)
         stop_spectate()
     else
         ESX.TriggerServerCallback("esx_ava_personalmenu:getPlayerCoords", function(coords)
+            if coords == vector3(0, 0, 0) then return end
             local localTargetId, targetPed = -1, nil
 
             DoScreenFadeOut(500)

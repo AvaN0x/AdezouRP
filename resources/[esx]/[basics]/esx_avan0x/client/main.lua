@@ -62,24 +62,25 @@ end)
 -------- CAN'T MOVE TO DRIVER SEAT --------
 -------------------------------------------
 
+local playerPed = nil
+
 local disableMTDS = true -- MoveToDriverSeat
 local shouldStopMTDS = nil
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(2000)
-		local playerPed = GetPlayerPed(-1)
+		playerPed = PlayerPedId()
 		local veh = GetVehiclePedIsIn(playerPed, false)
 		shouldStopMTDS = veh ~= 0 and disableMTDS and GetPedInVehicleSeat(veh, 0) == playerPed
+		Citizen.Wait(2000)
 	end
 end)
 
 
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(10)
+        Citizen.Wait(0)
 		if shouldStopMTDS and disableMTDS then
-			local playerPed = GetPlayerPed(-1)
 			if GetIsTaskActive(playerPed, 165) then
 				SetPedIntoVehicle(playerPed, GetVehiclePedIsIn(playerPed, false), 0)
 			end
@@ -89,7 +90,7 @@ end)
 
 RegisterNetEvent("esx_avan0x:moveToDriverSeat")
 AddEventHandler("esx_avan0x:moveToDriverSeat", function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+	if IsPedInAnyVehicle(PlayerPedId(), false) then
 		disableMTDS = false
 		Citizen.Wait(5000)
 		disableMTDS = true
@@ -104,7 +105,7 @@ end)
 -----------
 
 RegisterCommand("v", function(source, args, rawCommand)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
 	local v = GetVehiclePedIsIn(playerPed, false)
 
 	if v ~= 0 then
