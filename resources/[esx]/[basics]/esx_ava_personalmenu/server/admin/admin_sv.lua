@@ -40,9 +40,7 @@ AddEventHandler("esx_ava_personalmenu:goto_sv", function(targetId)
 end)
 
 RegisterServerEvent("esx_ava_personalmenu:bring_sv")
-AddEventHandler("esx_ava_personalmenu:bring_sv", function(targetId)
-    local _source = source
-    local coords = GetEntityCoords(GetPlayerPed(_source))
+AddEventHandler("esx_ava_personalmenu:bring_sv", function(targetId, coords)
 	TriggerClientEvent("esx_ava_personalmenu:teleport", targetId, coords)
 end)
 

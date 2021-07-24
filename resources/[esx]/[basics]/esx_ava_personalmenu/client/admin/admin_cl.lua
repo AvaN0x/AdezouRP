@@ -7,6 +7,9 @@ local lastSpectateLocation = nil
 
 local AdminConfig = {}
 
+function GetPlayerPos(playerPed)
+    return lastSpectateLocation or GetEntityCoords(playerPed or PlayerPedId())
+end
 
 function AdminLoop()
 	if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
@@ -391,7 +394,6 @@ function players_list_spectate()
             return a.serverID < b.serverID
         end)
         if #elements >= 1 then
-            admin_spectate_player(elements[1].value.id)
             ESX.UI.Menu.Open("default", GetCurrentResourceName(), "ava_personalmenu_admin_playerslist_spectate",
             {
                 title    = _("admin_spectate"),
@@ -447,7 +449,7 @@ function PlayerManagment(player)
 		elseif data.current.value == "admin_goto" then
 			TriggerServerEvent('esx_ava_personalmenu:goto_sv', player.id)
 		elseif data.current.value == "admin_bring" then
-			TriggerServerEvent('esx_ava_personalmenu:bring_sv', player.id)
+			TriggerServerEvent('esx_ava_personalmenu:bring_sv', player.id, GetPlayerPos(playerPed))
         elseif data.current.value == "admin_revive" then
             TriggerServerEvent("esx_ava_deaths:admin:revive", player.id)
         elseif data.current.value == "admin_debug" then
