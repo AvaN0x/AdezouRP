@@ -77,8 +77,6 @@ function AdminLoop()
 		end)
 
 		Citizen.CreateThread(function()
-            local knownTags = {}
-
             local MP_GAMER_TAG_COMPONENTS = {
                 GAMER_NAME = 0,
                 CREW_TAG = 1,
@@ -107,25 +105,22 @@ function AdminLoop()
                     -- this will only get close players in Infinity
                     for _, playerTarget in ipairs(GetActivePlayers()) do
                         local targetPed = GetPlayerPed(playerTarget)
-                        -- check if tag does not exist or is not active
-                        if not knownTags[playerTarget] or not IsMpGamerTagActive(knownTags[playerTarget]) then
-                            knownTags[playerTarget] = CreateFakeMpGamerTag(targetPed, GetPlayerServerId(playerTarget) .. ' - ' .. GetPlayerName(playerTarget), false, false, "", 0)
-                        end
+                        local tag = CreateFakeMpGamerTag(targetPed, GetPlayerServerId(playerTarget) .. ' - ' .. GetPlayerName(playerTarget), false, false, "", 0)
 
                         if #(GetEntityCoords(targetPed) - playerCoords) <= 150 then -- 150 of distance to show player tag
                             -- Name
-                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 1)
+                            SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 1)
 
                             -- Health
-                            SetMpGamerTagHealthBarColor(knownTags[playerTarget], 18)
-                            SetMpGamerTagAlpha(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 255)
-                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 1)
+                            SetMpGamerTagHealthBarColor(tag, 18)
+                            SetMpGamerTagAlpha(tag, MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 255)
+                            SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 1)
                         else
                             -- Hide name
-                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 0)
+                            SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 0)
 
                             -- Hide Health
-                            SetMpGamerTagVisibility(knownTags[playerTarget], MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 0)
+                            SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 0)
                         end
                     end
 				else
