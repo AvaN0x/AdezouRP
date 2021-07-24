@@ -582,9 +582,11 @@ function admin_spectate_player(targetId)
             FreezeEntityPosition(playerPed, false)
 
             if lastSpectateLocation ~= nil then
+                print("tp lastSpectateLocation", lastSpectateLocation)
                 RequestCollisionAtCoord(lastSpectateLocation)
                 SetEntityCoords(playerPed, lastSpectateLocation)
                 lastSpectateLocation = nil
+                print("lastSpectateLocation set nil", lastSpectateLocation)
             end
 
             -- TriggerEvent("updateVoipTargetPed", playerPed, false) -- TOKOVOIP
@@ -601,6 +603,7 @@ function admin_spectate_player(targetId)
             while not IsScreenFadedOut() do Wait(0) end
 
             if lastSpectateLocation == nil then
+                print("set lastSpectateLocation", lastSpectateLocation)
                 lastSpectateLocation = GetEntityCoords(playerPed)
             end
 
@@ -610,6 +613,7 @@ function admin_spectate_player(targetId)
             SetEntityCollision(playerPed, false, false)
             FreezeEntityPosition(playerPed, true)
 
+            print("tp coords", coords)
             SetEntityCoords(playerPed, coords.x, coords.y, coords.z - 15.0, 0, 0, 0, false)
 
             repeat
