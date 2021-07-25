@@ -731,5 +731,25 @@ Config.Doors = {
 			authorizedJobs = { 'attackataco' },
 			locked = true
 		},
+
+
+
+        {
+            textCoords = vector3(-2148.63, 1106.05, 27.8),
+            locked = true,
+            distance = 12,
+            doors = {
+                {
+                    objHash = -348431101,
+                    objYaw = 190.0,
+                    objCoords  = vector3(-2149.04, 1101.94, 28.66)
+                },
+                {
+                    objHash = 129720997,
+                    objYaw = 350.0,
+                    objCoords = vector3(-2149.11, 1109.94, 28.66)
+                }
+            }
+        },
 	}
 }
