@@ -737,7 +737,7 @@ Config.Doors = {
         {
             textCoords = vector3(-2148.63, 1106.05, 27.8),
             locked = true,
-            distance = 12,
+            distance = 30,
             doors = {
                 {
                     objHash = -348431101,
