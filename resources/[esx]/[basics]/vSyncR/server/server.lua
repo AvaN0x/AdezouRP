@@ -134,7 +134,12 @@ RegisterCommand('blackout', function(source)
         if blackout then
             print(_U('blackout_enabled'))
         else
-            print(_U('blackout_disabled'))
+            if iem then
+                iem = false
+                print(_U('iem_disabled'))
+            else
+                print(_U('blackout_disabled'))
+            end
         end
     else
         if isAllowedToChange(source) then
@@ -142,7 +147,12 @@ RegisterCommand('blackout', function(source)
             if blackout then
                 TriggerClientEvent('vSync:notify', source, _U('blackout_enabledc'))
             else
-                TriggerClientEvent('vSync:notify', source, _U('blackout_disabledc'))
+                if iem then
+                    iem = false
+                    TriggerClientEvent('vSync:notify', source, _U('iem_disabledc'))
+                else
+                    TriggerClientEvent('vSync:notify', source, _U('blackout_disabledc'))
+                end
             end
             TriggerEvent('vSync:requestSync')
         end
