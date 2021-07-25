@@ -854,6 +854,10 @@ RegisterCommand('ava', function()
 
         SetVehicleColours(vehicle, 135, 135)
 
+        -- print(Citizen.InvokeNative(0x2F5A72430E78C8D3, vehicle)) -- _GET_DRIFT_TYRES_ENABLED
+        -- Citizen.InvokeNative(0x5AC79C98C5C17F05, vehicle, true) -- _SET_DRIFT_TYRES_ENABLED
+        -- Citizen.InvokeNative(0x3A375167F5782A65, vehicle, true) -- _SET_REDUCE_DRIFT_VEHICLE_SUSPENSION
+
         local maxMod = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46}
         for i = 1, #maxMod, 1 do
             SetVehicleMod(vehicle, maxMod[i], GetNumVehicleMods(vehicle, maxMod[i]) - 1, false)
