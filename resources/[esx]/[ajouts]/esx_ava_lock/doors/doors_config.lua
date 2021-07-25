@@ -734,7 +734,8 @@ Config.Doors = {
 
 
 
-        {
+        -- LS TUNER MEET
+        { -- door to circuit
             textCoords = vector3(-2148.63, 1106.05, 27.8),
             locked = true,
             distance = 30,
@@ -750,6 +751,13 @@ Config.Doors = {
                     objCoords = vector3(-2149.11, 1109.94, 28.66)
                 }
             }
+        },
+        { -- outside door
+            textCoords = vector3(778.32, -1867.40, 28.4),
+            locked = true,
+            distance = 30,
+            objHash = -982531572,
+            objCoords = vector3(777.97, -1867.64, 31.30)
         },
 	}
 }
