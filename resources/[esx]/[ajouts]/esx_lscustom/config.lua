@@ -95,6 +95,22 @@ Config.Zones = {
     --     }
 	-- }
 
+
+	ls_tuner_meet = {
+		Pos   = vector3(-2171.19, 1156.95, 27.68),
+		Size  = {x = 3.0, y = 3.0, z = 0.2},
+		Color = {r = 204, g = 204, b = 0},
+		Marker= 1,
+		Name  = _U('blip_name'),
+		Hint  = _U('press_custom'),
+        WhiteList = {
+            "main",
+            "cosmetics",
+            "wheels",
+            "modDriftTyres"
+        }
+	}
+
 }
 
 Config.Colors = {
@@ -774,7 +790,8 @@ Config.Menus = {
 		parent = 'cosmetics',
 		modFrontWheelsTypes = _U('wheel_type'),
 		modFrontWheelsColor = _U('wheel_color'),
-		tyreSmokeColor = _U('tiresmoke')
+		tyreSmokeColor = _U('tiresmoke'),
+        modDriftTyres = _("modDriftTyres")
 	},
 	modFrontWheelsTypes = {
 		label				= _U('wheel_type'),
@@ -788,7 +805,8 @@ Config.Menus = {
 		modFrontWheelsType6	= _U('motorcycle'),
 		modFrontWheelsType7	= _U('highend'),
 		modFrontWheelsType8	= "Jantes Benny's 1",
-		modFrontWheelsType9	= "Jantes Benny's 2"
+		modFrontWheelsType9	= "Jantes Benny's 2",
+		modFrontWheelsType10	= "IDK"
 	},
 	modFrontWheelsType0 = {
 		label = _U('sport'),
@@ -858,6 +876,13 @@ Config.Menus = {
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 9,
+		price = 2.27
+	},
+	modFrontWheelsType10 = {
+		label = "Jantes Benny's 2",
+		parent = 'modFrontWheelsTypes',
+		modType = 23,
+		wheelType = 10,
 		price = 2.27
 	},
 	modFrontWheelsColor = {
@@ -1043,6 +1068,12 @@ Config.Menus = {
 		parent = 'wheels',
 		modType = 'tyreSmokeColor',
 		price = 0.49
+	},
+    modDriftTyres = {
+		label = _U('modDriftTyres'),
+		parent = 'wheels',
+		modType = "modDriftTyres",
+		price = 0.20
 	}
 
 }
