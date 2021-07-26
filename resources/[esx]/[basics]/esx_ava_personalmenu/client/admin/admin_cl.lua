@@ -44,7 +44,7 @@ function AdminLoop()
 				if noclip then
 					local playerPed = PlayerPedId()
 					local x, y, z = getPosition(playerPed)
-					local dx, dy, dz = getCamDirection(playerPed)
+					local dx, dy, dz, camHeading = getCamDirection(playerPed)
 					local speed = Config.noclip_speed
 
 					SetTextComponentFormat('STRING')
@@ -66,6 +66,9 @@ function AdminLoop()
 						z = z - speed * dz
 					end
 					SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
+                    SetEntityHeading(playerPed, camHeading)
+                    SetLocalPlayerVisibleLocally(true)
+                    SetEntityAlpha(playerPed, 100, false)
 
 					if IsControlJustPressed(0, 25) or IsDisabledControlJustPressed(0, 25) then
 						admin_noclip()
@@ -503,7 +506,7 @@ function getCamDirection(playerPed)
 		z = z/len
 	end
 
-	return x, y, z
+	return x, y, z, heading
 end
 
 
@@ -636,6 +639,7 @@ function admin_noclip()
 
     FreezeEntityPosition(playerPed, noclip)
     SetEntityVisible(playerPed, not noclip, false)
+    SetLocalPlayerVisibleLocally(true)
 	if noclip then
 		-- SetPlayerInvincible(playerPed, true)
 		ESX.ShowNotification("NoClip ~g~Activé")
@@ -644,6 +648,7 @@ function admin_noclip()
 		-- if not admin_mode then
 			-- SetPlayerInvincible(playerPed, false)
 		-- end
+        ResetEntityAlpha(playerPed)
 		ESX.ShowNotification("NoClip ~r~Désactivé")
 	end
 end
