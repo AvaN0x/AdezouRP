@@ -712,11 +712,12 @@ function ReviveAllClose()
 	end
 end
 
-RegisterCommand('ra', function()
+RegisterNetEvent('esx_ava_personalmenu:command:ra')
+AddEventHandler('esx_ava_personalmenu:command:ra', function()
     if PlayerGroup ~= nil and (PlayerGroup == "mod" or PlayerGroup == "admin" or PlayerGroup == "superadmin" or PlayerGroup == "owner") then
         ReviveAllClose()
     end
-end, false)
+end)
 
 function admin_unban()
 	ESX.TriggerServerCallback('ava_connection:getBannedElements', function(elements)
@@ -843,7 +844,9 @@ function LoadPedModel(model)
 end
 
 
-RegisterCommand('ava', function()
+
+RegisterNetEvent('esx_ava_personalmenu:command:ava')
+AddEventHandler('esx_ava_personalmenu:command:ava', function()
     if PlayerGroup ~= nil and (PlayerGroup == "superadmin" or PlayerGroup == "owner") then
         local playerPed = PlayerPedId()
         local vehicle = GetVehiclePedIsIn(playerPed, false)
@@ -904,4 +907,4 @@ RegisterCommand('ava', function()
             SetVehicleNeonLightsColour(vehicle, 177, 18, 89)
         end)
     end
-end, false)
+end)

@@ -28,7 +28,7 @@ TriggerEvent("es:addGroupCommand", "heal", "admin", function(source, args, user)
 		end
 	else
 		print(("esx_ava_needs: %s healed self"):format(GetPlayerIdentifier(source, 0)))
-        exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(source) .. " healed himself", 15902015)
+        exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", GetPlayerName(source) .. " healed himself", 15902015)
 		TriggerClientEvent("esx_ava_needs:healPlayer", source)
 	end
 end, function(source, args, user)

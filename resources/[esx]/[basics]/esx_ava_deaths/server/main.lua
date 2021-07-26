@@ -53,6 +53,7 @@ end)
 
 
 TriggerEvent('es:addGroupCommand', 'revive', 'mod', function(source, args, user)
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", GetPlayerName(source) .. " used admin revive", 15902015)
 	if args[1] ~= nil then
 		if GetPlayerName(tonumber(args[1])) ~= nil then
 			print(('esx_ava_deaths: %s used admin revive'):format(GetPlayerIdentifiers(source)[1]))
@@ -71,4 +72,6 @@ AddEventHandler('esx_ava_deaths:admin:revive', function(target, debug)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xPlayers = ESX.GetPlayers()
 	TriggerClientEvent('esx_ava_deaths:admin:revive', target, debug)
+    print(('esx_ava_deaths: %s used admin revive'):format(GetPlayerIdentifiers(source)[1]))
+    exports.esx_avan0x:SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", GetPlayerName(source) .. " used admin revive", 15902015)
 end)
