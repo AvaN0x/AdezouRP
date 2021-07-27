@@ -71,12 +71,16 @@ function ToggleOpenCar()
 		if keys_has_value(my_keys, plate) then
 			local locked = GetVehicleDoorLockStatus(vehicle)
             VehicleAnim(vehicle)
-            if locked == 1 or locked == 0 then -- if unlocked is unlocked and  is none
+            if locked == 1 or locked == 0 then -- if unlocked is unlocked and is none
                 SetVehicleDoorsLocked(vehicle, 2)
+                SetVehicleDoorsLockedForAllPlayers(vehicle, true)
+                Citizen.InvokeNative(0xDBC631F109350B8C, vehicle, true)
                 PlayVehicleDoorCloseSound(vehicle, 1)
 				ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('you_closed_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
             elseif locked == 2 then -- 2 is locked
                 SetVehicleDoorsLocked(vehicle, 1)
+                SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+                Citizen.InvokeNative(0xDBC631F109350B8C, vehicle, false)
                 PlayVehicleDoorOpenSound(vehicle, 0)
 				ESX.ShowAdvancedColoredNotification(_('keys'), plate, _('you_opened_vehicle'), 'CHAR_PEGASUS_DELIVERY', 1, 2)
 			end

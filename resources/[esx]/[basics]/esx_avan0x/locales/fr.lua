@@ -16,12 +16,20 @@ Locales["fr"] = {
 
 
     ["repairkits_cant_inside_vehicle"] = "Vous ne pouvez pas faire cela dans un véhicule",
+
     ["repairkits_repairkit_using"] = "Réparation du moteur",
-    ["repairkits_bodykit_using"] = "Réparation de la carrosserie",
-    ["repairkits_cloth_using"] = "Nettoyage",
     ["repairkits_repairkit_done"] = "Moteur réparé",
+
     ["repairkits_bodykit_done"] = "Carrosserie réparée",
+    ["repairkits_bodykit_using"] = "Réparation de la carrosserie",
+
+    ["repairkits_cloth_using"] = "Nettoyage",
     ["repairkits_cloth_done"] = "Véhicule nettoyé",
+
+    ["repairkits_blowtorch_using"] = "Ouverture du véhicule",
+    ["repairkits_blowtorch_not_closed"] = "Ce véhicule est déjà ouvert.",
+    ["repairkits_blowtorch_done"] = "Véhicule ouvert",
+
     ['repairkits_cant_use_now'] = "Vous ne pouvez pas utiliser cela actuellement.",
     ["repairkits_need_to_be_mechanic"] = "Vous devez être un mécanicien pour pouvoir faire ceci.",
 

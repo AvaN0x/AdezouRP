@@ -158,3 +158,56 @@ AddEventHandler('esx_avan0x:cloth', function()
     end)
 end)
 
+-------------
+-- blowtorch --
+-------------
+
+RegisterNetEvent('esx_avan0x:blowtorch')
+AddEventHandler('esx_avan0x:blowtorch', function()
+    if isWorking then
+        return
+    end
+
+	local playerPed = PlayerPedId()
+
+    if IsPedInAnyVehicle(playerPed, true) then
+        ESX.ShowNotification(_('repairkits_cant_inside_vehicle'))
+        return
+    end
+
+    exports.esx_avan0x:GetVehicleInFrontOrChooseClosestVehicle(function(vehicle)
+        isWorking = true
+        local duration = 20000
+        Citizen.CreateThread(function()
+
+
+            local locked = GetVehicleDoorLockStatus(vehicle)
+            if locked == 1 or locked == 0 then
+                ESX.ShowNotification(_('repairkits_blowtorch_not_closed'))
+
+            else
+                TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_WELDING", 0, true)
+                
+                exports.progressBars:startUI(duration, _("repairkits_blowtorch_using"))
+                Citizen.Wait(duration)
+                local engineHealth = GetVehicleEngineHealth(vehicle)
+                
+                SetVehicleDoorsLocked(vehicle, 1)
+                SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+                Citizen.InvokeNative(0xDBC631F109350B8C, vehicle, false)
+                
+                
+                ClearPedTasks(playerPed)
+                FreezeEntityPosition(playerPed, false)
+                
+                TriggerServerEvent('esx_avan0x:blowtorch:remove')
+                ESX.ShowNotification(_('repairkits_blowtorch_done'))
+            end
+
+            isWorking = false
+            Citizen.Wait(1000)
+            ClearPedTasksImmediately(playerPed)
+            SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
+        end)
+	end)
+end)
