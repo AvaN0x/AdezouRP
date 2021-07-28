@@ -234,6 +234,20 @@ Config.Peds = {
         scenario = "WORLD_HUMAN_HANG_OUT_STREET"
     },
 
+    -- Lost arme
+    {
+        PedName = "g_m_y_lost_03",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(987.27, -144.24, 74.27)
+        heading = 140.0,
+        scenario = "WORLD_HUMAN_SMOKING_POT_CLUBHOUSE",
+        name = "Johnny Grey",
+        bubble = "Salut, Vielle charue , Allez prend ta bécanne et trace chercher ta caisse!!! ",
+        props = {
+            {componentId = 1, drawableId = 0},
+        }
+    },
+
 
     -- old format, need update
     -- Superettes = {
