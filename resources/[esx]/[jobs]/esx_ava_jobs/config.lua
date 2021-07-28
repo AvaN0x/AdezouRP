@@ -2291,7 +2291,16 @@ Config.Jobs = {
                     Pos = vector3(975.37, -140.63, 74.23),
                     Heading = 50.0
                 },
-            }
+            },
+            Crate = {
+				Pos = vector3(987.05, -144.41, 73.29),
+                Name = "Crate",
+                HelpText = _('press_to_talk'),
+                Action = function()
+                    TriggerEvent('esx_ava_lock:dooranim')
+                    TriggerEvent("esx_ava_crate_lost:startMission")
+                end
+            },
 		},
         ProcessMenuZones = {
             -- clips

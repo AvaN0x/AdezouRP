@@ -606,6 +606,8 @@ Citizen.CreateThread(function()
                             else
                                 TriggerEvent('esx_ava_garage:OpenSocietyVehiclesMenu', job.SocietyName, CurrentZoneValue)
                             end
+                        elseif CurrentZoneValue.Action then
+                            CurrentZoneValue.Action()
                         end
 
                     elseif CurrentZoneCategory == "ProcessZones" then
