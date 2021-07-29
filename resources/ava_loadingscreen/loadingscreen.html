@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FiveM | Loadingscreen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="noselect">
+
+    <main id="slideshow">
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351195483308052/20210420144250_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351197710876742/20210425235748_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351196489547796/20210423194108_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351199417434132/20210426004438_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351199635537980/20210426004718_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351202135998475/retouche.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351203192963122/FiveM_-_FR_AdezouRP_Scripts_Inedits_ALL_DLC_INCLUDED_RP_26_04_2021_18_05_34.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351205055365120/retouche_2.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351205637455912/Sans_titre-1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351381823782972/soleil_adezou.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351407781806100/Screenshot_426.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/837351535632711680/unknown.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/839060698012975114/20210503163949_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/839060700785279017/1.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/841827907692134410/Lavu1.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/841828561379655690/photo.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/841829366354149396/20210505014041_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/841829369786007552/20210506002955_1.jpg" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/842083009930592266/Desktop_Screenshot_2021.05.08_-_16.16.15.42.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/842083125781331998/Desktop_Screenshot_2021.05.08_-_16.15.17.72.png" />
+        <img src="https://cdn.discordapp.com/attachments/831611578079903764/842083217871077427/unknown.png" />
+        <!-- <img src="" /> -->
+    </main>
+
+    <h1 id="usespace" style="display:none" /*class="enable_music" * />Appuie sur <strong>espace</strong> pour
+    activer/désactiver la musique</h1>
+
+    <h1 class="servername"><strong>Adezou</strong> RolePlay</h1>
+    <h1 class="undertext">Connexion au serveur en cours</h1>
+
+    <div class="progress"></div>
+
+    <div id="yt" style="display:none"></div>
+
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt', {
+                width: 300,
+                height: 170,
+                videoId: 'GQMmbIysHw8',
+                playerVars: {
+                    start: 0
+                },
+                events: {
+                    onReady: initialize
+                }
+            });
+        }
+        function initialize() {
+            var usespace = document.getElementById("usespace");
+            usespace.classList.add("enable_music");
+            usespace.style.display = "inline-block";
+            player.setVolume(10);
+            player.playVideo();
+            usespace.innerHTML += "<br/><strong>" + player.getVideoData().title + "</strong>";
+        }
+
+        var play = false;
+
+        function onKeyDown(event) {
+            switch (event.keyCode) {
+                case 32: //SpaceBar
+                    if (play) {
+                        player.pauseVideo();
+                        play = false;
+                    } else {
+                        player.playVideo();
+                        play = true;
+                    }
+                    break;
+            }
+            return false;
+
+        }
+
+        window.addEventListener("keydown", onKeyDown, false);
+    </script>
+
+</body>
+
+</html>

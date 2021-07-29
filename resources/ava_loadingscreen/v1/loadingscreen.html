@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FiveM | Loadingscreen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="noselect">
+
+    <h1 id="usespace" style="display:none" /*class="enable_music"*/ >Appuie sur <strong>espace</strong> pour activer/désactiver la musique</h1>
+
+    <h1 class="servername"><strong>Adezou</strong> RolePlay</h1>
+    <h1 class="undertext">Connexion au serveur en cours</h1>
+
+    <div class="overcast"></div>
+    <div class="progress"></div>
+
+    <div id="yt" style="display:none"></div>
+
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
+    <script>
+        var player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt', {
+                width: 300,
+                height: 170,
+                // videoId: '6zNTsv_AchM',
+                videoId: 'Fl-GjkQLtHM',
+                playerVars: {
+                    // start: 41
+                    start: 68
+                },
+                events: {
+                    onReady: initialize
+                }
+            });
+        }
+
+        function initialize() {
+            var usespace = document.getElementById("usespace");
+            usespace.classList.add("enable_music");
+            usespace.style.display = "block";
+            player.setVolume(10);
+            player.playVideo();
+            usespace.innerHTML += "<br/><strong>" + player.getVideoData().title + "</strong>";
+        }
+
+        var play = false;
+
+        function onKeyDown(event) {
+            switch (event.keyCode) {
+                case 32: //SpaceBar                    
+                    if (play) {
+                        player.pauseVideo();
+                        play = false;
+                    } else {
+                        player.playVideo();
+                        play = true;
+                    }
+                    break;
+            }
+            return false;
+
+        }
+
+        window.addEventListener("keydown", onKeyDown, false);
+
+
+    </script>
+
+</body>
+
+</html>
