@@ -95,4 +95,6 @@ Locales['fr'] = {
   ['fuel_tank'] = 'bouchon du réservoir',
   ['windows'] = 'fenêtres',
   ['stickers'] = 'autocollants',
+
+  ['modDriftTyres'] = 'Adhérence des pneus',
 }

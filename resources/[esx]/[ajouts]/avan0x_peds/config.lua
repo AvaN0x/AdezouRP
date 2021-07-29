@@ -238,7 +238,7 @@ Config.Peds = {
     {
         PedName = "g_m_y_lost_03",
         PedType = "PED_TYPE_CIVMALE",
-        pos = vector3(987.27, -144.24, 74.27)
+        pos = vector3(987.22, -144.19, 73.29),
         heading = 140.0,
         scenario = "WORLD_HUMAN_SMOKING_POT_CLUBHOUSE",
         name = "Johnny Grey",

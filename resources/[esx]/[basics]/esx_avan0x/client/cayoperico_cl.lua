@@ -493,19 +493,19 @@ Citizen.CreateThread(function()
             isIslandLoaded = isInIsland
 
             -- switch island (will disable Los Santos)
-            -- Citizen.InvokeNative(0x9A9D1BA639675CF1, 'HeistIsland', isIslandLoaded) -- or use false to disable it
+            -- SetIslandHopperEnabled('HeistIsland', isIslandLoaded) -- or use false to disable it
             SetDeepOceanScaler(isIslandLoaded and 0.0 or 1.0)
 
             -- switch radar interior
-            Citizen.InvokeNative(0x5E1460624D194A38, isIslandLoaded)
+            SetToggleMinimapHeistIsland(isIslandLoaded)
 
             -- misc natives
-            Citizen.InvokeNative(0xF74B1FFA4A15FBEA, isIslandLoaded)
+            SetAiGlobalPathNodesType(isIslandLoaded)
             Citizen.InvokeNative(0x53797676AD34A9AA, not isIslandLoaded)
             SetScenarioGroupEnabled('Heist_Island_Peds', isIslandLoaded)
 
             -- audio stuff
-            SetAudioFlag('PlayerOnDLCHeist4Island', isIslandLoaded)
+            SetAudioFlag('PlayerOnDLCHeist4Island', isIslandLoaded) -- disable radios
             SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', isIslandLoaded, true)
             SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', not isIslandLoaded, true)
 

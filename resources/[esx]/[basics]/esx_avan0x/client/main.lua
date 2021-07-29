@@ -52,6 +52,34 @@ Citizen.CreateThread(function()
             SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_01_STAGE', false)
             SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_02_MAIN_ROOM', false)
             SetStaticEmitterEnabled('LOS_SANTOS_VANILLA_UNICORN_03_BACK_ROOM', false)
+
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_01", false)
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_02", false)
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_03", false)
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_04", false)
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_05", false)
+            -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Main_rm_Vehicle_Noise_01", false)
+            -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Main_rm_Vehicle_Noise_02", false)
+            -- -- -- -- SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Meet_rm_Music_Takeover", false)
+
+
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Main_rm_Vehicle_Noise_01", false)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_Main_rm_Vehicle_Noise_02", false)
+
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_viewer_area_music_01", true)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_viewer_area_music_02", true)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_viewer_area_music_01_B", true)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_viewer_area_music_02_B", true)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_music_01", true)
+            SetStaticEmitterEnabled("SE_tr_tuner_car_meet_sandbox_music_02", true)
+
+
+            -- SetStaticEmitterEnabled("DLC_Tuner_Car_Meet_Test_Area_Sounds", false)
+            -- SetStaticEmitterEnabled("DLC_Tuner_Car_Meet_Scripted_Sounds", false)
+
+            SetAmbientZoneState("AZ_tr_tuner_car_meet_Meet_BG", false, true)
+            SetAmbientZoneState("AZ_tr_tuner_car_meet_Meet_BG_2", false, true)
+
             loop = false
         end
     end

@@ -173,21 +173,24 @@ end
 
 
 function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
-    AddTextEntry(GetCurrentResourceName(), text)
-    BeginTextCommandDisplayHelp(GetCurrentResourceName())
-    EndTextCommandDisplayHelp(2, false, false, -1)
-    SetFloatingHelpTextWorldPosition(1, x, y, z)
+    local onScreen = World3dToScreen2d(x, y, z)
+    if onScreen then
+        AddTextEntry(GetCurrentResourceName(), text)
+        BeginTextCommandDisplayHelp(GetCurrentResourceName())
+        EndTextCommandDisplayHelp(2, false, false, -1)
+        SetFloatingHelpTextWorldPosition(1, x, y, z)
 
 
-    local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
-    local bubbleStyle = bubbleStyle or 3
-    -- -1 centered, no triangles
-    -- 0 left, no triangles
-    -- 1 centered, triangle top
-    -- 2 left, triangle left
-    -- 3 centered, triangle bottom
-    -- 4 right, triangle right
-    SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+        local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+        local bubbleStyle = bubbleStyle or 3
+        -- -1 centered, no triangles
+        -- 0 left, no triangles
+        -- 1 centered, triangle top
+        -- 2 left, triangle left
+        -- 3 centered, triangle bottom
+        -- 4 right, triangle right
+        SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+    end
 end
 
 function ArrayContains(array, value)

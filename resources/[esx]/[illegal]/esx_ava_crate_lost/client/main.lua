@@ -25,6 +25,7 @@ AddEventHandler('esx_ava_crate_lost:startMission', function()
         ESX.ShowNotification("T'en as déjà un en cours sacam")
         return
     end
+    local MissionCompleted = false
     MissionStarted = true
     local spawnLoc = Config.Locations[math.random(1, #Config.Locations)]
     local zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)), (spawnLoc.y + math.random(-45, 45)), spawnLoc.z, 120.0)
@@ -53,6 +54,7 @@ print(spawnLoc)
                     PropSpawned = obj
                     PlaceObjectOnGroundProperly(obj)
                     FreezeEntityPosition(obj, true)
+                    spawnLoc = GetEntityCoords(obj)
                 end)
 				ESX.ShowNotification("Vous êtes proche de la caisse")
 			end
@@ -77,8 +79,6 @@ print(spawnLoc)
 		ESX.ShowNotification("Vous avez récupéré la caisse")
 	end
     RemoveBlip(zoneBlip)
-    zoneBlip = nil
     ESX.Game.DeleteObject(PropSpawned)
-    PropSpawned = false
     MissionStarted = false
 end)

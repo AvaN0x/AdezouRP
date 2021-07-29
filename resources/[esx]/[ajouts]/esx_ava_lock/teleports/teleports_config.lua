@@ -238,6 +238,25 @@ Config.Teleports = {
 		},
 
 
+		{ -- ls tuner car meet
+			tpEnter = {
+				pos = vector3(783.37, -1867.88, 28.26),
+				heading = 260.0,
+				size  = {x = 2.5, y = 2.5, z = 1.0},
+				label = "Entrer"
+			},
+			tpExit = {
+				pos = vector3(-2219.78, 1156.36, 28.79),
+				heading = 220.0,
+				size  = {x = 2.5, y = 2.5, z = 1.0},
+				label = "Sortir"
+			},
+			allowVehicles = true,
+			locked = false
+		},
+	
+
+
 		-- { -- maze bank arena
 		-- 	tpEnter = {
 		-- 		pos = vector3(-366.0, -1867.94, 19.55),
