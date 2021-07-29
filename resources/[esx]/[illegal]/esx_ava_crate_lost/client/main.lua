@@ -50,7 +50,8 @@ print(spawnLoc)
         -- DrawLine(spawnLoc.x, spawnLoc.y, spawnLoc.z, spawnLoc.x, spawnLoc.y, spawnLoc.z + 10, 255, 0, 255, 255) -- debug
 		if distance < 80.0 then
 			if not PropSpawned then
-                ESX.Game.SpawnLocalObject(GetHashKey(Config.Prop), spawnLoc, function(obj)
+                PropSpawned = true
+                ESX.Game.SpawnObject(GetHashKey(Config.Prop), spawnLoc, function(obj)
                     PropSpawned = obj
                     PlaceObjectOnGroundProperly(obj)
                     FreezeEntityPosition(obj, true)
