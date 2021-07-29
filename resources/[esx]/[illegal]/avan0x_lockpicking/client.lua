@@ -82,6 +82,7 @@ AddEventHandler('avan0x_lockpicking:LockpickingComplete', function(result)
 	if result and vehicle then
 		SetVehicleDoorsLocked(vehicle, 1)
 		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
+        Citizen.InvokeNative(0xDBC631F109350B8C, vehicle, false)
 		ClearPedTasksImmediately(playerPed)
 
 		vehicle = nil

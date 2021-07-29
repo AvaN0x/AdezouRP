@@ -784,7 +784,8 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 		modLivery         = GetVehicleMod(vehicle, 48),
 		livery 			  = GetVehicleLivery(vehicle),
 		modInteriorColor  = GetVehicleInteriorColour(vehicle),
-		modDashboardColor = GetVehicleDashboardColour(vehicle)
+		modDashboardColor = GetVehicleDashboardColour(vehicle),
+		modDriftTyres     = Citizen.InvokeNative(0x2F5A72430E78C8D3, vehicle) -- _GET_DRIFT_TYRES_ENABLED
 	}
 end
 
@@ -1054,6 +1055,10 @@ ESX.Game.SetVehicleProperties = function(vehicle, props)
 
 	if props.modDashboardColor ~= nil then
 		SetVehicleDashboardColour(vehicle, props.modDashboardColor)
+	end
+    
+	if props.modDriftTyres ~= nil then
+		Citizen.InvokeNative(0x5AC79C98C5C17F05, vehicle, props.modDriftTyres) -- _SET_DRIFT_TYRES_ENABLED
 	end
 end
 

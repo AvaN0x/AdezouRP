@@ -62,6 +62,9 @@ AddEventHandler('esx_lscustom:cancelInstallMod', function()
 end)
 
 function OpenLSMenu(elems, menuName, menuTitle, parent)
+    if elems[1] then
+        UpdateMods(elems[1])
+    end
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), menuName,
 	{
 		title    = menuTitle,
@@ -189,9 +192,9 @@ end
 
 
 function UpdateMods(data)
-	local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-
 	if data.modType ~= nil then
+        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+
 		local props = {}
 		if data.wheelType ~= nil then
 			props['wheels'] = data.wheelType
@@ -267,7 +270,7 @@ function GetAction(data)
 
 			if v.modType ~= nil then
 				-- print(v.modType)
-				if v.modType == 22 then
+				if v.modType == 22 or v.modType == "modDriftTyres" then
 					table.insert(elements, {label = " " .. _U('by_default'), modType = k, modNum = false})
 				elseif v.modType == 'neonColor' or v.modType == 'tyreSmokeColor' then -- disable neon
 					table.insert(elements, {label = " " ..  _U('by_default'), modType = k, modNum = {0, 0, 0}})
@@ -349,6 +352,14 @@ function GetAction(data)
 						end
 						table.insert(elements, {label = _label, modType = k, modNum = j})
 					end
+                elseif v.modType == "modDriftTyres" then -- TURBO
+					local _label = ''
+					if currentMods[k] then
+						_label = 'Pneu basse adhérence - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
+					else
+						_label = 'Pneu basse adhérence - <span style="color:green;">$' .. math.floor(vehiclePrice * v.price / 100) .. ' </span>'
+					end
+					table.insert(elements, {label = _label, modType = k, modNum = true})
 				elseif v.modType == 23 then -- WHEELS RIM & TYPE
 					local props = {}
 

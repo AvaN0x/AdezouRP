@@ -3,6 +3,8 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
+math.randomseed(os.time())
+
 local MechanicJobName = "mechanic"
 
 ---------------
@@ -58,5 +60,26 @@ AddEventHandler('esx_avan0x:cloth:remove', function()
     local xPlayer = ESX.GetPlayerFromId(source)
 
 	xPlayer.removeInventoryItem('cloth', 1)
+end)
+
+-------------
+-- bodykit --
+-------------
+
+ESX.RegisterUsableItem('blowtorch', function(source)
+    if exports.esx_ava_jobs:hasJob(source, MechanicJobName) then
+        TriggerClientEvent('esx_avan0x:blowtorch', source)
+    else
+        TriggerClientEvent('esx:showNotification', source, _('repairkits_need_to_be_mechanic'))
+    end
+end)
+
+RegisterServerEvent('esx_avan0x:blowtorch:remove')
+AddEventHandler('esx_avan0x:blowtorch:remove', function()
+    if math.random(0, 100) < 5 then
+        local xPlayer = ESX.GetPlayerFromId(source)
+        
+        xPlayer.removeInventoryItem('blowtorch', 1)
+    end
 end)
 

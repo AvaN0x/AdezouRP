@@ -32,10 +32,10 @@ Locales['fr'] = {
     ['blackout_disabled'] = 'Le blackout est maintenant désactivé.',
     ['blackout_disabledc'] = 'Le blackout est maintenant ~b~désactivé~s~.',
 
-    ['iem_enabled'] = 'Le IEM est maintenant activé.',
-    ['iem_enabledc'] = 'Le IEM est maintenant ~b~activé~s~.',
-    ['iem_disabled'] = 'Le IEM est maintenant désactivé.',
-    ['iem_disabledc'] = 'Le IEM est maintenant ~b~désactivé~s~.',
+    ['iem_enabled'] = 'L\'IEM est maintenant activée.',
+    ['iem_enabledc'] = 'L\'IEM est maintenant ~b~activée~s~.',
+    ['iem_disabled'] = 'L\'IEM est maintenant désactivée.',
+    ['iem_disabledc'] = 'L\'IEM est maintenant ~b~désactivée~s~.',
 
     ['help_weathercommand'] = 'Change la météo.',
     ['help_weathertype'] = 'typemétéo',
