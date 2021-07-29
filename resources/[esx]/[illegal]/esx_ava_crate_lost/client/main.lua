@@ -85,9 +85,9 @@ print(spawnLoc)
 	else
 		ESX.ShowNotification("Vous avez récupéré la caisse")
 	end
-    while DoesObjectOfTypeExistAtCoords(parachuteCoords, 10.0, GetHashKey("w_am_flare"), true) do
+    while DoesObjectOfTypeExistAtCoords(spawnLoc, 10.0, GetHashKey("w_am_flare"), true) do
         Wait(0)
-        local prop = GetClosestObjectOfType(parachuteCoords, 10.0, GetHashKey("w_am_flare"), false, false, false)
+        local prop = GetClosestObjectOfType(spawnLoc, 10.0, GetHashKey("w_am_flare"), false, false, false)
         RemoveParticleFxFromEntity(prop)
         SetEntityAsMissionEntity(prop, false, true)
         DeleteObject(prop)
