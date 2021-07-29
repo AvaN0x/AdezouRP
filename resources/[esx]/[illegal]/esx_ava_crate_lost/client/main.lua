@@ -54,6 +54,7 @@ print(spawnLoc)
                     PropSpawned = obj
                     PlaceObjectOnGroundProperly(obj)
                     FreezeEntityPosition(obj, true)
+                    spawnLoc = GetEntityCoords(obj)
                 end)
 				ESX.ShowNotification("Vous êtes proche de la caisse")
 			end
