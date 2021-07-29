@@ -51,11 +51,17 @@ print(spawnLoc)
 		if distance < 80.0 then
 			if not PropSpawned then
                 PropSpawned = true
+                RequestWeaponAsset(GetHashKey("weapon_flare")) -- flare won't spawn later in the script if we don't request it right now
+                while not HasWeaponAssetLoaded(GetHashKey("weapon_flare")) do
+                    Wait(0)
+                end
+        
                 ESX.Game.SpawnObject(GetHashKey(Config.Prop), spawnLoc, function(obj)
                     PropSpawned = obj
                     PlaceObjectOnGroundProperly(obj)
                     FreezeEntityPosition(obj, true)
                     spawnLoc = GetEntityCoords(obj)
+                    ShootSingleBulletBetweenCoords(spawnLoc, spawnLoc - vector3(0.0001, 0.0001, 0.0001), 0, false, GetHashKey("weapon_flare"), 0, true, false, -1.0)
                 end)
 				ESX.ShowNotification("Vous êtes proche de la caisse")
 			end
@@ -79,7 +85,15 @@ print(spawnLoc)
 	else
 		ESX.ShowNotification("Vous avez récupéré la caisse")
 	end
+    while DoesObjectOfTypeExistAtCoords(parachuteCoords, 10.0, GetHashKey("w_am_flare"), true) do
+        Wait(0)
+        local prop = GetClosestObjectOfType(parachuteCoords, 10.0, GetHashKey("w_am_flare"), false, false, false)
+        RemoveParticleFxFromEntity(prop)
+        SetEntityAsMissionEntity(prop, false, true)
+        DeleteObject(prop)
+    end
     RemoveBlip(zoneBlip)
-    ESX.Game.DeleteObject(PropSpawned)
+    SetEntityAsMissionEntity(PropSpawned, false, true)
+    DeleteObject(PropSpawned)
     MissionStarted = false
 end)
