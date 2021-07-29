@@ -39,7 +39,7 @@ AddEventHandler('esx_ava_crate_lost:startMission', function()
 
 print(spawnLoc)
 	local startTime = GetGameTimer()
-	local timer = 600000 -- 10 minutes
+	local timer = 240000 -- 4 minutes
 
     local playerPed = PlayerPedId()
     local PropSpawned = nil
