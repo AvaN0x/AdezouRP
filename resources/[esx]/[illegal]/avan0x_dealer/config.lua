@@ -127,7 +127,7 @@ Config.DrugPrices = {
     ['bracelet_steel'] = 146,
     ['bracelet_emerald'] = 493,
     ['bracelet_ruby'] = 626,
-    ['weaponbox'] = 4876,
+    ['weaponbox'] = 2576,
 }
 
 Config.MaxPriceVariance = 10.0 -- %
