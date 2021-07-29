@@ -186,15 +186,15 @@ local function routeMessage(source, author, message, mode, fromConsole)
 
     TriggerEvent('chatMessage', source, #outMessage.args > 1 and outMessage.args[1] or '', outMessage.args[#outMessage.args])
 
-    if not WasEventCanceled() then
-        if type(routingTarget) ~= 'table' then
-            TriggerClientEvent('chat:addMessage', routingTarget, outMessage)
-        else
-            for _, id in ipairs(routingTarget) do
-                TriggerClientEvent('chat:addMessage', id, outMessage)
-            end
-        end
-    end
+    -- if not WasEventCanceled() then
+    --     if type(routingTarget) ~= 'table' then
+    --         TriggerClientEvent('chat:addMessage', routingTarget, outMessage)
+    --     else
+    --         for _, id in ipairs(routingTarget) do
+    --             TriggerClientEvent('chat:addMessage', id, outMessage)
+    --         end
+    --     end
+    -- end
 
     if not fromConsole then
         print(author .. '^7' .. (modes[mode] and (' (' .. modes[mode].displayName .. ')') or '') .. ': ' .. message .. '^7')
@@ -202,13 +202,13 @@ local function routeMessage(source, author, message, mode, fromConsole)
 end
 
 AddEventHandler('_chat:messageEntered', function(author, color, message, mode)
-    if not message or not author then
-        return
-    end
+    -- if not message or not author then
+    --     return
+    -- end
 
-    local source = source
+    -- local source = source
 
-    routeMessage(source, author, message, mode)
+    -- routeMessage(source, author, message, mode)
 end)
 
 AddEventHandler('__cfx_internal:commandFallback', function(command)
@@ -237,9 +237,9 @@ AddEventHandler('playerDropped', function(reason)
     TriggerClientEvent('chatMessage', -1, '', { 255, 255, 255 }, '^2* ' .. GetPlayerName(source) ..' left (' .. reason .. ')')
 end)
 
-RegisterCommand('say', function(source, args, rawCommand)
-    routeMessage(source, (source == 0) and 'console' or GetPlayerName(source), rawCommand:sub(5), nil, true)
-end)
+-- RegisterCommand('say', function(source, args, rawCommand)
+--     routeMessage(source, (source == 0) and 'console' or GetPlayerName(source), rawCommand:sub(5), nil, true)
+-- end)
 
 -- command suggestions for clients
 local function refreshCommands(player)
