@@ -3,6 +3,7 @@ desktop.ini
 server.cfg
 *.sh
 /cache/
+/resources/\[ignore\]/
 /resources/\[textures\]/
 /resources/\[esx\]/\[test\]
 /resources/\[esx\]/\[purchased\]
