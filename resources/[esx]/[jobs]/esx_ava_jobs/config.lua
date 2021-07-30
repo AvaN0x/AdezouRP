@@ -2268,6 +2268,15 @@ Config.Jobs = {
                 HelpText = _('press_to_open'),
 				Marker = 27
 			},
+            BoxStock = {
+				Pos = vector3(1010.24, -117.37, 72.95),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Dépot",
+                StockName = "biker_lost_box",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
             Dressing = {
 				Pos = vector3(986.63, -92.71, 73.87),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
