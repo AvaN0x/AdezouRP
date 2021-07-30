@@ -14,3 +14,7 @@ server.cfg
 
 .vscode/
 imgui.ini
+
+/resources/\[system\]/
+/resources/\[essential\]/
+/resources/\[esx\]/\[non-esx\]/\[gcphone\]/
