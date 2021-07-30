@@ -18,4 +18,4 @@ files {
 
 loadscreen 'loadingscreen.html'
 
-
+lua54 'yes'
