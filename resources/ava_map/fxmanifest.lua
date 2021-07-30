@@ -1,5 +1,5 @@
 version '1.0.0'
-author 'AvaN0x'
+author 'github.com/AvaN0x'
 description 'Main spawnpoint at the airport'
 repository 'https://github.com/AvaN0x/AdezouRP'
 
