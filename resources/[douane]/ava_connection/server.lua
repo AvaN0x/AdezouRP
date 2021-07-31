@@ -95,8 +95,10 @@ function GetPlayerIdentifiersInVars(player)
 end
 
 AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
-	deferrals.defer()
-	deferrals.update("Vérification des permissions...")
+    deferrals.defer()
+    -- mandatory wait!
+    Wait(0)
+    deferrals.update("Vérification des permissions...")
 
 	if banList == nil then
 		deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
