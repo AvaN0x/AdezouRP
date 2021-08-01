@@ -1,5 +1,5 @@
 fx_version 'cerulean'
-games { 'gta5' }
+game 'gta5'
 
 version '3.0'
 author 'github.com/AvaN0x'

@@ -16,15 +16,3 @@ ExecuteCommand('add_principal group.admin group.mod')
 ExecuteCommand('add_principal group.superadmin group.admin')
     ExecuteCommand('add_ace group.superadmin command allow')
 
-
-AddEventHandler('playerConnecting', function()
-    print(source, "playerConnecting")
-end)
-
-AddEventHandler('playerJoining', function()
-    print(source, "playerJoining")
-end)
-
-AddEventHandler('playerDropped', function()
-    print(source, "playerDropped")
-end)
