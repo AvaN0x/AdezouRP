@@ -95,6 +95,7 @@ function GetPlayerIdentifiersInVars(player)
 end
 
 AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
+    local _source = source
     deferrals.defer()
     -- mandatory wait!
     Wait(0)
@@ -104,7 +105,7 @@ AddEventHandler("playerConnecting", function(steamName, setCallback, deferrals)
 		deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
 		SendWebhookEmbedMessage("avan0x_wh_staff", "", "The ban list have not loaded well !", 16711680)
 	else
-		local steam, license, discord, ip, live, xbl = GetPlayerIdentifiersInVars(source)
+		local steam, license, discord, ip, live, xbl = GetPlayerIdentifiersInVars(_source)
 
 		if steam == nil or license == nil then
 			deferrals.done("Veuillez vérifier que steam soit bien lancé.")
