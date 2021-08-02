@@ -806,7 +806,7 @@ Config.Menus = {
 		modFrontWheelsType7	= _U('highend'),
 		modFrontWheelsType8	= "Jantes Benny's 1",
 		modFrontWheelsType9	= "Jantes Benny's 2",
-		modFrontWheelsType10	= "IDK"
+		modFrontWheelsType10 = "Jantes circuit"
 	},
 	modFrontWheelsType0 = {
 		label = _U('sport'),
