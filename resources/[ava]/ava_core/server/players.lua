@@ -189,7 +189,9 @@ end
 ------------------------------------
 
 local function UpdateBanList()
-    MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban, COALESCE (users.name,'STAFF') AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier ORDER BY date_ban DESC", {}, function(data)
+    -- MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban, COALESCE (users.name, 'STAFF') AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier ORDER BY date_ban DESC", {},
+    MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban FROM ban_list ORDER BY date_ban DESC", {},
+    function(data)
         AVA.Players.BanList = data[1] and data or {}
 	end)
 end
@@ -205,7 +207,8 @@ AVA.Players.IsBanned = function(license, discord, steam, ip, live, xbl)
 
 	for k, v in ipairs(AVA.Players.BanList) do
 		if v.license == license or v.discord == discord or v.steam == steam or v.ip == ip or v.live == live or v.xbl == xbl then
-			return true, v.reason .. " (" .. v.staff_name .. ")"
+			-- return true, v.reason .. " (" .. v.staff_name .. ")"
+			return true, v.reason
 		end
 	end
 
