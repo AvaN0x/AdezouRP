@@ -22,7 +22,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, args)
     
     -- TriggerClientEvent('chat:addSuggestion') -- TODO trigger this on connection
 
-    print("Command added: " .. name .. (needAce and ", requires principal group." .. group or ""))
+    dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^7")
 end
 
 AVA.Commands.RegisterCommand("car", "mod", function(source, args)
