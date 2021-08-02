@@ -45,9 +45,9 @@ my_data 'discord_config' {
 		"743525702531547228" -- citizen
 	},
     Ace = {
-        { ace = "superadmin", role = "743525702531547234" },
-        { ace = "admin", role = "835276464865542195" },
-        { ace = "mod", role = "743525702531547231" },
-        { ace = "helper", role = "743525702531547230" }
+        { ace = "superadmin", role = "743525702531547234" }, -- superadmin
+        { ace = "admin", role = "835276464865542195" }, -- admin
+        { ace = "mod", role = "743525702531547231" }, -- mod
+        -- { ace = "helper", role = "743525702531547230" } -- helper
     }
 }

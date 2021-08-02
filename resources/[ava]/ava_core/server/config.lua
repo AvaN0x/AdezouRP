@@ -5,6 +5,7 @@
 
 AVAConfig = {}
 
+AVAConfig.DiscordWhitelist = GetConvar("ava_core_discord_whitelist", "false") ~= "false"
 -- edit 'discord_config' in fxmanifest.lua
 AVAConfig.Discord = {}
 

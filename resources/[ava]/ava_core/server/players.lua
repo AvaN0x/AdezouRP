@@ -25,6 +25,27 @@ local function GetDiscordGuildUser(discordId)
     return
 end
 
+
+local function GetDiscordUser(discordId)
+    if not discordId or type(discordId) ~= "string" then
+        print("^1[GetDiscordUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId) .. "^1).^7")
+        return
+    elseif not AVAConfig.Discord.GuildId then
+        print("^1[GetDiscordUser] An error occured, AVAConfig.Discord.GuildId is not set.^7")
+        return
+    end
+
+    local member = AVA.Utils.DiscordRequest("GET", ("users/%s"):format(string.gsub(discordId, "discord:", "")), {})
+    if member.code == 200 then
+        local data = json.decode(member.data)
+
+        return data
+    end
+    return
+end
+
+
+
 ------------------------------------------
 --------------- Connecting ---------------
 ------------------------------------------
@@ -58,24 +79,29 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 			elseif isBanned == true then
 				deferrals.done("Vous avez été banni de ce serveur : " .. banReason)
 			else
-				local member = GetDiscordGuildUser(discord)
-				if member then
-                    local gotRole
-					for k, v in ipairs(AVAConfig.Discord.Whitelist) do
-						if AVA.Utils.TableHasValue(member.roles, v) then
-							gotRole = true
-							break
-						end
-					end
-					if gotRole then
-						deferrals.done()
-						return
-					end
-				end
-				deferrals.presentCard([==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
-				function(data, rawData)
-					deferrals.done("discord.gg/KRTKC6b")
-				end)
+                if AVAConfig.DiscordWhitelist then
+                    local member = GetDiscordGuildUser(discord)
+                    if member then
+                        local gotRole
+                        for k, v in ipairs(AVAConfig.Discord.Whitelist) do
+                            if AVA.Utils.TableHasValue(member.roles, v) then
+                                gotRole = true
+                                break
+                            end
+                        end
+                        if gotRole then
+                            deferrals.done()
+                            return
+                        end
+                    end
+                    deferrals.presentCard([==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
+                    function(data, rawData)
+                        deferrals.done("discord.gg/KRTKC6b")
+                    end)
+                else
+                    deferrals.done()
+                    return
+                end
 			end
 		end
 	end
@@ -94,7 +120,12 @@ local function setupPlayer(src, oldSource)
         -- dprint(src, "playerJoining, oldId : ", oldSource)
         
         local license, discord = AVA.Players.GetSourceIdentifiers(src)
-        local member = GetDiscordGuildUser(discord)
+
+
+
+        local member = AVAConfig.DiscordWhitelist
+            and GetDiscordGuildUser(discord)
+            or GetDiscordUser(discord)
         if not member then
             local playerName = GetPlayerName(src) or ""
             DropPlayer(src, "Votre utilisateur Discord n'a pas pu être récupéré. Veuillez réessayer dans un instant.")
@@ -103,14 +134,18 @@ local function setupPlayer(src, oldSource)
             return    
         end
 
-        local group = nil
-        for i = 1, #AVAConfig.Discord.Ace, 1 do
-            if AVA.Utils.TableHasValue(member.roles, AVAConfig.Discord.Ace[i].role) then
-                group = AVAConfig.Discord.Ace[i].ace
-                break
+        local group, discordTag = nil, ""
+        if AVAConfig.DiscordWhitelist then
+            for i = 1, #AVAConfig.Discord.Ace, 1 do
+                if AVA.Utils.TableHasValue(member.roles, AVAConfig.Discord.Ace[i].role) then
+                    group = AVAConfig.Discord.Ace[i].ace
+                    break
+                end
             end
+            discordTag = (member.user.username or "") .. "#" .. (member.user.discriminator or "")
+        else
+            discordTag = (member.username or "") .. "#" .. (member.discriminator or "")
         end
-        local discordTag = (member.user.username or "") .. "#" .. (member.user.discriminator or "")
 
         AVA.Players.List[tostring(src)] = CreatePlayer(src, license, discord, group, discordTag)
 
