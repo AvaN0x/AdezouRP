@@ -806,7 +806,9 @@ Config.Menus = {
 		modFrontWheelsType7	= _U('highend'),
 		modFrontWheelsType8	= "Jantes Benny's 1",
 		modFrontWheelsType9	= "Jantes Benny's 2",
-		modFrontWheelsType10 = "Jantes circuit"
+		modFrontWheelsType10 = "Jantes F1",
+		modFrontWheelsType11 = "Jantes de rue",
+		modFrontWheelsType12 = "Jantes de circuit",
 	},
 	modFrontWheelsType0 = {
 		label = _U('sport'),
@@ -879,10 +881,24 @@ Config.Menus = {
 		price = 2.27
 	},
 	modFrontWheelsType10 = {
-		label = "Jantes Benny's 2",
+		label = "Jantes F1",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 10,
+		price = 2.27
+	},
+	modFrontWheelsType11 = {
+		label = "Jantes de rue",
+		parent = 'modFrontWheelsTypes',
+		modType = 23,
+		wheelType = 11,
+		price = 2.27
+	},
+	modFrontWheelsType12 = {
+		label = "Jantes de circuit",
+		parent = 'modFrontWheelsTypes',
+		modType = 23,
+		wheelType = 12,
 		price = 2.27
 	},
 	modFrontWheelsColor = {
