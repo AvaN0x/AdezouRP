@@ -3,6 +3,27 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
+CREATE TABLE IF NOT EXISTS `players` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `license` varchar(64) NOT NULL,
+  `discord` varchar(64) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `position` varchar(255) DEFAULT NULL,
+  `character` text DEFAULT NULL,
+  `skin` longtext DEFAULT NULL,
+  `loadout` longtext DEFAULT NULL,
+  `accounts` text DEFAULT NULL,
+  `status` text DEFAULT NULL,
+  `jobs` text DEFAULT NULL,
+  `inventory` longtext DEFAULT NULL,
+  `metadata` text DEFAULT NULL,
+  `last_played` boolean NOT NULL DEFAULT TRUE,
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `license` (`license`),
+  KEY `last_updated` (`last_updated`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE IF NOT EXISTS `ban_list` (
     `license` varchar(50) NOT NULL,

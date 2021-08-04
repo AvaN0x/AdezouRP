@@ -9,6 +9,7 @@ repository 'https://github.com/AvaN0x/AdezouRP'
 lua54 'yes'
 
 client_scripts {
+    'client/config.lua',
     "client/main.lua",
     "client/player.lua"
 }

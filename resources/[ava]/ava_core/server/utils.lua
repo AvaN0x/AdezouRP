@@ -62,15 +62,15 @@ Citizen.CreateThread(function()
             local guild = AVA.Utils.DiscordRequest("GET", ("guilds/%s"):format(AVAConfig.Discord.GuildId), {})
             if guild.code == 200 then
                 local data = json.decode(guild.data)
-                print("Permission system guild set to: ^3" .. data.name .. " ^7(^3" .. data.id .. "^7)")
+                print("Permission system guild set to: ^3" .. data.name .. " ^0(^3" .. data.id .. "^0)")
             else
-                print("^1An error occured, please check your config and ensure everything is correct. Error: ^*" .. (guild.data or guild.code) .. "^7")
+                print("^1An error occured, please check your config and ensure everything is correct. Error: ^*" .. (guild.data or guild.code) .. "^0")
             end
         else
-            print("^1An error occured, please check your config and ensure everything is correct.^7")
+            print("^1An error occured, please check your config and ensure everything is correct.^0")
 		end
 	else
-		print("^1You need to use \"set avan0x_bot_token 'YOUR BOT TOKEN'\" in your server.cfg.^7")
+		print("^1You need to use \"set avan0x_bot_token 'YOUR BOT TOKEN'\" in your server.cfg.^0")
 	end
 end)
 

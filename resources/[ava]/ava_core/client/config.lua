@@ -5,15 +5,5 @@
 
 AVAConfig = {}
 
-AVAConfig.DiscordWhitelist = GetConvar("ava_core_discord_whitelist", "false") ~= "false"
--- edit 'discord_config' in fxmanifest.lua
-AVAConfig.Discord = {}
-
 -- edit 'debug_prints' in fxmanifest.lua, any value mean true, remove if false
 AVAConfig.Debug = false
-
-
-AVAConfig.DefaultPlayerData = {
-    position = vector3(-1042.89, -2746.54, 20.37),
-    -- inventory = {}
-}

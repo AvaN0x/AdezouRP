@@ -20,20 +20,24 @@ for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
     end
 end
 
-
-
-
--------------------------------------------
---------------- Init Config ---------------
--------------------------------------------
-
 function dprint(...)
     if AVAConfig.Debug then
-        print("^3[DEBUG] ^7", ...)
+        print("^3[DEBUG] ^0", ...)
     end
 end
 
-dprint("Console colors : \n\t^1^ 1 : AvaN0x's Core^7\n\t^2^ 2 : AvaN0x's Core^7\n\t^3^ 3 : AvaN0x's Core^7\n\t^4^ 4 : AvaN0x's Core^7\n\t^5^ 5 : AvaN0x's Core^7\n\t^6^ 6 : AvaN0x's Core^7\n\t^7^ 7 : AvaN0x's Core^7\n\t^8^ 8 : AvaN0x's Core^7\n\t^9^ 9 : AvaN0x's Core^7")
+dprint([[
+Console colors : 
+    ^0^ 0 : AvaN0x's Core
+    ^1^ 1 : AvaN0x's Core
+    ^2^ 2 : AvaN0x's Core
+    ^3^ 3 : AvaN0x's Core
+    ^4^ 4 : AvaN0x's Core
+    ^5^ 5 : AvaN0x's Core
+    ^6^ 6 : AvaN0x's Core
+    ^7^ 7 : AvaN0x's Core
+    ^8^ 8 : AvaN0x's Core
+    ^9^ 9 : AvaN0x's Core^0]])
 
 -----------------------------------------------
 --------------- Init principals ---------------
