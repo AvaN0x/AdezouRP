@@ -195,9 +195,10 @@ function RageUI.Controls()
 								Citizen.CreateThread(function()
 									RageUI.GoUp(Options)
 									Citizen.Wait(175)
+                                    local timeStarted = GetGameTimer()
 									while Controls.Up.Enabled and IsDisabledControlPressed(Controls.Up.Keys[Index][1], Controls.Up.Keys[Index][2]) do
 										RageUI.GoUp(Options)
-										Citizen.Wait(50)
+										Citizen.Wait((GetGameTimer() - timeStarted) > 800 and 50 or 150)
 									end
 									Controls.Up.Pressed = false
 								end)
@@ -215,9 +216,10 @@ function RageUI.Controls()
 								Citizen.CreateThread(function()
 									RageUI.GoDown(Options)
 									Citizen.Wait(175)
+                                    local timeStarted = GetGameTimer()
 									while Controls.Down.Enabled and IsDisabledControlPressed(Controls.Down.Keys[Index][1], Controls.Down.Keys[Index][2]) do
 										RageUI.GoDown(Options)
-										Citizen.Wait(50)
+										Citizen.Wait((GetGameTimer() - timeStarted) > 800 and 50 or 150)
 									end
 									Controls.Down.Pressed = false
 								end)

@@ -64,7 +64,8 @@ function Items:AddButton(Label, Description, Style, Actions, Submenu)
         RageUI.ItemsSafeZone(CurrentMenu)
         local haveLeftBadge = Style.LeftBadge and Style.LeftBadge ~= RageUI.BadgeStyle.None
         local haveRightBadge = (Style.RightBadge and Style.RightBadge ~= RageUI.BadgeStyle.None)
-        local LeftBadgeOffset = haveLeftBadge and 27 or 0
+        -- local LeftBadgeOffset = haveLeftBadge and 27 or 0
+        local LeftBadgeOffset = haveLeftBadge and 32 or 0
         local RightBadgeOffset = haveRightBadge and 32 or 0
         if Style.Color and Style.Color.BackgroundColor then
             Graphics.Rectangle(CurrentMenu.X, CurrentMenu.Y + 0 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + CurrentMenu.WidthOffset, 38, Style.Color.BackgroundColor[1], Style.Color.BackgroundColor[2], Style.Color.BackgroundColor[3], Style.Color.BackgroundColor[4])
