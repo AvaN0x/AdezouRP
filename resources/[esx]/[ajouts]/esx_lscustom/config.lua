@@ -508,6 +508,19 @@ function GetNeons()
 		{ label = 'Violet', 	    r = 153, 	g = 0, 		b = 153},
 		{ label = "Ivory", 			r = 41, 	g = 36, 	b = 33}
 	}
+    -- *from the game files
+    -- print("CMOD_TYR_3", GetLabelText("CMOD_TYR_3"), 255, 255, 255)
+    -- print("CMOD_TYR_4", GetLabelText("CMOD_TYR_4"), 20, 20, 20)
+    -- print("CMOD_TYR_5", GetLabelText("CMOD_TYR_5"), 0, 174, 239)
+    -- print("CMOD_TYR_6", GetLabelText("CMOD_TYR_6"), 252, 238, 0)
+    -- print("CMOD_TYR_11", GetLabelText("CMOD_TYR_11"), 132, 102, 226)
+    -- print("CMOD_TYR_7", GetLabelText("CMOD_TYR_7"), 255, 127, 0)
+    -- print("CMOD_TYR_10", GetLabelText("CMOD_TYR_10"), 114, 204, 114) -- 102, 152, 104
+    -- print("CMOD_TYR_8", GetLabelText("CMOD_TYR_8"), 226, 6, 6)
+    -- print("CMOD_TYR_12", GetLabelText("CMOD_TYR_12"), 203, 54, 148)
+    -- print("CMOD_TYR_13", GetLabelText("CMOD_TYR_13"), 180, 130, 97)
+    -- print("CMOD_TYR_PAT", GetLabelText("CMOD_TYR_PAT"), 0, 0, 0) -- ?!
+    -- print("CMOD_TYR_9", GetLabelText("CMOD_TYR_9"), "crew color") -- CREW
 
 	return neons
 end
@@ -796,106 +809,106 @@ Config.Menus = {
 	modFrontWheelsTypes = {
 		label				= _U('wheel_type'),
 		parent				= 'wheels',
-		modFrontWheelsType0	= _U('sport'),
-		modFrontWheelsType1	= _U('muscle'),
-		modFrontWheelsType2	= _U('lowrider'),
-		modFrontWheelsType3	= _U('suv'),
-		modFrontWheelsType4	= _U('allterrain'),
-		modFrontWheelsType5	= _U('tuning'),
-		modFrontWheelsType6	= _U('motorcycle'),
-		modFrontWheelsType7	= _U('highend'),
-		modFrontWheelsType8	= "Jantes Benny's 1",
-		modFrontWheelsType9	= "Jantes Benny's 2",
-		modFrontWheelsType10 = "Jantes F1",
-		modFrontWheelsType11 = "Jantes de rue",
-		modFrontWheelsType12 = "Jantes de circuit",
+		modFrontWheelsType0	= "CMOD_WHE1_5",
+		modFrontWheelsType1	= "CMOD_WHE1_3",
+		modFrontWheelsType2	= "CMOD_WHE1_2",
+		modFrontWheelsType3	= "CMOD_WHE1_6",
+		modFrontWheelsType4	= "CMOD_WHE1_4",
+		modFrontWheelsType5	= "CMOD_WHE1_7",
+		modFrontWheelsType6	= "CMOD_WHE1_0",
+		modFrontWheelsType7	= "CMOD_WHE1_1",
+		modFrontWheelsType8	= "CMOD_WHE1_8",
+		modFrontWheelsType9	= "CMOD_WHE1_9",
+		modFrontWheelsType10 = "CMOD_WHE1_10",
+		modFrontWheelsType11 = "CMOD_WHE1_11",
+		modFrontWheelsType12 = "CMOD_WHE1_12",
 	},
 	modFrontWheelsType0 = {
-		label = _U('sport'),
+		labelText = "CMOD_WHE1_5",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 0,
 		price = 2.06
 	},
 	modFrontWheelsType1 = {
-		label = _U('muscle'),
+		labelText = "CMOD_WHE1_3",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 1,
 		price = 1.86
 	},
 	modFrontWheelsType2 = {
-		label = _U('lowrider'),
+		labelText = "CMOD_WHE1_2",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 2,
 		price = 2.06
 	},
 	modFrontWheelsType3 = {
-		label = _U('suv'),
+		labelText = "CMOD_WHE1_6",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 3,
 		price = 1.86
 	},
 	modFrontWheelsType4 = {
-		label = _U('allterrain'),
+		labelText = "CMOD_WHE1_4",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 4,
 		price = 1.86
 	},
 	modFrontWheelsType5 = {
-		label = _U('tuning'),
+		labelText = "CMOD_WHE1_7",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 5,
 		price = 2.27
 	},
 	modFrontWheelsType6 = {
-		label = _U('motorcycle'),
+		labelText = "CMOD_WHE1_0",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 6,
 		price = 1.44
 	},
 	modFrontWheelsType7 = {
-		label = _U('highend'),
+		labelText = "CMOD_WHE1_1",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 7,
 		price = 2.27
 	},
 	modFrontWheelsType8 = {
-		label = "Jantes Benny's 1",
+		labelText = "CMOD_WHE1_8",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 8,
 		price = 2.27
 	},
 	modFrontWheelsType9 = {
-		label = "Jantes Benny's 2",
+		labelText = "CMOD_WHE1_9",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 9,
 		price = 2.27
 	},
 	modFrontWheelsType10 = {
-		label = "Jantes F1",
+		labelText = "CMOD_WHE1_10",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 10,
 		price = 2.27
 	},
 	modFrontWheelsType11 = {
-		label = "Jantes de rue",
+		labelText = "CMOD_WHE1_11",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 11,
 		price = 2.27
 	},
 	modFrontWheelsType12 = {
-		label = "Jantes de circuit",
+		labelText = "CMOD_WHE1_12",
 		parent = 'modFrontWheelsTypes',
 		modType = 23,
 		wheelType = 12,

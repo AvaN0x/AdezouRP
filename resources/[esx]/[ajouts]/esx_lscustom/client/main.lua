@@ -19,12 +19,36 @@ local lsMenuIsShowed	= false
 local isInLSMarker		= false
 local myCar				= {}
 
+
+Citizen.CreateThread(function()
+    if not HasThisAdditionalTextLoaded("mod_mnu", 9) then
+        RequestAdditionalText("mod_mnu", 9)
+        while not HasThisAdditionalTextLoaded("mod_mnu", 9) do
+            Citizen.Wait(0)
+        end
+    end
+
+
+    print("CMOD_TYR_1", GetLabelText("CMOD_TYR_1"))
+
+    print("")
+
+    print("CMOD_TYR_STT", GetLabelText("CMOD_TYR_STT"))
+    print("CMOD_F1_TYR1_6", GetLabelText("CMOD_F1_TYR1_6"))
+
+    print("")
+
+    print("CMOD_TYR_LG", GetLabelText("CMOD_TYR_LG"))
+    print("CMOD_TYR_2", GetLabelText("CMOD_TYR_2"))
+end)
+
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
-	
+
 	while ESX.GetPlayerData().job == nil or ESX.GetPlayerData().job2 == nil do
 		Citizen.Wait(10)
 	end
@@ -62,6 +86,13 @@ AddEventHandler('esx_lscustom:cancelInstallMod', function()
 end)
 
 function OpenLSMenu(elems, menuName, menuTitle, parent)
+    if not HasThisAdditionalTextLoaded("mod_mnu", 9) then
+        RequestAdditionalText("mod_mnu", 9)
+        while not HasThisAdditionalTextLoaded("mod_mnu", 9) do
+            Citizen.Wait(0)
+        end
+    end
+
     if elems[1] then
         UpdateMods(elems[1])
     end
@@ -149,7 +180,7 @@ function OpenExtraMenu()
 	local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
 	for id=0, 12 do
 		if DoesExtraExist(vehicle, id) then
-			local state = IsVehicleExtraTurnedOn(vehicle, id) 
+			local state = IsVehicleExtraTurnedOn(vehicle, id)
 
 			if state then
 				table.insert(elements, {
@@ -265,7 +296,7 @@ function GetAction(data)
             -- print(k)
 
 			menuName  = k
-			menuTitle = v.label
+			menuTitle = v.labelText and GetLabelText(v.labelText) or v.label
 			parent    = v.parent
 
 			if v.modType ~= nil then
@@ -452,7 +483,7 @@ function GetAction(data)
 						elseif data.value == 'modFrontWheelsColor' then
 							table.insert(elements, {label = Config.Colors[i].label, value = 'wheelColor', type = Config.Colors[i].value})
 						end
-					end	
+					end
 				elseif data.value == 'cosmetics' or data.value == 'bodyparts' then
 					for l,w in pairs(v) do
 						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
@@ -468,6 +499,13 @@ function GetAction(data)
                             then
 								table.insert(elements, {label = w, value = l})
 							end
+						end
+					end
+				elseif data.value == "modFrontWheelsTypes" then
+                    for l,w in pairs(v) do
+						if l ~= 'label' and l ~= 'parent' and (CurrentZone.WhiteList == nil or array_contain_value(CurrentZone.WhiteList, l)) then
+							table.insert(elements, {label = GetLabelText(w), value = l})
+							-- print(l)
 						end
 					end
 				else
