@@ -435,7 +435,7 @@ end
 
 function RageUI.ItemsDescription(Description)
     local CurrentMenu = RageUI.CurrentMenu;
-    if Description ~= "" or Description ~= nil then
+    if Description ~= "" and Description ~= nil then
         if CurrentMenu.Description ~= Description then
             CurrentMenu.Description = Description or nil;
             local SettingsDescription = RageUI.Settings.Items.Description;
