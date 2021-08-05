@@ -142,6 +142,18 @@ local function retrievePlayerData(id)
     return players[1]
 end
 
+local function loadPlayer(src)
+    local aPlayer = AVA.Players.List[tostring(src)]
+    if not aPlayer then
+        print("^1[loadPlayer] ^0Could not load player for id ^3" .. tostring(src), "^0")
+        return
+    end
+    TriggerClientEvent("ava_core:client:playerLoaded", src, {
+        citizenId = aPlayer.citizenId,
+        position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z)
+    })
+end
+
 local function logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
     if AVA.Players.List[tostring(src)] then
         AVA.Players.List[tostring(src)].Logout()
@@ -165,13 +177,20 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     local aPlayer = CreatePlayer(src, license, discord, group, playerName, discordTag, citizenId, playerData)
     AVA.Players.List[tostring(src)] = aPlayer
 
-    dprint(vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z))
+    -- we check if the player character is valid
+    if type(aPlayer.character) == "table"
+        and aPlayer.character.firstname
+        and aPlayer.character.lastname
+        and aPlayer.character.sex
+        and aPlayer.character.birthdate
+    then
+        dprint("Player char is valid")
+        loadPlayer(tostring(src))
+    else
+        dprint("Player char is not valid")
+        loadPlayer(tostring(src))
 
-    TriggerClientEvent("ava_core:client:playerLoaded", src, {
-        citizenId = citizenId,
-        position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z)
-    })
-
+    end
 end
 
 local function setupPlayer(src, oldSource)

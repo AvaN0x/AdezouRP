@@ -24,6 +24,63 @@ CREATE TABLE IF NOT EXISTS `players` (
   KEY `last_updated` (`last_updated`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- {
+--     "id": 1,
+--     "license": "license:0000000",
+--     "discord": "discord:0000000",
+--     "name": "AvaN0x",
+--     "position": "vector3(0, 0, 0)",
+--     "character": {
+--         "firstname": "firstname",
+--         "lastname": "lastname",
+--         "sex": 0,
+--         "birthdate": "1970-01-01"
+--     },
+--     "skin": {},
+--     "loadout": {},
+--     "accounts": {
+--         "bank": 0
+--     },
+--     "status": {
+--         "health": 100,
+--         "armour": 0,
+--         "hungry": 100,
+--         "thirst": 100,
+--         "drugged": 0,
+--         "drunk": 0,
+--         "injured": 0
+--     },
+--     "jobs": [
+--         {
+--             "name": "state",
+--             "grade": "boss"
+--         },
+--         {
+--             "name": "gang_families",
+--             "grade": "og"
+--         }
+--     ],
+--     "inventory": [
+--         {
+--             "name": "cash",
+--             "quantity": 0
+--         },
+--         {
+--             "name": "dirty",
+--             "quantity": 0
+--         },
+--         {
+--             "name": "bread",
+--             "quantity": 1
+--         }
+--     ],
+--     "metadata": {
+--         "phone": "555-1234"
+--     },
+--     "last_played": true,
+--     "last_updated": "1970-01-01 00:00:00"
+-- }
+
 
 CREATE TABLE IF NOT EXISTS `ban_list` (
     `license` varchar(50) NOT NULL,
