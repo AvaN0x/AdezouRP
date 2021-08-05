@@ -11,14 +11,15 @@ local SubMenu = RageUI.CreateSubMenu(MainMenu, "", "SubTitle")
 local SubSubMenu = RageUI.CreateSubMenu(SubMenu, "", "SubSubTitle")
 local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", "Check some heritages things")
 SubMenuHeritage.EnableMouse = true;
+-- SubMenuHeritage.Closable = false;
 local RightBadgesSubMenu = RageUI.CreateSubMenu(MainMenu, "", "RightBadges SubMenu")
 
 local Checked = false;
 local ListIndex = 1;
 local List2Index = 1;
 
-local MumList = { "Hannah", "Aubrey", "Jasmine", "Gisele", "Amelia", "Isabella", "Zoe", "Ava", "Camila", "Violet", "Sophia", "Evelyn", "Nicole", "Ashley", "Gracie", "Brianna", "Natalie", "Olivia", "Elizabeth", "Charlotte", "Emma" };
-local DadList = { "Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", " Claude", "Niko" };
+local MumList = { "Hannah", "Audrey", "Jasmine", "Giselle", "Amelia", "Isabella", "Zoe", "Ava", "Camilla", "Violet", "Sophia", "Evelyn", "Nicole", "Ashley", "Gracie", "Brianna", "Natalie", "Olivia", "Elizabeth", "Charlotte", "Emma", "Misty" };
+local DadList = { "Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "John", "Niko", "Claude" };
 local MumIndex, DadIndex = 1, 1
 
 local GridX, GridY = 0, 0
