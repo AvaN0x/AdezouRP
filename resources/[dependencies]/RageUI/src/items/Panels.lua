@@ -31,6 +31,16 @@ local Grid = {
     },
 }
 
+---@type table
+local Colour = {
+    Background = { Dictionary = "commonmenu", Texture = "gradient_bgd", Y = 4, Width = 431, Height = 112 },
+    LeftArrow = { Dictionary = "commonmenu", Texture = "arrowleft", X = 7.5, Y = 15, Width = 30, Height = 30 },
+    RightArrow = { Dictionary = "commonmenu", Texture = "arrowright", X = 393.5, Y = 15, Width = 30, Height = 30 },
+    Box = { X = 15, Y = 55, Width = 44.5, Height = 44.5 },
+    SelectedRectangle = { X = 15, Y = 47, Width = 44.5, Height = 8 },
+    LabelOf = "sur"
+}
+
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
     local CurrentMenu = RageUI.CurrentMenu
     if (CurrentMenu.Index == Index) then
@@ -143,4 +153,88 @@ end
 ---@return void
 function Panels:GridVertical(StartedY, TopText, BottomText, Action, Index)
     UIGridPanel(GridType.Vertical, nil, StartedY, TopText, BottomText, nil, nil, Action, Index)
+end
+
+
+
+
+---ColourPanel
+---@param Title string
+---@param Colours thread
+---@param MinimumIndex number
+---@param CurrentIndex number
+---@param Action function
+---@param Index number
+---@param AllowLeftRightKeys boolean
+---@return nil
+---@public
+function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, Index, AllowLeftRightKeys)
+    local CurrentMenu = RageUI.CurrentMenu;
+    if (CurrentMenu.Index == Index) then
+        ---@type number
+        local Maximum = (#Colours > 9) and 9 or #Colours
+        ---@type boolean
+        local Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Colour.Box.X + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.Box.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Colour.Box.Width * Maximum), Colour.Box.Height)
+        ---@type number
+        local LeftArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Colour.LeftArrow.X + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.LeftArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.LeftArrow.Width, Colour.LeftArrow.Height)
+        ---@type number
+        local RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Colour.RightArrow.X + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.RightArrow.Width, Colour.RightArrow.Height)
+
+        ---@type boolean
+        local leftActive = AllowLeftRightKeys and RageUI.Settings.Controls.Left.Active
+        ---@type boolean
+        local rightActive = AllowLeftRightKeys and RageUI.Settings.Controls.Right.Active
+        
+        ---@type boolean
+        local Selected = false
+
+        Graphics.Sprite(Colour.Background.Dictionary, Colour.Background.Texture, CurrentMenu.X, CurrentMenu.Y + Colour.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.Background.Width + CurrentMenu.WidthOffset, Colour.Background.Height)
+        Graphics.Sprite(Colour.LeftArrow.Dictionary, Colour.LeftArrow.Texture, CurrentMenu.X + Colour.LeftArrow.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.LeftArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.LeftArrow.Width, Colour.LeftArrow.Height)
+        Graphics.Sprite(Colour.RightArrow.Dictionary, Colour.RightArrow.Texture, CurrentMenu.X + Colour.RightArrow.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.RightArrow.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.RightArrow.Width, Colour.RightArrow.Height)
+
+        Graphics.Rectangle(CurrentMenu.X + Colour.SelectedRectangle.X + (Colour.Box.Width * (CurrentIndex - MinimumIndex)) + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.SelectedRectangle.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.SelectedRectangle.Width, Colour.SelectedRectangle.Height, 245, 245, 245, 255)
+
+        for i = 1, Maximum do
+            Graphics.Rectangle(CurrentMenu.X + Colour.Box.X + (Colour.Box.Width * (i - 1)) + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.Box.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.Box.Width, Colour.Box.Height, table.unpack(Colours[MinimumIndex + i - 1]))
+        end
+
+        Graphics.Text((Title and Title or "") .. " (" .. CurrentIndex .. " " .. Colour.LabelOf .. " " .. #Colours .. ")", CurrentMenu.X + RageUI.Settings.Panels.Grid.Text.Top.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + RageUI.Settings.Panels.Grid.Text.Top.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, RageUI.Settings.Panels.Grid.Text.Top.Scale, 245, 245, 245, 255, 1)
+        
+        if ((Hovered or LeftArrowHovered or RightArrowHovered) and RageUI.Settings.Controls.Click.Active)
+            or (AllowLeftRightKeys and (leftActive or rightActive))
+        then
+            Selected = true
+
+            if LeftArrowHovered or leftActive then
+                CurrentIndex = CurrentIndex - 1
+
+                if CurrentIndex < 1 then
+                    CurrentIndex = #Colours
+                    MinimumIndex = #Colours - Maximum + 1
+                elseif CurrentIndex < MinimumIndex then
+                    MinimumIndex = MinimumIndex - 1
+                end
+            elseif RightArrowHovered or rightActive then
+                CurrentIndex = CurrentIndex + 1
+
+                if CurrentIndex > #Colours then
+                    CurrentIndex = 1
+                    MinimumIndex = 1
+                elseif CurrentIndex > MinimumIndex + Maximum - 1 then
+                    MinimumIndex = MinimumIndex + 1
+                end
+            elseif Hovered then
+                for Index = 1, Maximum do
+                    if Graphics.IsMouseInBounds(CurrentMenu.X + Colour.Box.X + (Colour.Box.Width * (Index - 1)) + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.Box.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.Box.Width, Colour.Box.Height) then
+                        CurrentIndex = MinimumIndex + Index - 1
+                    end
+                end
+            end
+            Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef, true)
+        end
+
+        RageUI.ItemOffset = RageUI.ItemOffset + Colour.Background.Height + Colour.Background.Y
+
+        Action((Hovered or LeftArrowHovered or RightArrowHovered), Selected, MinimumIndex, CurrentIndex)
+    end
 end

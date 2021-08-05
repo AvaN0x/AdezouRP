@@ -4,9 +4,10 @@
 --- created at [24/05/2021 10:02]
 ---
 
+-- edited by AvaN0x
 fx_version 'cerulean'
 
-games { 'gta5' };
+game 'gta5';
 
 client_scripts {
 	"src/RageUI.lua",

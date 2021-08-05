@@ -6,12 +6,15 @@
 
 -- local MainMenu = RageUI.CreateMenu("", "SUBTITLE", 0, 0, "casinoui_lucky_wheel", "casinoui_lucky_wheel");
 local MainMenu = RageUI.CreateMenu("", "SUBTITLE", 0, 0, "avaui", "avaui_title_adezou");
+MainMenu.Closed = function()
+    print("MainMenu closed")
+end
 
 local SubMenu = RageUI.CreateSubMenu(MainMenu, "", "SubTitle")
 local SubSubMenu = RageUI.CreateSubMenu(SubMenu, "", "SubSubTitle")
 local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", "Check some heritages things")
 SubMenuHeritage.EnableMouse = true;
--- SubMenuHeritage.Closable = false;
+SubMenuHeritage.Closable = false;
 local RightBadgesSubMenu = RageUI.CreateSubMenu(MainMenu, "", "RightBadges SubMenu")
 
 local Checked = false;
@@ -22,6 +25,8 @@ local MumList = { "Hannah", "Audrey", "Jasmine", "Giselle", "Amelia", "Isabella"
 local DadList = { "Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "John", "Niko", "Claude" };
 local MumIndex, DadIndex = 1, 1
 
+
+
 local GridX, GridY = 0, 0
 
 
@@ -29,7 +34,7 @@ local GridX, GridY = 0, 0
 local SecondMainMenu = RageUI.CreateMenu("", "SecondMainMenu", 0, 0, "arcadeui_race_car", "arcadeui_race_car");
 
 
-
+local minColorIndex, colorIndex = 1, 1
 function RageUI.PoolMenus:Example()
 	MainMenu:IsVisible(function(Items)
         
@@ -43,6 +48,15 @@ function RageUI.PoolMenus:Example()
 
 		Items:AddButton("Sub Menu", "Sub Menu", { RightLabel = "→→→" }, function(onSelected)
         end, SubMenu)
+		Items:AddButton("~r~Bread", nil, { RightLabel = "~r~100 $" }, function(onSelected) end)
+		Items:AddButton("~g~Bread", nil, { RightLabel = "~g~100 $" }, function(onSelected) end)
+		Items:AddButton("~b~Bread", nil, { RightLabel = "~b~100 $" }, function(onSelected) end)
+		Items:AddButton("~y~Bread", nil, { RightLabel = "~y~100 $" }, function(onSelected) end)
+		Items:AddButton("~p~Bread", nil, { RightLabel = "~p~100 $" }, function(onSelected) end)
+		Items:AddButton("~c~Bread", nil, { RightLabel = "~c~100 $" }, function(onSelected) end)
+		Items:AddButton("~m~Bread", nil, { RightLabel = "~m~100 $" }, function(onSelected) end)
+		Items:AddButton("~u~Bread", nil, { RightLabel = "~u~100 $" }, function(onSelected) end)
+		Items:AddButton("~o~Bread", nil, { RightLabel = "~o~100 $" }, function(onSelected) end)
 
 		Items:AddButton("SecondMainMenu", "SecondMainMenu", { RightLabel = "→→→", RightBadge = function() return {BadgeDictionary = "mpcarhud", BadgeTexture = "vehicle_card_icons_flag_france"} end }, function(onSelected)
 
@@ -105,7 +119,6 @@ function RageUI.PoolMenus:Example()
 		-- Panels
 	end)
 
-    
 	SubMenuHeritage:IsVisible(function(Items)
 		-- Items
         Items:Heritage(MumIndex, DadIndex)
@@ -122,6 +135,14 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Nose", nil, { IsDisabled = false }, function(onSelected)
 		end)
+        Items:AddButton("Test Color", nil, {}, function(onSelected)
+		end)
+        Items:AddButton("~g~Valider", nil, { Color = { BackgroundColor = RageUI.ItemsColour.Pink, HighLightColor = RageUI.ItemsColour.YellowLight} }, function(onSelected)
+            if onSelected then
+                -- RageUI.Visible(SubMenuHeritage, false)
+                RageUI.GoBack()
+            end
+		end)
     end, function()
 		-- Panels
         Panels:Grid(GridX, GridY, "Top", "Bottom", "Left", "Right", function(X, Y, CharacterX, CharacterY)
@@ -130,6 +151,13 @@ function RageUI.PoolMenus:Example()
             print(GridX, GridY, CharacterX, CharacterY)
 		end, 3)
 
+        Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, minColorIndex, colorIndex, function(Hovered, Active, MinimumIndex, CurrentIndex)
+            if Active then
+                minColorIndex = MinimumIndex
+                colorIndex = CurrentIndex
+                print(RageUI.PanelColour.HairCut[colorIndex][1], RageUI.PanelColour.HairCut[colorIndex][2], RageUI.PanelColour.HairCut[colorIndex][3])
+            end
+        end, 4, true)
 	end)
 
 
