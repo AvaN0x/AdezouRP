@@ -48,15 +48,15 @@ function RageUI.PoolMenus:Example()
 
 		Items:AddButton("Sub Menu", "Sub Menu", { RightLabel = "→→→" }, function(onSelected)
         end, SubMenu)
-		Items:AddButton("~r~Bread", nil, { RightLabel = "~r~100 $" }, function(onSelected) end)
-		Items:AddButton("~g~Bread", nil, { RightLabel = "~g~100 $" }, function(onSelected) end)
-		Items:AddButton("~b~Bread", nil, { RightLabel = "~b~100 $" }, function(onSelected) end)
-		Items:AddButton("~y~Bread", nil, { RightLabel = "~y~100 $" }, function(onSelected) end)
-		Items:AddButton("~p~Bread", nil, { RightLabel = "~p~100 $" }, function(onSelected) end)
-		Items:AddButton("~c~Bread", nil, { RightLabel = "~c~100 $" }, function(onSelected) end)
-		Items:AddButton("~m~Bread", nil, { RightLabel = "~m~100 $" }, function(onSelected) end)
-		Items:AddButton("~u~Bread", nil, { RightLabel = "~u~100 $" }, function(onSelected) end)
-		Items:AddButton("~o~Bread", nil, { RightLabel = "~o~100 $" }, function(onSelected) end)
+		Items:AddButton("~r~Bread", "", { RightLabel = "~r~100 $" }, function(onSelected) end)
+		Items:AddButton("~g~Bread", "", { RightLabel = "~g~100 $" }, function(onSelected) end)
+		Items:AddButton("~b~Bread", "", { RightLabel = "~b~100 $" }, function(onSelected) end)
+		Items:AddButton("~y~Bread", "", { RightLabel = "~y~100 $" }, function(onSelected) end)
+		Items:AddButton("~p~Bread", "", { RightLabel = "~p~100 $" }, function(onSelected) end)
+		Items:AddButton("~c~Bread", "", { RightLabel = "~c~100 $" }, function(onSelected) end)
+		Items:AddButton("~m~Bread", "", { RightLabel = "~m~100 $" }, function(onSelected) end)
+		Items:AddButton("~u~Bread", "", { RightLabel = "~u~100 $" }, function(onSelected) end)
+		Items:AddButton("~o~Bread", "", { RightLabel = "~o~100 $" }, function(onSelected) end)
 
 		Items:AddButton("SecondMainMenu", "SecondMainMenu", { RightLabel = "→→→", RightBadge = function() return {BadgeDictionary = "mpcarhud", BadgeTexture = "vehicle_card_icons_flag_france"} end }, function(onSelected)
 
@@ -66,7 +66,7 @@ function RageUI.PoolMenus:Example()
                 print("onSelected")
             end
 		end)
-		Items:AddList("List", { 1, 2, 3 }, ListIndex, nil, {}, function(Index, onSelected, onListChange)
+		Items:AddList("List", { 1, 2, 3 }, ListIndex, nil, nil, function(Index, onSelected, onListChange)
 			if (onListChange) then
 				ListIndex = Index;
 			end
@@ -87,7 +87,6 @@ function RageUI.PoolMenus:Example()
         Items:AddButton("All right badges", "Get a view of all right badges", { IsDisabled = Checked, RightLabel = "→→→" }, function(onSelected)
         end, RightBadgesSubMenu)
 
-	end, function(Panels)
 	end)
 
 	SecondMainMenu:IsVisible(function(Items)
@@ -95,28 +94,22 @@ function RageUI.PoolMenus:Example()
 		Items:AddButton("Nothing", nil, {}, function(onSelected)
 
         end)
-	end, function()
-		-- Panels
 	end)
 
 	SubMenu:IsVisible(function(Items)
 		-- Items
-		Items:AddButton("Hello world", "Hello world.", { IsDisabled = false }, function(onSelected)
+		Items:AddButton("Hello world", "Hello world.", nil, function(onSelected)
 
 		end, SubSubMenu)
-	end, function()
-		-- Panels
 	end)
 
 	SubSubMenu:IsVisible(function(Items)
 		-- Items
-		Items:AddButton("Sub Hello world", "Sub Hello world.", { IsDisabled = false }, function(onSelected)
+		Items:AddButton("Sub Hello world", nil, nil, function(onSelected)
             if onSelected then
                 RageUI.GoBack()
             end
 		end)
-	end, function()
-		-- Panels
 	end)
 
 	SubMenuHeritage:IsVisible(function(Items)
@@ -133,7 +126,7 @@ function RageUI.PoolMenus:Example()
 			end
         end)
 
-        Items:AddButton("Nose", nil, { IsDisabled = false }, function(onSelected)
+        Items:AddButton("Nose", nil, nil, function(onSelected)
 		end)
         Items:AddButton("Test Color", nil, {}, function(onSelected)
 		end)

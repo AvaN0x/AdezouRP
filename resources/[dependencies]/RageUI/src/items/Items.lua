@@ -60,6 +60,7 @@ function Items:AddButton(Label, Description, Style, Actions, Submenu)
     local CurrentMenu = RageUI.CurrentMenu
     local Option = RageUI.Options + 1
     if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+        if not Style then Style = {} end
         local Active = CurrentMenu.Index == Option
         RageUI.ItemsSafeZone(CurrentMenu)
         local haveLeftBadge = Style.LeftBadge and Style.LeftBadge ~= RageUI.BadgeStyle.None
@@ -128,6 +129,7 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
 
     local Option = RageUI.Options + 1
     if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+        if not Style then Style = {} end
 
         local Active = CurrentMenu.Index == Option;
         local Selected = false;
@@ -190,7 +192,7 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
         if Style.Style ~= nil then
             if Style.Style == 1 then
                 StyleCheckBox(Active, Checked, 2, 4, BoxOffset)
-            elseif Style.Style == 2 then
+            elseif Style.Style == 2 then -- Style == 2 is Times instead of Tick
                 StyleCheckBox(Active, Checked, 5, 6, BoxOffset)
             else
                 StyleCheckBox(Active, Checked, 2, 4, BoxOffset)
@@ -259,6 +261,8 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
 
     local Option = RageUI.Options + 1
     if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+        if not Style then Style = {} end
+
         local Active = CurrentMenu.Index == Option;
         local onListChange = false;
         RageUI.ItemsSafeZone(CurrentMenu)
