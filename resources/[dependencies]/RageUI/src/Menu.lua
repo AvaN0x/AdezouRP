@@ -147,24 +147,24 @@ end
 function RageUIMenus:AddInstructionButton(button)
 	if type(button) == "table" and #button == 2 then
 		table.insert(self.InstructionalButtons, button)
-		self.UpdateInstructionalButtons(true);
+		self:UpdateInstructionalButtons(true);
 	end
 end
 
 function RageUIMenus:RemoveInstructionButton(button)
-	if type(button) == "table" then
+	if type(button) == "table" and #button == 2 then
 		for i = 1, #self.InstructionalButtons do
-			if button == self.InstructionalButtons[i] then
+			if button[1] == self.InstructionalButtons[i][1] and button[2] == self.InstructionalButtons[i][2] then
 				table.remove(self.InstructionalButtons, i)
-				self.UpdateInstructionalButtons(true);
+				self:UpdateInstructionalButtons(true);
 				break
 			end
 		end
 	else
-		if tonumber(button) then
+		if type(button) == "number" then
 			if self.InstructionalButtons[tonumber(button)] then
 				table.remove(self.InstructionalButtons, tonumber(button))
-				self.UpdateInstructionalButtons(true);
+				self:UpdateInstructionalButtons(true);
 			end
 		end
 	end

@@ -153,7 +153,7 @@ function RageUI.PoolMenus:Example()
                 colorIndex = CurrentIndex
                 print(RageUI.PanelColour.HairCut[colorIndex][1], RageUI.PanelColour.HairCut[colorIndex][2], RageUI.PanelColour.HairCut[colorIndex][3])
             end
-        end, 4, true)
+        end, 4)
 	end)
 
 

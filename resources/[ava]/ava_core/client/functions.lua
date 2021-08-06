@@ -51,3 +51,9 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
     end
 	EndTextCommandThefeedPostTicker(false, true)
 end
+
+AVA.ShowHelpNotification = function(text)
+    AddTextEntry("AVA_NOTF_TE", text)
+    BeginTextCommandDisplayHelp("AVA_NOTF_TE")
+    EndTextCommandDisplayHelp(0, false, true, -1)
+end

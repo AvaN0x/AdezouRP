@@ -132,6 +132,22 @@ RageUI.Settings = {
                 { 0, 24 },
             },
         },
+        PageDown = {
+            Enabled = true,
+            Active = false,
+            Pressed = false,
+            Keys = {
+                { 2, 207 },
+            },
+        },
+        PageUp = {
+            Enabled = true,
+            Active = false,
+            Pressed = false,
+            Keys = {
+                { 2, 208 },
+            },
+        },
         Enabled = {
             Controller = {
                 { 0, 2 }, -- Look Up and Down

@@ -38,7 +38,9 @@ local Colour = {
     RightArrow = { Dictionary = "commonmenu", Texture = "arrowright", X = 393.5, Y = 15, Width = 30, Height = 30 },
     Box = { X = 15, Y = 55, Width = 44.5, Height = 44.5 },
     SelectedRectangle = { X = 15, Y = 47, Width = 44.5, Height = 8 },
-    LabelOf = "sur"
+    LabelOf = "sur",
+    InstructionalButtons = {GetControlGroupInstructionalButton(2, 15, 0), "Changer la couleur"},
+    IsDrawingPanelColourIButtons = false
 }
 
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
@@ -159,7 +161,6 @@ end
 
 
 
-
 ---ColourPanel
 ---@param Title string
 ---@param Colours thread
@@ -167,10 +168,9 @@ end
 ---@param CurrentIndex number
 ---@param Action function
 ---@param Index number
----@param AllowLeftRightKeys boolean
 ---@return nil
 ---@public
-function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, Index, AllowLeftRightKeys)
+function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, Index)
     local CurrentMenu = RageUI.CurrentMenu;
     if (CurrentMenu and CurrentMenu.Index == Index) then
         ---@type number
@@ -183,9 +183,9 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
         local RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Colour.RightArrow.X + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.RightArrow.Width, Colour.RightArrow.Height)
 
         ---@type boolean
-        local leftActive = AllowLeftRightKeys and RageUI.Settings.Controls.Left.Active
+        local leftActive = RageUI.Settings.Controls.PageDown.Active
         ---@type boolean
-        local rightActive = AllowLeftRightKeys and RageUI.Settings.Controls.Right.Active
+        local rightActive = RageUI.Settings.Controls.PageUp.Active
         
         ---@type boolean
         local Selected = false
@@ -203,7 +203,7 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
         Graphics.Text((Title and Title or "") .. " (" .. CurrentIndex .. " " .. Colour.LabelOf .. " " .. #Colours .. ")", CurrentMenu.X + RageUI.Settings.Panels.Grid.Text.Top.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + RageUI.Settings.Panels.Grid.Text.Top.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, RageUI.Settings.Panels.Grid.Text.Top.Scale, 245, 245, 245, 255, 1)
         
         if ((Hovered or LeftArrowHovered or RightArrowHovered) and RageUI.Settings.Controls.Click.Active)
-            or (AllowLeftRightKeys and (leftActive or rightActive))
+            or leftActive or rightActive
         then
             Selected = true
 
@@ -239,6 +239,18 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
 
         if Action then
             Action((Hovered or LeftArrowHovered or RightArrowHovered), Selected, MinimumIndex, CurrentIndex)
+        end
+
+        if not Colour.IsDrawingPanelColourIButtons then
+            Colour.IsDrawingPanelColourIButtons = true
+
+            CurrentMenu:AddInstructionButton(Colour.InstructionalButtons)
+        end
+    else
+        if Colour.IsDrawingPanelColourIButtons then
+            Colour.IsDrawingPanelColourIButtons = false
+
+            CurrentMenu:RemoveInstructionButton(Colour.InstructionalButtons)
         end
     end
 end
