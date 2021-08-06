@@ -43,7 +43,7 @@ local Colour = {
 
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
     local CurrentMenu = RageUI.CurrentMenu
-    if (CurrentMenu.Index == Index) then
+    if (CurrentMenu and CurrentMenu.Index == Index) then
         local X = Type == GridType.Default and StartedX or Type == GridType.Horizontal and StartedX or Type == GridType.Vertical and 0.5
         local Y = Type == GridType.Default and StartedY or Type == GridType.Horizontal and 0.5 or Type == GridType.Vertical and StartedY
         local Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Grid.Grid.X + CurrentMenu.SafeZoneSize.X + 20, CurrentMenu.Y + Grid.Grid.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset + 20, Grid.Grid.Width + CurrentMenu.WidthOffset - 40, Grid.Grid.Height - 40)
@@ -93,7 +93,9 @@ local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftTe
                 X = math.round((CircleX - (CurrentMenu.X + Grid.Grid.X + (CurrentMenu.WidthOffset / 2) + 20) + (Grid.Circle.Width / 2)) / (Grid.Grid.Width - 40), 2)
                 Y = math.round((CircleY - (CurrentMenu.Y + Grid.Grid.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset + 20) + (Grid.Circle.Height / 2)) / (Grid.Grid.Height - 40), 2)
                 if (X ~= StartedX) and (Y ~= StartedY) then
-                    Action(X, Y, (X * 2 - 1), (Y * 2 - 1))
+                    if Action then
+                        Action(X, Y, (X * 2 - 1), (Y * 2 - 1))
+                    end
                     --	Action.onPositionChange(X, Y, (X * 2 - 1), (Y * 2 - 1))
                 end
                 StartedX = X;
@@ -170,7 +172,7 @@ end
 ---@public
 function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, Index, AllowLeftRightKeys)
     local CurrentMenu = RageUI.CurrentMenu;
-    if (CurrentMenu.Index == Index) then
+    if (CurrentMenu and CurrentMenu.Index == Index) then
         ---@type number
         local Maximum = (#Colours > 9) and 9 or #Colours
         ---@type boolean
@@ -235,6 +237,8 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
 
         RageUI.ItemOffset = RageUI.ItemOffset + Colour.Background.Height + Colour.Background.Y
 
-        Action((Hovered or LeftArrowHovered or RightArrowHovered), Selected, MinimumIndex, CurrentIndex)
+        if Action then
+            Action((Hovered or LeftArrowHovered or RightArrowHovered), Selected, MinimumIndex, CurrentIndex)
+        end
     end
 end

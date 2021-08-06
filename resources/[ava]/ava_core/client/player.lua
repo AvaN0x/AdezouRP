@@ -25,8 +25,8 @@ Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
         if not IsEntityDead(playerPed) then
             local playerCoords = GetEntityCoords(playerPed)
-            
-            if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned then
+
+            if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
                 TriggerServerEvent("ava_core:server:updatePosition", playerCoords)
                 AVA.Player.Data.position = playerCoords
             end
@@ -50,9 +50,11 @@ end)
 
 AddEventHandler("playerSpawned", function()
     dprint("playerSpawned")
+    AVA.Player.HasSpawned = true
+    AVA.Player.IsDead = false
+
 	while not AVA.Player.Loaded do Wait(10) end
     local playerPed = PlayerPedId()
-    AVA.Player.HasSpawned = true
 
     dprint(json.encode(AVA.Player.Data.position), AVA.Player.Data.position)
 	if AVA.Player.Data.position then
@@ -61,7 +63,6 @@ AddEventHandler("playerSpawned", function()
 
 	-- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
 
-	IsDead = false
 end)
 
 AVA.GetPlayerData = function()

@@ -188,8 +188,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
         loadPlayer(tostring(src))
     else
         dprint("Player char is not valid")
-        loadPlayer(tostring(src))
-
+        TriggerClientEvent("ava_core:client:createChar", src)
     end
 end
 
@@ -452,7 +451,7 @@ AVA.Players.Save = function(src)
 
     if aPlayer and aPlayer.citizenId then
         local position = json.encode(aPlayer.position)
-        local character = json.encode(aPlayer.character)
+        -- local character = json.encode(aPlayer.character)
         local skin = json.encode(aPlayer.skin)
         local loadout = json.encode(aPlayer.loadout)
         local accounts = json.encode(aPlayer.accounts)
@@ -460,9 +459,10 @@ AVA.Players.Save = function(src)
         local jobs = json.encode(aPlayer.jobs)
         local inventory = json.encode(aPlayer.inventory)
         local metadata = json.encode(aPlayer.metadata)
-        MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
+        -- MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
+        MySQL.Async.execute('UPDATE `players` SET `position` = @position, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
             ['@position'] = position ~= "null" and position or nil,
-            ['@character'] = character ~= "null" and character or nil,
+            -- ['@character'] = character ~= "null" and character or nil,
             ['@skin'] = skin ~= "null" and skin or nil,
             ['@loadout'] = loadout ~= "null" and loadout or nil,
             ['@accounts'] = accounts ~= "null" and accounts or nil,

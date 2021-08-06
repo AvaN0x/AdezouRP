@@ -259,3 +259,7 @@ end
 Keys.Register("F4", "F4", "Test", function()
 	RageUI.Visible(MainMenu, not RageUI.Visible(MainMenu))
 end)
+
+Keys.Register("F5", "F5", "Test", function()
+	RageUI.Visible(SecondMainMenu, not RageUI.Visible(SecondMainMenu))
+end)

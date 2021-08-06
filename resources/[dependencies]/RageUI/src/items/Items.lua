@@ -52,7 +52,7 @@ Items = {}
 ---@param Label string
 ---@param Description string
 ---@param Style table
----@param Actions fun(onSelected:boolean, onActive:boolean)
+---@param Actions fun(onSelected:boolean)
 ---@param Submenu any
 ---@public
 ---@return void
@@ -105,7 +105,9 @@ function Items:AddButton(Label, Description, Style, Actions, Submenu)
             RageUI.ItemsDescription(Description);
             if not (Style.IsDisabled) then
                 local Selected = (CurrentMenu.Controls.Select.Active)
-                Actions(Selected)
+                if Actions then
+                    Actions(Selected)
+                end
                 if Selected then
                     Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
                     if Submenu and Submenu() then
@@ -208,7 +210,9 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
         end
 
         if (Active) then
-            Actions(Selected, Checked)
+            if Actions then
+                Actions(Selected, Checked)
+            end
             RageUI.ItemsDescription(Description)
         end
 
@@ -351,7 +355,9 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
                     Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
                 end
                 local Selected = (CurrentMenu.Controls.Select.Active)
-                Actions(Index, Selected, onListChange, Active)
+                if Actions then
+                    Actions(Index, Selected, onListChange, Active)
+                end
                 if (Selected) then
                     Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
                     if Submenu ~= nil and type(Submenu) == "table" then
@@ -369,24 +375,26 @@ end
 ---@param Dad number
 function Items:Heritage(Mum, Dad)
     local CurrentMenu = RageUI.CurrentMenu;
-    if Mum < 0 or Mum > 21 then
-        Mum = 0
+    if CurrentMenu then
+        if Mum < 0 or Mum > 21 then
+            Mum = 0
+        end
+        if Dad < 0 or Dad > 23 then
+            Dad = 0
+        end
+        if Mum == 21 then
+            Mum = "special_female_" .. (tonumber(string.sub(Mum, 2, 2)) - 1)
+        else
+            Mum = "female_" .. Mum
+        end
+        if Dad >= 21 then
+            Dad = "special_male_" .. (tonumber(string.sub(Dad, 2, 2)) - 1)
+        else
+            Dad = "male_" .. Dad
+        end
+        Graphics.Sprite("pause_menu_pages_char_mom_dad", "mumdadbg", CurrentMenu.X, CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + (CurrentMenu.WidthOffset / 1), 228)
+        Graphics.Sprite("char_creator_portraits", Dad, CurrentMenu.X + 195 + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 228, 228)
+        Graphics.Sprite("char_creator_portraits", Mum, CurrentMenu.X + 25 + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 228, 228)
+        RageUI.ItemOffset = RageUI.ItemOffset + 228
     end
-    if Dad < 0 or Dad > 23 then
-        Dad = 0
-    end
-    if Mum == 21 then
-        Mum = "special_female_" .. (tonumber(string.sub(Mum, 2, 2)) - 1)
-    else
-        Mum = "female_" .. Mum
-    end
-    if Dad >= 21 then
-        Dad = "special_male_" .. (tonumber(string.sub(Dad, 2, 2)) - 1)
-    else
-        Dad = "male_" .. Dad
-    end
-    Graphics.Sprite("pause_menu_pages_char_mom_dad", "mumdadbg", CurrentMenu.X, CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + (CurrentMenu.WidthOffset / 1), 228)
-    Graphics.Sprite("char_creator_portraits", Dad, CurrentMenu.X + 195 + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 228, 228)
-    Graphics.Sprite("char_creator_portraits", Mum, CurrentMenu.X + 25 + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 228, 228)
-    RageUI.ItemOffset = RageUI.ItemOffset + 228
 end

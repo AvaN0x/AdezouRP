@@ -9,9 +9,25 @@ repository 'https://github.com/AvaN0x/AdezouRP'
 lua54 'yes'
 
 client_scripts {
+    "@RageUI/src/RageUI.lua",
+    "@RageUI/src/Menu.lua",
+    "@RageUI/src/MenuController.lua",
+    "@RageUI/src/components/Audio.lua",
+    "@RageUI/src/components/Graphics.lua",
+    "@RageUI/src/components/Keys.lua",
+    "@RageUI/src/components/Util.lua",
+    "@RageUI/src/components/Visual.lua",
+    "@RageUI/src/elements/ItemsBadge.lua",
+    "@RageUI/src/elements/ItemsColour.lua",
+    "@RageUI/src/elements/PanelColour.lua",
+    "@RageUI/src/items/Items.lua",
+    "@RageUI/src/items/Panels.lua",
+
     'client/config.lua',
     "client/main.lua",
-    "client/player.lua"
+    "client/functions.lua",
+    "client/player.lua",
+    "client/createchar.lua"
 }
 
 server_scripts {
@@ -30,7 +46,8 @@ shared_scripts {
 }
 
 dependencies {
-	'mysql-async'
+	'mysql-async',
+    'RageUI'
 }
 
 -- comment this line to disable debug prints
