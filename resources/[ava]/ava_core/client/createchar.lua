@@ -8,6 +8,9 @@ AVA.Player.CreatingChar = false
 
 local MainMenu = RageUI.CreateMenu("", "Création de personnage", 0, 0, "avaui", "avaui_title_adezou");
 
+local SexList = {"Homme", "Femme"}
+local CharacterData = {}
+
 ---------------------------------------
 --------------- Cameras ---------------
 ---------------------------------------
@@ -25,12 +28,12 @@ local function StartCharCreator()
     local playerPed = PlayerPedId()
 
     DoScreenFadeOut(1000)
-    Citizen.Wait(4000) 
+    Citizen.Wait(2000)
     DestroyAllCams(true)
 
     cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", Camera.body.x, Camera.body.y, Camera.body.z, 0.00, 0.00, 0.00, Camera.body.fov, false, 0)
     SetCamActive(cam2, true)
-    RenderScriptCams(true, false, 2000, true, true) 
+    RenderScriptCams(true, false, 2000, true, true)
 
     Citizen.Wait(500)
 
@@ -58,9 +61,6 @@ local function StartCharCreator()
         SetEntityCoords(playerPed, 402.89, -996.87, -99.0, 0.0, 0.0, 0.0, true)
         SetEntityHeading(playerPed, 173.97)
     end
-
-    Citizen.Wait(100)
-    RageUI.Visible(MainMenu, true)
 
     Citizen.Wait(1000)
     FreezeEntityPosition(playerPed, true)
@@ -99,22 +99,91 @@ end
 -------------------------------------
 --------------- MENUS ---------------
 -------------------------------------
+local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", "Identité")
+MainMenu.InstructionalButtons = {
+    {"~INPUT_FRONTEND_RT~", "Droite"},
+    {"~INPUT_FRONTEND_LT~", "Gauche"}
+}
 MainMenu.Closable = false
 MainMenu.Closed = function()
     print("MainMenu closed")
+    print("CharacterData", json.encode(CharacterData))
     StopCharCreator()
 end
 
 function RageUI.PoolMenus:AvaCoreCreateChar()
 	MainMenu:IsVisible(function(Items)
-        Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
+        -- Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
+        Items:AddButton("Identité", "", { RightLabel = "→→→" }, nil, SubMenuIdentity)
 
-        Items:AddButton("Sauvegarder et valider", nil, { Color = { BackgroundColor = RageUI.ItemsColour.OrangeDark, HighLightColor = RageUI.ItemsColour.OrangeLight } }, function(onSelected)
+        Items:AddButton("Hérédité", "", { RightLabel = "→→→" }, function(onSelected)
+            if onSelected then
+                print("onSelected")
+            end
+        end, SubMenuHeritage)
+
+        Items:AddButton("Traits du visage", "", { RightLabel = "→→→" }, function(onSelected)
+            if onSelected then
+                print("onSelected")
+            end
+        end, SubMenuVisage)
+
+        Items:AddButton("Apparence", "", { RightLabel = "→→→" }, function(onSelected)
+            if onSelected then
+                print("onSelected")
+            end
+        end, SubMenuAppearance)
+
+        Items:AddButton("Vêtements", "", { RightLabel = "→→→" }, function(onSelected)
+            if onSelected then
+                print("onSelected")
+            end
+        end, SubMenuClothes)
+
+
+        Items:AddButton("Sauvegarder et valider", nil, { Color = { BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight } }, function(onSelected)
             if onSelected then
                 RageUI.CloseAll()
             end
 		end)
 	end)
+
+    SubMenuIdentity:IsVisible(function(Items)
+        Items:AddButton("Prénom", nil, { RightLabel = CharacterData.firstname }, function(onSelected)
+            if onSelected then
+                local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères maximum)", "", 50)
+                if result and result ~= "" then
+                    CharacterData.firstname = result
+                end
+            end
+        end)
+        Items:AddButton("Nom", nil, { RightLabel = CharacterData.lastname }, function(onSelected)
+            if onSelected then
+                local result = AVA.KeyboardInput("Entrez votre nom (50 caractères maximum)", "", 50)
+                if result and result ~= "" then
+                    CharacterData.lastname = result
+                end
+            end
+        end)
+        Items:AddList("Sexe", SexList, CharacterData.sexIndex, nil, {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.sexIndex = Index;
+			end
+        end)
+        Items:AddButton("Date de naissance", nil, { RightLabel = CharacterData.birthdate }, function(onSelected)
+            if onSelected then
+                local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
+                if result and result ~= "" then
+                    if string.find(result, "%d%d/%d%d/%d%d%d%d") then
+                        CharacterData.birthdate = result
+                    else
+                        AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
+                    end
+                end
+            end
+        end)
+    end)
+    
 end
 
 
@@ -138,5 +207,16 @@ RegisterNetEvent("ava_core:client:createChar", function()
     end)
     DisplayRadar(false)
     StartCharCreator()
+    
+    CharacterData = {
+        firstname = "",
+        lastname = "",
+        sexIndex = 1,
+        birthdate = ""
+    }
+    
+    Citizen.Wait(100)
+    RageUI.CloseAll()
+    RageUI.Visible(MainMenu, true)
 end)
 
