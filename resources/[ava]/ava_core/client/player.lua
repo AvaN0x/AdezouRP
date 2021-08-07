@@ -5,6 +5,7 @@
 AVA.Player = {}
 AVA.Player.Loaded = false
 AVA.Player.HasSpawned = false
+AVA.Player.FirstSpawn = true
 
 --* replaced with event playerJoining
 -- Citizen.CreateThread(function()
@@ -51,27 +52,28 @@ end)
 AddEventHandler("playerSpawned", function()
     dprint("playerSpawned")
     AVA.Player.IsDead = false
+    AVA.Player.HasSpawned = true
 
 	while not AVA.Player.Loaded do Wait(10) end
     local playerPed = PlayerPedId()
 
-    dprint(json.encode(AVA.Player.Data.position), AVA.Player.Data.position)
+    dprint(AVA.Player.Data.position)
 	if AVA.Player.Data.position then
 		SetEntityCoords(playerPed, AVA.Player.Data.position)
 	end
 
-
-    if not AVA.Player.HasSpawned then
+    dprint(json.encode(AVA.Player.Data.skin))
+    if AVA.Player.FirstSpawn then
+        AVA.Player.FirstSpawn = false
         if AVA.Player.Data.skin then
             TriggerEvent('skinchanger:loadSkin', AVA.Player.Data.skin)
         else
-            TriggerEvent('skinchanger:loadDefaultModel', true)
+            TriggerEvent('skinchanger:loadSkin', {sex = 0})
         end
 
     end
 
 	-- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
-    AVA.Player.HasSpawned = true
 end)
 
 AVA.GetPlayerData = function()

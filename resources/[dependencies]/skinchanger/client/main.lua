@@ -138,6 +138,10 @@ function LoadDefaultModel(malePed, cb)
 		TriggerEvent('skinchanger:modelLoaded')
 	end)
 end
+AddEventHandler('skinchanger:loadDefaultModel', function(loadMale, cb)
+	LoadDefaultModel(loadMale, cb)
+end)
+exports("LoadDefaultModel", LoadDefaultModel)
 
 function GetMaxVals()
 	local playerPed = PlayerPedId()
@@ -427,9 +431,7 @@ function ApplySkin(skin, clothes)
 	end
 end
 
-AddEventHandler('skinchanger:loadDefaultModel', function(loadMale, cb)
-	LoadDefaultModel(loadMale, cb)
-end)
+
 
 AddEventHandler('skinchanger:getData', function(cb)
 	local components = json.decode(json.encode(Components))
@@ -447,18 +449,12 @@ AddEventHandler('skinchanger:getData', function(cb)
 	cb(components, GetMaxVals())
 end)
 
-AddEventHandler('skinchanger:change', function(key, val)
-	Character[key] = val
-
-	if key == 'sex' then
-		TriggerEvent('skinchanger:loadSkin', Character)
-	else
-		ApplySkin(Character)
-	end
-end)
 
 AddEventHandler('skinchanger:getSkin', function(cb)
 	cb(Character)
+end)
+exports("getSkin", function()
+    return Character
 end)
 
 AddEventHandler('skinchanger:modelLoaded', function()
@@ -475,8 +471,9 @@ AddEventHandler('skinchanger:modelLoaded', function()
 	end
 end)
 
-RegisterNetEvent('skinchanger:loadSkin')
-AddEventHandler('skinchanger:loadSkin', function(skin, cb)
+
+
+function loadSkin(skin, cb)
 	if skin['sex'] ~= LastSex then
 		LoadSkin = skin
 
@@ -494,10 +491,15 @@ AddEventHandler('skinchanger:loadSkin', function(skin, cb)
 	end
 
 	LastSex = skin['sex']
-end)
+    return Character
+end
+exports("loadSkin", loadSkin)
+RegisterNetEvent('skinchanger:loadSkin')
+AddEventHandler('skinchanger:loadSkin', loadSkin)
 
-RegisterNetEvent('skinchanger:loadClothes')
-AddEventHandler('skinchanger:loadClothes', function(playerSkin, clothesSkin)
+
+
+function loadClothes(playerSkin, clothesSkin)
 	if playerSkin['sex'] ~= LastSex then
 		LoadClothes = {
 			playerSkin	= playerSkin,
@@ -505,13 +507,49 @@ AddEventHandler('skinchanger:loadClothes', function(playerSkin, clothesSkin)
 		}
 
 		if playerSkin['sex'] == 0 then
-			TriggerEvent('skinchanger:loadDefaultModel', true)
+			LoadDefaultModel(true)
 		else
-			TriggerEvent('skinchanger:loadDefaultModel', false)
+			LoadDefaultModel(false)
 		end
 	else
 		ApplySkin(playerSkin, clothesSkin)
 	end
 
 	LastSex = playerSkin['sex']
-end)
+    return Character
+end
+exports("loadClothes", loadClothes)
+RegisterNetEvent('skinchanger:loadClothes')
+AddEventHandler('skinchanger:loadClothes', loadClothes)
+
+
+function change(key, val)
+	Character[key] = val
+
+	if key == 'sex' then
+		loadSkin(Character)
+	else
+		ApplySkin(Character)
+	end
+
+    return Character
+end
+AddEventHandler('skinchanger:change', change)
+exports("change", change)
+
+
+function reset()
+    LastSex = -1
+    LoadSkin = nil
+    LoadClothes = nil
+    Character = {}
+    
+    for i=1, #Components, 1 do
+        Character[Components[i].name] = Components[i].value
+    end
+end
+
+RegisterNetEvent('skinchanger:ava_core:reset')
+AddEventHandler('skinchanger:ava_core:reset', reset)
+
+exports("reset", reset)
