@@ -150,7 +150,8 @@ local function loadPlayer(src)
     end
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
-        position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z)
+        position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
+        skin = aPlayer.skin
     })
 end
 

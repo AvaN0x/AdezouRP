@@ -50,7 +50,6 @@ end)
 
 AddEventHandler("playerSpawned", function()
     dprint("playerSpawned")
-    AVA.Player.HasSpawned = true
     AVA.Player.IsDead = false
 
 	while not AVA.Player.Loaded do Wait(10) end
@@ -61,8 +60,18 @@ AddEventHandler("playerSpawned", function()
 		SetEntityCoords(playerPed, AVA.Player.Data.position)
 	end
 
-	-- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
 
+    if not AVA.Player.HasSpawned then
+        if AVA.Player.Data.skin then
+            TriggerEvent('skinchanger:loadSkin', AVA.Player.Data.skin)
+        else
+            TriggerEvent('skinchanger:loadDefaultModel', true)
+        end
+
+    end
+
+	-- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
+    AVA.Player.HasSpawned = true
 end)
 
 AVA.GetPlayerData = function()
@@ -72,3 +81,8 @@ AVA.GetPlayerData = function()
     end
     return
 end
+
+-- DEBUG COMMAND
+RegisterCommand("respawn", function()
+    exports.spawnmanager:spawnPlayer()
+end)

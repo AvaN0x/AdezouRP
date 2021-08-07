@@ -114,6 +114,18 @@ end
 function RageUI.PoolMenus:AvaCoreCreateChar()
 	MainMenu:IsVisible(function(Items)
         -- Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
+        
+        Items:AddList("Sexe", SexList, CharacterData.sexIndex, nil, {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.sexIndex = Index;
+                TriggerEvent('skinchanger:loadDefaultModel', CharacterData.sexIndex == 0, function()
+                    print("load default skin")
+                    -- TriggerEvent('skinchanger:loadSkin', DefaultSkin.Male)
+                    -- TriggerEvent('skinchanger:loadSkin', DefaultSkin.FemaleTriggerEvent('skinchanger:loadSkin', AVA.Player.Data.skin))
+                end)
+			end
+        end)
+
         Items:AddButton("Identité", "", { RightLabel = "→→→" }, nil, SubMenuIdentity)
 
         Items:AddButton("Hérédité", "", { RightLabel = "→→→" }, function(onSelected)
@@ -151,7 +163,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     SubMenuIdentity:IsVisible(function(Items)
         Items:AddButton("Prénom", nil, { RightLabel = CharacterData.firstname }, function(onSelected)
             if onSelected then
-                local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères maximum)", "", 50)
+                local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
                     CharacterData.firstname = result
                 end
@@ -159,16 +171,11 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end)
         Items:AddButton("Nom", nil, { RightLabel = CharacterData.lastname }, function(onSelected)
             if onSelected then
-                local result = AVA.KeyboardInput("Entrez votre nom (50 caractères maximum)", "", 50)
+                local result = AVA.KeyboardInput("Entrez votre nom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
                     CharacterData.lastname = result
                 end
             end
-        end)
-        Items:AddList("Sexe", SexList, CharacterData.sexIndex, nil, {}, function(Index, onSelected, onListChange)
-            if (onListChange) then
-				CharacterData.sexIndex = Index;
-			end
         end)
         Items:AddButton("Date de naissance", nil, { RightLabel = CharacterData.birthdate }, function(onSelected)
             if onSelected then
