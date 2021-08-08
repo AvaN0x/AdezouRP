@@ -36,6 +36,7 @@ local SecondMainMenu = RageUI.CreateMenu("", "SecondMainMenu", 0, 0, "arcadeui_r
 
 
 local minColorIndex, colorIndex = 1, 1
+local percent = 0.5
 function RageUI.PoolMenus:Example()
 	MainMenu:IsVisible(function(Items)
         
@@ -133,6 +134,8 @@ function RageUI.PoolMenus:Example()
 		end)
         Items:AddButton("Test Color", nil, {}, function(onSelected)
 		end)
+        Items:AddButton("Test percent", nil, {}, function(onSelected)
+		end)
         Items:AddButton("~g~Valider", nil, { Color = { BackgroundColor = RageUI.ItemsColour.Pink, HighLightColor = RageUI.ItemsColour.YellowLight} }, function(onSelected)
             if onSelected then
                 -- RageUI.Visible(SubMenuHeritage, false)
@@ -141,19 +144,22 @@ function RageUI.PoolMenus:Example()
 		end)
     end, function()
 		-- Panels
-        Panels:Grid(GridX, GridY, "Top", "Bottom", "Left", "Right", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(GridX, GridY, "Haut", "Bas", "Gauche", "Droite", function(X, Y, CharacterX, CharacterY)
 			GridX = X;
 			GridY = Y;
             print(GridX, GridY, CharacterX, CharacterY)
 		end, 3)
 
-        Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, minColorIndex, colorIndex, function(Hovered, Active, MinimumIndex, CurrentIndex)
-            if Active then
-                minColorIndex = MinimumIndex
-                colorIndex = CurrentIndex
-                print(RageUI.PanelColour.HairCut[colorIndex][1], RageUI.PanelColour.HairCut[colorIndex][2], RageUI.PanelColour.HairCut[colorIndex][3])
-            end
+        Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, minColorIndex, colorIndex, function(MinimumIndex, CurrentIndex)
+            minColorIndex = MinimumIndex
+            colorIndex = CurrentIndex
+            print(RageUI.PanelColour.HairCut[colorIndex][1], RageUI.PanelColour.HairCut[colorIndex][2], RageUI.PanelColour.HairCut[colorIndex][3])
         end, 4)
+
+        Panels:PercentagePanel(percent, nil, nil, nil, function(Percent)
+            percent = Percent
+            print(math.floor(percent * 10))
+        end, 5)
 	end)
 
 

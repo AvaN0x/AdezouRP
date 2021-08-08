@@ -29,9 +29,10 @@ local Grid = {
         Left = { X = 57.75, Y = 130, Scale = 0.35 },
         Right = { X = 373.25, Y = 130, Scale = 0.35 },
     },
+    InstructionalButtons = {GetControlGroupInstructionalButton(2, 1, 0), "Déplacer le curseur"},
+    IsDrawingPanelIButtons = false
 }
 
----@type table
 local Colour = {
     Background = { Dictionary = "commonmenu", Texture = "gradient_bgd", Y = 4, Width = 431, Height = 112 },
     LeftArrow = { Dictionary = "commonmenu", Texture = "arrowleft", X = 7.5, Y = 15, Width = 30, Height = 30 },
@@ -40,7 +41,19 @@ local Colour = {
     SelectedRectangle = { X = 15, Y = 47, Width = 44.5, Height = 8 },
     LabelOf = "sur",
     InstructionalButtons = {GetControlGroupInstructionalButton(2, 15, 0), "Changer la couleur"},
-    IsDrawingPanelColourIButtons = false
+    IsDrawingPanelIButtons = false
+}
+
+local Percentage = {
+    Background = { Dictionary = "commonmenu", Texture = "gradient_bgd", Y = 4, Width = 431, Height = 76 },
+    Bar = { X = 9, Y = 50, Width = 413, Height = 10 },
+    Text = {
+        Left = { X = 25, Y = 15, Scale = 0.35 },
+        Middle = { X = 215.5, Y = 15, Scale = 0.35 },
+        Right = { X = 398, Y = 15, Scale = 0.35 },
+    },
+    InstructionalButtons = {GetControlGroupInstructionalButton(2, 1, 0), "Changer l'opacité"},
+    IsDrawingPanelIButtons = false
 }
 
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
@@ -116,6 +129,17 @@ local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftTe
             --if (Action.onSelected ~= nil) then
             --	Action.onSelected(X, Y, (X * 2 - 1), (Y * 2 - 1));
             --end
+        end
+        if not Grid.IsDrawingPanelIButtons then
+            Grid.IsDrawingPanelIButtons = true
+
+            CurrentMenu:AddInstructionButton(Grid.InstructionalButtons)
+        end
+    else
+        if Grid.IsDrawingPanelIButtons then
+            Grid.IsDrawingPanelIButtons = false
+
+            CurrentMenu:RemoveInstructionButton(Grid.InstructionalButtons)
         end
     end
 end
@@ -200,7 +224,7 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
             Graphics.Rectangle(CurrentMenu.X + Colour.Box.X + (Colour.Box.Width * (i - 1)) + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.Box.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.Box.Width, Colour.Box.Height, table.unpack(Colours[MinimumIndex + i - 1]))
         end
 
-        Graphics.Text((Title and Title or "") .. " (" .. CurrentIndex .. " " .. Colour.LabelOf .. " " .. #Colours .. ")", CurrentMenu.X + RageUI.Settings.Panels.Grid.Text.Top.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + RageUI.Settings.Panels.Grid.Text.Top.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, RageUI.Settings.Panels.Grid.Text.Top.Scale, 245, 245, 245, 255, 1)
+        Graphics.Text((Title and Title or "") .. " (" .. CurrentIndex .. " " .. Colour.LabelOf .. " " .. #Colours .. ")", CurrentMenu.X + Grid.Text.Top.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Grid.Text.Top.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Grid.Text.Top.Scale, 245, 245, 245, 255, 1)
         
         if ((Hovered or LeftArrowHovered or RightArrowHovered) and RageUI.Settings.Controls.Click.Active)
             or leftActive or rightActive
@@ -233,24 +257,106 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
                 end
             end
             Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef, true)
+
+            if Action then
+                Action(MinimumIndex, CurrentIndex)
+            end
         end
 
         RageUI.ItemOffset = RageUI.ItemOffset + Colour.Background.Height + Colour.Background.Y
 
-        if Action then
-            Action((Hovered or LeftArrowHovered or RightArrowHovered), Selected, MinimumIndex, CurrentIndex)
-        end
 
-        if not Colour.IsDrawingPanelColourIButtons then
-            Colour.IsDrawingPanelColourIButtons = true
+        if not Colour.IsDrawingPanelIButtons then
+            Colour.IsDrawingPanelIButtons = true
 
             CurrentMenu:AddInstructionButton(Colour.InstructionalButtons)
         end
     else
-        if Colour.IsDrawingPanelColourIButtons then
-            Colour.IsDrawingPanelColourIButtons = false
+        if Colour.IsDrawingPanelIButtons then
+            Colour.IsDrawingPanelIButtons = false
 
             CurrentMenu:RemoveInstructionButton(Colour.InstructionalButtons)
+        end
+    end
+end
+
+
+
+
+---PercentagePanel
+---@param Percent number
+---@param HeaderText string
+---@param MinText string
+---@param MaxText string
+---@param Actions function
+---@param Index number
+---@return nil
+---@public
+function Panels:PercentagePanel(Percent, HeaderText, MinText, MaxText, Actions, Index)
+    local CurrentMenu = RageUI.CurrentMenu
+
+    if (CurrentMenu and CurrentMenu.Index == Index) then
+        ---@type boolean
+        local Hovered = Graphics.IsMouseInBounds(CurrentMenu.X + Percentage.Bar.X + CurrentMenu.SafeZoneSize.X, CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset - 4, Percentage.Bar.Width + CurrentMenu.WidthOffset, Percentage.Bar.Height + 8)
+
+        ---@type boolean
+        local Selected = false
+
+        ---@type number
+        local Progress = Percentage.Bar.Width
+
+        if Percent < 0.0 then
+            Percent = 0.0
+        elseif Percent > 1.0 then
+            Percent = 1.0
+        end
+
+        Progress = Progress * Percent
+
+        Graphics.Sprite(Percentage.Background.Dictionary, Percentage.Background.Texture, CurrentMenu.X, CurrentMenu.Y + Percentage.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Percentage.Background.Width + CurrentMenu.WidthOffset, Percentage.Background.Height)
+        Graphics.Rectangle(CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Percentage.Bar.Width, Percentage.Bar.Height, 87, 87, 87, 255)
+        Graphics.Rectangle(CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Progress, Percentage.Bar.Height, 245, 245, 245, 255)
+
+        Graphics.Text(HeaderText or "Opacité", CurrentMenu.X + Percentage.Text.Middle.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Middle.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Middle.Scale, 245, 245, 245, 255, 1)
+        Graphics.Text(MinText or "0%", CurrentMenu.X + Percentage.Text.Left.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Left.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Left.Scale, 245, 245, 245, 255, 1)
+        Graphics.Text(MaxText or "100%", CurrentMenu.X + Percentage.Text.Right.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Percentage.Text.Right.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Percentage.Text.Right.Scale, 245, 245, 245, 255, 1)
+
+        if Hovered then
+            if IsDisabledControlPressed(0, 24) then
+                Selected = true
+
+                Progress = math.round(GetControlNormal(0, 239) * 1920) - CurrentMenu.SafeZoneSize.X - (CurrentMenu.X + Percentage.Bar.X + (CurrentMenu.WidthOffset / 2))
+
+                if Progress < 0 then
+                    Progress = 0
+                elseif Progress > (Percentage.Bar.Width) then
+                    Progress = Percentage.Bar.Width
+                end
+
+                Percent = math.round(Progress / Percentage.Bar.Width, 2)
+            end
+        end
+
+        RageUI.ItemOffset = RageUI.ItemOffset + Percentage.Background.Height + Percentage.Background.Y
+
+        if Hovered and Selected then
+            Audio.PlaySound(RageUI.Settings.Audio.Slider.audioName, RageUI.Settings.Audio.Slider.audioRef, true)
+
+            if Actions then
+                Actions(Percent)
+            end
+        end
+
+        if not Percentage.IsDrawingPanelIButtons then
+            Percentage.IsDrawingPanelIButtons = true
+
+            CurrentMenu:AddInstructionButton(Percentage.InstructionalButtons)
+        end
+    else
+        if Percentage.IsDrawingPanelIButtons then
+            Percentage.IsDrawingPanelIButtons = false
+
+            CurrentMenu:RemoveInstructionButton(Percentage.InstructionalButtons)
         end
     end
 end
