@@ -264,7 +264,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
     local CurrentMenu = RageUI.CurrentMenu;
 
     local Option = RageUI.Options + 1
-    if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+    if CurrentMenu and CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
         if not Style then Style = {} end
 
         local Active = CurrentMenu.Index == Option;
@@ -397,4 +397,196 @@ function Items:Heritage(Mum, Dad)
         Graphics.Sprite("char_creator_portraits", Mum, CurrentMenu.X + 25 + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 228, 228)
         RageUI.ItemOffset = RageUI.ItemOffset + 228
     end
+end
+
+
+
+
+
+---@type table
+local SettingsButton = {
+    Rectangle = { Y = 0, Width = 431, Height = 38 },
+    Text = { X = 8, Y = 3, Scale = 0.33 },
+    LeftBadge = { Y = -2, Width = 40, Height = 40 },
+    RightBadge = { X = 385, Y = -2, Width = 40, Height = 40 },
+    RightText = { X = 420, Y = 4, Scale = 0.35 },
+    SelectedSprite = { Dictionary = "commonmenu", Texture = "gradient_nav", Y = 0, Width = 431, Height = 38 },
+}
+
+---@type table
+local SettingsSlider = {
+    Background = { X = 250, Y = 14.5, Width = 150, Height = 9 },
+    Slider = { X = 250, Y = 14.5, Width = 75, Height = 9 },
+    Divider = { X = 323.5, Y = 9, Width = 2.5, Height = 20 },
+    LeftArrow = { Dictionary = "commonmenutu", Texture = "arrowleft", X = 235, Y = 11.5, Width = 15, Height = 15 },
+    RightArrow = { Dictionary = "commonmenutu", Texture = "arrowright", X = 400, Y = 11.5, Width = 15, Height = 15 },
+}
+
+
+---Slider
+---@param Label string
+---@param SliderIndex number
+---@param SliderMax number
+---@param Description string
+---@param Divider boolean
+---@param Callback function
+function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style, Callback)
+    ---@type table
+    local CurrentMenu = RageUI.CurrentMenu;
+
+    if CurrentMenu ~= nil then
+        if not Style then Style = {} end
+
+        local Items = {}
+        for i = 1, SliderMax do
+            table.insert(Items, i)
+        end
+        ---@type number
+        local Option = RageUI.Options + 1
+
+        if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+
+            ---@type number
+            local Selected = CurrentMenu.Index == Option
+
+            ---@type boolean
+            local LeftArrowHovered, RightArrowHovered = false, false
+
+            RageUI.ItemsSafeZone(CurrentMenu)
+
+            local Hovered = false;
+            local LeftBadgeOffset = ((Style.LeftBadge == RageUI.BadgeStyle.None or tonumber(Style.LeftBadge) == nil) and 0 or 27)
+            local RightBadgeOffset = ((Style.RightBadge == RageUI.BadgeStyle.None or tonumber(Style.RightBadge) == nil) and 0 or 32)
+            local RightOffset = 0
+
+            if Selected then
+                Graphics.Sprite(SettingsButton.SelectedSprite.Dictionary, SettingsButton.SelectedSprite.Texture, CurrentMenu.X, CurrentMenu.Y + SettingsButton.SelectedSprite.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsButton.SelectedSprite.Width + CurrentMenu.WidthOffset, SettingsButton.SelectedSprite.Height)
+                LeftArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + SettingsSlider.LeftArrow.X + CurrentMenu.SafeZoneSize.X + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsSlider.LeftArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsSlider.LeftArrow.Width, SettingsSlider.LeftArrow.Height)
+                RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + SettingsSlider.RightArrow.X + CurrentMenu.SafeZoneSize.X + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsSlider.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsSlider.RightArrow.Width, SettingsSlider.RightArrow.Height)
+
+                RageUI.ItemsDescription(Description)
+            end
+            if not (Style.IsDisabled) then
+                if Selected then
+                    if Style.RightLabel ~= nil and Style.RightLabel ~= "" then
+                        Graphics.Text(Style.RightLabel, CurrentMenu.X + SettingsButton.RightText.X - RightBadgeOffset + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsButton.RightText.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.RightText.Scale, 0, 0, 0, 255, 2)
+                        RightOffset = MeasureStringWidth(Style.RightLabel, 0, 0.35)
+                    end
+                else
+                    if Style.RightLabel ~= nil and Style.RightLabel ~= "" then
+                        RightOffset = MeasureStringWidth(Style.RightLabel, 0, 0.35)
+                        Graphics.Text(Style.RightLabel, CurrentMenu.X + SettingsButton.RightText.X - RightBadgeOffset + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsButton.RightText.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.RightText.Scale, 245, 245, 245, 255, 2)
+                    end
+                end
+            end
+            RightOffset = RightOffset + RightBadgeOffset
+            if not (Style.IsDisabled) then
+                if Selected then
+                    Graphics.Text(Label, CurrentMenu.X + SettingsButton.Text.X + LeftBadgeOffset, CurrentMenu.Y + SettingsButton.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.Text.Scale, 0, 0, 0, 255)
+
+                    Graphics.Sprite((Style.LeftArrow and Style.LeftArrow.Dictionary or SettingsSlider.LeftArrow.Dictionary), (Style.LeftArrow and Style.LeftArrow.Texture or SettingsSlider.LeftArrow.Texture), CurrentMenu.X + (Style.LeftArrow and Style.LeftArrow.X or SettingsSlider.LeftArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.LeftArrow and Style.LeftArrow.Y or SettingsSlider.LeftArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.LeftArrow and Style.LeftArrow.Width or SettingsSlider.LeftArrow.Width), (Style.LeftArrow and Style.LeftArrow.Height or SettingsSlider.LeftArrow.Height), 0, 0, 0, 0, 255)
+                    Graphics.Sprite((Style.RightArrow and Style.RightArrow.Dictionary or SettingsSlider.RightArrow.Dictionary), (Style.RightArrow and Style.RightArrow.Texture or SettingsSlider.RightArrow.Texture), CurrentMenu.X + (Style.RightArrow and Style.RightArrow.X or SettingsSlider.RightArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.RightArrow and Style.RightArrow.Y or SettingsSlider.RightArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.RightArrow and Style.RightArrow.Width or SettingsSlider.RightArrow.Width), (Style.RightArrow and Style.RightArrow.Height or SettingsSlider.RightArrow.Height), 0, 0, 0, 0, 255)
+                else
+                    Graphics.Text(Label, CurrentMenu.X + SettingsButton.Text.X + LeftBadgeOffset, CurrentMenu.Y + SettingsButton.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.Text.Scale, 245, 245, 245, 255)
+
+                    if Style.ShowWhenNotSelected then
+                        Graphics.Sprite((Style.LeftArrow and Style.LeftArrow.Dictionary or SettingsSlider.LeftArrow.Dictionary), (Style.LeftArrow and Style.LeftArrow.Texture or SettingsSlider.LeftArrow.Texture), CurrentMenu.X + (Style.LeftArrow and Style.LeftArrow.X or SettingsSlider.LeftArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.LeftArrow and Style.LeftArrow.Y or SettingsSlider.LeftArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.LeftArrow and Style.LeftArrow.Width or SettingsSlider.LeftArrow.Width), (Style.LeftArrow and Style.LeftArrow.Height or SettingsSlider.LeftArrow.Height), 0, 255, 255, 255, 255)
+                        Graphics.Sprite((Style.RightArrow and Style.RightArrow.Dictionary or SettingsSlider.RightArrow.Dictionary), (Style.RightArrow and Style.RightArrow.Texture or SettingsSlider.RightArrow.Texture), CurrentMenu.X + (Style.RightArrow and Style.RightArrow.X or SettingsSlider.RightArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.RightArrow and Style.RightArrow.Y or SettingsSlider.RightArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.RightArrow and Style.RightArrow.Width or SettingsSlider.RightArrow.Width), (Style.RightArrow and Style.RightArrow.Height or SettingsSlider.RightArrow.Height), 0, 255, 255, 255, 255)
+                    end
+                end
+            else
+                Graphics.Text(Label, CurrentMenu.X + SettingsButton.Text.X + LeftBadgeOffset, CurrentMenu.Y + SettingsButton.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.Text.Scale, 163, 159, 148, 255)
+
+                if Selected then
+                    Graphics.Sprite((Style.LeftArrow and Style.LeftArrow.Dictionary or SettingsSlider.LeftArrow.Dictionary), (Style.LeftArrow and Style.LeftArrow.Texture or SettingsSlider.LeftArrow.Texture), CurrentMenu.X + (Style.LeftArrow and Style.LeftArrow.X or SettingsSlider.LeftArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.LeftArrow and Style.LeftArrow.Y or SettingsSlider.LeftArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.LeftArrow and Style.LeftArrow.Width or SettingsSlider.LeftArrow.Width), (Style.LeftArrow and Style.LeftArrow.Height or SettingsSlider.LeftArrow.Height), 163, 159, 148, 255)
+                    Graphics.Sprite((Style.RightArrow and Style.RightArrow.Dictionary or SettingsSlider.RightArrow.Dictionary), (Style.RightArrow and Style.RightArrow.Texture or SettingsSlider.RightArrow.Texture), CurrentMenu.X + (Style.RightArrow and Style.RightArrow.X or SettingsSlider.RightArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.RightArrow and Style.RightArrow.Y or SettingsSlider.RightArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.RightArrow and Style.RightArrow.Width or SettingsSlider.RightArrow.Width), (Style.RightArrow and Style.RightArrow.Height or SettingsSlider.RightArrow.Height), 163, 159, 148, 255)
+                end
+            end
+            
+            if type(Style) == "table" then
+                if not (Style.IsDisabled) then
+                    if type(Style) == 'table' then
+                        if Style.LeftBadge ~= nil then
+                            if Style.LeftBadge ~= RageUI.BadgeStyle.None and tonumber(Style.LeftBadge) ~= nil then
+                                Graphics.Sprite(RageUI.GetBadgeDictionary(Style.LeftBadge, Selected), RageUI.GetBadgeTexture(Style.LeftBadge, Selected), CurrentMenu.X, CurrentMenu.Y + SettingsButton.LeftBadge.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsButton.LeftBadge.Width, SettingsButton.LeftBadge.Height, RageUI.GetBadgeColour(Style.LeftBadge, Selected))
+                            end
+                        end
+                        if Style.RightBadge ~= nil then
+                            if Style.RightBadge ~= RageUI.BadgeStyle.None and tonumber(Style.RightBadge) ~= nil then
+                                Graphics.Sprite(RageUI.GetBadgeDictionary(Style.RightBadge, Selected), RageUI.GetBadgeTexture(Style.RightBadge, Selected), CurrentMenu.X + SettingsButton.RightBadge.X + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsButton.RightBadge.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsButton.RightBadge.Width, SettingsButton.RightBadge.Height, 0, RageUI.GetBadgeColour(Style.RightBadge, Selected))
+                            end
+                        end
+                    end
+                else
+                    ---@type table
+                    local LeftBadge = RageUI.BadgeStyle.Lock
+                    ---@type number
+                    local LeftBadgeOffset = ((LeftBadge == RageUI.BadgeStyle.None or tonumber(LeftBadge) == nil) and 0 or 27)
+                    if LeftBadge ~= RageUI.BadgeStyle.None and tonumber(LeftBadge) ~= nil then
+                        Graphics.Sprite(RageUI.GetBadgeDictionary(LeftBadge, Selected), RageUI.GetBadgeTexture(LeftBadge, Selected), CurrentMenu.X, CurrentMenu.Y + SettingsButton.LeftBadge.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsButton.LeftBadge.Width, SettingsButton.LeftBadge.Height, nil, CheckBoxLockBadgeColor(Selected))
+                    end
+                end
+            end
+
+            Graphics.Rectangle(CurrentMenu.X + SettingsSlider.Background.X + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + SettingsSlider.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsSlider.Background.Width, SettingsSlider.Background.Height, 4, 32, 57, 255)
+            Graphics.Rectangle(CurrentMenu.X + SettingsSlider.Slider.X + (((SettingsSlider.Background.Width - SettingsSlider.Slider.Width) / (#Items - 1)) * (SliderIndex - 1)) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + SettingsSlider.Slider.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsSlider.Slider.Width, SettingsSlider.Slider.Height, 57, 116, 200, 255)
+
+            if Divider then
+                Graphics.Rectangle(CurrentMenu.X + SettingsSlider.Divider.X + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsSlider.Divider.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, SettingsSlider.Divider.Width, SettingsSlider.Divider.Height, 245, 245, 245, 255)
+            end
+
+            RageUI.ItemOffset = RageUI.ItemOffset + SettingsButton.Rectangle.Height
+
+            if Selected and (CurrentMenu.Controls.Left.Active or (CurrentMenu.Controls.Click.Active and LeftArrowHovered)) and not (CurrentMenu.Controls.Right.Active or (CurrentMenu.Controls.Click.Active and RightArrowHovered)) then
+                SliderIndex = SliderIndex - 1
+
+                if SliderIndex < 1 then
+                    SliderIndex = #Items
+                end
+
+                Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
+            elseif Selected and (CurrentMenu.Controls.Right.Active or (CurrentMenu.Controls.Click.Active and RightArrowHovered)) and not (CurrentMenu.Controls.Left.Active or (CurrentMenu.Controls.Click.Active and LeftArrowHovered)) then
+                SliderIndex = SliderIndex + 1
+                if SliderIndex > #Items then
+                    SliderIndex = 1
+                end
+
+                Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
+            end
+
+            local Active = CurrentMenu.Controls.Select.Active or ((Hovered and CurrentMenu.Controls.Click.Active) and (not LeftArrowHovered and not RightArrowHovered))
+            if Selected and Active then
+                Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
+            end
+            
+            if not Style.IsDisabled and Callback then
+                Callback(Selected, (Active and Selected), SliderIndex)
+            end
+        end
+
+        RageUI.Options = RageUI.Options + 1
+    end
+end
+
+
+
+---SliderHeritage
+---@param Label string
+---@param SliderIndex number
+---@param Description string
+---@param Callback function
+function Items:SliderHeritage(Label, SliderIndex, Description, Callback)
+    local Style = {
+        ShowWhenNotSelected = true,
+        LeftArrow = { Dictionary = "mpleaderboard", Texture = "leaderboard_female_icon", X = 215, Y = 0, Width = 40, Height = 40 },
+        RightArrow = { Dictionary = "mpleaderboard", Texture = "leaderboard_male_icon", X = 395, Y = 0, Width = 40, Height = 40 }
+    }
+
+    self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, sliderIndex, percent)
+        if Callback then
+            print(sliderIndex, percent)
+            local percent = (sliderIndex or 0) * 5
+            Callback(selected, active, sliderIndex, percent)
+        end
+    end)
 end
