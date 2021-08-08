@@ -6,7 +6,7 @@
 
 AVA.Player.CreatingChar = false
 
-local CharacterIdentity = {}
+local CharacterData = {}
 local CharacterSkin = {}
 
 local MainMenu = RageUI.CreateMenu("", "Création de personnage", 0, 0, "avaui", "avaui_title_adezou")
@@ -114,6 +114,24 @@ end
 -------------------------------------
 --------------- MENUS ---------------
 -------------------------------------
+
+local function ValidateData()
+    local hadError = false
+    if not CharacterData.firstname or CharacterData.firstname == ""
+        or not CharacterData.lastname or CharacterData.lastname == ""
+        or not CharacterData.birthdate or CharacterData.birthdate == "" or not string.find(CharacterData.birthdate, "%d%d/%d%d/%d%d%d%d")
+    then
+        hadError = true
+        AVA.ShowNotification("~r~Les informations sur l'identité de votre personnage ne sont pas valides.", nil, "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
+    end
+    if CharacterData.selectedOutfit == 0 then
+        hadError = true
+        AVA.ShowNotification("~r~Vous n'avez pas séléctionné de tenue.", nil, "ava_core_logo", "Vêtements", nil, nil, "ava_core_logo")
+    end
+
+    return not hadError
+end
+
 -- don't touch these lists
 local MomList = { "Hannah", "Audrey", "Jasmine", "Giselle", "Amelia", "Isabella", "Zoe", "Ava", "Camilla", "Violet", "Sophia", "Evelyn", "Nicole", "Ashley", "Gracie", "Brianna", "Natalie", "Olivia", "Elizabeth", "Charlotte", "Emma", "Misty" }
 local MomListId = { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45 }
@@ -123,19 +141,49 @@ local DadListId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
 local MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 
 
-local DefaultSkin = {
+local Outfits = {
     -- Male
-    [0] = {sex = 0, mom = MomListId[1], dad = DadListId[1], torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 15, tshirt_2 = 0, pants_1 = 61, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0 },
-    
+    [0] = {
+        -- Default outfit
+        [0] = {
+            outfit = {sex = 0, torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 15, tshirt_2 = 0, pants_1 = 61, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0 }
+        },
+
+        --! test outfits
+        [1] = {
+            outfit = {sex = 0, torso_1 = 25, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 10, tshirt_2 = 0, pants_1 = 21, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 52, shoes_2 = 0 },
+            label = "Tenue lambda"
+        },
+        [2] = {
+            outfit = {sex = 0, torso_1 = 255, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 10, tshirt_2 = 0, pants_1 = 21, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 52, shoes_2 = 0 },
+            label = "Tenue 2"
+        }
+    },
+
     -- Female
-    [1] = {sex = 1, mom = MomListId[1], dad = DadListId[1], torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 15, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0, glasses_1 = 5 }
+    [1] = {
+        -- Default outfit
+        [0] = {
+            outfit = {sex = 1, torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 15, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0, glasses_1 = 5 }
+        },
+
+        --! test outfits
+        [1] = {
+            outfit = {sex = 1, torso_1 = 25, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 12, tshirt_2 = 0, pants_1 = 55, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 58, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue lambda"
+        },
+        [2] = {
+            outfit = {sex = 1, torso_1 = 255, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 12, tshirt_2 = 0, pants_1 = 55, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 58, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue 2"
+        }
+    }
 }
 
 local SexList = {"Homme", "Femme"}
 MainMenu.Closable = false
 MainMenu.Closed = function()
     print("MainMenu closed")
-    print("CharacterIdentity", json.encode(CharacterIdentity))
+    print("CharacterData", json.encode(CharacterData))
     StopCharCreator()
 end
 local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", "Identité")
@@ -144,17 +192,37 @@ local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", "Hérédité")
 
 SubMenuHeritage.Closed = function()
 	ToggleCamOnFace(false)
+    exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
+
+
+local SubMenuVisage = RageUI.CreateSubMenu(MainMenu, "", "Traits du visage")
+
+SubMenuVisage.Closed = function()
+	ToggleCamOnFace(false)
+    exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+end
+
+
+local SubMenuAppearance = RageUI.CreateSubMenu(MainMenu, "", "Apparence")
+
+SubMenuAppearance.Closed = function()
+	ToggleCamOnFace(false)
+    exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+end
+
+local SubMenuOutfits = RageUI.CreateSubMenu(MainMenu, "", "Tenues")
 
 function RageUI.PoolMenus:AvaCoreCreateChar()
 	MainMenu:IsVisible(function(Items)
         -- Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
 
-        Items:AddList("Sexe", SexList, CharacterIdentity.sexIndex + 1, nil, {}, function(Index, onSelected, onListChange)
+        Items:AddList("Sexe", SexList, CharacterData.sexIndex + 1, nil, {}, function(Index, onSelected, onListChange)
             if (onListChange) then
-				CharacterIdentity.sexIndex = Index - 1
+				CharacterData.sexIndex = Index - 1
+                CharacterData.selectedOutfit = 0
                 exports.skinchanger:reset()
-                CharacterSkin = exports.skinchanger:loadSkin(DefaultSkin[CharacterIdentity.sexIndex])
+                exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
                 MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 			end
         end)
@@ -164,58 +232,57 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton("Hérédité", "", { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
+                exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
             end
         end, SubMenuHeritage)
 
         Items:AddButton("Traits du visage", "", { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
-
+                ToggleCamOnFace(true)
+                exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
             end
         end, SubMenuVisage)
 
         Items:AddButton("Apparence", "", { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
-
+                ToggleCamOnFace(true)
+                exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
             end
         end, SubMenuAppearance)
 
-        Items:AddButton("Vêtements", "", { RightLabel = "→→→" }, function(onSelected)
-            if onSelected then
-
-            end
-        end, SubMenuClothes)
+        Items:AddButton("Tenues", "", { RightLabel = "→→→" }, nil, SubMenuOutfits)
 
 
         Items:AddButton("Sauvegarder et valider", nil, { Color = { BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight } }, function(onSelected)
-            if onSelected then
+            if onSelected and ValidateData() then
                 RageUI.CloseAll()
             end
 		end)
 	end)
 
     SubMenuIdentity:IsVisible(function(Items)
-        Items:AddButton("Prénom", "(50 caractères max.)", { RightLabel = CharacterIdentity.firstname }, function(onSelected)
+        Items:AddButton("Prénom", "(50 caractères max.)", { RightLabel = CharacterData.firstname }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
-                    CharacterIdentity.firstname = result
+                    CharacterData.firstname = result
                 end
             end
         end)
-        Items:AddButton("Nom", "(50 caractères max.)", { RightLabel = CharacterIdentity.lastname }, function(onSelected)
+        Items:AddButton("Nom", "(50 caractères max.)", { RightLabel = CharacterData.lastname }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre nom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
-                    CharacterIdentity.lastname = result
+                    CharacterData.lastname = result
                 end
             end
         end)
-        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020", { RightLabel = CharacterIdentity.birthdate }, function(onSelected)
+        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020", { RightLabel = CharacterData.birthdate }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
                 if result and result ~= "" then
                     if string.find(result, "%d%d/%d%d/%d%d%d%d") then
-                        CharacterIdentity.birthdate = result
+                        CharacterData.birthdate = result
                     else
                         AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
                     end
@@ -229,27 +296,42 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddList("Mère", MomList, MomIndex, nil, {}, function(Index, onSelected, onListChange)
             if onListChange then
 				MomIndex = Index
-                CharacterSkin = exports.skinchanger:change("mom", MomListId[MomIndex])
+                exports.skinchanger:change("mom", MomListId[MomIndex])
 			end
         end)
         Items:AddList("Père", DadList, DadIndex, nil, {}, function(Index, onSelected, onListChange)
             if onListChange then
 				DadIndex = Index
-                CharacterSkin = exports.skinchanger:change("dad", DadListId[DadIndex])
+                exports.skinchanger:change("dad", DadListId[DadIndex])
 			end
         end)
         Items:SliderHeritage("Ressemblance", Resemblance, "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.", function(Selected, Active, OnListChange, SliderIndex, Percent)
             if OnListChange then
                 Resemblance = SliderIndex
-                CharacterSkin = exports.skinchanger:change("face_md_weight", Percent)
+                exports.skinchanger:change("face_md_weight", Percent)
             end
         end)
         Items:SliderHeritage("Couleur de peau", SkinTone, "Déterminez de quel parent vous tenez le plus.", function(Selected, Active, OnListChange, SliderIndex, Percent)
             if OnListChange then
                 SkinTone = SliderIndex
-                CharacterSkin = exports.skinchanger:change("skin_md_weight", Percent)
+                exports.skinchanger:change("skin_md_weight", Percent)
             end
         end)
+    end)
+
+    SubMenuOutfits:IsVisible(function(Items)
+        for i = 1, #Outfits[CharacterData.sexIndex], 1 do
+            Items:AddButton(Outfits[CharacterData.sexIndex][i].label or "Tenue",
+                "Ceci est une tenue par défaut.\nElle pourra être changée par la suite dans un magasin de vêtements",
+                { RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil) },
+                function(onSelected)
+                    -- TODO check to change when entering element
+                    if onSelected and CharacterData.selectedOutfit ~= i then
+                        CharacterData.selectedOutfit = i
+                        exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+                    end
+                end)
+        end
     end)
 
 
@@ -269,15 +351,16 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     while not AVA.Player.HasSpawned do Wait(10) end
 
-    CharacterIdentity = {
+    CharacterData = {
         firstname = "",
         lastname = "",
         sexIndex = 0,
-        birthdate = ""
+        birthdate = "",
+        selectedOutfit = 0
     }
-    
+
     exports.skinchanger:reset()
-    CharacterSkin = exports.skinchanger:loadSkin(DefaultSkin[CharacterIdentity.sexIndex])
+    CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
     MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 
     Citizen.CreateThread(function()
