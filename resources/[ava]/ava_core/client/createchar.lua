@@ -193,7 +193,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 	end)
 
     SubMenuIdentity:IsVisible(function(Items)
-        Items:AddButton("Prénom", nil, { RightLabel = CharacterIdentity.firstname }, function(onSelected)
+        Items:AddButton("Prénom", "(50 caractères max.)", { RightLabel = CharacterIdentity.firstname }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
@@ -201,7 +201,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 end
             end
         end)
-        Items:AddButton("Nom", nil, { RightLabel = CharacterIdentity.lastname }, function(onSelected)
+        Items:AddButton("Nom", "(50 caractères max.)", { RightLabel = CharacterIdentity.lastname }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre nom (50 caractères max.)", "", 50)
                 if result and result ~= "" then
@@ -209,7 +209,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 end
             end
         end)
-        Items:AddButton("Date de naissance", nil, { RightLabel = CharacterIdentity.birthdate }, function(onSelected)
+        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020", { RightLabel = CharacterIdentity.birthdate }, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
                 if result and result ~= "" then
