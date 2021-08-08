@@ -120,7 +120,8 @@ local MomListId = { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
 
 local DadList = { "Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "John", "Niko", "Claude" }
 local DadListId = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44 }
-local MomIndex, DadIndex = 1, 1
+local MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
+
 
 local DefaultSkin = {
     -- Male
@@ -154,7 +155,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 				CharacterIdentity.sexIndex = Index - 1
                 exports.skinchanger:reset()
                 CharacterSkin = exports.skinchanger:loadSkin(DefaultSkin[CharacterIdentity.sexIndex])
-                MomIndex, DadIndex = 1, 1
+                MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 			end
         end)
 
@@ -226,24 +227,32 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     SubMenuHeritage:IsVisible(function(Items)
         Items:Heritage(MomIndex, DadIndex)
         Items:AddList("Mère", MomList, MomIndex, nil, {}, function(Index, onSelected, onListChange)
-            if (onListChange) then
+            if onListChange then
 				MomIndex = Index
                 CharacterSkin = exports.skinchanger:change("mom", MomListId[MomIndex])
 			end
         end)
         Items:AddList("Père", DadList, DadIndex, nil, {}, function(Index, onSelected, onListChange)
-            if (onListChange) then
+            if onListChange then
 				DadIndex = Index
                 CharacterSkin = exports.skinchanger:change("dad", DadListId[DadIndex])
 			end
         end)
+        Items:SliderHeritage("Ressemblance", Resemblance, "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.", function(Selected, Active, SliderIndex, Percent)
+            if Selected then
+                Resemblance = SliderIndex
+                CharacterSkin = exports.skinchanger:change("face_md_weight", Percent)
+            end
+        end)
+        Items:SliderHeritage("Couleur de peau", SkinTone, "Déterminez de quel parent vous tenez le plus.", function(Selected, Active, SliderIndex, Percent)
+            if Selected then
+                SkinTone = SliderIndex
+                CharacterSkin = exports.skinchanger:change("skin_md_weight", Percent)
+            end
+        end)
+    end)
+    
 
-
-    end, function()
-
-
-
-	end)
 end
 
 
@@ -269,7 +278,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
     
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(DefaultSkin[CharacterIdentity.sexIndex])
-    MomIndex, DadIndex = 1, 1
+    MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 
     Citizen.CreateThread(function()
         while AVA.Player.CreatingChar do

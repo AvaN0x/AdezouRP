@@ -584,7 +584,6 @@ function Items:SliderHeritage(Label, SliderIndex, Description, Callback)
 
     self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, sliderIndex, percent)
         if Callback then
-            print(sliderIndex, percent)
             local percent = (sliderIndex or 0) * 5
             Callback(selected, active, sliderIndex, percent)
         end
