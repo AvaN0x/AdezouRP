@@ -238,20 +238,20 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 CharacterSkin = exports.skinchanger:change("dad", DadListId[DadIndex])
 			end
         end)
-        Items:SliderHeritage("Ressemblance", Resemblance, "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.", function(Selected, Active, SliderIndex, Percent)
-            if Selected then
+        Items:SliderHeritage("Ressemblance", Resemblance, "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.", function(Selected, Active, OnListChange, SliderIndex, Percent)
+            if OnListChange then
                 Resemblance = SliderIndex
                 CharacterSkin = exports.skinchanger:change("face_md_weight", Percent)
             end
         end)
-        Items:SliderHeritage("Couleur de peau", SkinTone, "Déterminez de quel parent vous tenez le plus.", function(Selected, Active, SliderIndex, Percent)
-            if Selected then
+        Items:SliderHeritage("Couleur de peau", SkinTone, "Déterminez de quel parent vous tenez le plus.", function(Selected, Active, OnListChange, SliderIndex, Percent)
+            if OnListChange then
                 SkinTone = SliderIndex
                 CharacterSkin = exports.skinchanger:change("skin_md_weight", Percent)
             end
         end)
     end)
-    
+
 
 end
 

@@ -455,6 +455,7 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
             RageUI.ItemsSafeZone(CurrentMenu)
 
             local Hovered = false;
+            local OnListChange = false;
             local LeftBadgeOffset = ((Style.LeftBadge == RageUI.BadgeStyle.None or tonumber(Style.LeftBadge) == nil) and 0 or 27)
             local RightBadgeOffset = ((Style.RightBadge == RageUI.BadgeStyle.None or tonumber(Style.RightBadge) == nil) and 0 or 32)
             local RightOffset = 0
@@ -502,7 +503,7 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
                     Graphics.Sprite((Style.RightArrow and Style.RightArrow.Dictionary or SettingsSlider.RightArrow.Dictionary), (Style.RightArrow and Style.RightArrow.Texture or SettingsSlider.RightArrow.Texture), CurrentMenu.X + (Style.RightArrow and Style.RightArrow.X or SettingsSlider.RightArrow.X) + CurrentMenu.WidthOffset - RightOffset, CurrentMenu.Y + (Style.RightArrow and Style.RightArrow.Y or SettingsSlider.RightArrow.Y) + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, (Style.RightArrow and Style.RightArrow.Width or SettingsSlider.RightArrow.Width), (Style.RightArrow and Style.RightArrow.Height or SettingsSlider.RightArrow.Height), 163, 159, 148, 255)
                 end
             end
-            
+
             if type(Style) == "table" then
                 if not (Style.IsDisabled) then
                     if type(Style) == 'table' then
@@ -544,6 +545,7 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
                     SliderIndex = #Items
                 end
 
+                OnListChange = true
                 Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
             elseif Selected and (CurrentMenu.Controls.Right.Active or (CurrentMenu.Controls.Click.Active and RightArrowHovered)) and not (CurrentMenu.Controls.Left.Active or (CurrentMenu.Controls.Click.Active and LeftArrowHovered)) then
                 SliderIndex = SliderIndex + 1
@@ -551,6 +553,7 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
                     SliderIndex = 1
                 end
 
+                OnListChange = true
                 Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
             end
 
@@ -558,9 +561,9 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
             if Selected and Active then
                 Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
             end
-            
+
             if not Style.IsDisabled and Callback then
-                Callback(Selected, (Active and Selected), SliderIndex)
+                Callback(Selected, (Active and Selected), OnListChange, SliderIndex)
             end
         end
 
@@ -582,10 +585,10 @@ function Items:SliderHeritage(Label, SliderIndex, Description, Callback)
         RightArrow = { Dictionary = "mpleaderboard", Texture = "leaderboard_male_icon", X = 395, Y = 0, Width = 40, Height = 40 }
     }
 
-    self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, sliderIndex, percent)
+    self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, onListChange, sliderIndex, percent)
         if Callback then
             local percent = (sliderIndex or 0) * 5
-            Callback(selected, active, sliderIndex, percent)
+            Callback(selected, active, onListChange, sliderIndex, percent)
         end
     end)
 end

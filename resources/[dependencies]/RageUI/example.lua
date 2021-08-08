@@ -144,22 +144,22 @@ function RageUI.PoolMenus:Example()
         Items:AddButton("Test percent", nil, {}, function(onSelected)
 		end)
         
-        Items:Slider("test", sliderTest1, 20, "description test", false, { IsDisabled = true }, function(Selected, Active, SliderIndex)
-            if Selected or Active then
-                print(Selected, Active, SliderIndex)
+        Items:Slider("test", sliderTest1, 20, "description test", false, { IsDisabled = true }, function(Selected, Active, OnListChange, SliderIndex)
+            if OnListChange then
+                print(Selected, Active, OnListChange, SliderIndex)
                 sliderTest1 = SliderIndex
             end
         end)
-        Items:Slider("test2", sliderTest2, 20, "description test", false, { IsDisabled = false }, function(Selected, Active, SliderIndex)
-            if Selected or Active then
-                print(Selected, Active, SliderIndex)
+        Items:Slider("test2", sliderTest2, 20, "description test", false, { IsDisabled = false }, function(Selected, Active, OnListChange, SliderIndex)
+            if OnListChange then
+                print(Selected, Active, OnListChange, SliderIndex)
                 sliderTest2 = SliderIndex
             end
         end)
 
-        Items:SliderHeritage("testheritage", sliderTest4, "description test", function(Selected, Active, SliderIndex, Percent)
-            if Selected or Active then
-                print(Selected, Active, SliderIndex, Percent)
+        Items:SliderHeritage("testheritage", sliderTest4, "description test", function(Selected, Active, OnListChange, SliderIndex, Percent)
+            if OnListChange then
+                print(Selected, Active, OnListChange, SliderIndex, Percent)
                 sliderTest4 = SliderIndex
             end
         end)
