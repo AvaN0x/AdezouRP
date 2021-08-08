@@ -52,7 +52,7 @@ Items = {}
 ---@param Label string
 ---@param Description string
 ---@param Style table
----@param Actions fun(onSelected:boolean)
+---@param Actions fun(onSelected:boolean, onEntered:boolean)
 ---@param Submenu any
 ---@public
 ---@return void
@@ -106,7 +106,7 @@ function Items:AddButton(Label, Description, Style, Actions, Submenu)
             if not (Style.IsDisabled) then
                 local Selected = (CurrentMenu.Controls.Select.Active)
                 if Actions then
-                    Actions(Selected)
+                    Actions(Selected, CurrentMenu.NewIndex == CurrentMenu.Index)
                 end
                 if Selected then
                     Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
@@ -125,7 +125,7 @@ end
 ---@param Description string
 ---@param Checked boolean
 ---@param Style table
----@param Actions fun(onSelected:boolean, IsChecked:boolean)
+---@param Actions fun(onSelected:boolean, IsChecked:boolean, onEntered:boolean)
 function Items:CheckBox(Label, Description, Checked, Style, Actions)
     local CurrentMenu = RageUI.CurrentMenu;
 
@@ -211,7 +211,7 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
 
         if (Active) then
             if Actions then
-                Actions(Selected, Checked)
+                Actions(Selected, Checked, CurrentMenu.NewIndex == CurrentMenu.Index)
             end
             RageUI.ItemsDescription(Description)
         end
@@ -258,7 +258,7 @@ end
 ---@param Index number
 ---@param Style table<any, any>
 ---@param Description string
----@param Actions fun(Index:number, onSelected:boolean, onListChange:boolean))
+---@param Actions fun(Index:number, onSelected:boolean, onListChange:boolean, onEntered:boolean))
 ---@param Submenu any
 function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu)
     local CurrentMenu = RageUI.CurrentMenu;
@@ -356,7 +356,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
                 end
                 local Selected = (CurrentMenu.Controls.Select.Active)
                 if Actions then
-                    Actions(Index, Selected, onListChange, Active)
+                    Actions(Index, Selected, onListChange, Active, CurrentMenu.NewIndex == CurrentMenu.Index)
                 end
                 if (Selected) then
                     Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
@@ -429,8 +429,8 @@ local SettingsSlider = {
 ---@param SliderMax number
 ---@param Description string
 ---@param Divider boolean
----@param Callback function
-function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style, Callback)
+---@param Actions function
+function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style, Actions)
     ---@type table
     local CurrentMenu = RageUI.CurrentMenu;
 
@@ -562,8 +562,8 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
                 Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
             end
 
-            if not Style.IsDisabled and Callback then
-                Callback(Selected, (Active and Selected), OnListChange, SliderIndex)
+            if not Style.IsDisabled and Actions then
+                Actions(Selected, (Active and Selected), OnListChange, SliderIndex, CurrentMenu.NewIndex == CurrentMenu.Index)
             end
         end
 
@@ -577,18 +577,18 @@ end
 ---@param Label string
 ---@param SliderIndex number
 ---@param Description string
----@param Callback function
-function Items:SliderHeritage(Label, SliderIndex, Description, Callback)
+---@param Actions function
+function Items:SliderHeritage(Label, SliderIndex, Description, Actions)
     local Style = {
         ShowWhenNotSelected = true,
         LeftArrow = { Dictionary = "mpleaderboard", Texture = "leaderboard_female_icon", X = 215, Y = 0, Width = 40, Height = 40 },
         RightArrow = { Dictionary = "mpleaderboard", Texture = "leaderboard_male_icon", X = 395, Y = 0, Width = 40, Height = 40 }
     }
 
-    self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, onListChange, sliderIndex, percent)
-        if Callback then
+    self:Slider(Label, SliderIndex, 20, Description, true, Style, function(selected, active, onListChange, sliderIndex, percent, onEntered)
+        if Actions then
             local percent = (sliderIndex or 0) * 5
-            Callback(selected, active, onListChange, sliderIndex, percent)
+            Actions(selected, active, onListChange, sliderIndex, percent, onEntered)
         end
     end)
 end

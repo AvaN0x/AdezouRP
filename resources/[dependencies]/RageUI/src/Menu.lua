@@ -45,6 +45,7 @@ function RageUI.CreateMenu(Title, Subtitle, X, Y, TextureDictionary, TextureName
 	Menu.WidthOffset = 0
 	Menu.Open = false
 	Menu.Controls = RageUI.Settings.Controls
+	Menu.NewIndex = -1
 	Menu.Index = 1
 	Menu.Sprite = { Dictionary = TextureDictionary or "commonmenu", Texture = TextureName or "interaction_bgd", Color = { R = R, G = G, B = B, A = A } }
 	Menu.Rectangle = nil
@@ -237,6 +238,7 @@ function RageUIMenus:IsVisible(Item, Panel)
             Panel(Panels);
         end
 		RageUI.PoolMenus.Timer = 1
+        self.NewIndex = -1
 		RageUI.Render()
 	end
 end

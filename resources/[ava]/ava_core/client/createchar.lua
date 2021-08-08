@@ -212,6 +212,12 @@ SubMenuAppearance.Closed = function()
 end
 
 local SubMenuOutfits = RageUI.CreateSubMenu(MainMenu, "", "Tenues")
+local DisplayedOutfit = 0
+SubMenuOutfits.Closed = function()
+    exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    DisplayedOutfit = CharacterData.selectedOutfit
+end
+
 
 function RageUI.PoolMenus:AvaCoreCreateChar()
 	MainMenu:IsVisible(function(Items)
@@ -319,16 +325,29 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end)
     end)
 
+    SubMenuVisage:IsVisible(function(Items)
+
+    end, function(Panels)
+
+    end)
+    SubMenuAppearance:IsVisible(function(Items)
+
+    end, function(Panels)
+
+    end)
+
     SubMenuOutfits:IsVisible(function(Items)
         for i = 1, #Outfits[CharacterData.sexIndex], 1 do
             Items:AddButton(Outfits[CharacterData.sexIndex][i].label or "Tenue",
                 "Ceci est une tenue par défaut.\nElle pourra être changée par la suite dans un magasin de vêtements",
                 { RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil) },
-                function(onSelected)
-                    -- TODO check to change when entering element
-                    if onSelected and CharacterData.selectedOutfit ~= i then
+                function(onSelected, onEntered)
+                    if onEntered and DisplayedOutfit ~= i then
+                        DisplayedOutfit = i
+                        exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][DisplayedOutfit].outfit)
+                    end
+                    if onSelected then
                         CharacterData.selectedOutfit = i
-                        exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
                     end
                 end)
         end
@@ -361,7 +380,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
-    MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
+    MomIndex, DadIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
 
     Citizen.CreateThread(function()
         while AVA.Player.CreatingChar do

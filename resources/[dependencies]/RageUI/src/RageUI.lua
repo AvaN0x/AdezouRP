@@ -287,6 +287,10 @@ function RageUI.Visible(Menu, Value)
                 RageUI.CurrentMenu = nil
             end
             Menu.Open = Value
+            Menu.NewIndex = Menu.Index
+            if (Menu.onIndexChange ~= nil) then
+                Menu.onIndexChange(Menu.Index)
+            end
             RageUI.Options = 0
             RageUI.ItemOffset = 0
             RageUI.LastControl = false
@@ -301,11 +305,13 @@ function RageUI.CloseAll()
         local parent = RageUI.CurrentMenu.Parent
         while parent ~= nil do
             parent.Index = 1
+            parent.NewIndex = -1
             parent.Pagination.Minimum = 1
             parent.Pagination.Maximum = parent.Pagination.Total
             parent = parent.Parent
         end
         RageUI.CurrentMenu.Index = 1
+        RageUI.CurrentMenu.NewIndex = -1
         RageUI.CurrentMenu.Pagination.Minimum = 1
         RageUI.CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Pagination.Total
         if RageUI.CurrentMenu.Closed ~= nil then
@@ -350,6 +356,7 @@ function RageUI.Subtitle()
             Graphics.Text(CurrentMenu.PageCounterColour .. CurrentMenu.Subtitle, CurrentMenu.X + RageUI.Settings.Items.Subtitle.Text.X, CurrentMenu.Y + RageUI.Settings.Items.Subtitle.Text.Y + RageUI.ItemOffset, 0, RageUI.Settings.Items.Subtitle.Text.Scale, 245, 245, 245, 255, nil, false, false, RageUI.Settings.Items.Subtitle.Background.Width + CurrentMenu.WidthOffset)
             if CurrentMenu.Index > CurrentMenu.Options or CurrentMenu.Index < 0 then
                 CurrentMenu.Index = 1
+                CurrentMenu.NewIndex = 1
             end
             if (CurrentMenu ~= nil) then
                 if (CurrentMenu.Index > CurrentMenu.Pagination.Total) then
