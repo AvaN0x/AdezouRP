@@ -185,8 +185,8 @@ function GetMaxVals()
 		eyebrows_2		= 10,
 		eyebrows_3		= GetNumHairColors()-1,
 		eyebrows_4		= GetNumHairColors()-1,
-		eyebrows_5		= 10,
-		eyebrows_6		= 10,
+		eyebrows_5		= 100,
+		eyebrows_6		= 100,
 		makeup_1		= GetNumHeadOverlayValues(4)-1,
 		makeup_2		= 10,
 		makeup_3		= GetNumHairColors()-1,
@@ -335,26 +335,26 @@ function ApplySkin(skin, clothes)
 	local skin_weight =			(Character['skin_md_weight'] / 100) + 0.0
 	SetPedHeadBlendData			(playerPed, Character['mom'], Character['dad'], 0, Character['mom'], Character['dad'], 0, face_weight, skin_weight, 0.0, false)
 
-	SetPedFaceFeature			(playerPed,			0,								(Character['nose_1'] / 10) + 0.0)			-- Nose Width
-	SetPedFaceFeature			(playerPed,			1,								(Character['nose_2'] / 10) + 0.0)			-- Nose Peak Height
-	SetPedFaceFeature			(playerPed,			2,								(Character['nose_3'] / 10) + 0.0)			-- Nose Peak Length
-	SetPedFaceFeature			(playerPed,			3,								(Character['nose_4'] / 10) + 0.0)			-- Nose Bone Height
-	SetPedFaceFeature			(playerPed,			4,								(Character['nose_5'] / 10) + 0.0)			-- Nose Peak Lowering
-	SetPedFaceFeature			(playerPed,			5,								(Character['nose_6'] / 10) + 0.0)			-- Nose Bone Twist
-	SetPedFaceFeature			(playerPed,			6,								(Character['eyebrows_5'] / 10) + 0.0)		-- Eyebrow height
-	SetPedFaceFeature			(playerPed,			7,								(Character['eyebrows_6'] / 10) + 0.0)		-- Eyebrow depth
-	SetPedFaceFeature			(playerPed,			8,								(Character['cheeks_1'] / 10) + 0.0)			-- Cheekbones Height
-	SetPedFaceFeature			(playerPed,			9,								(Character['cheeks_2'] / 10) + 0.0)			-- Cheekbones Width
-	SetPedFaceFeature			(playerPed,			10,								(Character['cheeks_3'] / 10) + 0.0)			-- Cheeks Width
-	SetPedFaceFeature			(playerPed,			11,								(Character['eye_squint'] / 10) + 0.0)		-- Eyes squint
-	SetPedFaceFeature			(playerPed,			12,								(Character['lip_thickness'] / 10) + 0.0)	-- Lip Fullness
-	SetPedFaceFeature			(playerPed,			13,								(Character['jaw_1'] / 10) + 0.0)			-- Jaw Bone Width
-	SetPedFaceFeature			(playerPed,			14,								(Character['jaw_2'] / 10) + 0.0)			-- Jaw Bone Length
-	SetPedFaceFeature			(playerPed,			15,								(Character['chin_1'] / 10) + 0.0)			-- Chin Height
-	SetPedFaceFeature			(playerPed,			16,								(Character['chin_2'] / 10) + 0.0)			-- Chin Length
-	SetPedFaceFeature			(playerPed,			17,								(Character['chin_3'] / 10) + 0.0)			-- Chin Width
-	SetPedFaceFeature			(playerPed,			18,								(Character['chin_4'] / 10) + 0.0)			-- Chin Hole Size
-	SetPedFaceFeature			(playerPed,			19,								(Character['neck_thickness'] / 10) + 0.0)	-- Neck Thickness
+	SetPedFaceFeature			(playerPed,			0,								(Character['nose_1'] / 100) + 0.0)			-- Nose Width
+	SetPedFaceFeature			(playerPed,			1,								(Character['nose_2'] / 100) + 0.0)			-- Nose Peak Height
+	SetPedFaceFeature			(playerPed,			2,								(Character['nose_3'] / 100) + 0.0)			-- Nose Peak Length
+	SetPedFaceFeature			(playerPed,			3,								(Character['nose_4'] / 100) + 0.0)			-- Nose Bone Height
+	SetPedFaceFeature			(playerPed,			4,								(Character['nose_5'] / 100) + 0.0)			-- Nose Peak Lowering
+	SetPedFaceFeature			(playerPed,			5,								(Character['nose_6'] / 100) + 0.0)			-- Nose Bone Twist
+	SetPedFaceFeature			(playerPed,			6,								(Character['eyebrows_5'] / 100) + 0.0)		-- Eyebrow height
+	SetPedFaceFeature			(playerPed,			7,								(Character['eyebrows_6'] / 100) + 0.0)		-- Eyebrow depth
+	SetPedFaceFeature			(playerPed,			8,								(Character['cheeks_1'] / 100) + 0.0)			-- Cheekbones Height
+	SetPedFaceFeature			(playerPed,			9,								(Character['cheeks_2'] / 100) + 0.0)			-- Cheekbones Width
+	SetPedFaceFeature			(playerPed,			10,								(Character['cheeks_3'] / 100) + 0.0)			-- Cheeks Width
+	SetPedFaceFeature			(playerPed,			11,								(Character['eye_squint'] / 100) + 0.0)		-- Eyes squint
+	SetPedFaceFeature			(playerPed,			12,								(Character['lip_thickness'] / 100) + 0.0)	-- Lip Fullness
+	SetPedFaceFeature			(playerPed,			13,								(Character['jaw_1'] / 100) + 0.0)			-- Jaw Bone Width
+	SetPedFaceFeature			(playerPed,			14,								(Character['jaw_2'] / 100) + 0.0)			-- Jaw Bone Length
+	SetPedFaceFeature			(playerPed,			15,								(Character['chin_1'] / 100) + 0.0)			-- Chin Height
+	SetPedFaceFeature			(playerPed,			16,								(Character['chin_2'] / 100) + 0.0)			-- Chin Length
+	SetPedFaceFeature			(playerPed,			17,								(Character['chin_3'] / 100) + 0.0)			-- Chin Width
+	SetPedFaceFeature			(playerPed,			18,								(Character['chin_4'] / 100) + 0.0)			-- Chin Hole Size
+	SetPedFaceFeature			(playerPed,			19,								(Character['neck_thickness'] / 100) + 0.0)	-- Neck Thickness
 
 	SetPedHairColor				(playerPed,			Character['hair_color_1'],		Character['hair_color_2'])					-- Hair Color
 	SetPedHeadOverlay			(playerPed, 3,		Character['age_1'],				(Character['age_2'] / 10) + 0.0)			-- Age + opacity
@@ -537,6 +537,43 @@ end
 AddEventHandler('skinchanger:change', change)
 exports("change", change)
 
+function changeNoApply(key, val)
+	Character[key] = val
+
+    return Character
+end
+AddEventHandler('skinchanger:changeNoApply', changeNoApply)
+exports("changeNoApply", changeNoApply)
+
+function changes(changes)
+    local containSex = false
+    for key, val in pairs(changes) do
+        if key == "sex" then
+            containSex = true
+        end
+        Character[key] = val
+    end
+
+	if containSex then
+		loadSkin(Character)
+	else
+		ApplySkin(Character)
+	end
+
+    return Character
+end
+AddEventHandler('skinchanger:changes', changes)
+exports("changes", changes)
+
+function changesNoApply(changes)
+    for key, val in pairs(changes) do
+        Character[key] = val
+    end
+
+    return Character
+end
+AddEventHandler('skinchanger:changesNoApply', changesNoApply)
+exports("changesNoApply", changesNoApply)
 
 function reset()
     LastSex = -1

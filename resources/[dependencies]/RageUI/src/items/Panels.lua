@@ -15,8 +15,8 @@ local GridType = {
 
 local GridSprite = {
     [GridType.Default] = { Dictionary = "pause_menu_pages_char_mom_dad", Texture = "nose_grid", },
-    [GridType.Horizontal] = { Dictionary = "RageUI_", Texture = "horizontal_grid", },
-    [GridType.Vertical] = { Dictionary = "RageUI_", Texture = "vertical_grid", },
+    [GridType.Horizontal] = { Dictionary = "RageUI", Texture = "horizontal_grid", },
+    [GridType.Vertical] = { Dictionary = "RageUI", Texture = "vertical_grid", },
 }
 
 local Grid = {
@@ -30,7 +30,7 @@ local Grid = {
         Right = { X = 373.25, Y = 130, Scale = 0.35 },
     },
     InstructionalButtons = {GetControlGroupInstructionalButton(2, 1, 0), "Déplacer le curseur"},
-    IsDrawingPanelIButtons = false
+    IndexDrawingIButtons = -1
 }
 
 local Colour = {
@@ -41,7 +41,7 @@ local Colour = {
     SelectedRectangle = { X = 15, Y = 47, Width = 44.5, Height = 8 },
     LabelOf = "sur",
     InstructionalButtons = {GetControlGroupInstructionalButton(2, 15, 0), "Changer la couleur"},
-    IsDrawingPanelIButtons = false
+    IndexDrawingIButtons = -1
 }
 
 local Percentage = {
@@ -53,7 +53,7 @@ local Percentage = {
         Right = { X = 398, Y = 15, Scale = 0.35 },
     },
     InstructionalButtons = {GetControlGroupInstructionalButton(2, 1, 0), "Changer l'opacité"},
-    IsDrawingPanelIButtons = false
+    IndexDrawingIButtons = -1
 }
 
 local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftText, RightText, Action, Index)
@@ -130,14 +130,16 @@ local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftTe
             --	Action.onSelected(X, Y, (X * 2 - 1), (Y * 2 - 1));
             --end
         end
-        if not Grid.IsDrawingPanelIButtons then
-            Grid.IsDrawingPanelIButtons = true
+        if Grid.IndexDrawingIButtons ~= Index then
+            if Grid.IndexDrawingIButtons < Index then
+                CurrentMenu:AddInstructionButton(Grid.InstructionalButtons)
+            end
 
-            CurrentMenu:AddInstructionButton(Grid.InstructionalButtons)
+            Grid.IndexDrawingIButtons = Index
         end
     else
-        if Grid.IsDrawingPanelIButtons then
-            Grid.IsDrawingPanelIButtons = false
+        if Grid.IndexDrawingIButtons == Index then
+            Grid.IndexDrawingIButtons = -1
 
             CurrentMenu:RemoveInstructionButton(Grid.InstructionalButtons)
         end
@@ -266,14 +268,16 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
         RageUI.ItemOffset = RageUI.ItemOffset + Colour.Background.Height + Colour.Background.Y
 
 
-        if not Colour.IsDrawingPanelIButtons then
-            Colour.IsDrawingPanelIButtons = true
-
-            CurrentMenu:AddInstructionButton(Colour.InstructionalButtons)
+        if Colour.IndexDrawingIButtons ~= Index then
+            if Colour.IndexDrawingIButtons < Index then
+                CurrentMenu:AddInstructionButton(Colour.InstructionalButtons)
+            end
+            
+            Colour.IndexDrawingIButtons = Index
         end
     else
-        if Colour.IsDrawingPanelIButtons then
-            Colour.IsDrawingPanelIButtons = false
+        if Colour.IndexDrawingIButtons == Index then
+            Colour.IndexDrawingIButtons = -1
 
             CurrentMenu:RemoveInstructionButton(Colour.InstructionalButtons)
         end
@@ -347,14 +351,16 @@ function Panels:PercentagePanel(Percent, HeaderText, MinText, MaxText, Actions, 
             end
         end
 
-        if not Percentage.IsDrawingPanelIButtons then
-            Percentage.IsDrawingPanelIButtons = true
-
-            CurrentMenu:AddInstructionButton(Percentage.InstructionalButtons)
+        if Percentage.IndexDrawingIButtons ~= Index then
+            if Percentage.IndexDrawingIButtons < Index then
+                CurrentMenu:AddInstructionButton(Percentage.InstructionalButtons)
+            end
+            
+            Percentage.IndexDrawingIButtons = Index
         end
     else
-        if Percentage.IsDrawingPanelIButtons then
-            Percentage.IsDrawingPanelIButtons = false
+        if Percentage.IndexDrawingIButtons == Index then
+            Percentage.IndexDrawingIButtons = -1
 
             CurrentMenu:RemoveInstructionButton(Percentage.InstructionalButtons)
         end
