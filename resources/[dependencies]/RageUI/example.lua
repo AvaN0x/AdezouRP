@@ -48,16 +48,20 @@ local sliderTest6 = 1
 function RageUI.PoolMenus:Example()
 	MainMenu:IsVisible(function(Items)
         
+        Items:AddSeparator("Separator")
         Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
 
+        Items:AddSeparator("Separator")
         Items:AddButton("Heritage", "Heritage.", { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
                 print("onSelected")
             end
         end, SubMenuHeritage)
-
+        
+        Items:AddSeparator("Separator")
 		Items:AddButton("Sub Menu", "Sub Menu", { RightLabel = "→→→" }, function(onSelected)
         end, SubMenu)
+        Items:AddSeparator("Bread Separator")
 		Items:AddButton("~r~Bread", "", { RightLabel = "~r~100 $" }, function(onSelected) end)
 		Items:AddButton("~g~Bread", "", { RightLabel = "~g~100 $" }, function(onSelected) end)
 		Items:AddButton("~b~Bread", "", { RightLabel = "~b~100 $" }, function(onSelected) end)
@@ -97,11 +101,12 @@ function RageUI.PoolMenus:Example()
 				List3Index = Index;
 			end
         end)
-        -- Items:AddSeparator("Separator")
+        Items:AddSeparator("Test separator")
         Items:AddButton("All right badges", "Get a view of all right badges", { IsDisabled = Checked, RightLabel = "→→→" }, function(onSelected)
         end, RightBadgesSubMenu)
         Items:AddButton("Colors", "Get a view of all colors", { RightLabel = "→→→" }, function(onSelected)
         end, ColorsSubMenu)
+        Items:AddSeparator("Separator")
 
 	end)
 

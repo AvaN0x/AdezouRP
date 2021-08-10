@@ -238,13 +238,62 @@ function Items:AddSeparator(Label)
         end
         RageUI.ItemOffset = RageUI.ItemOffset + 38
         if (Active) then
+            -- if (RageUI.LastControl) then
+            --     CurrentMenu.Index = Option - 1
+            --     if (CurrentMenu.Index < 1) then
+            --         CurrentMenu.Index = RageUI.CurrentMenu.Options
+            --     end
+            -- else
+            --     CurrentMenu.Index = Option + 1
+            -- end
             if (RageUI.LastControl) then
-                CurrentMenu.Index = Option - 1
-                if (CurrentMenu.Index < 1) then
-                    CurrentMenu.Index = RageUI.CurrentMenu.Options
-                end
+                if RageUI.CurrentMenu.Options > CurrentMenu.Pagination.Total then
+					if CurrentMenu.Index <= CurrentMenu.Pagination.Minimum then
+						if CurrentMenu.Index == 1 then
+							CurrentMenu.Pagination.Minimum = RageUI.CurrentMenu.Options - (CurrentMenu.Pagination.Total - 1)
+							CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Options
+							CurrentMenu.Index = RageUI.CurrentMenu.Options
+						else
+							CurrentMenu.Pagination.Minimum = (CurrentMenu.Pagination.Minimum - 1)
+							CurrentMenu.Pagination.Maximum = (CurrentMenu.Pagination.Maximum - 1)
+							CurrentMenu.Index = CurrentMenu.Index - 1
+						end
+					else
+						CurrentMenu.Index = CurrentMenu.Index - 1
+					end
+				else
+					if CurrentMenu.Index == 1 then
+						CurrentMenu.Pagination.Minimum = RageUI.CurrentMenu.Options - (CurrentMenu.Pagination.Total - 1)
+						CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Options
+						CurrentMenu.Index = RageUI.CurrentMenu.Options
+					else
+						CurrentMenu.Index = CurrentMenu.Index - 1
+					end
+				end
             else
-                CurrentMenu.Index = Option + 1
+                if RageUI.CurrentMenu.Options > CurrentMenu.Pagination.Total then
+					if CurrentMenu.Index >= CurrentMenu.Pagination.Maximum then
+						if CurrentMenu.Index == RageUI.CurrentMenu.Options then
+							CurrentMenu.Pagination.Minimum = 1
+							CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total
+							CurrentMenu.Index = 1
+						else
+							CurrentMenu.Pagination.Maximum = (CurrentMenu.Pagination.Maximum + 1)
+							CurrentMenu.Pagination.Minimum = (CurrentMenu.Pagination.Minimum + 1)
+							CurrentMenu.Index = CurrentMenu.Index + 1
+						end
+					else
+						CurrentMenu.Index = CurrentMenu.Index + 1
+					end
+				else
+					if CurrentMenu.Index == RageUI.CurrentMenu.Options then
+						CurrentMenu.Pagination.Minimum = 1
+						CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total
+						CurrentMenu.Index = 1
+					else
+						CurrentMenu.Index = CurrentMenu.Index + 1
+					end
+				end
             end
             RageUI.ItemsDescription(nil)
         end

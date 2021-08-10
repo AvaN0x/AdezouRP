@@ -81,7 +81,7 @@ function RageUI.GoDown(Options)
 							CurrentMenu.Index = 1
 						else
 							CurrentMenu.Pagination.Maximum = (CurrentMenu.Pagination.Maximum + 1)
-							CurrentMenu.Pagination.Minimum = CurrentMenu.Pagination.Maximum - (CurrentMenu.Pagination.Total - 1)
+							CurrentMenu.Pagination.Minimum = (CurrentMenu.Pagination.Minimum + 1)
 							CurrentMenu.Index = CurrentMenu.Index + 1
 						end
 					else

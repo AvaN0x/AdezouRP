@@ -358,16 +358,16 @@ function RageUI.Subtitle()
                 CurrentMenu.Index = 1
                 CurrentMenu.NewIndex = 1
             end
-            if (CurrentMenu ~= nil) then
-                if (CurrentMenu.Index > CurrentMenu.Pagination.Total) then
-                    local offset = CurrentMenu.Index - CurrentMenu.Pagination.Total
-                    CurrentMenu.Pagination.Minimum = 1 + offset
-                    CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total + offset
-                else
-                    CurrentMenu.Pagination.Minimum = 1
-                    CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total
-                end
-            end
+            -- if (CurrentMenu ~= nil) then
+            --     if (CurrentMenu.Index > CurrentMenu.Pagination.Total) then
+            --         local offset = CurrentMenu.Index - CurrentMenu.Pagination.Total
+            --         CurrentMenu.Pagination.Minimum = 1 + offset
+            --         CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total + offset
+            --     else
+            --         CurrentMenu.Pagination.Minimum = 1
+            --         CurrentMenu.Pagination.Maximum = CurrentMenu.Pagination.Total
+            --     end
+            -- end
 
             if CurrentMenu.Display.PageCounter then
                 if CurrentMenu.PageCounter == nil then
