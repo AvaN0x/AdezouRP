@@ -234,10 +234,11 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 CharacterData.Visage = {}
                 CharacterData.Appearance = {}
                 CharacterData.selectedOutfit = 0
+                MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
                 exports.skinchanger:reset()
                 CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
                 SkinMaxVals = exports.skinchanger:GetMaxVals()
-                MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
+                playerPed = PlayerPedId()
 			end
         end)
 
@@ -247,6 +248,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                playerPed = PlayerPedId()
             end
         end, SubMenuHeritage)
 
@@ -254,6 +256,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                playerPed = PlayerPedId()
             end
         end, SubMenuVisage)
 
@@ -261,6 +264,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                playerPed = PlayerPedId()
             end
         end, SubMenuAppearance)
 
