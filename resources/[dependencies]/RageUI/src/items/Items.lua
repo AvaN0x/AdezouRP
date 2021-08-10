@@ -324,11 +324,11 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
         local RightOffset = 0
         -- local ListText = (type(Items[Index]) == "table") and string.format("← %s →", Items[Index].Name) or string.format("← %s →", Items[Index]) or "NIL"
         local ListText = (type(Items) == "number")
-            and ((Index <= Items) and string.format("← %s →", Index - 1) or "← ? →")
-            or ((type(Items[Index]) == "table") and string.format("← %s →", Items[Index].Name) or string.format("← %s →", Items[Index] or "?") or "← ? →")
-    
-
+            and ((Index <= Items) and tostring(Index - 1) or "?")
+            or ((type(Items[Index]) == "table") and tostring(Items[Index].Name) or tostring(Items[Index]) or "?")
+            
         if (Active) then
+            ListText = string.format("← %s →", ListText)
             Graphics.Sprite("commonmenu", "gradient_nav", CurrentMenu.X, CurrentMenu.Y + 0 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + CurrentMenu.WidthOffset, 38)
         end
 
