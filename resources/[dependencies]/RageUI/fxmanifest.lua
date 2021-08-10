@@ -5,6 +5,7 @@
 ---
 
 -- edited by AvaN0x
+-- BIG THANKS to https://github.com/iTexZoz for the work ddone on this
 fx_version 'cerulean'
 
 game 'gta5';

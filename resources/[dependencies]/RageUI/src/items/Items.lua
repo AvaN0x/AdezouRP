@@ -254,7 +254,7 @@ end
 
 ---AddList
 ---@param Label string
----@param Items table<any, any>
+---@param Items table<any, any> / number
 ---@param Index number
 ---@param Style table<any, any>
 ---@param Description string
@@ -273,7 +273,11 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
         local LeftBadgeOffset = ((Style.LeftBadge == RageUI.BadgeStyle.None or Style.LeftBadge == nil) and 0 or 27)
         local RightBadgeOffset = ((Style.RightBadge == RageUI.BadgeStyle.None or Style.RightBadge == nil) and 0 or 32)
         local RightOffset = 0
-        local ListText = (type(Items[Index]) == "table") and string.format("← %s →", Items[Index].Name) or string.format("← %s →", Items[Index]) or "NIL"
+        -- local ListText = (type(Items[Index]) == "table") and string.format("← %s →", Items[Index].Name) or string.format("← %s →", Items[Index]) or "NIL"
+        local ListText = (type(Items) == "number")
+            and ((Index <= Items) and string.format("← %s →", Index - 1) or "← ? →")
+            or ((type(Items[Index]) == "table") and string.format("← %s →", Items[Index].Name) or string.format("← %s →", Items[Index] or "?") or "← ? →")
+    
 
         if (Active) then
             Graphics.Sprite("commonmenu", "gradient_nav", CurrentMenu.X, CurrentMenu.Y + 0 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + CurrentMenu.WidthOffset, 38)
@@ -342,13 +346,13 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
                 if (CurrentMenu.Controls.Left.Active) and not (CurrentMenu.Controls.Right.Active) then
                     Index = Index - 1
                     if Index < 1 then
-                        Index = #Items
+                        Index = ((type(Items) == "number") and Items or #Items)
                     end
                     onListChange = true
                     Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
                 elseif (CurrentMenu.Controls.Right.Active) and not (CurrentMenu.Controls.Left.Active) then
                     Index = Index + 1
-                    if Index > #Items then
+                    if Index > ((type(Items) == "number") and Items or #Items) then
                         Index = 1
                     end
                     onListChange = true

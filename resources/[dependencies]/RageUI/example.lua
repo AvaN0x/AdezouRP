@@ -21,6 +21,7 @@ local ColorsSubMenu = RageUI.CreateSubMenu(MainMenu, "", "Colors SubMenu")
 local Checked = false;
 local ListIndex = 1;
 local List2Index = 1;
+local List3Index = 1;
 
 local MumList = { "Hannah", "Audrey", "Jasmine", "Giselle", "Amelia", "Isabella", "Zoe", "Ava", "Camilla", "Violet", "Sophia", "Evelyn", "Nicole", "Ashley", "Gracie", "Brianna", "Natalie", "Olivia", "Elizabeth", "Charlotte", "Emma", "Misty" };
 local DadList = { "Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "John", "Niko", "Claude" };
@@ -89,7 +90,11 @@ function RageUI.PoolMenus:Example()
         Items:AddList("List Items", { "Yes", "No", "Maybe ?", "Money" }, List2Index, nil, {}, function(Index, onSelected, onListChange)
             if (onListChange) then
 				List2Index = Index;
-                print(ListIndex)
+			end
+        end)
+        Items:AddList("List Items", 100, List3Index, nil, {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				List3Index = Index;
 			end
         end)
         -- Items:AddSeparator("Separator")
