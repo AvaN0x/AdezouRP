@@ -9,6 +9,7 @@ AVA.Player.CreatingChar = false
 local playerPed = nil
 local CharacterData = {}
 local CharacterSkin = {}
+local SkinMaxVals = {}
 
 local MainMenu = RageUI.CreateMenu("", "Création de personnage", 0, 0, "avaui", "avaui_title_adezou")
 
@@ -231,9 +232,11 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             if (onListChange) then
 				CharacterData.sexIndex = Index - 1
                 CharacterData.Visage = {}
+                CharacterData.Appearance = {}
                 CharacterData.selectedOutfit = 0
                 exports.skinchanger:reset()
                 CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
+                SkinMaxVals = exports.skinchanger:GetMaxVals()
                 MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
 			end
         end)
@@ -349,9 +352,9 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.ForeHeadY = Y
             exports.skinchanger:changesNoApply({ eyebrows_6 = CharacterX * 100, eyebrows_5 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 6, CharacterX) -- eyebrows_5
-            SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrows_6     
+            SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrows_6
 		end, 1)
-        
+
         Panels:GridHorizontal(CharacterData.Visage.Eyes or 0.5, "Plissés", "Ouverts", function(X, _, CharacterX)
 			CharacterData.Visage.Eyes = X
             exports.skinchanger:changeNoApply("eye_squint", (1 - CharacterX) * 100)
@@ -363,7 +366,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.NoseY = Y
             exports.skinchanger:changesNoApply({ nose_1 = CharacterX * 100, nose_2 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 0, CharacterX) -- nose_1
-            SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_2     
+            SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_2
 		end, 3)
 
         Panels:Grid(CharacterData.Visage.NoseBoneX or 0.5, CharacterData.Visage.NoseBoneY or 0.5, "Saillante", "Incurvée", "Courte", "Longue", function(X, Y, CharacterX, CharacterY)
@@ -371,7 +374,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.NoseBoneY = Y
             exports.skinchanger:changesNoApply({ nose_3 = (1 - CharacterX) * 100, nose_4 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 2, (1 - CharacterX)) -- nose_3
-            SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_4     
+            SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_4
 		end, 4)
 
         Panels:Grid(CharacterData.Visage.NosePeakX or 0.5, CharacterData.Visage.NosePeakY or 0.5, "Bout vers le haut", "Bout vers le bas", "Cassé\ngauche", "Cassé\ndroite", function(X, Y, CharacterX, CharacterY)
@@ -379,7 +382,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.NosePeakY = Y
             exports.skinchanger:changesNoApply({ nose_6 = (1 - CharacterX) * 100, nose_5 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 5, (1 - CharacterX)) -- nose_6
-            SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_5  
+            SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_5
 		end, 5)
 
         Panels:Grid(CharacterData.Visage.CheekBoneX or 0.5, CharacterData.Visage.CheekBoneY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur", function(X, Y, CharacterX, CharacterY)
@@ -387,7 +390,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.CheekBoneY = Y
             exports.skinchanger:changesNoApply({ cheeks_2 = CharacterX * 100, cheeks_1 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 9, CharacterX) -- cheeks_2
-            SetPedFaceFeature(playerPed, 8, CharacterY) -- cheeks_1     
+            SetPedFaceFeature(playerPed, 8, CharacterY) -- cheeks_1
 		end, 6)
 
         Panels:GridHorizontal(CharacterData.Visage.Cheek or 0.5, "Emacié", "Bouffi", function(X, _, CharacterX)
@@ -407,7 +410,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.JawY = Y
             exports.skinchanger:changesNoApply({ jaw_1 = CharacterX * 100, jaw_2 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 13, CharacterX) -- jaw_1
-            SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_2     
+            SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_2
 		end, 9)
 
         Panels:Grid(CharacterData.Visage.ChinX or 0.5, CharacterData.Visage.ChinY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur", function(X, Y, CharacterX, CharacterY)
@@ -415,7 +418,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.ChinY = Y
             exports.skinchanger:changesNoApply({ chin_2 = CharacterX * 100, chin_1 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 16, CharacterX) -- chin_2
-            SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_1     
+            SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_1
 		end, 10)
 
         Panels:Grid(CharacterData.Visage.ChinShapeX or 0.5, CharacterData.Visage.ChinShapeY or 0.5, "Arrondi", "Fossette", "Carré", "Pointu", function(X, Y, CharacterX, CharacterY)
@@ -423,7 +426,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 			CharacterData.Visage.ChinShapeY = Y
             exports.skinchanger:changesNoApply({ chin_3 = (1 - CharacterX) * 100, chin_4 = CharacterY * 100 })
             SetPedFaceFeature(playerPed, 17, (1 - CharacterX)) -- chin_3
-            SetPedFaceFeature(playerPed, 18, CharacterY) -- chin_4     
+            SetPedFaceFeature(playerPed, 18, CharacterY) -- chin_4
 		end, 11)
 
         Panels:GridHorizontal(CharacterData.Visage.Neck or 0.5, "Mince", "Epais", function(X, _, CharacterX)
@@ -434,20 +437,250 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuAppearance:IsVisible(function(Items)
-        Items:AddButton("Coiffure") -- some may need to be a list, idk
-        Items:AddButton("Sourcils") -- some may need to be a list, idk
-        Items:AddButton("Pilosité faciale") -- some may need to be a list, idk
-        Items:AddButton("Problèmes peau") -- some may need to be a list, idk
-        Items:AddButton("Signes de vieillissement") -- some may need to be a list, idk
-        Items:AddButton("Teint") -- some may need to be a list, idk
-        Items:AddButton("Taches cutanées") -- some may need to be a list, idk
-        Items:AddButton("Aspect de la peau") -- some may need to be a list, idk
-        Items:AddButton("Couleur des yeux") -- some may need to be a list, idk
-        Items:AddButton("Maquilage yeux") -- some may need to be a list, idk
-        Items:AddButton("Rouge à lèvres") -- some may need to be a list, idk
+        Items:AddList("Coiffure", (SkinMaxVals.hair_1 or -1) + 1 , CharacterData.Appearance.HairCutIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.HairCutIndex = Index
+
+                CharacterSkin.hair_1 = Index - 1
+                exports.skinchanger:changeNoApply("hair_1", Index - 1)
+                SetPedComponentVariation(playerPed, 2, CharacterSkin.hair_1 , CharacterSkin.hair_2, 2)
+                -- SkinMaxVals.hair_2 = GetNumberOfPedTextureVariations(playerPed, 2, CharacterSkin.hair_1) - 1
+			end
+        end)
+        Items:AddList("Sourcils", (SkinMaxVals.eyebrows_1 or -1) + 1 , CharacterData.Appearance.EyeBrowsIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.EyeBrowsIndex = Index
+
+                CharacterSkin.eyebrows_1 = Index - 1
+                exports.skinchanger:changeNoApply("eyebrows_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Pilosité faciale", (SkinMaxVals.beard_1 or -1) + 1 , CharacterData.Appearance.BeardIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.BeardIndex = Index
+
+                CharacterSkin.beard_1 = Index - 1
+                exports.skinchanger:changeNoApply("beard_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Problèmes peau", (SkinMaxVals.blemishes_1 or -1) + 1 , CharacterData.Appearance.BlemishesIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.BlemishesIndex = Index
+
+                CharacterSkin.blemishes_1 = Index - 1
+                exports.skinchanger:changeNoApply("blemishes_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Signes de vieillissement", (SkinMaxVals.age_1 or -1) + 1 , CharacterData.Appearance.SkinAgingIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.SkinAgingIndex = Index
+
+                CharacterSkin.age_1 = Index - 1
+                exports.skinchanger:changeNoApply("age_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Teint", (SkinMaxVals.complexion_1 or -1) + 1 , CharacterData.Appearance.ComplexionIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.ComplexionIndex = Index
+
+                CharacterSkin.complexion_1 = Index - 1
+                exports.skinchanger:changeNoApply("complexion_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Taches cutanées", (SkinMaxVals.moles_1 or -1) + 1 , CharacterData.Appearance.MolesIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.MolesIndex = Index
+
+                CharacterSkin.moles_1 = Index - 1
+                exports.skinchanger:changeNoApply("moles_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Aspect de la peau", (SkinMaxVals.sun_1 or -1) + 1 , CharacterData.Appearance.SkinDamageIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.SkinDamageIndex = Index
+
+                CharacterSkin.sun_1 = Index - 1
+                exports.skinchanger:changeNoApply("sun_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Couleur des yeux", (SkinMaxVals.eye_color or -1) + 1 , CharacterData.Appearance.EyeColorIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.EyeColorIndex = Index
+
+                CharacterSkin.eye_color = Index - 1
+                exports.skinchanger:changeNoApply("eye_color", Index - 1)
+                SetPedEyeColor(playerPed, CharacterSkin.eye_color, 0, 1)
+			end
+        end)
+        Items:AddList("Maquilage yeux", (SkinMaxVals.makeup_1 or -1) + 1 , CharacterData.Appearance.EyeMakeupIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.EyeMakeupIndex = Index
+
+                CharacterSkin.makeup_1 = Index - 1
+                exports.skinchanger:changeNoApply("makeup_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
+			end
+        end)
+        Items:AddList("Rouge à lèvres", (SkinMaxVals.lipstick_1 or -1) + 1 , CharacterData.Appearance.LipstickIndex or 1, "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+            if (onListChange) then
+				CharacterData.Appearance.LipstickIndex = Index
+
+                CharacterSkin.lipstick_1 = Index - 1
+                exports.skinchanger:changeNoApply("lipstick_1", Index - 1)
+                SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick_1, (CharacterSkin.lipstick_2 / 100) + 0.0)
+			end
+        end)
 
     end, function(Panels)
+        if CharacterSkin.hair_1 ~= 0 then
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1, CharacterData.Appearance.HairColorIndex or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.HairColorMin = MinimumIndex
+                CharacterData.Appearance.HairColorIndex = CurrentIndex
 
+                CharacterSkin.hair_color_1 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("hair_color_1", CurrentIndex - 1)
+                SetPedHairColor(playerPed, CharacterSkin.hair_color_1, CharacterSkin.hair_color_2)
+            end, 1)
+            Panels:ColourPanel("Couleur des mèches", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColor2Min or 1, CharacterData.Appearance.HairColor2Index or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.HairColor2Min = MinimumIndex
+                CharacterData.Appearance.HairColor2Index = CurrentIndex
+
+                CharacterSkin.hair_color_2 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("hair_color_2", CurrentIndex - 1)
+                SetPedHairColor(playerPed, CharacterSkin.hair_color_1, CharacterSkin.hair_color_2)
+            end, 1)
+        end
+
+        Panels:PercentagePanel(CharacterData.Appearance.EyeBrowsOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.EyeBrowsOpacity = Percent
+            
+            CharacterSkin.eyebrows_2 = Percent * 100
+            exports.skinchanger:changeNoApply("eyebrows_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
+        end, 2)
+        if CharacterSkin.eyebrows_2 > 0 then
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeBrowsColorMin or 1, CharacterData.Appearance.EyeBrowsColorIndex or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.EyeBrowsColorMin = MinimumIndex
+                CharacterData.Appearance.EyeBrowsColorIndex = CurrentIndex
+                
+                CharacterSkin.eyebrows_3 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("eyebrows_3", CurrentIndex - 1)
+                SetPedHeadOverlayColor(playerPed, 2, 1, CharacterSkin.eyebrows_3, CharacterSkin.eyebrows_4)
+            end, 2)
+        end
+
+        Panels:PercentagePanel(CharacterData.Appearance.BodyHairsOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.BodyHairsOpacity = Percent
+        
+            CharacterSkin.beard_2 = Percent * 100
+            exports.skinchanger:changeNoApply("beard_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
+        end, 3)
+        if CharacterSkin.beard_2 > 0 then
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.BodyHairsColorMin or 1, CharacterData.Appearance.BodyHairsColorIndex or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.BodyHairsColorMin = MinimumIndex
+                CharacterData.Appearance.BodyHairsColorIndex = CurrentIndex
+
+                CharacterSkin.beard_3 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("beard_3", CurrentIndex - 1)
+                SetPedHeadOverlayColor(playerPed, 1, 1, CharacterSkin.beard_3, CharacterSkin.beard_4)
+            end, 3)
+        end
+
+        Panels:PercentagePanel(CharacterData.Appearance.BlemishesOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.BlemishesOpacity = Percent
+
+            CharacterSkin.blemishes_2 = Percent * 100
+            exports.skinchanger:changeNoApply("blemishes_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
+        end, 4)
+
+        Panels:PercentagePanel(CharacterData.Appearance.SkinAgingOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.SkinAgingOpacity = Percent
+
+            CharacterSkin.age_2 = Percent * 100
+            exports.skinchanger:changeNoApply("age_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
+        end, 5)
+
+        Panels:PercentagePanel(CharacterData.Appearance.ComplexionOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.ComplexionOpacity = Percent
+
+            CharacterSkin.complexion_2 = Percent * 100
+            exports.skinchanger:changeNoApply("complexion_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
+        end, 6)
+
+        Panels:PercentagePanel(CharacterData.Appearance.MolesOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.MolesOpacity = Percent
+
+            CharacterSkin.moles_2 = Percent * 100
+            exports.skinchanger:changeNoApply("moles_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
+        end, 7)
+        
+        Panels:PercentagePanel(CharacterData.Appearance.SkinDamageOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.SkinDamageOpacity = Percent
+
+            CharacterSkin.sun_2 = Percent * 100
+            exports.skinchanger:changeNoApply("sun_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
+        end, 8)
+
+
+        Panels:PercentagePanel(CharacterData.Appearance.EyeMakeupOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.EyeMakeupOpacity = Percent
+
+            CharacterSkin.makeup_2 = Percent * 100
+            exports.skinchanger:changeNoApply("makeup_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
+        end, 10)
+        if CharacterSkin.makeup_2 > 0 then
+            -- TODO update PanelColour list of colours to a valid one
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColorMin or 1, CharacterData.Appearance.EyeMakeupColorIndex or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.EyeMakeupColorMin = MinimumIndex
+                CharacterData.Appearance.EyeMakeupColorIndex = CurrentIndex
+
+                CharacterSkin.makeup_3 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("makeup_3", CurrentIndex - 1)
+                SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_3, CharacterSkin.makeup_4)
+            end, 10)
+            -- TODO update PanelColour list of colours to a valid one
+            Panels:ColourPanel("Couleur 2", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColor2Min or 1, CharacterData.Appearance.EyeMakeupColor2Index or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.EyeMakeupColor2Min = MinimumIndex
+                CharacterData.Appearance.EyeMakeupColor2Index = CurrentIndex
+
+                CharacterSkin.makeup_4 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("makeup_4", CurrentIndex - 1)
+                SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_3, CharacterSkin.makeup_4)
+            end, 10)
+        end
+
+        Panels:PercentagePanel(CharacterData.Appearance.LipstickOpacity or 0.0, nil, nil, nil, function(Percent)
+            CharacterData.Appearance.LipstickOpacity = Percent
+
+            CharacterSkin.lipstick_2 = Percent * 100
+            exports.skinchanger:changeNoApply("lipstick_2", Percent * 100)
+            SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick_1, (CharacterSkin.lipstick_2 / 100) + 0.0)
+        end, 11)
+        if CharacterSkin.lipstick_2 > 0 then
+            -- TODO update PanelColour list of colours to a valid one
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.LipstickColorMin or 1, CharacterData.Appearance.LipstickColorIndex or 1, function(MinimumIndex, CurrentIndex)
+                CharacterData.Appearance.LipstickColorMin = MinimumIndex
+                CharacterData.Appearance.LipstickColorIndex = CurrentIndex
+    
+                CharacterSkin.lipstick_3 = CurrentIndex - 1
+                exports.skinchanger:changeNoApply("lipstick_3", CurrentIndex - 1)
+                SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_3, CharacterSkin.lipstick_4)
+            end, 11)
+        end
     end)
 
     SubMenuOutfits:IsVisible(function(Items)
@@ -490,12 +723,15 @@ RegisterNetEvent("ava_core:client:createChar", function()
         sexIndex = 0,
         birthdate = "",
         selectedOutfit = 0,
-        Visage = {}
+        Visage = {},
+        Appearance = {}
     }
-    CharacterData.Visage.ForeHeadX = 0.5
-    CharacterData.Visage.ForeHeadY = 0.5
+
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    Wait(0)
+    SkinMaxVals = exports.skinchanger:GetMaxVals()
+
     MomIndex, DadIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
 
     Citizen.CreateThread(function()

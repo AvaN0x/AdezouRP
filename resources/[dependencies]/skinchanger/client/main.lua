@@ -152,27 +152,27 @@ function GetMaxVals()
 		dad				= 44, -- numbers 0-20 and 42-44 are male (24 total)
 		face_md_weight	= 100,
 		skin_md_weight	= 100,
-		nose_1			= 10,
-		nose_2			= 10,
-		nose_3			= 10,
-		nose_4			= 10,
-		nose_5			= 10,
-		nose_6			= 10,
-		cheeks_1		= 10,
-		cheeks_2		= 10,
-		cheeks_3		= 10,
-		lip_thickness	= 10,
-		jaw_1			= 10,
-		jaw_2			= 10,
-		chin_1			= 10,
-		chin_2			= 10,
-		chin_3			= 10,
-		chin_4			= 10,
-		neck_thickness	= 10,
+		nose_1			= 100,
+		nose_2			= 100,
+		nose_3			= 100,
+		nose_4			= 100,
+		nose_5			= 100,
+		nose_6			= 100,
+		cheeks_1		= 100,
+		cheeks_2		= 100,
+		cheeks_3		= 100,
+		lip_thickness	= 100,
+		jaw_1			= 100,
+		jaw_2			= 100,
+		chin_1			= 100,
+		chin_2			= 100,
+		chin_3			= 100,
+		chin_4			= 100,
+		neck_thickness	= 100,
 		age_1			= GetNumHeadOverlayValues(3)-1,
-		age_2			= 10,
+		age_2			= 100,
 		beard_1			= GetNumHeadOverlayValues(1)-1,
-		beard_2			= 10,
+		beard_2			= 100,
 		beard_3			= GetNumHairColors()-1,
 		beard_4			= GetNumHairColors()-1,
 		hair_1			= GetNumberOfPedDrawableVariations		(playerPed, 2) - 1,
@@ -180,39 +180,39 @@ function GetMaxVals()
 		hair_color_1	= GetNumHairColors()-1,
 		hair_color_2	= GetNumHairColors()-1,
 		eye_color		= 31,
-		eye_squint		= 10,
+		eye_squint		= 100,
 		eyebrows_1		= GetNumHeadOverlayValues(2)-1,
-		eyebrows_2		= 10,
+		eyebrows_2		= 100,
 		eyebrows_3		= GetNumHairColors()-1,
 		eyebrows_4		= GetNumHairColors()-1,
 		eyebrows_5		= 100,
 		eyebrows_6		= 100,
 		makeup_1		= GetNumHeadOverlayValues(4)-1,
-		makeup_2		= 10,
+		makeup_2		= 100,
 		makeup_3		= GetNumHairColors()-1,
 		makeup_4		= GetNumHairColors()-1,
 		lipstick_1		= GetNumHeadOverlayValues(8)-1,
-		lipstick_2		= 10,
+		lipstick_2		= 100,
 		lipstick_3		= GetNumHairColors()-1,
 		lipstick_4		= GetNumHairColors()-1,
 		blemishes_1		= GetNumHeadOverlayValues(0)-1,
-		blemishes_2		= 10,
+		blemishes_2		= 100,
 		blush_1			= GetNumHeadOverlayValues(5)-1,
-		blush_2			= 10,
+		blush_2			= 100,
 		blush_3			= GetNumHairColors()-1,
 		complexion_1	= GetNumHeadOverlayValues(6)-1,
-		complexion_2	= 10,
+		complexion_2	= 100,
 		sun_1			= GetNumHeadOverlayValues(7)-1,
-		sun_2			= 10,
+		sun_2			= 100,
 		moles_1			= GetNumHeadOverlayValues(9)-1,
-		moles_2			= 10,
+		moles_2			= 100,
 		chest_1			= GetNumHeadOverlayValues(10)-1,
-		chest_2			= 10,
+		chest_2			= 100,
 		chest_3			= GetNumHairColors()-1,
 		bodyb_1			= GetNumHeadOverlayValues(11)-1,
-		bodyb_2			= 10,
+		bodyb_2			= 100,
 		bodyb_3			= GetNumHeadOverlayValues(12)-1,
-		bodyb_4			= 10,
+		bodyb_4			= 100,
 		ears_1			= GetNumberOfPedPropDrawableVariations	(playerPed, 2) - 1,
 		ears_2			= GetNumberOfPedPropTextureVariations	(playerPed, 2, Character['ears_1'] - 1),
 		tshirt_1		= GetNumberOfPedDrawableVariations		(playerPed, 8) - 1,
@@ -247,6 +247,8 @@ function GetMaxVals()
 
 	return data
 end
+exports("GetMaxVals", GetMaxVals)
+
 
 function ApplySkin(skin, clothes)
 	local playerPed = PlayerPedId()
@@ -357,36 +359,36 @@ function ApplySkin(skin, clothes)
 	SetPedFaceFeature			(playerPed,			19,								(Character['neck_thickness'] / 100) + 0.0)	-- Neck Thickness
 
 	SetPedHairColor				(playerPed,			Character['hair_color_1'],		Character['hair_color_2'])					-- Hair Color
-	SetPedHeadOverlay			(playerPed, 3,		Character['age_1'],				(Character['age_2'] / 10) + 0.0)			-- Age + opacity
-	SetPedHeadOverlay			(playerPed, 0,		Character['blemishes_1'],		(Character['blemishes_2'] / 10) + 0.0)		-- Blemishes + opacity
-	SetPedHeadOverlay			(playerPed, 1,		Character['beard_1'],			(Character['beard_2'] / 10) + 0.0)			-- Beard + opacity
+	SetPedHeadOverlay			(playerPed, 3,		Character['age_1'],				(Character['age_2'] / 100) + 0.0)			-- Age + opacity
+	SetPedHeadOverlay			(playerPed, 0,		Character['blemishes_1'],		(Character['blemishes_2'] / 100) + 0.0)		-- Blemishes + opacity
+	SetPedHeadOverlay			(playerPed, 1,		Character['beard_1'],			(Character['beard_2'] / 100) + 0.0)			-- Beard + opacity
 	SetPedEyeColor				(playerPed,			Character['eye_color'], 0, 1)												-- Eyes color
-	SetPedHeadOverlay			(playerPed, 2,		Character['eyebrows_1'],		(Character['eyebrows_2'] / 10) + 0.0)		-- Eyebrows + opacity
-	SetPedHeadOverlay			(playerPed, 4,		Character['makeup_1'],			(Character['makeup_2'] / 10) + 0.0)			-- Makeup + opacity
-	SetPedHeadOverlay			(playerPed, 8,		Character['lipstick_1'],		(Character['lipstick_2'] / 10) + 0.0)		-- Lipstick + opacity
+	SetPedHeadOverlay			(playerPed, 2,		Character['eyebrows_1'],		(Character['eyebrows_2'] / 100) + 0.0)		-- Eyebrows + opacity
+	SetPedHeadOverlay			(playerPed, 4,		Character['makeup_1'],			(Character['makeup_2'] / 100) + 0.0)			-- Makeup + opacity
+	SetPedHeadOverlay			(playerPed, 8,		Character['lipstick_1'],		(Character['lipstick_2'] / 100) + 0.0)		-- Lipstick + opacity
 	SetPedComponentVariation	(playerPed, 2,		Character['hair_1'],			Character['hair_2'], 2)						-- Hair
 	SetPedHeadOverlayColor		(playerPed, 1, 1,	Character['beard_3'],			Character['beard_4'])						-- Beard Color
 	SetPedHeadOverlayColor		(playerPed, 2, 1,	Character['eyebrows_3'],		Character['eyebrows_4'])					-- Eyebrows Color
 	SetPedHeadOverlayColor		(playerPed, 4, 2,	Character['makeup_3'],			Character['makeup_4'])						-- Makeup Color
 	SetPedHeadOverlayColor		(playerPed, 8, 1,	Character['lipstick_3'],		Character['lipstick_4'])					-- Lipstick Color
-	SetPedHeadOverlay			(playerPed, 5,		Character['blush_1'],			(Character['blush_2'] / 10) + 0.0)			-- Blush + opacity
+	SetPedHeadOverlay			(playerPed, 5,		Character['blush_1'],			(Character['blush_2'] / 100) + 0.0)			-- Blush + opacity
 	SetPedHeadOverlayColor		(playerPed, 5, 2,	Character['blush_3'])														-- Blush Color
-	SetPedHeadOverlay			(playerPed, 6,		Character['complexion_1'],		(Character['complexion_2'] / 10) + 0.0)		-- Complexion + opacity
-	SetPedHeadOverlay			(playerPed, 7,		Character['sun_1'],				(Character['sun_2'] / 10) + 0.0)			-- Sun Damage + opacity
-	SetPedHeadOverlay			(playerPed, 9,		Character['moles_1'],			(Character['moles_2'] / 10) + 0.0)			-- Moles/Freckles + opacity
-	SetPedHeadOverlay			(playerPed, 10,		Character['chest_1'],			(Character['chest_2'] / 10) + 0.0)			-- Chest Hair + opacity
+	SetPedHeadOverlay			(playerPed, 6,		Character['complexion_1'],		(Character['complexion_2'] / 100) + 0.0)		-- Complexion + opacity
+	SetPedHeadOverlay			(playerPed, 7,		Character['sun_1'],				(Character['sun_2'] / 100) + 0.0)			-- Sun Damage + opacity
+	SetPedHeadOverlay			(playerPed, 9,		Character['moles_1'],			(Character['moles_2'] / 100) + 0.0)			-- Moles/Freckles + opacity
+	SetPedHeadOverlay			(playerPed, 10,		Character['chest_1'],			(Character['chest_2'] / 100) + 0.0)			-- Chest Hair + opacity
 	SetPedHeadOverlayColor		(playerPed, 10, 1,	Character['chest_3'])														-- Torso Color
 
 	if Character['bodyb_1'] == -1 then
-		SetPedHeadOverlay		(playerPed, 11,		255,						(Character['bodyb_2'] / 10) + 0.0)		-- Body Blemishes + opacity
+		SetPedHeadOverlay		(playerPed, 11,		255,						(Character['bodyb_2'] / 100) + 0.0)		-- Body Blemishes + opacity
 	else
-		SetPedHeadOverlay		(playerPed, 11,		Character['bodyb_1'],		(Character['bodyb_2'] / 10) + 0.0)
+		SetPedHeadOverlay		(playerPed, 11,		Character['bodyb_1'],		(Character['bodyb_2'] / 100) + 0.0)
 	end
 
 	if Character['bodyb_3'] == -1 then
-		SetPedHeadOverlay		(playerPed, 12,		255,							(Character['bodyb_4'] / 10) + 0.0)
+		SetPedHeadOverlay		(playerPed, 12,		255,							(Character['bodyb_4'] / 100) + 0.0)
 	else
-		SetPedHeadOverlay		(playerPed, 12,		Character['bodyb_3'],			(Character['bodyb_4'] / 10) + 0.0)			-- Blemishes 'added body effect' + opacity
+		SetPedHeadOverlay		(playerPed, 12,		Character['bodyb_3'],			(Character['bodyb_4'] / 100) + 0.0)			-- Blemishes 'added body effect' + opacity
 	end
 
 	if Character['ears_1'] == -1 then
