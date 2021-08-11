@@ -148,6 +148,7 @@ local function loadPlayer(src)
         print("^1[loadPlayer] ^0Could not load player for id ^3" .. tostring(src), "^0")
         return
     end
+    AVA.RB.MoveSourceToRB(src, 0)
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
         position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
@@ -188,7 +189,8 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
         dprint("Player char is valid")
         loadPlayer(tostring(src))
     else
-        dprint("Player char is not valid")
+        dprint("Player char need to create a char")
+        AVA.RB.MoveSourceToRBName(src, "createchar" .. src)
         TriggerClientEvent("ava_core:client:createChar", src)
     end
 end
@@ -297,11 +299,62 @@ for _, source in ipairs(GetPlayers()) do
 end
 
 --* replaced with event playerJoining
--- RegisterNetEvent('ava_core:server:playerJoined', function()
+-- RegisterServerEvent('ava_core:server:playerJoined', function()
 --     local src = source
 -- --     dprint(src, "ava_core:server:playerJoined")
 -- end)
 
+RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
+    local src = source
+    
+    local aPlayer = AVA.Players.List[tostring(src)]
+    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.skin) == "table" then
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
+        return
+
+    -- we check if the player character is valid
+    elseif type(character) == "table"
+        and character.firstname and character.firstname ~= ""
+        and character.lastname and character.lastname ~= ""
+        and character.sex and character.sex ~= ""
+        and character.birthdate and character.birthdate ~= ""
+        and type(skin) == "table"
+        and skin.sex
+    then
+        aPlayer.position = AVAConfig.DefaultPlayerData.position
+        aPlayer.character = {
+            firstname = character.firstname,
+            lastname = character.lastname,
+            sex = character.sex,
+            birthdate = character.birthdate
+        }
+        aPlayer.skin = skin
+        aPlayer.inventory = AVAConfig.DefaultPlayerData.inventory or {}
+        aPlayer.accounts = AVAConfig.DefaultPlayerData.accounts or {}
+        aPlayer.status = AVAConfig.DefaultPlayerData.status or {}
+        aPlayer.jobs = AVAConfig.DefaultPlayerData.jobs or {}
+        aPlayer.loadout = AVAConfig.DefaultPlayerData.loadout or {}
+        aPlayer.metadata = AVAConfig.DefaultPlayerData.metadata or {}
+
+        dprint(json.encode(aPlayer.character, { indent=true }))
+        MySQL.Async.execute('UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id', {
+            ['@character'] = json.encode(aPlayer.character),
+            ['@license'] = aPlayer.identifiers.license,
+            ['@id'] = aPlayer.citizenId
+        }, function(result)
+            print("^2[SAVE CHARACTER] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+        end)
+        aPlayer.Save()
+
+        loadPlayer(src)
+
+    else
+        -- for some reason, player managed to have unvalid data, we send him back to creating a char
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 need to create a new character because we received uncomplete values.^0(" .. aPlayer.citizenId .. ")")
+        TriggerClientEvent("ava_core:client:createChar", src)
+    end
+
+end)
 
 
 ---------------------------------------
@@ -474,7 +527,7 @@ AVA.Players.Save = function(src)
             ['@license'] = aPlayer.identifiers.license,
             ['@id'] = aPlayer.citizenId
         }, function(result)
-            print("^2[SAVE] ^0" .. aPlayer.name .. "(" .. aPlayer.citizenId .. ")")
+            print("^2[SAVE] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
         end)
     end
 end

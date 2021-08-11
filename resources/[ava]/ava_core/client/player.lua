@@ -43,7 +43,8 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 
     if AVA.Player.HasSpawned then
         AVA.Player.HasSpawned = false
-        dprint('TriggerEvent("playerSpawned")')
+        AVA.Player.FirstSpawn = true
+        print('TriggerEvent("playerSpawned")')
         -- TriggerEvent("playerSpawned")
         exports.spawnmanager:spawnPlayer()
     end
@@ -66,9 +67,9 @@ AddEventHandler("playerSpawned", function()
     if AVA.Player.FirstSpawn then
         AVA.Player.FirstSpawn = false
         if AVA.Player.Data.skin then
-            TriggerEvent('skinchanger:loadSkin', AVA.Player.Data.skin)
+            exports.skinchanger:loadSkin(AVA.Player.Data.skin)
         else
-            TriggerEvent('skinchanger:loadSkin', {sex = 0})
+            exports.skinchanger:loadSkin({sex = 0})
         end
 
     end

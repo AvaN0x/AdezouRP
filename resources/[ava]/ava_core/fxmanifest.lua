@@ -38,6 +38,7 @@ server_scripts {
 	'server/classes/player.lua',
 	'server/utils.lua',
 	'server/commands.lua',
+	'server/routing_buckets.lua',
 	'server/players.lua',
 }
 

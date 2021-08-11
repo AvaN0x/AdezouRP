@@ -43,6 +43,7 @@ local function StartCharCreator()
 
     -- set player position
     DoScreenFadeIn(2000)
+    RequestCollisionAtCoord(405.59, -997.18, -99.00)
     SetEntityCoords(PlayerPedId(), 405.59, -997.18, -99.00, 0.0, 0.0, 0.0, true)
     SetEntityHeading(PlayerPedId(), 90.00)
 
@@ -68,6 +69,12 @@ local function StartCharCreator()
 
     Wait(1000)
     FreezeEntityPosition(PlayerPedId(), true)
+
+    -- TaskLookAtCoord(PlayerPedId(), 405.59, -997.18, -99.00, -1, 0, 4)  -- its left
+    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), -20.0, 0.0, 0.0), -1, 0, 4) 
+    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), 20.0, 0.0, 0.0), -1, 0, 4) 
+
+
 end
 
 
@@ -88,8 +95,6 @@ local function StopCharCreator()
     Wait(1000)
 
     RenderScriptCams(false, false, 0, true, true)
-
-    AVA.Player.CreatingChar = false
 
     EnableAllControlActions(0)
 
@@ -151,14 +156,25 @@ local Outfits = {
             outfit = {sex = 0, torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 15, tshirt_2 = 0, pants_1 = 61, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0 }
         },
 
-        --! test outfits
         [1] = {
-            outfit = {sex = 0, torso_1 = 25, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 10, tshirt_2 = 0, pants_1 = 21, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 52, shoes_2 = 0 },
-            label = "Tenue lambda"
+            outfit = {sex = 0, torso_1 = 0, torso_2 = 0, arms = 19, arms_2 = 0, tshirt_1 = 5, tshirt_2 = 0, pants_1 = 62, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 16, shoes_2 = 5 },
+            label = "Tenue short"
         },
         [2] = {
-            outfit = {sex = 0, torso_1 = 255, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 10, tshirt_2 = 0, pants_1 = 21, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 52, shoes_2 = 0 },
-            label = "Tenue 2"
+            outfit = {sex = 0, torso_1 = 0, torso_2 = 0, arms = 19, arms_2 = 0, tshirt_1 = 5, tshirt_2 = 0, pants_1 = 63, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 22, shoes_2 = 0 },
+            label = "Tenue lambda"
+        },
+        [3] = {
+            outfit = {sex = 0, torso_1 = 7, torso_2 = 13, arms = 24, arms_2 = 0, tshirt_1 = 5, tshirt_2 = 0, pants_1 = 64, pants_2 = 2, helmet_1 = -1, helmet_2 = 0, shoes_1 = 9, shoes_2 = 3 },
+            label = "Tenue jogging"
+        },
+        [4] = {
+            outfit = {sex = 0, torso_1 = 72, torso_2 = 2, arms = 24, arms_2 = 0, tshirt_1 = 13, tshirt_2 = 0, pants_1 = 48, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 10, shoes_2 = 7 },
+            label = "Tenue homme d'affaire"
+        },
+        [5] = {
+            outfit = {sex = 0, torso_1 = 167, torso_2 = 0, arms = 24, arms_2 = 0, tshirt_1 = 47, tshirt_2 = 0, pants_1 = 98, pants_2 = 1, helmet_1 = -1, helmet_2 = 0, shoes_1 = 54, shoes_2 = 3 },
+            label = "Tenue hiver"
         }
     },
 
@@ -169,25 +185,32 @@ local Outfits = {
             outfit = {sex = 1, torso_1 = 15, torso_2 = 0, arms = 15, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 15, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 5, shoes_2 = 0, glasses_1 = 5 }
         },
 
-        --! test outfits
         [1] = {
-            outfit = {sex = 1, torso_1 = 25, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 12, tshirt_2 = 0, pants_1 = 55, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 58, shoes_2 = 0, glasses_1 = 5 },
-            label = "Tenue lambda"
+            outfit = {sex = 1, torso_1 = 0, torso_2 = 2, arms = 0, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 25, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 1, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue short"
         },
         [2] = {
-            outfit = {sex = 1, torso_1 = 255, torso_2 = 0, arms = 5, arms_2 = 0, tshirt_1 = 12, tshirt_2 = 0, pants_1 = 55, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 58, shoes_2 = 0, glasses_1 = 5 },
-            label = "Tenue 2"
+            outfit = {sex = 1, torso_1 = 2, torso_2 = 0, arms = 2, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 2, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 1, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue lambda"
+        },
+        [3] = {
+            outfit = {sex = 1, torso_1 = 4, torso_2 = 14, arms = 4, arms_2 = 0, tshirt_1 = 14, tshirt_2 = 0, pants_1 = 2, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 1, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue jogging"
+        },
+        [4] = {
+            outfit = {sex = 1, torso_1 = 7, torso_2 = 4, arms = 6, arms_2 = 0, tshirt_1 = 20, tshirt_2 = 1, pants_1 = 6, pants_2 = 0, helmet_1 = -1, helmet_2 = 0, shoes_1 = 6, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue femme d'affaire"
+        },
+        [5] = {
+            outfit = {sex = 1, torso_1 = 64, torso_2 = 0, arms = 6, arms_2 = 0, tshirt_1 = 20, tshirt_2 = 0, pants_1 = 73, pants_2 = 5, helmet_1 = -1, helmet_2 = 0, shoes_1 = 8, shoes_2 = 0, glasses_1 = 5 },
+            label = "Tenue hiver"
         }
     }
 }
 
 local SexList = {"Homme", "Femme"}
 MainMenu.Closable = false
-MainMenu.Closed = function()
-    print("MainMenu closed")
-    print("CharacterData", json.encode(CharacterData))
-    StopCharCreator()
-end
+
 local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", "Identité")
 
 local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", "Hérédité")
@@ -761,3 +784,17 @@ RegisterNetEvent("ava_core:client:createChar", function()
 end)
 
 
+MainMenu.Closed = function()
+    print("MainMenu closed")
+    dprint("CharacterData", json.encode(CharacterData, { indent=true }))
+    
+    StopCharCreator()
+    AVA.Player.CreatingChar = false
+    CharacterSkin = exports.skinchanger:getSkin()
+    TriggerServerEvent("ava_core:server:createdPlayer", {
+        firstname = CharacterData.firstname,
+        lastname = CharacterData.lastname,
+        birthdate = CharacterData.birthdate,
+        sex = CharacterData.sexIndex
+    }, CharacterSkin)
+end
