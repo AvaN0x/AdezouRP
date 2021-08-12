@@ -480,9 +480,9 @@ function loadSkin(skin, cb)
 		LoadSkin = skin
 
 		if skin['sex'] == 0 then
-			TriggerEvent('skinchanger:loadDefaultModel', true, cb)
+			LoadDefaultModel(true, cb)
 		else
-			TriggerEvent('skinchanger:loadDefaultModel', false, cb)
+			LoadDefaultModel(false, cb)
 		end
 	else
 		ApplySkin(skin)

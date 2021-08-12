@@ -6,6 +6,8 @@ description 'Skin Changer'
 
 version '1.0.3'
 
+
+-- edited by AvaN0x
 client_scripts {
 	'locale.lua',
 	'locales/br.lua',

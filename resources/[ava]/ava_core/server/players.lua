@@ -151,6 +151,7 @@ local function loadPlayer(src)
     AVA.RB.MoveSourceToRB(src, 0)
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
+        character = aPlayer.character,
         position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
         skin = aPlayer.skin
     })

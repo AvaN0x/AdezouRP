@@ -108,13 +108,10 @@ local function StopCharCreator()
     DisplayRadar(true)
     DoScreenFadeIn(1000)
 
-    Wait(1000)
     -- TriggerServerEvent('esx_skin:save', Character)
     -- TriggerEvent('skinchanger:loadSkin', Character)
 
     DestroyAllCams(true)
-    -- clear some global variables
-    bodyCam, faceCam, isCamOnFace = nil, nil, false
 end
 
 
@@ -797,4 +794,11 @@ MainMenu.Closed = function()
         birthdate = CharacterData.birthdate,
         sex = CharacterData.sexIndex
     }, CharacterSkin)
+
+    -- clear some global variables
+    bodyCam, faceCam, isCamOnFace = nil, nil, false
+    CharacterSkin = nil
+    CharacterData = nil
+    playerPed = nil
+    SkinMaxVals =  nil
 end
