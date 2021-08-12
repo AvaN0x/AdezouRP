@@ -59,7 +59,7 @@ Items = {}
 function Items:AddButton(Label, Description, Style, Actions, Submenu)
     local CurrentMenu = RageUI.CurrentMenu
     local Option = RageUI.Options + 1
-    if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+    if CurrentMenu and CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
         if not Style then Style = {} end
         local Active = CurrentMenu.Index == Option
         RageUI.ItemsSafeZone(CurrentMenu)
@@ -130,7 +130,7 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
     local CurrentMenu = RageUI.CurrentMenu;
 
     local Option = RageUI.Options + 1
-    if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+    if CurrentMenu and CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
         if not Style then Style = {} end
 
         local Active = CurrentMenu.Index == Option;
@@ -231,7 +231,7 @@ end
 function Items:AddSeparator(Label)
     local CurrentMenu = RageUI.CurrentMenu
     local Option = RageUI.Options + 1
-    if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
+    if CurrentMenu and CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
         local Active = CurrentMenu.Index == Option;
         if (Label ~= nil) then
             Graphics.Text(Label, CurrentMenu.X + 0 + (CurrentMenu.WidthOffset * 2.5 ~= 0 and CurrentMenu.WidthOffset * 2.5 or 200), CurrentMenu.Y + 0 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, 0.33, 245, 245, 245, 255, 1)

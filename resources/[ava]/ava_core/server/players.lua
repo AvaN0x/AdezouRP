@@ -533,7 +533,7 @@ AVA.Players.Save = function(src)
     end
 end
 
-AVA.Commands.RegisterCommand("changechar", "mod", function(source, args)
+AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
     local src = source
     local newCitizenId = args[1]
     local aPlayer = AVA.Players.List[tostring(src)]
@@ -578,7 +578,7 @@ AVA.Commands.RegisterCommand("changechar", "mod", function(source, args)
 end, "change_char", {{name = "char", help = "char_id"}})
 
 
-AVA.Commands.RegisterCommand("newchar", "mod", function(source, args)
+AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer then
@@ -586,8 +586,8 @@ AVA.Commands.RegisterCommand("newchar", "mod", function(source, args)
         local charsCount = MySQL.Sync.fetchScalar('SELECT COUNT(1) FROM `players` WHERE `license` = @license', {
             ['@license'] = aPlayer.identifiers.license,
         })
-        if charsCount > AVAConfig.MaxChars then
-            TriggerClientEvent("ava_core:client:ShowNotification", src, "~r~Vous ne pouvez> pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
+        if charsCount >= AVAConfig.MaxChars then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, "~r~Vous ne pouvez pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
             return
         end
 
@@ -618,7 +618,7 @@ AVA.Commands.RegisterCommand("newchar", "mod", function(source, args)
 end, "new_char")
 
 
-AVA.Commands.RegisterCommand("chars", "mod", function(source, args)
+AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer then

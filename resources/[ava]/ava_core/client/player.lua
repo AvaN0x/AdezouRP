@@ -55,6 +55,7 @@ local function SpawnPlayer()
     -- dprint(AVA.Player.Data.position)
     if AVA.Player.Data.position then
         SetEntityCoords(playerPed, AVA.Player.Data.position)
+        SetEntityHeading(playerPed, 0.0)
     end
 
     dprint(json.encode(AVA.Player.Data.skin))
@@ -173,7 +174,7 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
                         else
                             ExecuteCommand(("changechar %s"):format(tostring(char.id)))
                         end
-                        RageUI.Visible(SelectCharMenu, false)
+                        RageUI.CloseAll()
                     end
                 end)
         end
@@ -182,6 +183,9 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
 
 end
 RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
+    if AVA.Player.IsDead or AVA.Player.CreatingChar then
+        return
+    end
     RageUI.CloseAll()
     playerChars = {}
     for i = 1, #chars, 1 do
@@ -227,5 +231,5 @@ end)
 
 -- DEBUG COMMAND
 RegisterCommand("respawn", function()
-    exports.spawnmanager:spawnPlayer()
+    SpawnPlayer()
 end)
