@@ -7,8 +7,24 @@ AVA.Commands = {}
 AVA.Commands.SuggestionList = {}
 
 AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
-    local name = name:lower()
-    local group = group:lower()
+    if type(name) == "table" then
+        -- name is an array of aliases
+        for i = 1, #name, 1 do
+            if type(name[i]) == "string" then
+                AVA.Commands.RegisterCommand(name[i], group, callback, help, params)
+            end
+        end
+        return
+    elseif type(name) ~= "string" then
+        print("^3[WARN] Could not create command because ^0name^3 is not a ^0string^3.^0")
+        return
+    elseif type(callback) ~= "function" then
+        print("^3[WARN]^0 Could not create command ^3" .. name .. "^0 because ^3callback^0 is not a ^3function^0.^0")
+        return
+    end
+
+    name = name:lower()
+    group = type(group) == "string" and group:lower() or nil
 
     local needAce = group and group ~= ""
     RegisterCommand(name, callback, needAce)
@@ -23,10 +39,14 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^7")
 end
 
-AVA.Commands.RegisterCommand("car", "mod", function(source, args)
-    TriggerClientEvent('chat:addMessage', source, {
-        args = { "don't spawn " .. (args[1] or 'adder') }
-    })
+AVA.Commands.RegisterCommand({"vehicle", "car", "plane", "boat", "bike" ,"heli"}, "admin", function(source, args)
+    if type(args[1]) == "string" then
+        TriggerClientEvent('ava:client:spawnVehicle', source, args[1])
+    end
+end, "spawn_car", {{name = "car", help = "car_name"}})
+
+AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
+    TriggerClientEvent('ava:client:deleteVehicle', source)
 end, "spawn_car", {{name = "car", help = "car_name"}})
 
 

@@ -27,7 +27,8 @@ client_scripts {
     "client/main.lua",
     "client/functions.lua",
     "client/player.lua",
-    "client/createchar.lua"
+    "client/createchar.lua",
+    "client/commands.lua"
 }
 
 server_scripts {
