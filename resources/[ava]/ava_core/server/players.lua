@@ -307,7 +307,7 @@ end
 
 RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
     local src = source
-    
+
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.skin) == "table" then
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
@@ -497,7 +497,7 @@ AVA.Players.Logout = function(src)
 
     if aPlayer then
         -- remove all RP related aces and principals
-        dprint("^2[LOGOUT] ^0" .. aPlayer.name .. "(" .. aPlayer.citizenId .. ")")
+        dprint("^2[LOGOUT] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
     end
 end
 
@@ -533,7 +533,9 @@ AVA.Players.Save = function(src)
     end
 end
 
-local function changeCharacter(src, newCitizenId)
+AVA.Commands.RegisterCommand("changechar", "mod", function(source, args)
+    local src = source
+    local newCitizenId = args[1]
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer and newCitizenId then
         local license, citizenId = aPlayer.identifiers.license, aPlayer.citizenId
@@ -573,12 +575,22 @@ local function changeCharacter(src, newCitizenId)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
     end
     return
-end
+end, "change_char", {{name = "char", help = "char_id"}})
 
 
-local function newCharacter(src)
+AVA.Commands.RegisterCommand("newchar", "mod", function(source, args)
+    local src = source
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer then
+        -- check if player can create a new char
+        local charsCount = MySQL.Sync.fetchScalar('SELECT COUNT(1) FROM `players` WHERE `license` = @license', {
+            ['@license'] = aPlayer.identifiers.license,
+        })
+        if charsCount > AVAConfig.MaxChars then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, "~r~Vous ne pouvez> pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
+            return
+        end
+
         local license, discord, group, playerName, discordTag, citizenId = aPlayer.identifiers.license, aPlayer.identifiers.discord, aPlayer.group, aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
@@ -603,24 +615,20 @@ local function newCharacter(src)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
     end
     return
-end
-
-RegisterServerEvent("ava_core:server:changeCharacter", function(newCitizenId)
-    local src = source
-    changeCharacter(src, newCitizenId)
-end)
-
-AVA.Commands.RegisterCommand("changechar", "mod", function(source, args)
-    local src = source
-    changeCharacter(src, args[1])
-end, "change_char", {{name = "char", help = "char_id"}})
-
-RegisterServerEvent("ava_core:server:newCharacter", function(newCitizenId)
-    local src = source
-    newCharacter(src)
-end)
-
-AVA.Commands.RegisterCommand("newchar", "mod", function(source, args)
-    local src = source
-    newCharacter(src)
 end, "new_char")
+
+
+AVA.Commands.RegisterCommand("chars", "mod", function(source, args)
+    local src = source
+    local aPlayer = AVA.Players.List[tostring(src)]
+    if aPlayer then
+        local chars = MySQL.Sync.fetchAll('SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = @license ORDER BY `id` DESC', {
+            ['@license'] = aPlayer.identifiers.license,
+        })
+        if chars[1] then
+            TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", src, "Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil, "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
+        end
+    end
+end, "get_all_player_chars")

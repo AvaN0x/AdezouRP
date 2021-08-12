@@ -17,6 +17,14 @@ for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
 
     elseif GetResourceMetadata(resourceName, "my_data", i - 1) == "debug_prints" then
         AVAConfig.Debug = true
+
+    elseif GetResourceMetadata(resourceName, "my_data", i - 1) == "max_characters" then
+        local value = json.decode(GetResourceMetadata(resourceName, "my_data_extra", i - 1)) or 0
+        if value ~= "null" and tonumber(value) > 0 then
+            AVAConfig.MaxChars = tonumber(value)
+        else
+            print("^3[WARN] max_characters was not valid, value must be a number > 0^0")
+        end
     end
 end
 

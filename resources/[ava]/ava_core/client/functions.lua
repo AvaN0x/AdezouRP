@@ -51,6 +51,8 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
     end
 	EndTextCommandThefeedPostTicker(false, true)
 end
+RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)
+
 
 AVA.ShowHelpNotification = function(text)
     AddTextEntry("AVA_NOTF_TE", text)

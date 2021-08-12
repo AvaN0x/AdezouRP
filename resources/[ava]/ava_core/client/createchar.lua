@@ -71,8 +71,8 @@ local function StartCharCreator()
     FreezeEntityPosition(PlayerPedId(), true)
 
     -- TaskLookAtCoord(PlayerPedId(), 405.59, -997.18, -99.00, -1, 0, 4)  -- its left
-    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), -20.0, 0.0, 0.0), -1, 0, 4) 
-    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), 20.0, 0.0, 0.0), -1, 0, 4) 
+    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), -20.0, 0.0, 0.0), -1, 0, 4)
+    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), 20.0, 0.0, 0.0), -1, 0, 4)
 
 
 end
@@ -584,7 +584,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
         Panels:PercentagePanel(CharacterData.Appearance.EyeBrowsOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.EyeBrowsOpacity = Percent
-            
+
             CharacterSkin.eyebrows_2 = Percent * 100
             exports.skinchanger:changeNoApply("eyebrows_2", Percent * 100)
             SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
@@ -593,7 +593,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeBrowsColorMin or 1, CharacterData.Appearance.EyeBrowsColorIndex or 1, function(MinimumIndex, CurrentIndex)
                 CharacterData.Appearance.EyeBrowsColorMin = MinimumIndex
                 CharacterData.Appearance.EyeBrowsColorIndex = CurrentIndex
-                
+
                 CharacterSkin.eyebrows_3 = CurrentIndex - 1
                 exports.skinchanger:changeNoApply("eyebrows_3", CurrentIndex - 1)
                 SetPedHeadOverlayColor(playerPed, 2, 1, CharacterSkin.eyebrows_3, CharacterSkin.eyebrows_4)
@@ -602,7 +602,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
         Panels:PercentagePanel(CharacterData.Appearance.BodyHairsOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.BodyHairsOpacity = Percent
-        
+
             CharacterSkin.beard_2 = Percent * 100
             exports.skinchanger:changeNoApply("beard_2", Percent * 100)
             SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
@@ -649,7 +649,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             exports.skinchanger:changeNoApply("moles_2", Percent * 100)
             SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
         end, 7)
-        
+
         Panels:PercentagePanel(CharacterData.Appearance.SkinDamageOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.SkinDamageOpacity = Percent
 
@@ -699,7 +699,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.LipstickColorMin or 1, CharacterData.Appearance.LipstickColorIndex or 1, function(MinimumIndex, CurrentIndex)
                 CharacterData.Appearance.LipstickColorMin = MinimumIndex
                 CharacterData.Appearance.LipstickColorIndex = CurrentIndex
-    
+
                 CharacterSkin.lipstick_3 = CurrentIndex - 1
                 exports.skinchanger:changeNoApply("lipstick_3", CurrentIndex - 1)
                 SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_3, CharacterSkin.lipstick_4)
@@ -740,6 +740,8 @@ RegisterNetEvent("ava_core:client:createChar", function()
     AVA.Player.CreatingChar = true
 
     while not AVA.Player.HasSpawned do Wait(10) end
+
+    RageUI.CloseAll()
 
     CharacterData = {
         firstname = "",
@@ -784,7 +786,7 @@ end)
 MainMenu.Closed = function()
     print("MainMenu closed")
     dprint("CharacterData", json.encode(CharacterData, { indent=true }))
-    
+
     StopCharCreator()
     AVA.Player.CreatingChar = false
     CharacterSkin = exports.skinchanger:getSkin()
