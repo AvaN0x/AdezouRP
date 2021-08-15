@@ -28,7 +28,8 @@ client_scripts {
     "client/functions.lua",
     "client/player.lua",
     "client/createchar.lua",
-    "client/commands.lua"
+    "client/commands.lua",
+    "client/inventories.lua"
 }
 
 server_scripts {
@@ -36,11 +37,13 @@ server_scripts {
 
 	'server/config.lua',
 	'server/main.lua',
+	'server/classes/inventory.lua',
 	'server/classes/player.lua',
 	'server/utils.lua',
 	'server/commands.lua',
 	'server/routing_buckets.lua',
 	'server/players.lua',
+	'server/inventories.lua'
 }
 
 shared_scripts {

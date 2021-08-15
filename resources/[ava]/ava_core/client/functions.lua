@@ -18,6 +18,7 @@ AVA.KeyboardInput = function(textEntry, inputText, maxLength)
     Citizen.Wait(100)
     return result or ""
 end
+exports("KeyboardInput", AVA.KeyboardInput)
 
 AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconType, textureDict)
     AddTextEntry("AVA_NOTF_TE", text or "")
@@ -51,6 +52,7 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
     end
 	EndTextCommandThefeedPostTicker(false, true)
 end
+exports("ShowNotification", AVA.ShowNotification)
 RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)
 
 
@@ -59,6 +61,7 @@ AVA.ShowHelpNotification = function(text)
     BeginTextCommandDisplayHelp("AVA_NOTF_TE")
     EndTextCommandDisplayHelp(0, false, true, -1)
 end
+exports("ShowHelpNotification", AVA.ShowHelpNotification)
 
 
 
@@ -111,11 +114,13 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
 
     return Citizen.Await(p)
 end
+exports("SpawnVehicle", AVA.Vehicles.SpawnVehicle)
 
 
 AVA.Vehicles.SpawnVehicleLocal = function(vehName, coords, heading)
 	return AVA.Vehicles.SpawnVehicle(vehName, coords, heading, false)
 end
+exports("SpawnVehicleLocal", AVA.Vehicles.SpawnVehicleLocal)
 
 AVA.Vehicles.DeleteVehicle = function(vehicle)
     if IsEntityAVehicle(vehicle) then
@@ -123,6 +128,7 @@ AVA.Vehicles.DeleteVehicle = function(vehicle)
         DeleteVehicle(vehicle)
     end
 end
+exports("DeleteVehicle", AVA.Vehicles.DeleteVehicle)
 
 AVA.Vehicles.GetVehicleInFront = function(distance)
     local yOffset = distance
@@ -138,3 +144,4 @@ AVA.Vehicles.GetVehicleInFront = function(distance)
 
     return IsEntityAVehicle(vehicle) and vehicle or 0
 end
+exports("GetVehicleInFront", AVA.Vehicles.GetVehicleInFront)

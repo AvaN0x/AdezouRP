@@ -177,7 +177,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     end
 
 
-    local aPlayer = CreatePlayer(src, license, discord, group, playerName, discordTag, citizenId, playerData)
+    local aPlayer = CreatePlayer(tostring(src), license, discord, group, playerName, discordTag, citizenId, playerData)
     AVA.Players.List[tostring(src)] = aPlayer
 
     -- we check if the player character is valid
@@ -309,7 +309,7 @@ RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
     local src = source
 
     local aPlayer = AVA.Players.List[tostring(src)]
-    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.skin) == "table" then
+    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.character.firstname) == "string" and type(aPlayer.skin) == "table" then
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
         return
 
@@ -330,7 +330,7 @@ RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
             birthdate = character.birthdate
         }
         aPlayer.skin = skin
-        aPlayer.inventory = AVAConfig.DefaultPlayerData.inventory or {}
+        aPlayer.inventory = CreateInventory(tostring(src), AVAConfig.DefaultPlayerData.inventory, AVAConfig.InventoryMaxWeight)
         aPlayer.accounts = AVAConfig.DefaultPlayerData.accounts or {}
         aPlayer.status = AVAConfig.DefaultPlayerData.status or {}
         aPlayer.jobs = AVAConfig.DefaultPlayerData.jobs or {}
@@ -402,6 +402,12 @@ AVA.Players.GetSourceIdentifiers = function(source)
 
     return license, discord, steam, ip, live, xbl
 end
+exports("GetSourceIdentifiers", AVA.Players.GetSourceIdentifiers)
+
+AVA.Players.GetPlayer = function(src)
+    return AVA.Players.List[tostring(src)]
+end
+exports("GetPlayer", AVA.Players.GetPlayer)
 
 
 ------------------------------------
@@ -485,7 +491,7 @@ end
 RegisterServerEvent("ava_core:server:updatePosition", function(position)
     local src = source
     if position then
-        local aPlayer = AVA.Players.List[tostring(src)]
+        local aPlayer = AVA.Players.GetPlayer(src)
         if aPlayer then
             aPlayer.position = position
         end
@@ -493,7 +499,7 @@ RegisterServerEvent("ava_core:server:updatePosition", function(position)
 end)
 
 AVA.Players.Logout = function(src)
-    local aPlayer = AVA.Players.List[tostring(src)]
+    local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer then
         -- remove all RP related aces and principals
@@ -502,29 +508,20 @@ AVA.Players.Logout = function(src)
 end
 
 AVA.Players.Save = function(src)
-    local aPlayer = AVA.Players.List[tostring(src)]
+    local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer and aPlayer.citizenId then
-        local position = json.encode(aPlayer.position)
-        -- local character = json.encode(aPlayer.character)
-        local skin = json.encode(aPlayer.skin)
-        local loadout = json.encode(aPlayer.loadout)
-        local accounts = json.encode(aPlayer.accounts)
-        local status = json.encode(aPlayer.status)
-        local jobs = json.encode(aPlayer.jobs)
-        local inventory = json.encode(aPlayer.inventory)
-        local metadata = json.encode(aPlayer.metadata)
         -- MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
         MySQL.Async.execute('UPDATE `players` SET `position` = @position, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
-            ['@position'] = position ~= "null" and position or nil,
-            -- ['@character'] = character ~= "null" and character or nil,
-            ['@skin'] = skin ~= "null" and skin or nil,
-            ['@loadout'] = loadout ~= "null" and loadout or nil,
-            ['@accounts'] = accounts ~= "null" and accounts or nil,
-            ['@status'] = status ~= "null" and status or nil,
-            ['@jobs'] = jobs ~= "null" and jobs or nil,
-            ['@inventory'] = inventory ~= "null" and inventory or nil,
-            ['@metadata'] = metadata ~= "null" and metadata or nil,
+            ['@position'] = json.encode(aPlayer.position),
+            -- ['@character'] = json.encode(aPlayer.character),
+            ['@skin'] = json.encode(aPlayer.skin),
+            ['@loadout'] = json.encode(aPlayer.loadout),
+            ['@accounts'] = json.encode(aPlayer.accounts),
+            ['@status'] = json.encode(aPlayer.status),
+            ['@jobs'] = json.encode(aPlayer.jobs),
+            ['@inventory'] = aPlayer.inventory and json.encode(aPlayer.inventory.items) or "[]",
+            ['@metadata'] = json.encode(aPlayer.metadata),
             ['@license'] = aPlayer.identifiers.license,
             ['@id'] = aPlayer.citizenId
         }, function(result)
@@ -536,7 +533,7 @@ end
 AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
     local src = source
     local newCitizenId = args[1]
-    local aPlayer = AVA.Players.List[tostring(src)]
+    local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer and newCitizenId then
         local license, citizenId = aPlayer.identifiers.license, aPlayer.citizenId
 
@@ -580,7 +577,7 @@ end, "change_char", {{name = "char", help = "char_id"}})
 
 AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local src = source
-    local aPlayer = AVA.Players.List[tostring(src)]
+    local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         -- check if player can create a new char
         local charsCount = MySQL.Sync.fetchScalar('SELECT COUNT(1) FROM `players` WHERE `license` = @license', {
@@ -620,7 +617,7 @@ end, "new_char")
 
 AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
-    local aPlayer = AVA.Players.List[tostring(src)]
+    local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         local chars = MySQL.Sync.fetchAll('SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = @license ORDER BY `id` DESC', {
             ['@license'] = aPlayer.identifiers.license,

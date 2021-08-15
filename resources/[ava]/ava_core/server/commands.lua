@@ -38,6 +38,8 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     
     dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^7")
 end
+exports("RegisterCommand", AVA.Commands.RegisterCommand)
+
 
 AVA.Commands.RegisterCommand({"vehicle", "car", "plane", "boat", "bike" ,"heli"}, "admin", function(source, args)
     if type(args[1]) == "string" then
@@ -47,11 +49,11 @@ end, "spawn_car", {{name = "car", help = "car_name"}})
 
 AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
     TriggerClientEvent('ava:client:deleteVehicle', source)
-end, "spawn_car", {{name = "car", help = "car_name"}})
+end, "delete_car")
 
 
 AVA.Commands.RegisterCommand("report", "", function(source, args)
     TriggerClientEvent('chat:addMessage', source, {
         args = { "hey this should report, maybe, maybe not" }
     })
-end, "spawn_car", {{name = "reason", help = "your_reason"}})
+end, "report", {{name = "reason", help = "your_reason"}})

@@ -21,6 +21,7 @@ AVA.RB.GetRootingBucket = function(name)
         return rbCount
     end
 end
+exports("GetRootingBucket", AVA.RB.GetRootingBucket)
 
 AVA.RB.MoveSourceToRB = function(src, rb)
     rb = type(rb) == "number" and rb or 0
@@ -29,11 +30,13 @@ AVA.RB.MoveSourceToRB = function(src, rb)
         SetPlayerRoutingBucket(src, rb)
     end
 end
+exports("MoveSourceToRB", AVA.RB.MoveSourceToRB)
 
 AVA.RB.MoveSourceToRBName = function(src, rbName)
     local rb = rbName and AVA.RB.GetRootingBucket(rbName) or 0
     AVA.RB.MoveSourceToRB(src, rb)
 end
+exports("MoveSourceToRBName", AVA.RB.MoveSourceToRBName)
 
 AVA.Commands.RegisterCommand("rb", "superadmin", function(source, args)
     local src = source
