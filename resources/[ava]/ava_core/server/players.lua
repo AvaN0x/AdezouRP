@@ -300,12 +300,12 @@ for _, source in ipairs(GetPlayers()) do
 end
 
 --* replaced with event playerJoining
--- RegisterServerEvent('ava_core:server:playerJoined', function()
+-- RegisterNetEvent('ava_core:server:playerJoined', function()
 --     local src = source
 -- --     dprint(src, "ava_core:server:playerJoined")
 -- end)
 
-RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
+RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
     local src = source
 
     local aPlayer = AVA.Players.List[tostring(src)]
@@ -337,7 +337,7 @@ RegisterServerEvent("ava_core:server:createdPlayer", function(character, skin)
         aPlayer.loadout = AVAConfig.DefaultPlayerData.loadout or {}
         aPlayer.metadata = AVAConfig.DefaultPlayerData.metadata or {}
 
-        dprint(json.encode(aPlayer.character, { indent=true }))
+        dprint(json.encode(aPlayer.character, { indent = true }))
         MySQL.Async.execute('UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id', {
             ['@character'] = json.encode(aPlayer.character),
             ['@license'] = aPlayer.identifiers.license,
@@ -442,7 +442,7 @@ AVA.Players.IsBanned = function(license, discord, steam, ip, live, xbl)
 end
 
 -- TODO put as a command or something
--- RegisterServerEvent("ava_connection:banPlayer")
+-- RegisterNetEvent("ava_connection:banPlayer")
 -- AddEventHandler("ava_connection:banPlayer", function(id, reason)
 -- 	local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(id)
 -- 	local name = GetPlayerName(id)
@@ -468,7 +468,7 @@ end
 -- end)
 
 -- TODO put as a command or something
--- RegisterServerEvent("ava_connection:unban")
+-- RegisterNetEvent("ava_connection:unban")
 -- AddEventHandler("ava_connection:unban", function(license)
 --     local src = source
 -- 	MySQL.Sync.execute('DELETE FROM `ban_list` WHERE license = @license', {
@@ -488,7 +488,7 @@ end
 --------------- Player Data ---------------
 -------------------------------------------
 
-RegisterServerEvent("ava_core:server:updatePosition", function(position)
+RegisterNetEvent("ava_core:server:updatePosition", function(position)
     local src = source
     if position then
         local aPlayer = AVA.Players.GetPlayer(src)

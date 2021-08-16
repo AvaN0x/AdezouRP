@@ -25,6 +25,7 @@ client_scripts {
 
     'client/config.lua',
     "client/main.lua",
+    'client/callbacks.lua',
     "client/functions.lua",
     "client/player.lua",
     "client/createchar.lua",
@@ -34,9 +35,10 @@ client_scripts {
 
 server_scripts {
     '@mysql-async/lib/MySQL.lua',
-
+    
 	'server/config.lua',
 	'server/main.lua',
+    'server/callbacks.lua',
 	'server/classes/inventory.lua',
 	'server/classes/player.lua',
 	'server/utils.lua',
