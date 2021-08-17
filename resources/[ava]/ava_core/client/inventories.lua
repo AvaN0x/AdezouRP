@@ -178,3 +178,12 @@ RegisterCommand('+keyInventory', function()
 end)
 
 RegisterKeyMapping('+keyInventory', 'Inventaire', 'keyboard', AVAConfig.InventoryKey)
+
+
+
+
+
+RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, editedQuantity, newQuantity)
+    AVA.ShowNotification(("%s%d %s"):format(editedQuantity and "+" or "-", editedQuantity, itemLabel))
+end)
+
