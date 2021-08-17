@@ -28,6 +28,7 @@ AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
                         limit = cfgItem.limit,
                         noIcon = cfgItem.noIcon,
                         closeInv = cfgItem.closeInv,
+                        usable = cfgItem.usable,
                     }
                 end
             end

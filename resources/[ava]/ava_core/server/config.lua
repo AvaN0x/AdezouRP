@@ -16,19 +16,10 @@ AVAConfig.MaxChars = 5
 
 AVAConfig.InventoryMaxWeight = 75000
 
-AVAConfig.DefaultPlayerData = {
-    position = vector3(-1042.89, -2746.54, 20.37),
-    inventory = {{name = "cash", quantity = 4000}},
-}
+AVAConfig.DefaultPlayerData = {position = vector3(-1042.89, -2746.54, 20.37), inventory = {{name = "cash", quantity = 4000}}}
 
 AVAConfig.Items = {
-    cash = {
-        label = "Argent",
-        type = "money",
-        description = "Argent liquide",
-        weight = 1,
-        alwaysDisplayed = true,
-    },
+    cash = {label = "Argent", type = "money", description = "Argent liquide", weight = 1, alwaysDisplayed = true},
     dirtycash = {label = "Argent sale", type = "money", weight = 1, noIcon = true},
 
     bread = {label = "Pain", type = "food", weight = 100, limit = nil},
@@ -48,13 +39,7 @@ AVAConfig.Items = {
     },
 
     waterbottle = {label = "Bouteille d'eau", type = "liquid", weight = 100, limit = nil},
-    ecola = {
-        label = "eCola",
-        type = "liquid",
-        description = "Un soda délicieusement infect.",
-        weight = 100,
-        noIcon = true,
-    },
+    ecola = {label = "eCola", type = "liquid", description = "Un soda délicieusement infect.", weight = 100, noIcon = true},
     pisswasser = {
         label = "Pisswasser",
         type = "liquid",

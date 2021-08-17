@@ -21,3 +21,11 @@ AVA.Utils.TableHasValue = function(table, val)
     return false
 end
 exports("TableHasValue", AVA.Utils.TableHasValue)
+
+---Format a number from "123456789" to "123 456 789"
+---@param number any
+---@return string
+AVA.Utils.FormatNumber = function(number)
+    return tostring(number):reverse():gsub("%d%d%d", "%1 "):reverse():gsub("^ ", "")
+end
+exports("FormatNumber", AVA.Utils.FormatNumber)

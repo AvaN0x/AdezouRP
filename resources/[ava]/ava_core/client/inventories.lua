@@ -3,9 +3,14 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local InventoryElements, InventoryTopElements = {}, {}
+local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu:AddInstructionButton({GetControlGroupInstructionalButton(2, 15, 0), "Changer de tri"})
+local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
+ItemSelectedMenu.Closed = function()
+    selectedItem = nil
+end
 
 local SortIndexes = {
     {name = "weight", label = "poids"},
@@ -94,8 +99,9 @@ local function ReloadInventoryData()
                 label = item.label,
                 description = ("Poids unité : %s %s%s"):format(formatWeight(item.weight), unit,
                     item.desc and ("\n%s"):format(item.desc) or ""),
-                RightLabel = ("%s %s - %s %s"):format(item.limit and ("%s/%s"):format(item.quantity, item.limit)
-                                                          or tostring(item.quantity),
+                RightLabel = ("%s %s - %s %s"):format(item.limit
+                                                          and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
+                                                          or AVA.Utils.FormatNumber(item.quantity),
                     item.type and item.type == "money" and "$" or "u.", formatWeight(item.total_weight), unit),
                 LeftBadge = not item.noIcon and function()
                     return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
@@ -134,7 +140,10 @@ end
 ---Action when selecting an item
 ---@param item table
 local function SelectItem(item)
+    selectedItem = item
     dprint(item.name)
+    ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity),
+        item.type and item.type == "money" and "$" or "u.")
 end
 
 function RageUI.PoolMenus:AvaCoreInventory()
@@ -151,7 +160,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                 Items:AddButton(element.label, element.description,
                     {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
                         if onSelected then SelectItem(element.item) end
-                    end)
+                    end, ItemSelectedMenu)
             end
         end
 
@@ -160,8 +169,17 @@ function RageUI.PoolMenus:AvaCoreInventory()
             Items:AddButton(element.label, element.description,
                 {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
                     if onSelected then SelectItem(element.item) end
-                end)
+                end, ItemSelectedMenu)
         end
+    end)
+
+    ItemSelectedMenu:IsVisible(function(Items)
+        if selectedItem.usable then
+            Items:AddButton("Utiliser", nil, nil, function(onSelected)
+            end)
+        end
+        Items:AddButton("Donner", nil, nil, function(onSelected)
+        end)
     end)
 end
 
