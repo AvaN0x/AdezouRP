@@ -21,6 +21,7 @@ end
 exports("KeyboardInput", AVA.KeyboardInput)
 
 AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconType, textureDict)
+    local feedPostId
     AddTextEntry("AVA_NOTF_TE", text or "")
 	BeginTextCommandThefeedPost("AVA_NOTF_TE")
     if color then
@@ -47,10 +48,12 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
             RequestStreamedTextureDict(textureDict, false)
             while not HasStreamedTextureDictLoaded(textureDict) do Wait(0) end
         end
-        EndTextCommandThefeedPostMessagetext(textureDict, textureName, false, iconType or 4, title, subtitle)
+        feedPostId = EndTextCommandThefeedPostMessagetext(textureDict, textureName, false, iconType or 4, title, subtitle)
         SetStreamedTextureDictAsNoLongerNeeded(textureDict)
+    else
+        feedPostId = EndTextCommandThefeedPostTicker(false, true)
     end
-	EndTextCommandThefeedPostTicker(false, true)
+    return feedPostId
 end
 exports("ShowNotification", AVA.ShowNotification)
 RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)

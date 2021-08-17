@@ -23,10 +23,11 @@ client_scripts {
     "@RageUI/src/items/Items.lua",
     "@RageUI/src/items/Panels.lua",
 
-    'client/config.lua',
+    "client/config.lua",
     "client/main.lua",
-    'client/callbacks.lua',
-    "client/functions.lua",
+    "client/callbacks.lua",
+    "client/utils.lua",
+    "shared/utils.lua",
     "client/player.lua",
     "client/createchar.lua",
     "client/commands.lua",
@@ -34,18 +35,19 @@ client_scripts {
 }
 
 server_scripts {
-    '@mysql-async/lib/MySQL.lua',
+    "@mysql-async/lib/MySQL.lua",
     
-	'server/config.lua',
-	'server/main.lua',
-    'server/callbacks.lua',
-	'server/classes/inventory.lua',
-	'server/classes/player.lua',
-	'server/utils.lua',
-	'server/commands.lua',
-	'server/routing_buckets.lua',
-	'server/players.lua',
-	'server/inventories.lua'
+	"server/config.lua",
+	"server/main.lua",
+    "server/callbacks.lua",
+	"server/classes/inventory.lua",
+	"server/classes/player.lua",
+	"server/utils.lua",
+    "shared/utils.lua",
+	"server/commands.lua",
+	"server/routing_buckets.lua",
+	"server/players.lua",
+	"server/inventories.lua"
 }
 
 shared_scripts {
