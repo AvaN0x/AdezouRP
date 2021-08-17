@@ -60,6 +60,11 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 		local item = self.getItem(name)
         if item then
             item.quantity = item.quantity + quantity
+
+            if self.playerSrc then
+                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, true, Items[item.name].label, quantity)
+            end
+
             self.updateWeight()
             self.modified = true
         end
@@ -75,6 +80,10 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             local new_quantity = item.quantity - quantity
             item.quantity = new_quantity >= 0 and new_quantity or 0
 
+            if self.playerSrc then
+                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, false, Items[item.name].label, quantity)
+            end
+            -- TODO remove totally element from inventory if 0?
             self.updateWeight()
             self.modified = true
         end
@@ -175,6 +184,10 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
 	self.clearInventory = function()
 		for k, item in ipairs(self.items) do
+            if self.playerSrc and item.quantity > 0 then
+                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, false, Items[item.name].label, Items[item.name].quantity)
+            end
+            -- TODO remove totally element from inventory ?
 			item.quantity = 0
 		end
 		self.actual_weight = 0
