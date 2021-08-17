@@ -8,8 +8,6 @@ local InventoryElements, InventoryTopElements = {}, {}
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu:AddInstructionButton({GetControlGroupInstructionalButton(2, 15, 0), "Changer de tri"})
 
-
-
 local SortIndexes = {
     { name = "weight", label = "poids" },
     { name = "quantity", label = "quantité" },
@@ -57,6 +55,19 @@ local function SetSortingIndex(index)
     SortInventory()
 end
 
+local function formatWeight(weight, digitCount)
+    if type(digitCount) ~= "number" then
+        if (weight % 10) > 0 then
+            digitCount = 3
+        elseif (weight % 100) > 0 then
+            digitCount = 2
+        else
+            digitCount = 1
+        end
+    end
+    return ("%." .. digitCount .. "f"):format(weight / 1000)
+end
+
 local function ReloadInventoryData()
     local invItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getInventoryItems")
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
@@ -75,13 +86,13 @@ local function ReloadInventoryData()
             local element = {
                 item = item,
                 label = item.label,
-                description = ("Poids unité : %." .. (item.weight < 10 and "3" or "2") .. "f %s%s"):format(item.weight / 1000, unit, item.desc and ("\n%s"):format(item.desc) or ""),
+                description = ("Poids unité : %s %s%s"):format(formatWeight(item.weight), unit, item.desc and ("\n%s"):format(item.desc) or ""),
                 RightLabel = ("%s %s - %s %s"):format(
                     item.limit
                         and ("%s/%s"):format(item.quantity, item.limit)
                         or tostring(item.quantity),
                     item.type and item.type == "money" and "$" or "u.",
-                    string.format("%.1f", item.total_weight / 1000),
+                    formatWeight(item.total_weight),
                     unit
                 ),
                 LeftBadge = not item.noIcon and function() return {BadgeDictionary = "ava_items", BadgeTexture = item.name} end or nil
@@ -106,7 +117,7 @@ local function ReloadInventoryData()
     SortInventory()
 
 
-    InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, string.format("%.3f", actualWeight / 1000), string.format("%.1f", maxWeight / 1000))
+    InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
 end
 
 local function OpenMyInventory()
