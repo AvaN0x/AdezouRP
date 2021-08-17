@@ -2,8 +2,6 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
-
 AVA.Utils = {}
 
 ---Trim
@@ -19,13 +17,7 @@ exports("Trim", AVA.Utils.Trim)
 ---@param val any
 ---@return boolean
 AVA.Utils.TableHasValue = function(table, val)
-	if table then
-		for k, v in ipairs(table) do
-			if v == val then
-				return true
-			end
-		end
-	end
-	return false
+    if table then for k, v in ipairs(table) do if v == val then return true end end end
+    return false
 end
 exports("TableHasValue", AVA.Utils.TableHasValue)

@@ -2,7 +2,6 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 local Items = AVAConfig.Items
 
 AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
@@ -28,7 +27,7 @@ AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
                         weight = cfgItem.weight,
                         limit = cfgItem.limit,
                         noIcon = cfgItem.noIcon,
-                        closeInv = cfgItem.closeInv
+                        closeInv = cfgItem.closeInv,
                     }
                 end
             end

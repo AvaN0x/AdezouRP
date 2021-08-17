@@ -4,8 +4,6 @@
 -------------------------------------------
 AVA = {}
 
-
-
 -------------------------------------------
 --------------- Init Config ---------------
 -------------------------------------------
@@ -29,9 +27,7 @@ for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
 end
 
 function dprint(...)
-    if AVAConfig.Debug then
-        print("^3[DEBUG] ^0", ...)
-    end
+    if AVAConfig.Debug then print("^3[DEBUG] ^0", ...) end
 end
 
 dprint([[
@@ -54,12 +50,12 @@ Console colors :
 -- if using "snail" instead of "builtin.everyone", then console can do commands and players can't
 -- ExecuteCommand('add_principal group.mod builtin.snail')
 
-ExecuteCommand('add_principal group.admin group.mod')
-    ExecuteCommand('add_ace group.admin command.stop allow')
-    ExecuteCommand('add_ace group.admin command.start allow')
-    ExecuteCommand('add_ace group.admin command.restart allow')
-    ExecuteCommand('add_ace group.admin command.ensure allow')
+ExecuteCommand("add_principal group.admin group.mod")
+ExecuteCommand("add_ace group.admin command.stop allow")
+ExecuteCommand("add_ace group.admin command.start allow")
+ExecuteCommand("add_ace group.admin command.restart allow")
+ExecuteCommand("add_ace group.admin command.ensure allow")
 
-ExecuteCommand('add_principal group.superadmin group.admin')
-    ExecuteCommand('add_ace group.superadmin command allow')
+ExecuteCommand("add_principal group.superadmin group.admin")
+ExecuteCommand("add_ace group.superadmin command allow")
 

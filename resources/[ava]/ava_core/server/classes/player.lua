@@ -2,16 +2,12 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 function CreatePlayer(src, license, discord, group, name, discordTag, citizenId, playerData)
-	local self = {}
+    local self = {}
 
-	self.src = src
-	self.identifiers = {
-        license = license,
-        discord = discord
-    }
-	self.group = group
+    self.src = src
+    self.identifiers = {license = license, discord = discord}
+    self.group = group
     self.name = name
     self.discordTag = discordTag
 
@@ -24,9 +20,9 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     self.accounts = playerData.accounts and json.decode(playerData.accounts) or {}
     self.status = playerData.status and json.decode(playerData.status) or {}
     self.jobs = playerData.jobs and json.decode(playerData.jobs) or {}
-    self.inventory = CreateInventory(self.src, playerData.inventory and json.decode(playerData.inventory) or {}, AVAConfig.InventoryMaxWeight)
+    self.inventory = CreateInventory(self.src, playerData.inventory and json.decode(playerData.inventory) or {},
+        AVAConfig.InventoryMaxWeight)
     self.metadata = playerData.metadata and json.decode(playerData.metadata) or {}
-
 
     self.Logout = function()
         AVA.Players.Logout(self.src)
@@ -34,7 +30,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     self.Save = function()
         AVA.Players.Save(self.src)
     end
-    
+
     -----------------------------------------
     --------------- Inventory ---------------
     -----------------------------------------
