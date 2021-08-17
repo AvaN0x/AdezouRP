@@ -15,8 +15,9 @@ local SortIndexes = {
     { name = "type", label = "type" }
 }
 local sortNotificationId = 0
-local sortIndex = GetResourceKvpInt("ava_core_inventory_sort")
+local sortIndex = GetResourceKvpInt("ava_core_inventory_sort") % #SortIndexes
 
+---Sort the inventory with the actual sorting index
 local function SortInventory()
     local indexName = SortIndexes[sortIndex + 1].name
     if indexName == "weight" then
@@ -42,6 +43,8 @@ local function SortInventory()
     end
 end
 
+---Edit the index of sorting for the inventory
+---@param index number
 local function SetSortingIndex(index)
     sortIndex = index % #SortIndexes
     SetResourceKvpInt("ava_core_inventory_sort", sortIndex)
@@ -55,6 +58,10 @@ local function SetSortingIndex(index)
     SortInventory()
 end
 
+---Format a weight (in gram) into a string
+---@param weight number
+---@param digitCount integer
+---@return string
 local function formatWeight(weight, digitCount)
     if type(digitCount) ~= "number" then
         if (weight % 10) > 0 then
@@ -68,6 +75,7 @@ local function formatWeight(weight, digitCount)
     return ("%." .. digitCount .. "f"):format(weight / 1000)
 end
 
+---Get inventory data from server and process it
 local function ReloadInventoryData()
     local invItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getInventoryItems")
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
@@ -129,6 +137,8 @@ local function OpenMyInventory()
     end
 end
 
+---Action when selecting an item
+---@param item table
 local function SelectItem(item)
     dprint(item.name)
 end

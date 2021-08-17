@@ -6,6 +6,12 @@
 AVA.Commands = {}
 AVA.Commands.SuggestionList = {}
 
+---Register a command using ace permissions to a group
+---@param name string|table
+---@param group string|nil
+---@param callback any
+---@param help string
+---@param params table {name: string, help: string}
 AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     if type(name) == "table" then
         -- name is an array of aliases

@@ -8,6 +8,9 @@ AVA.RB = {}
 local rbCount = 0
 local namedRoutingBuckets = {}
 
+---Get a rooting bucket based on the name given, or just the next accessible one
+---@param name string
+---@return number
 AVA.RB.GetRootingBucket = function(name)
     if type(name) == "string" and name ~= "" then
         if namedRoutingBuckets[name] == nil then
@@ -23,6 +26,9 @@ AVA.RB.GetRootingBucket = function(name)
 end
 exports("GetRootingBucket", AVA.RB.GetRootingBucket)
 
+---Move source player to a given rooting bucket
+---@param src string
+---@param rb integer
 AVA.RB.MoveSourceToRB = function(src, rb)
     rb = type(rb) == "number" and rb or 0
     if GetPlayerRoutingBucket(src) ~= rb then
@@ -32,6 +38,9 @@ AVA.RB.MoveSourceToRB = function(src, rb)
 end
 exports("MoveSourceToRB", AVA.RB.MoveSourceToRB)
 
+---Move source player to a rooting bucket with a given name
+---@param src string
+---@param rbName string
 AVA.RB.MoveSourceToRBName = function(src, rbName)
     local rb = rbName and AVA.RB.GetRootingBucket(rbName) or 0
     AVA.RB.MoveSourceToRB(src, rb)

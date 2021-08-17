@@ -62,7 +62,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             item.quantity = item.quantity + quantity
 
             if self.playerSrc then
-                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, true, Items[item.name].label, quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, quantity, item.quantity)
             end
 
             self.updateWeight()
@@ -81,7 +81,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             item.quantity = new_quantity >= 0 and new_quantity or 0
 
             if self.playerSrc then
-                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, false, Items[item.name].label, quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, 0 - quantity, item.quantity)
             end
             -- TODO remove totally element from inventory if 0?
             self.updateWeight()
@@ -185,7 +185,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 	self.clearInventory = function()
 		for k, item in ipairs(self.items) do
             if self.playerSrc and item.quantity > 0 then
-                TriggerClientEvent("avan0x_hud:inventoryItemNotification", self.playerSrc, false, Items[item.name].label, Items[item.name].quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, 0 - item.quantity, 0)
             end
             -- TODO remove totally element from inventory ?
 			item.quantity = 0

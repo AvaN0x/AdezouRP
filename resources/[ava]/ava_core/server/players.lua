@@ -382,6 +382,14 @@ end)
 --------------- Functions ---------------
 -----------------------------------------
 
+---Get identifiers from source
+---@param source string
+---@return string license
+---@return string discord
+---@return string steam
+---@return string ip
+---@return string live
+---@return string xbl
 AVA.Players.GetSourceIdentifiers = function(source)
 	local license, discord, steam, ip, live, xbl
 	for k, v in ipairs(GetPlayerIdentifiers(source)) do
@@ -404,6 +412,9 @@ AVA.Players.GetSourceIdentifiers = function(source)
 end
 exports("GetSourceIdentifiers", AVA.Players.GetSourceIdentifiers)
 
+---Get player from its source
+---@param src string
+---@return any
 AVA.Players.GetPlayer = function(src)
     return AVA.Players.List[tostring(src)]
 end

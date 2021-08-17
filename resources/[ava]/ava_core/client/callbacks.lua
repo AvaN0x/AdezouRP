@@ -4,6 +4,9 @@
 -------------------------------------------
 local nextRequestId = 0
 
+---Trigger a server callback
+---@param eventName string
+---@return any
 AVA.TriggerServerCallback = function(eventName, ...)
     if type(eventName) ~= "string" then
         return

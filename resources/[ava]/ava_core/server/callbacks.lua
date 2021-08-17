@@ -16,6 +16,9 @@ RegisterNetEvent("ava_core:callbacks:server", function(eventName, requestId, ...
     TriggerClientEvent(('ava_core:callbacks:client:%s:%s'):format(eventName, requestId), src, table.unpack(result))
 end)
 
+---Register a server callback
+---@param eventName string
+---@param callback function
 AVA.RegisterServerCallback = function(eventName, callback)
     if type(eventName) ~= "string" then
         return

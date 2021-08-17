@@ -3,9 +3,14 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-AVA.KeyboardInput = function(textEntry, inputText, maxLength)
-    AddTextEntry("AVA_KYBRD_INPT", textEntry or "")
-    DisplayOnscreenKeyboard(1, "AVA_KYBRD_INPT", '', inputText or "", '', '', '', maxLength or 255)
+---Prompt the user a text
+---@param titleText string
+---@param defaultText string
+---@param maxLength number
+---@return string result prompted text
+AVA.KeyboardInput = function(titleText, defaultText, maxLength)
+    AddTextEntry("AVA_KYBRD_INPT", titleText or "")
+    DisplayOnscreenKeyboard(1, "AVA_KYBRD_INPT", '', defaultText or "", '', '', '', maxLength or 255)
 
     while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
         Citizen.Wait(10)
@@ -20,6 +25,15 @@ AVA.KeyboardInput = function(textEntry, inputText, maxLength)
 end
 exports("KeyboardInput", AVA.KeyboardInput)
 
+---Show a feedpost to the user
+---@param text string
+---@param color number
+---@param textureName string
+---@param title string
+---@param subtitle string
+---@param iconType number
+---@param textureDict string
+---@return number notificationId
 AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconType, textureDict)
     local feedPostId
     AddTextEntry("AVA_NOTF_TE", text or "")
@@ -73,6 +87,12 @@ exports("ShowHelpNotification", AVA.ShowHelpNotification)
 ----------------------------------------
 
 AVA.Vehicles = {}
+---Spawn a vehicle at a given coords and heading
+---@param vehName string|number
+---@param coords vector3
+---@param heading float
+---@param isNetwork boolean set the vehicle to be on network or only on local
+---@return vehicle
 AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
     local p = promise:new()
     isNetwork = (isNetwork == nil or isNetwork == true)
@@ -88,13 +108,13 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
 		local vehicle = CreateVehicle(modelHash, coords.x, coords.y, coords.z, heading, isNetwork, false)
         -- init vehicle
         SetVehicleOnGroundProperly(vehicle)
-        
+
 		SetEntityAsMissionEntity(vehicle, true, false)
 		SetVehicleHasBeenOwnedByPlayer(vehicle, true)
 		SetVehicleNeedsToBeHotwired(vehicle, false)
         SetVehicleIsWanted(vehicle, false)
         SetVehRadioStation(vehicle, 'OFF')
-        
+
         if isNetwork then
             -- init vehicle on network
             local id = VehToNet(vehicle)
@@ -119,12 +139,18 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
 end
 exports("SpawnVehicle", AVA.Vehicles.SpawnVehicle)
 
-
+---Spawn a vehicle at a given coords and heading on local
+---@param vehName string|number
+---@param coords vector3
+---@param heading float
+---@return vehicle
 AVA.Vehicles.SpawnVehicleLocal = function(vehName, coords, heading)
 	return AVA.Vehicles.SpawnVehicle(vehName, coords, heading, false)
 end
 exports("SpawnVehicleLocal", AVA.Vehicles.SpawnVehicleLocal)
 
+---Delete a vehicle
+---@param vehicle entity
 AVA.Vehicles.DeleteVehicle = function(vehicle)
     if IsEntityAVehicle(vehicle) then
         SetEntityAsMissionEntity(vehicle, true, true)
@@ -133,6 +159,9 @@ AVA.Vehicles.DeleteVehicle = function(vehicle)
 end
 exports("DeleteVehicle", AVA.Vehicles.DeleteVehicle)
 
+---Get the vehicle in front of the user
+---@param distance number
+---@return entity 
 AVA.Vehicles.GetVehicleInFront = function(distance)
     local yOffset = distance
     if not distance or not tonumber(distance) or tonumber(distance) < 0 then
