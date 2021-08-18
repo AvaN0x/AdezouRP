@@ -26,6 +26,7 @@ for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
     end
 end
 
+---Print only if AVAConfig.Debug is true
 function dprint(...)
     if AVAConfig.Debug then
         print("^3[DEBUG] ^0", ...)
