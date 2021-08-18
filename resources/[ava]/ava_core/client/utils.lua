@@ -57,8 +57,7 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
             RequestStreamedTextureDict(textureDict, false)
             while not HasStreamedTextureDictLoaded(textureDict) do Wait(0) end
         end
-        feedPostId = EndTextCommandThefeedPostMessagetext(textureDict, textureName, false,
-            iconType or 4, title, subtitle)
+        feedPostId = EndTextCommandThefeedPostMessagetext(textureDict, textureName, false, iconType or 4, title, subtitle)
         SetStreamedTextureDictAsNoLongerNeeded(textureDict)
     else
         feedPostId = EndTextCommandThefeedPostTicker(false, true)
@@ -98,8 +97,7 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
         RequestModel(modelHash)
         while not HasModelLoaded(modelHash) do Wait(0) end
 
-        local vehicle = CreateVehicle(modelHash, coords.x, coords.y, coords.z, heading, isNetwork,
-            false)
+        local vehicle = CreateVehicle(modelHash, coords.x, coords.y, coords.z, heading, isNetwork, false)
         -- init vehicle
         SetVehicleOnGroundProperly(vehicle)
 
@@ -163,10 +161,130 @@ AVA.Vehicles.GetVehicleInFront = function(distance)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local offsetCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, yOffset + 0.0, 0.0)
-    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y,
-        playerCoords.z, offsetCoords.x, offsetCoords.y, offsetCoords.z, 10, playerPed, 0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z, offsetCoords.x,
+        offsetCoords.y, offsetCoords.z, 10, playerPed, 0)
     local _, _, _, _, vehicle = GetShapeTestResult(rayHandle)
 
     return IsEntityAVehicle(vehicle) and vehicle or 0
 end
 exports("GetVehicleInFront", AVA.Vehicles.GetVehicleInFront)
+
+---use example : 
+---```lua
+---     local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_AIM~", label = "Aim"}})
+---     DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+---```
+---to optimise it you can call the export outside of a loop
+---@param buttons table {{control: string, label: string}}
+---@return any scaleform
+AVA.Utils.GetScaleformInstructionalButtons = function(buttons)
+    local instructionScaleform = RequestScaleformMovie("instructional_buttons")
+
+    while not HasScaleformMovieLoaded(instructionScaleform) do Wait(0) end
+
+    PushScaleformMovieFunction(instructionScaleform, "CLEAR_ALL")
+    PushScaleformMovieFunction(instructionScaleform, "TOGGLE_MOUSE_BUTTONS")
+    PushScaleformMovieFunctionParameterBool(0)
+    PopScaleformMovieFunctionVoid()
+
+    for i = 1, #buttons, 1 do
+        PushScaleformMovieFunction(instructionScaleform, "SET_DATA_SLOT")
+        PushScaleformMovieFunctionParameterInt(i - 1)
+
+        PushScaleformMovieMethodParameterButtonName(buttons[i].control)
+        PushScaleformMovieFunctionParameterString(buttons[i].label)
+        PopScaleformMovieFunctionVoid()
+    end
+
+    PushScaleformMovieFunction(instructionScaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+    PushScaleformMovieFunctionParameterInt(-1)
+    PopScaleformMovieFunctionVoid()
+
+    return instructionScaleform
+end
+exports("GetScaleformInstructionalButtons", AVA.Utils.GetScaleformInstructionalButtons)
+
+---Draw a text on screen
+---@param x number
+---@param y number
+---@param z number
+---@param text string
+---@param size number
+---@param r number
+---@param g number
+---@param b number
+AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+
+    if onScreen then
+        SetTextScale(0.35, size or 0.35)
+        SetTextFont(0)
+        SetTextProportional(1)
+        SetTextColour(r or 255, g or 255, b or 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        SetTextOutline()
+
+        AddTextComponentString(text)
+        EndTextCommandDisplayText(_x, _y)
+    end
+end
+exports("DrawText3D", AVA.Utils.DrawText3D)
+
+---Draw a "bubble" like text, only one can be displayed at a time
+---@param x nulber
+---@param y nulber
+---@param z nulber
+---@param text string
+---@param backgroundColor number
+---@param bubbleStyle number
+AVA.Utils.DrawBubbleText3D = function(x, y, z, text, backgroundColor, bubbleStyle)
+    local onScreen = World3dToScreen2d(x, y, z)
+    if onScreen then
+        AddTextEntry(GetCurrentResourceName(), text)
+        BeginTextCommandDisplayHelp(GetCurrentResourceName())
+        EndTextCommandDisplayHelp(2, false, false, -1)
+        SetFloatingHelpTextWorldPosition(1, x, y, z)
+
+        local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+        local bubbleStyle = bubbleStyle or 3
+        -- -1 centered, no triangles
+        -- 0 left, no triangles
+        -- 1 centered, triangle top
+        -- 2 left, triangle left
+        -- 3 centered, triangle bottom
+        -- 4 right, triangle right
+        SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+    end
+end
+exports("DrawBubbleText3D", AVA.Utils.DrawBubbleText3D)
+
+---TaskGoStraightToCoord which let the user cancel it when trying to move
+---@param ped ped
+---@param coords vector3
+---@param speed number
+---@param timeout number
+---@param targetHeading number
+---@param distanceToSlide number
+---@return boolean success player is at coords or canceled
+AVA.Utils.CancelableGoStraightToCoord = function(ped, coords, speed, timeout, targetHeading, distanceToSlide)
+    TaskGoStraightToCoord(ped, coords.x, coords.y, coords.z, speed, timeout, targetHeading, distanceToSlide)
+
+    local checkControls = ped == PlayerPedId()
+    -- 0x7D8F4411 is TaskGoStraightToCoord
+    while GetScriptTaskStatus(ped, 0x7D8F4411) ~= 7 do
+        if checkControls then
+            if IsControlJustPressed(0, 32) or IsControlJustPressed(0, 33) or IsControlJustPressed(0, 34)
+                or IsControlJustPressed(0, 35) then
+                ClearPedTasks(ped)
+                return false
+            end
+        end
+
+        Citizen.Wait(0)
+    end
+
+    return true
+end
+exports("CancelableGoStraightToCoord", AVA.Utils.CancelableGoStraightToCoord)
+
