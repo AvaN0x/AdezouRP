@@ -37,3 +37,25 @@ AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
         return items, inventory.max_weight, inventory.actual_weight, inventory.label
     end
 end)
+
+RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+    local aTarget = AVA.Players.GetPlayer(targetId)
+
+    if src ~= targetId and aPlayer and aTarget then
+        local playerInventory = aPlayer.inventory
+        local targetInventory = aTarget.inventory
+        if count and count > 0 and playerInventory.canRemoveItem(itemName, count) then
+            if targetInventory.canAddItem(itemName, count) then
+                playerInventory.removeItem(itemName, count)
+                targetInventory.addItem(itemName, count)
+            else
+                TriggerClientEvent("ava_core:client:ShowNotification", src, ("target_not_enough_place"))
+                TriggerClientEvent("ava_core:client:ShowNotification", targetId, ("not_enough_place"))
+            end
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", src, ("invalid_quantity"))
+        end
+    end
+end)

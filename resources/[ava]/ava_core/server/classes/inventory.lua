@@ -31,7 +31,11 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     self.updateWeight() -- * init weight value
 
     self.getItem = function(name)
-        for i = 1, #self.items, 1 do if self.items[i].name == name then return self.items[i] end end
+        for i = 1, #self.items, 1 do
+            if self.items[i].name == name then
+                return self.items[i]
+            end
+        end
 
         if Items[name] then
             item = {name = name, quantity = 0}
@@ -44,15 +48,17 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     end
 
     self.addItem = function(name, quantity)
-        if quantity <= 0 then return end
+        if quantity <= 0 then
+            return
+        end
 
         local item = self.getItem(name)
         if item then
             item.quantity = item.quantity + quantity
 
             if self.playerSrc then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name,
-                    Items[item.name].label, quantity, item.quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
+                    true, quantity, item.quantity)
             end
 
             self.updateWeight()
@@ -61,7 +67,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     end
 
     self.removeItem = function(name, quantity)
-        if quantity <= 0 then return end
+        if quantity <= 0 then
+            return
+        end
 
         local item = self.getItem(name)
         if item then
@@ -69,8 +77,8 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             item.quantity = new_quantity >= 0 and new_quantity or 0
 
             if self.playerSrc then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name,
-                    Items[item.name].label, 0 - quantity, item.quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
+                    false, quantity, item.quantity)
             end
             -- TODO remove totally element from inventory if 0?
             self.updateWeight()
@@ -79,7 +87,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     end
 
     self.setItem = function(name, quantity)
-        if quantity < 0 then return end
+        if quantity < 0 then
+            return
+        end
 
         local item = self.getItem(name)
         if item then
@@ -92,7 +102,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
     -- TODO second arg for items to check without other items (ex for treatment)
     self.canAddItem = function(name, quantity)
-        if quantity < 0 then return false end
+        if quantity < 0 then
+            return false
+        end
 
         local item = self.getItem(name)
         if item then
@@ -112,12 +124,13 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     self.canAddAllItems = function(items) -- {name: string, quantity: number}
         local total_weight = 0
         for k, v in ipairs(items) do
-            if not v.name or v.quantity == nil or v.quantity < 0 then return false end
+            if not v.name or v.quantity == nil or v.quantity < 0 then
+                return false
+            end
 
             local item = self.getItem(v.name)
             if item then
-                if self.playerSrc == nil and Items[item.name].limit and item.quantity + v.quantity
-                    > Items[item.name].limit then -- only check limit if player inventory
+                if self.playerSrc == nil and Items[item.name].limit and item.quantity + v.quantity > Items[item.name].limit then -- only check limit if player inventory
                     return false
                 end
                 total_weight = total_weight + v.quantity * Items[item.name].weight
@@ -131,13 +144,17 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     end
 
     self.canTake = function(name)
-        if self.actual_weight > self.max_weight then return 0 end
+        if self.actual_weight > self.max_weight then
+            return 0
+        end
         local item = self.getItem(name)
         if item then
             local fromWeight = math.floor((self.max_weight - self.actual_weight) / Items[item.name].weight)
             if self.playerSrc == nil and Items[item.name].limit then -- only check limit if player inventory
                 local fromLimit = Items[item.name].limit - item.quantity
-                if fromLimit < 0 then fromLimit = 0 end
+                if fromLimit < 0 then
+                    fromLimit = 0
+                end
                 return fromLimit < fromWeight and fromLimit or fromWeight
             else
                 return fromWeight
@@ -147,7 +164,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     end
 
     self.canRemoveItem = function(name, quantity)
-        if quantity < 0 then return false end
+        if quantity < 0 then
+            return false
+        end
 
         local item = self.getItem(name)
         if item then
@@ -163,8 +182,8 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     self.clearInventory = function()
         for k, item in ipairs(self.items) do
             if self.playerSrc and item.quantity > 0 then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name,
-                    Items[item.name].label, 0 - item.quantity, 0)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
+                    false, item.quantity, 0)
             end
             -- TODO remove totally element from inventory ?
             item.quantity = 0
@@ -178,7 +197,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     ----------
 
     self.saveInventory = function()
-        if self.modified == true then self.modified = false end
+        if self.modified == true then
+            self.modified = false
+        end
     end
 
     return self

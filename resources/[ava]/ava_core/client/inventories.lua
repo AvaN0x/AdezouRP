@@ -2,10 +2,13 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local InventoryElements, InventoryTopElements = {}, {}
+local InventoryElements, InventoryTopElements = nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
+InventoryMenu.Closed = function()
+    InventoryElements, InventoryTopElements = nil, nil
+end
 InventoryMenu:AddInstructionButton({GetControlGroupInstructionalButton(2, 15, 0), "Changer de tri"})
 local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
 ItemSelectedMenu.Closed = function()
@@ -57,8 +60,8 @@ local function SetSortingIndex(index)
         -- remove old notification of sorter to only show the actual sorting label
         ThefeedRemoveItem(sortNotificationId)
     end
-    sortNotificationId = AVA.ShowNotification(nil, nil, "ava_core_logo", "Inventaire",
-        ("Trié par ~y~%s~s~."):format(SortIndexes[sortIndex + 1].label), nil, "ava_core_logo")
+    sortNotificationId = AVA.ShowNotification(nil, nil, "ava_core_logo", "Inventaire", ("Trié par ~y~%s~s~."):format(SortIndexes[sortIndex + 1].label), nil,
+        "ava_core_logo")
 
     SortInventory()
 end
@@ -80,8 +83,16 @@ local function formatWeight(weight, digitCount)
     return ("%." .. digitCount .. "f"):format(weight / 1000)
 end
 
+---Get string for quantity unit
+---@param itemType string
+---@return string
+local function getQuantityUnit(itemType)
+    return itemType and itemType == "money" and "$" or "u."
+end
+
 ---Get inventory data from server and process it
 local function ReloadInventoryData()
+    local lastReloadInv = GetGameTimer()
     local invItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getInventoryItems")
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
 
@@ -97,12 +108,10 @@ local function ReloadInventoryData()
             local element = {
                 item = item,
                 label = item.label,
-                description = ("Poids unité : %s %s%s"):format(formatWeight(item.weight), unit,
-                    item.desc and ("\n%s"):format(item.desc) or ""),
-                RightLabel = ("%s %s - %s %s"):format(item.limit
-                                                          and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
-                                                          or AVA.Utils.FormatNumber(item.quantity),
-                    item.type and item.type == "money" and "$" or "u.", formatWeight(item.total_weight), unit),
+                description = ("Poids unité : %s %s%s"):format(formatWeight(item.weight), unit, item.desc and ("\n%s"):format(item.desc) or ""),
+                RightLabel = ("%s %s - %s %s"):format(item.limit and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
+                                                          or AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type), formatWeight(item.total_weight),
+                    unit),
                 LeftBadge = not item.noIcon and function()
                     return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
                 end or nil,
@@ -142,8 +151,8 @@ end
 local function SelectItem(item)
     selectedItem = item
     dprint(item.name)
-    ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity),
-        item.type and item.type == "money" and "$" or "u.")
+    ItemSelectedMenu.Index = 1
+    ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type))
 end
 
 function RageUI.PoolMenus:AvaCoreInventory()
@@ -157,29 +166,57 @@ function RageUI.PoolMenus:AvaCoreInventory()
         if AVAConfig.InventoryMoneyOnTop then
             for i = 1, #InventoryTopElements, 1 do
                 local element = InventoryTopElements[i]
-                Items:AddButton(element.label, element.description,
-                    {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
-                        if onSelected then SelectItem(element.item) end
-                    end, ItemSelectedMenu)
+                Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
+                    if onSelected then
+                        SelectItem(element.item)
+                    end
+                end, ItemSelectedMenu)
             end
         end
 
         for i = 1, #InventoryElements, 1 do
             local element = InventoryElements[i]
-            Items:AddButton(element.label, element.description,
-                {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
-                    if onSelected then SelectItem(element.item) end
-                end, ItemSelectedMenu)
+            Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
+                if onSelected then
+                    SelectItem(element.item)
+                end
+            end, ItemSelectedMenu)
         end
     end)
 
     ItemSelectedMenu:IsVisible(function(Items)
-        if selectedItem.usable then
-            Items:AddButton("Utiliser", nil, nil, function(onSelected)
+        if selectedItem.quantity > 0 then
+            if selectedItem.usable then
+                Items:AddButton("Utiliser", nil, nil, function(onSelected)
+                    if onSelected then
+                        selectedItem.quantity = selectedItem.quantity - 1
+                        local selectedItem = selectedItem
+                        if closeInv then
+                            RageUI.CloseAll()
+                        end
+                        TriggerServerEvent("ava_core:server:useItem", targetId, selectedItem.name, count)
+                    end
+                end)
+            end
+            Items:AddButton("Donner", nil, nil, function(onSelected)
+                if onSelected then
+                    local selectedItem = selectedItem
+                    Citizen.CreateThread(function()
+                        local targetId = AVA.Utils.ChooseClosestPlayer(nil, nil, true)
+                        if targetId then
+                            local count = tonumber(AVA.KeyboardInput(("%s - %s %s"):format("Entrez un nombre", AVA.Utils.FormatNumber(selectedItem.quantity),
+                                getQuantityUnit(selectedItem.type)), "", 10))
+                            if type(count) == "number" and math.floor(count) == count and count > 0 then
+                                TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
+                            end
+                        end
+                        OpenMyInventory()
+                    end)
+                end
             end)
+        else
+            RageUI.GoBack()
         end
-        Items:AddButton("Donner", nil, nil, function(onSelected)
-        end)
     end)
 end
 
@@ -189,7 +226,15 @@ end)
 
 RegisterKeyMapping("+keyInventory", "Inventaire", "keyboard", AVAConfig.InventoryKey)
 
-RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, editedQuantity, newQuantity)
-    AVA.ShowNotification(("%s%d %s"):format(editedQuantity and "+" or "-", editedQuantity, itemLabel))
+RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
+    if RageUI.Visible(InventoryMenu) and InventoryElements and InventoryTopElements then
+        ReloadInventoryData()
+    end
+    if selectedItem and selectedItem.name == itemName then
+        selectedItem.quantity = isAddition and (selectedItem.quantity + editedQuantity) or (selectedItem.quantity - editedQuantity)
+        ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(selectedItem.label, AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type))
+    end
+
+    AVA.ShowNotification(("%s%d %s"):format(isAddition and "+" or "-", editedQuantity, itemLabel))
 end)
 
