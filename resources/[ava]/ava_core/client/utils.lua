@@ -4,8 +4,8 @@
 -------------------------------------------
 ---Prompt the user a text
 ---@param titleText string
----@param defaultText string
----@param maxLength number
+---@param defaultText? string
+---@param maxLength? number
 ---@return string result prompted text
 AVA.KeyboardInput = function(titleText, defaultText, maxLength)
     AddTextEntry("AVA_KYBRD_INPT", titleText or "")
@@ -26,12 +26,12 @@ exports("KeyboardInput", AVA.KeyboardInput)
 
 ---Show a feedpost to the user
 ---@param text string
----@param color number
----@param textureName string
----@param title string
----@param subtitle string
----@param iconType number
----@param textureDict string
+---@param color? number
+---@param textureName? string
+---@param title? string
+---@param subtitle? string
+---@param iconType? number
+---@param textureDict? string
 ---@return number notificationId
 AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconType, textureDict)
     local feedPostId
@@ -89,7 +89,7 @@ AVA.Vehicles = {}
 ---@param vehName string|number
 ---@param coords vector3
 ---@param heading float
----@param isNetwork boolean set the vehicle to be on network or only on local
+---@param isNetwork? boolean set the vehicle to be on network or only on local
 ---@return vehicle
 AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
     local p = promise:new()
@@ -160,7 +160,7 @@ end
 exports("DeleteVehicle", AVA.Vehicles.DeleteVehicle)
 
 ---Get the vehicle in front of the user
----@param distance number
+---@param distance? number
 ---@return entity 
 AVA.Vehicles.GetVehicleInFront = function(distance)
     local yOffset = distance
@@ -171,7 +171,8 @@ AVA.Vehicles.GetVehicleInFront = function(distance)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local offsetCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, yOffset + 0.0, 0.0)
-    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z, offsetCoords.x, offsetCoords.y, offsetCoords.z, 10, playerPed, 0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z, offsetCoords.x, offsetCoords.y, offsetCoords.z,
+        10, playerPed, 0)
     local _, _, _, _, vehicle = GetShapeTestResult(rayHandle)
 
     return IsEntityAVehicle(vehicle) and vehicle or 0
@@ -220,10 +221,10 @@ exports("GetScaleformInstructionalButtons", AVA.Utils.GetScaleformInstructionalB
 ---@param y number
 ---@param z number
 ---@param text string
----@param size number
----@param r number
----@param g number
----@param b number
+---@param size? number
+---@param r? number
+---@param g? number
+---@param b? number
 AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
@@ -247,8 +248,8 @@ exports("DrawText3D", AVA.Utils.DrawText3D)
 ---@param y nulber
 ---@param z nulber
 ---@param text string
----@param backgroundColor number
----@param bubbleStyle number
+---@param backgroundColor? number
+---@param bubbleStyle? number
 AVA.Utils.DrawBubbleText3D = function(x, y, z, text, backgroundColor, bubbleStyle)
     local onScreen = World3dToScreen2d(x, y, z)
     if onScreen then
@@ -345,9 +346,9 @@ end
 ---Open a menu to select a player inside
 ---## WARNING
 ---**This have to be called inside of a thread, or everything excepted a RageUI callback**
----@param title string
----@param distance number
----@param allowMyself any
+---@param title? string
+---@param distance? number
+---@param allowMyself? boolean
 ---@return number playerLocalId
 ---@return number playerServerId
 AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
@@ -373,7 +374,12 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
             local targetCoords = GetEntityCoords(targetPed)
             if #(playerCoords - targetCoords) < distance then
                 playersCount = playersCount + 1
-                entitiesToSelect[playersCount] = {entity = targetPed, localId = player, serverId = GetPlayerServerId(player), label = player ~= playerId and ("Personne #%d"):format(playersCount) or "Moi"}
+                entitiesToSelect[playersCount] = {
+                    entity = targetPed,
+                    localId = player,
+                    serverId = GetPlayerServerId(player),
+                    label = player ~= playerId and ("Personne #%d"):format(playersCount) or "Moi",
+                }
             end
         end
     end
@@ -391,67 +397,3 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
     end
 end
 
--- -- whitelist and blacklist needs to be arrays of hashkeys
--- function ChooseClosestVehicle(cb, title, distance, whitelist, blacklist)
---     local playerPed = PlayerPedId()
-
---     if not distance or not tonumber(distance) or tonumber(distance) < 0 then distance = 3.0 end
---     if not title or title == "" then title = "select_a_vehicle" end
---     local elements = {}
-
---     local vehiclesCount = 0
---     local playerCoords = GetEntityCoords(playerPed)
---     for _, v in ipairs(GetGamePool("CVehicle")) do
---         local veh = GetObjectIndexFromEntityIndex(v)
---         local vehCoords = GetEntityCoords(veh)
---         local vehModel = GetEntityModel(veh)
---         if #(playerCoords - vehCoords) < distance + 0.0
---             and (whitelist == nil or #whitelist == 0 or ArrayContains(whitelist, vehModel))
---             and (blacklist == nil or #blacklist == 0 or not ArrayContains(blacklist, vehModel)) then
---             vehiclesCount = vehiclesCount + 1
---             table.insert(elements, {label = "Véhicule #" .. vehiclesCount, vehicle = veh})
---         end
---     end
-
---     if vehiclesCount > 0 then
---         local drawVehicles = true
---         Citizen.CreateThread(function()
---             while drawVehicles do
---                 Citizen.Wait(0)
---                 local playerCoords = GetEntityCoords(playerPed)
---                 for k, v in ipairs(elements) do
---                     local vehCoords = GetEntityCoords(v.vehicle)
---                     DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.3, vehCoords.x, vehCoords.y, vehCoords.z + 0.3,
---                         255, 0, 255, 128)
---                     DrawText3D(vehCoords.x, vehCoords.y, vehCoords.z + 0.3, v.label, 0.3)
---                 end
---             end
---         end)
---         Citizen.CreateThread(function()
---             while drawVehicles do
---                 Citizen.Wait(500)
---                 drawVehicles = ESX.UI.Menu.IsOpen("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_vehicle")
---             end
---         end)
---         ESX.UI.Menu.Open("default", GetCurrentResourceName(), "esx_avan0x_choose_closest_vehicle",
---             {title = title, align = "left", elements = elements}, function(data, menu)
---                 drawVehicles = false
---                 menu.close()
---                 cb(data.current.vehicle)
---             end, function(data, menu)
---                 drawVehicles = false
---                 menu.close()
---             end)
---     else
---         AVA.ShowNotification("no_vehicles_near")
---     end
--- end
-
--- function GetVehicleInFrontOrChooseClosestVehicle(cb, title, distance)
---     local vehicle = AVA.Vehicles.GetVehicleInFront(distance)
---     if vehicle ~= 0 then
---         cb(vehicle)
---     else
---         ChooseClosestVehicle(cb, title, distance)
---     end
--- end

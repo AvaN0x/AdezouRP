@@ -25,30 +25,26 @@ end
 
 local function GetDiscordGuildUser(discordId)
     if not discordId or type(discordId) ~= "string" then
-        print("^1[GetDiscordGuildUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId)
-                  .. "^1).^0")
+        print("^1[GetDiscordGuildUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId) .. "^1).^0")
         return
     elseif not AVAConfig.Discord.GuildId then
         print("^1[GetDiscordGuildUser] An error occured, AVAConfig.Discord.GuildId is not set.^0")
         return
     end
 
-    local member = AVA.Utils.DiscordRequest("GET", ("guilds/%s/members/%s"):format(AVAConfig.Discord.GuildId,
-        string.gsub(discordId, "discord:", "")), {})
+    local member = AVA.Utils.DiscordRequest("GET", ("guilds/%s/members/%s"):format(AVAConfig.Discord.GuildId, string.gsub(discordId, "discord:", "")), {})
     if member.code == 200 then
         local data = json.decode(member.data)
 
         return data
     end
-    print("^1[GetDiscordGuildUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8"
-              .. member.code .. "^0")
+    print("^1[GetDiscordGuildUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" .. member.code .. "^0")
     return
 end
 
 local function GetDiscordUser(discordId)
     if not discordId or type(discordId) ~= "string" then
-        print("^1[GetDiscordUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId)
-                  .. "^1).^0")
+        print("^1[GetDiscordUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId) .. "^1).^0")
         return
     elseif not AVAConfig.Discord.GuildId then
         print("^1[GetDiscordUser] An error occured, AVAConfig.Discord.GuildId is not set.^0")
@@ -61,8 +57,7 @@ local function GetDiscordUser(discordId)
 
         return data
     end
-    print("^1[GetDiscordUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8"
-              .. member.code .. "^0")
+    print("^1[GetDiscordUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" .. member.code .. "^0")
     return
 end
 
@@ -80,8 +75,7 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
     deferrals.update("Vérification des permissions...")
 
     if AVA.Players.BanList == nil then
-        deferrals.done(
-            "Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
+        deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", "The ban list have not loaded well !", 16711680)
     else
         local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(src)
@@ -97,8 +91,7 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
 
             local isBanned, banReason = AVA.Players.IsBanned(license, discord, steam, ip, live, xbl)
             if isBanned == nil then
-                deferrals.done(
-                    "Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
+                deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
             elseif isBanned == true then
                 deferrals.done("Vous avez été banni de ce serveur : " .. banReason)
             else
@@ -162,9 +155,10 @@ local function loadPlayer(src)
 end
 
 local function logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
-    if AVA.Players.List[tostring(src)] then
-        AVA.Players.List[tostring(src)].Logout()
-        AVA.Players.List[tostring(src)].Save()
+    local oldPlayer = AVA.Players.GetPlayer(src)
+    if oldPlayer then
+        oldPlayer.Logout()
+        oldPlayer.Save()
         AVA.Players.List[tostring(src)] = nil
     end
 
@@ -174,8 +168,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     -- if for any reason, we could not get player datas, then we drop the player
     -- /!\ this should not happen, but it's better to prevent than cure
     if not playerData then
-        DropPlayer(src,
-            "Une erreur s'est produite lors de la récupération de votre personnage. Veuillez réessayer dans un instant.")
+        DropPlayer(src, "Une erreur s'est produite lors de la récupération de votre personnage. Veuillez réessayer dans un instant.")
         print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
                   .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
@@ -188,8 +181,8 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     AVA.Players.List[tostring(src)] = aPlayer
 
     -- we check if the player character is valid
-    if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname
-        and aPlayer.character.sex and aPlayer.character.birthdate then
+    if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and aPlayer.character.sex
+        and aPlayer.character.birthdate then
         dprint("Player char is valid")
         loadPlayer(tostring(src))
     else
@@ -212,8 +205,7 @@ local function setupPlayer(src, oldSource)
         local member = AVAConfig.DiscordWhitelist and GetDiscordGuildUser(discord) or GetDiscordUser(discord)
         -- kick player if we could not get the discord user
         if not member then
-            DropPlayer(src,
-                "Votre utilisateur Discord n'a pas pu être récupéré. Veuillez réessayer dans un instant.")
+            DropPlayer(src, "Votre utilisateur Discord n'a pas pu être récupéré. Veuillez réessayer dans un instant.")
             print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
                       .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
@@ -238,8 +230,7 @@ local function setupPlayer(src, oldSource)
 
         -- check if the player already exist on database, we get the most last played and most recent found
         local citizenId = MySQL.Sync.fetchScalar(
-            "SELECT id FROM `players` WHERE `license` = @license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1",
-            {["@license"] = license})
+            "SELECT id FROM `players` WHERE `license` = @license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", {["@license"] = license})
         if citizenId then
             -- we found a character, so we update its discord and name
             -- we also edit the last_played value of all other characters this player have
@@ -252,8 +243,7 @@ local function setupPlayer(src, oldSource)
             -- })
         else
             -- we haven't found a character, so we create a new one
-            citizenId = MySQL.Sync.insert(
-                "INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
+            citizenId = MySQL.Sync.insert("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
                 {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName})
         end
 
@@ -268,8 +258,7 @@ local function setupPlayer(src, oldSource)
         for i = 1, #AVA.Commands.SuggestionList, 1 do
             local command = AVA.Commands.SuggestionList[i]
             if IsPlayerAceAllowed(src, ("command.%s"):format(command.name)) then
-                table.insert(suggestions,
-                    {name = "/" .. command.name, help = command.help or "", params = command.params})
+                table.insert(suggestions, {name = "/" .. command.name, help = command.help or "", params = command.params})
             end
         end
         TriggerClientEvent("chat:addSuggestions", src, suggestions)
@@ -277,9 +266,8 @@ local function setupPlayer(src, oldSource)
 
         -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. playerName .. "~s~ se connecte.")
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
-            "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)" .. " se connecte. ("
-                .. citizenId .. ")", 311891)
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
+            .. " se connecte. (" .. citizenId .. ")", 311891)
 
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
 
@@ -292,7 +280,9 @@ AddEventHandler("playerJoining", function(oldSource)
     setupPlayer(src, oldSource)
 end)
 
-for _, source in ipairs(GetPlayers()) do setupPlayer(source) end
+for _, source in ipairs(GetPlayers()) do
+    setupPlayer(source)
+end
 
 -- * replaced with event playerJoining
 -- RegisterNetEvent('ava_core:server:playerJoined', function()
@@ -304,26 +294,17 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
     local src = source
 
     local aPlayer = AVA.Players.List[tostring(src)]
-    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.character.firstname) == "string"
-        and type(aPlayer.skin) == "table" then
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name
-                  .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
+    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.character.firstname) == "string" and type(aPlayer.skin) == "table" then
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
         return
 
         -- we check if the player character is valid
-    elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname
-        and character.lastname ~= "" and character.sex and character.sex ~= "" and character.birthdate
-        and character.birthdate ~= "" and type(skin) == "table" and skin.sex then
+    elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
+        and character.sex ~= "" and character.birthdate and character.birthdate ~= "" and type(skin) == "table" and skin.sex then
         aPlayer.position = AVAConfig.DefaultPlayerData.position
-        aPlayer.character = {
-            firstname = character.firstname,
-            lastname = character.lastname,
-            sex = character.sex,
-            birthdate = character.birthdate,
-        }
+        aPlayer.character = {firstname = character.firstname, lastname = character.lastname, sex = character.sex, birthdate = character.birthdate}
         aPlayer.skin = skin
-        aPlayer.inventory = CreateInventory(tostring(src), AVAConfig.DefaultPlayerData.inventory,
-            AVAConfig.InventoryMaxWeight)
+        aPlayer.inventory = CreateInventory(tostring(src), AVAConfig.DefaultPlayerData.inventory, AVAConfig.InventoryMaxWeight)
         aPlayer.accounts = AVAConfig.DefaultPlayerData.accounts or {}
         aPlayer.status = AVAConfig.DefaultPlayerData.status or {}
         aPlayer.jobs = AVAConfig.DefaultPlayerData.jobs or {}
@@ -332,11 +313,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
         dprint(json.encode(aPlayer.character, {indent = true}))
         MySQL.Async.execute("UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id",
-            {
-                ["@character"] = json.encode(aPlayer.character),
-                ["@license"] = aPlayer.identifiers.license,
-                ["@id"] = aPlayer.citizenId,
-            }, function(result)
+            {["@character"] = json.encode(aPlayer.character), ["@license"] = aPlayer.identifiers.license, ["@id"] = aPlayer.citizenId}, function(result)
                 print("^2[SAVE CHARACTER] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
             end)
         aPlayer.Save()
@@ -345,8 +322,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name
-                  .. "^0)^9 need to create a new character because we received uncomplete values.^0("
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 need to create a new character because we received uncomplete values.^0("
                   .. aPlayer.citizenId .. ")")
         TriggerClientEvent("ava_core:client:createChar", src)
     end
@@ -362,12 +338,11 @@ AddEventHandler("playerDropped", function(reason)
     -- dprint(src, "playerDropped", reason)
     if AVA.Players.List[tostring(src)] then
         -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. AVA.Players.List[tostring(src)].name .. "~s~ se déconnecte.")
-        print("^5" .. AVA.Players.List[tostring(src)].discordTag .. "^0 (^3" .. AVA.Players.List[tostring(src)].name
-                  .. "^0) se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")")
+        print("^5" .. AVA.Players.List[tostring(src)].discordTag .. "^0 (^3" .. AVA.Players.List[tostring(src)].name .. "^0) se déconnecte. ("
+                  .. AVA.Players.List[tostring(src)].citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
-            "<@" .. string.gsub(AVA.Players.List[tostring(src)].identifiers.discord, "discord:", "") .. ">" .. " (`"
-                .. AVA.Players.List[tostring(src)].name .. "`)" .. " se déconnecte. ("
-                .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
+            "<@" .. string.gsub(AVA.Players.List[tostring(src)].identifiers.discord, "discord:", "") .. ">" .. " (`" .. AVA.Players.List[tostring(src)].name
+                .. "`)" .. " se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
 
         AVA.Players.List[tostring(src)].Logout()
         AVA.Players.List[tostring(src)].Save()
@@ -412,11 +387,37 @@ exports("GetSourceIdentifiers", AVA.Players.GetSourceIdentifiers)
 
 ---Get player from its source
 ---@param src string
----@return any
+---@return aPlayer
 AVA.Players.GetPlayer = function(src)
     return AVA.Players.List[tostring(src)]
 end
 exports("GetPlayer", AVA.Players.GetPlayer)
+
+---Make the source player use an item if possible
+---@param src string
+---@param itemName string
+AVA.Players.UseItem = function(src, itemName)
+    local aPlayer = AVA.Players.GetPlayer(src)
+
+    if not aPlayer or type(itemName) ~= "string" then
+        return
+    end
+    if type(AVA.UsableItems[itemName]) == "function" then
+        local item = aPlayer.inventory.getItem(itemName)
+        if item and item.quantity > 0 then
+            AVA.UsableItems[itemName](aPlayer.src)
+        end
+    end
+end
+exports("UseItem", AVA.Players.UseItem)
+
+RegisterNetEvent("ava_core:server:useItem", function(itemName)
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+    if aPlayer then
+        aPlayer.UseItem(itemName)
+    end
+end)
 
 ------------------------------------
 --------------- Bans ---------------
@@ -436,11 +437,12 @@ MySQL.ready(function()
 end)
 
 AVA.Players.IsBanned = function(license, discord, steam, ip, live, xbl)
-    if AVA.Players.BanList == nil then return end
+    if AVA.Players.BanList == nil then
+        return
+    end
 
     for k, v in ipairs(AVA.Players.BanList) do
-        if v.license == license or v.discord == discord or v.steam == steam or v.ip == ip or v.live == live or v.xbl
-            == xbl then
+        if v.license == license or v.discord == discord or v.steam == steam or v.ip == ip or v.live == live or v.xbl == xbl then
             -- return true, v.reason .. " (" .. v.staff_name .. ")"
             return true, v.reason
         end
@@ -499,7 +501,9 @@ RegisterNetEvent("ava_core:server:updatePosition", function(position)
     local src = source
     if position then
         local aPlayer = AVA.Players.GetPlayer(src)
-        if aPlayer then aPlayer.position = position end
+        if aPlayer then
+            aPlayer.position = position
+        end
     end
 end)
 
@@ -509,6 +513,8 @@ AVA.Players.Logout = function(src)
     if aPlayer then
         -- remove all RP related aces and principals
         dprint("^2[LOGOUT] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+    else
+        error("^1[AVA.Players.Logout]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
     end
 end
 
@@ -534,6 +540,8 @@ AVA.Players.Save = function(src)
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
             end)
+    else
+        error("^1[AVA.Players.Save]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
     end
 end
 
@@ -550,8 +558,7 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         end
 
         -- we check if the citizenId is owned by the license
-        local citizenExist = MySQL.Sync.fetchScalar(
-            "SELECT 1 FROM `players` WHERE `license` = @license AND `id` = @id LIMIT 0, 1",
+        local citizenExist = MySQL.Sync.fetchScalar("SELECT 1 FROM `players` WHERE `license` = @license AND `id` = @id LIMIT 0, 1",
             {["@license"] = license, ["@id"] = newCitizenId})
 
         if not citizenExist then
@@ -560,8 +567,7 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         end
 
         -- local license, discord, group, playerName, discordTag, citizenId = aPlayer.license, aPlayer.discord, aPlayer.group, aPlayer.playerName, aPlayer.discordTag, aPlayer.citizenId
-        local discord, group, playerName, discordTag = aPlayer.identifiers.discord, aPlayer.group, aPlayer.name,
-            aPlayer.discordTag
+        local discord, group, playerName, discordTag = aPlayer.identifiers.discord, aPlayer.group, aPlayer.name, aPlayer.discordTag
         dprint("citizen " .. newCitizenId .. " does exist for " .. license)
 
         -- we update the discord id and name of the new character
@@ -581,26 +587,22 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         -- check if player can create a new char
-        local charsCount = MySQL.Sync.fetchScalar("SELECT COUNT(1) FROM `players` WHERE `license` = @license",
-            {["@license"] = aPlayer.identifiers.license})
+        local charsCount = MySQL.Sync.fetchScalar("SELECT COUNT(1) FROM `players` WHERE `license` = @license", {["@license"] = aPlayer.identifiers.license})
         if charsCount >= AVAConfig.MaxChars then
-            TriggerClientEvent("ava_core:client:ShowNotification", src,
-                "~r~Vous ne pouvez pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages", nil, nil,
-                "ava_core_logo")
+            TriggerClientEvent("ava_core:client:ShowNotification", src, "~r~Vous ne pouvez pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages",
+                nil, nil, "ava_core_logo")
             return
         end
 
-        local license, discord, group, playerName, discordTag, citizenId = aPlayer.identifiers.license,
-            aPlayer.identifiers.discord, aPlayer.group, aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
+        local license, discord, group, playerName, discordTag, citizenId = aPlayer.identifiers.license, aPlayer.identifiers.discord, aPlayer.group,
+            aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
-        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `id` = @id AND `last_played` <> 0; ",
-            {["@id"] = citizenId})
+        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `id` = @id AND `last_played` <> 0; ", {["@id"] = citizenId})
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player
-        local newCitizenId = MySQL.Sync.insert(
-            "INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
+        local newCitizenId = MySQL.Sync.insert("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
             {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName})
 
         if not newCitizenId then
@@ -618,15 +620,13 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
-        local chars = MySQL.Sync.fetchAll(
-            "SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = @license ORDER BY `id` DESC",
+        local chars = MySQL.Sync.fetchAll("SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = @license ORDER BY `id` DESC",
             {["@license"] = aPlayer.identifiers.license})
         if chars[1] then
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
-            TriggerClientEvent("ava_core:client:ShowNotification", src,
-                "Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil, "ava_core_logo",
-                "Personnages", nil, nil, "ava_core_logo")
+            TriggerClientEvent("ava_core:client:ShowNotification", src, "Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil,
+                "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
         end
     end
 end, "get_all_player_chars")

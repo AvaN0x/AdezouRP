@@ -20,7 +20,9 @@ AVA.Player.IsDead = false
 -- end)
 
 Citizen.CreateThread(function()
-    while not AVA.Player.Data do Wait(10) end
+    while not AVA.Player.Data do
+        Wait(10)
+    end
 
     while true do
         Citizen.Wait(1000)
@@ -37,7 +39,9 @@ end)
 
 AVA.GetPlayerData = function()
     -- if player is not loaded, Data can't possibly (not sure) be incomplete
-    if AVA.Player.Loaded then return AVA.Player.Data end
+    if AVA.Player.Loaded then
+        return AVA.Player.Data
+    end
     return
 end
 
@@ -45,7 +49,9 @@ local function SpawnPlayer()
     AVA.Player.IsDead = false
     AVA.Player.HasSpawned = true
 
-    while not AVA.Player.Loaded do Wait(10) end
+    while not AVA.Player.Loaded do
+        Wait(10)
+    end
     local playerPed = PlayerPedId()
 
     -- dprint(AVA.Player.Data.position)
@@ -95,7 +101,9 @@ local function RespawnPlayer()
     Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
         DoScreenFadeOut(800)
-        while not IsScreenFadedOut() do Citizen.Wait(50) end
+        while not IsScreenFadedOut() do
+            Citizen.Wait(50)
+        end
 
         SetEntityCoordsNoOffset(playerPed, AVA.Player.Data.position, false, false, false, true)
         NetworkResurrectLocalPlayer(AVA.Player.Data.position, 0.0, true, false)
@@ -147,8 +155,7 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
     SelectCharMenu:IsVisible(function(Items)
         for i = 1, #playerChars, 1 do
             local char = playerChars[i]
-            Items:AddButton(char.label, char.subtitle,
-                {RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled},
+            Items:AddButton(char.label, char.subtitle, {RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled},
                 function(onSelected, onEntered)
                     if onSelected then
                         if char.id == -1 then
@@ -164,7 +171,9 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
 
 end
 RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
-    if AVA.Player.IsDead or AVA.Player.CreatingChar then return end
+    if AVA.Player.IsDead or AVA.Player.CreatingChar then
+        return
+    end
     RageUI.CloseAll()
     playerChars = {}
     for i = 1, #chars, 1 do
@@ -175,13 +184,9 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
                 label = ("%s %s"):format(char.character.firstname, char.character.lastname),
                 id = char.id,
                 disabled = char.last_played,
-                subtitle = ("ID de personnage ~o~%s~s~%s"):format(tostring(char.id),
-                    char.last_played and "\nPersonnage actuel" or ""),
+                subtitle = ("ID de personnage ~o~%s~s~%s"):format(tostring(char.id), char.last_played and "\nPersonnage actuel" or ""),
                 RightBadge = function()
-                    return {
-                        BadgeDictionary = "mpleaderboard",
-                        BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon",
-                    }
+                    return {BadgeDictionary = "mpleaderboard", BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon"}
                 end,
             })
         end
@@ -200,8 +205,8 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
     if #playerChars > 1 then
         RageUI.Visible(SelectCharMenu, true)
     else
-        AVA.ShowNotification("Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil, "ava_core_logo",
-            "Sélection de personnage", nil, nil, "ava_core_logo")
+        AVA.ShowNotification("Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil, "ava_core_logo", "Sélection de personnage", nil, nil,
+            "ava_core_logo")
     end
 end)
 

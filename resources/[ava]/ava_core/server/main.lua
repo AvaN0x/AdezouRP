@@ -27,7 +27,9 @@ for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
 end
 
 function dprint(...)
-    if AVAConfig.Debug then print("^3[DEBUG] ^0", ...) end
+    if AVAConfig.Debug then
+        print("^3[DEBUG] ^0", ...)
+    end
 end
 
 dprint([[
@@ -59,3 +61,25 @@ ExecuteCommand("add_ace group.admin command.ensure allow")
 ExecuteCommand("add_principal group.superadmin group.admin")
 ExecuteCommand("add_ace group.superadmin command allow")
 
+-------------------------------------
+--------------- Items ---------------
+-------------------------------------
+AVA.UsableItems = {}
+
+---Register an usable item
+---@param itemName any
+---@param callback fun(itemName: string, callback: function)
+AVA.RegisterUsableItem = function(itemName, callback)
+    if type(itemName) == "string" and type(callback) == "function" then
+        AVA.UsableItems[itemName] = callback
+        AVAConfig.Items[itemName].usable = true
+    end
+end
+
+AVA.RegisterUsableItem("bread", function(src)
+    print(src .. " tried to eat bread, unfortunately this feature is not done.")
+    local aPlayer = AVA.Players.GetPlayer(src)
+    if aPlayer then
+        aPlayer.inventory.removeItem("bread", 1)
+    end
+end)

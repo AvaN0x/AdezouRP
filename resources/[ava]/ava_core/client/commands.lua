@@ -12,8 +12,9 @@ end)
 
 RegisterNetEvent("ava:client:deleteVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false)
-                        or AVA.Vehicles.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.Vehicles.GetVehicleInFront(5)
 
-    if vehicle ~= 0 then AVA.Vehicles.DeleteVehicle(vehicle) end
+    if vehicle ~= 0 then
+        AVA.Vehicles.DeleteVehicle(vehicle)
+    end
 end)

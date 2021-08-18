@@ -8,7 +8,9 @@ local nextRequestId = 0
 ---@param eventName string
 ---@return any
 AVA.TriggerServerCallback = function(eventName, ...)
-    if type(eventName) ~= "string" then return end
+    if type(eventName) ~= "string" then
+        return
+    end
 
     local p = promise:new()
 

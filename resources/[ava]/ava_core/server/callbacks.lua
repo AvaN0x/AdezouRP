@@ -4,19 +4,16 @@
 -------------------------------------------
 local callbacks = {}
 
-RegisterNetEvent("ava_core:callbacks:server",
-    function(eventName, requestId, ...)
-        local src = source
-        local result
+RegisterNetEvent("ava_core:callbacks:server", function(eventName, requestId, ...)
+    local src = source
+    local result
 
-        if type(callbacks[eventName]) == "function" then
-            result = {callbacks[eventName](src, ...)}
-        end
+    if type(callbacks[eventName]) == "function" then
+        result = {callbacks[eventName](src, ...)}
+    end
 
-        TriggerClientEvent(
-            ("ava_core:callbacks:client:%s:%s"):format(eventName, requestId),
-            src, table.unpack(result))
-    end)
+    TriggerClientEvent(("ava_core:callbacks:client:%s:%s"):format(eventName, requestId), src, table.unpack(result))
+end)
 
 ---Register a server callback
 ---@param eventName string

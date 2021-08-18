@@ -87,7 +87,7 @@ end
 ---@param itemType string
 ---@return string
 local function getQuantityUnit(itemType)
-    return itemType and itemType == "money" and "$" or "u."
+    return itemType and itemType == "money" and "$" or ""
 end
 
 ---Get inventory data from server and process it
@@ -190,10 +190,10 @@ function RageUI.PoolMenus:AvaCoreInventory()
                     if onSelected then
                         selectedItem.quantity = selectedItem.quantity - 1
                         local selectedItem = selectedItem
-                        if closeInv then
+                        if selectedItem.closeInv then
                             RageUI.CloseAll()
                         end
-                        TriggerServerEvent("ava_core:server:useItem", targetId, selectedItem.name, count)
+                        TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
                     end
                 end)
             end
@@ -201,7 +201,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                 if onSelected then
                     local selectedItem = selectedItem
                     Citizen.CreateThread(function()
-                        local targetId = AVA.Utils.ChooseClosestPlayer(nil, nil, true)
+                        local targetId = AVA.Utils.ChooseClosestPlayer()
                         if targetId then
                             local count = tonumber(AVA.KeyboardInput(("%s - %s %s"):format("Entrez un nombre", AVA.Utils.FormatNumber(selectedItem.quantity),
                                 getQuantityUnit(selectedItem.type)), "", 10))

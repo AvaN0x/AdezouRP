@@ -5,6 +5,7 @@
 local Items = AVAConfig.Items
 
 function CreateInventory(playerSrc, items, max_weight, identifier, label)
+    ---@class inventory
     local self = {}
 
     self.playerSrc = playerSrc
@@ -57,8 +58,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             item.quantity = item.quantity + quantity
 
             if self.playerSrc then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
-                    true, quantity, item.quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
             end
 
             self.updateWeight()
@@ -77,8 +77,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             item.quantity = new_quantity >= 0 and new_quantity or 0
 
             if self.playerSrc then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
-                    false, quantity, item.quantity)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, quantity, item.quantity)
             end
             -- TODO remove totally element from inventory if 0?
             self.updateWeight()
@@ -182,8 +181,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     self.clearInventory = function()
         for k, item in ipairs(self.items) do
             if self.playerSrc and item.quantity > 0 then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label,
-                    false, item.quantity, 0)
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, item.quantity, 0)
             end
             -- TODO remove totally element from inventory ?
             item.quantity = 0
