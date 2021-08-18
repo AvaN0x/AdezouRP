@@ -59,3 +59,15 @@ RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
         end
     end
 end)
+
+RegisterNetEvent("ava_core:server:addtest", function()
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    print(src, aPlayer)
+    if aPlayer then
+        local inventory = aPlayer.GetInventory()
+        for k, v in pairs(AVAConfig.Items) do
+            inventory.addItem(k, 1)
+        end
+    end
+end)

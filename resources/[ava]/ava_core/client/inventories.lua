@@ -92,7 +92,6 @@ end
 
 ---Get inventory data from server and process it
 local function ReloadInventoryData()
-    local lastReloadInv = GetGameTimer()
     local invItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getInventoryItems")
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
 
@@ -226,15 +225,31 @@ end)
 
 RegisterKeyMapping("+keyInventory", "Inventaire", "keyboard", AVAConfig.InventoryKey)
 
+local editItem_timelastReload, editItem_waitingToReload = -1, false
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    if RageUI.Visible(InventoryMenu) and InventoryElements and InventoryTopElements then
+    AVA.ShowNotification(("%s%d %s"):format(isAddition and "+" or "-", editedQuantity, itemLabel))
+
+    if not editItem_waitingToReload and InventoryElements and InventoryTopElements and RageUI.Visible(InventoryMenu) then
+        -- prevent spamming the server for data
+        -- this will do it with at least 500ms between each calls
+        editItem_waitingToReload = true
+        local timer = GetGameTimer()
+        while (math.abs(timer - editItem_timelastReload) < 500) do
+            timer = GetGameTimer()
+            Wait(10)
+        end
+        editItem_timelastReload = timer
+        editItem_waitingToReload = false
         ReloadInventoryData()
     end
     if selectedItem and selectedItem.name == itemName then
-        selectedItem.quantity = isAddition and (selectedItem.quantity + editedQuantity) or (selectedItem.quantity - editedQuantity)
+        selectedItem.quantity = newQuantity
         ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(selectedItem.label, AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type))
     end
-
-    AVA.ShowNotification(("%s%d %s"):format(isAddition and "+" or "-", editedQuantity, itemLabel))
 end)
 
+RegisterCommand("+addtest", function()
+    TriggerServerEvent("ava_core:server:addtest")
+end)
+
+RegisterKeyMapping("+addtest", "addtest", "keyboard", "F3")
