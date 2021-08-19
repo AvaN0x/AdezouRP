@@ -63,7 +63,6 @@ end)
 RegisterNetEvent("ava_core:server:addtest", function()
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    print(src, aPlayer)
     if aPlayer then
         local inventory = aPlayer.inventory
         for k, v in pairs(AVAConfig.Items) do
