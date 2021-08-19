@@ -10,3 +10,5 @@ AVAConfig.Debug = false
 AVAConfig.InventoryKey = "F2"
 
 AVAConfig.InventoryMoneyOnTop = true
+
+AVAConfig.ClearMissionrowPD = true

@@ -32,6 +32,7 @@ client_scripts {
     "client/createchar.lua",
     "client/commands.lua",
     "client/inventories.lua",
+    "client/tweaks.lua",
 }
 
 server_scripts {
