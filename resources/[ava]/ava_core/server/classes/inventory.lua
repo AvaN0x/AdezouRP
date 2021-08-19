@@ -41,7 +41,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         if Items[name] then
             item = {name = name, quantity = 0}
 
-            table.insert(self.items, item)
+            self.items[#self.items + 1] = item
             return item
         else
             return nil
@@ -55,6 +55,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
         local item = self.getItem(name)
         if item then
+            quantity = math.floor(quantity)
             item.quantity = item.quantity + quantity
 
             if self.playerSrc then
@@ -73,6 +74,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
         local item = self.getItem(name)
         if item then
+            quantity = math.floor(quantity)
             local new_quantity = item.quantity - quantity
             item.quantity = new_quantity >= 0 and new_quantity or 0
 
@@ -92,6 +94,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
         local item = self.getItem(name)
         if item then
+            quantity = math.floor(quantity)
             item.quantity = quantity
 
             self.updateWeight()

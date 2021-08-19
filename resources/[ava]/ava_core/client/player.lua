@@ -26,14 +26,14 @@ Citizen.CreateThread(function()
 
     while true do
         Citizen.Wait(1000)
-        if not AVA.Player.IsDead then
-            local playerCoords = GetEntityCoords(PlayerPedId())
+        -- if not AVA.Player.IsDead then
+        local playerCoords = GetEntityCoords(PlayerPedId())
 
-            if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
-                TriggerServerEvent("ava_core:server:updatePosition", playerCoords)
-                AVA.Player.Data.position = playerCoords
-            end
+        if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
+            TriggerServerEvent("ava_core:server:updatePosition", playerCoords)
+            AVA.Player.Data.position = playerCoords
         end
+        -- end
     end
 end)
 

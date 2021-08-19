@@ -240,7 +240,10 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
         end
         editItem_timelastReload = timer
         editItem_waitingToReload = false
-        ReloadInventoryData()
+        -- Only reload if inventory is still visible
+        if RageUI.Visible(InventoryMenu) then
+            ReloadInventoryData()
+        end
     end
     if selectedItem and selectedItem.name == itemName then
         selectedItem.quantity = newQuantity

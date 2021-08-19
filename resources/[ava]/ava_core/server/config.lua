@@ -16,8 +16,16 @@ AVAConfig.MaxChars = 5
 
 AVAConfig.InventoryMaxWeight = 75000
 
-AVAConfig.DefaultPlayerData = {position = vector3(-1042.89, -2746.54, 20.37), inventory = {{name = "cash", quantity = 4000}}}
+AVAConfig.DefaultPlayerData = {
+    position = vector3(-1042.89, -2746.54, 20.37),
+    inventory = {{name = "cash", quantity = 2000}},
+    accounts = {{name = "bank", amount = 4000}},
+}
 
+-- List of all accounts that exists
+AVAConfig.Accounts = {bank = {label = "Banque"}}
+
+-- List of all items and their datas
 AVAConfig.Items = {
     cash = {label = "Argent", type = "money", description = "Argent liquide", weight = 0.1, alwaysDisplayed = true},
     dirtycash = {label = "Argent sale", type = "money", weight = 0.1, noIcon = true},

@@ -8,7 +8,7 @@ AVA.Commands.SuggestionList = {}
 ---Register a command using ace permissions to a group
 ---@param name string|table
 ---@param group string|nil
----@param callback any
+---@param callback fun(source: any, args: table, rawCommand: string) this can return a string that will be added to the discord log
 ---@param help string
 ---@param params table {name: string, help: string}
 AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
@@ -32,7 +32,14 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     group = type(group) == "string" and group:lower() or nil
 
     local needAce = group and group ~= ""
-    RegisterCommand(name, callback, needAce)
+    RegisterCommand(name, function(source, args, rawCommand)
+        local commandString = callback(source, args, rawCommand)
+
+        local aPlayer = AVA.Players.GetPlayer(source)
+        local logString = ("**%s** used command `/%s`"):format(aPlayer and aPlayer.GetDiscordTag() or GetPlayerName(source), rawCommand)
+        -- print("^5[COMMAND]^0 " .. logString)
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 15902015)
+    end, needAce)
 
     if needAce then
         ExecuteCommand("add_ace group." .. group .. " command." .. name .. " allow")
@@ -45,6 +52,10 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
 end
 exports("RegisterCommand", AVA.Commands.RegisterCommand)
 
+----------------------------------------
+--------------- Vehicles ---------------
+----------------------------------------
+
 AVA.Commands.RegisterCommand({"vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
     if type(args[1]) == "string" then
         TriggerClientEvent("ava:client:spawnVehicle", source, args[1])
@@ -55,6 +66,81 @@ AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "ad
     TriggerClientEvent("ava:client:deleteVehicle", source)
 end, "delete_car")
 
+----------------------------------------
+--------------- Accounts ---------------
+----------------------------------------
+
+AVA.Commands.RegisterCommand("ag", "admin", function(source, args)
+    local aPlayer = AVA.Players.GetPlayer(source)
+    if aPlayer then
+        dprint("accounts", json.encode(aPlayer.accounts))
+    end
+end)
+
+AVA.Commands.RegisterCommand("addaccount", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local accountExist = aPlayer.AddAccountMoney(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** received **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
+    end
+end, "Add money to a player account balance", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "account", help = "Account name (bank)"},
+    {name = "balance", help = "Money amount"},
+})
+
+AVA.Commands.RegisterCommand("setaccount", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local accountExist = aPlayer.SetAccountMoney(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** on account named " .. args[2] .. " has its balance set to **" .. args[3] .. "**.")
+    end
+end, "Set balance of a player account", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "account", help = "Account name (bank)"},
+    {name = "balance", help = "Money amount"},
+})
+
+AVA.Commands.RegisterCommand("removeaccount", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local accountExist = aPlayer.RemoveAccountMoney(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** deducted **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
+    end
+end, "Remove money from a player account balance", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "account", help = "Account name (bank)"},
+    {name = "balance", help = "Money amount"},
+})
+
+-----------------------------------------
+--------------- Inventory ---------------
+-----------------------------------------
+
+AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
+    local aPlayer = AVA.Players.GetPlayer(type(args[1]) == "string" and args[1] or source)
+    if aPlayer then
+        aPlayer.inventory.clearInventory()
+    end
+end, "Clear player inventory", {{name = "player", help = "Player id, empty if yourself"}})
+
+--------------------------------------
+--------------- Others ---------------
+--------------------------------------
+
 AVA.Commands.RegisterCommand("report", "", function(source, args)
     TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
 end, "report", {{name = "reason", help = "your_reason"}})
+
