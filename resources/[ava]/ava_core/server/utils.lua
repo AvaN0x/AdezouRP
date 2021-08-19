@@ -58,7 +58,13 @@ AVA.Utils.SendWebhookEmbedMessage = function(webhookName, title, description, co
         PerformHttpRequest(webhook, function(err, text, headers)
         end, "POST", json.encode({
             embeds = {
-                {title = title, description = description, color = color, footer = GetConvar("DEV_SERVER", "false") ~= "false" and {text = "DEV SERVER"} or nil},
+                {
+                    title = title,
+                    description = description,
+                    color = color,
+                    footer = GetConvar("DEV_SERVER", "false") ~= "false" and {text = "DEV SERVER"} or nil,
+                    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                },
             },
         }), {["Content-Type"] = "application/json"})
     end
