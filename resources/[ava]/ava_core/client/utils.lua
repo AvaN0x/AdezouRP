@@ -339,7 +339,6 @@ local function SelectEntity(title, entitiesToSelect, cb)
         SelectEntityMenu = nil
 
         cb(selectedEntity)
-        print("menu closed")
     end)
 end
 
@@ -367,24 +366,24 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
 
     local entitiesToSelect = {}
 
-    local playersCount = 0
+    local entityCount = 0
     for _, player in ipairs(GetActivePlayers()) do
         if player ~= playerId or allowMyself then
             local targetPed = GetPlayerPed(player)
             local targetCoords = GetEntityCoords(targetPed)
             if #(playerCoords - targetCoords) < distance then
-                playersCount = playersCount + 1
-                entitiesToSelect[playersCount] = {
+                entityCount = entityCount + 1
+                entitiesToSelect[entityCount] = {
                     entity = targetPed,
                     localId = player,
                     serverId = GetPlayerServerId(player),
-                    label = player ~= playerId and ("Personne #%d"):format(playersCount) or "Moi",
+                    label = player ~= playerId and ("Personne #%d"):format(entityCount) or "Moi",
                 }
             end
         end
     end
 
-    if playersCount > 0 then
+    if entityCount > 0 then
         local p = promise:new()
         SelectEntity(title, entitiesToSelect, function(entity)
             p:resolve(entity)
@@ -393,7 +392,75 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
         local player = Citizen.Await(p) or {}
         return player.serverId, player.localId
     else
-        AVA.ShowNotification("Aucun joueur proche")
+        AVA.ShowNotification("Aucun joueur assez proche")
     end
 end
+exports("ChooseClosestPlayer", AVA.Utils.ChooseClosestPlayer)
 
+---Open a menu to select a player inside
+---## WARNING
+---**This have to be called inside of a thread, or everything excepted a RageUI callback**
+---@param title? string
+---@param distance? number
+---@param whitelist? table table of hashes to whitelist
+---@param blacklsit? table table of hashes to blacklist
+---@return vehicle vehicle
+AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
+    local playerPed = PlayerPedId()
+    local playerCoords = GetEntityCoords(playerPed)
+
+    if not title or title == "" then
+        title = "Sélectionner un véhicule"
+    end
+    if not distance or not tonumber(distance) or tonumber(distance) <= 0 then
+        distance = 5.0
+    else
+        distance = distance + 0.0
+    end
+
+    local entitiesToSelect = {}
+    local entityCount = 0
+
+    for _, v in ipairs(GetGamePool("CVehicle")) do
+        local veh = GetObjectIndexFromEntityIndex(v)
+        local vehCoords = GetEntityCoords(veh)
+        local vehModel = GetEntityModel(veh)
+        if #(playerCoords - vehCoords) < distance + 0.0 and (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
+            and (blacklist == nil or #blacklist == 0 or not AVA.Utils.TableHasValue(blacklist, vehModel)) then
+            entityCount = entityCount + 1
+            entitiesToSelect[entityCount] = {label = ("Véhicule #%d"):format(entityCount), entity = veh}
+        end
+    end
+
+    if entityCount > 0 then
+        local p = promise:new()
+        SelectEntity(title, entitiesToSelect, function(entity)
+            p:resolve(entity)
+        end)
+
+        local veh = Citizen.Await(p) or {}
+        return veh.entity
+    else
+        AVA.ShowNotification("Aucun véhicule assez proche")
+    end
+end
+exports("ChooseClosestVehicle", AVA.Vehicles.ChooseClosestVehicle)
+
+---Get the vehicle in front of the player, if none is found, it calls AVA.Vehicles.ChooseClosestVehicle to let the player select a vehicle close
+---@param distance number
+---@param title string
+---@return vehicle vehicle
+AVA.Vehicles.GetVehicleInFrontOrChooseClosest = function(distance, title)
+    if not distance or not tonumber(distance) or tonumber(distance) < 0 then
+        distance = 4.0
+    else
+        distance = distance + 0.0
+    end
+
+    local vehicle = AVA.Vehicles.GetVehicleInFront(distance)
+    if vehicle == 0 then
+        vehicle = AVA.Vehicles.ChooseClosestVehicle(title, distance)
+    end
+    return vehicle
+end
+exports("GetVehicleInFrontOrChooseClosest", AVA.Vehicles.GetVehicleInFrontOrChooseClosest)
