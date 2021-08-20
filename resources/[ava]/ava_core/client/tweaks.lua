@@ -56,12 +56,22 @@ Citizen.CreateThread(function()
     -- * remove wanted level
     SetMaxWantedLevel(0)
 
+    -- * set some stats
+    StatSetInt(GetHashKey("MP0_STAMINA"), 30, true)
+    StatSetInt(GetHashKey("MP0_STRENGTH"), 0, true)
+    StatSetInt(GetHashKey("MP0_LUNG_CAPACITY"), 100, true)
+    StatSetInt(GetHashKey("MP0_WHEELIE_ABILITY"), 0, true)
+    StatSetInt(GetHashKey("MP0_FLYING_ABILITY"), 0, true)
+    StatSetInt(GetHashKey("MP0_SHOOTING_ABILITY"), 0, true)
+    StatSetInt(GetHashKey("MP0_STEALTH_ABILITY"), 0, true)
+
     local loop = 0
     local playerId = PlayerId()
     while true do
         Wait(0)
         loop = loop + 1
         DisablePlayerVehicleRewards(playerId)
+        SetPlayerHealthRechargeMultiplier(playerId, 0.0)
 
         SetPedDensityMultiplierThisFrame(0.5)
         SetVehicleDensityMultiplierThisFrame(0.65)
