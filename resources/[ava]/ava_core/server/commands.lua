@@ -70,7 +70,8 @@ end, "delete_car")
 --------------- Accounts ---------------
 ----------------------------------------
 
-AVA.Commands.RegisterCommand("ag", "admin", function(source, args)
+-- * DEBUG
+AVA.Commands.RegisterCommand("debugaccounts", "superadmin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(source)
     if aPlayer then
         dprint("accounts", json.encode(aPlayer.accounts))
@@ -123,6 +124,92 @@ end, "Remove money from a player account balance", {
     {name = "player", help = "Player id, 0 is yourself"},
     {name = "account", help = "Account name (bank)"},
     {name = "balance", help = "Money amount"},
+})
+
+----------------------------------------
+--------------- Licenses ---------------
+----------------------------------------
+
+-- * DEBUG
+AVA.Commands.RegisterCommand("debuglicenses", "superadmin", function(source, args)
+    local aPlayer = AVA.Players.GetPlayer(source)
+    if aPlayer then
+        dprint("licenses", json.encode(aPlayer.metadata.licenses))
+    end
+end)
+
+AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local licenseAdded = aPlayer.AddLicense(args[2])
+        return licenseAdded and ("**" .. aPlayer.GetDiscordTag() .. "** received license named **" .. args[2] .. "**.")
+    end
+end, "Add a license to a player",
+    {{name = "player", help = "Player id, 0 is yourself"}, {name = "license", help = "License name (driver, trafficLaws, weapon)"}})
+
+AVA.Commands.RegisterCommand("removelicense", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local licenseRemoved = aPlayer.RemoveLicense(args[2])
+        return licenseRemoved and ("**" .. aPlayer.GetDiscordTag() .. "** got the license named **" .. args[2] .. "** removed.")
+    end
+end, "Remove license from a player",
+    {{name = "player", help = "Player id, 0 is yourself"}, {name = "license", help = "License name (driver, trafficLaws, weapon)"}})
+
+AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local success, quantity = aPlayer.SetLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+    end
+end, "Set quantity of points from a player license", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "quantity", help = "Quantity of points"},
+})
+
+AVA.Commands.RegisterCommand("addlicensepoints", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local success, quantity = aPlayer.AddLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+    end
+end, "Add points to a player license", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "quantity", help = "Quantity of points"},
+})
+
+AVA.Commands.RegisterCommand("removelicensepoints", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aPlayer then
+        local success, quantity = aPlayer.RemoveLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+    end
+end, "Remove points from a player license", {
+    {name = "player", help = "Player id, 0 is yourself"},
+    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "quantity", help = "Quantity of points"},
 })
 
 -----------------------------------------

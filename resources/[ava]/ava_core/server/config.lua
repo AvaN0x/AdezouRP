@@ -23,6 +23,14 @@ AVAConfig.DefaultPlayerData = {
 }
 
 -- List of all accounts that exists
+AVAConfig.Licenses = {
+    trafficLaws = {label = "Code de la route"},
+    driver = {label = "Permis", hasPoints = true, defaultPoints = 12},
+
+    weapon = {label = "Permis de Port d'Armes"},
+}
+
+-- List of all accounts that exists
 AVAConfig.Accounts = {bank = {label = "Banque"}}
 
 -- List of all items and their datas
