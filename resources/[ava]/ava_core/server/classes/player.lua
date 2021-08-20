@@ -175,7 +175,10 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                 if type(self.metadata.licenses) ~= "table" then
                     self.metadata.licenses = {}
                 end
-                self.metadata.licenses[#self.metadata.licenses + 1] = {name = licenseName, points = cfgLicense.hasPoints and cfgLicense.defaultPoints}
+                self.metadata.licenses[#self.metadata.licenses + 1] = {
+                    name = licenseName,
+                    points = cfgLicense.hasPoints and (cfgLicense.defaultPoints or cfgLicense.maxPoints),
+                }
                 return true
             end
         end
@@ -213,7 +216,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     ---Set quantity of points a player have on a license
     ---@param licenseName string
-    ---@param quantity number needs to be less than license defaultPoints
+    ---@param quantity number needs to be less than license maxPoints
     ---@return boolean success
     self.SetLicensePoints = function(licenseName, quantity)
         local hasLicense, license = self.HasLicense(licenseName)
@@ -221,7 +224,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         if hasLicense and tonumber(quantity) then
             local cfgLicense = AVAConfig.Licenses[licenseName]
             quantity = math.floor(tonumber(quantity))
-            if cfgLicense and cfgLicense.hasPoints and quantity >= 0 and quantity <= cfgLicense.defaultPoints then
+            if cfgLicense and cfgLicense.hasPoints and quantity >= 0 and quantity <= cfgLicense.maxPoints then
                 license.points = quantity
                 return true, license.points
             end
@@ -252,7 +255,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     ---Add a quantity of points to a player license
     ---@param licenseName string
-    ---@param quantity number if new quantity is above the license defaultPoints, the new quantity will be the license defaultPoints
+    ---@param quantity number if new quantity is above the license maxPoints, the new quantity will be the license maxPoints
     ---@return boolean success
     self.AddLicensePoints = function(licenseName, quantity)
         local hasLicense, license = self.HasLicense(licenseName)
@@ -262,8 +265,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             quantity = math.floor(tonumber(quantity))
             if cfgLicense and cfgLicense.hasPoints and quantity >= 0 then
                 license.points = license.points + quantity
-                if license.points > cfgLicense.defaultPoints then
-                    license.points = cfgLicense.defaultPoints
+                if license.points > cfgLicense.maxPoints then
+                    license.points = cfgLicense.maxPoints
                 end
                 return true, license.points
             end

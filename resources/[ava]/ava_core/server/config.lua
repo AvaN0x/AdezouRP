@@ -25,7 +25,7 @@ AVAConfig.DefaultPlayerData = {
 -- List of all accounts that exists
 AVAConfig.Licenses = {
     trafficLaws = {label = "Code de la route"},
-    driver = {label = "Permis", hasPoints = true, defaultPoints = 12},
+    driver = {label = "Permis", hasPoints = true, defaultPoints = 12, maxPoints = 12},
 
     weapon = {label = "Permis de Port d'Armes"},
 }
