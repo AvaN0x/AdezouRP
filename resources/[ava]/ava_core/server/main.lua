@@ -10,13 +10,14 @@ AVA = {}
 
 local resourceName = GetCurrentResourceName()
 for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
-    if GetResourceMetadata(resourceName, "my_data", i - 1) == "discord_config" then
+    local dataName = GetResourceMetadata(resourceName, "my_data", i - 1)
+    if dataName == "discord_config" then
         AVAConfig.Discord = json.decode(GetResourceMetadata(resourceName, "my_data_extra", i - 1))
 
-    elseif GetResourceMetadata(resourceName, "my_data", i - 1) == "debug_prints" then
+    elseif dataName == "debug_prints" then
         AVAConfig.Debug = true
 
-    elseif GetResourceMetadata(resourceName, "my_data", i - 1) == "max_characters" then
+    elseif dataName == "max_characters" then
         local value = json.decode(GetResourceMetadata(resourceName, "my_data_extra", i - 1)) or 0
         if value ~= "null" and tonumber(value) > 0 then
             AVAConfig.MaxChars = tonumber(value)

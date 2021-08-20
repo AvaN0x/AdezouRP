@@ -84,6 +84,20 @@ exports("ShowHelpNotification", AVA.ShowHelpNotification)
 --------------- Vehicles ---------------
 ----------------------------------------
 
+AVA.RequestModel = function(model)
+    if IsModelValid(model) then
+        RequestModel(GetHashKey(model))
+        while not HasModelLoaded(GetHashKey(model)) do
+            Wait(0)
+        end
+    end
+end
+exports("RequestModel", AVA.RequestModel)
+
+----------------------------------------
+--------------- Vehicles ---------------
+----------------------------------------
+
 AVA.Vehicles = {}
 ---Spawn a vehicle at a given coords and heading
 ---@param vehName string|number

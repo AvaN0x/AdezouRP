@@ -318,11 +318,13 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
             end)
         aPlayer.Save()
 
+        TriggerClientEvent("ava_core:client:joinCutScene", src)
+
         loadPlayer(src)
 
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 need to create a new character because we received uncomplete values.^0("
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 need to create a character again because we received uncomplete values.^0("
                   .. aPlayer.citizenId .. ")")
         TriggerClientEvent("ava_core:client:createChar", src)
     end

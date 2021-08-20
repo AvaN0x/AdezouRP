@@ -115,17 +115,15 @@ end
 
 local function ValidateData()
     local hadError = false
-    if not CharacterData.firstname or CharacterData.firstname == "" or not CharacterData.lastname or CharacterData.lastname == ""
-        or not CharacterData.birthdate or CharacterData.birthdate == ""
-        or not string.find(CharacterData.birthdate, "%d%d/%d%d/%d%d%d%d") then
+    if not CharacterData.firstname or CharacterData.firstname == "" or not CharacterData.lastname or CharacterData.lastname == "" or not CharacterData.birthdate
+        or CharacterData.birthdate == "" or not string.find(CharacterData.birthdate, "%d%d/%d%d/%d%d%d%d") then
         hadError = true
-        AVA.ShowNotification("~r~Les informations sur l'identité de votre personnage ne sont pas valides.", nil,
-            "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
+        AVA.ShowNotification("~r~Les informations sur l'identité de votre personnage ne sont pas valides.", nil, "ava_core_logo", "Date de naissance", nil,
+            nil, "ava_core_logo")
     end
     if CharacterData.selectedOutfit == 0 then
         hadError = true
-        AVA.ShowNotification("~r~Vous n'avez pas séléctionné de tenue.", nil, "ava_core_logo", "Vêtements", nil, nil,
-            "ava_core_logo")
+        AVA.ShowNotification("~r~Vous n'avez pas séléctionné de tenue.", nil, "ava_core_logo", "Vêtements", nil, nil, "ava_core_logo")
     end
 
     return not hadError
@@ -501,40 +499,44 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
         Items:AddButton("Tenues", "", {RightLabel = "→→→"}, nil, SubMenuOutfits)
 
-        Items:AddButton("Sauvegarder et valider", nil, {
-            Color = {BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight},
-        }, function(onSelected)
-            if onSelected and ValidateData() then RageUI.CloseAll() end
-        end)
+        Items:AddButton("Sauvegarder et valider", nil,
+            {Color = {BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight}}, function(onSelected)
+                if onSelected and ValidateData() then
+                    RageUI.CloseAll()
+                end
+            end)
     end)
 
     SubMenuIdentity:IsVisible(function(Items)
         Items:AddButton("Prénom", "(50 caractères max.)", {RightLabel = CharacterData.firstname}, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères max.)", "", 50)
-                if result and result ~= "" then CharacterData.firstname = result end
+                if result and result ~= "" then
+                    CharacterData.firstname = result
+                end
             end
         end)
         Items:AddButton("Nom", "(50 caractères max.)", {RightLabel = CharacterData.lastname}, function(onSelected)
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre nom (50 caractères max.)", "", 50)
-                if result and result ~= "" then CharacterData.lastname = result end
+                if result and result ~= "" then
+                    CharacterData.lastname = result
+                end
             end
         end)
-        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020",
-            {RightLabel = CharacterData.birthdate}, function(onSelected)
-                if onSelected then
-                    local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
-                    if result and result ~= "" then
-                        if string.find(result, "%d%d/%d%d/%d%d%d%d") then
-                            CharacterData.birthdate = result
-                        else
-                            AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo",
-                                "Date de naissance", nil, nil, "ava_core_logo")
-                        end
+        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020", {RightLabel = CharacterData.birthdate}, function(onSelected)
+            if onSelected then
+                local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
+                if result and result ~= "" then
+                    if string.find(result, "%d%d/%d%d/%d%d%d%d") then
+                        CharacterData.birthdate = result
+                    else
+                        AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo", "Date de naissance", nil, nil,
+                            "ava_core_logo")
                     end
                 end
-            end)
+            end
+        end)
     end)
 
     SubMenuHeritage:IsVisible(function(Items)
@@ -582,8 +584,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton("Forme du menton", "Modifiez votre visage")
         Items:AddButton("Largeur du cou", "Modifiez votre visage")
     end, function(Panels)
-        Panels:Grid(CharacterData.Visage.ForeHeadX or 0.5, CharacterData.Visage.ForeHeadY or 0.5, "Haut", "Bas", "Intérieur",
-            "Extérieur", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.ForeHeadX or 0.5, CharacterData.Visage.ForeHeadY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
+            function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.ForeHeadX = X
                 CharacterData.Visage.ForeHeadY = Y
                 exports.skinchanger:changesNoApply({eyebrows_6 = CharacterX * 100, eyebrows_5 = CharacterY * 100})
@@ -606,8 +608,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_2
             end, 3)
 
-        Panels:Grid(CharacterData.Visage.NoseBoneX or 0.5, CharacterData.Visage.NoseBoneY or 0.5, "Saillante", "Incurvée",
-            "Courte", "Longue", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.NoseBoneX or 0.5, CharacterData.Visage.NoseBoneY or 0.5, "Saillante", "Incurvée", "Courte", "Longue",
+            function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.NoseBoneX = X
                 CharacterData.Visage.NoseBoneY = Y
                 exports.skinchanger:changesNoApply({nose_3 = (1 - CharacterX) * 100, nose_4 = CharacterY * 100})
@@ -615,8 +617,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_4
             end, 4)
 
-        Panels:Grid(CharacterData.Visage.NosePeakX or 0.5, CharacterData.Visage.NosePeakY or 0.5, "Bout vers le haut",
-            "Bout vers le bas", "Cassé\ngauche", "Cassé\ndroite", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.NosePeakX or 0.5, CharacterData.Visage.NosePeakY or 0.5, "Bout vers le haut", "Bout vers le bas", "Cassé\ngauche",
+            "Cassé\ndroite", function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.NosePeakX = X
                 CharacterData.Visage.NosePeakY = Y
                 exports.skinchanger:changesNoApply({nose_6 = (1 - CharacterX) * 100, nose_5 = CharacterY * 100})
@@ -624,8 +626,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_5
             end, 5)
 
-        Panels:Grid(CharacterData.Visage.CheekBoneX or 0.5, CharacterData.Visage.CheekBoneY or 0.5, "Haut", "Bas", "Intérieur",
-            "Extérieur", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.CheekBoneX or 0.5, CharacterData.Visage.CheekBoneY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
+            function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.CheekBoneX = X
                 CharacterData.Visage.CheekBoneY = Y
                 exports.skinchanger:changesNoApply({cheeks_2 = CharacterX * 100, cheeks_1 = CharacterY * 100})
@@ -654,8 +656,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_2
             end, 9)
 
-        Panels:Grid(CharacterData.Visage.ChinX or 0.5, CharacterData.Visage.ChinY or 0.5, "Haut", "Bas", "Intérieur",
-            "Extérieur", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.ChinX or 0.5, CharacterData.Visage.ChinY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
+            function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.ChinX = X
                 CharacterData.Visage.ChinY = Y
                 exports.skinchanger:changesNoApply({chin_2 = CharacterX * 100, chin_1 = CharacterY * 100})
@@ -663,8 +665,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_1
             end, 10)
 
-        Panels:Grid(CharacterData.Visage.ChinShapeX or 0.5, CharacterData.Visage.ChinShapeY or 0.5, "Arrondi", "Fossette",
-            "Carré", "Pointu", function(X, Y, CharacterX, CharacterY)
+        Panels:Grid(CharacterData.Visage.ChinShapeX or 0.5, CharacterData.Visage.ChinShapeY or 0.5, "Arrondi", "Fossette", "Carré", "Pointu",
+            function(X, Y, CharacterX, CharacterY)
                 CharacterData.Visage.ChinShapeX = X
                 CharacterData.Visage.ChinShapeY = Y
                 exports.skinchanger:changesNoApply({chin_3 = (1 - CharacterX) * 100, chin_4 = CharacterY * 100})
@@ -680,8 +682,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuAppearance:IsVisible(function(Items)
-        Items:AddList("Coiffure", (SkinMaxVals.hair_1 or -1) + 1, CharacterData.Appearance.HairCutIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Coiffure", (SkinMaxVals.hair_1 or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.HairCutIndex = Index
 
@@ -691,8 +693,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     -- SkinMaxVals.hair_2 = GetNumberOfPedTextureVariations(playerPed, 2, CharacterSkin.hair_1) - 1
                 end
             end)
-        Items:AddList("Sourcils", (SkinMaxVals.eyebrows_1 or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Sourcils", (SkinMaxVals.eyebrows_1 or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeBrowsIndex = Index
 
@@ -701,8 +703,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Pilosité faciale", (SkinMaxVals.beard_1 or -1) + 1, CharacterData.Appearance.BeardIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Pilosité faciale", (SkinMaxVals.beard_1 or -1) + 1, CharacterData.Appearance.BeardIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BeardIndex = Index
 
@@ -711,8 +713,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Problèmes peau", (SkinMaxVals.blemishes_1 or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Problèmes peau", (SkinMaxVals.blemishes_1 or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BlemishesIndex = Index
 
@@ -721,8 +723,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Signes de vieillissement", (SkinMaxVals.age_1 or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Signes de vieillissement", (SkinMaxVals.age_1 or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinAgingIndex = Index
 
@@ -731,8 +733,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Teint", (SkinMaxVals.complexion_1 or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Teint", (SkinMaxVals.complexion_1 or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.ComplexionIndex = Index
 
@@ -741,8 +743,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Taches cutanées", (SkinMaxVals.moles_1 or -1) + 1, CharacterData.Appearance.MolesIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Taches cutanées", (SkinMaxVals.moles_1 or -1) + 1, CharacterData.Appearance.MolesIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.MolesIndex = Index
 
@@ -751,8 +753,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Aspect de la peau", (SkinMaxVals.sun_1 or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Aspect de la peau", (SkinMaxVals.sun_1 or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinDamageIndex = Index
 
@@ -761,8 +763,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Couleur des yeux", (SkinMaxVals.eye_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Couleur des yeux", (SkinMaxVals.eye_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeColorIndex = Index
 
@@ -771,8 +773,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedEyeColor(playerPed, CharacterSkin.eye_color, 0, 1)
                 end
             end)
-        Items:AddList("Maquilage yeux", (SkinMaxVals.makeup_1 or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Maquilage yeux", (SkinMaxVals.makeup_1 or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeMakeupIndex = Index
 
@@ -781,8 +783,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Rouge à lèvres", (SkinMaxVals.lipstick_1 or -1) + 1, CharacterData.Appearance.LipstickIndex or 1,
-            "Changez votre apparence.", {}, function(Index, onSelected, onListChange)
+        Items:AddList("Rouge à lèvres", (SkinMaxVals.lipstick_1 or -1) + 1, CharacterData.Appearance.LipstickIndex or 1, "Changez votre apparence.", {},
+            function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.LipstickIndex = Index
 
@@ -794,8 +796,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
     end, function(Panels)
         if CharacterSkin.hair_1 ~= 0 then
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1,
-                CharacterData.Appearance.HairColorIndex or 1, function(MinimumIndex, CurrentIndex)
+            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1, CharacterData.Appearance.HairColorIndex or 1,
+                function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.HairColorMin = MinimumIndex
                     CharacterData.Appearance.HairColorIndex = CurrentIndex
 
@@ -947,13 +949,14 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         for i = 1, #Outfits[CharacterData.sexIndex], 1 do
             Items:AddButton(Outfits[CharacterData.sexIndex][i].label or "Tenue",
                 "Ceci est une tenue par défaut.\nElle pourra être changée par la suite dans un magasin de vêtements",
-                {RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil)},
-                function(onSelected, onEntered)
+                {RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil)}, function(onSelected, onEntered)
                     if onEntered and DisplayedOutfit ~= i then
                         DisplayedOutfit = i
                         exports.skinchanger:changes(Outfits[CharacterData.sexIndex][DisplayedOutfit].outfit)
                     end
-                    if onSelected then CharacterData.selectedOutfit = i end
+                    if onSelected then
+                        CharacterData.selectedOutfit = i
+                    end
                 end)
         end
     end)
@@ -965,22 +968,18 @@ end
 -------------------------------------
 
 RegisterNetEvent("ava_core:client:createChar", function()
-    if AVA.Player.CreatingChar then return end
+    if AVA.Player.CreatingChar then
+        return
+    end
     AVA.Player.CreatingChar = true
 
-    while not AVA.Player.HasSpawned do Wait(10) end
+    while not AVA.Player.HasSpawned do
+        Wait(10)
+    end
 
     RageUI.CloseAll()
 
-    CharacterData = {
-        firstname = "",
-        lastname = "",
-        sexIndex = 0,
-        birthdate = "",
-        selectedOutfit = 0,
-        Visage = {},
-        Appearance = {},
-    }
+    CharacterData = {firstname = "", lastname = "", sexIndex = 0, birthdate = "", selectedOutfit = 0, Visage = {}, Appearance = {}}
 
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
@@ -1032,3 +1031,186 @@ MainMenu.Closed = function()
     playerPed = nil
     SkinMaxVals = nil
 end
+
+----------------------------------------
+--------------- Cutscene ---------------
+----------------------------------------
+
+local function setPedData(ped, i)
+    if i == 1 then
+        SetPedHeadBlendData(ped, 21, 21, 21, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 57, 0, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 22, 0, 2) -- pants
+        SetPedComponentVariation(ped, 6, 6, 0, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 260, 12, 2) -- torso
+        SetPedHairColor(ped, 10, 21)
+    elseif i == 2 then
+        SetPedHeadBlendData(ped, 39, 39, 39, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 5, 4, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 1, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 10, 0, 2) -- pants
+        SetPedComponentVariation(ped, 6, 10, 0, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 11, 2, 2) -- chain
+        SetPedComponentVariation(ped, 8, 13, 6, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 10, 0, 2) -- torso
+        SetPedHairColor(ped, 35, 21)
+    elseif i == 3 then
+        SetPedHeadBlendData(ped, 34, 34, 34, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 1, 4, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 1, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 0, 1, 2) -- pants
+        SetPedComponentVariation(ped, 6, 7, 4, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
+        SetPedComponentVariation(ped, 8, 16, 0, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 6, 0, 2) -- torso
+        SetPedHairColor(ped, 30, 21)
+    elseif i == 4 then
+        SetPedHeadBlendData(ped, 14, 14, 14, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 5, 3, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 5, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 15, 3, 2) -- pants
+        SetPedComponentVariation(ped, 6, 7, 2, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 78, 3, 2) -- torso
+        SetPedHairColor(ped, 10, 21)
+    elseif i == 5 then
+        SetPedHeadBlendData(ped, 39, 39, 39, 2, 2, 2, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 68, 0, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 12, 5, 2) -- pants
+        SetPedComponentVariation(ped, 6, 6, 2, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 4, 3, 2) -- chain
+        SetPedComponentVariation(ped, 8, 3, 0, 2) -- tshirt
+        SetPedComponentVariation(ped, 11, 79, 2, 2) -- torso
+        SetPedHairColor(ped, 10, 21)
+    elseif i == 6 then
+        SetPedHeadBlendData(ped, 27, 27, 27, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 7, 3, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 12, 0, 2) -- pants
+        SetPedComponentVariation(ped, 6, 5, 2, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 5, 3, 2) -- chain
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 80, 2, 2) -- torso
+        SetPedHairColor(ped, 29, 31)
+    elseif i == 7 then
+        SetPedHeadBlendData(ped, 33, 33, 33, 0, 0, 0, 1.0, 1.0, 1.0, true)
+        SetPedComponentVariation(ped, 2, 73, 0, 2) -- hairs
+        SetPedComponentVariation(ped, 3, 12, 0, 2) -- arms
+        SetPedComponentVariation(ped, 4, 27, 0, 2) -- pants
+        SetPedComponentVariation(ped, 6, 15, 3, 2) -- shoes
+        SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
+        SetPedComponentVariation(ped, 11, 283, 7, 2) -- torso
+        SetPedHairColor(ped, 62, 0)
+    end
+    SetPedComponentVariation(ped, 1, 0, 0, 2) -- mask
+    SetPedComponentVariation(ped, 5, 0, 0, 2) -- bags
+    SetPedComponentVariation(ped, 9, 0, 0, 2) -- bproof
+    SetPedComponentVariation(ped, 10, 0, 0, 2) -- decals
+    ClearPedProp(ped, 0)
+    ClearPedProp(ped, 1)
+    ClearPedProp(ped, 2)
+    ClearPedProp(ped, 3)
+    ClearPedProp(ped, 4)
+    ClearPedProp(ped, 5)
+    ClearPedProp(ped, 6)
+    ClearPedProp(ped, 7)
+    ClearPedProp(ped, 8)
+end
+
+RegisterNetEvent("ava_core:client:joinCutScene", function()
+    AVA.Player.CreatingChar = true
+    DoScreenFadeOut(250)
+    Wait(250)
+    local playerPed = PlayerPedId()
+    local isFemale = IsPedModel(playerPed, "mp_f_freemode_01")
+    PrepareMusicEvent("FM_INTRO_START")
+    TriggerMusicEvent("FM_INTRO_START")
+
+    if isFemale then
+        RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 103, 8)
+    else
+        RequestCutsceneWithPlaybackList("MP_INTRO_CONCAT", 31, 8)
+    end
+    if CanRequestAssetsForCutsceneEntity() then
+        if isFemale then
+            SetCutsceneEntityStreamingFlags("MP_Female_Character", 0, 1);
+        else
+            SetCutsceneEntityStreamingFlags("MP_Male_Character", 0, 1);
+        end
+    end
+    while not HasCutsceneLoaded() do
+        Wait(10)
+    end
+
+    AVA.RequestModel("mp_f_freemode_01")
+    AVA.RequestModel("mp_m_freemode_01")
+
+    if isFemale then
+        RegisterEntityForCutscene(0, "MP_Male_Character", 3, GetHashKey("mp_m_freemode_01"), 0)
+        RegisterEntityForCutscene(playerPed, "MP_Female_Character", 0, 0, 0)
+    else
+        RegisterEntityForCutscene(playerPed, "MP_Male_Character", 0, 0, 0)
+        RegisterEntityForCutscene(0, "MP_Female_Character", 3, GetHashKey("mp_f_freemode_01"), 0)
+    end
+
+    local peds = {}
+    for i = 1, 7, 1 do
+        SetCutsceneEntityStreamingFlags(("MP_Plane_Passenger_%d"):format(i), 0, 1)
+        if i == 1 or i == 4 or i == 6 then
+            peds[i] = CreatePed(26, GetHashKey("mp_m_freemode_01"), -1117.778, -1557.625, 3.3819, 0.0, 0, 0)
+        else
+            peds[i] = CreatePed(26, GetHashKey("mp_f_freemode_01"), -1117.778, -1557.625, 3.3819, 0.0, 0, 0)
+        end
+        if not IsEntityDead(peds[i]) then
+            setPedData(peds[i], i)
+            FinalizeHeadBlend(peds[i])
+            RegisterEntityForCutscene(peds[i], ("MP_Plane_Passenger_%d"):format(i), 0, 0, 64)
+        end
+    end
+
+    -- load scene to avoid texture missing
+    NewLoadSceneStartSphere(-1212.79, -1673.52, 7, 1000, 0) -- tennis field
+
+    -- START the custscene
+    StartCutscene(4)
+    DoScreenFadeIn(250)
+
+    -- wait for the player to be close enough to the airport to load textures of it
+    Wait(21420)
+    if isFemale then
+        -- load scene to avoid texture missing
+        -- this is only needed if the player is a female
+        -- I did not managed to figure out why
+        NewLoadSceneStartSphere(-1042.89, -2746.54, 20.0, 1000, 0) -- airport
+    end
+
+    -- plane is on the floor, we remove peds and stop the music
+    Wait(10000)
+
+    for i = 1, 7, 1 do
+        DeleteEntity(peds[i])
+    end
+    PrepareMusicEvent("AC_STOP")
+    TriggerMusicEvent("AC_STOP")
+
+    -- stop the scene right before Lamar comes, do it while the screen is faded out
+    Wait(6120)
+    DoScreenFadeOut(1000)
+    Wait(1200)
+    StopCutsceneImmediately()
+    Wait(570)
+    DoScreenFadeIn(1000)
+
+    -- Teleport player back to its position
+    AVA.Player.CreatingChar = false
+    if AVA.Player.Data.position then
+        SetEntityCoords(playerPed, AVA.Player.Data.position)
+        SetEntityHeading(playerPed, 0.0)
+    end
+end)
