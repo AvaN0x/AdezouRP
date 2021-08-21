@@ -537,6 +537,7 @@ AVA.Players.Save = function(src)
     local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer and aPlayer.citizenId then
+        local p = promise.new()
         -- MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
         MySQL.Async.execute(
             "UPDATE `players` SET `position` = @position, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id",
@@ -554,11 +555,46 @@ AVA.Players.Save = function(src)
                 ["@id"] = aPlayer.citizenId,
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+                p:resolve()
             end)
+        return p
     else
         error("^1[AVA.Players.Save]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
     end
 end
+
+---Save all players and print when all saves are done
+AVA.Players.SaveAll = function()
+    local promises = {}
+    local count = 0
+    for src, aPlayer in pairs(AVA.Players.List) do
+        count = count + 1
+        promises[count] = aPlayer.save()
+    end
+
+    Citizen.Await(promise.all(promises))
+    print("^2[SAVE PLAYERS] ^0 Every players are now saved.")
+end
+exports("SaveAllPlayers", AVA.Players.SaveAll)
+
+AVA.Commands.RegisterCommand("saveplayers", "superadmin", function(source, args, rawCommand)
+    AVA.Players.SaveAll()
+end)
+-----------------------------------------
+--------------- Auto save ---------------
+-----------------------------------------
+
+if AVAConfig.SaveTimeout then
+    local function timeoutSavePlayers()
+        AVA.Players.SaveAll()
+        SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSavePlayers)
+    end
+    SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSavePlayers)
+end
+
+-------------------------------------------
+--------------- Select char ---------------
+-------------------------------------------
 
 AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
     local src = source

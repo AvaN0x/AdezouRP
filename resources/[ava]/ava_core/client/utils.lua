@@ -116,7 +116,7 @@ AVA.Vehicles = {}
 ---@param isNetwork? boolean set the vehicle to be on network or only on local
 ---@return vehicle
 AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
-    local p = promise:new()
+    local p = promise.new()
     isNetwork = (isNetwork == nil or isNetwork == true)
 
     Citizen.CreateThread(function()
@@ -408,7 +408,7 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
     end
 
     if entityCount > 0 then
-        local p = promise:new()
+        local p = promise.new()
         SelectEntity(title, entitiesToSelect, function(entity)
             p:resolve(entity)
         end)
@@ -457,7 +457,7 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
     end
 
     if entityCount > 0 then
-        local p = promise:new()
+        local p = promise.new()
         SelectEntity(title, entitiesToSelect, function(entity)
             p:resolve(entity)
         end)

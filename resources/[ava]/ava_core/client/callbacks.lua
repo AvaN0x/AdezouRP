@@ -12,7 +12,7 @@ AVA.TriggerServerCallback = function(eventName, ...)
         return
     end
 
-    local p = promise:new()
+    local p = promise.new()
 
     local thisRequestId = nextRequestId
     -- can have up to 65,536 values (from 0 to 65,535)

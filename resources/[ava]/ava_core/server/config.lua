@@ -14,6 +14,10 @@ AVAConfig.Debug = false
 -- edit 'max_characters' in fxmanifest.lua, value must be > 0
 AVAConfig.MaxChars = 5
 
+-- time between each save all players (in minutes)
+-- remove to disable auto saves
+AVAConfig.SaveTimeout = 10
+
 AVAConfig.InventoryMaxWeight = 75000
 
 AVAConfig.DefaultPlayerData = {
