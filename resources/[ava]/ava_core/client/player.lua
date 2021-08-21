@@ -37,14 +37,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-AVA.GetPlayerData = function()
-    -- if player is not loaded, Data can't possibly (not sure) be incomplete
-    if AVA.Player.Loaded then
-        return AVA.Player.Data
-    end
-    return
-end
-
 local function SpawnPlayer()
     AVA.Player.IsDead = false
     AVA.Player.HasSpawned = true
@@ -209,6 +201,30 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
             "ava_core_logo")
     end
 end)
+
+------------------------------------------------
+--------------- Get data exports ---------------
+------------------------------------------------
+
+---Get data about player
+---@return any
+AVA.Player.getData = function()
+    while not AVA.Player.Loaded do
+        Wait(10)
+    end
+    return AVA.Player.Data
+end
+exports("getPlayerData", AVA.Player.getData)
+
+---Get data about player character
+---@return character
+AVA.Player.getCharacterData = function()
+    while not AVA.Player.Loaded do
+        Wait(10)
+    end
+    return AVA.Player.Data.character
+end
+exports("getPlayerCharacterData", AVA.Player.getCharacterData)
 
 -- DEBUG COMMAND
 RegisterCommand("respawn", function()

@@ -157,8 +157,8 @@ end
 local function logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
     local oldPlayer = AVA.Players.GetPlayer(src)
     if oldPlayer then
-        oldPlayer.Logout()
-        oldPlayer.Save()
+        oldPlayer.logout()
+        oldPlayer.save()
         AVA.Players.List[tostring(src)] = nil
     end
 
@@ -316,7 +316,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
             {["@character"] = json.encode(aPlayer.character), ["@license"] = aPlayer.identifiers.license, ["@id"] = aPlayer.citizenId}, function(result)
                 print("^2[SAVE CHARACTER] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
             end)
-        aPlayer.Save()
+        aPlayer.save()
 
         TriggerClientEvent("ava_core:client:joinCutScene", src)
 
@@ -346,8 +346,8 @@ AddEventHandler("playerDropped", function(reason)
             "<@" .. string.gsub(AVA.Players.List[tostring(src)].identifiers.discord, "discord:", "") .. ">" .. " (`" .. AVA.Players.List[tostring(src)].name
                 .. "`)" .. " se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
 
-        AVA.Players.List[tostring(src)].Logout()
-        AVA.Players.List[tostring(src)].Save()
+        AVA.Players.List[tostring(src)].logout()
+        AVA.Players.List[tostring(src)].save()
         AVA.Players.List[tostring(src)] = nil
     end
     DEBUGPrintPlayerList("playerDropped")
@@ -395,6 +395,19 @@ AVA.Players.GetPlayer = function(src)
 end
 exports("GetPlayer", AVA.Players.GetPlayer)
 
+---Get player from its citizen id
+---@param src string
+---@return aPlayer
+AVA.Players.GetPlayerByCitizenId = function(citizenId)
+    citizenId = tostring(citizenId)
+    for src, player in pairs(AVA.Players.List) do
+        if tostring(player.citizenId) == citizenId then
+            return AVA.Players.List[tostring(src)]
+        end
+    end
+end
+exports("GetPlayerByCitizenId", AVA.Players.GetPlayerByCitizenId)
+
 ---Make the source player use an item if possible
 ---@param src string
 ---@param itemName string
@@ -417,7 +430,7 @@ RegisterNetEvent("ava_core:server:useItem", function(itemName)
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
-        aPlayer.UseItem(itemName)
+        aPlayer.useItem(itemName)
     end
 end)
 

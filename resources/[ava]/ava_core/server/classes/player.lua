@@ -36,17 +36,17 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@field licenses table
     self.metadata = playerData.metadata and json.decode(playerData.metadata) or {}
 
-    self.Logout = function()
+    self.logout = function()
         return AVA.Players.Logout(self.src)
     end
 
-    self.Save = function()
+    self.save = function()
         return AVA.Players.Save(self.src)
     end
 
     ---Get player discord tag if possible, else it will return the name
     ---@return string
-    self.GetDiscordTag = function()
+    self.getDiscordTag = function()
         return self.discordTag or self.name
     end
 
@@ -56,11 +56,11 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     ---Get player inventory
     ---@return inventory
-    self.GetInventory = function()
+    self.getInventory = function()
         return self.inventory
     end
 
-    self.UseItem = function(itemName)
+    self.useItem = function(itemName)
         AVA.Players.UseItem(self.src, itemName)
     end
 
@@ -71,7 +71,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Get the account for a specified player account, if the player does not have the account, it will create it en return it
     ---@param accountName string
     ---@return integer
-    self.GetAccountMoney = function(accountName)
+    self.getAccount = function(accountName)
         if type(accountName) ~= "string" then
             return
         end
@@ -91,15 +91,26 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return
     end
 
+    ---Get the balance of a player account
+    ---@param accountName string
+    ---@return number balance
+    self.getAccountBalance = function(accountName)
+        local account = self.getAccount(accountName)
+        if account then
+            return account.balance
+        end
+        return 0
+    end
+
     ---Set the balance of a player account
     ---@param accountName string
     ---@param balance number
     ---@return boolean accountExist
-    self.SetAccountMoney = function(accountName, balance)
+    self.setAccountBalance = function(accountName, balance)
         if type(balance) ~= "number" or balance <= 0 then
             return
         end
-        local account = self.GetAccountMoney(accountName)
+        local account = self.getAccount(accountName)
         if account then
             account.balance = math.floor(balance)
             return true
@@ -111,11 +122,11 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param accountName string
     ---@param balance number
     ---@return boolean accountExist
-    self.AddAccountMoney = function(accountName, balance)
+    self.addAccountBalance = function(accountName, balance)
         if type(balance) ~= "number" or balance <= 0 then
             return
         end
-        local account = self.GetAccountMoney(accountName)
+        local account = self.getAccount(accountName)
         if account then
             account.balance = account.balance + math.floor(balance)
             return true
@@ -127,11 +138,11 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param accountName string
     ---@param balance number
     ---@return boolean accountExist
-    self.RemoveAccountMoney = function(accountName, balance)
+    self.removeAccountBalance = function(accountName, balance)
         if type(balance) ~= "number" or balance <= 0 then
             return
         end
-        local account = self.GetAccountMoney(accountName)
+        local account = self.getAccount(accountName)
         if account then
             account.balance = account.balance - math.floor(balance)
             return true
@@ -148,7 +159,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@return boolean hasLicense
     ---@return table license
     ---@return number index
-    self.HasLicense = function(licenseName)
+    self.hasLicense = function(licenseName)
         if type(licenseName) ~= "string" then
             return false
         end
@@ -166,8 +177,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Add a license to a player if the license exist and if the player does not already have it
     ---@param licenseName string
     ---@return boolean success
-    self.AddLicense = function(licenseName)
-        local alreadyHasLicense = self.HasLicense(licenseName)
+    self.addLicense = function(licenseName)
+        local alreadyHasLicense = self.hasLicense(licenseName)
 
         if not alreadyHasLicense then
             local cfgLicense = AVAConfig.Licenses[licenseName]
@@ -188,8 +199,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Remove a license from a player if the player has it
     ---@param licenseName string
     ---@return boolean success
-    self.RemoveLicense = function(licenseName)
-        local hasLicense, _, index = self.HasLicense(licenseName)
+    self.removeLicense = function(licenseName)
+        local hasLicense, _, index = self.hasLicense(licenseName)
 
         if hasLicense then
             self.metadata.licenses[index] = nil
@@ -202,8 +213,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param licenseName string
     ---@return boolean hasLicense
     ---@return number points
-    self.GetLicensePoints = function(licenseName)
-        local hasLicense, license = self.HasLicense(licenseName)
+    self.getLicensePoints = function(licenseName)
+        local hasLicense, license = self.hasLicense(licenseName)
 
         if hasLicense then
             local cfgLicense = AVAConfig.Licenses[licenseName]
@@ -218,8 +229,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param licenseName string
     ---@param quantity number needs to be less than license maxPoints
     ---@return boolean success
-    self.SetLicensePoints = function(licenseName, quantity)
-        local hasLicense, license = self.HasLicense(licenseName)
+    self.setLicensePoints = function(licenseName, quantity)
+        local hasLicense, license = self.hasLicense(licenseName)
 
         if hasLicense and tonumber(quantity) then
             local cfgLicense = AVAConfig.Licenses[licenseName]
@@ -236,8 +247,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param licenseName string
     ---@param quantity number if number is above the current quantity of points, the new quantity will be 0
     ---@return boolean success
-    self.RemoveLicensePoints = function(licenseName, quantity)
-        local hasLicense, license = self.HasLicense(licenseName)
+    self.removeLicensePoints = function(licenseName, quantity)
+        local hasLicense, license = self.hasLicense(licenseName)
 
         if hasLicense and tonumber(quantity) then
             local cfgLicense = AVAConfig.Licenses[licenseName]
@@ -257,8 +268,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param licenseName string
     ---@param quantity number if new quantity is above the license maxPoints, the new quantity will be the license maxPoints
     ---@return boolean success
-    self.AddLicensePoints = function(licenseName, quantity)
-        local hasLicense, license = self.HasLicense(licenseName)
+    self.addLicensePoints = function(licenseName, quantity)
+        local hasLicense, license = self.hasLicense(licenseName)
 
         if hasLicense and tonumber(quantity) then
             local cfgLicense = AVAConfig.Licenses[licenseName]

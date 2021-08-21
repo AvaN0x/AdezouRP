@@ -19,7 +19,7 @@ AVAConfig.InventoryMaxWeight = 75000
 AVAConfig.DefaultPlayerData = {
     position = vector3(-1042.89, -2746.54, 20.37),
     inventory = {{name = "cash", quantity = 2000}},
-    accounts = {{name = "bank", amount = 4000}},
+    accounts = {{name = "bank", balance = 4000}},
 }
 
 -- List of all accounts that exists

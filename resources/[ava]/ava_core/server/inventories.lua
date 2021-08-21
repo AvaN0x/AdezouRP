@@ -8,7 +8,7 @@ AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     if aPlayer then
-        local inventory = aPlayer.GetInventory()
+        local inventory = aPlayer.getInventory()
 
         local items = {}
         local itemsCount = 0

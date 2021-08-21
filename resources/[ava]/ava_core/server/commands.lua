@@ -36,7 +36,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
         local commandString = callback(source, args, rawCommand)
 
         local aPlayer = AVA.Players.GetPlayer(source)
-        local logString = ("**%s** used command `/%s`"):format(aPlayer and aPlayer.GetDiscordTag() or GetPlayerName(source), rawCommand)
+        local logString = ("**%s** used command `/%s`"):format(aPlayer and aPlayer.getDiscordTag() or GetPlayerName(source), rawCommand)
         -- print("^5[COMMAND]^0 " .. logString)
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 15902015)
     end, needAce)
@@ -85,8 +85,8 @@ AVA.Commands.RegisterCommand("addaccount", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local accountExist = aPlayer.AddAccountMoney(args[2], tonumber(args[3]))
-        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** received **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
+        local accountExist = aPlayer.addAccountBalance(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.getDiscordTag() .. "** received **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
     end
 end, "Add money to a player account balance", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -101,8 +101,8 @@ AVA.Commands.RegisterCommand("setaccount", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local accountExist = aPlayer.SetAccountMoney(args[2], tonumber(args[3]))
-        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** on account named " .. args[2] .. " has its balance set to **" .. args[3] .. "**.")
+        local accountExist = aPlayer.setAccountBalance(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.getDiscordTag() .. "** on account named " .. args[2] .. " has its balance set to **" .. args[3] .. "**.")
     end
 end, "Set balance of a player account", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -117,8 +117,8 @@ AVA.Commands.RegisterCommand("removeaccount", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local accountExist = aPlayer.RemoveAccountMoney(args[2], tonumber(args[3]))
-        return accountExist and ("**" .. aPlayer.GetDiscordTag() .. "** deducted **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
+        local accountExist = aPlayer.removeAccountBalance(args[2], tonumber(args[3]))
+        return accountExist and ("**" .. aPlayer.getDiscordTag() .. "** deducted **" .. args[3] .. " $** on account named **" .. args[2] .. "**.")
     end
 end, "Remove money from a player account balance", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -145,8 +145,8 @@ AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local licenseAdded = aPlayer.AddLicense(args[2])
-        return licenseAdded and ("**" .. aPlayer.GetDiscordTag() .. "** received license named **" .. args[2] .. "**.")
+        local licenseAdded = aPlayer.addLicense(args[2])
+        return licenseAdded and ("**" .. aPlayer.getDiscordTag() .. "** received license named **" .. args[2] .. "**.")
     end
 end, "Add a license to a player",
     {{name = "player", help = "Player id, 0 is yourself"}, {name = "license", help = "License name (driver, trafficLaws, weapon)"}})
@@ -158,8 +158,8 @@ AVA.Commands.RegisterCommand("removelicense", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local licenseRemoved = aPlayer.RemoveLicense(args[2])
-        return licenseRemoved and ("**" .. aPlayer.GetDiscordTag() .. "** got the license named **" .. args[2] .. "** removed.")
+        local licenseRemoved = aPlayer.removeLicense(args[2])
+        return licenseRemoved and ("**" .. aPlayer.getDiscordTag() .. "** got the license named **" .. args[2] .. "** removed.")
     end
 end, "Remove license from a player",
     {{name = "player", help = "Player id, 0 is yourself"}, {name = "license", help = "License name (driver, trafficLaws, weapon)"}})
@@ -171,8 +171,8 @@ AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local success, quantity = aPlayer.SetLicensePoints(args[2], tonumber(args[3]))
-        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+        local success, quantity = aPlayer.setLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Set quantity of points from a player license", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -187,8 +187,8 @@ AVA.Commands.RegisterCommand("addlicensepoints", "admin", function(source, args)
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local success, quantity = aPlayer.AddLicensePoints(args[2], tonumber(args[3]))
-        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+        local success, quantity = aPlayer.addLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Add points to a player license", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -203,8 +203,8 @@ AVA.Commands.RegisterCommand("removelicensepoints", "admin", function(source, ar
 
     local aPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aPlayer then
-        local success, quantity = aPlayer.RemoveLicensePoints(args[2], tonumber(args[3]))
-        return success and ("**" .. aPlayer.GetDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
+        local success, quantity = aPlayer.removeLicensePoints(args[2], tonumber(args[3]))
+        return success and ("**" .. aPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Remove points from a player license", {
     {name = "player", help = "Player id, 0 is yourself"},
@@ -219,7 +219,7 @@ end, "Remove points from a player license", {
 AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(type(args[1]) == "string" and args[1] or source)
     if aPlayer then
-        aPlayer.inventory.clearInventory()
+        aPlayer.getInventory().clearInventory()
     end
 end, "Clear player inventory", {{name = "player", help = "Player id, empty if yourself"}})
 

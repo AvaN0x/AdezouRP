@@ -972,6 +972,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
         return
     end
     AVA.Player.CreatingChar = true
+    AVA.Player.Loaded = false
 
     while not AVA.Player.HasSpawned do
         Wait(10)

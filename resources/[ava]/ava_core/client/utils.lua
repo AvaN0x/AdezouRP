@@ -81,11 +81,11 @@ end
 exports("ShowHelpNotification", AVA.ShowHelpNotification)
 
 ----------------------------------------
---------------- Vehicles ---------------
+--------------- Requests ---------------
 ----------------------------------------
 
 AVA.RequestModel = function(model)
-    if IsModelValid(model) then
+    if IsModelValid(model) and not HasModelLoaded(GetHashKey(model)) then
         RequestModel(GetHashKey(model))
         while not HasModelLoaded(GetHashKey(model)) do
             Wait(0)
@@ -93,6 +93,16 @@ AVA.RequestModel = function(model)
     end
 end
 exports("RequestModel", AVA.RequestModel)
+
+AVA.RequestAnimDict = function(animDict)
+    if not HasAnimDictLoaded(animDict) then
+        RequestAnimDict(animDict)
+        while not HasAnimDictLoaded(animDict) do
+            Wait(0)
+        end
+    end
+end
+exports("RequestAnimDict", AVA.RequestAnimDict)
 
 ----------------------------------------
 --------------- Vehicles ---------------
