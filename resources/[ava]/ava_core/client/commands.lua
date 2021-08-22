@@ -18,3 +18,18 @@ RegisterNetEvent("ava:client:deleteVehicle", function()
         AVA.Vehicles.DeleteVehicle(vehicle)
     end
 end)
+
+RegisterNetEvent("ava:client:teleportToCoords", function(x, y, z)
+    AVA.TeleportPlayerToCoords(x, y, z, true)
+end)
+
+RegisterNetEvent("ava:client:teleportToWaypoint", function()
+    local waypoint = GetFirstBlipInfoId(GetWaypointBlipEnumId())
+    if waypoint and waypoint > 0 then
+        local blipCoords = GetBlipInfoIdCoord(waypoint)
+        print(blipCoords)
+        AVA.TeleportPlayerToCoords(blipCoords.x, blipCoords.y, 0, true)
+    else
+        AVA.ShowNotification(nil, nil, "ava_core_logo", "Aucun waypoint trouvé", nil, nil, "ava_core_logo")
+    end
+end)

@@ -84,8 +84,10 @@ exports("ShowHelpNotification", AVA.ShowHelpNotification)
 --------------- Requests ---------------
 ----------------------------------------
 
+---Request a model
+---@param model string
 AVA.RequestModel = function(model)
-    if IsModelValid(model) and not HasModelLoaded(GetHashKey(model)) then
+    if IsModelValid(GetHashKey(model)) and not HasModelLoaded(GetHashKey(model)) then
         RequestModel(GetHashKey(model))
         while not HasModelLoaded(GetHashKey(model)) do
             Wait(0)
@@ -94,6 +96,8 @@ AVA.RequestModel = function(model)
 end
 exports("RequestModel", AVA.RequestModel)
 
+---Request an animDict
+---@param animDict string
 AVA.RequestAnimDict = function(animDict)
     if not HasAnimDictLoaded(animDict) then
         RequestAnimDict(animDict)
@@ -103,6 +107,85 @@ AVA.RequestAnimDict = function(animDict)
     end
 end
 exports("RequestAnimDict", AVA.RequestAnimDict)
+
+---Teleport a player to coords with or without vehicle
+---@param x number
+---@param y number
+---@param z number
+---@param allowVehicle boolean
+AVA.TeleportPlayerToCoords = function(x, y, z, allowVehicle)
+    if type(x) ~= "number" and type(x) ~= "number" and type(x) ~= "number" then
+        return
+    end
+
+    local playerPed = PlayerPedId()
+    x = x + 0.0
+    y = y + 0.0
+    z = z + 0.0
+
+    DoScreenFadeOut(500)
+    while not IsScreenFadedOut() do
+        Wait(0)
+    end
+
+    RequestCollisionAtCoord(x, y, z)
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+    -- only teleport vehicle if player is driver
+    local doTeleportVehicle = allowVehicle and vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) == playerPed
+
+    if doTeleportVehicle then
+        FreezeEntityPosition(vehicle, true)
+        SetPedCoordsKeepVehicle(playerPed, x, y, z)
+    else
+        FreezeEntityPosition(playerPed, true)
+        SetEntityCoords(playerPed, x, y, z)
+    end
+
+    while not HasCollisionLoadedAroundEntity(playerPed) do
+        Wait(100)
+    end
+
+    if z == 0 then
+        dprint("Looking for a new ground because z was 0.")
+
+        -- make entity invisible when searching ground
+        local wasVisible = IsEntityVisible(playerPed)
+        if wasVisible then
+            SetEntityVisible(playerPed, false)
+        end
+
+        for loopZ = 1, 1000, 1 do
+            SetPedCoordsKeepVehicle(playerPed, x, y, loopZ + 0.0)
+            local foundGround, zPos = GetGroundZFor_3dCoord(x, y, loopZ + 0.0)
+            if foundGround then
+                z = zPos + 0.0
+                break
+            end
+            Wait(0)
+        end
+
+        -- if we are over 1000, then we teleport the player to the Z == 0 to, in most cases, make it fall in the ground and teleport back to the ground
+        if z > 1000 then
+            z = 0.0
+        end
+
+        if wasVisible then
+            SetEntityVisible(playerPed, true)
+        end
+
+        SetPedCoordsKeepVehicle(playerPed, x, y, z)
+    end
+
+    if doTeleportVehicle then
+        FreezeEntityPosition(vehicle, false)
+    else
+        FreezeEntityPosition(playerPed, false)
+    end
+
+    DoScreenFadeIn(500)
+    SetGameplayCamRelativeHeading(0)
+end
+exports("TeleportPlayerToCoords", AVA.TeleportPlayerToCoords)
 
 ----------------------------------------
 --------------- Vehicles ---------------

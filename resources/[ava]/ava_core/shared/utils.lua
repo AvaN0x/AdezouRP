@@ -35,3 +35,11 @@ AVA.Utils.FormatNumber = function(number)
     return tostring(number):reverse():gsub("%d%d%d", "%1 "):reverse():gsub("^ ", "")
 end
 exports("FormatNumber", AVA.Utils.FormatNumber)
+
+---Format a vector3 to a readable string
+---@param coord vector3
+---@return string
+AVA.Utils.Vector3ToString = function(coord)
+    return type(coord) == "vector3" and ("vector3(%.2f, %.2f, %.2f)"):format(coord.x, coord.y, coord.z)
+end
+exports("Vector3ToString", AVA.Utils.Vector3ToString)
