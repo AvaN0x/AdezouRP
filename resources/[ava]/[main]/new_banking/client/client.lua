@@ -56,20 +56,20 @@ Citizen.CreateThread(function()
                 atm = nearATM() -- update the nearest ATM to be sure to go at the closest one
 
                 local playerPed = PlayerPedId()
-                TaskGoStraightToCoord(playerPed, atm.x, atm.y, atm.z, 10.0, 10, atm.heading, 0.5)
-                Wait(2000)
-                ClearPedTasksImmediately(playerPed)
+                local isAtCoord = exports.ava_core:CancelableGoStraightToCoord(playerPed, vector3(atm.x, atm.y, atm.z), 10.0, 10, atm.heading, 0.5)
 
-                -- exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@enter")
-                -- TaskPlayAnim(playerPed, "amb@prop_human_atm@male@enter", "enter", 8.0, -8, 4000, 0, 0, 0, 0, 0)
-                -- Citizen.Wait(4000)
+                if isAtCoord then
+                    ClearPedTasksImmediately(playerPed)
+                    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@enter")
+                    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@enter", "enter", 8.0, -8, 4000, 0, 0, 0, 0, 0)
+                    Citizen.Wait(4000)
 
-                -- exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@base")
-                -- TaskPlayAnim(playerPed, "amb@prop_human_atm@male@base", "base", 8.0, 8, -1, 1, 0, 0, 0, 0)
-                -- Citizen.Wait(1000)
+                    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@base")
+                    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@base", "base", 8.0, 8, -1, 1, 0, 0, 0, 0)
+                    Citizen.Wait(1000)
 
-                print("1")
-                OpenBank()
+                    OpenBank()
+                end
             end
         end
 
@@ -97,7 +97,6 @@ function CloseBank()
         Citizen.Wait(7000)
 
         ClearPedTasksImmediately(playerPed)
-
     end
     inMenu = false
 end
@@ -136,7 +135,7 @@ RegisterNetEvent("currentbalance")
 AddEventHandler("currentbalance", function(balance)
     local character = exports.ava_core:getPlayerCharacterData()
 
-    SendNUIMessage({type = "balanceHUD", balance = balance, player = ("%s %s"):format(character.firstname, character.lastname)})
+    SendNUIMessage({type = "balanceHUD", balance = balance, player = ("%s %s"):format(character.firstname, character.lastname), citizenId = character.citizenId})
 end)
 
 -- ===============================================

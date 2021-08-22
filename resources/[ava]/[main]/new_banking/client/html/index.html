@@ -42,7 +42,7 @@
             <div class="flex">
                 <div class="balance box-shadow">
                     <p>Bienvenue<br>
-                        <span class="name"><span class="username1"></span></span><br>
+                        <span class="name"><span class="username"></span> - <span class="citizenId"></span></span><br>
                         Vous avez<br>
                         <span class="money"><span class="curbalance"></span><span class="euro"> $</span></span>
                     </p>
@@ -122,7 +122,7 @@
             <div class="flex">
                 <div class="btn btn-violet banniere">
                     <p>Retirer de l'argent<br>
-                        <span>depuis votre compte banquaire</span>
+                        <span>depuis votre compte bancaire</span>
                     </p>
                 </div>
                 <button class="btn btn-grey back">
@@ -171,7 +171,7 @@
                     </div>
                     <div class="input-cont box-shadow">
                         <label>A qui souhaitez vous faire le virement ?</label>
-                        <input id="to" type="text" placeholder="id">
+                        <input id="to" type="text" placeholder="Numéro de compte">
                     </div>
                 </div>
                 <button class="btn btn-green" type="submit">
@@ -220,7 +220,8 @@
                     $('#waiting').show();
                     $('body').addClass("active");
                 } else if (event.data.type === "balanceHUD") {
-                    $('.username1').html(event.data.player);
+                    $('.username').html(event.data.player);
+                    $('.citizenId').html(event.data.citizenId);
                     $('.curbalance').html(event.data.balance);
                 } else if (event.data.type === "closeAll") {
                     $('#waiting, #general, #transferUI, #withdrawUI, #depositUI, #topbar').hide();

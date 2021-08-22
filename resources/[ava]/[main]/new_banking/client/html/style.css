@@ -283,9 +283,12 @@ nav {
 
 .balance .name {
     font-size: 25px;
-    color: #a9cc2e;
     margin-bottom: 5px;
     display: block;
+}
+
+.balance .name span {
+    color: #a9cc2e;
 }
 
 .balance .money {
@@ -450,6 +453,10 @@ label {
 
 .input-cont input::-webkit-input-placeholder {
     color: #7cb732;
+}
+
+#to::-webkit-input-placeholder {
+    font-size: 30px;
 }
 
 .double-input {

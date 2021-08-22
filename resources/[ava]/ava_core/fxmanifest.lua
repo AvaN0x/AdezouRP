@@ -3,7 +3,7 @@ game "gta5"
 
 version "1.0"
 author "github.com/AvaN0x"
-description "Loading screen"
+description "Core script"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
@@ -60,7 +60,7 @@ dependencies {"mysql-async", "RageUI"}
 -- comment this line to disable debug prints
 my_data "debug_prints" "yes"
 
--- my_data 'max_characters' '5'
+my_data "max_characters" "10"
 
 my_data "discord_config" {
     GuildId = "743525702157992018",
