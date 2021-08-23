@@ -34,9 +34,9 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     local needAce = group and group ~= ""
     RegisterCommand(name, function(source, args, rawCommand)
         local aPlayer = AVA.Players.GetPlayer(source)
-        if aPlayer then
-            local commandString = callback(source, args, rawCommand, aPlayer)
+        local commandString = callback(source, args, rawCommand, aPlayer)
 
+        if aPlayer then
             local logString = ("**%s** used command `/%s`"):format(aPlayer and aPlayer.getDiscordTag() or GetPlayerName(source), rawCommand)
             -- print("^5[COMMAND]^0 " .. logString)
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 15902015)
@@ -60,12 +60,12 @@ exports("RegisterCommand", AVA.Commands.RegisterCommand)
 
 AVA.Commands.RegisterCommand({"vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
     if type(args[1]) == "string" then
-        TriggerClientEvent("ava:client:spawnVehicle", source, args[1])
+        TriggerClientEvent("ava_core:client:spawnVehicle", source, args[1])
     end
 end, "spawn_car", {{name = "car", help = "car_name"}})
 
 AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
-    TriggerClientEvent("ava:client:deleteVehicle", source)
+    TriggerClientEvent("ava_core:client:deleteVehicle", source)
 end, "delete_car")
 
 ----------------------------------------
@@ -74,7 +74,9 @@ end, "delete_car")
 
 -- * DEBUG
 AVA.Commands.RegisterCommand("debugaccounts", "superadmin", function(source, args, rawCommand, aPlayer)
-    dprint("accounts", json.encode(aPlayer.accounts))
+    if aPlayer then
+        dprint("accounts", json.encode(aPlayer.accounts))
+    end
 end)
 
 AVA.Commands.RegisterCommand("addaccount", "admin", function(source, args)
@@ -131,7 +133,9 @@ end, "Remove money from a player account balance", {
 
 -- * DEBUG
 AVA.Commands.RegisterCommand("debuglicenses", "superadmin", function(source, args, rawCommand, aPlayer)
-    dprint("licenses", json.encode(aPlayer.metadata.licenses))
+    if aPlayer then
+        dprint("licenses", json.encode(aPlayer.metadata.licenses))
+    end
 end)
 
 AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
@@ -219,13 +223,9 @@ AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     end
 end, "Clear player inventory", {{name = "player", help = "Player id, empty if yourself"}})
 
---------------------------------------
---------------- Others ---------------
---------------------------------------
-
-AVA.Commands.RegisterCommand("report", "", function(source, args)
-    TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
-end, "report", {{name = "reason", help = "your_reason"}})
+-----------------------------------------
+--------------- Teleports ---------------
+-----------------------------------------
 
 AVA.Commands.RegisterCommand("tp", "admin", function(source, args)
     local x = tonumber((string.gsub(args[1], ",$", ""))) -- double parentheses are needed to only use first return of gsub
@@ -233,7 +233,7 @@ AVA.Commands.RegisterCommand("tp", "admin", function(source, args)
     local z = tonumber(type(args[3]) == "string" and (string.gsub(args[3], ",$", "")) or 0)
 
     if x and y and z then
-        TriggerClientEvent("ava:client:teleportToCoords", source, x, y, z)
+        TriggerClientEvent("ava_core:client:teleportToCoords", source, x, y, z)
         return "Teleported to **" .. AVA.Utils.Vector3ToString(vector3(x, y, z)) .. "**."
     end
 end, "Teleport to coords", {{name = "x", help = "number[,]"}, {name = "y", help = "number[,]"}, {name = "z", help = "number[,] or empty"}})
@@ -250,7 +250,7 @@ AVA.Commands.RegisterCommand("goto", "mod", function(source, args)
         else
             local targetCoords = GetEntityCoords(targetPed)
             if targetCoords ~= vector3(0.0, 0.0, 0.0) then
-                TriggerClientEvent("ava:client:teleportToCoords", source, targetCoords.x, targetCoords.y, targetCoords.z)
+                TriggerClientEvent("ava_core:client:teleportToCoords", source, targetCoords.x, targetCoords.y, targetCoords.z)
                 return "Teleported to **" .. AVA.Utils.Vector3ToString(targetCoords) .. "**."
             end
         end
@@ -270,7 +270,7 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
         else
             local sourceCoords = GetEntityCoords(sourcePed)
             if sourceCoords ~= vector3(0.0, 0.0, 0.0) then
-                TriggerClientEvent("ava:client:teleportToCoords", args[1], sourceCoords.x, sourceCoords.y, sourceCoords.z)
+                TriggerClientEvent("ava_core:client:teleportToCoords", args[1], sourceCoords.x, sourceCoords.y, sourceCoords.z)
                 return "**" .. aTargetPlayer.getDiscordTag() .. "** teleported to **" .. AVA.Utils.Vector3ToString(sourceCoords) .. "**."
             end
         end
@@ -278,6 +278,26 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
 end, "Teleport a player to me", {{name = "player", help = "Other player id"}})
 
 AVA.Commands.RegisterCommand({"tpm", "tpmarker", "tpw", "tpwaypoint"}, "admin", function(source, args)
-    TriggerClientEvent("ava:client:teleportToWaypoint", source)
+    TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
     return "Teleported to its waypoint."
 end, "Teleport to waypoint")
+
+--------------------------------------
+--------------- Others ---------------
+--------------------------------------
+
+AVA.Commands.RegisterCommand("report", "", function(source, args)
+    TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
+end, "report", {{name = "reason", help = "your_reason"}})
+
+AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) == "string" and args[1] ~= "0" and args[1] ~= tostring(source) then
+        local aTargetPlayer = AVA.Players.GetPlayer(args[1])
+        if aTargetPlayer then
+            TriggerClientEvent("ava_core:client:kill", args[1])
+            return "**" .. aTargetPlayer.getDiscordTag() .. "** has been killed by **" .. aPlayer and aPlayer.getDiscordTag() or "console" .. "."
+        end
+    else
+        TriggerClientEvent("ava_core:client:kill", source)
+    end
+end, "Kill a player", {{name = "player", help = "Player id, 0 or empty is yourself"}})

@@ -320,7 +320,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         dprint(json.encode(aPlayer.character, {indent = true}))
         MySQL.Async.execute("UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id",
             {["@character"] = json.encode(aPlayer.character), ["@license"] = aPlayer.identifiers.license, ["@id"] = aPlayer.citizenId}, function(result)
-                print("^2[SAVE CHARACTER] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+                print("^2[SAVE CHARACTER] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
             end)
         aPlayer.save()
 
@@ -533,7 +533,7 @@ AVA.Players.Logout = function(src)
 
     if aPlayer then
         -- remove all RP related aces and principals
-        dprint("^2[LOGOUT] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+        dprint("^2[LOGOUT] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
     else
         error("^1[AVA.Players.Logout]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
     end
