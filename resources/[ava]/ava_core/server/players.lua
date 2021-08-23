@@ -560,7 +560,7 @@ AVA.Players.Save = function(src)
                 ["@license"] = aPlayer.identifiers.license,
                 ["@id"] = aPlayer.citizenId,
             }, function(result)
-                print("^2[SAVE] ^0" .. aPlayer.name .. " (" .. aPlayer.citizenId .. ")")
+                print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
                 p:resolve()
             end)
         return p
