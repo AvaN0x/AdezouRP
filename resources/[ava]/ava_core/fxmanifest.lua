@@ -8,6 +8,8 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
+files {"shared/import.lua"}
+
 client_scripts {
     "@RageUI/src/RageUI.lua",
     "@RageUI/src/Menu.lua",

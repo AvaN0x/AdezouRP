@@ -23,7 +23,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     elseif type(name) ~= "string" then
         print("^3[WARN] Could not create command because ^0name^3 is not a ^0string^3.^0")
         return
-    elseif type(callback) ~= "function" then
+    elseif type(callback) ~= "function" and (type(callback) == "table" and callback["__cfx_functionReference"] == nil) then
         print("^3[WARN]^0 Could not create command ^3" .. name .. "^0 because ^3callback^0 is not a ^3function^0.^0")
         return
     end

@@ -28,3 +28,7 @@ AVA.RegisterServerCallback = function(eventName, callback)
     callbacks[eventName] = callback
 end
 exports("RegisterServerCallback", AVA.RegisterServerCallback)
+
+AVA.RegisterServerCallback("ava_core:IsPlayerAceAllowed", function(source, ace)
+    return IsPlayerAceAllowed(source, ace)
+end)
