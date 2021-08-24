@@ -87,7 +87,7 @@ exports("ShowHelpNotification", AVA.ShowHelpNotification)
 ---Request control of an entity over network
 ---@param entity entity
 AVA.NetworkRequestControlOfEntity = function(entity)
-    if IsAnEntity(entity) then
+    if IsAnEntity(entity) and not NetworkHasControlOfEntity(entity) then
         NetworkRequestControlOfEntity(entity)
         while not NetworkHasControlOfEntity(entity) do
             Citizen.Wait(1)
@@ -293,7 +293,11 @@ AVA.Vehicles.GetVehicleInFront = function(distance)
         10, playerPed, 0)
     local _, _, _, _, vehicle = GetShapeTestResult(rayHandle)
 
-    return IsEntityAVehicle(vehicle) and vehicle or 0
+    if IsEntityAVehicle(vehicle) then
+        AVA.NetworkRequestControlOfEntity(vehicle)
+        return vehicle
+    end
+    return 0
 end
 exports("GetVehicleInFront", AVA.Vehicles.GetVehicleInFront)
 
@@ -557,6 +561,7 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
         end)
 
         local veh = Citizen.Await(p) or {}
+        AVA.NetworkRequestControlOfEntity(veh.entity)
         return veh.entity
     else
         AVA.ShowNotification(GetString("no_vehicle_close_enough"))
