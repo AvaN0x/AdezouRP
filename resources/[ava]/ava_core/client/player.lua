@@ -52,10 +52,10 @@ local function SpawnPlayer()
         SetEntityHeading(playerPed, 0.0)
     end
 
-    dprint(json.encode(AVA.Player.Data.skin))
     if AVA.Player.FirstSpawn then
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
 
+        -- dprint(json.encode(AVA.Player.Data.skin))
         AVA.Player.FirstSpawn = false
         if AVA.Player.Data.skin then
             exports.skinchanger:loadSkin(AVA.Player.Data.skin)
@@ -85,7 +85,11 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 end)
 
 AddEventHandler("playerSpawned", function()
-    dprint("playerSpawned")
+    dprint("playerSpawned", AVAConfig.EnablePVP)
+    if AVAConfig.EnablePVP then
+        SetCanAttackFriendly(PlayerPedId(), true, false)
+        NetworkSetFriendlyFireOption(true)
+    end
     SpawnPlayer()
 end)
 
@@ -107,8 +111,6 @@ local function RespawnPlayer()
 
         StopScreenEffect("DeathFailOut")
         DoScreenFadeIn(800)
-
-        print(IsEntityDead(playerPed))
     end)
 end
 
