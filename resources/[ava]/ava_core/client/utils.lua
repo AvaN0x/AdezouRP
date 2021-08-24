@@ -84,12 +84,25 @@ exports("ShowHelpNotification", AVA.ShowHelpNotification)
 --------------- Requests ---------------
 ----------------------------------------
 
+---Request control of an entity over network
+---@param entity entity
+AVA.NetworkRequestControlOfEntity = function(entity)
+    if IsAnEntity(entity) then
+        NetworkRequestControlOfEntity(entity)
+        while not NetworkHasControlOfEntity(entity) do
+            Citizen.Wait(1)
+        end
+    end
+end
+exports("NetworkRequestControlOfEntity", AVA.NetworkRequestControlOfEntity)
+
 ---Request a model
----@param model string
+---@param model string|number
 AVA.RequestModel = function(model)
-    if IsModelValid(GetHashKey(model)) and not HasModelLoaded(GetHashKey(model)) then
-        RequestModel(GetHashKey(model))
-        while not HasModelLoaded(GetHashKey(model)) do
+    model = type(model) == "number" and model or GetHashKey(model)
+    if IsModelValid(model) and not HasModelLoaded(model) then
+        RequestModel(model)
+        while not HasModelLoaded(model) do
             Wait(0)
         end
     end
@@ -207,10 +220,7 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
         local modelHash = type(vehName) == "number" and vehName or GetHashKey(vehName)
 
         -- get vehicle model
-        RequestModel(modelHash)
-        while not HasModelLoaded(modelHash) do
-            Wait(0)
-        end
+        AVA.RequestModel(modelHash)
 
         local vehicle = CreateVehicle(modelHash, coords.x, coords.y, coords.z, heading, isNetwork, false)
         -- init vehicle
@@ -260,6 +270,7 @@ exports("SpawnVehicleLocal", AVA.Vehicles.SpawnVehicleLocal)
 ---@param vehicle entity
 AVA.Vehicles.DeleteVehicle = function(vehicle)
     if IsEntityAVehicle(vehicle) then
+        AVA.NetworkRequestControlOfEntity(vehicle)
         SetEntityAsMissionEntity(vehicle, true, true)
         DeleteVehicle(vehicle)
     end
