@@ -25,20 +25,22 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
     self.updateWeight = function()
         self.actual_weight = 0
         for i = 1, #self.items, 1 do
-            self.actual_weight = self.actual_weight + self.items[i].quantity * Items[self.items[i].name].weight
+            if Items[self.items[i].name] then
+                self.actual_weight = self.actual_weight + self.items[i].quantity * Items[self.items[i].name].weight
+            end
         end
     end
 
     self.updateWeight() -- * init weight value
 
     self.getItem = function(name)
-        for i = 1, #self.items, 1 do
-            if self.items[i].name == name then
-                return self.items[i]
-            end
-        end
-
         if Items[name] then
+            for i = 1, #self.items, 1 do
+                if self.items[i].name == name then
+                    return self.items[i]
+                end
+            end
+
             item = {name = name, quantity = 0}
 
             self.items[#self.items + 1] = item
@@ -183,7 +185,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
     self.clearInventory = function()
         for k, item in ipairs(self.items) do
-            if self.playerSrc and item.quantity > 0 then
+            if self.playerSrc and item.quantity > 0 and Items[item.name] then
                 TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, item.quantity, 0)
             end
             -- TODO remove totally element from inventory ?

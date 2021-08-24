@@ -38,19 +38,4 @@ AVAConfig.Licenses = {
 AVAConfig.Accounts = {bank = {label = "Banque"}}
 
 -- List of all items and their datas
-AVAConfig.Items = {
-    cash = {label = "Argent", type = "money", description = "Argent liquide", weight = 0.1, alwaysDisplayed = true},
-    dirtycash = {label = "Argent sale", type = "money", weight = 0.1, noIcon = true},
-
-    bread = {label = "Pain", type = "food", weight = 100, limit = nil, closeInv = true},
-    egochaser = {label = "EgoChaser", type = "food", description = "La barre énergétique qui prend soin de vous.", weight = 100, noIcon = true},
-    meteorite = {label = "Meteorite", type = "food", description = "Un cœur fondant enrobé de chocolat noir.", weight = 100, noIcon = true},
-
-    waterbottle = {label = "Bouteille d'eau", type = "liquid", weight = 100, limit = nil},
-    ecola = {label = "eCola", type = "liquid", description = "Un soda délicieusement infect.", weight = 100, noIcon = true},
-    pisswasser = {label = "Pisswasser", type = "liquid", description = "Bière de baston bavaroise.", weight = 100, noIcon = true},
-
-    lockpick = {label = "Lockpick", weight = 100, limit = nil, closeInv = true, noIcon = true},
-
-    grape = {label = "Raisin", weight = 10, limit = 180, noIcon = true},
-}
+AVAConfig.Items = json.decode(LoadResourceFile(GetCurrentResourceName(), "items.json") or "{}")

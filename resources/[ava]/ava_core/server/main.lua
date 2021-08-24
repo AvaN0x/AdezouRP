@@ -76,7 +76,8 @@ AVA.UsableItems = {}
 ---@param itemName any
 ---@param callback fun(itemName: string, callback: function)
 AVA.RegisterUsableItem = function(itemName, callback)
-    if type(itemName) == "string" and type(callback) == "function" then
+    if type(itemName) == "string" and AVAConfig.Items[itemName]
+        and (type(callback) == "function" or (type(callback) == "table" and callback["__cfx_functionReference"] ~= nil)) then
         AVA.UsableItems[itemName] = callback
         AVAConfig.Items[itemName].usable = true
     end
