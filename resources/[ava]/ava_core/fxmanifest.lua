@@ -8,7 +8,9 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"shared/import.lua"}
+files {"shared/import.lua", "languages/**.json"}
+
+shared_scripts {"shared/language.lua"}
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -51,10 +53,6 @@ server_scripts {
     "server/routing_buckets.lua",
     "server/players.lua",
     "server/inventories.lua",
-}
-
-shared_scripts {
-    -- 'shared/import.lua',
 }
 
 dependencies {"mysql-async", "RageUI"}

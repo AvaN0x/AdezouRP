@@ -140,7 +140,7 @@ end)
 -----------------------------------------
 
 local playerChars = {}
-local SelectCharMenu = RageUI.CreateMenu("", "Sélection de personnage", 0, 0, "avaui", "avaui_title_adezou")
+local SelectCharMenu = RageUI.CreateMenu("", GetString("select_char_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
 
 function RageUI.PoolMenus:AvaCoreSelectChar()
 
@@ -176,7 +176,8 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
                 label = ("%s %s"):format(char.character.firstname, char.character.lastname),
                 id = char.id,
                 disabled = char.last_played,
-                subtitle = ("ID de personnage ~o~%s~s~%s"):format(tostring(char.id), char.last_played and "\nPersonnage actuel" or ""),
+                subtitle = GetString("select_char_menu_subtitle", tostring(char.id),
+                    char.last_played and GetString("select_char_menu_subtitle_actual_char") or ""),
                 RightBadge = function()
                     return {BadgeDictionary = "mpleaderboard", BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon"}
                 end,
@@ -197,8 +198,7 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
     if #playerChars > 1 then
         RageUI.Visible(SelectCharMenu, true)
     else
-        AVA.ShowNotification("Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil, "ava_core_logo", "Sélection de personnage", nil, nil,
-            "ava_core_logo")
+        AVA.ShowNotification(GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo", "Sélection de personnage", nil, nil, "ava_core_logo")
     end
 end)
 

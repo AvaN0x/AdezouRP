@@ -463,7 +463,7 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
     local playerId = PlayerId()
 
     if not title or title == "" then
-        title = "Sélectionner un joueur"
+        title = GetString("select_a_person")
     end
     if not distance or not tonumber(distance) or tonumber(distance) <= 0 then
         distance = 3.0
@@ -484,7 +484,7 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
                     entity = targetPed,
                     localId = player,
                     serverId = GetPlayerServerId(player),
-                    label = player ~= playerId and ("Personne #%d"):format(entityCount) or "Moi",
+                    label = player ~= playerId and GetString("person_number", entityCount) or "Moi",
                 }
             end
         end
@@ -499,7 +499,7 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
         local player = Citizen.Await(p) or {}
         return player.serverId, player.localId
     else
-        AVA.ShowNotification("Aucun joueur assez proche")
+        AVA.ShowNotification(GetString("no_persons_close_enough"))
     end
 end
 exports("ChooseClosestPlayer", AVA.Utils.ChooseClosestPlayer)
@@ -517,7 +517,7 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
     local playerCoords = GetEntityCoords(playerPed)
 
     if not title or title == "" then
-        title = "Sélectionner un véhicule"
+        title = GetString("select_a_vehicle")
     end
     if not distance or not tonumber(distance) or tonumber(distance) <= 0 then
         distance = 5.0
@@ -535,7 +535,7 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
         if #(playerCoords - vehCoords) < distance + 0.0 and (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
             and (blacklist == nil or #blacklist == 0 or not AVA.Utils.TableHasValue(blacklist, vehModel)) then
             entityCount = entityCount + 1
-            entitiesToSelect[entityCount] = {label = ("Véhicule #%d"):format(entityCount), entity = veh}
+            entitiesToSelect[entityCount] = {label = GetString("vehicle_number", entityCount), entity = veh}
         end
     end
 
@@ -548,7 +548,7 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
         local veh = Citizen.Await(p) or {}
         return veh.entity
     else
-        AVA.ShowNotification("Aucun véhicule assez proche")
+        AVA.ShowNotification(GetString("no_vehicle_close_enough"))
     end
 end
 exports("ChooseClosestVehicle", AVA.Vehicles.ChooseClosestVehicle)

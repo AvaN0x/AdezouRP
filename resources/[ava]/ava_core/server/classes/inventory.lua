@@ -14,7 +14,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
     -- identifier and label are not used in case of a player inventory
     self.identifier = identifier
-    self.label = label or "Inventaire"
+    self.label = label or GetString("inventory")
 
     self.actual_weight = 0
     self.modified = false

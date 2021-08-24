@@ -72,28 +72,27 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
     -- mandatory wait!
     Wait(0)
 
-    deferrals.update("Vérification des permissions...")
+    deferrals.update(GetString("connecting_checking_perms"))
 
     if AVA.Players.BanList == nil then
-        deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", "The ban list have not loaded well !", 16711680)
+        deferrals.done(GetString("connecting_error"))
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", GetString("connecting_error_ban_list_log"), 16711680)
     else
         local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(src)
 
         if license == nil then
-            deferrals.done("Votre license Rockstar n'a pas été détectée.")
+            deferrals.done(GetString("connecting_no_rockstar_license"))
         elseif discord == nil then
-            deferrals.done(
-                "Discord n'a pas été détecté. Veuillez vous assurer que Discord est en cours d'exécution et est installé. Voir le lien ci-dessous pour un processus de débogage - docs.faxes.zone/docs/debugging-discord")
+            deferrals.done(GetString("connecting_discord_not_found"))
         else
             local discordId = string.gsub(discord, "discord:", "")
-            deferrals.update("Ton ID discord a été trouvé...")
+            deferrals.update(GetString("connecting_discord_found"))
 
             local isBanned, banReason = AVA.Players.IsBanned(license, discord, steam, ip, live, xbl)
             if isBanned == nil then
-                deferrals.done("Une erreur est survenue, veuillez réessayer. Si le problème persiste, veuillez créer un ticket sur le discord.")
+                deferrals.done(GetString("connecting_error"))
             elseif isBanned == true then
-                deferrals.done("Vous avez été banni de ce serveur : " .. banReason)
+                deferrals.done(GetString("connecting_you_are_banned", banReason))
             else
                 if AVAConfig.DiscordWhitelist then
                     local member = GetDiscordGuildUser(discord)
@@ -174,7 +173,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     -- if for any reason, we could not get player datas, then we drop the player
     -- /!\ this should not happen, but it's better to prevent than cure
     if not playerData then
-        DropPlayer(src, "Une erreur s'est produite lors de la récupération de votre personnage. Veuillez réessayer dans un instant.")
+        DropPlayer(src, GetString("log_player_error"))
         print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
                   .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
@@ -211,7 +210,7 @@ local function setupPlayer(src, oldSource)
         local member = AVAConfig.DiscordWhitelist and GetDiscordGuildUser(discord) or GetDiscordUser(discord)
         -- kick player if we could not get the discord user
         if not member then
-            DropPlayer(src, "Votre utilisateur Discord n'a pas pu être récupéré. Veuillez réessayer dans un instant.")
+            DropPlayer(src, GetString("log_player_discord_error"))
             print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
                       .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
@@ -330,7 +329,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 need to create a character again because we received uncomplete values.^0("
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
                   .. aPlayer.citizenId .. ")")
         TriggerClientEvent("ava_core:client:createChar", src)
     end
@@ -637,7 +636,7 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
     end
     return
-end, "change_char", {{name = "char", help = "char_id"}})
+end, GetString("change_char_help"), {{name = "char", help = GetString("char_id")}})
 
 AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local src = source
@@ -646,8 +645,8 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
         -- check if player can create a new char
         local charsCount = MySQL.Sync.fetchScalar("SELECT COUNT(1) FROM `players` WHERE `license` = @license", {["@license"] = aPlayer.identifiers.license})
         if charsCount >= AVAConfig.MaxChars then
-            TriggerClientEvent("ava_core:client:ShowNotification", src, "~r~Vous ne pouvez pas avoir plus de personnages.", nil, "ava_core_logo", "Personnages",
-                nil, nil, "ava_core_logo")
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", "Personnages", nil, nil,
+                "ava_core_logo")
             return
         end
 
@@ -671,7 +670,7 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
     end
     return
-end, "new_char")
+end, GetString("new_char_help"))
 
 AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
@@ -682,8 +681,8 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
         if chars[1] then
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
-            TriggerClientEvent("ava_core:client:ShowNotification", src, "Vous devez avoir au minimum un personnage pour pouvoir en changer.", nil,
-                "ava_core_logo", "Personnages", nil, nil, "ava_core_logo")
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo",
+                "Personnages", nil, nil, "ava_core_logo")
         end
     end
-end, "get_all_player_chars")
+end, GetString("get_all_player_chars_help"))

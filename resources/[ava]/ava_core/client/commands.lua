@@ -36,7 +36,7 @@ RegisterNetEvent("ava_core:client:teleportToWaypoint", function()
         local blipCoords = GetBlipInfoIdCoord(waypoint)
         AVA.TeleportPlayerToCoords(blipCoords.x, blipCoords.y, 0, true)
     else
-        AVA.ShowNotification(nil, nil, "ava_core_logo", "Aucun waypoint trouvé", nil, nil, "ava_core_logo")
+        AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("tpm_no_waypoint_found"), nil, nil, "ava_core_logo")
     end
 end)
 
@@ -47,5 +47,5 @@ end)
 RegisterNetEvent("ava_core:client:kill")
 AddEventHandler("ava_core:client:kill", function()
     SetEntityHealth(PlayerPedId(), 0)
-    AVA.ShowNotification(nil, nil, "ava_core_logo", "Tué par un staff", nil, nil, "ava_core_logo")
+    AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("killed_by_staff"), nil, nil, "ava_core_logo")
 end)
