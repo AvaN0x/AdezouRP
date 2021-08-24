@@ -290,6 +290,10 @@ end, GetString("tpm_help"))
 --------------- Others ---------------
 --------------------------------------
 
+AVA.Commands.RegisterCommand("myid", "", function(source, args)
+    TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
+end, GetString("myid_help"))
+
 -- AVA.Commands.RegisterCommand("report", "", function(source, args)
 --     TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
 -- end, "report", {{name = "reason", help = "your_reason"}})

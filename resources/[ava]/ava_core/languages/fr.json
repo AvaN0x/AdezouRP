@@ -26,6 +26,8 @@
     "kill_help": "Tuer un joueur",
     "kill_log": "**%s** a été tué par **%s**.",
     "killed_by_staff": "Tué par un staff",
+    "myid_help": "Récupérer mon ID",
+    "myid_message": "Mon ID est ^3%s^0",
     "inventory_use": "Utiliser",
     "inventory_give": "Donner",
     "inventory": "Inventaire",
