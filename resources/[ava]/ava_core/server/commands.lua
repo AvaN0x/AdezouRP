@@ -58,15 +58,31 @@ exports("RegisterCommand", AVA.Commands.RegisterCommand)
 --------------- Vehicles ---------------
 ----------------------------------------
 
-AVA.Commands.RegisterCommand({"vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({"spawnvehicle", "vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
     if type(args[1]) == "string" then
         TriggerClientEvent("ava_core:client:spawnVehicle", source, args[1])
     end
-end, GetString("spawn_vehicle"), {{name = "vehicle", help = GetString("vehicle_name")}})
+end, GetString("spawn_vehicle_help"), {{name = "vehicle", help = GetString("vehicle_name")}})
 
 AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
     TriggerClientEvent("ava_core:client:deleteVehicle", source)
-end, GetString("delete_vehicle"))
+end, GetString("delete_vehicle_help"))
+
+AVA.Commands.RegisterCommand({"repairvehicle", "repair", "r"}, "admin", function(source, args)
+    TriggerClientEvent("ava_core:client:repairVehicle", source)
+end, GetString("repair_vehicle_help"))
+
+AVA.Commands.RegisterCommand({"flipvehicle", "flipv"}, "admin", function(source, args)
+    TriggerClientEvent("ava_core:client:flipVehicle", source)
+end, GetString("flip_vehicle_help"))
+
+AVA.Commands.RegisterCommand("tpnearestvehicle", "admin", function(source, args)
+    TriggerClientEvent("ava_core:client:tpNearestVehicle", source)
+end, GetString("tpnearestvehicle_help"))
+
+AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(source, args)
+    TriggerClientEvent("ava_core:client:tuneVehiclePink", source)
+end, GetString("tune_vehicle_pink_help"))
 
 ----------------------------------------
 --------------- Accounts ---------------

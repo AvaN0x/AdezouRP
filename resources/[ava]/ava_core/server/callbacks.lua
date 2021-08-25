@@ -8,7 +8,7 @@ RegisterNetEvent("ava_core:callbacks:server", function(eventName, requestId, ...
     local src = source
     local result
 
-    if type(callbacks[eventName]) == "function" then
+    if type(callbacks[eventName]) == "function" or (type(callbacks[eventName]) == "table" and callbacks[eventName]["__cfx_functionReference"] ~= nil) then
         result = {callbacks[eventName](src, ...)}
     end
 
@@ -20,8 +20,10 @@ end)
 ---@param callback function
 AVA.RegisterServerCallback = function(eventName, callback)
     if type(eventName) ~= "string" then
+        print("^3[WARN] Could not create server callback because ^eventName^3 is not a ^0string^3.^0")
         return
-    elseif type(callback) ~= "function" then
+    elseif type(callback) ~= "function" and (type(callback) == "table" and callback["__cfx_functionReference"] == nil) then
+        print("^3[WARN]^0 Could not create server callback ^3" .. name .. "^0 because ^3callback^0 is not a ^3function^0.^0")
         return
     end
 

@@ -12,17 +12,17 @@ end)
 --------------- Init Config ---------------
 -------------------------------------------
 
-local resourceName = GetCurrentResourceName()
-for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
-    local dataName = GetResourceMetadata(resourceName, "my_data", i - 1)
+local resourceName<const> = GetCurrentResourceName()
+for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
+    local dataName = GetResourceMetadata(resourceName, "ava_config", i - 1)
     if dataName == "discord_config" then
-        AVAConfig.Discord = json.decode(GetResourceMetadata(resourceName, "my_data_extra", i - 1))
+        AVAConfig.Discord = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1))
 
     elseif dataName == "debug_prints" then
         AVAConfig.Debug = true
 
     elseif dataName == "max_characters" then
-        local value = json.decode(GetResourceMetadata(resourceName, "my_data_extra", i - 1)) or 0
+        local value = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1)) or 0
         if value ~= "null" and tonumber(value) > 0 then
             AVAConfig.MaxChars = tonumber(value)
         else
@@ -66,6 +66,12 @@ ExecuteCommand("add_ace group.admin command.ensure allow")
 
 ExecuteCommand("add_principal group.superadmin group.admin")
 ExecuteCommand("add_ace group.superadmin command allow")
+
+AddEventHandler("ava_core:server:add_ace", function(principal, object)
+    if type(principal) == "string" and type(object) == "string" then
+        ExecuteCommand(("add_ace %s %s allow"):format(principal, object))
+    end
+end)
 
 -------------------------------------
 --------------- Items ---------------

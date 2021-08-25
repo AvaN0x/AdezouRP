@@ -1,0 +1,23 @@
+{
+    "admin_menu": "Menu admin",
+    "admin_menu_title": "Administration",
+    "admin_menu_player_list": "~o~Liste des joueurs",
+    "admin_menu_player_list_subtitle": "Accéder à la liste des joueurs",
+    "player_list": "Liste des joueurs",
+    "admin_menu_vehicles": "~g~Véhicules",
+    "admin_menu_vehicles_subtitle": "Gestion de véhicules",
+    "vehicles": "Véhicules",
+    "vehicles_spawnvehicle": "~g~Spawn véhicule",
+    "vehicles_spawnvehicle_subtitle": "",
+    "vehicles_spawnvehicle_input": "Entrez un nom de véhicule",
+    "vehicles_repairvehicle": "Réparer véhicule",
+    "vehicles_repairvehicle_subtitle": "",
+    "vehicles_flipvehicle": "Retourner véhicule",
+    "vehicles_flipvehicle_subtitle": "Remettre le véhicule sur ses roues",
+    "vehicles_tunevehiclepink": "~p~Custom le véhicule en rose",
+    "vehicles_tunevehiclepink_subtitle": "",
+    "vehicles_deletevehicle": "~r~Supprimer véhicule",
+    "vehicles_deletevehicle_subtitle": "",
+    "vehicles_tpnearestvehicle": "~y~TP véhicule le plus proche",
+    "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche"
+}

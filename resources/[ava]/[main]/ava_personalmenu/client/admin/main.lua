@@ -2,21 +2,36 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-MainAdminMenu = RageUI.CreateMenu("", "Administration", 0, 0, "avaui", "avaui_title_adezou")
+MainAdminMenu = RageUI.CreateMenu("", GetString("admin_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
+---@type adminmenu_perms
+perms = {}
 
 RegisterCommand("adminmenu", function()
-    if not isAdmin then
-        isAdmin = not not AVA.TriggerServerCallback("ava_core:IsPlayerAceAllowed", "command.adminmenu")
+    if isAdmin == nil then
+        isAdmin, perms = AVA.TriggerServerCallback("ava_core:isAdminAllowed")
     end
+
     if isAdmin then
+        print(json.encode(perms, {indent = true}))
+
         RageUI.Visible(MainAdminMenu, true)
     end
 end)
 
-RegisterKeyMapping("adminmenu", "Admin menu", "keyboard", "HOME")
+RegisterKeyMapping("adminmenu", GetString("admin_menu"), "keyboard", "HOME")
 
 function RageUI.PoolMenus:AdminMenu()
     MainAdminMenu:IsVisible(function(Items)
-
+        if perms.playerlist then
+            Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), nil, function(onSelected)
+            end, PlayerListSubMenu)
+        end
+        if perms.vehicles then
+            Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), nil, function(onSelected)
+            end, VehiclesSubMenu)
+        end
     end)
+
+    PoolPlayerList()
+    PoolVehicles()
 end

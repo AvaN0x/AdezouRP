@@ -58,11 +58,11 @@ server_scripts {
 dependencies {"mysql-async", "RageUI"}
 
 -- comment this line to disable debug prints
-my_data "debug_prints" "yes"
+ava_config "debug_prints" "yes"
 
-my_data "max_characters" "10"
+ava_config "max_characters" "10"
 
-my_data "discord_config" {
+ava_config "discord_config" {
     GuildId = "743525702157992018",
     Whitelist = {
         -- "743525702531547234", -- superadmin

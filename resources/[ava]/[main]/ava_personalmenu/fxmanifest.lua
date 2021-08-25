@@ -8,6 +8,8 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
+files {"languages/**.json"}
+
 client_scripts {
     "@RageUI/src/RageUI.lua",
     "@RageUI/src/Menu.lua",
@@ -25,11 +27,13 @@ client_scripts {
 
     "client/main.lua",
     "client/admin/main.lua",
+    "client/admin/playerlist.lua",
+    "client/admin/vehicles.lua",
 }
 
 server_scripts {"server/main.lua", "server/admin/main.lua"}
 
-shared_scripts {"@ava_core/shared/import.lua"}
+shared_scripts {"@ava_core/shared/import.lua", "@ava_core/shared/language.lua"}
 
 dependencies {"ava_core"}
 
