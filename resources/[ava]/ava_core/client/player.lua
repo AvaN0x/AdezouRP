@@ -137,6 +137,38 @@ AddEventHandler("baseevents:onPlayerKilled", function(killerid, data)
     RespawnPlayer()
 end)
 
+------------------------------------
+--------------- Save ---------------
+------------------------------------
+AddTextEntry("AVA_BSY_SPNR", GetString("player_being_saved"))
+local saveBusySpinnerState = false
+
+RegisterNetEvent("ava_core:client:startSave", function()
+    Citizen.CreateThread(function()
+        saveBusySpinnerState = true
+        BeginTextCommandBusyspinnerOn("AVA_BSY_SPNR")
+        EndTextCommandBusyspinnerOn(4)
+
+        -- we hide the busy spinner after 5 secondes if it's still shown, this should not happen but it's a security
+        Wait(5000)
+        if BusyspinnerIsOn() and saveBusySpinnerState then
+            saveBusySpinnerState = false
+            BusyspinnerOff()
+        end
+    end)
+end)
+
+RegisterNetEvent("ava_core:client:endSave", function()
+    Citizen.CreateThread(function()
+        -- Show the busyspinner for at least 500ms
+        Wait(500)
+        if BusyspinnerIsOn() then
+            saveBusySpinnerState = false
+            BusyspinnerOff()
+        end
+    end)
+end)
+
 -----------------------------------------
 --------------- Multichar ---------------
 -----------------------------------------

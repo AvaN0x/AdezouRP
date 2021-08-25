@@ -542,6 +542,7 @@ AVA.Players.Save = function(src)
     local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer and aPlayer.citizenId then
+        TriggerClientEvent("ava_core:client:startSave", src)
         local p = promise.new()
         -- MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
         MySQL.Async.execute(
@@ -560,6 +561,7 @@ AVA.Players.Save = function(src)
                 ["@id"] = aPlayer.citizenId,
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+                TriggerClientEvent("ava_core:client:endSave", src)
                 p:resolve()
             end)
         return p

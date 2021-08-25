@@ -306,6 +306,12 @@ end, GetString("tpm_help"))
 --------------- Others ---------------
 --------------------------------------
 
+AVA.Commands.RegisterCommand("save", "", function(_, _, _, aPlayer)
+    if aPlayer then
+        aPlayer.save()
+    end
+end)
+
 AVA.Commands.RegisterCommand("myid", "", function(source, args)
     TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
 end, GetString("myid_help"))

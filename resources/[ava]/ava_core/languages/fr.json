@@ -1,4 +1,5 @@
 {
+    "player_being_saved": "Sauvegarde en cours",
     "used_command": "**%s** used command `/%s`",
     "spawn_vehicle_help": "Spawn un véhicule",
     "vehicle_name": "Nom du véhicule",
