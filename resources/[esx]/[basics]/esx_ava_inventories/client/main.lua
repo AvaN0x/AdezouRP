@@ -71,7 +71,7 @@ function OpenMyInventory()
                 table.insert(elements2, {label = _('use_item'), value = "use_item"})
             end
             table.insert(elements2, {label = _('give_item'), value = "give_item"})
-            table.insert(elements2, {label = _('drop_item'), value = "drop_item"})
+            -- table.insert(elements2, {label = _('drop_item'), value = "drop_item"})
 
             local title = data.current.label
             if data.current.item and data.current.item.label then
@@ -97,10 +97,10 @@ function OpenMyInventory()
                         GiveItem(targetId, data.current.value, data.current.item.name)
                     end, _('select_a_player'), 3.0)
 
-                elseif data2.current.value == "drop_item" then
-                    DropItem(data.current.value, data.current.item.name)
-                    ESX.UI.Menu.CloseAll()
-                    OpenMyInventory()
+                -- elseif data2.current.value == "drop_item" then
+                --     DropItem(data.current.value, data.current.item.name)
+                --     ESX.UI.Menu.CloseAll()
+                --     OpenMyInventory()
                 end
             end, function(data2, menu2)
                 ESX.UI.Menu.CloseAll()
@@ -142,18 +142,18 @@ function GiveItem(player, itemType, itemName)
 end
 
 function DropItem(itemType, itemName)
-    local amount = 1
-    if itemType ~= "item_weapon" then
-        amount = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
-    end
-    local playerPed = PlayerPedId()
-    if IsPedSittingInAnyVehicle(playerPed) then
-        return
-    end
+    -- local amount = 1
+    -- if itemType ~= "item_weapon" then
+    --     amount = tonumber(exports.esx_avan0x:KeyboardInput(_('enter_amount'), "", 10))
+    -- end
+    -- local playerPed = PlayerPedId()
+    -- if IsPedSittingInAnyVehicle(playerPed) then
+    --     return
+    -- end
 
-    if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
-        TriggerServerEvent("esx_ava_inventories:dropItem", 'inventory', itemType, itemName, amount)
-    end
+    -- if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
+    --     TriggerServerEvent("esx_ava_inventories:dropItem", 'inventory', itemType, itemName, amount)
+    -- end
 end
 
 
