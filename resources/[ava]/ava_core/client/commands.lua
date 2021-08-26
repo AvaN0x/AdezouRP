@@ -44,14 +44,23 @@ end)
 RegisterNetEvent("ava_core:client:tpNearestVehicle", function()
     local playerPed = PlayerPedId()
 
-    local vehicle = GetClosestVehicle(GetEntityCoords(playerPed, true), 12.0, 0, 71)
+    local vehicle = AVA.Vehicles.GetClosestVehicle(nil, true)
     if vehicle ~= 0 then
+        local wantedSeat = -1
         local driverPed = GetPedInVehicleSeat(vehicle, -1)
-        if driverPed ~= 0 and not IsPedAPlayer(driverPed) then
-            DeletePed(driverPed)
+        if driverPed ~= 0 then
+            if not IsPedAPlayer(driverPed) then
+                DeletePed(driverPed)
+            elseif driverPed == playerPed then
+                -- we wont teleport the player if it is already the driver
+                return
+            else
+                -- if the driver is a player, we try to teleport the player to the first available seat
+                wantedSeat = -2
+            end
         end
         ClearPedTasksImmediately(playerPed)
-        TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+        TaskWarpPedIntoVehicle(playerPed, vehicle, wantedSeat)
     end
 end)
 
