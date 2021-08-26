@@ -2,15 +2,14 @@
 ------- REMADE BY GITHUB.COM/AVAN0X -------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 Config = {}
 
 -- For the door.
 Config.DrawTextDist = 2.0
 
 -- The door.
-Config.HintLocation      =   vector3(-60.05, 982.01, 233.60) -- new point
-Config.SalesLocations    =   {
+Config.HintLocation = vector4(-60.05, 982.01, 233.60, 13.45) -- new point
+Config.SalesLocations = {
     [1] = vector4(-544.2, -1799.3, 22.4, 68.92),
     [2] = vector4(-496.85, -1762.41, 18.65, 262.54),
     [3] = vector4(-483.48, -1691.74, 19.14, 88.9),
@@ -63,71 +62,70 @@ Config.SalesLocations    =   {
 
 }
 
-Config.DealerPed = 's_m_y_dealer_01'
-
+Config.DealerPed = "s_m_y_dealer_01"
 
 -- TODO This is not beautiful at all, change it at some time
 Config.DrugItems = {
     -- ['Montre Rolex'] = 'rolex',
-    ['Lingot d\'Or'] = 'gold',
-    ['Diamant'] = 'diamond',
-    ['Pochon de cannabis'] = 'bagweed',
-    ['Pochon de cocaïne'] = 'bagcoke',
-    ['Pochon d\'extazy'] = 'bagexta',
-    ['Pochon de Meth'] = 'methamphetamine',
+    ["Lingot d'Or"] = "gold",
+    ["Diamant"] = "diamond",
+    ["Pochon de cannabis"] = "bagweed",
+    ["Pochon de cocaïne"] = "bagcoke",
+    ["Pochon d'extazy"] = "bagexta",
+    ["Pochon de Meth"] = "methamphetamine",
 
-    ['Montre en or'] = 'watch_gold',
-    ['Montre en diamant'] = 'watch_diamond',
-    ['Montre en argent'] = 'watch_steel',
-    ['Montre en émeraude'] = 'watch_emerald',
-    ['Montre en ruby'] = 'watch_ruby',
-    ['Collier en or'] = 'necklace_gold',
-    ['Collier en diamant'] = 'necklace_diamond',
-    ['Collier en argent'] = 'necklace_steel',
-    ['Collier en émeraude'] = 'necklace_emerald',
-    ['Collier en ruby'] = 'necklace_ruby',
-    ['Bague en or'] = 'ring_gold',
-    ['Bague en diamant'] = 'ring_diamond',
-    ['Bague en argent'] = 'ring_steel',
-    ['Bague en émeraude'] = 'ring_emerald',
-    ['Bague en ruby'] = 'ring_ruby',
-    ['Bracelet en or'] = 'bracelet_gold',
-    ['Bracelet en diamant'] = 'bracelet_diamond',
-    ['Bracelet en argent'] = 'bracelet_steel',
-    ['Bracelet en émeraude'] = 'bracelet_emerald',
-    ['Bracelet en ruby'] = 'bracelet_ruby',
-    ['Caisse D\'armes'] = 'weaponbox',
+    ["Montre en or"] = "watch_gold",
+    ["Montre en diamant"] = "watch_diamond",
+    ["Montre en argent"] = "watch_steel",
+    ["Montre en émeraude"] = "watch_emerald",
+    ["Montre en ruby"] = "watch_ruby",
+    ["Collier en or"] = "necklace_gold",
+    ["Collier en diamant"] = "necklace_diamond",
+    ["Collier en argent"] = "necklace_steel",
+    ["Collier en émeraude"] = "necklace_emerald",
+    ["Collier en ruby"] = "necklace_ruby",
+    ["Bague en or"] = "ring_gold",
+    ["Bague en diamant"] = "ring_diamond",
+    ["Bague en argent"] = "ring_steel",
+    ["Bague en émeraude"] = "ring_emerald",
+    ["Bague en ruby"] = "ring_ruby",
+    ["Bracelet en or"] = "bracelet_gold",
+    ["Bracelet en diamant"] = "bracelet_diamond",
+    ["Bracelet en argent"] = "bracelet_steel",
+    ["Bracelet en émeraude"] = "bracelet_emerald",
+    ["Bracelet en ruby"] = "bracelet_ruby",
+    ["Caisse D'armes"] = "weaponbox",
 }
 
 Config.DrugPrices = {
-    ['gold'] = 150,
-    ['diamond'] = 600,
-    ['bagweed'] = 70,
-    ['bagcoke'] = 165,
-    ['bagexta'] = 90,
-    ['methamphetamine'] = 220,
+    ["gold"] = 150,
+    ["diamond"] = 600,
+    ["bagweed"] = 70,
+    ["bagcoke"] = 165,
+    ["bagexta"] = 90,
+    ["methamphetamine"] = 220,
 
-    ['watch_gold'] = 328,
-    ['watch_diamond'] = 532,
-    ['watch_steel'] = 212,
-    ['watch_emerald'] = 749,
-    ['watch_ruby'] = 799,
-    ['necklace_gold'] = 314,
-    ['necklace_diamond'] = 481,
-    ['necklace_steel'] = 173,
-    ['necklace_emerald'] = 701,
-    ['necklace_ruby'] = 747,
-    ['ring_gold'] = 198,
-    ['ring_diamond'] = 268,
-    ['ring_steel'] = 112,
-    ['ring_emerald'] = 362,
-    ['ring_ruby'] = 432,
-    ['bracelet_gold'] = 232,
-    ['bracelet_diamond'] = 376,
-    ['bracelet_steel'] = 146,
-    ['bracelet_emerald'] = 493,
-    ['bracelet_ruby'] = 626,
-    ['weaponbox'] = 2576,
+    ["watch_gold"] = 328,
+    ["watch_diamond"] = 532,
+    ["watch_steel"] = 212,
+    ["watch_emerald"] = 749,
+    ["watch_ruby"] = 799,
+    ["necklace_gold"] = 314,
+    ["necklace_diamond"] = 481,
+    ["necklace_steel"] = 173,
+    ["necklace_emerald"] = 701,
+    ["necklace_ruby"] = 747,
+    ["ring_gold"] = 198,
+    ["ring_diamond"] = 268,
+    ["ring_steel"] = 112,
+    ["ring_emerald"] = 362,
+    ["ring_ruby"] = 432,
+    ["bracelet_gold"] = 232,
+    ["bracelet_diamond"] = 376,
+    ["bracelet_steel"] = 146,
+    ["bracelet_emerald"] = 493,
+    ["bracelet_ruby"] = 626,
+    ["weaponbox"] = 2576,
 }
 
 Config.MaxPriceVariance = 10.0 -- %
