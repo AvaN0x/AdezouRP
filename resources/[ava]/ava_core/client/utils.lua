@@ -325,7 +325,11 @@ AVA.Vehicles.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
         end
     end
 
-    return closestVeh, closestDistance
+    if IsEntityAVehicle(closestVeh) then
+        AVA.NetworkRequestControlOfEntity(closestVeh)
+        return closestVeh, closestDistance
+    end
+    return 0
 end
 exports("GetClosestVehicle", AVA.Vehicles.GetClosestVehicle)
 
