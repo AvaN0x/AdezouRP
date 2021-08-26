@@ -169,7 +169,9 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
 
     local playerData = retrievePlayerData(citizenId)
 
-    dprint("playerData", citizenId, json.encode(playerData, {indent = true}))
+    dprint("playerData", citizenId)
+    -- dprint(json.encode(playerData, {indent = true}))
+    
     -- if for any reason, we could not get player datas, then we drop the player
     -- /!\ this should not happen, but it's better to prevent than cure
     if not playerData then
