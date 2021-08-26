@@ -248,6 +248,10 @@ end, "Clear player inventory", {{name = "player", help = "Player id, empty if yo
 -----------------------------------------
 
 AVA.Commands.RegisterCommand("tp", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" then
+        return
+    end
+
     local x = tonumber((string.gsub(args[1], ",$", ""))) -- double parentheses are needed to only use first return of gsub
     local y = tonumber((string.gsub(args[2], ",$", "")))
     local z = tonumber(type(args[3]) == "string" and (string.gsub(args[3], ",$", "")) or 0)
