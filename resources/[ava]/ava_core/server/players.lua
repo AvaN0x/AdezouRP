@@ -163,7 +163,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     local oldPlayer = AVA.Players.GetPlayer(src)
     if oldPlayer then
         oldPlayer.logout()
-        oldPlayer.save()
+        Citizen.Await(oldPlayer.save())
         AVA.Players.List[tostring(src)] = nil
     end
 
@@ -352,7 +352,7 @@ AddEventHandler("playerDropped", function(reason)
                 .. "`)" .. " se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
 
         AVA.Players.List[tostring(src)].logout()
-        AVA.Players.List[tostring(src)].save()
+        Citizen.Await(AVA.Players.List[tostring(src)].save())
         AVA.Players.List[tostring(src)] = nil
     end
     DEBUGPrintPlayerList("playerDropped")
