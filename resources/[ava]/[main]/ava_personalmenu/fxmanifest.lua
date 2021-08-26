@@ -31,7 +31,7 @@ client_scripts {
     "client/admin/vehicles.lua",
 }
 
-server_scripts {"server/main.lua", "server/admin/main.lua"}
+server_scripts {"server/main.lua", "server/admin/main.lua", "server/admin/commands.lua"}
 
 shared_scripts {"@ava_core/shared/import.lua", "@ava_core/shared/language.lua"}
 

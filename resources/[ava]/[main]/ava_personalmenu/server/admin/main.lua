@@ -5,9 +5,13 @@
 ---@class adminmenu_perms
 local requiredPerms<const> = {
     playerlist = {spec = true, ["goto"] = true, summon = true, kill = true},
+    playersoptions = {playerblips = true},
     vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     adminmode = true,
 }
+
+local playersData = {}
+local avaPlayerData = {}
 
 TriggerEvent("ava_core:server:add_ace", "group.mod", "adminmenu")
 
@@ -41,4 +45,58 @@ end
 exports.ava_core:RegisterServerCallback("ava_core:isAdminAllowed", function(source)
     local menuAllowed = IsPlayerAceAllowed(source, "adminmenu")
     return not not menuAllowed, menuAllowed and checkPerms(source, key, value) or nil
+end)
+
+------------------------------------------
+--------------- Data loops ---------------
+------------------------------------------
+local dataLoopInterval = GetConvarInt("ava_adminmenu_dataLoopInterval", 5000)
+CreateThread(function()
+    local pairs = pairs
+
+    while true do
+        Wait(dataLoopInterval)
+        local newData = {}
+
+        local players = GetPlayers()
+        local count = 0
+        for _, playerSrc in pairs(players) do
+            local ped = GetPlayerPed(playerSrc)
+            local coords = GetEntityCoords(ped)
+            local rb = GetPlayerRoutingBucket(playerSrc)
+
+            if type(avaPlayerData[playerSrc]) ~= "table" then
+                avaPlayerData[playerSrc] = {}
+                local aPlayer = exports.ava_core:GetPlayer(playerSrc)
+                avaPlayerData[playerSrc].name = aPlayer.getDiscordTag()
+            end
+
+            -- coords
+            local data = {}
+            data.id = playerSrc
+            data.c = coords
+            data.rb = rb
+
+            data.n = avaPlayerData[playerSrc].name
+
+            count = count + 1
+            newData[count] = data
+
+            Wait(0)
+        end
+
+        playersData = newData
+
+        -- TODO only registered admins that asked about it
+        for _, serverID in pairs(players) do
+            if IsPlayerAceAllowed(serverID, "adminmenu") then
+                TriggerClientEvent("ava_personalmenu:client:playersData", serverID, playersData, GetPlayerRoutingBucket(serverID))
+            end
+        end
+    end
+end)
+
+AddEventHandler("playerDropped", function()
+    local src = source
+    avaPlayerData[tostring(src)] = nil
 end)

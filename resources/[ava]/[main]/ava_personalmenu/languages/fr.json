@@ -1,11 +1,17 @@
 {
     "admin_menu": "Menu admin",
     "admin_menu_title": "Administration",
-    "admin_menu_player_list": "~o~Liste des joueurs",
+    "admin_menu_player_list": "Liste des joueurs",
     "admin_menu_player_list_subtitle": "Accéder à la liste des joueurs",
+    "admin_menu_players_options": "Options des joueurs",
+    "admin_menu_players_options_subtitle": "Options concernant la totalité des joueurs",
     "player_list": "Liste des joueurs",
+    "players_options": "Options des joueurs",
+    "admin_menu_players_options_blips": "Blips des joueurs",
+    "admin_menu_players_options_blips_subtitle": "Afficher les joueurs sur la map",
     "admin_menu_vehicles": "~g~Véhicules",
     "admin_menu_vehicles_subtitle": "Gestion de véhicules",
+    "routing_bucket_different": "Routing Bucket différent.",
     "vehicles": "Véhicules",
     "vehicles_spawnvehicle": "~g~Spawn véhicule",
     "vehicles_spawnvehicle_subtitle": "",
@@ -18,6 +24,6 @@
     "vehicles_tunevehiclepink_subtitle": "",
     "vehicles_deletevehicle": "~r~Supprimer véhicule",
     "vehicles_deletevehicle_subtitle": "",
-    "vehicles_tpnearestvehicle": "~y~TP véhicule le plus proche",
+    "vehicles_tpnearestvehicle": "TP véhicule le plus proche",
     "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche"
 }
