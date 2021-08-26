@@ -39,6 +39,9 @@ local function togglePlayerBlipsLoop(value)
                 if playerLocalId ~= myPlayerId then
                     if playerLocalId ~= -1 then
                         if not oldBlip or oldBlip.type == "coord" then
+                            if oldBlip and oldBlip.blip then
+                                RemoveBlip(oldBlip.blip)
+                            end
                             local targetPed = GetPlayerPed(playerLocalId)
                             blip = AddBlipForEntity(targetPed)
                             oldBlip = {type = "entity"}
@@ -46,6 +49,9 @@ local function togglePlayerBlipsLoop(value)
                             ShowHeadingIndicatorOnBlip(blip, true)
                         end
                     elseif not oldBlip or oldBlip.type == "entity" then
+                        if oldBlip and oldBlip.blip then
+                            RemoveBlip(oldBlip.blip)
+                        end
                         local coords = playerData.c
                         blip = AddBlipForCoord(coords.x, coords.y, coords.z)
                         oldBlip = {type = "coord"}
@@ -70,20 +76,19 @@ local function togglePlayerBlipsLoop(value)
                         oldBlip.sameRB = playerData.sameRB
                     end
                     newBlips[playerId] = oldBlip
+                    shownBlips[playerId] = nil
                 end
                 Wait(0)
             end
 
-            -- we check if we need to remove blips
-            for playerId, blip in pairs(shownBlips) do
-                local newBlip = newBlips[playerId]
-                if not newBlip or blip.type ~= newBlip.type then
-                    RemoveBlip(blip.blip)
-                end
+            -- we remove left over blips
+            for _, blip in pairs(shownBlips) do
+                RemoveBlip(blip.blip)
             end
             shownBlips = newBlips
             Wait(5000)
         end
+        -- blips that are left in shownBlips are non existent anymore
         for _, blip in pairs(shownBlips) do
             RemoveBlip(blip.blip)
         end
