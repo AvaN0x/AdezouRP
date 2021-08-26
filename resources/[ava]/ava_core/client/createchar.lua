@@ -983,7 +983,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
     CharacterData = {firstname = "", lastname = "", sexIndex = 0, birthdate = "", selectedOutfit = 0, Visage = {}, Appearance = {}}
 
     exports.skinchanger:reset()
-    CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    CharacterSkin = exports.skinchanger:loadSkin(Outfits[0][0].outfit)
     Wait(0)
     SkinMaxVals = exports.skinchanger:GetMaxVals()
 
