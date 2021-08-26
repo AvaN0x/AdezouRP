@@ -67,7 +67,7 @@ end)
 RegisterNetEvent("ava_core:client:tuneVehiclePink", function()
     local playerPed = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed, false)
-    if vehicle == 0 then
+    if vehicle == 0 or GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
         return
     end
     SetVehicleModKit(vehicle, 0)
