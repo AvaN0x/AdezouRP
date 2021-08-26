@@ -25,6 +25,8 @@ Citizen.CreateThread(function()
 			Config.Doors.DoorList[doorID].locked = state
 		end
 	end)
+    
+    TriggerServerEvent("esx_ava_jobs:requestGang") -- already triggered in esx_ava_gang
 end)
 
 RegisterNetEvent('esx:setJob')
