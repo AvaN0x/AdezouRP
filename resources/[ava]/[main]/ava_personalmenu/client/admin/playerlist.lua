@@ -42,7 +42,7 @@ local function togglePlayerBlipsLoop(value)
                             local targetPed = GetPlayerPed(playerLocalId)
                             blip = AddBlipForEntity(targetPed)
                             oldBlip = {type = "entity"}
-                            
+
                             ShowHeadingIndicatorOnBlip(blip, true)
                         end
                     elseif not oldBlip or oldBlip.type == "entity" then
@@ -53,7 +53,7 @@ local function togglePlayerBlipsLoop(value)
                         local coords = playerData.c
                         SetBlipCoords(oldBlip.blip, coords.x, coords.y, coords.z)
                     end
-                    
+
                     if blip then
                         SetBlipDisplay(blip, 2)
                         SetBlipSprite(blip, 1)
@@ -64,7 +64,7 @@ local function togglePlayerBlipsLoop(value)
                         AddTextComponentString(("%s - %s"):format(playerId, playerData.n))
                         EndTextCommandSetBlipName(blip)
                         oldBlip.blip = blip
-                    end              
+                    end
                     if oldBlip.sameRB ~= playerData.sameRB then
                         SetBlipColour(oldBlip.blip, playerData.sameRB and 8 or 27)
                         oldBlip.sameRB = playerData.sameRB
@@ -99,11 +99,12 @@ function PoolPlayerList()
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
                 local player = playersData[i]
-                Items:AddList(("%s - %s"):format(player.id, player.n), playersOptions, listIndex, not player.sameRB and GetString("routing_bucket_different"), nil, function(Index, onSelected, onListChange)
-                    if onListChange then
-                        listIndex = Index
-                    end
-                end)
+                Items:AddList(("%s - %s"):format(player.id, player.n), playersOptions, listIndex, not player.sameRB and GetString("routing_bucket_different"),
+                    nil, function(Index, onSelected, onListChange)
+                        if onListChange then
+                            listIndex = Index
+                        end
+                    end)
             end
         end)
     end
@@ -111,12 +112,13 @@ function PoolPlayerList()
     if perms.playersoptions then
         PlayersOptionsSubMenu:IsVisible(function(Items)
             if perms.playersoptions.playerblips then
-                Items:CheckBox(GetString("admin_menu_players_options_blips"), GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil, function(onSelected, IsChecked)
-                    if (onSelected) then
-                        -- togglePlayerBlipsLoop(IsChecked)
-                        ExecuteCommand("playerblips" .. (IsChecked and " true" or ""))
-                    end
-                end)
+                Items:CheckBox(GetString("admin_menu_players_options_blips"), GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil,
+                    function(onSelected, IsChecked)
+                        if (onSelected) then
+                            -- togglePlayerBlipsLoop(IsChecked)
+                            ExecuteCommand("playerblips" .. (IsChecked and " true" or ""))
+                        end
+                    end)
             end
         end)
     end

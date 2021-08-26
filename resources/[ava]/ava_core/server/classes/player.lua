@@ -53,7 +53,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Get player character name if possible, else it will return the name
     ---@return string
     self.getCharacterName = function()
-        return (self.character and self.character.firstname and self.character.lastname) and ("%s %s"):format(self.character.firstname, self.character.lastname) or self.name 
+        return (self.character and self.character.firstname and self.character.lastname) and ("%s %s"):format(self.character.firstname, self.character.lastname)
+                   or self.name
     end
 
     -----------------------------------------
