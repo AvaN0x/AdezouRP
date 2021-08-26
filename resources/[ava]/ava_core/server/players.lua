@@ -163,13 +163,15 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     local oldPlayer = AVA.Players.GetPlayer(src)
     if oldPlayer then
         oldPlayer.logout()
-        oldPlayer.save()
+        Citizen.Await(oldPlayer.save())
         AVA.Players.List[tostring(src)] = nil
     end
 
     local playerData = retrievePlayerData(citizenId)
 
-    dprint("playerData", citizenId, json.encode(playerData, {indent = true}))
+    dprint("playerData", citizenId)
+    -- dprint(json.encode(playerData, {indent = true}))
+
     -- if for any reason, we could not get player datas, then we drop the player
     -- /!\ this should not happen, but it's better to prevent than cure
     if not playerData then
@@ -306,15 +308,15 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         -- we check if the player character is valid
     elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
         and character.sex ~= "" and character.birthdate and character.birthdate ~= "" and type(skin) == "table" and skin.sex then
-        aPlayer.position = AVAConfig.DefaultPlayerData.position
+        aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
         aPlayer.character = {firstname = character.firstname, lastname = character.lastname, sex = character.sex, birthdate = character.birthdate}
         aPlayer.skin = skin
-        aPlayer.inventory = CreateInventory(tostring(src), AVAConfig.DefaultPlayerData.inventory, AVAConfig.InventoryMaxWeight)
-        aPlayer.accounts = AVAConfig.DefaultPlayerData.accounts or {}
-        aPlayer.status = AVAConfig.DefaultPlayerData.status or {}
-        aPlayer.jobs = AVAConfig.DefaultPlayerData.jobs or {}
-        aPlayer.loadout = AVAConfig.DefaultPlayerData.loadout or {}
-        aPlayer.metadata = AVAConfig.DefaultPlayerData.metadata or {}
+        aPlayer.inventory = CreateInventory(tostring(src), json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
+        aPlayer.accounts = json.decode(json.encode(AVAConfig.DefaultPlayerData.accounts)) or {}
+        aPlayer.status = json.decode(json.encode(AVAConfig.DefaultPlayerData.status)) or {}
+        aPlayer.jobs = json.decode(json.encode(AVAConfig.DefaultPlayerData.jobs)) or {}
+        aPlayer.loadout = json.decode(json.encode(AVAConfig.DefaultPlayerData.loadout)) or {}
+        aPlayer.metadata = json.decode(json.encode(AVAConfig.DefaultPlayerData.metadata)) or {}
 
         dprint(json.encode(aPlayer.character, {indent = true}))
         MySQL.Async.execute("UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id",
@@ -352,7 +354,7 @@ AddEventHandler("playerDropped", function(reason)
                 .. "`)" .. " se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
 
         AVA.Players.List[tostring(src)].logout()
-        AVA.Players.List[tostring(src)].save()
+        Citizen.Await(AVA.Players.List[tostring(src)].save())
         AVA.Players.List[tostring(src)] = nil
     end
     DEBUGPrintPlayerList("playerDropped")
