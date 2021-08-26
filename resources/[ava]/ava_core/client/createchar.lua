@@ -984,7 +984,6 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(Outfits[0][0].outfit)
-    Wait(0)
     SkinMaxVals = exports.skinchanger:GetMaxVals()
 
     MomIndex, DadIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
@@ -1006,6 +1005,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
     StartCharCreator()
 
     playerPed = PlayerPedId()
+    SkinMaxVals = exports.skinchanger:GetMaxVals()
     Wait(100)
     RageUI.CloseAll()
     RageUI.Visible(MainMenu, true)
