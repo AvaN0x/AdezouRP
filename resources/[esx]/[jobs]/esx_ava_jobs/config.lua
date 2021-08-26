@@ -2688,8 +2688,40 @@ Config.Jobs = {
             },
 		}
 	},
+    orga_s1q = {
+        isGang = true,
+		LabelName = "S1Q",
+		Zones = {
+			Stock = {
+				Pos = vector3(-85.24, 996.46, 229.63),
+				Size  = {x = 1.5, y = 1.5, z = 1.0},
+				Color = {r = 136, g = 243, b = 216},
+				Name  = "Coffre",
+                StockName = "orga_s1q",
+                HelpText = _('press_to_open'),
+				Marker = 27
+			},
+            GangCarGarage = {
+                Name = "Garage gang",
+                HelpText = _('spawn_veh'),
+                Pos = vector3(-130.32, 1004.17, 235.15),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+				Color = {r = 136, g = 243, b = 216},
+                Marker = 36,
+                Type = "car",
+                IsNonProprietaryGarage = true,
+				IsGangGarage = true,
+                Identifier = "garage_mafia",
+                SpawnPoint = {
+                    Pos = vector3(-130.32, 1004.17, 235.15),
+                    Heading = 198.69
+                },
+            },
+		}
+	},
 
 }
+
 
 
 Config.JobCenter = {
