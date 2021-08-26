@@ -40,28 +40,36 @@ Citizen.CreateThread(function()
 		if not MissionStarted then
 			local p = Config.HintLocation
 			if #(playerCoords - p.xyz) < Config.DrawTextDist then
-				ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour frapper à la porte")
+				ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour appeler un dealer")
 
 				if IsControlJustPressed(0, 38) then
 					TaskGoStraightToCoord(playerPed, p.x, p.y, p.z, 10.0, 10, p.w, 0.5)
 					Wait(3000)
 					ClearPedTasksImmediately(playerPed)
 
-					while not HasAnimDictLoaded("timetable@jimmy@doorknock@") do
-						RequestAnimDict("timetable@jimmy@doorknock@")
-						Citizen.Wait(0)
-					end
-					TaskPlayAnim(playerPed, "timetable@jimmy@doorknock@", "knockdoor_idle", 8.0, 8.0, -1, 4, 0, 0, 0, 0 )
-					Citizen.Wait(0)
-					while IsEntityPlayingAnim(playerPed, "timetable@jimmy@doorknock@", "knockdoor_idle", 3) do
-						Citizen.Wait(0)
-					end
+					TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_STAND_MOBILE", 0, true)
+					
+					-- while not HasAnimDictLoaded("timetable@jimmy@doorknock@") do
+					-- 	RequestAnimDict("timetable@jimmy@doorknock@")
+					-- 	Citizen.Wait(0)
+					-- end
+					-- TaskPlayAnim(playerPed, "timetable@jimmy@doorknock@", "knockdoor_idle", 8.0, 8.0, -1, 4, 0, 0, 0, 0 )
+					-- Citizen.Wait(0)
+					-- while IsEntityPlayingAnim(playerPed, "timetable@jimmy@doorknock@", "knockdoor_idle", 3) do
+					-- 	Citizen.Wait(0)
+					-- end
 
 					Citizen.Wait(1000)
 
-                    TriggerServerEvent('3dme:shareDisplay', "* L'individu remarque un petit morceau de papier glissé sous la porte *")
+                    TriggerServerEvent('3dme:shareDisplay', "* L'individu a trouvé un dealer disponible *")
+					Wait(3000)
 
+					ClearPedTasks(playerPed)
+
+					Wait(1000)
+					
 					ClearPedTasksImmediately(playerPed)
+					
 
                     ESX.TriggerServerCallback('avan0x_dealer:askCanStart', function(canStart)
                         if canStart then
