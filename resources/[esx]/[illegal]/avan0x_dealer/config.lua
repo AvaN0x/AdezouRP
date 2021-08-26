@@ -9,7 +9,7 @@ Config = {}
 Config.DrawTextDist = 2.0
 
 -- The door.
-Config.HintLocation      =   vector4(143.9,-131.7,53.86, 155.37) -- new point
+Config.HintLocation      =   vector3(-60.05, 982.01, 233.60) -- new point
 Config.SalesLocations    =   {
     [1] = vector4(-544.2, -1799.3, 22.4, 68.92),
     [2] = vector4(-496.85, -1762.41, 18.65, 262.54),
