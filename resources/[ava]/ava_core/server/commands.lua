@@ -84,6 +84,40 @@ AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(
     TriggerClientEvent("ava_core:client:tuneVehiclePink", source)
 end, GetString("tune_vehicle_pink_help"))
 
+------------------------------------
+--------------- Kick ---------------
+------------------------------------
+
+AVA.Commands.RegisterCommand("kick", "mod", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) ~= "string" then
+        return
+    end
+    local id = args[1]
+    local reason = table.concat(args, " ", 2)
+    if not reason or reason == "" then
+        reason = GetString("no_reason_given")
+    end
+
+	local license, discord = AVA.Players.GetSourceIdentifiers(id)
+    if license then
+        local aTargetPlayer = AVA.Players.GetPlayer(id)
+        local name = aTargetPlayer and aTargetPlayer.getDiscordTag() or GetPlayerName(id) or "not_found"
+        local staffName = aPlayer and aPlayer.getDiscordTag()
+        
+        local discordMessage
+        if aPlayer then
+            DropPlayer(id, GetString("you_got_kicked_by", staffName, reason))
+            discordMessage = GetString("player_got_kicked_by", string.gsub(discord, "discord:", ""), name, string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
+        else
+            DropPlayer(id, GetString("you_got_kicked", reason))
+            discordMessage = GetString("player_got_kicked", string.gsub(discord, "discord:", ""), name, reason)
+        end
+                
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16522243) -- #fc1c03
+        return discordMessage
+    end
+end)
+
 ----------------------------------------
 --------------- Accounts ---------------
 ----------------------------------------

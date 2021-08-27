@@ -223,17 +223,37 @@ function PoolPlayerList()
                         end
                     end)
                 end
-                if perms.playerlist["bring"] then
+                if perms.playerlist.bring then
                     Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), nil, function(onSelected)
                         if onSelected then
                             ExecuteCommand("bring " .. playerData.id)
                         end
                     end)
                 end
-                if perms.playerlist["kill"] then
+                if perms.playerlist.kill then
                     Items:AddButton(GetString("player_manage_kill"), GetString("player_manage_kill_subtitle"), nil, function(onSelected)
                         if onSelected then
                             ExecuteCommand("kill " .. playerData.id)
+                        end
+                    end)
+                end
+                if perms.playerlist.kick then
+                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            local reason = AVA.KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
+                            if reason and reason ~= "" then
+                                ExecuteCommand("kick " .. playerData.id .. " " .. reason)
+                            end
+                        end
+                    end)
+                end
+                if perms.playerlist.ban then
+                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            local reason = AVA.KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
+                            if reason and reason ~= "" then
+                                ExecuteCommand("ban " .. playerData.id .. " " .. reason)
+                            end
                         end
                     end)
                 end
