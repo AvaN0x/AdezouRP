@@ -23,47 +23,441 @@
         "label": "EgoChaser",
         "type": "food",
         "description": "La barre énergétique qui prend soin de vous.",
-        "weight": 100,
+        "weight": 50,
         "noIcon": true
     },
     "meteorite": {
         "label": "Meteorite",
         "type": "food",
         "description": "Un cœur fondant enrobé de chocolat noir.",
-        "weight": 100,
+        "weight": 50,
         "noIcon": true
     },
     "waterbottle": {
         "label": "Bouteille d'eau",
         "type": "liquid",
-        "weight": 100,
+        "weight": 330,
         "limit": null
     },
     "ecola": {
         "label": "eCola",
         "type": "liquid",
         "description": "Un soda délicieusement infect.",
-        "weight": 100,
+        "weight": 330,
         "noIcon": true
     },
     "pisswasser": {
         "label": "Pisswasser",
         "type": "liquid",
         "description": "Bière de baston bavaroise.",
-        "weight": 100,
+        "weight": 330,
         "noIcon": true
     },
     "lockpick": {
         "label": "Lockpick",
-        "weight": 100,
+        "weight": 500,
         "limit": null,
         "closeInv": true,
         "noIcon": true
     },
     "grape": {
         "label": "Raisin",
-        "weight": 10,
+        "weight": 300,
         "limit": 180,
+        "noIcon": true
+    },
+    "ziptie": {
+        "label": "Serflex",
+        "weight": 10,
+        "limit": 50,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "blowtorch": {
+        "label": "Chalumeau",
+        "weight": 1500,
+        "limit": null,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "bodykit": {
+        "label": "Kit Carosserie",
+        "weight": 2000,
+        "limit": 15,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "repairkit": {
+        "label": "Kit Réparation",
+        "weight": 2000,
+        "limit": 15,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "bumber_part_worn": {
+        "label": "Pare-chocs usagé",
+        "weight": 6000,
+        "limit": 20,
+        "noIcon": true
+    },
+    "bumber_part_revamped": {
+        "label": "Pare-chocs retapé",
+        "weight": 5500,
+        "limit": 20,
+        "noIcon": true
+    },
+    "rag": {
+        "label": "Chiffon",
+        "weight": 500,
+        "limit": 15,
+        "closeInv": true,
+        "description": "Allez frotte!!",
+        "noIcon": true
+    },
+    "handcuff": {
+        "label": "Paire de menotte",
+        "weight": 500,
+        "limit": 4,
+        "closeInv": true,
+        "description": "Elles n'ont pas de fourure rose!",
+        "noIcon": true
+    },
+    "ethylotest": {
+        "label": "Ethylotest",
+        "weight": 1000,
+        "limit": 20,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "prisonoutfit": {
+        "label": "Tenue de prison",
+        "weight": 1500,
+        "limit": 15,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "bproof_vest": {
+        "label": "Gilet pare balles",
+        "weight": 5000,
+        "limit": 4,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "medikit": {
+        "label": "Trousse médicale",
+        "weight": 150,
+        "limit": 15,
+        "closeInv": true,
+        "description": "Pour les gros bobos.",
+        "noIcon": true
+    },
+    "defibrilator": {
+        "label": "Défibrilateur",
+        "weight": 0,
+        "limit": 0,
+        "closeInv": true,
+        "description": "Chef on est en train de le perdre!",
+        "noIcon": true
+    },
+    "dolizou": {
+        "label": "Dolizou",
+        "weight": 100,
+        "limit": null,
+        "closeInv": true,
+        "description": "Sous prescription du médecin",
+        "noIcon": true
+    },
+    "bandage": {
+        "label": "Bandage",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "weed": {
+        "label": "Cannabis",
+        "type": "drug",
+        "weight": 1,
+        "limit": 150,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "weedbag": {
+        "label": "Pochon de cannabis",
+        "type": "drug",
+        "weight": 5,
+        "limit": 150,
+        "closeInv": true,
+        "noIcon": true
+    },
+    "keyweed": {
+        "label": "Porte clé kiwi",
+        "weight": 5,
+        "limit": 5,
+        "noIcon": true
+    },
+    "cokeleaf": {
+        "label": "Feuille de Cocaïne",
+        "type": "drug",
+        "weight": 3,
+        "limit": 150,
+        "noIcon": true
+    },
+    "coke": {
+        "label": "Cocaïne",
+        "type": "drug",
+        "weight": 150,
+        "limit": 1,
+        "noIcon": true
+    },
+    "bagcoke": {
+        "label": "Pochon de cocaïne",
+        "type": "drug",
+        "weight": 150,
+        "limit": 5,
+        "noIcon": true
+    },
+    "keycoke": {
+        "label": "Porte clé coquelicot",
+        "weight": 5,
+        "limit": 5,
+        "noIcon": true
+    },
+    "extaamphetamine": {
+        "label": "Amphétamine",
+        "type": "drug",
+        "weight": 1,
+        "limit": 50,
+        "noIcon": true
+    },
+    "extamdma": {
+        "label": "MDMA",
+        "type": "drug",
+        "weight": 1,
+        "limit": 50,
+        "noIcon": true
+    },
+    "extazyp": {
+        "label": "Extazy en poudre",
+        "type": "drug",
+        "weight": 1,
+        "limit": 250,
+        "noIcon": true
+    },
+    "bagexta": {
+        "label": "Porte clé dinosaure",
+        "weight": 5,
+        "limit": 5,
+        "noIcon": true
+    },
+    "methylamine": {
+        "label": "Méthylamine",
+        "type": "drug",
+        "weight": 150,
+        "limit": 1,
+        "noIcon": true
+    },
+    "methpseudophedrine": {
+        "label": "Pseudophédrine",
+        "type": "drug",
+        "weight": 1,
+        "limit": 150,
+        "noIcon": true
+    },
+    "methacide": {
+        "label": "Acide Phénilacétique",
+        "type": "drug",
+        "weight": 1,
+        "limit": 150,
+        "noIcon": true
+    },
+    "methamphetamine": {
+        "label": "Pochon de meth",
+        "type": "drug",
+        "weight": 5,
+        "limit": 150,
+        "noIcon": true
+    },
+    "keymeth": {
+        "label": "Porte clé baleine",
+        "weight": 5,
+        "limit": 5,
+        "noIcon": true
+    },
+    "dildo": {
+        "label": "Gode",
+        "weight": 150,
+        "limit": 5,
+        "closeInv": true,
+        "description": "30cm de bonheur!",
+        "noIcon": true
+    },
+    "gpsbeacon": {
+        "label": "Balise GPS",
+        "weight": 500,
+        "limit": 15,
+        "closeInv": true,
+        "description": "Nous on te suit partout!",
+        "noIcon": true
+    },
+    "Bracelet_diamond": {
+        "label": "Bracelet en diamant",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "Bracelet_emerald": {
+        "label": "Bracelet en émeraude",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "Bracelet_gold": {
+        "label": "Bracelet en or",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "Bracelet_ruby": {
+        "label": "Bracelet en ruby",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "Bracelet_steel": {
+        "label": "Bracelet en argent",
+        "weight": 150,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "necklace_diamond": {
+        "label": "collier en diamant",
+        "weight": 300,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "necklace_emerald": {
+        "label": "collier en émeraude",
+        "weight": 300,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "necklace_gold": {
+        "label": "collier en or",
+        "weight": 300,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "necklace_ruby": {
+        "label": "collier en ruby",
+        "weight": 300,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "necklace_steel": {
+        "label": "collier en argent",
+        "weight": 300,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "ring_diamond": {
+        "label": "Bague en diamant",
+        "weight": 50,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "ring_emerald": {
+        "label": "Bague en émeraude",
+        "weight": 50,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "ring_gold": {
+        "label": "Bague en or",
+        "weight": 50,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "ring_ruby": {
+        "label": "Bague en ruby",
+        "weight": 50,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "ring_steel": {
+        "label": "Bague en argent",
+        "weight": 50,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "watch_diamond": {
+        "label": "Montre en diamant",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "watch_emerald": {
+        "label": "Montre en émeraude",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "watch_gold": {
+        "label": "Montre en or",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "watch_ruby": {
+        "label": "Montre en ruby",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "watch_steel": {
+        "label": "Montre en argent",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
         "noIcon": true
     }
 }
