@@ -107,7 +107,8 @@ local function ReloadInventoryData()
             local element = {
                 item = item,
                 label = item.label,
-                description = GetString("inventory_weight_unit", formatWeight(item.weight), unit, item.desc and ("\n%s"):format(item.desc) or ""),
+                description = GetString("inventory_weight_unit", formatWeight(item.weight), unit,
+                    (item.desc and item.desc ~= "") and ("\n%s"):format(item.desc) or ""),
                 RightLabel = ("%s %s - %s %s"):format(item.limit and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
                                                           or AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type), formatWeight(item.total_weight),
                     unit),

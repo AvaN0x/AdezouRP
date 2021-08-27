@@ -4,11 +4,13 @@
 -------------------------------------------
 PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("player_list"))
 PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("players_options"))
+local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, "", "player_name")
 local playersOptions = {{Name = "Gérer", task = "manage"}, {Name = "Spectate", task = "spec"}}
 local playerlistTaskIndex = 1
 PlayerListSubMenu.Closed = function()
     playerlistTaskIndex = 1
 end
+local selectedPlayerData = nil
 
 local displayPlayerBlips = false
 local displayPlayerTags = false
@@ -143,7 +145,7 @@ local function togglePlayerTagsLoop(value)
             for i = 1, #playersData do
                 local playerData = playersData[i]
                 local playerId = tostring(playerData.id)
-                
+
                 local playerLocalId = GetPlayerFromServerId(tonumber(playerId))
                 if playerLocalId ~= -1 then
                     local tag = shownTags[playerId]
@@ -195,7 +197,46 @@ function PoolPlayerList()
                         if onListChange then
                             playerlistTaskIndex = Index
                         end
+                        if onSelected then
+                            local task = playersOptions[playerlistTaskIndex].task
+                            if task == "manage" then
+                                print("manage")
+                                selectedPlayerData = playerData
+                                PlayersManageSubMenu.Subtitle = playerData.n
+                            elseif task == "spec" then
+                                print("spec")
+                            end
+                        end
+                    end, {PlayersManageSubMenu})
+            end
+        end)
+
+        PlayersManageSubMenu:IsVisible(function(Items)
+            if not selectedPlayerData then
+                RageUI.GoBack()
+            else
+                local playerData = selectedPlayerData
+                if perms.playerlist["goto"] then
+                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("goto " .. playerData.id)
+                        end
                     end)
+                end
+                if perms.playerlist["bring"] then
+                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("bring " .. playerData.id)
+                        end
+                    end)
+                end
+                if perms.playerlist["kill"] then
+                    Items:AddButton(GetString("player_manage_kill"), GetString("player_manage_kill_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("kill " .. playerData.id)
+                        end
+                    end)
+                end
             end
         end)
     end
@@ -227,9 +268,19 @@ RegisterNetEvent("ava_personalmenu:client:playersData", function(data, myRB)
     tablesort(data, function(a, b)
         return a.id < b.id
     end)
+
+    -- we need to update the selectedPlayerData
+    local selectedPlayerDataId = selectedPlayerData and selectedPlayerData.id
+    local newSelectedPlayerData = nil
     for i = 1, #data do
         local player = data[i]
         player.sameRB = tonumber(myRB) == tonumber(data[i].rb)
+
+        if selectedPlayerDataId and player.id == selectedPlayerDataId then
+            newSelectedPlayerData = player
+        end
     end
+    selectedPlayerData = newSelectedPlayerData
+        
     playersData = data
 end)
