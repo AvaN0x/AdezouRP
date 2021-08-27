@@ -247,7 +247,7 @@ end, "Clear player inventory", {{name = "player", help = "Player id, empty if yo
 --------------- Teleports ---------------
 -----------------------------------------
 
-AVA.Commands.RegisterCommand("tp", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"tpcoords", "tp"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" then
         return
     end
@@ -301,10 +301,10 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
     end
 end, GetString("summon_help"), {{name = "player", help = GetString("player_id")}})
 
-AVA.Commands.RegisterCommand({"tpm", "tpmarker", "tpw", "tpwaypoint"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({"tpwaypoint", "tpm", "tpmarker", "tpw"}, "admin", function(source, args)
     TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
-    return GetString("tpm_log")
-end, GetString("tpm_help"))
+    return GetString("tpwaypoint_log")
+end, GetString("tpwaypoint_help"))
 
 --------------------------------------
 --------------- Others ---------------

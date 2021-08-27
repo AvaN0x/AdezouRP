@@ -5,7 +5,10 @@
 PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("player_list"))
 PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("players_options"))
 local playersOptions = {{Name = "Gérer", task = "manage"}, {Name = "Spectate", task = "spec"}}
-local listIndex = 1
+local playerlistTaskIndex = 1
+PlayerListSubMenu.Closed = function()
+    playerlistTaskIndex = 1
+end
 
 local displayPlayerBlips = false
 
@@ -104,10 +107,10 @@ function PoolPlayerList()
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
                 local player = playersData[i]
-                Items:AddList(("%s - %s"):format(player.id, player.n), playersOptions, listIndex, not player.sameRB and GetString("routing_bucket_different"),
+                Items:AddList(("%s - %s"):format(player.id, player.n), playersOptions, playerlistTaskIndex, not player.sameRB and GetString("routing_bucket_different"),
                     nil, function(Index, onSelected, onListChange)
                         if onListChange then
-                            listIndex = Index
+                            playerlistTaskIndex = Index
                         end
                     end)
             end
@@ -120,7 +123,6 @@ function PoolPlayerList()
                 Items:CheckBox(GetString("admin_menu_players_options_blips"), GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil,
                     function(onSelected, IsChecked)
                         if (onSelected) then
-                            -- togglePlayerBlipsLoop(IsChecked)
                             ExecuteCommand("playerblips" .. (IsChecked and " true" or ""))
                         end
                     end)

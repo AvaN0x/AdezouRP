@@ -182,7 +182,7 @@ RegisterNetEvent("ava_core:client:teleportToWaypoint", function()
         local blipCoords = GetBlipInfoIdCoord(waypoint)
         AVA.TeleportPlayerToCoords(blipCoords.x, blipCoords.y, 0, true)
     else
-        AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("tpm_no_waypoint_found"), nil, nil, "ava_core_logo")
+        AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("tpwaypoint_no_waypoint_found"), nil, nil, "ava_core_logo")
     end
 end)
 
