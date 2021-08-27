@@ -11,6 +11,7 @@ PlayerListSubMenu.Closed = function()
 end
 
 local displayPlayerBlips = false
+local displayPlayerTags = false
 
 local function togglePlayerBlipsLoop(value)
     if value ~= nil then
@@ -70,7 +71,7 @@ local function togglePlayerBlipsLoop(value)
                         SetBlipCategory(blip, 7)
                         SetBlipScale(blip, 0.7)
                         BeginTextCommandSetBlipName("STRING")
-                        AddTextComponentString(("%s - %s"):format(playerId, playerData.n))
+                        AddTextComponentString(playerId .. ' - ' .. playerData.n)
                         EndTextCommandSetBlipName(blip)
                         oldBlip.blip = blip
                     end
@@ -81,7 +82,6 @@ local function togglePlayerBlipsLoop(value)
                     newBlips[playerId] = oldBlip
                     shownBlips[playerId] = nil
                 end
-                Wait(0)
             end
 
             -- we remove left over blips
@@ -91,7 +91,7 @@ local function togglePlayerBlipsLoop(value)
             shownBlips = newBlips
             Wait(5000)
         end
-        -- blips that are left in shownBlips are non existent anymore
+        -- blips that are left in shownBlips need to be removed
         for _, blip in pairs(shownBlips) do
             RemoveBlip(blip.blip)
         end
@@ -102,12 +102,95 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function(value)
     togglePlayerBlipsLoop(value and true or false)
 end)
 
+
+local function togglePlayerTagsLoop(value)
+    if value ~= nil then
+        value = not displayPlayerTags
+    end
+
+    if displayPlayerTags then
+        displayPlayerTags = value
+        return
+    end
+    displayPlayerTags = value
+
+    Citizen.CreateThread(function()
+        local pairs = pairs
+        local MP_GAMER_TAG_COMPONENTS = {
+            GAMER_NAME = 0,
+            CREW_TAG = 1,
+            HEALTH_ARMOUR = 2,
+            BIG_TEXT = 3,
+            AUDIO_ICON = 4,
+            MP_USING_MENU = 5,
+            MP_PASSIVE_MODE = 6,
+            WANTED_STARS = 7,
+            MP_DRIVER = 8,
+            MP_CO_DRIVER = 9,
+            MP_TAGGED = 12,
+            GAMER_NAME_NEARBY = 13,
+            ARROW = 14,
+            MP_PACKAGES = 15,
+            INV_IF_PED_FOLLOWING = 16,
+            RANK_TEXT = 17,
+            MP_TYPING = 18
+        }
+        local shownTags = {}
+
+        while displayPlayerTags do
+            local newTags = {}
+
+            for i = 1, #playersData do
+                local playerData = playersData[i]
+                local playerId = tostring(playerData.id)
+                
+                local playerLocalId = GetPlayerFromServerId(tonumber(playerId))
+                if playerLocalId ~= -1 then
+                    local tag = shownTags[playerId]
+                    if not tag or not IsMpGamerTagActive(tag) then
+                        local targetPed = GetPlayerPed(playerLocalId)
+                        tag = CreateFakeMpGamerTag(targetPed, playerId .. ' - ' .. playerData.n, false, false, "", 0)
+
+                        -- Name
+                        SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 1)
+
+                        -- Health
+                        SetMpGamerTagHealthBarColor(tag, 18)
+                        SetMpGamerTagAlpha(tag, MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 255)
+                        SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.HEALTH_ARMOUR, 1)
+                    end
+                    newTags[playerId] = tag
+
+                    -- we remove the tag from the old list, to be able to know which tags needs to be removed
+                    shownTags[playerId] = nil
+                end
+            end
+
+            -- we remove left over blips
+            for _, tag in pairs(shownTags) do
+                RemoveMpGamerTag(tag)
+            end
+            shownTags = newTags
+            Wait(5000)
+        end
+
+        -- tags that are left in shownTags need to be removed
+        for _, tag in pairs(shownTags) do
+            RemoveMpGamerTag(tag)
+        end
+    end)
+end
+
+RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function(value)
+    togglePlayerTagsLoop(value and true or false)
+end)
+
 function PoolPlayerList()
     if perms.playerlist then
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
                 local player = playersData[i]
-                Items:AddList(("%s - %s"):format(player.id, player.n), playersOptions, playerlistTaskIndex, not player.sameRB and GetString("routing_bucket_different"),
+                Items:AddList(player.id .. ' - ' .. playerData.n, playersOptions, playerlistTaskIndex, not player.sameRB and GetString("routing_bucket_different"),
                     nil, function(Index, onSelected, onListChange)
                         if onListChange then
                             playerlistTaskIndex = Index
@@ -124,6 +207,14 @@ function PoolPlayerList()
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             ExecuteCommand("playerblips" .. (IsChecked and " true" or ""))
+                        end
+                    end)
+            end
+            if perms.playersoptions.playertags then
+                Items:CheckBox(GetString("admin_menu_players_options_gamertags"), GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags, nil,
+                    function(onSelected, IsChecked)
+                        if (onSelected) then
+                            ExecuteCommand("playertags" .. (IsChecked and " true" or ""))
                         end
                     end)
             end

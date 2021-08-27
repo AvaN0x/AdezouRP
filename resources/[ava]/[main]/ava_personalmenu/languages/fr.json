@@ -30,5 +30,7 @@
     "vehicles_deletevehicle": "~r~Supprimer véhicule",
     "vehicles_deletevehicle_subtitle": "",
     "vehicles_tpnearestvehicle": "TP véhicule le plus proche",
-    "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche"
+    "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche",
+    "admin_menu_players_options_gamertags": "Afficher les noms des joueurs",
+    "admin_menu_players_options_gamertags_subtitle": "Afficher les noms des joueurs"
 }
