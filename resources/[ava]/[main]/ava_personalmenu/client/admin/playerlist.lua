@@ -189,8 +189,8 @@ function PoolPlayerList()
     if perms.playerlist then
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
-                local player = playersData[i]
-                Items:AddList(player.id .. ' - ' .. playerData.n, playersOptions, playerlistTaskIndex, not player.sameRB and GetString("routing_bucket_different"),
+                local playerData = playersData[i]
+                Items:AddList(playerData.id .. ' - ' .. playerData.n, playersOptions, playerlistTaskIndex, not playerData.sameRB and GetString("routing_bucket_different"),
                     nil, function(Index, onSelected, onListChange)
                         if onListChange then
                             playerlistTaskIndex = Index

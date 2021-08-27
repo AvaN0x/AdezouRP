@@ -57,7 +57,6 @@ CreateThread(function()
     local pairs = pairs
 
     while true do
-        Wait(dataLoopInterval)
         local newData = {}
 
         local players = GetPlayers()
@@ -90,11 +89,12 @@ CreateThread(function()
         playersData = newData
 
         -- TODO only registered admins that asked about it
-        for _, serverID in pairs(players) do
-            if IsPlayerAceAllowed(serverID, "adminmenu") then
-                TriggerClientEvent("ava_personalmenu:client:playersData", serverID, playersData, GetPlayerRoutingBucket(serverID))
+        for _, playerSrc in pairs(players) do
+            if IsPlayerAceAllowed(playerSrc, "adminmenu") then
+                TriggerClientEvent("ava_personalmenu:client:playersData", playerSrc, playersData, GetPlayerRoutingBucket(playerSrc))
             end
         end
+        Wait(dataLoopInterval)
     end
 end)
 
