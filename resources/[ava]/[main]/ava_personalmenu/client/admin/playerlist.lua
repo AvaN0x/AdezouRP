@@ -184,8 +184,8 @@ function PoolPlayerList()
                         if onSelected then
                             local task = playersOptions[playerlistTaskIndex].task
                             if task == "manage" then
-                                print("manage")
                                 selectedPlayerData = playerData
+                                selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(playerData.id)) == PlayerId()
                                 PlayersManageSubMenu.Subtitle = playerData.n
                             elseif task == "spec" then
                                 print("spec")
@@ -200,14 +200,14 @@ function PoolPlayerList()
                 RageUI.GoBack()
             else
                 local playerData = selectedPlayerData
-                if perms.playerlist["goto"] then
+                if perms.playerlist["goto"] and not playerData.isMyself then
                     Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), nil, function(onSelected)
                         if onSelected then
                             ExecuteCommand("goto " .. playerData.id)
                         end
                     end)
                 end
-                if perms.playerlist.bring then
+                if perms.playerlist.bring and not playerData.isMyself then
                     Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), nil, function(onSelected)
                         if onSelected then
                             ExecuteCommand("bring " .. playerData.id)
