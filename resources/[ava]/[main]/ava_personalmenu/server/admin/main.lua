@@ -9,6 +9,7 @@ local requiredPerms<const> = {
     vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     tpcoords = true,
     tpwaypoint = true,
+    noclip = true,
     adminmode = true,
 }
 

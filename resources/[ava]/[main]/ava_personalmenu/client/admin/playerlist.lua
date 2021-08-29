@@ -15,16 +15,12 @@ local selectedPlayerData = nil
 local displayPlayerBlips = false
 local displayPlayerTags = false
 
-local function togglePlayerBlipsLoop(value)
-    if value ~= nil then
-        value = not displayPlayerBlips
-    end
+RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function()
+    displayPlayerBlips = not displayPlayerBlips
 
-    if displayPlayerBlips then
-        displayPlayerBlips = value
+    if not displayPlayerBlips then
         return
     end
-    displayPlayerBlips = value
 
     DisplayPlayerNameTagsOnBlips(true)
     Citizen.CreateThread(function()
@@ -98,23 +94,15 @@ local function togglePlayerBlipsLoop(value)
             RemoveBlip(blip.blip)
         end
     end)
-end
 
-RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function(value)
-    togglePlayerBlipsLoop(value and true or false)
 end)
 
+RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function()
+    displayPlayerTags = not displayPlayerTags
 
-local function togglePlayerTagsLoop(value)
-    if value ~= nil then
-        value = not displayPlayerTags
-    end
-
-    if displayPlayerTags then
-        displayPlayerTags = value
+    if not displayPlayerTags then
         return
     end
-    displayPlayerTags = value
 
     Citizen.CreateThread(function()
         local pairs = pairs
@@ -181,10 +169,6 @@ local function togglePlayerTagsLoop(value)
             RemoveMpGamerTag(tag)
         end
     end)
-end
-
-RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function(value)
-    togglePlayerTagsLoop(value and true or false)
 end)
 
 function PoolPlayerList()
@@ -267,7 +251,7 @@ function PoolPlayerList()
                 Items:CheckBox(GetString("admin_menu_players_options_blips"), GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil,
                     function(onSelected, IsChecked)
                         if (onSelected) then
-                            ExecuteCommand("playerblips" .. (IsChecked and " true" or ""))
+                            ExecuteCommand("playerblips")
                         end
                     end)
             end
@@ -275,7 +259,7 @@ function PoolPlayerList()
                 Items:CheckBox(GetString("admin_menu_players_options_gamertags"), GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags, nil,
                     function(onSelected, IsChecked)
                         if (onSelected) then
-                            ExecuteCommand("playertags" .. (IsChecked and " true" or ""))
+                            ExecuteCommand("playertags")
                         end
                     end)
             end
