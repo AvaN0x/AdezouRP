@@ -68,9 +68,11 @@ CreateThread(function()
             local rb = GetPlayerRoutingBucket(playerSrc)
 
             if type(avaPlayerData[playerSrc]) ~= "table" then
-                avaPlayerData[playerSrc] = {}
                 local aPlayer = exports.ava_core:GetPlayer(playerSrc)
-                avaPlayerData[playerSrc].name = aPlayer.getDiscordTag()
+                if aPlayer then
+                    avaPlayerData[playerSrc] = {}
+                    avaPlayerData[playerSrc].name = aPlayer.getDiscordTag()
+                end
             end
 
             -- coords
@@ -79,7 +81,7 @@ CreateThread(function()
             data.c = coords
             data.rb = rb
 
-            data.n = avaPlayerData[playerSrc].name
+            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or "Not found"
 
             count = count + 1
             newData[count] = data

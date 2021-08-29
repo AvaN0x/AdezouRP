@@ -168,6 +168,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
                 end
 
                 SetEntityCoordsNoOffset(playerPed, GetOffsetFromEntityInWorldCoords(playerPed, xOffset, 0, zOffset), true, true, true)
+                SetGameplayCamRelativeHeading(0)
             end
 
             DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
