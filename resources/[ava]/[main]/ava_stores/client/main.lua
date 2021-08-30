@@ -3,7 +3,6 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-ESX = nil
 local GUI = {
     Time = 0
 }
@@ -14,26 +13,10 @@ local CurrentZoneName = nil
 local CurrentHelpText = nil
 local CurrentActionEnabled = false
 
-local PlayerData = {}
 local mainBlips = {}
 
-
-
-
 Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
-
-	while ESX.GetPlayerData().job == nil or ESX.GetPlayerData().job2 == nil do
-		Citizen.Wait(10)
-	end
-
-	PlayerData = ESX.GetPlayerData()
-
     Citizen.Wait(1000)
-    TriggerServerEvent("esx_ava_stores:requestGang")
 
     for _, v in pairs(Config.Stores) do
         local function CreateBlip(coord)
@@ -64,29 +47,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-	PlayerData = xPlayer
-end)
-
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-	PlayerData.job = job
-end)
-
-RegisterNetEvent('esx:setJob2')
-AddEventHandler('esx:setJob2', function(job2)
-	PlayerData.job2 = job2
-end)
-
-RegisterNetEvent('esx_ava_stores:setGang')
-AddEventHandler('esx_ava_stores:setGang', function(gang)
-	if gang and gang.name then
-		actualGang = {name = gang.name, grade = gang.grade}
-	else
-		actualGang = nil
-	end
-end)
 
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
@@ -100,8 +60,6 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 
 
-
-
 local playerCoords = nil
 local playerPed = nil
 
@@ -112,8 +70,6 @@ Citizen.CreateThread(function()
 		Wait(500)
     end
 end)
-
-
 
 
 -------------
@@ -166,19 +122,19 @@ Citizen.CreateThread(function()
         then
             HasAlreadyEnteredMarker = true
             LastZone = currentZoneName
-            TriggerEvent('esx_ava_stores:hasEnteredMarker', currentZoneName)
+            TriggerEvent('ava_stores:client:hasEnteredMarker', currentZoneName)
         end
 
         if not isInMarker and HasAlreadyEnteredMarker then
             HasAlreadyEnteredMarker = false
-            TriggerEvent('esx_ava_stores:hasExitedMarker', LastZone)
+            TriggerEvent('ava_stores:client:hasExitedMarker', LastZone)
         end
     end
 end)
 
 
 
-AddEventHandler('esx_ava_stores:hasEnteredMarker', function(zoneName)
+AddEventHandler('ava_stores:client:hasEnteredMarker', function(zoneName)
 	if Config.Stores[zoneName].HelpText ~= nil then
         CurrentHelpText = Config.Stores[zoneName].HelpText
     end
@@ -187,8 +143,9 @@ AddEventHandler('esx_ava_stores:hasEnteredMarker', function(zoneName)
     CurrentActionEnabled = true
 end)
 
-AddEventHandler('esx_ava_stores:hasExitedMarker', function(zoneName)
-	ESX.UI.Menu.CloseAll()
+AddEventHandler('ava_stores:client:hasExitedMarker', function(zoneName)
+    -- TODO only close shop menu (check if visible)
+	RageUI.CloseAll()
 	CurrentZoneName = nil
 end)
 
@@ -232,48 +189,81 @@ end)
 function BuyZone()
     local store = Config.Stores[CurrentZoneName]
 
-    ESX.TriggerServerCallback('esx_ava_stores:GetBuyItems', function(items)
-        local elements = {}
-        for k, item in pairs(items) do
-            table.insert(elements, {
-                label = _('store_item_label', item.label, item.isDirtyMoney and "#eb4034" or "#0cc421", item.price),
-                price = item.price,
-                name = item.name,
-                maxCanTake = item.maxCanTake
-            })
-        end
+    local items = exports.ava_core:TriggerServerCallback('ava_stores:getStoreItems', CurrentZoneName)
 
-        if #elements > 0 then
-            ESX.UI.Menu.CloseAll()
-            ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'esx_ava_stores_store',
-            {
-                title = store.Name,
-                align = 'left',
-                elements = elements
-            },
-            function(data, menu)
-                local count = tonumber(exports.esx_avan0x:KeyboardInput(_('how_much_max', data.current.maxCanTake or 0), "", 10))
+    local elements = {}
+    local count = 0
+    for i = 1, #items do
+        local item = items[i]
+        count = count + 1
+        elements[count] = {
+            label = item.label,
+            rightLabel = GetString('store_item_right_label', item.isDirtyMoney and "~r~" or "", item.price),
+            leftBadge = not item.noIcon and function()
+                return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
+            end or nil,
+            price = item.price,
+            name = item.name,
+            maxCanTake = item.maxCanTake,
+            desc = item.desc
+        }
+    end
 
-                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                    menu.close()
-                    if count > data.current.maxCanTake then
-                        ESX.ShowNotification(_('cant_carry'))
-                    else
-                        TriggerServerEvent('esx_ava_stores:BuyItem', CurrentZoneName, data.current.name, count)
+    if count > 1 then
+        RageUI.OpenTempMenu(store.Name, function(Items)
+            for i = 1, #elements do
+                local element = elements[i]
+                Items:AddButton(element.label, element.desc, {RightLabel = element.rightLabel, LeftBadge = element.leftBadge}, function(onSelected)
+                    if onSelected then
+                        local count = tonumber(exports.ava_core:KeyboardInput(GetString('how_much_max', element.maxCanTake or 0), "", 10))
+                        
+                        if type(count) == "number" and math.floor(count) == count and count > 0 then
+                            if count > element.maxCanTake then
+                                exports.ava_core:ShowNotification(GetString('cant_carry'))
+                            else
+                                TriggerServerEvent('ava_stores:server:buyItem', CurrentZoneName, element.name, count)
+                                RageUI.CloseAll()
+                            end
+                        else
+                            exports.ava_core:ShowNotification(GetString('invalid_quantity'))
+                        end
                     end
-                else
-                    ESX.ShowNotification(_('invalid_quantity'))
-                end
-                CurrentActionEnabled = true
-            end,
-            function(data, menu)
-                menu.close()
-                CurrentActionEnabled = true
-            end)
-        else
-            ESX.ShowNotification(_('nothing_can_buy'))
-        end
-    end, CurrentZoneName)
+                end)
+            end
+        end)
+        CurrentActionEnabled = true
+
+
+
+    --     RageUI.CloseAll()
+    --     ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_stores_store',
+    --     {
+    --         title = store.Name,
+    --         align = 'left',
+    --         elements = elements
+    --     },
+    --     function(data, menu)
+    --         local count = tonumber(exports.ava_core:KeyboardInput(GetString('how_much_max', data.current.maxCanTake or 0), "", 10))
+
+    --         if type(count) == "number" and math.floor(count) == count and count > 0 then
+    --             menu.close()
+    --             if count > data.current.maxCanTake then
+    --                 exports.ava_core:ShowNotification(GetString('cant_carry'))
+    --             else
+    --                 TriggerServerEvent('ava_stores:server:buyItem', CurrentZoneName, data.current.name, count)
+    --             end
+    --         else
+    --             exports.ava_core:ShowNotification(GetString('invalid_quantity'))
+    --         end
+    --         CurrentActionEnabled = true
+    --     end,
+    --     function(data, menu)
+    --         menu.close()
+    --         CurrentActionEnabled = true
+    --     end)
+    else
+        exports.ava_core:ShowNotification(GetString('nothing_can_buy'))
+    end
 
 end
 
@@ -282,69 +272,68 @@ end
 function CarWash()
     local veh = GetVehiclePedIsUsing(playerPed)
     if veh == 0 then
-        ESX.ShowNotification(_('carwash_not_in_vehicle'))
+        exports.ava_core:ShowNotification(GetString('carwash_not_in_vehicle'))
         CurrentActionEnabled = true
     elseif math.ceil(GetEntitySpeed(veh) * 3.6) > 5 then
-        ESX.ShowNotification(_('carwash_driving_too_fast'))
+        exports.ava_core:ShowNotification(GetString('carwash_driving_too_fast'))
         CurrentActionEnabled = true
     else
-        ESX.TriggerServerCallback('esx_ava_stores:carwash:checkMoney', function(hasEnoughMoney)
-            if not hasEnoughMoney then
-                ESX.ShowNotification(_('cant_afford'))
-                CurrentActionEnabled = true
-            else
-                local carwash = Config.Stores[CurrentZoneName]
-                local particles = {}
-                local isWorking = true
+        local hasEnoughMoney = exports.ava_core:TriggerServerCallback('ava_stores:carwash:checkMoney', CurrentZoneName)
+        if not hasEnoughMoney then
+            exports.ava_core:ShowNotification(GetString('cant_afford'))
+            CurrentActionEnabled = true
+        else
+            local carwash = Config.Stores[CurrentZoneName]
+            local particles = {}
+            local isWorking = true
 
-                Citizen.CreateThread(function()
-                    while isWorking do
-                        DisableAllControlActions(0)
-                        EnableControlAction(0, 1, true) -- Enable horizontal cam
-                        EnableControlAction(0, 2, true) -- Enable vertical cam
-                        Citizen.Wait(0)
-                    end
-                end)
-
-                FreezeEntityPosition(veh, true)
-                FreezeEntityPosition(playerPed, true)
-                if carwash.Carwash.Particles then
-                    local assetName = "scr_carwash"
-
-                    for i = 1, #carwash.Carwash.Particles do
-                        RequestNamedPtfxAsset(assetName)
-                        UseParticleFxAsset(assetName)
-
-                        while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
-
-                        local particle = carwash.Carwash.Particles[i]
-                        table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0, particle.Heading + 0.0, 0.0, 1.0, 0.0, 0, 0))
-                    end
+            Citizen.CreateThread(function()
+                while isWorking do
+                    DisableAllControlActions(0)
+                    EnableControlAction(0, 1, true) -- Enable horizontal cam
+                    EnableControlAction(0, 2, true) -- Enable vertical cam
+                    Citizen.Wait(0)
                 end
+            end)
 
-                exports.progressBars:startUI(carwash.Carwash.Duration or 5000, _('carwash_on_cleaning'))
-                Citizen.Wait(carwash.Carwash.Duration or 5000)
+            FreezeEntityPosition(veh, true)
+            FreezeEntityPosition(playerPed, true)
+            if carwash.Carwash.Particles then
+                local assetName = "scr_carwash"
 
-                WashDecalsFromVehicle(veh, 1.0)
-                SetVehicleDirtLevel(veh)
+                for i = 1, #carwash.Carwash.Particles do
+                    RequestNamedPtfxAsset(assetName)
+                    UseParticleFxAsset(assetName)
 
-                if #particles > 0 then
-                    for i = 1, #particles do
-                        if DoesParticleFxLoopedExist(particles[i]) then
-                            StopParticleFxLooped(particles[i], 0)
-                            RemoveParticleFx(particles[i], 0)
-                        end
-                    end
-                    particles = nil
+                    while not HasNamedPtfxAssetLoaded(assetName) do Citizen.Wait(10) end
+
+                    local particle = carwash.Carwash.Particles[i]
+                    table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0, particle.Heading + 0.0, 0.0, 1.0, 0.0, 0, 0))
                 end
-
-                isWorking = false
-                FreezeEntityPosition(playerPed, false)
-                FreezeEntityPosition(veh, false)
-                CurrentActionEnabled = true
-                ESX.ShowNotification(_('carwash_vehicle_cleaned'))
             end
-        end, CurrentZoneName)
+
+            exports.progressBars:startUI(carwash.Carwash.Duration or 5000, GetString('carwash_on_cleaning'))
+            Citizen.Wait(carwash.Carwash.Duration or 5000)
+
+            WashDecalsFromVehicle(veh, 1.0)
+            SetVehicleDirtLevel(veh)
+
+            if #particles > 0 then
+                for i = 1, #particles do
+                    if DoesParticleFxLoopedExist(particles[i]) then
+                        StopParticleFxLooped(particles[i], 0)
+                        RemoveParticleFx(particles[i], 0)
+                    end
+                end
+                particles = nil
+            end
+
+            isWorking = false
+            FreezeEntityPosition(playerPed, false)
+            FreezeEntityPosition(veh, false)
+            CurrentActionEnabled = true
+            exports.ava_core:ShowNotification(GetString('carwash_vehicle_cleaned'))
+        end
     end
 end
 

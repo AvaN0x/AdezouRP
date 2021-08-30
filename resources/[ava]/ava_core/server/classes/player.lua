@@ -75,6 +75,12 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     --------------- Accounts ---------------
     ----------------------------------------
 
+    ---Get all player accounts
+    ---@return table
+    self.getAccounts = function()
+        return self.accounts or {}
+    end
+
     ---Get the account for a specified player account, if the player does not have the account, it will create it en return it
     ---@param accountName string
     ---@return integer
@@ -160,6 +166,12 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ----------------------------------------
     --------------- Licenses ---------------
     ----------------------------------------
+
+    ---Get all player licenses
+    ---@return table
+    self.getLicenses = function()
+        return self.metadata and self.metadata.licenses or {}
+    end
 
     ---Check if a player has a license
     ---@param licenseName string

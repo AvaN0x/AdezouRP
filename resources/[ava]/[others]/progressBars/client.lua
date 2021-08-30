@@ -6,3 +6,4 @@ function startUI(time, text)
 		text = text
 	})
 end
+exports("startUI", startUI)

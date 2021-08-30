@@ -5,8 +5,6 @@
 
 Config = {}
 Config.DrawDistance = 15.0
-Config.Locale = 'fr'
-
 
 Config.Stores = {
     TwentyFourSeven = {
@@ -42,7 +40,7 @@ Config.Stores = {
         Color = {r = 134, g = 180, b = 84},
         Distance = 1.5,
         Name = "Twenty Four Seven",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
     RobsLiquor = {
@@ -75,7 +73,7 @@ Config.Stores = {
         Color = {r = 134, g = 180, b = 84},
         Distance = 1.5,
         Name = "Robs Liquor",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
 
@@ -108,7 +106,7 @@ Config.Stores = {
         Color = {r = 134, g = 180, b = 84},
         Distance = 1.5,
         Name = "LTD gasoline",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
 
@@ -144,7 +142,7 @@ Config.Stores = {
         Color = {r = 175, g = 0, b = 0},
         Distance = 1.5,
         Name = "Ammunation",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
 
@@ -173,7 +171,7 @@ Config.Stores = {
         Color = {r = 175, g = 0, b = 0},
         Distance = 1.5,
         Name = "Ammunation",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
 
@@ -187,7 +185,7 @@ Config.Stores = {
         },
         Distance = 1,
         Name = "Black Market",
-        HelpText = _('press_buy')
+        HelpText = GetString('press_buy')
     },
 
 
@@ -239,7 +237,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Station de lavage",
-        HelpText = _('press_wash_car', 80)
+        HelpText = GetString('press_wash_car', 80)
     },
 
 
@@ -284,7 +282,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Station de lavage",
-        HelpText = _('press_wash_car', 80)
+        HelpText = GetString('press_wash_car', 80)
     },
 
 
@@ -329,7 +327,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Station de lavage",
-        HelpText = _('press_wash_car', 80)
+        HelpText = GetString('press_wash_car', 80)
     },
 
 
@@ -357,7 +355,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Station de lavage",
-        HelpText = _('press_wash_car', 80)
+        HelpText = GetString('press_wash_car', 80)
     },
 
 
@@ -377,7 +375,7 @@ Config.Stores = {
         Distance = 2,
         Color = {r = 198, g = 183, b = 222},
         Name = "Station de lavage",
-        HelpText = _('press_wash_car', 80)
+        HelpText = GetString('press_wash_car', 80)
     },
 
 

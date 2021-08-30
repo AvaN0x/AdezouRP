@@ -99,3 +99,10 @@ AVA.RegisterUsableItem("bread", function(src)
         aPlayer.inventory.removeItem("bread", 1)
     end
 end)
+
+---Get all items data
+---@return table
+AVA.GetItemsData = function()
+    return AVAConfig.Items or {}
+end
+exports("GetItemsData", AVA.GetItemsData)

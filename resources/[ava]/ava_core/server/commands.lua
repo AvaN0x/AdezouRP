@@ -275,7 +275,38 @@ AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     if aTargetPlayer then
         aTargetPlayer.getInventory().clearInventory()
     end
-end, "Clear player inventory", {{name = "player", help = "Player id, empty if yourself"}})
+end, GetString("clear_inventory_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+
+AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]))
+    end
+end, GetString("give_item_help"), {
+    {name = "player", help = GetString("player_id_or_zero")},
+    {name = "itemName", help = GetString("item_name")},
+    {name = "quantity", help = GetString("quantity")},
+})
+
+AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        aTargetPlayer.getInventory().removeItem(args[2], tonumber(args[3]))
+    end
+end, GetString("remove_item_help"), {
+    {name = "player", help = GetString("player_id_or_zero")},
+    {name = "itemName", help = GetString("item_name")},
+    {name = "quantity", help = GetString("quantity")},
+})
+
 
 -----------------------------------------
 --------------- Teleports ---------------

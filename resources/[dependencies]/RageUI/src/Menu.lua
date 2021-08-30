@@ -251,3 +251,39 @@ function RageUIMenus:KeysRegister(Controls, ControlName, Description, Action)
 		end
 	end, false)
 end
+
+
+
+
+
+
+function RageUI.OpenTempMenu(title, ItemsFunction, textureName, textureDirectory)
+    Citizen.CreateThread(function()
+        local playerPed = PlayerPedId()
+
+        local TempMenu = RageUI.CreateMenu("", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
+        local isMenuVisible = true
+
+        RageUI.PoolMenus.TempRageUI = function()
+            local menuVisible = false
+            if TempMenu then
+                TempMenu:IsVisible(function(Items)
+                    menuVisible = true
+                    if ItemsFunction then
+                        ItemsFunction(Items)
+                    end
+                end)
+            end
+            if not menuVisible then
+                isMenuVisible = false
+            end
+        end
+        RageUI.Visible(TempMenu, true)
+
+        while isMenuVisible do
+            Wait(10)
+        end
+        RageUI.PoolMenus.AvaCoreTempRageUI = nil
+        TempMenu = nil
+    end)
+end
