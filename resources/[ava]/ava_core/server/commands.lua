@@ -76,7 +76,7 @@ AVA.Commands.RegisterCommand({"flipvehicle", "flipv"}, "admin", function(source,
     TriggerClientEvent("ava_core:client:flipVehicle", source)
 end, GetString("flip_vehicle_help"))
 
-AVA.Commands.RegisterCommand("tpnearestvehicle", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"tpnearestvehicle", "tpv"}, "admin", function(source, args)
     TriggerClientEvent("ava_core:client:tpNearestVehicle", source)
 end, GetString("tpnearestvehicle_help"))
 
