@@ -57,7 +57,8 @@ RegisterNetEvent("bank:transfer", function(target, amount)
             else
                 aPlayer.removeAccountBalance("bank", amount)
                 aTargetPlayer.addAccountBalance("bank", amount)
-                TriggerClientEvent("ava_core:client:ShowNotification", aTargetPlayer.src, nil, nil, "CHAR_BANK_FLEECA", "Vous avez reçu", ("~g~%s~s~ $"):format(amount), nil, "CHAR_BANK_FLEECA")
+                TriggerClientEvent("ava_core:client:ShowNotification", aTargetPlayer.src, nil, nil, "CHAR_BANK_FLEECA", "Vous avez reçu",
+                    ("~g~%s~s~ $"):format(amount), nil, "CHAR_BANK_FLEECA")
                 TriggerClientEvent("bank:result", src, "success", "Transfert effectué.")
             end
         end

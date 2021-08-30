@@ -69,7 +69,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function()
                         SetBlipCategory(blip, 7)
                         SetBlipScale(blip, 0.7)
                         BeginTextCommandSetBlipName("STRING")
-                        AddTextComponentString(playerId .. ' - ' .. playerData.n)
+                        AddTextComponentString(playerId .. " - " .. playerData.n)
                         EndTextCommandSetBlipName(blip)
                         oldBlip.blip = blip
                     end
@@ -123,7 +123,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function()
             MP_PACKAGES = 15,
             INV_IF_PED_FOLLOWING = 16,
             RANK_TEXT = 17,
-            MP_TYPING = 18
+            MP_TYPING = 18,
         }
         local shownTags = {}
 
@@ -139,7 +139,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function()
                     local tag = shownTags[playerId]
                     if not tag or not IsMpGamerTagActive(tag) then
                         local targetPed = GetPlayerPed(playerLocalId)
-                        tag = CreateFakeMpGamerTag(targetPed, playerId .. ' - ' .. playerData.n, false, false, "", 0)
+                        tag = CreateFakeMpGamerTag(targetPed, playerId .. " - " .. playerData.n, false, false, "", 0)
 
                         -- Name
                         SetMpGamerTagVisibility(tag, MP_GAMER_TAG_COMPONENTS.GAMER_NAME, 1)
@@ -176,8 +176,8 @@ function PoolPlayerList()
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
                 local playerData = playersData[i]
-                Items:AddList(playerData.id .. ' - ' .. playerData.n, playersOptions, playerlistTaskIndex, not playerData.sameRB and GetString("routing_bucket_different"),
-                    nil, function(Index, onSelected, onListChange)
+                Items:AddList(playerData.id .. " - " .. playerData.n, playersOptions, playerlistTaskIndex,
+                    not playerData.sameRB and GetString("routing_bucket_different"), nil, function(Index, onSelected, onListChange)
                         if onListChange then
                             playerlistTaskIndex = Index
                         end
@@ -256,8 +256,8 @@ function PoolPlayerList()
                     end)
             end
             if perms.playersoptions.playertags then
-                Items:CheckBox(GetString("admin_menu_players_options_gamertags"), GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags, nil,
-                    function(onSelected, IsChecked)
+                Items:CheckBox(GetString("admin_menu_players_options_gamertags"), GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags,
+                    nil, function(onSelected, IsChecked)
                         if (onSelected) then
                             ExecuteCommand("playertags")
                         end
@@ -285,6 +285,6 @@ RegisterNetEvent("ava_personalmenu:client:playersData", function(data, myRB)
         end
     end
     selectedPlayerData = newSelectedPlayerData
-        
+
     playersData = data
 end)

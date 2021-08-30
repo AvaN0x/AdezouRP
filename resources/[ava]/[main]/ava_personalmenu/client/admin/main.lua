@@ -27,10 +27,12 @@ RegisterKeyMapping("adminmenu", GetString("admin_menu"), "keyboard", "HOME")
 function RageUI.PoolMenus:AdminMenu()
     MainAdminMenu:IsVisible(function(Items)
         if perms.playerlist then
-            Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), { RightLabel = "→→→" }, nil, PlayerListSubMenu)
+            Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), {RightLabel = "→→→"}, nil,
+                PlayerListSubMenu)
         end
         if perms.playersoptions then
-            Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), { RightLabel = "→→→" }, nil, PlayersOptionsSubMenu)
+            Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), {RightLabel = "→→→"}, nil,
+                PlayersOptionsSubMenu)
         end
         if perms.tpcoords then
             Items:AddButton(GetString("admin_menu_tpcoords"), GetString("admin_menu_tpcoords_subtitle"), nil, function(onSelected)
@@ -51,22 +53,20 @@ function RageUI.PoolMenus:AdminMenu()
             end)
         end
         if perms.noclip then
-            Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil,
-                function(onSelected, IsChecked)
-                    if (onSelected) then
-                        ExecuteCommand("noclip")
-                    end
-                end)
+            Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil, function(onSelected, IsChecked)
+                if (onSelected) then
+                    ExecuteCommand("noclip")
+                end
+            end)
         end
         if perms.vehicles then
-            Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), { RightLabel = "→→→" }, nil, VehiclesSubMenu)
+            Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), {RightLabel = "→→→"}, nil, VehiclesSubMenu)
         end
     end)
 
     PoolPlayerList()
     PoolVehicles()
 end
-
 
 --------------------------------------
 --------------- NOCLIP ---------------
@@ -76,22 +76,22 @@ local cos = math.cos
 local sqrt = math.sqrt
 local pi = math.pi
 local function getCamDirection(playerPed)
-	local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(playerPed)
-	local pitch = GetGameplayCamRelativePitch()
+    local heading = GetGameplayCamRelativeHeading() + GetEntityHeading(playerPed)
+    local pitch = GetGameplayCamRelativePitch()
 
-	local x = -sin(heading * pi/180.0)
-	local y = cos(heading * pi/180.0)
-	local z = sin(pitch * pi/180.0)
+    local x = -sin(heading * pi / 180.0)
+    local y = cos(heading * pi / 180.0)
+    local z = sin(pitch * pi / 180.0)
 
-	local len = sqrt(x * x + y * y + z * z)
+    local len = sqrt(x * x + y * y + z * z)
 
-	if len ~= 0 then
-		x = x / len
-		y = y / len
-		z = z / len
-	end
+    if len ~= 0 then
+        x = x / len
+        y = y / len
+        z = z / len
+    end
 
-	return x, y, z, heading
+    return x, y, z, heading
 end
 
 RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()

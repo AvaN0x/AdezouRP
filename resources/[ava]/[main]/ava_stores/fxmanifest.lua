@@ -1,9 +1,9 @@
-fx_version 'cerulean'
-games { 'gta5' }
+fx_version "cerulean"
+games {"gta5"}
 
-version '1.0.0'
-author 'github.com/AvaN0x'
-description 'Stores handler'
+version "1.0.0"
+author "github.com/AvaN0x"
+description "Stores handler"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 files {"languages/**.json"}
@@ -25,13 +25,10 @@ client_scripts {
     "@RageUI/src/items/Items.lua",
     "@RageUI/src/items/Panels.lua",
 
-    'config.lua',
-    'client/main.lua',
+    "config.lua",
+    "client/main.lua",
 }
 
-server_scripts {
-    'config.lua',
-    'server/main.lua',
-}
+server_scripts {"config.lua", "server/main.lua"}
 
 dependencies {"ava_core", "RageUI"}
