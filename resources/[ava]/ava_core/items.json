@@ -12,6 +12,12 @@
         "weight": 0.1,
         "noIcon": true
     },
+    "radio": {
+        "label": "Radio",
+        "weight": 250,
+        "noIcon": true,
+        "closeInv": true
+    },
     "bread": {
         "label": "Pain",
         "type": "food",

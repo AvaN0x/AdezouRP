@@ -86,8 +86,11 @@ AVA.RegisterUsableItem = function(itemName, callback)
         and (type(callback) == "function" or (type(callback) == "table" and callback["__cfx_functionReference"] ~= nil)) then
         AVA.UsableItems[itemName] = callback
         AVAConfig.Items[itemName].usable = true
+
+        dprint("Usable item added: ^3" .. itemName .. "^0")
     end
 end
+exports("RegisterUsableItem", AVA.RegisterUsableItem)
 
 AVA.RegisterUsableItem("bread", function(src)
     print(src .. " tried to eat bread, unfortunately this feature is not done.")

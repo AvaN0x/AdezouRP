@@ -50,7 +50,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
         table.insert(AVA.Commands.SuggestionList, {name = name, help = help or "", params = params})
     end
 
-    dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^7")
+    dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^0")
 end
 exports("RegisterCommand", AVA.Commands.RegisterCommand)
 

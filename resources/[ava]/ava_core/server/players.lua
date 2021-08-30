@@ -424,7 +424,7 @@ AVA.Players.UseItem = function(src, itemName)
     if not aPlayer or type(itemName) ~= "string" then
         return
     end
-    if type(AVA.UsableItems[itemName]) == "function" then
+    if type(AVA.UsableItems[itemName]) ~= "nil" then
         local item = aPlayer.inventory.getItem(itemName)
         if item and item.quantity > 0 then
             AVA.UsableItems[itemName](aPlayer.src)
