@@ -4,11 +4,12 @@
 -------------------------------------------
 ---@class adminmenu_perms
 local requiredPerms<const> = {
-    playerlist = {spec = true, ["goto"] = true, summon = true, kill = true},
-    playersoptions = {playerblips = true},
+    playerlist = {spec = true, ["goto"] = true, bring = true, kill = true, kick = true, ban = true},
+    playersoptions = {playerblips = true, playertags = true},
     vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     tpcoords = true,
     tpwaypoint = true,
+    noclip = true,
     adminmode = true,
 }
 
@@ -57,7 +58,6 @@ CreateThread(function()
     local pairs = pairs
 
     while true do
-        Wait(dataLoopInterval)
         local newData = {}
 
         local players = GetPlayers()
@@ -68,9 +68,11 @@ CreateThread(function()
             local rb = GetPlayerRoutingBucket(playerSrc)
 
             if type(avaPlayerData[playerSrc]) ~= "table" then
-                avaPlayerData[playerSrc] = {}
                 local aPlayer = exports.ava_core:GetPlayer(playerSrc)
-                avaPlayerData[playerSrc].name = aPlayer.getDiscordTag()
+                if aPlayer then
+                    avaPlayerData[playerSrc] = {}
+                    avaPlayerData[playerSrc].name = aPlayer.getDiscordTag()
+                end
             end
 
             -- coords
@@ -79,7 +81,7 @@ CreateThread(function()
             data.c = coords
             data.rb = rb
 
-            data.n = avaPlayerData[playerSrc].name
+            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or "Not found"
 
             count = count + 1
             newData[count] = data
@@ -90,11 +92,12 @@ CreateThread(function()
         playersData = newData
 
         -- TODO only registered admins that asked about it
-        for _, serverID in pairs(players) do
-            if IsPlayerAceAllowed(serverID, "adminmenu") then
-                TriggerClientEvent("ava_personalmenu:client:playersData", serverID, playersData, GetPlayerRoutingBucket(serverID))
+        for _, playerSrc in pairs(players) do
+            if IsPlayerAceAllowed(playerSrc, "adminmenu") then
+                TriggerClientEvent("ava_personalmenu:client:playersData", playerSrc, playersData, GetPlayerRoutingBucket(playerSrc))
             end
         end
+        Wait(dataLoopInterval)
     end
 end)
 

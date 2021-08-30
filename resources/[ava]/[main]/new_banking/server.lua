@@ -51,7 +51,6 @@ RegisterNetEvent("bank:transfer", function(target, amount)
         else
             amount = math.floor(tonumber(amount))
             local balance = aPlayer.getAccountBalance("bank")
-            local targetBalance = aTargetPlayer.getAccountBalance("bank")
 
             if balance < amount or amount <= 0 then
                 TriggerClientEvent("bank:result", src, "error", "Vous n'avez pas assez d'argent en banque.")

@@ -473,33 +473,53 @@ AVA.Players.IsBanned = function(license, discord, steam, ip, live, xbl)
     return false
 end
 
+AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) ~= "string" then
+        return
+    end
+    local id = args[1]
+    local reason = table.concat(args, " ", 2)
+    if not reason or reason == "" then
+        reason = GetString("no_reason_given")
+    end
+
+	local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(id)
+    if license then
+        local aTargetPlayer = AVA.Players.GetPlayer(id)
+        local name = aTargetPlayer and aTargetPlayer.getDiscordTag() or GetPlayerName(id) or "not_found"
+        local staffName = aPlayer and aPlayer.getDiscordTag()
+        
+        local discordMessage
+        if aPlayer then
+            DropPlayer(id, GetString("you_got_banned_by", staffName, reason))
+            discordMessage = GetString("player_got_banned_by", string.gsub(discord, "discord:", ""), name, string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
+        else
+            DropPlayer(id, GetString("you_got_banned", reason))
+            discordMessage = GetString("player_got_banned", string.gsub(discord, "discord:", ""), name, reason)
+        end
+        
+        MySQL.Async.execute('INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@license, @discord, @steam, @ip, @xbl, @live, @name, @reason, @staff)', {
+            ['@license'] = license or "not_found",
+            ['@discord'] = discord or "not_found",
+            ['@steam'] = steam or "not_found",
+            ['@ip'] = ip or "not_found",
+            ['@xbl'] = xbl or "not_found",
+            ['@live'] = live or "not_found",
+            ['@name'] = name or "not_found",
+            ['@reason'] = reason or "",
+            ['@staff'] = aPlayer and aPlayer.identifiers.discord or "console"
+        },  function()
+            UpdateBanList()
+        end)
+        
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16711680) -- #ff0000
+        return discordMessage
+    end
+end)
+
 -- TODO put as a command or something
--- RegisterNetEvent("ava_connection:banPlayer")
--- AddEventHandler("ava_connection:banPlayer", function(id, reason)
--- 	local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(id)
--- 	local name = GetPlayerName(id)
---     local _, staffDiscord = AVA.Players.GetSourceIdentifiers(source)
--- 	local staffName = GetPlayerName(source)
+-- AVA.Commands.RegisterCommand("unban", "superadmin", function(source, args)
 
--- 	DropPlayer(id, "Tu as été banni par " .. staffName .. " : ".. reason)
--- 	AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", "<@" .. string.gsub(discord, "discord:", "") .. "> (`" .. name .. "`) got banned by " .. (staffDiscord and ("<@" .. string.gsub(staffDiscord, "discord:", "") .. "> (`" .. staffName .. "`)") or staffName) .. ".\nReason : " .. reason, 16711680) -- #ff0000
-
--- 	MySQL.Sync.execute('INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@license, @discord, @steam, @ip, @xbl, @live, @name, @reason, @staff)', {
---         ['@license'] = license or "not_found",
--- 		['@discord'] = discord or "not_found",
--- 		['@steam'] = steam or "not_found",
--- 		['@ip'] = ip or "not_found",
--- 		['@xbl'] = xbl or "not_found",
--- 		['@live'] = live or "not_found",
--- 		['@name'] = name or "not_found",
--- 		['@reason'] = reason or "",
--- 		['@staff'] = staffDiscord
--- 	})
-
--- 	UpdateBanList()
--- end)
-
--- TODO put as a command or something
 -- RegisterNetEvent("ava_connection:unban")
 -- AddEventHandler("ava_connection:unban", function(license)
 --     local src = source
