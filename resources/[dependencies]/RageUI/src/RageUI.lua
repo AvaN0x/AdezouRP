@@ -280,9 +280,9 @@ function RageUI.Visible(Menu, Value)
                         RageUI.CurrentMenu.Closed()
                     end
                     RageUI.CurrentMenu.Open = false
-                    Menu:UpdateInstructionalButtons(Value);
                 end
                 RageUI.CurrentMenu = Menu
+                RageUI.CurrentMenu:UpdateInstructionalButtons(true);
             else
                 RageUI.CurrentMenu = nil
             end
