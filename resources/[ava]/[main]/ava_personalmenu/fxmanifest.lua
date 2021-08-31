@@ -26,6 +26,9 @@ client_scripts {
     "@RageUI/src/items/Panels.lua",
 
     "client/main.lua",
+    "client/vehicle_management.lua",
+    "client/speedlimiter.lua",
+
     "client/admin/main.lua",
     "client/admin/playerlist.lua",
     "client/admin/vehicles.lua",

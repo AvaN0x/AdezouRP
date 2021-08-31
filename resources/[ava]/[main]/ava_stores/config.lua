@@ -158,8 +158,9 @@ Config.Stores = {
         Items = {
             {name = "headbag", price = 200, isDirtyMoney = true},
             {name = "tenuecasa", price = 200, isDirtyMoney = true},
-            {name = "balisegps", price = 200, isDirtyMoney = true},
+            {name = "gpsbeacon", price = 200, isDirtyMoney = true},
             {name = "lockpick", price = 200, isDirtyMoney = true},
+            {name = "ziptie", price = 200, isDirtyMoney = true},
         },
         Distance = 1,
         Name = "Black Market",
