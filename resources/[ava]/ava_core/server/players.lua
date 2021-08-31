@@ -242,7 +242,7 @@ local function setupPlayer(src, oldSource)
             -- we found a character, so we update its discord and name
             -- we also edit the last_played value of all other characters this player have
             MySQL.Sync.execute(
-                "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `id` <> @id AND `last_played` <> 0;",
+                "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` <> @id AND `last_played` <> 0;",
                 {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName, ["@id"] = citizenId})
             -- we edit the last_played value of all other characters this player have
             -- MySQL.Sync.execute('UPDATE `players` SET `last_played` = 0 WHERE `id` <> @id AND `last_played` <> 0', {
@@ -653,7 +653,7 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         -- we update the discord id and name of the new character
         -- and we also edit the last_played value of all other characters this player have
         MySQL.Sync.execute(
-            "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `id` <> @id AND `last_played` <> 0;",
+            "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` <> @id AND `last_played` <> 0;",
             {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName, ["@id"] = newCitizenId})
 
         -- local playerData = retrievePlayerData(newCitizenId)
@@ -678,7 +678,7 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
             aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
-        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `id` = @id AND `last_played` <> 0; ", {["@id"] = citizenId})
+        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` = @id AND `last_played` <> 0; ", {["@license"] = license, ["@id"] = citizenId})
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player
