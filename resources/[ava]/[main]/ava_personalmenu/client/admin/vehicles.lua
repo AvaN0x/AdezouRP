@@ -40,17 +40,17 @@ function PoolVehicles()
                     end
                 end)
             end
-            if perms.vehicles.deletevehicle then
-                Items:AddButton(GetString("vehicles_deletevehicle"), GetString("vehicles_deletevehicle_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        ExecuteCommand("deletevehicle")
-                    end
-                end)
-            end
             if perms.vehicles.tpnearestvehicle then
                 Items:AddButton(GetString("vehicles_tpnearestvehicle"), GetString("vehicles_tpnearestvehicle_subtitle"), nil, function(onSelected)
                     if onSelected then
                         ExecuteCommand("tpnearestvehicle")
+                    end
+                end)
+            end
+            if perms.vehicles.deletevehicle then
+                Items:AddButton(GetString("vehicles_deletevehicle"), GetString("vehicles_deletevehicle_subtitle"), nil, function(onSelected)
+                    if onSelected then
+                        ExecuteCommand("deletevehicle")
                     end
                 end)
             end

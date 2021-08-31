@@ -300,7 +300,7 @@ function RageUI.Visible(Menu, Value)
     end
 end
 
-function RageUI.CloseAll()
+function RageUI.CloseAllInternal()
     if RageUI.CurrentMenu ~= nil then
         local parent = RageUI.CurrentMenu.Parent
         while parent ~= nil do
@@ -324,6 +324,13 @@ function RageUI.CloseAll()
     RageUI.ItemOffset = 0
     ResetScriptGfxAlign()
 end
+
+function RageUI.CloseAll()
+    TriggerEvent("RageUI.CloseAll")
+end
+AddEventHandler("RageUI.CloseAll", function()
+    RageUI.CloseAllInternal()
+end)
 
 function RageUI.Banner()
     local CurrentMenu = RageUI.CurrentMenu

@@ -137,7 +137,7 @@ end)
 
 AddEventHandler("ava_stores:client:hasExitedMarker", function(zoneName)
     -- TODO only close shop menu (check if visible)
-    RageUI.CloseAll()
+    RageUI.CloseAllInternal()
     CurrentZoneName = nil
 end)
 
@@ -197,7 +197,7 @@ function BuyZone()
         }
     end
 
-    if count > 1 then
+    if count > 0 then
         RageUI.OpenTempMenu(store.Name, function(Items)
             for i = 1, #elements do
                 local element = elements[i]
@@ -210,7 +210,7 @@ function BuyZone()
                                 exports.ava_core:ShowNotification(GetString("cant_carry"))
                             else
                                 TriggerServerEvent("ava_stores:server:buyItem", CurrentZoneName, element.name, count)
-                                RageUI.CloseAll()
+                                RageUI.CloseAllInternal()
                             end
                         else
                             exports.ava_core:ShowNotification(GetString("invalid_quantity"))
@@ -218,35 +218,9 @@ function BuyZone()
                     end
                 end)
             end
-        end)
+        end, store.Title and store.Title.textureName, store.Title and store.Title.textureDirectory)
         CurrentActionEnabled = true
 
-        --     RageUI.CloseAll()
-        --     ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'ava_stores_store',
-        --     {
-        --         title = store.Name,
-        --         align = 'left',
-        --         elements = elements
-        --     },
-        --     function(data, menu)
-        --         local count = tonumber(exports.ava_core:KeyboardInput(GetString('how_much_max', data.current.maxCanTake or 0), "", 10))
-
-        --         if type(count) == "number" and math.floor(count) == count and count > 0 then
-        --             menu.close()
-        --             if count > data.current.maxCanTake then
-        --                 exports.ava_core:ShowNotification(GetString('cant_carry'))
-        --             else
-        --                 TriggerServerEvent('ava_stores:server:buyItem', CurrentZoneName, data.current.name, count)
-        --             end
-        --         else
-        --             exports.ava_core:ShowNotification(GetString('invalid_quantity'))
-        --         end
-        --         CurrentActionEnabled = true
-        --     end,
-        --     function(data, menu)
-        --         menu.close()
-        --         CurrentActionEnabled = true
-        --     end)
     else
         exports.ava_core:ShowNotification(GetString("nothing_can_buy"))
     end

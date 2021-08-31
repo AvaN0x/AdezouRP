@@ -12,9 +12,9 @@ end)
 --------------- Init Config ---------------
 -------------------------------------------
 
-local resourceName = GetCurrentResourceName()
-for i = 1, GetNumResourceMetadata(resourceName, "my_data"), 1 do
-    if GetResourceMetadata(resourceName, "my_data", i - 1) == "debug_prints" then
+local resourceName<const> = GetCurrentResourceName()
+for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
+    if GetResourceMetadata(resourceName, "ava_config", i - 1) == "debug_prints" then
         AVAConfig.Debug = true
     end
 end

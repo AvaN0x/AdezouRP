@@ -36,6 +36,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@field licenses table
     self.metadata = playerData.metadata and json.decode(playerData.metadata) or {}
 
+    self.lastSaveTime = nil
+
     self.logout = function()
         return AVA.Players.Logout(self.src)
     end

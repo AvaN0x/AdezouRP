@@ -1,4 +1,6 @@
 {
+    "cannot_save": "Sauvegarde impossible",
+    "save_wait_x_seconds": "Veuillez attendre ~y~%d~s~ secondes.",
     "player_being_saved": "Sauvegarde en cours",
     "used_command": "**%s** used command `/%s`",
     "spawn_vehicle_help": "Spawn un véhicule",
@@ -54,6 +56,7 @@
     "select_a_vehicle": "Sélectionner un véhicule",
     "vehicle_number": "Véhicule #%d",
     "change_char_help": "Changer de personnage",
+    "chars": "Personnages",
     "new_char_help": "Créer un nouveau personnage",
     "get_all_player_chars_help": "Lister mes personnages",
     "char_id": "Identifiant du personnage",

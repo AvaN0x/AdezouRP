@@ -18,6 +18,7 @@ RegisterCommand("adminmenu", function()
     if isAdmin then
         -- print(json.encode(perms, {indent = true}))
 
+        RageUI.CloseAll()
         RageUI.Visible(MainAdminMenu, true)
     end
 end)
@@ -26,41 +27,43 @@ RegisterKeyMapping("adminmenu", GetString("admin_menu"), "keyboard", "HOME")
 
 function RageUI.PoolMenus:AdminMenu()
     MainAdminMenu:IsVisible(function(Items)
-        if perms.playerlist then
-            Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), {RightLabel = "→→→"}, nil,
+        if perms then
+            if perms.playerlist then
+                Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), {RightLabel = "→→→"}, nil,
                 PlayerListSubMenu)
-        end
-        if perms.playersoptions then
-            Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), {RightLabel = "→→→"}, nil,
+            end
+            if perms.playersoptions then
+                Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), {RightLabel = "→→→"}, nil,
                 PlayersOptionsSubMenu)
-        end
-        if perms.tpcoords then
-            Items:AddButton(GetString("admin_menu_tpcoords"), GetString("admin_menu_tpcoords_subtitle"), nil, function(onSelected)
-                if onSelected then
-                    local result = AVA.KeyboardInput(GetString("admin_menu_tpcoords_input"), tpcoords_lastinput or "", 30)
-                    if result and result ~= "" then
-                        tpcoords_lastinput = result
-                        ExecuteCommand("tpcoords " .. result)
+            end
+            if perms.tpcoords then
+                Items:AddButton(GetString("admin_menu_tpcoords"), GetString("admin_menu_tpcoords_subtitle"), nil, function(onSelected)
+                    if onSelected then
+                        local result = AVA.KeyboardInput(GetString("admin_menu_tpcoords_input"), tpcoords_lastinput or "", 30)
+                        if result and result ~= "" then
+                            tpcoords_lastinput = result
+                            ExecuteCommand("tpcoords " .. result)
+                        end
                     end
-                end
-            end)
-        end
-        if perms.tpwaypoint then
-            Items:AddButton(GetString("admin_menu_tpwaypoint"), GetString("admin_menu_tpwaypoint_subtitle"), nil, function(onSelected)
-                if onSelected then
-                    ExecuteCommand("tpwaypoint")
-                end
-            end)
-        end
-        if perms.noclip then
-            Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil, function(onSelected, IsChecked)
-                if (onSelected) then
-                    ExecuteCommand("noclip")
-                end
-            end)
-        end
-        if perms.vehicles then
-            Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), {RightLabel = "→→→"}, nil, VehiclesSubMenu)
+                end)
+            end
+            if perms.tpwaypoint then
+                Items:AddButton(GetString("admin_menu_tpwaypoint"), GetString("admin_menu_tpwaypoint_subtitle"), nil, function(onSelected)
+                    if onSelected then
+                        ExecuteCommand("tpwaypoint")
+                    end
+                end)
+            end
+            if perms.noclip then
+                Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil, function(onSelected, IsChecked)
+                    if (onSelected) then
+                        ExecuteCommand("noclip")
+                    end
+                end)
+            end
+            if perms.vehicles then
+                Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), {RightLabel = "→→→"}, nil, VehiclesSubMenu)
+            end
         end
     end)
 

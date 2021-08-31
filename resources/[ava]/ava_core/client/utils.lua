@@ -471,7 +471,7 @@ local function SelectEntity(title, entitiesToSelect, cb)
                     Items:AddButton(entity.label, nil, nil, function(onSelected)
                         if onSelected then
                             selectedEntity = entity
-                            RageUI.CloseAll()
+                            RageUI.CloseAllInternal()
                         end
                     end)
 

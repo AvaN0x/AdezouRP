@@ -583,6 +583,7 @@ AVA.Players.Save = function(src)
                 ["@id"] = aPlayer.citizenId,
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+                aPlayer.lastSaveTime = os.time()
                 TriggerClientEvent("ava_core:client:endSave", src)
                 p:resolve()
             end)
@@ -669,7 +670,7 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
         -- check if player can create a new char
         local charsCount = MySQL.Sync.fetchScalar("SELECT COUNT(1) FROM `players` WHERE `license` = @license", {["@license"] = aPlayer.identifiers.license})
         if charsCount >= AVAConfig.MaxChars then
-            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", "Personnages", nil, nil,
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", GetString("chars"), nil, nil,
                 "ava_core_logo")
             return
         end
@@ -706,7 +707,7 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo",
-                "Personnages", nil, nil, "ava_core_logo")
+                GetString("chars"), nil, nil, "ava_core_logo")
         end
     end
 end, GetString("get_all_player_chars_help"))

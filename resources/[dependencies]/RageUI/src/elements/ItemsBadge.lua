@@ -63,6 +63,16 @@ RageUI.BadgeStyle = {
             BadgeTexture = Selected and "shop_franklin_icon_b" or "shop_franklin_icon_a",
         }
     end,
+    Art = function(Selected)
+        return {
+            BadgeTexture = Selected and "shop_art_icon_b" or "shop_art_icon_a",
+        }
+    end,
+    Chips = function(Selected)
+        return {
+            BadgeTexture = Selected and "shop_chips_a" or "shop_chips_b",
+        }
+    end,
     Bike = function(Selected)
         return {
             BadgeTexture = Selected and "shop_garage_bike_icon_b" or "shop_garage_bike_icon_a",

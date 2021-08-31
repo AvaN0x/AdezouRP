@@ -1,4 +1,8 @@
 {
+    "personal_menu_admin_menu": "Menu administrateur",
+    "personal_menu_emotes": "Emotes",
+    "personal_menu_vehicle_management": "Gestion du véhicule",
+    "personal_menu_save_player": "Sauvegarde du personnage",
     "admin_menu": "Menu admin",
     "admin_menu_title": "Administration",
     "admin_menu_player_list": "Liste des joueurs",

@@ -502,7 +502,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton("Sauvegarder et valider", nil,
             {Color = {BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight}}, function(onSelected)
                 if onSelected and ValidateData() then
-                    RageUI.CloseAll()
+                    RageUI.CloseAllInternal()
                 end
             end)
     end)

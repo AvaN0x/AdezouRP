@@ -47,7 +47,7 @@ end
 
 exports.ava_core:RegisterServerCallback("ava_core:isAdminAllowed", function(source)
     local menuAllowed = IsPlayerAceAllowed(source, "adminmenu")
-    return not not menuAllowed, menuAllowed and checkPerms(source, key, value) or nil
+    return not not menuAllowed, menuAllowed and checkPerms(source, key, value) or {}
 end)
 
 ------------------------------------------

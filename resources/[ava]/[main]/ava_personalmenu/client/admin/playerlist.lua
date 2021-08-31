@@ -200,15 +200,15 @@ function PoolPlayerList()
                 RageUI.GoBack()
             else
                 local playerData = selectedPlayerData
-                if perms.playerlist["goto"] and not playerData.isMyself then
-                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), nil, function(onSelected)
+                if perms.playerlist["goto"] then
+                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), {IsDisabled = playerData.isMyself}, function(onSelected)
                         if onSelected then
                             ExecuteCommand("goto " .. playerData.id)
                         end
                     end)
                 end
-                if perms.playerlist.bring and not playerData.isMyself then
-                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), nil, function(onSelected)
+                if perms.playerlist.bring then
+                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), {IsDisabled = playerData.isMyself}, function(onSelected)
                         if onSelected then
                             ExecuteCommand("bring " .. playerData.id)
                         end
@@ -282,6 +282,7 @@ RegisterNetEvent("ava_personalmenu:client:playersData", function(data, myRB)
 
         if selectedPlayerDataId and player.id == selectedPlayerDataId then
             newSelectedPlayerData = player
+            selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(player.id)) == PlayerId()
         end
     end
     selectedPlayerData = newSelectedPlayerData

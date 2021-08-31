@@ -192,7 +192,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         selectedItem.quantity = selectedItem.quantity - 1
                         local selectedItem = selectedItem
                         if selectedItem.closeInv then
-                            RageUI.CloseAll()
+                            RageUI.CloseAllInternal()
                         end
                         TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
                     end

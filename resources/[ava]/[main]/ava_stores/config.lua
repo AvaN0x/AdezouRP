@@ -7,6 +7,7 @@ Config.DrawDistance = 15.0
 
 Config.Stores = {
     TwentyFourSeven = {
+        Title = {textureName = "shopui_title_conveniencestore", textureDirectory = "shopui_title_conveniencestore"},
         Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
         Coords = {
             vector3(373.87, 325.87, 102.59), -- Clinton Ave
@@ -38,6 +39,7 @@ Config.Stores = {
     },
 
     RobsLiquor = {
+        Title = {textureName = "shopui_title_liquorstore2", textureDirectory = "shopui_title_liquorstore2"},
         Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
         Coords = {
             vector3(1135.83, -982.10, 45.44), -- Vespucci Blvd
@@ -66,6 +68,7 @@ Config.Stores = {
     },
 
     LTDgasoline = {
+        Title = {textureName = "shopui_title_gasstation", textureDirectory = "shopui_title_gasstation"},
         Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
         Coords = {
             vector3(-48.05, -1756.84, 28.44), -- Grove Street
@@ -93,6 +96,7 @@ Config.Stores = {
     },
 
     Ammunation = {
+        Title = {textureName = "shopui_title_gunclub", textureDirectory = "shopui_title_gunclub"},
         Blip = {Sprite = 110, Colour = 1, Scale = 0.6},
         Coords = {
             vector3(-662.31, -935.17, 20.85), -- Little Seoul
@@ -124,6 +128,7 @@ Config.Stores = {
     },
 
     ShootingAmmunation = {
+        Title = {textureName = "shopui_title_gunclub", textureDirectory = "shopui_title_gunclub"},
         Blip = {Sprite = 313, Colour = 1, Scale = 0.6},
         Coords = {
             vector3(21.56, -1106.61, 28.82), -- Adam's Apple Blvd
@@ -148,6 +153,7 @@ Config.Stores = {
     },
 
     BlackMarket = {
+        Title = {textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar"},
         Coord = vector3(1716.30, 3295.09, 40.32),
         Items = {
             {name = "headbag", price = 200, isDirtyMoney = true},

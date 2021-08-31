@@ -377,7 +377,13 @@ end, GetString("tpwaypoint_help"))
 
 AVA.Commands.RegisterCommand("save", "", function(_, _, _, aPlayer)
     if aPlayer then
-        aPlayer.save()
+        local time = os.time()
+        -- player need to wait at least 10 seconds to be able to save manually again
+        if not aPlayer.lastSaveTime or (time - aPlayer.lastSaveTime) > 10 then
+            aPlayer.save()
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", aPlayer.src, "", nil, "ava_core_logo", GetString("cannot_save"), GetString("save_wait_x_seconds", 10 - (time - aPlayer.lastSaveTime)), nil, "ava_core_logo")
+        end
     end
 end)
 
