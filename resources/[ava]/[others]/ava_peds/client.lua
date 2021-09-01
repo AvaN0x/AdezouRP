@@ -2,16 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-ESX = nil
-
 local loopsRequired = true
-
-Citizen.CreateThread(function()
-    while ESX == nil do
-	TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-	Citizen.Wait(0)
-    end
-end)
 
 local pedNames = {}
 
@@ -53,15 +44,14 @@ Citizen.CreateThread(function()
     loopsRequired = #pedNames > 0
 end)
 
-
 local playerPed = nil
 local playerCoords = nil
 
 Citizen.CreateThread(function()
-	while loopsRequired do
+    while loopsRequired do
         playerPed = PlayerPedId()
-		playerCoords = GetEntityCoords(playerPed)
-		Wait(1000)
+        playerCoords = GetEntityCoords(playerPed)
+        Wait(1000)
     end
 end)
 
@@ -73,7 +63,7 @@ Citizen.CreateThread(function()
         for _, ped in ipairs(pedNames) do
             if #(playerCoords - ped.pos) < 4 then
                 wait = 0
-                local boneCoord = GetPedBoneCoords(ped.entity, 0x796e, ped.offsetZ , 0, 0)
+                local boneCoord = GetPedBoneCoords(ped.entity, 0x796e, ped.offsetZ, 0, 0)
                 if ped.name then
                     DrawText3D(boneCoord.x, boneCoord.y, boneCoord.z, ped.name, 0.25)
                 end
@@ -86,39 +76,56 @@ Citizen.CreateThread(function()
     end
 end)
 
+---Draw a text on screen
+---@param x number
+---@param y number
+---@param z number
+---@param text string
+---@param size? number
+---@param r? number
+---@param g? number
+---@param b? number
+function DrawText3D(x, y, z, text, size, r, g, b)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
--- function DrawText3D(x, y, z, text, size)
---     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    if onScreen then
+        AddTextEntry("AVA_DRW_3DTXT", text)
 
---     if onScreen then
---         SetTextScale(0.35, size or 0.35)
---         SetTextFont(0)
---         SetTextProportional(1)
---         SetTextColour(255, 255, 255, 215)
---         SetTextEntry("STRING")
---         SetTextCentre(1)
---         SetTextOutline()
+        SetTextScale(0.35, size or 0.35)
+        SetTextFont(0)
+        SetTextProportional(1)
+        SetTextColour(r or 255, g or 255, b or 255, 215)
+        SetTextEntry("AVA_DRW_3DTXT")
+        SetTextCentre(1)
+        SetTextOutline()
 
---         AddTextComponentString(text)
---         DrawText(_x, _y)
---     end
--- end
+        EndTextCommandDisplayText(_x, _y)
+    end
+end
 
+---Draw a "bubble" like text, only one can be displayed at a time
+---@param x nulber
+---@param y nulber
+---@param z nulber
+---@param text string
+---@param backgroundColor? number
+---@param bubbleStyle? number
+function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
+    local onScreen = World3dToScreen2d(x, y, z)
+    if onScreen then
+        AddTextEntry("AVA_DRW_BBLT3D", text)
+        BeginTextCommandDisplayHelp("AVA_DRW_BBLT3D")
+        EndTextCommandDisplayHelp(2, false, false, -1)
+        SetFloatingHelpTextWorldPosition(1, x, y, z)
 
--- function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
---     AddTextEntry(GetCurrentResourceName(), text)
---     BeginTextCommandDisplayHelp(GetCurrentResourceName())
---     EndTextCommandDisplayHelp(2, false, false, -1)
---     SetFloatingHelpTextWorldPosition(1, x, y, z)
-
-
---     local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
---     local bubbleStyle = bubbleStyle or 3
---     -- -1 centered, no triangles
---     -- 0 left, no triangles
---     -- 1 centered, triangle top
---     -- 2 left, triangle left
---     -- 3 centered, triangle bottom
---     -- 4 right, triangle right
---     SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
--- end
+        local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+        local bubbleStyle = bubbleStyle or 3
+        -- -1 centered, no triangles
+        -- 0 left, no triangles
+        -- 1 centered, triangle top
+        -- 2 left, triangle left
+        -- 3 centered, triangle bottom
+        -- 4 right, triangle right
+        SetFloatingHelpTextStyle(1, 1, backgroundColor, -1, bubbleStyle, 0)
+    end
+end

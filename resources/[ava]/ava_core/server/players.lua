@@ -450,7 +450,7 @@ local function UpdateBanList()
     MySQL.Async.fetchAll(
         "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban FROM ban_list ORDER BY date_ban DESC",
         {}, function(data)
-            AVA.Players.BanList = data[1] and data or {}
+            AVA.Players.BanList = (data and data[1]) and data or {}
         end)
 end
 
@@ -483,35 +483,38 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
         reason = GetString("no_reason_given")
     end
 
-	local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(id)
+    local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(id)
     if license then
         local aTargetPlayer = AVA.Players.GetPlayer(id)
         local name = aTargetPlayer and aTargetPlayer.getDiscordTag() or GetPlayerName(id) or "not_found"
         local staffName = aPlayer and aPlayer.getDiscordTag()
-        
+
         local discordMessage
         if aPlayer then
             DropPlayer(id, GetString("you_got_banned_by", staffName, reason))
-            discordMessage = GetString("player_got_banned_by", string.gsub(discord, "discord:", ""), name, string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
+            discordMessage = GetString("player_got_banned_by", string.gsub(discord, "discord:", ""), name,
+                string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
         else
             DropPlayer(id, GetString("you_got_banned", reason))
             discordMessage = GetString("player_got_banned", string.gsub(discord, "discord:", ""), name, reason)
         end
-        
-        MySQL.Async.execute('INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@license, @discord, @steam, @ip, @xbl, @live, @name, @reason, @staff)', {
-            ['@license'] = license or "not_found",
-            ['@discord'] = discord or "not_found",
-            ['@steam'] = steam or "not_found",
-            ['@ip'] = ip or "not_found",
-            ['@xbl'] = xbl or "not_found",
-            ['@live'] = live or "not_found",
-            ['@name'] = name or "not_found",
-            ['@reason'] = reason or "",
-            ['@staff'] = aPlayer and aPlayer.identifiers.discord or "console"
-        },  function()
-            UpdateBanList()
-        end)
-        
+
+        MySQL.Async.execute(
+            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@license, @discord, @steam, @ip, @xbl, @live, @name, @reason, @staff)",
+            {
+                ["@license"] = license or "not_found",
+                ["@discord"] = discord or "not_found",
+                ["@steam"] = steam or "not_found",
+                ["@ip"] = ip or "not_found",
+                ["@xbl"] = xbl or "not_found",
+                ["@live"] = live or "not_found",
+                ["@name"] = name or "not_found",
+                ["@reason"] = reason or "",
+                ["@staff"] = aPlayer and aPlayer.identifiers.discord or "console",
+            }, function()
+                UpdateBanList()
+            end)
+
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16711680) -- #ff0000
         return discordMessage
     end
@@ -679,7 +682,8 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
             aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
-        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` = @id AND `last_played` <> 0; ", {["@license"] = license, ["@id"] = citizenId})
+        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` = @id AND `last_played` <> 0; ",
+            {["@license"] = license, ["@id"] = citizenId})
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player

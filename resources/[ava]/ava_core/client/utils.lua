@@ -383,15 +383,16 @@ AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
     if onScreen then
+        AddTextEntry("AVA_DRW_3DTXT", text)
+
         SetTextScale(0.35, size or 0.35)
         SetTextFont(0)
         SetTextProportional(1)
         SetTextColour(r or 255, g or 255, b or 255, 215)
-        SetTextEntry("STRING")
+        SetTextEntry("AVA_DRW_3DTXT")
         SetTextCentre(1)
         SetTextOutline()
 
-        AddTextComponentString(text)
         EndTextCommandDisplayText(_x, _y)
     end
 end
@@ -407,8 +408,8 @@ exports("DrawText3D", AVA.Utils.DrawText3D)
 AVA.Utils.DrawBubbleText3D = function(x, y, z, text, backgroundColor, bubbleStyle)
     local onScreen = World3dToScreen2d(x, y, z)
     if onScreen then
-        AddTextEntry(GetCurrentResourceName(), text)
-        BeginTextCommandDisplayHelp(GetCurrentResourceName())
+        AddTextEntry("AVA_DRW_BBLT3D", text)
+        BeginTextCommandDisplayHelp("AVA_DRW_BBLT3D")
         EndTextCommandDisplayHelp(2, false, false, -1)
         SetFloatingHelpTextWorldPosition(1, x, y, z)
 
