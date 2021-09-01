@@ -30,11 +30,11 @@ function RageUI.PoolMenus:AdminMenu()
         if perms then
             if perms.playerlist then
                 Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), {RightLabel = "→→→"}, nil,
-                PlayerListSubMenu)
+                    PlayerListSubMenu)
             end
             if perms.playersoptions then
                 Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), {RightLabel = "→→→"}, nil,
-                PlayersOptionsSubMenu)
+                    PlayersOptionsSubMenu)
             end
             if perms.tpcoords then
                 Items:AddButton(GetString("admin_menu_tpcoords"), GetString("admin_menu_tpcoords_subtitle"), nil, function(onSelected)

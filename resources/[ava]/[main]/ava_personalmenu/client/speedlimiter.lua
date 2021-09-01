@@ -4,7 +4,6 @@
 -------------- TOOK INSPIRATION FROM ---------------
 ---- https://github.com/hojgr/teb_speed_control ----
 ----------------------------------------------------
-
 AddEventHandler("teb_speed_control:setSpeedLimiter", function(speed)
     if speed > 0 then
         LimitVehicleSpeed(speed)
@@ -19,11 +18,11 @@ end)
 
 local LastSpeedLimitedVehicle = nil
 local CurrentMaxSpeedMetersPerSecond = nil
-local SpeedDiffTolerance = (2/3.6)
+local SpeedDiffTolerance = (2 / 3.6)
 local LastForcedRpm = nil
 
 function KmhToMps(kmh)
-    return kmh * (1/3.6)
+    return kmh * (1 / 3.6)
 end
 
 Citizen.CreateThread(function()
@@ -65,7 +64,7 @@ end)
 
 function LimitVehicleSpeed(kmh)
     kmh = kmh - 1 -- reduction of 1 kmh because the vehicle always go higher of 1
-    local mpsSpeed = kmh * (1/3.6) -- KmH to Mps
+    local mpsSpeed = kmh * (1 / 3.6) -- KmH to Mps
 
     local vehicle = GetVehiclePedIsIn(PlayerPedId())
 
@@ -104,7 +103,7 @@ function ResetCurrentVehicleMaxSpeed()
 end
 
 function ResetVehicleMaxSpeed(vehicle)
-    local maxSpeed = GetVehicleHandlingFloat(vehicle,"CHandlingData","fInitialDriveMaxFlatVel")
+    local maxSpeed = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fInitialDriveMaxFlatVel")
     SetVehicleMaxSpeed(vehicle, maxSpeed)
     LastSpeedLimitedVehicle = nil
     CurrentMaxSpeedMetersPerSecond = nil
