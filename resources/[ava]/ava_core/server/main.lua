@@ -28,6 +28,14 @@ for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
         else
             print("^3[WARN] max_characters was not valid, value must be a number > 0^0")
         end
+
+    elseif dataName == "max_jobs_count" then
+        local value = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1)) or 0
+        if value ~= "null" and tonumber(value) > 0 then
+            AVAConfig.MaxJobsCount = tonumber(value)
+        else
+            print("^3[WARN] max_jobs_count was not valid, value must be a number > 0^0")
+        end
     end
 end
 
@@ -106,3 +114,24 @@ AVA.GetItemsData = function()
     return AVAConfig.Items or {}
 end
 exports("GetItemsData", AVA.GetItemsData)
+
+-------------------------------------
+--------------- Jobs ---------------
+-------------------------------------
+
+---Check whether a grade exist for a job or not
+---@param jobName string
+---@param gradeName string
+---@return boolean
+AVA.GradeExistForJob = function(jobName, gradeName)
+    local cfgJob = AVAConfig.Jobs[jobName]
+    if cfgJob then
+        for i = 1, #cfgJob.grades do
+            local grade = cfgJob.grades[i]
+            if grade.name == gradeName then
+                return true
+            end
+        end
+    end
+    return false
+end

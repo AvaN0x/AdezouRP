@@ -144,6 +144,7 @@ local function loadPlayer(src)
         print("^1[loadPlayer] ^0Could not load player for id ^3" .. tostring(src), "^0")
         return
     end
+    aPlayer.login()
     AVA.RB.MoveSourceToRB(src, 0)
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
@@ -169,7 +170,6 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
 
     local playerData = retrievePlayerData(citizenId)
 
-    dprint("playerData", citizenId)
     -- dprint(json.encode(playerData, {indent = true}))
 
     -- if for any reason, we could not get player datas, then we drop the player
@@ -190,10 +190,10 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     -- we check if the player character is valid
     if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and aPlayer.character.sex
         and aPlayer.character.birthdate then
-        dprint("Player char is valid")
+        -- dprint("Player char is valid")
         loadPlayer(tostring(src))
     else
-        dprint("Player char need to create a char")
+        -- dprint("Player char need to create a char")
         AVA.RB.MoveSourceToRBName(src, "createchar" .. src)
         TriggerClientEvent("ava_core:client:createChar", src)
     end
@@ -551,6 +551,17 @@ RegisterNetEvent("ava_core:server:updatePosition", function(position)
         end
     end
 end)
+
+AVA.Players.Login = function(src)
+    local aPlayer = AVA.Players.GetPlayer(src)
+
+    if aPlayer then
+        -- remove all RP related aces and principals
+        dprint("^2[LOGIN] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+    else
+        error("^1[AVA.Players.Login]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+    end
+end
 
 AVA.Players.Logout = function(src)
     local aPlayer = AVA.Players.GetPlayer(src)

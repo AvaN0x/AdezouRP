@@ -43,3 +43,8 @@ my_data 'discord_config' {
     }
 }
 ```
+
+## Jobs
+
+The default job is `unemployed`, this job is removed when the player get added a new job.
+**Do not remove or rename this job !**

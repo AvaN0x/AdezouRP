@@ -48,6 +48,7 @@ local function SpawnPlayer()
 
     -- dprint(AVA.Player.Data.position)
     if AVA.Player.Data.position then
+        RequestCollisionAtCoord(AVA.Player.Data.position)
         SetEntityCoords(playerPed, AVA.Player.Data.position)
         SetEntityHeading(playerPed, 0.0)
     end

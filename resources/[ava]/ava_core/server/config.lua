@@ -14,6 +14,9 @@ AVAConfig.Debug = false
 -- edit 'max_characters' in fxmanifest.lua, value must be > 0
 AVAConfig.MaxChars = 5
 
+-- edit 'max_jobs_count' in fxmanifest.lua, value must be > 0
+AVAConfig.MaxJobsCount = 2
+
 -- time between each save all players (in minutes)
 -- remove to disable auto saves
 AVAConfig.SaveTimeout = 10
@@ -39,3 +42,7 @@ AVAConfig.Accounts = {bank = {label = "Banque"}}
 
 -- List of all items and their datas
 AVAConfig.Items = json.decode(LoadResourceFile(GetCurrentResourceName(), "items.json") or "{}")
+
+-- List of all jobs
+AVAConfig.Jobs = json.decode(LoadResourceFile(GetCurrentResourceName(), "jobs.json") or "{}")
+print(json.encode(AVAConfig.Jobs, {indent = true}))

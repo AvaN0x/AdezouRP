@@ -98,21 +98,22 @@ AVA.Commands.RegisterCommand("kick", "mod", function(source, args, rawCommand, a
         reason = GetString("no_reason_given")
     end
 
-	local license, discord = AVA.Players.GetSourceIdentifiers(id)
+    local license, discord = AVA.Players.GetSourceIdentifiers(id)
     if license then
         local aTargetPlayer = AVA.Players.GetPlayer(id)
         local name = aTargetPlayer and aTargetPlayer.getDiscordTag() or GetPlayerName(id) or "not_found"
         local staffName = aPlayer and aPlayer.getDiscordTag()
-        
+
         local discordMessage
         if aPlayer then
             DropPlayer(id, GetString("you_got_kicked_by", staffName, reason))
-            discordMessage = GetString("player_got_kicked_by", string.gsub(discord, "discord:", ""), name, string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
+            discordMessage = GetString("player_got_kicked_by", string.gsub(discord, "discord:", ""), name,
+                string.gsub(aPlayer.identifiers.discord, "discord:", ""), staffName, reason)
         else
             DropPlayer(id, GetString("you_got_kicked", reason))
             discordMessage = GetString("player_got_kicked", string.gsub(discord, "discord:", ""), name, reason)
         end
-                
+
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16522243) -- #fc1c03
         return discordMessage
     end
@@ -198,10 +199,7 @@ AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
         local licenseAdded = aTargetPlayer.addLicense(args[2])
         return licenseAdded and ("**" .. aTargetPlayer.getDiscordTag() .. "** received license named **" .. args[2] .. "**.")
     end
-end, "Add a license to a player", {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
-})
+end, "Add a license to a player", {{name = "player", help = GetString("player_id_or_zero")}, {name = "license", help = GetString("license_name")}})
 
 AVA.Commands.RegisterCommand("removelicense", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
@@ -213,10 +211,7 @@ AVA.Commands.RegisterCommand("removelicense", "admin", function(source, args)
         local licenseRemoved = aTargetPlayer.removeLicense(args[2])
         return licenseRemoved and ("**" .. aTargetPlayer.getDiscordTag() .. "** got the license named **" .. args[2] .. "** removed.")
     end
-end, "Remove license from a player", {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
-})
+end, "Remove license from a player", {{name = "player", help = GetString("player_id_or_zero")}, {name = "license", help = GetString("license_name")}})
 
 AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
@@ -230,7 +225,7 @@ AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
     end
 end, "Set quantity of points from a player license", {
     {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "license", help = GetString("license_name")},
     {name = "quantity", help = "Quantity of points"},
 })
 
@@ -246,7 +241,7 @@ AVA.Commands.RegisterCommand("addlicensepoints", "admin", function(source, args)
     end
 end, "Add points to a player license", {
     {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "license", help = GetString("license_name")},
     {name = "quantity", help = "Quantity of points"},
 })
 
@@ -262,9 +257,67 @@ AVA.Commands.RegisterCommand("removelicensepoints", "admin", function(source, ar
     end
 end, "Remove points from a player license", {
     {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = "License name (driver, trafficLaws, weapon)"},
+    {name = "license", help = GetString("license_name")},
     {name = "quantity", help = "Quantity of points"},
 })
+
+------------------------------------
+--------------- Jobs ---------------
+------------------------------------
+
+-- * DEBUG
+AVA.Commands.RegisterCommand("debugjobs", "superadmin", function(source, args, rawCommand, aPlayer)
+    if aPlayer then
+        dprint("jobs", json.encode(aPlayer.jobs))
+    end
+end)
+
+AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        local cfgJob = AVAConfig.Jobs[args[2]]
+        if not cfgJob then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
+
+        else
+            -- we remove unemployed job if the player has it
+            aTargetPlayer.removeJob("unemployed")
+
+            if aTargetPlayer.canAddAnotherJob() then
+                local jobAdded, finalGrade = aTargetPlayer.addJob(args[2], args[3])
+                return jobAdded and GetString("addjob_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)
+            else
+                TriggerClientEvent("chat:addMessage", source,
+                    {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_player_cannot_have_more_jobs")}})
+            end
+        end
+    end
+end, GetString("addjob_help"), {
+    {name = "player", help = GetString("player_id_or_zero")},
+    {name = "job", help = GetString("job_name")},
+    {name = "grade?", help = GetString("job_grade_name")},
+})
+
+AVA.Commands.RegisterCommand("removejob", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        local cfgJob = AVAConfig.Jobs[args[2]]
+        if not cfgJob then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
+        else
+            local jobRemoved = aTargetPlayer.removeJob(args[2])
+            return jobRemoved and GetString("removejob_log", aTargetPlayer.getDiscordTag(), args[2])
+        end
+    end
+end, GetString("removejob_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "job", help = GetString("job_name")}})
 
 -----------------------------------------
 --------------- Inventory ---------------
@@ -275,7 +328,7 @@ AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     if aTargetPlayer then
         aTargetPlayer.getInventory().clearInventory()
     end
-end, GetString("clear_inventory_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("clearinventory_help"), {{name = "player", help = GetString("player_id_or_empty")}})
 
 AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
@@ -306,7 +359,6 @@ end, GetString("remove_item_help"), {
     {name = "itemName", help = GetString("item_name")},
     {name = "quantity", help = GetString("quantity")},
 })
-
 
 -----------------------------------------
 --------------- Teleports ---------------
@@ -382,7 +434,8 @@ AVA.Commands.RegisterCommand("save", "", function(_, _, _, aPlayer)
         if not aPlayer.lastSaveTime or (time - aPlayer.lastSaveTime) > 10 then
             aPlayer.save()
         else
-            TriggerClientEvent("ava_core:client:ShowNotification", aPlayer.src, "", nil, "ava_core_logo", GetString("cannot_save"), GetString("save_wait_x_seconds", 10 - (time - aPlayer.lastSaveTime)), nil, "ava_core_logo")
+            TriggerClientEvent("ava_core:client:ShowNotification", aPlayer.src, "", nil, "ava_core_logo", GetString("cannot_save"),
+                GetString("save_wait_x_seconds", 10 - (time - aPlayer.lastSaveTime)), nil, "ava_core_logo")
         end
     end
 end)

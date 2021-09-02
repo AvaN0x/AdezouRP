@@ -38,6 +38,10 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     self.lastSaveTime = nil
 
+    self.login = function()
+        return AVA.Players.Login(self.src)
+    end
+
     self.logout = function()
         return AVA.Players.Logout(self.src)
     end
@@ -224,7 +228,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         local hasLicense, _, index = self.hasLicense(licenseName)
 
         if hasLicense then
-            self.metadata.licenses[index] = nil
+            table.remove(self.metadata.licenses, index)
             return true
         end
         return false
@@ -309,6 +313,85 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ------------------------------------
     --------------- Jobs ---------------
     ------------------------------------
+
+    ---Get all player jobs
+    ---@return table
+    self.getJobs = function()
+        return self.jobs
+    end
+
+    ---Can the player be added another job
+    ---@return boolean canAdd
+    ---@return number "count of job that can be added"
+    self.canAddAnotherJob = function()
+        local playerJobCount<const> = #self.jobs
+        local canAdd<const> = playerJobCount < AVAConfig.MaxJobsCount
+        if canAdd then
+            return canAdd, playerJobCount - AVAConfig.MaxJobsCount
+        end
+        return false
+    end
+
+    ---Check if a player has a job
+    ---@param jobName string
+    ---@return boolean hasJob
+    ---@return table job
+    ---@return number index
+    self.hasJob = function(jobName)
+        if type(jobName) ~= "string" then
+            return false
+        end
+
+        if type(self.jobs) == "table" then
+            for i = 1, #self.jobs, 1 do
+                if self.jobs[i].name == jobName then
+                    return true, self.jobs[i], i
+                end
+            end
+        end
+        return false
+    end
+
+    ---Add a job to a player if the job exist, if the player already have this job, it will update it's grade
+    ---@param jobName string
+    ---@param gradeName? string "if not specified it will take the first available grade"
+    ---@return boolean success
+    ---@return grade "final grade added"
+    self.addJob = function(jobName, gradeName)
+        local cfgJob = AVAConfig.Jobs[jobName]
+        if cfgJob then
+            local alreadyHasJob, job = self.hasJob(jobName)
+            if not gradeName then
+                gradeName = cfgJob.grades[1].name
+            end
+
+            if alreadyHasJob then
+                if job.grade ~= gradeName and AVA.GradeExistForJob(jobName, gradeName) then
+                    job.grade = gradeName
+                    return true, gradeName
+                end
+            else
+                if AVA.GradeExistForJob(jobName, gradeName) then
+                    self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName}
+                    return true, gradeName
+                end
+            end
+        end
+        return false
+    end
+
+    ---Remove a job from a player if the player has it
+    ---@param jobName string
+    ---@return boolean success
+    self.removeJob = function(jobName)
+        local hasJob, _, index = self.hasJob(jobName)
+
+        if hasJob then
+            table.remove(self.jobs, index)
+            return true
+        end
+        return false
+    end
 
     return self
 end
