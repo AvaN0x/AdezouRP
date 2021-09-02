@@ -44,7 +44,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     end, needAce)
 
     if needAce then
-        ExecuteCommand("add_ace group." .. group .. " command." .. name .. " allow")
+        AVA.AddAce("group." .. group, "command." .. name)
     end
     if help or params then
         table.insert(AVA.Commands.SuggestionList, {name = name, help = help or "", params = params})
@@ -287,7 +287,7 @@ AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
             -- we remove unemployed job if the player has it
             aTargetPlayer.removeJob("unemployed")
 
-            if aTargetPlayer.canAddAnotherJob() then
+            if aTargetPlayer.canAddAnotherJob() or aTargetPlayer.hasJob(args[2]) then
                 local jobAdded, finalGrade = aTargetPlayer.addJob(args[2], args[3])
                 return jobAdded and GetString("addjob_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)
             else
@@ -459,3 +459,9 @@ AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand,
         TriggerClientEvent("ava_core:client:kill", source)
     end
 end, GetString("kill_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+
+AVA.Commands.RegisterCommand("ace", "superadmin", function(source, args, rawCommand, aPlayer)
+    if aPlayer and args[1] then
+        dprint(args[1], IsPlayerAceAllowed(source, args[1]))
+    end
+end)

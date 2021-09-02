@@ -16,7 +16,7 @@ local requiredPerms<const> = {
 local playersData = {}
 local avaPlayerData = {}
 
-TriggerEvent("ava_core:server:add_ace", "group.mod", "adminmenu")
+-- TriggerEvent("ava_core:server:add_ace", "group.mod", "adminmenu")
 
 local function checkPerms(source, key, value)
     -- init value with requiredPerms
@@ -46,7 +46,7 @@ local function checkPerms(source, key, value)
 end
 
 exports.ava_core:RegisterServerCallback("ava_core:isAdminAllowed", function(source)
-    local menuAllowed = IsPlayerAceAllowed(source, "adminmenu")
+    local menuAllowed = IsPlayerAceAllowed(source, "ace.group.mod")
     return not not menuAllowed, menuAllowed and checkPerms(source, key, value) or {}
 end)
 

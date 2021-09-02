@@ -367,11 +367,14 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
             if alreadyHasJob then
                 if job.grade ~= gradeName and AVA.GradeExistForJob(jobName, gradeName) then
+                    AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
+                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
                     job.grade = gradeName
                     return true, gradeName
                 end
             else
                 if AVA.GradeExistForJob(jobName, gradeName) then
+                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
                     self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName}
                     return true, gradeName
                 end
@@ -384,9 +387,10 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param jobName string
     ---@return boolean success
     self.removeJob = function(jobName)
-        local hasJob, _, index = self.hasJob(jobName)
+        local hasJob, job, index = self.hasJob(jobName)
 
         if hasJob then
+            AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
             table.remove(self.jobs, index)
             return true
         end

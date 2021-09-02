@@ -63,23 +63,54 @@ Console colors :
 --------------- Init principals ---------------
 -----------------------------------------------
 
--- if using "snail" instead of "builtin.everyone", then console can do commands and players can't
--- ExecuteCommand('add_principal group.mod builtin.snail')
-
-ExecuteCommand("add_principal group.admin group.mod")
-ExecuteCommand("add_ace group.admin command.stop allow")
-ExecuteCommand("add_ace group.admin command.start allow")
-ExecuteCommand("add_ace group.admin command.restart allow")
-ExecuteCommand("add_ace group.admin command.ensure allow")
-
-ExecuteCommand("add_principal group.superadmin group.admin")
-ExecuteCommand("add_ace group.superadmin command allow")
-
-AddEventHandler("ava_core:server:add_ace", function(principal, object)
+---Add an ace
+---@param principal string
+---@param object string
+AVA.AddAce = function(principal, object)
     if type(principal) == "string" and type(object) == "string" then
+        dprint(("add_ace ^4%s^0 ^5%s^0 allow"):format(principal, object))
         ExecuteCommand(("add_ace %s %s allow"):format(principal, object))
     end
-end)
+end
+AddEventHandler("ava_core:server:add_ace", AVA.AddAce)
+
+---Add a principal and an ace that only this principal have (if specified)
+---@param principal string
+---@param object string
+---@param with_ace boolean "will create an ace with it, under the form of `ace.${principal}"
+AVA.AddPrincipal = function(principal, object, with_ace)
+    if type(principal) == "string" and type(object) == "string" then
+        dprint(("add_principal ^4%s^0 ^5%s^0"):format(principal, object))
+        ExecuteCommand(("add_principal %s %s"):format(principal, object))
+        if with_ace then
+            AVA.AddAce(principal, "ace." .. principal)
+        end
+    end
+end
+AddEventHandler("ava_core:server:add_principal", AVA.AddPrincipal)
+
+---Remove a principal
+---@param principal string
+---@param object string
+AVA.RemovePrincipal = function(principal, object)
+    if type(principal) == "string" and type(object) == "string" then
+        dprint(("remove_principal ^4%s^0 ^5%s^0"):format(principal, object))
+        ExecuteCommand(("remove_principal %s %s"):format(principal, object))
+    end
+end
+AddEventHandler("ava_core:server:remove_principal", AVA.RemovePrincipal)
+
+-- if using "snail" instead of "builtin.everyone", then players can do commands and console can't
+AVA.AddPrincipal("group.mod", "builtin.everyone", true)
+
+AVA.AddPrincipal("group.admin", "group.mod", true)
+AVA.AddAce("group.admin", "command.stop")
+AVA.AddAce("group.admin", "command.start")
+AVA.AddAce("group.admin", "command.restart")
+AVA.AddAce("group.admin", "command.ensure")
+
+AVA.AddPrincipal("group.superadmin", "group.admin", true)
+AVA.AddAce("group.superadmin", "command")
 
 -------------------------------------
 --------------- Items ---------------
@@ -135,3 +166,23 @@ AVA.GradeExistForJob = function(jobName, gradeName)
     end
     return false
 end
+
+dprint("^6[JOBS] Start initializing principals for each jobs^0")
+for jobName, job in pairs(AVAConfig.Jobs) do
+    dprint("^6[JOBS]^0 Start principals for job ^6" .. jobName .. " ^0(^6" .. job.label .. "^0)")
+    local principal = "job." .. jobName
+    AVA.AddPrincipal(principal .. ".main", "builtin.everyone", true)
+    if job.grades then
+        local lastGradePrincipal = principal .. ".main"
+        for i = 1, #job.grades do
+            local grade = job.grades[i]
+            local gradePrincipal = principal .. "." .. grade.name
+            AVA.AddPrincipal(gradePrincipal, lastGradePrincipal, true)
+            lastGradePrincipal = gradePrincipal
+        end
+    else
+        print("^1" .. jobName .. " is missing grades^0")
+    end
+end
+dprint("^6[JOBS] Ended initializing principals for each jobs^0")
+

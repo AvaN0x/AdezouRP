@@ -256,8 +256,9 @@ local function setupPlayer(src, oldSource)
 
         -- add principal to the user
         if group then
-            ExecuteCommand("add_principal identifier." .. license .. " group." .. group)
-            dprint("Add principal ^3group." .. group .. "^0 to ^3" .. license .. "^0 (^3" .. discordTag .. "^0)")
+            AVA.AddPrincipal("player." .. src, "group." .. group)
+            -- ExecuteCommand("add_principal player." .. src .. " group." .. group)
+            dprint("Add principal ^3group." .. group .. "^0 to ^3player." .. src .. "^0 (^3" .. discordTag .. "^0)")
         end
 
         -- we add command suggestions to the player
@@ -345,16 +346,18 @@ end)
 AddEventHandler("playerDropped", function(reason)
     local src = source
     -- dprint(src, "playerDropped", reason)
-    if AVA.Players.List[tostring(src)] then
-        -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. AVA.Players.List[tostring(src)].name .. "~s~ se déconnecte.")
-        print("^5" .. AVA.Players.List[tostring(src)].discordTag .. "^0 (^3" .. AVA.Players.List[tostring(src)].name .. "^0) se déconnecte. ("
-                  .. AVA.Players.List[tostring(src)].citizenId .. ")")
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
-            "<@" .. string.gsub(AVA.Players.List[tostring(src)].identifiers.discord, "discord:", "") .. ">" .. " (`" .. AVA.Players.List[tostring(src)].name
-                .. "`)" .. " se déconnecte. (" .. AVA.Players.List[tostring(src)].citizenId .. ")", 16733269)
+    local aPlayer = AVA.Players.List[tostring(src)]
+    if aPlayer then
+        -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. aPlayer.name .. "~s~ se déconnecte.")
+        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`"
+            .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId .. ")", 16733269)
 
-        AVA.Players.List[tostring(src)].logout()
-        Citizen.Await(AVA.Players.List[tostring(src)].save())
+        aPlayer.logout()
+        Citizen.Await(aPlayer.save())
+
+        AVA.RemovePrincipal("player." .. src, "group." .. aPlayer.group)
+
         AVA.Players.List[tostring(src)] = nil
     end
     DEBUGPrintPlayerList("playerDropped")
@@ -556,7 +559,13 @@ AVA.Players.Login = function(src)
     local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer then
-        -- remove all RP related aces and principals
+        -- add all RP related aces and principals
+        local jobs = aPlayer.getJobs()
+        for i = 1, #jobs do
+            local job = jobs[i]
+            AVA.AddPrincipal("player." .. aPlayer.src, "job." .. job.name .. "." .. job.grade)
+        end
+
         dprint("^2[LOGIN] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
     else
         error("^1[AVA.Players.Login]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
@@ -568,6 +577,12 @@ AVA.Players.Logout = function(src)
 
     if aPlayer then
         -- remove all RP related aces and principals
+        local jobs = aPlayer.getJobs()
+        for i = 1, #jobs do
+            local job = jobs[i]
+            AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. "." .. job.grade)
+        end
+
         dprint("^2[LOGOUT] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
     else
         error("^1[AVA.Players.Logout]^0 aPlayer is not valid for src ^3" .. src .. "^0.")

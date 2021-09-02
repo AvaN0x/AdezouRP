@@ -45,4 +45,3 @@ AVAConfig.Items = json.decode(LoadResourceFile(GetCurrentResourceName(), "items.
 
 -- List of all jobs
 AVAConfig.Jobs = json.decode(LoadResourceFile(GetCurrentResourceName(), "jobs.json") or "{}")
-print(json.encode(AVAConfig.Jobs, {indent = true}))

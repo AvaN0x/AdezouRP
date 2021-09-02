@@ -4,7 +4,7 @@
         "grades": [
             {
                 "name": "employee",
-                "label": "",
+                "label": "Chômeur",
                 "salary": 20
             }
         ]
@@ -13,7 +13,7 @@
         "label": "Vigneron",
         "grades": [
             {
-                "name": "interim",
+                "name": "tempworker",
                 "label": "Intérimaire",
                 "salary": 50
             },
@@ -38,7 +38,7 @@
         "label": "Couturier",
         "grades": [
             {
-                "name": "interim",
+                "name": "tempworker",
                 "label": "Intérimaire",
                 "salary": 50
             },
