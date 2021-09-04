@@ -109,8 +109,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
         local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
             {control = "~INPUT_AIM~", label = GetString("admin_menu_noclip_leave")},
             {control = "~INPUT_SPRINT~", label = GetString("admin_menu_noclip_accelerate")},
-            {control = GetControlGroupInstructionalButton(2, 11, 0), label = GetString("admin_menu_noclip_forward_backward")},
-            {control = GetControlGroupInstructionalButton(2, 3, 0), label = GetString("admin_menu_noclip_move")},
+            {control = GetControlGroupInstructionalButton(2, 0, 0), label = GetString("admin_menu_noclip_move")},
+            {control = GetControlGroupInstructionalButton(2, 4, 0), label = GetString("admin_menu_noclip_up_down")},
         })
         local playerPed = PlayerPedId()
 
@@ -122,6 +122,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
         while noclipEnabled do
             Wait(0)
             playerPed = PlayerPedId()
+            local x, y, z
             local speed = 0.5
 
             SetEntityVelocity(playerPed, 0.0001, 0.0001, 0.0001)
@@ -132,16 +133,33 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
                 speed = 5.0
             end
 
-            local isForwardPressed = IsControlPressed(0, 32)
-            local isBackwardPressed = IsControlPressed(0, 33)
-
             local isUpKeyPressed = IsControlPressed(0, 172)
-            local isUpDownPressed = IsControlPressed(0, 173)
-            local isUpLeftPressed = IsControlPressed(0, 174)
-            local isUpRightPressed = IsControlPressed(0, 175)
+            local isDownPressed = IsControlPressed(0, 173)
+            local isLeftPressed = IsControlPressed(0, 34) -- A
+            local isRightPressed = IsControlPressed(0, 35) -- D
+            if isUpKeyPressed or isDownPressed or isLeftPressed or isRightPressed then
+                local xOffset, zOffset = 0, 0
 
+                if isUpKeyPressed then
+                    zOffset = 0.1 * speed
+                elseif isDownPressed then
+                    zOffset = -0.1 * speed
+                end
+                if isLeftPressed then
+                    xOffset = -0.5 * speed
+                elseif isRightPressed then
+                    xOffset = 0.5 * speed
+                end
+
+                x, y, z = unpack(GetOffsetFromEntityInWorldCoords(playerPed, xOffset, 0, zOffset))
+            end
+
+            local isForwardPressed = IsControlPressed(0, 32) -- W
+            local isBackwardPressed = IsControlPressed(0, 33) -- S
             if isForwardPressed or isBackwardPressed then
-                local x, y, z = unpack(GetEntityCoords(playerPed, true))
+                if not x or not y or not z then
+                    x, y, z = unpack(GetEntityCoords(playerPed, true))
+                end
                 local dx, dy, dz, camHeading = getCamDirection(playerPed)
 
                 if isForwardPressed then
@@ -154,23 +172,12 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
                     z = z - speed * dz
                 end
                 SetEntityHeading(playerPed, camHeading)
+            end
+
+            if x and y and z then
                 SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
-
-            elseif isUpKeyPressed or isUpDownPressed or isUpLeftPressed or isUpRightPressed then
-                local xOffset, zOffset = 0, 0
-
-                if isUpKeyPressed then
-                    zOffset = 0.1 * speed
-                elseif isUpDownPressed then
-                    zOffset = -0.1 * speed
-                end
-                if isUpLeftPressed then
-                    xOffset = -0.1 * speed
-                elseif isUpRightPressed then
-                    xOffset = 0.1 * speed
-                end
-
-                SetEntityCoordsNoOffset(playerPed, GetOffsetFromEntityInWorldCoords(playerPed, xOffset, 0, zOffset), true, true, true)
+            end
+            if isUpKeyPressed or isDownPressed then
                 SetGameplayCamRelativeHeading(0)
             end
 

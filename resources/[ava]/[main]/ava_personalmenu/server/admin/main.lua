@@ -93,7 +93,7 @@ CreateThread(function()
 
         -- TODO only registered admins that asked about it
         for _, playerSrc in pairs(players) do
-            if IsPlayerAceAllowed(playerSrc, "adminmenu") then
+            if IsPlayerAceAllowed(playerSrc, "ace.group.mod") then
                 TriggerClientEvent("ava_personalmenu:client:playersData", playerSrc, playersData, GetPlayerRoutingBucket(playerSrc))
             end
         end

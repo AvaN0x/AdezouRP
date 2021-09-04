@@ -201,18 +201,20 @@ function PoolPlayerList()
             else
                 local playerData = selectedPlayerData
                 if perms.playerlist["goto"] then
-                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), {IsDisabled = playerData.isMyself}, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("goto " .. playerData.id)
-                        end
-                    end)
+                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), {IsDisabled = playerData.isMyself},
+                        function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("goto " .. playerData.id)
+                            end
+                        end)
                 end
                 if perms.playerlist.bring then
-                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), {IsDisabled = playerData.isMyself}, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("bring " .. playerData.id)
-                        end
-                    end)
+                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), {IsDisabled = playerData.isMyself},
+                        function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("bring " .. playerData.id)
+                            end
+                        end)
                 end
                 if perms.playerlist.kill then
                     Items:AddButton(GetString("player_manage_kill"), GetString("player_manage_kill_subtitle"), nil, function(onSelected)
