@@ -225,7 +225,7 @@ end
 
 ---IsVisible
 ---@param Item fun(Item:Items)
----@param Panel fun(Panel:Panels) / nil
+---@param Panel? fun(Panel:Panels)
 function RageUIMenus:IsVisible(Item, Panel)
 	if (RageUI.Visible(self)) and (UpdateOnscreenKeyboard() ~= 0) and (UpdateOnscreenKeyboard() ~= 3) then
 		RageUI.Banner()
