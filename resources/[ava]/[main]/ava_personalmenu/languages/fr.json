@@ -82,7 +82,7 @@
     "vehicles_repairvehicle_subtitle": "",
     "vehicles_flipvehicle": "Retourner véhicule",
     "vehicles_flipvehicle_subtitle": "Remettre le véhicule sur ses roues",
-    "vehicles_tunevehiclepink": "~p~Custom le véhicule en rose",
+    "vehicles_tunevehiclepink": "<font color='#FF4798'>Custom le véhicule en rose</font>",
     "vehicles_tunevehiclepink_subtitle": "",
     "vehicles_deletevehicle": "~r~Supprimer véhicule",
     "vehicles_deletevehicle_subtitle": "",
