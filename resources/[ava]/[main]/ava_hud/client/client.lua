@@ -105,17 +105,24 @@ end, false)
 
 RegisterKeyMapping("+keyToggleBelt", GetString("seatbelt"), "keyboard", "X")
 
-------------------------------------------------
------------- Change some hud colors ------------
-------------------------------------------------
+----------------------------------------------------------
+------------ Change some hud colors and texts ------------
+----------------------------------------------------------
 Citizen.CreateThread(function()
     ReplaceHudColour(116, 15)
+
+    AddTextEntry("PM_PANE_LEAVE", GetString("PM_PANE_LEAVE"))
+    AddTextEntry("PM_PANE_QUIT", GetString("PM_PANE_QUIT"))
+
+    -- AddTextEntry('FE_THDR_GTAO', "~o~Adezou RôlePlay~s~ | ID: ~o~".. GetPlayerServerId(PlayerId()) .."~s~")
 end)
 
 ----------------------------------------------------
 ------------ Edit some pause menu texts ------------
 ----------------------------------------------------
 local function SetPauseMenuTitle()
+    -- mandatory wait!
+    Wait(0)
     -- Ask for subtitle
     BeginScaleformMovieMethodOnFrontendHeader("SHIFT_CORONA_DESC")
     PushScaleformMovieFunctionParameterBool(true)
@@ -141,7 +148,7 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
 
-        if IsPauseMenuActive() then -- ESC Key
+        if IsPauseMenuActive() then
             if not isPauseMenu then
                 isPauseMenu = true
                 SetPauseMenuTitle()
