@@ -69,8 +69,16 @@ local function SpawnPlayer()
     -- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
 end
 
+RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
+    for k, v in pairs(data) do
+        dprint("Edit local value of ", k)
+        AVA.Player.Data[k] = v
+    end
+end)
+
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     AVA.Player.Data = data
+    dprint("jobs", json.encode(AVA.Player.Data.jobs))
     dprint(AVA.Player.Data.citizenId, json.encode(AVA.Player.Data.character), AVA.Player.Data.position)
     AVA.Player.Loaded = true
     dprint("AVA.Player.Loaded loaded")

@@ -157,6 +157,7 @@ local function loadPlayer(src)
         },
         position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
         skin = aPlayer.skin,
+        jobs = aPlayer.getJobsClientData(),
     })
 end
 

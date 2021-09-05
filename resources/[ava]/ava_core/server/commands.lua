@@ -284,9 +284,6 @@ AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
             TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
 
         else
-            -- we remove unemployed job if the player has it
-            aTargetPlayer.removeJob("unemployed")
-
             if aTargetPlayer.canAddAnotherJob() or aTargetPlayer.hasJob(args[2]) then
                 local jobAdded, finalGrade = aTargetPlayer.addJob(args[2], args[3])
                 return jobAdded and GetString("addjob_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)

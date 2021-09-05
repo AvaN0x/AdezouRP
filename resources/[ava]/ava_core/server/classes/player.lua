@@ -320,16 +320,37 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return self.jobs
     end
 
-    ---Can the player be added another job
-    ---@return boolean canAdd
-    ---@return number "count of job that can be added"
-    self.canAddAnotherJob = function()
-        local playerJobCount<const> = #self.jobs
-        local canAdd<const> = playerJobCount < AVAConfig.MaxJobsCount
-        if canAdd then
-            return canAdd, playerJobCount - AVAConfig.MaxJobsCount
+    ---Get all player jobs with all under grades that the player is ace allowed
+    ---@return table
+    self.getJobsClientData = function()
+        local data = {}
+        local count = 0
+        for i = 1, #self.jobs, 1 do
+            local job<const> = self.jobs[i]
+            local cfgJob<const> = AVAConfig.Jobs[job.name]
+            if cfgJob then
+                local jobData = {name = job.name, grade = job.grade, label = cfgJob.label, underGrades = {}}
+                local countUnderGrades = 0
+                for j = 1, #cfgJob.grades do
+                    local grade = cfgJob.grades[j]
+                    if grade.name == job.grade then
+                        break
+                    else
+                        countUnderGrades = countUnderGrades + 1
+                        jobData.underGrades[countUnderGrades] = grade.name
+                    end
+                end
+                count = count + 1
+                data[count] = jobData
+            end
         end
-        return false
+
+        return data
+    end
+
+    ---Trigger client event with updated jobs data
+    local function updatePlayerLocalJobs()
+        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {jobs = self.getJobsClientData()})
     end
 
     ---Check if a player has a job
@@ -352,6 +373,23 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
+    ---Can the player be added another job
+    ---@return boolean canAdd
+    ---@return number "count of job that can be added"
+    self.canAddAnotherJob = function()
+        local playerJobCount = #self.jobs
+        -- job unemployed do not have to be accounted
+        if self.hasJob("unemployed") then
+            playerJobCount = playerJobCount - 1
+        end
+
+        local canAdd<const> = playerJobCount < AVAConfig.MaxJobsCount
+        if canAdd then
+            return canAdd, playerJobCount - AVAConfig.MaxJobsCount
+        end
+        return false
+    end
+
     ---Add a job to a player if the job exist, if the player already have this job, it will update it's grade
     ---@param jobName string
     ---@param gradeName? string "if not specified it will take the first available grade"
@@ -370,12 +408,26 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
                     job.grade = gradeName
+
+                    updatePlayerLocalJobs()
                     return true, gradeName
                 end
             else
                 if AVA.GradeExistForJob(jobName, gradeName) then
+                    -- we remove unemployed job as it is supposed to stay only if the player has no jobs
+                    if jobName ~= "unemployed" then
+                        local isUnemployed, unemployedJob, unemployedIndex = self.hasJob("unemployed")
+
+                        if isUnemployed then
+                            AVA.RemovePrincipal("player." .. self.src, "job.unemployed." .. unemployedJob.grade)
+                            table.remove(self.jobs, unemployedIndex)
+                        end
+                    end
+
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
                     self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName}
+
+                    updatePlayerLocalJobs()
                     return true, gradeName
                 end
             end
@@ -392,6 +444,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         if hasJob then
             AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
             table.remove(self.jobs, index)
+
+            updatePlayerLocalJobs()
             return true
         end
         return false
