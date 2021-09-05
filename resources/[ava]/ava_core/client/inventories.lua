@@ -6,6 +6,7 @@ local InventoryElements, InventoryTopElements = nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
+InventoryMenu.Display.Glare = true
 InventoryMenu.Closed = function()
     InventoryElements, InventoryTopElements = nil, nil
 end

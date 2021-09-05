@@ -3,6 +3,8 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 MainAdminMenu = RageUI.CreateMenu("", GetString("admin_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
+MainAdminMenu.Display.Glare = true
+
 ---@type adminmenu_perms
 perms = {}
 playersData = {}

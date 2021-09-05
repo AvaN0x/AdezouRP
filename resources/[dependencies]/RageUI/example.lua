@@ -9,6 +9,7 @@ local MainMenu = RageUI.CreateMenu("", "SUBTITLE", 0, 0, "avaui", "avaui_title_a
 MainMenu.Closed = function()
     print("MainMenu closed")
 end
+MainMenu.Display.Glare = true
 
 local SubMenu = RageUI.CreateSubMenu(MainMenu, "", "SubTitle")
 local SubSubMenu = RageUI.CreateSubMenu(SubMenu, "", "SubSubTitle")
@@ -47,7 +48,7 @@ local sliderTest5 = 1
 local sliderTest6 = 1
 function RageUI.PoolMenus:Example()
 	MainMenu:IsVisible(function(Items)
-        
+
         Items:AddSeparator("Separator")
         Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
 
