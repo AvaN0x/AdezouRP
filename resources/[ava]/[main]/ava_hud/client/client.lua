@@ -103,8 +103,18 @@ RegisterCommand("+keyToggleBelt", function()
     end
 end, false)
 
-RegisterKeyMapping("+keyToggleBelt", "Ceinture", "keyboard", "X")
+RegisterKeyMapping("+keyToggleBelt", GetString("seatbelt"), "keyboard", "X")
 
+------------------------------------------------
+------------ Change some hud colors ------------
+------------------------------------------------
+Citizen.CreateThread(function()
+    ReplaceHudColour(116, 15)
+end)
+
+----------------------------------------------------
+------------ Edit some pause menu texts ------------
+----------------------------------------------------
 local function SetPauseMenuTitle()
     -- Ask for subtitle
     BeginScaleformMovieMethodOnFrontendHeader("SHIFT_CORONA_DESC")

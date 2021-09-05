@@ -1,5 +1,12 @@
 {
+    "seatbelt": "Ceinture",
     "hud_details_key": "Détails du HUD",
     "pausemenu_title": "~o~Adezou RôlePlay~s~ | ID: ~o~%s~s~",
-    "pausemenu_subtitle": "~s~Discord : ~o~discord.gg/3Q8dvDT~s~"
+    "pausemenu_subtitle": "~s~Discord : ~o~discord.gg/3Q8dvDT~s~",
+    "rich_presence_asset_text": "AdezouRP - discord.gg/KRTKC6b",
+    "rich_presence_button_one": "FiveM",
+    "rich_presence_button_one_link": "https://cfx.re/join/6lopyd",
+    "rich_presence_button_two": "Discord",
+    "rich_presence_button_two_link": "https://discord.gg/KRTKC6b",
+    "rich_presence_player_count": "%d joueurs"
 }

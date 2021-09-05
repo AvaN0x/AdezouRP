@@ -229,6 +229,7 @@ if AVAConfig.PayCheckTimeout then
                     end
                 end
             end
+            Wait(0)
         end
         print("^4[PAY CHECK] ^0Every paycheck has been delivered.")
         SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)

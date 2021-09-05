@@ -11,7 +11,7 @@ lua54 "yes"
 
 files {"languages/**.json"}
 
-client_scripts {"@ava_core/shared/language.lua", "client/client.lua"}
+client_scripts {"@ava_core/shared/language.lua", "client/client.lua", "client/discord.lua"}
 
 server_scripts {"server/server.lua"}
 
