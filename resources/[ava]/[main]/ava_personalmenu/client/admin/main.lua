@@ -115,11 +115,23 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
             {control = GetControlGroupInstructionalButton(2, 4, 0), label = GetString("admin_menu_noclip_up_down")},
         })
         local playerPed = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(playerPed, false)
+        if GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
+            vehicle = 0
+        end
 
+        if vehicle ~= 0 then
+            FreezeEntityPosition(vehicle, true)
+            SetEntityVisible(vehicle, false, false)
+            SetEntityLocallyVisible(vehicle)
+        end
         FreezeEntityPosition(playerPed, true)
         SetEntityVisible(playerPed, false, false)
         SetLocalPlayerVisibleLocally(true)
-        ClearPedTasksImmediately(playerPed)
+
+        if vehicle == 0 then
+            ClearPedTasksImmediately(playerPed)
+        end
 
         while noclipEnabled do
             Wait(0)
@@ -127,6 +139,20 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
             local x, y, z
             local speed = 0.5
 
+            if vehicle ~= 0 then
+                DisableControlAction(0, 66, true) -- INPUT_VEH_GUN_LR
+                DisableControlAction(0, 67, true) -- INPUT_VEH_GUN_UD
+                DisableControlAction(0, 68, true) -- INPUT_VEH_AIM
+                DisableControlAction(0, 69, true) -- INPUT_VEH_ATTACK
+                DisableControlAction(0, 70, true) -- INPUT_VEH_ATTACK2
+                DisableControlAction(0, 75, true) -- INPUT_VEH_EXIT	
+                DisableControlAction(0, 105, true) -- INPUT_VEH_DROP_PROJECTILE	
+                DisableControlAction(0, 114, true) -- INPUT_VEH_FLY_ATTACK	
+
+                SetEntityVelocity(vehicle, 0.0001, 0.0001, 0.0001)
+                SetEntityLocallyVisible(vehicle)
+                SetEntityAlpha(vehicle, 100, false)
+            end
             SetEntityVelocity(playerPed, 0.0001, 0.0001, 0.0001)
             SetLocalPlayerVisibleLocally(true)
             SetEntityAlpha(playerPed, 100, false)
@@ -153,14 +179,14 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
                     xOffset = 0.5 * speed
                 end
 
-                x, y, z = unpack(GetOffsetFromEntityInWorldCoords(playerPed, xOffset, 0, zOffset))
+                x, y, z = unpack(GetOffsetFromEntityInWorldCoords(vehicle ~= 0 and vehicle or playerPed, xOffset, 0, zOffset))
             end
 
             local isForwardPressed = IsControlPressed(0, 32) -- W
             local isBackwardPressed = IsControlPressed(0, 33) -- S
             if isForwardPressed or isBackwardPressed then
                 if not x or not y or not z then
-                    x, y, z = unpack(GetEntityCoords(playerPed, true))
+                    x, y, z = unpack(GetEntityCoords(vehicle ~= 0 and vehicle or playerPed, true))
                 end
                 local dx, dy, dz, camHeading = getCamDirection(playerPed)
 
@@ -173,11 +199,11 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
                     y = y - speed * dy
                     z = z - speed * dz
                 end
-                SetEntityHeading(playerPed, camHeading)
+                SetEntityHeading(vehicle ~= 0 and vehicle or playerPed, camHeading)
             end
 
             if x and y and z then
-                SetEntityCoordsNoOffset(playerPed, x, y, z, true, true, true)
+                SetEntityCoordsNoOffset(vehicle ~= 0 and vehicle or playerPed, x, y, z, true, true, true)
             end
             if isUpKeyPressed or isDownPressed then
                 SetGameplayCamRelativeHeading(0)
@@ -190,6 +216,13 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
             end
         end
 
+        Wait(0)
+        if vehicle ~= 0 then
+            FreezeEntityPosition(vehicle, false)
+            SetEntityVisible(vehicle, true, false)
+            SetEntityLocallyVisible(vehicle)
+            ResetEntityAlpha(vehicle)
+        end
         FreezeEntityPosition(playerPed, false)
         SetEntityVisible(playerPed, true, false)
         SetLocalPlayerVisibleLocally(true)
