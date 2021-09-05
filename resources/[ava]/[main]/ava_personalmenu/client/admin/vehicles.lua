@@ -14,6 +14,7 @@ function PoolVehicles()
                         local result = AVA.KeyboardInput(GetString("vehicles_spawnvehicle_input"), vehiclename_lastinput or "", 20)
                         if result and result ~= "" then
                             vehiclename_lastinput = result
+                            exports.ava_hud:copyToClipboard(result)
                             ExecuteCommand("spawnvehicle " .. result)
                         end
                     end

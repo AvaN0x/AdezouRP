@@ -6,6 +6,8 @@ author "github.com/NewWayRP and github.com/AvaN0x"
 description "new_banking edited by AvaN0x for ava_core"
 -- https://github.com/NewWayRP/new_banking
 
+lua54 "yes"
+
 server_script "@mysql-async/lib/MySQL.lua"
 server_script "server.lua"
 

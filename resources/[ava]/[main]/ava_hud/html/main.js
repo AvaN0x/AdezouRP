@@ -1,28 +1,31 @@
 ﻿
 $(function () {
-    $("#job2").hide();
-    $("#gang").hide();
     $('.mainStats').hide();
     window.addEventListener('message', function (event) {
-        if (event.data.action == "setValue") {
-            if (event.data.key == "job") {
-                setJobIcon(event.data.name)
-            } else if (event.data.key == "job2") {
-                setJob2Icon(event.data.name);
-                if (event.data.name == "unemployed2")
-                    $("#job2").hide();
-                else
-                    $("#job2").show();
-            } else if (event.data.key == "gang") {
-                if (event.data.value != null) {
-                    setGangIcon(event.data.name);
-                    $("#gang").show();
-                } else
-                    $("#gang").hide();
+        if (event.data.action == "setJobs") {
+            $('#jobs').empty();
+            if (event.data.jobs.length > 0) {
+                for (const job of event.data.jobs) {
+                    $('#jobs').append(`
+                        <div class="stat">
+                            <img src="img/jobs/${job.name}.png"><span>${job.label} - ${job.gradeLabel}</span>
+                        </div>
+                    `);
+                }
+            } else {
+                $('#jobs').append(`
+                    <div class="stat">
+                        <span>Sans emploi</span>
+                    </div>
+                `);
             }
-            setValue(event.data.key, event.data.value);
-        } else if (event.data.action == "updateStatus") {
-            updateStatus(event.data.status);
+
+            if ($('#jobs').is(":hidden")) {
+                $('#jobs').fadeIn(500).fadeOut(2000);
+            }
+
+            // } else if (event.data.action == "updateStatus") {
+            //     updateStatus(event.data.status);
         } else if (event.data.action == "itemNotification") {
             let elem = $('<div>' + (event.data.add ? '+' : '-') + event.data.count + ' ' + event.data.label + '</div>');
             $('#inventoryNotifications').append(elem);
@@ -30,21 +33,15 @@ $(function () {
             $(elem).delay(3000).fadeOut(1000, () => {
                 elem.remove();
             })
+        } else if (event.data.action == "isBigmapOn") {
+            $('#playerStats')[event.data.toggle ? "addClass" : "removeClass"]("bigMap");
+
         } else if (event.data.action == "toggle") {
-            if (event.data.show)
-                $('#ui').show();
-            else
-                $('#ui').hide();
+            $('#ui')[event.data.show ? "show" : "hide"]();
         } else if (event.data.action == "togglePlayerStats") {
-            if (event.data.show)
-                $('#playerStats').show();
-            else
-                $('#playerStats').hide();
+            $('#playerStats')[event.data.show ? "show" : "hide"]();
         } else if (event.data.action == "toggleMainStats") {
-            if (event.data.show)
-                $('.mainStats').show();
-            else
-                $('.mainStats').hide();
+            $('.mainStats')[event.data.show ? "show" : "hide"]();
         } else if (event.data.action == "showcarhud") {
             if (event.data.showhud) {
                 $('.huds').fadeIn();
@@ -78,26 +75,6 @@ $(function () {
 });
 
 
-
-function setValue(key, value) {
-    $('#' + key + ' span').html(value);
-    if ($('.mainStats').is(":hidden"))
-        $('.mainStats').fadeIn(500).fadeOut(2000);
-
-}
-
-function setJobIcon(value) {
-    $('#job img').attr('src', 'img/jobs/' + value + '.png')
-}
-
-function setJob2Icon(value) {
-    $('#job2 img').attr('src', 'img/jobs/' + value + '.png')
-}
-
-function setGangIcon(value) {
-    $('#gang img').attr('src', 'img/gangs/' + value + '.png')
-}
-
 function updateStatus(status) {
     var hunger = status[0]
     var thirst = status[1]
@@ -124,7 +101,6 @@ function updateStatus(status) {
     } else {
         $('#injured').hide();
     }
-
 }
 
 

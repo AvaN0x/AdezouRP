@@ -334,6 +334,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                 for j = 1, #cfgJob.grades do
                     local grade = cfgJob.grades[j]
                     if grade.name == job.grade then
+                        jobData.gradeLabel = grade.label
                         break
                     else
                         countUnderGrades = countUnderGrades + 1

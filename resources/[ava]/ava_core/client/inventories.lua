@@ -228,8 +228,6 @@ RegisterKeyMapping("+keyInventory", GetString("inventory"), "keyboard", AVAConfi
 
 local editItem_timelastReload, editItem_waitingToReload = -1, false
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    AVA.ShowNotification(("%s%d %s"):format(isAddition and "+" or "-", editedQuantity, itemLabel))
-
     if not editItem_waitingToReload and InventoryElements and InventoryTopElements and RageUI.Visible(InventoryMenu) then
         -- prevent spamming the server for data
         -- this will do it with at least 500ms between each calls
