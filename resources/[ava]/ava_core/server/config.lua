@@ -21,6 +21,10 @@ AVAConfig.MaxJobsCount = 2
 -- remove to disable auto saves
 AVAConfig.SaveTimeout = 10
 
+-- time between each paychecks (in minutes)
+-- remove to disable auto saves
+AVAConfig.PayCheckTimeout = 48
+
 AVAConfig.InventoryMaxWeight = 75000
 
 AVAConfig.DefaultPlayerData = {

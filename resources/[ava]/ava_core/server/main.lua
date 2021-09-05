@@ -186,3 +186,52 @@ for jobName, job in pairs(AVAConfig.Jobs) do
 end
 dprint("^6[JOBS] Ended initializing principals for each jobs^0")
 
+-----------------------------------------
+--------------- Paychecks ---------------
+-----------------------------------------
+
+if AVAConfig.PayCheckTimeout then
+    local function timeoutPayCheck()
+        for src, aPlayer in pairs(AVA.Players.List) do
+            if type(aPlayer.jobs) == "table" then
+                for i = 1, #aPlayer.jobs do
+                    local job<const> = aPlayer.jobs[i]
+                    local cfgJob<const> = AVAConfig.Jobs[job.name]
+                    if cfgJob then
+                        local salary, notificationSubtitle = -1, ""
+                        for j = 1, #cfgJob.grades do
+                            local grade<const> = cfgJob.grades[j]
+                            if grade.name == job.grade then
+                                salary = grade.salary
+                                notificationSubtitle = (cfgJob.label or "") .. " - " .. (grade.label or "")
+                                break
+                            end
+                        end
+                        if salary ~= -1 then
+                            if job.grade == "tempworker" or job.name == "unemployed" then
+                                -- player is employed by job center and need to be paid by them
+                                aPlayer.addAccountBalance("bank", salary)
+                                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("received_job_center", salary), nil, "CHAR_BANK_MAZE",
+                                    GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
+                            else
+                                -- TODO check if society has money
+                                if true then
+                                    -- TODO take money from society
+                                    aPlayer.addAccountBalance("bank", salary)
+                                    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("received_salary", salary), nil, "CHAR_BANK_MAZE",
+                                        GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
+                                else
+                                    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("society_not_enough_money"), nil, "CHAR_BANK_MAZE",
+                                        GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        print("^4[PAY CHECK] ^0Every paycheck has been delivered.")
+        SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)
+    end
+    SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)
+end

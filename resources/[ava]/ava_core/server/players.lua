@@ -640,6 +640,7 @@ exports("SaveAllPlayers", AVA.Players.SaveAll)
 AVA.Commands.RegisterCommand("saveplayers", "superadmin", function(source, args, rawCommand)
     AVA.Players.SaveAll()
 end)
+
 -----------------------------------------
 --------------- Auto save ---------------
 -----------------------------------------

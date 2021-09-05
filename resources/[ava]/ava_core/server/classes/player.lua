@@ -332,7 +332,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                 local jobData = {name = job.name, grade = job.grade, label = cfgJob.label, underGrades = {}}
                 local countUnderGrades = 0
                 for j = 1, #cfgJob.grades do
-                    local grade = cfgJob.grades[j]
+                    local grade<const> = cfgJob.grades[j]
                     if grade.name == job.grade then
                         jobData.gradeLabel = grade.label
                         break
