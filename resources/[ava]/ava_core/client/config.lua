@@ -14,3 +14,6 @@ AVAConfig.InventoryMoneyOnTop = true
 AVAConfig.ClearMissionrowPD = true
 
 AVAConfig.EnablePVP = true
+
+---Prevent player from falling at loading
+AVAConfig.PreventPlayerFromFalling = true

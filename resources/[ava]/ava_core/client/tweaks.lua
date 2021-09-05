@@ -110,3 +110,20 @@ if AVAConfig.ClearMissionrowPD then
         end
     end)
 end
+
+---------------------------------------
+-------- CAN'T FALL AT LOADING --------
+---------------------------------------
+if AVAConfig.PreventPlayerFromFalling then
+    Citizen.CreateThread(function()
+        local playerPed = PlayerPedId()
+
+        dprint("Freeze player, waiting for collisions to load")
+        FreezeEntityPosition(playerPed, true)
+        while not HasCollisionLoadedAroundEntity(playerPed) do
+            Wait(10)
+        end
+        FreezeEntityPosition(playerPed, false)
+        dprint("Unfreeze player, collisions loaded around player")
+    end)
+end
