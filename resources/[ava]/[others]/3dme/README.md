@@ -1,40 +1,43 @@
-# 3D /me
-The /me command but it draws it in 3D (and it has log).
+# 3dme
+3dme made for OneSync with pma-voice proximity support
 
-<img src=https://imgur.com/vexru3M.png>
-<img src=https://imgur.com/k8z57Ws.png>
+## Support
 
-## Installation
-* Download the resource ;
-* Drag and drop it in your resources folder ;
-* Add ```start 3dme``` to you ```server.cfg```.
+Please report any issues you have in the GitHub [Issues](https://github.com/AvarianKnight/3dme/issues)
 
-## How to use
-* In the chat type /me followed by your action.
+# Compatibility Notice:
 
-## Options 
-* Color of the text : ```client.lua``` line 2 : ```local color = {r = 37, g = 175, b = 134, alpha = 255}```
-* Font of the text : ```client.lua``` line 3 : ```local font = 0``` Available fonts : https://imgur.com/a/oV3ciWs
-* Time on screen : ```client.lua``` line 4 : ```local time = 500```
-* Enable or disable the dropshadow : ```client.lua``` line 10 : ```local dropShadow = true```
-* Enable or disable the log : ```server.lua``` line 1 : ```local logEnabled = true```
-* Enable or disable chat messages : ```client.lua``` line 9 : ```local chatMessage = false```
-* Background : ```client.lua``` line 5-8 : ```local chatMessage = false```
+This script is only compatible with OneSync Infinity
 
-## Updates
-#### V1.1
-* The text display an exact amount of time (thanks to @SaltyGrandpa) ;
-* Added "the person" at the beginning of the text (```Line 16``` if you want to change the language) ;
-* Using /me multiple times doesn't make it unreadable.
-#### V1.2
-* Bugs fixes ;
-* Changed the native color and removed the shadow and the outline (you can still reactivate it) ;
-* Now draw when you are close to the person (50 m).
-#### V1.3
-* Now send a chat message to the people close to the person ;
-* Can now draw a background to the text ;
-* Added the options to draw a dropshadow.
+# Config
 
-## Note
-* This may not work if are you using a custom chat resource.
-* This could conflict with other /me scripts (just disable them).
+All of the config is done via ConVars in order to streamline the process.
+
+The ints are used like a boolean to 0 would be false, 1 true.
+
+| ConVar                  | Default | Description                                | Parameter(s) |
+|-------------------------|---------|--------------------------------------------|--------------|
+| 3dme_cooldown           | 1500    | The default /me cooldown                   | int          |
+| 3dme_enableProximity    | 0       | Enables proximity support for pma-voice    | int          |
+| 3dme_maxRange           | 25      | The max range for /me to travel            | int          |
+| 3dme_showChatMessage    | 1       | Enabled showing /me into chat              | int          |
+| 3dme_useGamertags       | 1       | Uses the players gamer tag to show the text above their head (improves performance but breaks anything else that uses gamer tags) | int          |
+
+
+#### Server
+
+##### Export Adders
+
+| Export               | Description                            | Parameter(s) |
+|----------------------|----------------------------------------|--------------|
+| addBlockedWord       | Adds blocked words to the filter       | array        |
+| removeBlockedWord    | Removes a blocked word from the filter | string       |
+
+##### Emitters
+
+| Emitter                 | Description                                        | Arguments(s) |
+|-------------------------|----------------------------------------------------|--------------|
+| 3dme:voiceRangeExploit  | Sent when someone tried using range above maxRange | source       |
+| 3dme:sent3dme           | Emits to the server the player & message, useful for logging | source, message |
+| 3dme:blacklistedWord    | Emits when someone uses a blacklisted word         | source, message |
+
