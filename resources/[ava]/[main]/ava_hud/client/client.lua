@@ -69,7 +69,7 @@ local lastToggleMainStats = 0
 local toggleMainStatsKeyPressed = false
 RegisterCommand("+keyToggleMainStats", function()
     toggleMainStatsKeyPressed = true
-    Wait(150)
+    Wait(100)
     -- only show if the key has been pressed for more than 150ms
     if toggleMainStatsKeyPressed then
         SendNUIMessage({action = "toggleMainStats", show = true})
@@ -85,6 +85,7 @@ RegisterCommand("-keyToggleMainStats", function()
         SendNUIMessage({action = "isBigmapOn", toggle = isBigmapOn})
     end
     lastToggleMainStats = timer
+    Wait(300)
     SendNUIMessage({action = "toggleMainStats", show = false})
 end, false)
 
