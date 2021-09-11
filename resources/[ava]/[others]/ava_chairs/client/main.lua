@@ -2,32 +2,31 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
 local chair = nil
 local isSitting = false
 local IsDead = false
 local oldCoords = nil
 
 Citizen.CreateThread(function()
-	while true do
-		Wait(1000)
+    while true do
+        Wait(1000)
         chair = getChair()
-	end
+    end
 end)
 
 Citizen.CreateThread(function()
-	while true do
+    while true do
         Wait(0)
         if not IsDead then
             if chair and not isSitting then
-                DrawText3D(chair.x, chair.y, chair.z, _U("sit_down"))
+                DrawText3D(chair.x, chair.y, chair.z, GetString("sit_down"))
 
                 if IsControlJustPressed(0, Config.Key) then
                     -- Animation(Config.Anims[chair.type])
-                    TriggerServerEvent("esx_ava_chairs:sitDown", chair)
+                    TriggerServerEvent("ava_chairs:sitDown", chair)
                 end
             elseif chair and isSitting then
-                DrawText3D(chair.x, chair.y, chair.z, _U("stand_up"))
+                DrawText3D(chair.x, chair.y, chair.z, GetString("stand_up"))
 
                 if IsControlJustPressed(0, Config.Key) then
                     StandUp()
@@ -37,22 +36,20 @@ Citizen.CreateThread(function()
     end
 end)
 
-
 function getChair()
-	local playerPed = PlayerPedId()
-	local coords = GetEntityCoords(playerPed)
-	for _,v in ipairs(Config.Props) do
-		local closestProp = GetClosestObjectOfType(coords, 0.7, v.hash, false, false, false)
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed)
+    for _, v in ipairs(Config.Props) do
+        local closestProp = GetClosestObjectOfType(coords, 0.7, v.hash, false, false, false)
 
-		if DoesEntityExist(closestProp) then
-			local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
+        if DoesEntityExist(closestProp) then
+            local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
 
-			return {x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type}
-		end
-	end
-	return nil
+            return {x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type}
+        end
+    end
+    return nil
 end
-
 
 function DrawText3D(x, y, z, text)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
@@ -71,8 +68,8 @@ function DrawText3D(x, y, z, text)
     end
 end
 
-RegisterNetEvent('esx_ava_chairs:sitDown')
-AddEventHandler('esx_ava_chairs:sitDown', function()
+RegisterNetEvent("ava_chairs:sitDown")
+AddEventHandler("ava_chairs:sitDown", function()
     Animation()
 end)
 
@@ -101,7 +98,7 @@ function Animation()
 end
 
 function StandUp()
-    TriggerServerEvent("esx_ava_chairs:standUp", chair)
+    TriggerServerEvent("ava_chairs:standUp", chair)
     isSitting = false
     local playerPed = PlayerPedId()
 
@@ -110,13 +107,15 @@ function StandUp()
     SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z - 0.98)
 end
 
-AddEventHandler("esx:onPlayerDeath", function()
+local playerDied = function()
     if isSitting then
         StandUp()
     end
-	IsDead = true
-end)
+    IsDead = true
+end
+AddEventHandler("baseevents:onPlayerDied", playerDied)
+AddEventHandler("baseevents:onPlayerKilled", playerDied)
 
 AddEventHandler("playerSpawned", function(spawn)
-	IsDead = false
+    IsDead = false
 end)
