@@ -412,7 +412,6 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         end
 
         local canAdd<const> = playerGangCount < AVAConfig.MaxGangsCount
-        dprint(canAdd, playerGangCount, AVAConfig.MaxGangsCount)
         if canAdd then
             return canAdd, playerGangCount - AVAConfig.MaxGangsCount
         end

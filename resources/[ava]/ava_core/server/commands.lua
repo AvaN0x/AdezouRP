@@ -8,7 +8,7 @@ AVA.Commands.SuggestionList = {}
 ---Register a command using ace permissions to a group
 ---@param name string|table
 ---@param group string|nil
----@param callback fun(source: any, args: table, rawCommand: string) this can return a string that will be added to the discord log
+---@param callback fun(source: any, args: table, rawCommand: string) "this can return a string that will be added to the discord log"
 ---@param help string
 ---@param params table {name: string, help: string}
 AVA.Commands.RegisterCommand = function(name, group, callback, help, params)

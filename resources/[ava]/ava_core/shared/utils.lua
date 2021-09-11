@@ -18,8 +18,9 @@ exports("Trim", AVA.Utils.Trim)
 ---@return boolean
 AVA.Utils.TableHasValue = function(table, val)
     if table then
-        for k, v in ipairs(table) do
-            if v == val then
+        for i = 1, #table do
+            local element = table[i]
+            if element == val then
                 return true
             end
         end
@@ -27,6 +28,23 @@ AVA.Utils.TableHasValue = function(table, val)
     return false
 end
 exports("TableHasValue", AVA.Utils.TableHasValue)
+
+---Check if a given table has a condition
+---@param table table
+---@param condition fun(i: index, element: any)
+---@return boolean
+AVA.Utils.TableHasCondition = function(table, condition)
+    if type(table) == "table" and condition then
+        for i = 1, #table do
+            local element = table[i]
+            if condition(i, element) then
+                return true
+            end
+        end
+    end
+    return false
+end
+exports("TableHasCondition", AVA.Utils.TableHasCondition)
 
 ---Format a number from "123456789" to "123 456 789"
 ---@param number any

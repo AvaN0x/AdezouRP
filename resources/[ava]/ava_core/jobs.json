@@ -9,6 +9,16 @@
             }
         ]
     },
+    "nightclub": {
+        "label": "Chômage",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Chômeur",
+                "salary": 20
+            }
+        ]
+    },
     "mechanic": {
         "label": "Mécanicien",
         "grades": [
@@ -130,6 +140,24 @@
             {
                 "name": "og",
                 "label": "OG"
+            }
+        ]
+    },
+    "biker_lost": {
+        "isGang": true,
+        "label": "Lost",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "president",
+                "label": "Président"
             }
         ]
     }
