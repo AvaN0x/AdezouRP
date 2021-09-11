@@ -329,7 +329,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             local job<const> = self.jobs[i]
             local cfgJob<const> = AVAConfig.Jobs[job.name]
             if cfgJob then
-                local jobData = {name = job.name, grade = job.grade, label = cfgJob.label, underGrades = {}}
+                local jobData = {name = job.name, grade = job.grade, label = cfgJob.label, isGang = job.isGang, underGrades = {}}
                 local countUnderGrades = 0
                 for j = 1, #cfgJob.grades do
                     local grade<const> = cfgJob.grades[j]
@@ -376,17 +376,45 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     ---Can the player be added another job
     ---@return boolean canAdd
-    ---@return number "count of job that can be added"
+    ---@return number "count of jobs that can be added"
     self.canAddAnotherJob = function()
-        local playerJobCount = #self.jobs
-        -- job unemployed do not have to be accounted
-        if self.hasJob("unemployed") then
-            playerJobCount = playerJobCount - 1
+        -- local playerJobCount = #self.jobs
+        -- if self.hasJob("unemployed") then
+        --     playerJobCount = playerJobCount - 1
+        -- end
+
+        local playerJobCount = 0
+
+        for i = 1, #self.jobs, 1 do
+            -- job unemployed do not have to be accounted
+            if not self.jobs[i].isGang and self.jobs[i].name ~= "unemployed" then
+                playerJobCount = playerJobCount + 1
+            end
         end
 
         local canAdd<const> = playerJobCount < AVAConfig.MaxJobsCount
         if canAdd then
             return canAdd, playerJobCount - AVAConfig.MaxJobsCount
+        end
+        return false
+    end
+
+    ---Can the player be added another gang
+    ---@return boolean canAdd
+    ---@return number "count of gangs that can be added"
+    self.canAddAnotherGang = function()
+        local playerGangCount = 0
+
+        for i = 1, #self.jobs, 1 do
+            if self.jobs[i].isGang then
+                playerGangCount = playerGangCount + 1
+            end
+        end
+
+        local canAdd<const> = playerGangCount < AVAConfig.MaxGangsCount
+        dprint(canAdd, playerGangCount, AVAConfig.MaxGangsCount)
+        if canAdd then
+            return canAdd, playerGangCount - AVAConfig.MaxGangsCount
         end
         return false
     end
@@ -426,7 +454,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     end
 
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
-                    self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName}
+                    self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName, isGang = cfgJob.isGang}
 
                     updatePlayerLocalJobs()
                     return true, gradeName

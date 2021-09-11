@@ -36,6 +36,14 @@ for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
         else
             print("^3[WARN] max_jobs_count was not valid, value must be a number > 0^0")
         end
+
+    elseif dataName == "max_gangs_count" then
+        local value = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1)) or 0
+        if value ~= "null" and tonumber(value) > 0 then
+            AVAConfig.MaxGangsCount = tonumber(value)
+        else
+            print("^3[WARN] max_gangs_count was not valid, value must be a number > 0^0")
+        end
     end
 end
 

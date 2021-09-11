@@ -4,11 +4,13 @@ $(function () {
     window.addEventListener('message', function (event) {
         if (event.data.action == "setJobs") {
             $('#jobs').empty();
+            $('#gangs').empty();
             if (event.data.jobs.length > 0) {
                 for (const job of event.data.jobs) {
-                    $('#jobs').append(`
+                    const target = job.isGang ? "gangs" : "jobs";
+                    $(`#${target}`).append(`
                         <div class="stat">
-                            <img src="img/jobs/${job.name}.png"><span>${job.label} - ${job.gradeLabel}</span>
+                            <img src="img/${target}/${job.name}.png"><span>${job.label} - ${job.gradeLabel}</span>
                         </div>
                     `);
                 }
@@ -20,8 +22,8 @@ $(function () {
                 `);
             }
 
-            if ($('#jobs').is(":hidden")) {
-                $('#jobs').fadeIn(500).fadeOut(2000);
+            if ($('.mainStats').is(":hidden")) {
+                $('.mainStats').fadeIn(500).fadeOut(2000);
             }
 
             // } else if (event.data.action == "updateStatus") {

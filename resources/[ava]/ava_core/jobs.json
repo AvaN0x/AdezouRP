@@ -9,6 +9,26 @@
             }
         ]
     },
+    "mechanic": {
+        "label": "Mécanicien",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200
+            }
+        ]
+    },
     "winemaker": {
         "label": "Vigneron",
         "grades": [
@@ -56,6 +76,60 @@
                 "name": "boss",
                 "label": "Patron",
                 "salary": 200
+            }
+        ]
+    },
+    "gang_vagos": {
+        "isGang": true,
+        "label": "Vagos",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG"
+            }
+        ]
+    },
+    "gang_families": {
+        "isGang": true,
+        "label": "Families",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG"
+            }
+        ]
+    },
+    "gang_ballas": {
+        "isGang": true,
+        "label": "Ballas",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG"
             }
         ]
     }

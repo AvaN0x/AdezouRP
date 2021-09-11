@@ -16,6 +16,8 @@ AVAConfig.MaxChars = 5
 
 -- edit 'max_jobs_count' in fxmanifest.lua, value must be > 0
 AVAConfig.MaxJobsCount = 1
+-- edit 'max_gangs_count' in fxmanifest.lua, value must be > 0
+AVAConfig.MaxGangsCount = 1
 
 -- time between each save all players (in minutes)
 -- remove to disable auto saves

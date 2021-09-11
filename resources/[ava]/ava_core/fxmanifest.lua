@@ -63,6 +63,7 @@ ava_config "debug_prints" "yes"
 ava_config "max_characters" "5"
 
 ava_config "max_jobs_count" "2"
+ava_config "max_gangs_count" "2"
 
 ava_config "discord_config" {
     GuildId = "743525702157992018",

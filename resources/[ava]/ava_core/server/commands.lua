@@ -280,7 +280,7 @@ AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
-        if not cfgJob then
+        if not cfgJob or cfgJob.isGang then
             TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
 
         else
@@ -307,7 +307,7 @@ AVA.Commands.RegisterCommand("removejob", "admin", function(source, args)
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
-        if not cfgJob then
+        if not cfgJob or cfgJob.isGang then
             TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
         else
             local jobRemoved = aTargetPlayer.removeJob(args[2])
@@ -315,6 +315,50 @@ AVA.Commands.RegisterCommand("removejob", "admin", function(source, args)
         end
     end
 end, GetString("removejob_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "job", help = GetString("job_name")}})
+
+AVA.Commands.RegisterCommand("addgang", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        local cfgJob = AVAConfig.Jobs[args[2]]
+        if not cfgJob or not cfgJob.isGang then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_do_not_exist")}})
+
+        else
+            if aTargetPlayer.canAddAnotherGang() or aTargetPlayer.hasJob(args[2]) then
+                local jobAdded, finalGrade = aTargetPlayer.addJob(args[2], args[3])
+                return jobAdded and GetString("addgang_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)
+            else
+                TriggerClientEvent("chat:addMessage", source,
+                    {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_player_cannot_have_more_gangs")}})
+            end
+        end
+    end
+end, GetString("addgang_help"), {
+    {name = "player", help = GetString("player_id_or_zero")},
+    {name = "gang", help = GetString("gang_name")},
+    {name = "grade?", help = GetString("gang_grade_name")},
+})
+
+AVA.Commands.RegisterCommand("removegang", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        local cfgJob = AVAConfig.Jobs[args[2]]
+        if not cfgJob or not cfgJob.isGang then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_do_not_exist")}})
+        else
+            local jobRemoved = aTargetPlayer.removeJob(args[2])
+            return jobRemoved and GetString("removegang_log", aTargetPlayer.getDiscordTag(), args[2])
+        end
+    end
+end, GetString("removegang_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "gang", help = GetString("gang_name")}})
 
 -----------------------------------------
 --------------- Inventory ---------------
