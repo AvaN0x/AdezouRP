@@ -1,5 +1,7 @@
 # ava_core resource
 
+⚠ **The file `lua_intellisense.lua` is completely useless for this script, I only use it for lua intellisense with exports**
+
 ## Permissions
 
 All permissions are made thanks to the FiveM ace/principals system and roles of player on a said discord. For it to work you will need a canvar (`avan0x_bot_token`) with your bot token
