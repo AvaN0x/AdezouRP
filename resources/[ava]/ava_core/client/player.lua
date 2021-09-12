@@ -218,7 +218,7 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
             table.insert(playerChars, {
                 label = ("%s %s"):format(char.character.firstname, char.character.lastname),
                 id = char.id,
-                disabled = char.last_played,
+                disabled = char.last_played == 1,
                 subtitle = GetString("select_char_menu_subtitle", tostring(char.id),
                     char.last_played and GetString("select_char_menu_subtitle_actual_char") or ""),
                 RightBadge = function()

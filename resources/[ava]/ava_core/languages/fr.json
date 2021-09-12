@@ -96,6 +96,7 @@
     "connecting_discord_found": "Ton ID discord a été trouvé...",
     "connecting_you_are_banned": "Vous avez été banni de ce serveur : %s\n(Si vous pensez que c'est une erreur, veuillez créer un ticket sur le discord)",
     "no_reason_given": "Aucune raison n'a été stipulée",
+    "ban_help": "Bannir un joueur",
     "you_got_banned": "Tu as été banni : %s\n(Si vous pensez que c'est une erreur, veuillez créer un ticket sur le discord)",
     "you_got_banned_by": "Tu as été banni par %s : %s\n(Si vous pensez que c'est une erreur, veuillez créer un ticket sur le discord)",
     "player_got_banned": "<@%s> (`%s`) a été banni.\nRaison : %s",

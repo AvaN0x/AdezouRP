@@ -40,8 +40,6 @@ client_scripts {
 }
 
 server_scripts {
-    "@mysql-async/lib/MySQL.lua",
-
     "server/config.lua",
     "server/main.lua",
     "server/callbacks.lua",
@@ -55,7 +53,7 @@ server_scripts {
     "server/inventories.lua",
 }
 
-dependencies {"mysql-async", "RageUI"}
+dependencies {"RageUI"}
 
 -- comment this line to disable debug prints
 ava_config "debug_prints" "yes"

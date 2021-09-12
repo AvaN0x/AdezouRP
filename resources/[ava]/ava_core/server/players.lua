@@ -132,9 +132,8 @@ local function retrievePlayerData(id)
         print("^1An error occured, player id is not valid : ^0", id)
         return
     end
-    local players = MySQL.Sync.fetchAll(
-        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `metadata` FROM `players` WHERE `id` = @id",
-        {["@id"] = id})
+    local players = exports.oxmysql:fetchSync(
+        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `metadata` FROM `players` WHERE `id` = :id", {id = id})
     return players[1]
 end
 
@@ -237,22 +236,21 @@ local function setupPlayer(src, oldSource)
         end
 
         -- check if the player already exist on database, we get the most last played and most recent found
-        local citizenId = MySQL.Sync.fetchScalar(
-            "SELECT id FROM `players` WHERE `license` = @license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", {["@license"] = license})
+        local citizenId = exports.oxmysql:scalarSync(
+            "SELECT id FROM `players` WHERE `license` = :license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", {license = license})
         if citizenId then
             -- we found a character, so we update its discord and name
             -- we also edit the last_played value of all other characters this player have
-            MySQL.Sync.execute(
-                "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` <> @id AND `last_played` <> 0;",
-                {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName, ["@id"] = citizenId})
+            exports.oxmysql:executeSync(
+                "UPDATE `players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
+                {license = license, discord = discord, name = playerName, id = citizenId})
             -- we edit the last_played value of all other characters this player have
-            -- MySQL.Sync.execute('UPDATE `players` SET `last_played` = 0 WHERE `id` <> @id AND `last_played` <> 0', {
-            --     ['@id'] = citizenId
-            -- })
+            exports.oxmysql:executeSync("UPDATE `players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
+                {license = license, id = citizenId})
         else
             -- we haven't found a character, so we create a new one
-            citizenId = MySQL.Sync.insert("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
-                {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName})
+            citizenId = exports.oxmysql:insertSync("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
+                {license = license, discord = discord, name = playerName})
         end
 
         -- add principal to the user
@@ -321,10 +319,9 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         aPlayer.metadata = json.decode(json.encode(AVAConfig.DefaultPlayerData.metadata)) or {}
 
         dprint(json.encode(aPlayer.character, {indent = true}))
-        MySQL.Async.execute("UPDATE `players` SET `character` = @character WHERE `license` = @license AND `id` = @id",
-            {["@character"] = json.encode(aPlayer.character), ["@license"] = aPlayer.identifiers.license, ["@id"] = aPlayer.citizenId}, function(result)
-                print("^2[SAVE CHARACTER] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
-            end)
+        exports.oxmysql:executeSync("UPDATE `players` SET `character` = :character WHERE `license` = :license AND `id` = :id",
+            {character = json.encode(aPlayer.character), license = aPlayer.identifiers.license, id = aPlayer.citizenId})
+        print("^2[SAVE CHARACTER] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
         aPlayer.save()
 
         TriggerClientEvent("ava_core:client:joinCutScene", src)
@@ -450,15 +447,15 @@ end)
 ------------------------------------
 
 local function UpdateBanList()
-    -- MySQL.Async.fetchAll("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban, COALESCE (users.name, 'STAFF') AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier ORDER BY date_ban DESC", {},
-    MySQL.Async.fetchAll(
-        "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban FROM ban_list ORDER BY date_ban DESC",
+    -- exports.oxmysql:fetch("SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, DATE_FORMAT(ban_list.date_ban, '%d/%m/%Y %T') AS date_ban, COALESCE (users.name, 'STAFF') AS staff_name FROM ban_list LEFT JOIN users ON ban_list.staff = users.identifier ORDER BY date_ban DESC", {},
+    exports.oxmysql:fetch(
+        "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC",
         {}, function(data)
             AVA.Players.BanList = (data and data[1]) and data or {}
         end)
 end
 
-MySQL.ready(function()
+Citizen.CreateThread(function()
     UpdateBanList()
 end)
 
@@ -503,18 +500,18 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
             discordMessage = GetString("player_got_banned", string.gsub(discord, "discord:", ""), name, reason)
         end
 
-        MySQL.Async.execute(
-            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (@license, @discord, @steam, @ip, @xbl, @live, @name, @reason, @staff)",
+        exports.oxmysql:execute(
+            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (:license, :discord, :steam, :ip, :xbl, :live, :name, :reason, :staff)",
             {
-                ["@license"] = license or "not_found",
-                ["@discord"] = discord or "not_found",
-                ["@steam"] = steam or "not_found",
-                ["@ip"] = ip or "not_found",
-                ["@xbl"] = xbl or "not_found",
-                ["@live"] = live or "not_found",
-                ["@name"] = name or "not_found",
-                ["@reason"] = reason or "",
-                ["@staff"] = aPlayer and aPlayer.identifiers.discord or "console",
+                license = license or "not_found",
+                discord = discord or "not_found",
+                steam = steam or "not_found",
+                ip = ip or "not_found",
+                xbl = xbl or "not_found",
+                live = live or "not_found",
+                name = name or "not_found",
+                reason = reason or "",
+                staff = aPlayer and aPlayer.identifiers.discord or "console",
             }, function()
                 UpdateBanList()
             end)
@@ -522,7 +519,7 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16711680) -- #ff0000
         return discordMessage
     end
-end)
+end, GetString("ban_help"), {{name = "player", help = GetString("player_id")}})
 
 -- TODO put as a command or something
 -- AVA.Commands.RegisterCommand("unban", "superadmin", function(source, args)
@@ -530,8 +527,8 @@ end)
 -- RegisterNetEvent("ava_connection:unban")
 -- AddEventHandler("ava_connection:unban", function(license)
 --     local src = source
--- 	MySQL.Sync.execute('DELETE FROM `ban_list` WHERE license = @license', {
--- 		['@license'] = license
+-- 	exports.oxmysql:executeSync('DELETE FROM `ban_list` WHERE license = :license', {
+-- 		license = license
 -- 	})
 -- 	for i = 1, #AVA.Players.BanList, 1 do
 -- 		if AVA.Players.BanList[i].license == license then
@@ -596,21 +593,21 @@ AVA.Players.Save = function(src)
     if aPlayer and aPlayer.citizenId then
         TriggerClientEvent("ava_core:client:startSave", src)
         local p = promise.new()
-        -- MySQL.Async.execute('UPDATE `players` SET `position` = @position, `character` = @character, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id', {
-        MySQL.Async.execute(
-            "UPDATE `players` SET `position` = @position, `skin` = @skin, `loadout` = @loadout, `accounts` = @accounts, `status` = @status, `jobs` = @jobs, `inventory` = @inventory, `metadata` = @metadata WHERE `license` = @license AND `id` = @id",
+        -- exports.oxmysql:execute('UPDATE `players` SET `position` = :position, `character` = :character, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `metadata` = :metadata WHERE `license` = :license AND `id` = :id', {
+        exports.oxmysql:execute(
+            "UPDATE `players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
             {
-                ["@position"] = json.encode(aPlayer.position),
-                -- ['@character'] = json.encode(aPlayer.character),
-                ["@skin"] = json.encode(aPlayer.skin),
-                ["@loadout"] = json.encode(aPlayer.loadout),
-                ["@accounts"] = json.encode(aPlayer.accounts),
-                ["@status"] = json.encode(aPlayer.status),
-                ["@jobs"] = json.encode(aPlayer.jobs),
-                ["@inventory"] = aPlayer.inventory and json.encode(aPlayer.inventory.items) or "[]",
-                ["@metadata"] = json.encode(aPlayer.metadata),
-                ["@license"] = aPlayer.identifiers.license,
-                ["@id"] = aPlayer.citizenId,
+                position = json.encode(aPlayer.position),
+                -- character = json.encode(aPlayer.character),
+                skin = json.encode(aPlayer.skin),
+                loadout = json.encode(aPlayer.loadout),
+                accounts = json.encode(aPlayer.accounts),
+                status = json.encode(aPlayer.status),
+                jobs = json.encode(aPlayer.jobs),
+                inventory = aPlayer.inventory and json.encode(aPlayer.inventory.items) or "[]",
+                metadata = json.encode(aPlayer.metadata),
+                license = aPlayer.identifiers.license,
+                id = aPlayer.citizenId,
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
                 aPlayer.lastSaveTime = os.time()
@@ -670,8 +667,8 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         end
 
         -- we check if the citizenId is owned by the license
-        local citizenExist = MySQL.Sync.fetchScalar("SELECT 1 FROM `players` WHERE `license` = @license AND `id` = @id LIMIT 0, 1",
-            {["@license"] = license, ["@id"] = newCitizenId})
+        local citizenExist = exports.oxmysql:scalarSync("SELECT 1 FROM `players` WHERE `license` = :license AND `id` = :id LIMIT 0, 1",
+            {license = license, id = newCitizenId})
 
         if not citizenExist then
             dprint("citizen " .. tostring(newCitizenId) .. " does not exist for " .. tostring(license))
@@ -684,9 +681,10 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
 
         -- we update the discord id and name of the new character
         -- and we also edit the last_played value of all other characters this player have
-        MySQL.Sync.execute(
-            "UPDATE `players` SET `name` = @name, `discord` = @discord, `last_played` = 1 WHERE `license` = @license AND `id` = @id; UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` <> @id AND `last_played` <> 0;",
-            {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName, ["@id"] = newCitizenId})
+        exports.oxmysql:executeSync("UPDATE `players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
+            {license = license, discord = discord, name = playerName, id = newCitizenId})
+        exports.oxmysql:executeSync("UPDATE `players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
+            {license = license, id = newCitizenId})
 
         -- local playerData = retrievePlayerData(newCitizenId)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
@@ -699,7 +697,7 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         -- check if player can create a new char
-        local charsCount = MySQL.Sync.fetchScalar("SELECT COUNT(1) FROM `players` WHERE `license` = @license", {["@license"] = aPlayer.identifiers.license})
+        local charsCount = exports.oxmysql:scalarSync("SELECT COUNT(1) FROM `players` WHERE `license` = :license", {license = aPlayer.identifiers.license})
         if charsCount >= AVAConfig.MaxChars then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", GetString("chars"), nil, nil,
                 "ava_core_logo")
@@ -710,13 +708,13 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
             aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
-        MySQL.Sync.execute("UPDATE `players` SET `last_played` = 0 WHERE `license` = @license AND `id` = @id AND `last_played` <> 0; ",
-            {["@license"] = license, ["@id"] = citizenId})
+        exports.oxmysql:executeSync("UPDATE `players` SET `last_played` = 0 WHERE `license` = :license AND `id` = :id AND `last_played` <> 0",
+            {license = license, id = citizenId})
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player
-        local newCitizenId = MySQL.Sync.insert("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (@license, @discord, @name)",
-            {["@license"] = license, ["@discord"] = discord, ["@name"] = playerName})
+        local newCitizenId = exports.oxmysql:insertSync("INSERT INTO `players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
+            {license = license, discord = discord, name = playerName})
 
         if not newCitizenId then
             dprint("could not insert a new char", newCitizenId, license, discord, playerName)
@@ -733,8 +731,8 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
-        local chars = MySQL.Sync.fetchAll("SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = @license ORDER BY `id` DESC",
-            {["@license"] = aPlayer.identifiers.license})
+        local chars = exports.oxmysql:fetchSync("SELECT `id`, `character`, `last_played` FROM `players` WHERE `license` = :license ORDER BY `id` DESC",
+            {license = aPlayer.identifiers.license})
         if chars[1] then
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
