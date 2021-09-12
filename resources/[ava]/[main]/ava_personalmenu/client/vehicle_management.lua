@@ -115,6 +115,6 @@ function PoolVehicleManagement()
     end)
 end
 
-AddEventHandler("baseevents:enteredVehicle", function()
+AddEventHandler("ava_core:client:enteredVehicle", function()
     SetPedConfigFlag(PlayerPedId(), 184, true) -- CPED_CONFIG_FLAG_PreventAutoShuffleToDriversSeat
 end)

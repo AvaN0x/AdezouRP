@@ -46,6 +46,8 @@ exports.ava_core.TriggerServerCallback = AVA.TriggerServerCallback
 
 exports.ava_core.getPlayerData = AVA.Player.getData
 exports.ava_core.getPlayerCharacterData = AVA.Player.getCharacterData
+
+exports.ava_core.IsPlayerInVehicle = AVA.Player.IsInVehicle
 -- #endregion
 
 -- #region server side

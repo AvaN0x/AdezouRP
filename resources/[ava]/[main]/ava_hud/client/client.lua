@@ -91,21 +91,6 @@ end, false)
 
 RegisterKeyMapping("+keyToggleMainStats", GetString("hud_details_key"), "keyboard", "Z")
 
--- KEYMAPPING
-RegisterCommand("+keyToggleBelt", function()
-    local ped = PlayerPedId()
-    if (IsPedInAnyVehicle(ped)) then
-        local car = GetVehiclePedIsIn(ped, false)
-        local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
-        if car and isAccepted then
-            beltOn = not beltOn
-            SendNUIMessage({action = "setbelt", isAccepted = isAccepted, belt = beltOn})
-        end
-    end
-end, false)
-
-RegisterKeyMapping("+keyToggleBelt", GetString("seatbelt"), "keyboard", "X")
-
 ----------------------------------------------------------
 ------------ Change some hud colors and texts ------------
 ----------------------------------------------------------
@@ -251,3 +236,17 @@ function has_value(tab, val)
     return false
 end
 
+-- KEYMAPPING
+RegisterCommand("+keyToggleBelt", function()
+    local ped = PlayerPedId()
+    if (IsPedInAnyVehicle(ped)) then
+        local car = GetVehiclePedIsIn(ped, false)
+        local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
+        if car and isAccepted then
+            beltOn = not beltOn
+            SendNUIMessage({action = "setbelt", isAccepted = isAccepted, belt = beltOn})
+        end
+    end
+end, false)
+
+RegisterKeyMapping("+keyToggleBelt", GetString("seatbelt"), "keyboard", "X")

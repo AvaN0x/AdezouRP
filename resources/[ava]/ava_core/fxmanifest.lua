@@ -37,6 +37,7 @@ client_scripts {
     "client/commands.lua",
     "client/inventories.lua",
     "client/tweaks.lua",
+    "client/vehicles.lua",
 }
 
 server_scripts {
