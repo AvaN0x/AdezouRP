@@ -200,12 +200,13 @@ dprint("^6[JOBS] Ended initializing principals for each jobs^0")
 
 if AVAConfig.PayCheckTimeout then
     local function timeoutPayCheck()
+        dprint("^4[PAYCHECK] Start paychecks^0")
         for src, aPlayer in pairs(AVA.Players.List) do
             if type(aPlayer.jobs) == "table" then
                 for i = 1, #aPlayer.jobs do
                     local job<const> = aPlayer.jobs[i]
                     local cfgJob<const> = AVAConfig.Jobs[job.name]
-                    if cfgJob then
+                    if cfgJob and not cfgJob.isGang then
                         local salary, notificationSubtitle = -1, ""
                         for j = 1, #cfgJob.grades do
                             local grade<const> = cfgJob.grades[j]
@@ -215,7 +216,9 @@ if AVAConfig.PayCheckTimeout then
                                 break
                             end
                         end
+                        dprint("^1Salary not found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0")
                         if salary ~= -1 then
+                            dprint("^1Salary found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0", salary, job.grade, notificationSubtitle)
                             if job.grade == "tempworker" or job.name == "unemployed" then
                                 -- player is employed by job center and need to be paid by them
                                 aPlayer.addAccountBalance("bank", salary)
@@ -233,6 +236,8 @@ if AVAConfig.PayCheckTimeout then
                                         GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
                                 end
                             end
+                        else
+                            dprint("^1Salary not found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0")
                         end
                     end
                 end
