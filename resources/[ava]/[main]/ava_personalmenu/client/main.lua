@@ -68,7 +68,7 @@ end
 
 RegisterCommand("personalMenu", function()
     if isAdmin == nil then
-        isAdmin, perms = AVA.TriggerServerCallback("ava_core:isAdminAllowed")
+        isAdmin, perms = exports.ava_core:TriggerServerCallback("ava_core:isAdminAllowed")
     end
 
     startInMenuLoop()

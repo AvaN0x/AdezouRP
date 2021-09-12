@@ -226,7 +226,7 @@ function PoolPlayerList()
                 if perms.playerlist.kick then
                     Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), nil, function(onSelected)
                         if onSelected then
-                            local reason = AVA.KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
+                            local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
                             if reason and reason ~= "" then
                                 ExecuteCommand("kick " .. playerData.id .. " " .. reason)
                             end
@@ -236,7 +236,7 @@ function PoolPlayerList()
                 if perms.playerlist.ban then
                     Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), nil, function(onSelected)
                         if onSelected then
-                            local reason = AVA.KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
+                            local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
                             if reason and reason ~= "" then
                                 ExecuteCommand("ban " .. playerData.id .. " " .. reason)
                             end

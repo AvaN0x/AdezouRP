@@ -14,7 +14,7 @@ local tpcoords_lastinput = ""
 
 RegisterCommand("adminmenu", function()
     if isAdmin == nil then
-        isAdmin, perms = AVA.TriggerServerCallback("ava_core:isAdminAllowed")
+        isAdmin, perms = exports.ava_core:TriggerServerCallback("ava_core:isAdminAllowed")
     end
 
     if isAdmin then
@@ -41,7 +41,7 @@ function RageUI.PoolMenus:AdminMenu()
             if perms.tpcoords then
                 Items:AddButton(GetString("admin_menu_tpcoords"), GetString("admin_menu_tpcoords_subtitle"), nil, function(onSelected)
                     if onSelected then
-                        local result = AVA.KeyboardInput(GetString("admin_menu_tpcoords_input"), tpcoords_lastinput or "", 30)
+                        local result = exports.ava_core:KeyboardInput(GetString("admin_menu_tpcoords_input"), tpcoords_lastinput or "", 30)
                         if result and result ~= "" then
                             tpcoords_lastinput = result
                             ExecuteCommand("tpcoords " .. result)

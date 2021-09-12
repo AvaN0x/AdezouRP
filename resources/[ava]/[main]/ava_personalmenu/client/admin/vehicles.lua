@@ -11,7 +11,7 @@ function PoolVehicles()
             if perms.vehicles.spawnvehicle then
                 Items:AddButton(GetString("vehicles_spawnvehicle"), GetString("vehicles_spawnvehicle_subtitle"), nil, function(onSelected)
                     if onSelected then
-                        local result = AVA.KeyboardInput(GetString("vehicles_spawnvehicle_input"), vehiclename_lastinput or "", 20)
+                        local result = exports.ava_core:KeyboardInput(GetString("vehicles_spawnvehicle_input"), vehiclename_lastinput or "", 20)
                         if result and result ~= "" then
                             vehiclename_lastinput = result
                             ExecuteCommand("spawnvehicle " .. result)
