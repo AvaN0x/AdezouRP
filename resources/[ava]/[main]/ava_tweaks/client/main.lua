@@ -107,6 +107,8 @@ local WeaponsToDisable = {
     -- [GetHashKey("VEHICLE_WEAPON_WATER_CANNON")] = true,
     -- [1422046295] = true, -- water cannon
     [749486726] = true, -- paragon2 MG
+    [231629074] = true, -- scramjet MG
+    [-1125578533] = true, -- scramjet ROCKET
 }
 
 local function Loop(value, vehicle)
