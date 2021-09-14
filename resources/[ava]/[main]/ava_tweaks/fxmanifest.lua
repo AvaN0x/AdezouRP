@@ -10,7 +10,7 @@ lua54 "yes"
 
 files {"languages/**.json"}
 
-client_scripts {"config.lua", "client/main.lua"}
+client_scripts {"config.lua", "client/main.lua", "client/**/*_cl.lua"}
 
 server_scripts {"config.lua", "server/main.lua"}
 
