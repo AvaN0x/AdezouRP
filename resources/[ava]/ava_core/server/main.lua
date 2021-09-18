@@ -158,12 +158,19 @@ exports("GetItemsData", AVA.GetItemsData)
 --------------- Jobs ---------------
 -------------------------------------
 
+---Get all jobs data
+---@return table
+AVA.GetJobsData = function()
+    return AVAConfig.Jobs or {}
+end
+exports("GetJobsData", AVA.GetJobsData)
+
 ---Check whether a grade exist for a job or not
 ---@param jobName string
 ---@param gradeName string
 ---@return boolean
 AVA.GradeExistForJob = function(jobName, gradeName)
-    local cfgJob = AVAConfig.Jobs[jobName]
+    local cfgJob<const> = AVAConfig.Jobs[jobName]
     if cfgJob then
         for i = 1, #cfgJob.grades do
             local grade = cfgJob.grades[i]
@@ -175,17 +182,37 @@ AVA.GradeExistForJob = function(jobName, gradeName)
     return false
 end
 
+---Get an array with all grades existing for a job
+---@param jobName string
+---@return array
+AVA.GetAllJobGrades = function(jobName)
+    local cfgJob<const> = AVAConfig.Jobs[jobName]
+    local grades = {}
+    if cfgJob then
+        local gradeCount = 0
+        for i = 1, #cfgJob.grades do
+            local grade = cfgJob.grades[i]
+            gradeCount = gradeCount + 1
+            grades[gradeCount] = {label = grade.label, name = grade.name}
+        end
+    end
+    return grades
+end
+
 dprint("^6[JOBS] Start initializing principals for each jobs^0")
 for jobName, job in pairs(AVAConfig.Jobs) do
     dprint("^6[JOBS]^0 Start principals for job ^6" .. jobName .. " ^0(^6" .. job.label .. "^0)")
-    local principal = "job." .. jobName
+    local principal<const> = "job." .. jobName
     AVA.AddPrincipal(principal .. ".main", "builtin.everyone", true)
     if job.grades then
         local lastGradePrincipal = principal .. ".main"
         for i = 1, #job.grades do
-            local grade = job.grades[i]
-            local gradePrincipal = principal .. "." .. grade.name
+            local grade<const> = job.grades[i]
+            local gradePrincipal<const> = principal .. ".grade." .. grade.name
             AVA.AddPrincipal(gradePrincipal, lastGradePrincipal, true)
+            if grade.manage then
+                AVA.AddAce(gradePrincipal, principal .. ".manage")
+            end
             lastGradePrincipal = gradePrincipal
         end
     else
@@ -210,7 +237,7 @@ if AVAConfig.PayCheckTimeout then
                         local salary, notificationSubtitle = -1, ""
                         for j = 1, #cfgJob.grades do
                             local grade<const> = cfgJob.grades[j]
-                            if grade.name == job.grade then
+                            if grade.name == job.grade and grade.salary ~= nil then
                                 salary = grade.salary
                                 notificationSubtitle = (cfgJob.label or "") .. " - " .. (grade.label or "")
                                 break

@@ -9,16 +9,6 @@
             }
         ]
     },
-    "nightclub": {
-        "label": "Chômage",
-        "grades": [
-            {
-                "name": "employee",
-                "label": "Chômeur",
-                "salary": 20
-            }
-        ]
-    },
     "mechanic": {
         "label": "Mécanicien",
         "grades": [
@@ -30,12 +20,14 @@
             {
                 "name": "chief",
                 "label": "Chef",
+                "manage": true,
                 "salary": 150
             },
             {
                 "name": "boss",
                 "label": "Patron",
-                "salary": 200
+                "salary": 200,
+                "manage": true
             }
         ]
     },
@@ -55,12 +47,14 @@
             {
                 "name": "chief",
                 "label": "Chef",
+                "manage": true,
                 "salary": 150
             },
             {
                 "name": "boss",
                 "label": "Patron",
-                "salary": 200
+                "salary": 200,
+                "manage": true
             }
         ]
     },
@@ -80,12 +74,14 @@
             {
                 "name": "chief",
                 "label": "Chef",
+                "manage": true,
                 "salary": 150
             },
             {
                 "name": "boss",
                 "label": "Patron",
-                "salary": 200
+                "salary": 200,
+                "manage": true
             }
         ]
     },
@@ -103,7 +99,8 @@
             },
             {
                 "name": "og",
-                "label": "OG"
+                "label": "OG",
+                "manage": true
             }
         ]
     },
@@ -121,7 +118,8 @@
             },
             {
                 "name": "og",
-                "label": "OG"
+                "label": "OG",
+                "manage": true
             }
         ]
     },
@@ -139,7 +137,8 @@
             },
             {
                 "name": "og",
-                "label": "OG"
+                "label": "OG",
+                "manage": true
             }
         ]
     },
@@ -157,7 +156,8 @@
             },
             {
                 "name": "president",
-                "label": "Président"
+                "label": "Président",
+                "manage": true
             }
         ]
     }
