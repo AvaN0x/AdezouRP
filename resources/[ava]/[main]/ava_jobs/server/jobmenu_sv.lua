@@ -56,11 +56,12 @@ RegisterServerEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
                 return
             end
 
+            -- check if the player is not trying to fire someone with a higher grade
             if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetJob.grade) then
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_fire_higher_grade"), nil, "ava_core_logo", cfgJob.label)
                 return
             end
-            -- TODO can t fire boss when chief
+
             local jobRemoved = aTargetPlayer.removeJob(jobName)
             if jobRemoved then
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_fired"), nil, "ava_core_logo", cfgJob.label)
@@ -85,7 +86,8 @@ RegisterServerEvent("ava_jobs:server:job_menu_change_grade", function(target, jo
     if IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
         local aTargetPlayer = exports.ava_core:GetPlayer(target)
         if aTargetPlayer then
-            if not aTargetPlayer.hasJob(jobName) then
+            local targetHasJob, targetJob = aTargetPlayer.hasJob(jobName)
+            if not targetHasJob then
                 if cfgJob.isGang then
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_gang"), nil, "ava_core_logo", cfgJob.label)
                 else
@@ -94,7 +96,18 @@ RegisterServerEvent("ava_jobs:server:job_menu_change_grade", function(target, jo
                 return
             end
 
-            -- TODO cannot change grade to higher than source grade
+            -- check if the player is not trying to change the grade of someone with a higher grade
+            if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetJob.grade) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_with_higher_grade"), nil, "ava_core_logo",
+                    cfgJob.label)
+                return
+            end
+
+            -- check if the player is not trying to change the grade of someone to a higher grade
+            if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_to_higher_grade"), nil, "ava_core_logo", cfgJob.label)
+                return
+            end
 
             local jobAdded, finalGrade = aTargetPlayer.addJob(jobName, gradeName)
             if jobAdded then
