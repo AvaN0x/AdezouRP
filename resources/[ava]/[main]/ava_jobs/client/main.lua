@@ -2,10 +2,10 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local GUI = {Time = 0}
-local PlayerData = {}
-local playerJobs = {}
-actualGang = nil
+local TimeLastAction = 0
+PlayerData = {}
+playerJobs = {}
+playerServices = {}
 
 local mainBlips = {}
 local JobBlips = {}
@@ -96,8 +96,6 @@ AddEventHandler("onResourceStop", function(resource)
         clearJobBlips()
     end
 end)
-
-local playerServices = {}
 
 function setJobsToUse()
     if not PlayerData.jobs then

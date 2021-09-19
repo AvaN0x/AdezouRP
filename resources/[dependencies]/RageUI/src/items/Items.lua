@@ -78,13 +78,13 @@ function Items:AddButton(Label, Description, Style, Actions, Submenu)
                 Graphics.Sprite("commonmenu", "gradient_nav", CurrentMenu.X, CurrentMenu.Y + 0 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 431 + CurrentMenu.WidthOffset, 38)
             end
         end
-        if not (Style.IsDisabled) then
-            if haveLeftBadge then
-                if (Style.LeftBadge ~= nil) then
-                    local LeftBadge = Style.LeftBadge(Active)
-                    Graphics.Sprite(LeftBadge.BadgeDictionary or "commonmenu", LeftBadge.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, LeftBadge.BadgeColour and LeftBadge.BadgeColour.R or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.G or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.B or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.A or 255)
-                end
+        if haveLeftBadge then
+            if (Style.LeftBadge ~= nil) then
+                local LeftBadge = Style.LeftBadge(Active)
+                Graphics.Sprite(LeftBadge.BadgeDictionary or "commonmenu", LeftBadge.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, LeftBadge.BadgeColour and LeftBadge.BadgeColour.R or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.G or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.B or 255, LeftBadge.BadgeColour and LeftBadge.BadgeColour.A or 255)
             end
+        end
+        if not (Style.IsDisabled) then
             if haveRightBadge then
                 if (Style.RightBadge ~= nil) then
                     local RightBadge = Style.RightBadge(Active)

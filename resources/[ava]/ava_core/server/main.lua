@@ -173,7 +173,7 @@ AVA.GradeExistForJob = function(jobName, gradeName)
     local cfgJob<const> = AVAConfig.Jobs[jobName]
     if cfgJob then
         for i = 1, #cfgJob.grades do
-            local grade = cfgJob.grades[i]
+            local grade<const> = cfgJob.grades[i]
             if grade.name == gradeName then
                 return true
             end
@@ -181,10 +181,29 @@ AVA.GradeExistForJob = function(jobName, gradeName)
     end
     return false
 end
+exports("GradeExistForJob", AVA.GradeExistForJob)
+
+---Get grade label
+---@param jobName string
+---@param gradeName string
+---@return string
+AVA.GetGradeLabel = function(jobName, gradeName)
+    local cfgJob<const> = AVAConfig.Jobs[jobName]
+    if cfgJob then
+        for i = 1, #cfgJob.grades do
+            local grade<const> = cfgJob.grades[i]
+            if grade.name == gradeName then
+                return grade.label
+            end
+        end
+    end
+    return ""
+end
+exports("GetGradeLabel", AVA.GetGradeLabel)
 
 ---Get an array with all grades existing for a job
 ---@param jobName string
----@return array
+---@return table
 AVA.GetAllJobGrades = function(jobName)
     local cfgJob<const> = AVAConfig.Jobs[jobName]
     local grades = {}
@@ -193,11 +212,12 @@ AVA.GetAllJobGrades = function(jobName)
         for i = 1, #cfgJob.grades do
             local grade = cfgJob.grades[i]
             gradeCount = gradeCount + 1
-            grades[gradeCount] = {label = grade.label, name = grade.name}
+            grades[gradeCount] = {label = grade.label, name = grade.name, canManage = grade.manage}
         end
     end
     return grades
 end
+exports("GetAllJobGrades", AVA.GetAllJobGrades)
 
 dprint("^6[JOBS] Start initializing principals for each jobs^0")
 for jobName, job in pairs(AVAConfig.Jobs) do
@@ -243,9 +263,8 @@ if AVAConfig.PayCheckTimeout then
                                 break
                             end
                         end
-                        dprint("^1Salary not found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0")
-                        if salary ~= -1 then
-                            dprint("^1Salary found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0", salary, job.grade, notificationSubtitle)
+                        if salary > 0 then
+                            dprint("^2Salary found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0", salary, job.grade, notificationSubtitle)
                             if job.grade == "tempworker" or job.name == "unemployed" then
                                 -- player is employed by job center and need to be paid by them
                                 aPlayer.addAccountBalance("bank", salary)
@@ -267,9 +286,9 @@ if AVAConfig.PayCheckTimeout then
                             dprint("^1Salary not found for " .. aPlayer.getDiscordTag() .. " with job " .. job.name .. "^0")
                         end
                     end
+                    Wait(0)
                 end
             end
-            Wait(0)
         end
         print("^4[PAY CHECK] ^0Every paycheck has been delivered.")
         SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)

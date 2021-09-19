@@ -433,7 +433,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@param jobName string
     ---@param gradeName? string "if not specified it will take the first available grade"
     ---@return boolean success
-    ---@return grade "final grade added"
+    ---@return string grade "final grade added"
     self.addJob = function(jobName, gradeName)
         local cfgJob = AVAConfig.Jobs[jobName]
         if cfgJob then
@@ -444,8 +444,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
             if alreadyHasJob then
                 if job.grade ~= gradeName and AVA.GradeExistForJob(jobName, gradeName) then
-                    AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
-                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
+                    AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. job.grade)
+                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. gradeName)
                     job.grade = gradeName
 
                     updatePlayerLocalJobs()
@@ -458,12 +458,12 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                         local isUnemployed, unemployedJob, unemployedIndex = self.hasJob("unemployed")
 
                         if isUnemployed then
-                            AVA.RemovePrincipal("player." .. self.src, "job.unemployed." .. unemployedJob.grade)
+                            AVA.RemovePrincipal("player." .. self.src, "job.unemployed.grade." .. unemployedJob.grade)
                             table.remove(self.jobs, unemployedIndex)
                         end
                     end
 
-                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. "." .. gradeName)
+                    AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. gradeName)
                     self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName, isGang = cfgJob.isGang}
 
                     updatePlayerLocalJobs()
@@ -481,7 +481,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         local hasJob, job, index = self.hasJob(jobName)
 
         if hasJob then
-            AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. "." .. job.grade)
+            AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. job.grade)
             table.remove(self.jobs, index)
 
             updatePlayerLocalJobs()

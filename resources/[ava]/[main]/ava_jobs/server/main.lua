@@ -2,3 +2,4 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+CoreJobs = exports.ava_core:GetJobsData()

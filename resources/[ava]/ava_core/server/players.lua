@@ -561,7 +561,7 @@ AVA.Players.Login = function(src)
         local jobs = aPlayer.getJobs()
         for i = 1, #jobs do
             local job = jobs[i]
-            AVA.AddPrincipal("player." .. aPlayer.src, "job." .. job.name .. "." .. job.grade)
+            AVA.AddPrincipal("player." .. aPlayer.src, "job." .. job.name .. ".grade." .. job.grade)
         end
 
         dprint("^2[LOGIN] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")

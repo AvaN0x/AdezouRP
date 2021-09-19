@@ -237,7 +237,7 @@ function has_value(tab, val)
 end
 
 -- KEYMAPPING
-RegisterCommand("+keyToggleBelt", function()
+RegisterCommand("keyToggleBelt", function()
     local ped = PlayerPedId()
     if (IsPedInAnyVehicle(ped)) then
         local car = GetVehiclePedIsIn(ped, false)
@@ -249,4 +249,4 @@ RegisterCommand("+keyToggleBelt", function()
     end
 end, false)
 
-RegisterKeyMapping("+keyToggleBelt", GetString("seatbelt"), "keyboard", "X")
+RegisterKeyMapping("keyToggleBelt", GetString("seatbelt"), "keyboard", "X")

@@ -60,6 +60,9 @@ exports.ava_core.GetPlayer = AVA.Players.GetPlayer
 exports.ava_core.GetPlayerByCitizenId = AVA.Players.GetPlayerByCitizenId
 exports.ava_core.UseItem = AVA.Players.UseItem
 exports.ava_core.SaveAllPlayers = AVA.Players.SaveAll
+exports.ava_core.GradeExistForJob = AVA.GradeExistForJob
+exports.ava_core.GetGradeLabel = AVA.GetGradeLabel
+exports.ava_core.GetAllJobGrades = AVA.GetAllJobGrades
 
 exports.ava_core.GetRootingBucket = AVA.RB.GetRootingBucket
 exports.ava_core.MoveSourceToRB = AVA.RB.MoveSourceToRB

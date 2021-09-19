@@ -198,6 +198,7 @@ function BuyZone()
     end
 
     if count > 0 then
+        RageUI.CloseAll()
         RageUI.OpenTempMenu(store.Name, function(Items)
             for i = 1, #elements do
                 local element = elements[i]

@@ -267,7 +267,9 @@ function RageUI.OpenTempMenu(title, ItemsFunction, textureName, textureDirectory
     Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
 
-        local TempMenu = RageUI.CreateMenu("", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
+        local TempMenu = RageUI.CurrentMenu
+            and RageUI.CreateSubMenu(RageUI.CurrentMenu, "", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
+            or RageUI.CreateMenu("", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
         local isMenuVisible = true
 
         RageUI.PoolMenus.TempRageUI = function()
@@ -284,6 +286,7 @@ function RageUI.OpenTempMenu(title, ItemsFunction, textureName, textureDirectory
                 isMenuVisible = false
             end
         end
+        RageUI.PoolMenus.Name = TempRageUI
         RageUI.Visible(TempMenu, true)
 
         while isMenuVisible do
