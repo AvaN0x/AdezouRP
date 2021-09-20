@@ -249,7 +249,7 @@ end)
 --------------- Get data exports ---------------
 ------------------------------------------------
 
----Get data about player
+---Get data from player
 ---@return any
 AVA.Player.getData = function()
     while not AVA.Player.Loaded do
@@ -259,7 +259,17 @@ AVA.Player.getData = function()
 end
 exports("getPlayerData", AVA.Player.getData)
 
----Get data about player character
+---Get skin data from player
+---@return any
+AVA.Player.getSkinData = function()
+    while not AVA.Player.Loaded do
+        Wait(10)
+    end
+    return AVA.Player.Data.skin
+end
+exports("getPlayerSkinData", AVA.Player.getSkinData)
+
+---Get data from player character
 ---@return character
 AVA.Player.getCharacterData = function()
     while not AVA.Player.Loaded do

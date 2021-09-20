@@ -34,4 +34,4 @@ client_scripts {
 
 server_scripts {"config.lua", "server/main.lua", "**/*_sv.lua"}
 
-server_export {"getCountInService", "isInService", "hasJob", "isInServiceOrHasJob"}
+dependencies {"ava_core"}

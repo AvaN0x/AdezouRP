@@ -132,16 +132,16 @@ function setJobsToUse()
     createBlips()
 end
 
-Citizen.CreateThread(function()
-    Citizen.Wait(500)
-    while true do
-        for jobName, job in pairs(playerJobs) do
-            print(jobName .. " : " .. (job.SocietyName or "no society name") .. " - " .. (job.grade or "no grade") .. " - "
-                      .. (job.canManage and "true" or "false"))
-        end
-        Citizen.Wait(50000)
-    end
-end)
+-- Citizen.CreateThread(function()
+--     Wait(500)
+--     while true do
+--         for jobName, job in pairs(playerJobs) do
+--             print(jobName .. " : " .. (job.SocietyName or "no society name") .. " - " .. (job.grade or "no grade") .. " - "
+--                       .. (job.canManage and "true" or "false"))
+--         end
+--         Wait(50000)
+--     end
+-- end)
 
 function checkAuthorizations()
     for jobName, job in pairs(playerJobs) do
@@ -463,14 +463,115 @@ AddEventHandler("ava_jobs:hasExitedMarker", function(jobName, zoneName, zoneCate
     CurrentZoneName = nil
 end)
 
---------------
--- Job Menu --
---------------
-RegisterCommand("+keyJobMenu", function()
-    OpenJobMenu()
-end)
+------------------
+-- Key Controls --
+------------------
+Citizen.CreateThread(function()
+    while true do
+        Wait(0)
 
-RegisterKeyMapping("+keyJobMenu", GetString("job_menu"), "keyboard", Config.JobMenuKey)
+        if CurrentZoneName ~= nil and CurrentActionEnabled then
+            if CurrentHelpText ~= nil then
+                SetTextComponentFormat("STRING")
+                AddTextComponentString(CurrentHelpText)
+                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+            end
+
+            if IsControlJustReleased(0, 38) -- E
+            and (GetGameTimer() - TimeLastAction) > 300 then
+                CurrentActionEnabled = false
+                TimeLastAction = GetGameTimer()
+                if CurrentZoneName == "JobCenter" then
+                    JobCenterMenu()
+                else
+                    local job = playerJobs[CurrentJobName]
+
+                    if CurrentZoneCategory == "Zones" then
+                        if CurrentZoneName == "JobActions" then
+                            -- OpenJobActionsMenu(CurrentJobName)
+                        elseif CurrentZoneName == "Dressing" then
+                            OpenCloakroomMenu()
+                            -- elseif string.match(CurrentZoneName, "Stock$") then
+                            --     TriggerEvent("esx_ava_inventories:OpenSharedInventory", CurrentZoneValue.StockName)
+                            -- elseif string.match(CurrentZoneName, "Garage$") then
+                            --     if CurrentZoneValue.IsNonProprietaryGarage then
+                            --         TriggerEvent("esx_ava_garage:openSpecialVehicleMenu", CurrentZoneValue, CurrentJobName)
+
+                            --     else
+                            --         TriggerEvent("esx_ava_garage:OpenSocietyVehiclesMenu", job.SocietyName, CurrentZoneValue)
+                            --     end
+                            -- elseif CurrentZoneValue.Action then
+                            --     CurrentZoneValue.Action()
+                        end
+
+                        -- elseif CurrentZoneCategory == "ProcessZones" then
+                        --     ProcessZone(job)
+
+                        -- elseif CurrentZoneCategory == "ProcessMenuZones" then
+                        --     ProcessMenuZone(job)
+
+                        -- elseif CurrentZoneCategory == "SellZones" then
+                        --     SellZone(job)
+
+                        -- elseif CurrentZoneCategory == "BuyZones" then
+                        --     BuyZone(job)
+
+                    end
+                end
+
+            end
+        else
+            Wait(50)
+        end
+    end
+end)
+function OpenCloakroomMenu()
+    local jobName = CurrentJobName
+    local job = playerJobs[jobName]
+    local outfits = CurrentZoneValue.Outfits
+
+    if outfits then
+        for i = 1, #outfits do
+            local outfit = outfits[i]
+            outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
+        end
+    end
+
+    RageUI.CloseAll()
+    RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
+        Items:AddButton(GetString("clothes_civil"), GetString("clothes_civil_subtitle"), nil, function(onSelected)
+            if onSelected then
+                local skin = exports.ava_core:getPlayerSkinData()
+                TriggerEvent("skinchanger:loadSkin", skin)
+            end
+        end)
+        Items:AddButton(GetString("user_clothes"), GetString("user_clothes_subtitle"), nil, function(onSelected)
+            if onSelected then
+                local skin = exports.ava_core:getPlayerSkinData()
+                TriggerEvent("skinchanger:loadSkin", skin)
+            end
+        end)
+        Items:CheckBox(GetString("take_service"), GetString("take_service_subtitle"), playerServices[jobName], nil, function(onSelected, IsChecked)
+            if (onSelected) then
+                playerServices[jobName] = not playerServices[jobName]
+                TriggerServerEvent("ava_jobs:setService", jobName, playerServices[jobName])
+            end
+        end)
+        if outfits then
+            for i = 1, #outfits do
+                local outfit = outfits[i]
+
+                Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
+                    if onSelected then
+                        TriggerEvent("skinchanger:getSkin", function(skin)
+                            TriggerEvent("skinchanger:loadClothes", skin, skin.sex == 0 and outfit.Male or outfit.Female)
+                        end)
+                    end
+                end)
+            end
+        end
+    end)
+end
 
 -----------
 -- Utils --
