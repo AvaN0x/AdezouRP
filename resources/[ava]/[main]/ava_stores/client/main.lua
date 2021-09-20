@@ -219,8 +219,9 @@ function BuyZone()
                     end
                 end)
             end
+        end, function()
+            CurrentActionEnabled = true
         end, store.Title and store.Title.textureName, store.Title and store.Title.textureDirectory)
-        CurrentActionEnabled = true
 
     else
         exports.ava_core:ShowNotification(GetString("nothing_can_buy"))

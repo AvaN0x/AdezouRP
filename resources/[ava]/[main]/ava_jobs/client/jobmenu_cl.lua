@@ -193,7 +193,7 @@ function RageUI.PoolMenus:JobMenu()
                                         end
                                     end)
                             end
-                        end, JobMenuManage.Sprite.Texture, JobMenuManage.Sprite.Dictionary)
+                        end, nil, JobMenuManage.Sprite.Texture, JobMenuManage.Sprite.Dictionary)
                     end
                 end
             end

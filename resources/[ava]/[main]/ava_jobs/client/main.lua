@@ -489,7 +489,7 @@ Citizen.CreateThread(function()
                     if CurrentZoneCategory == "Zones" then
                         if CurrentZoneName == "JobActions" then
                             -- OpenJobActionsMenu(CurrentJobName)
-                        elseif CurrentZoneName == "Dressing" then
+                        elseif CurrentZoneName == "Cloakroom" then
                             OpenCloakroomMenu()
                             -- elseif string.match(CurrentZoneName, "Stock$") then
                             --     TriggerEvent("esx_ava_inventories:OpenSharedInventory", CurrentZoneValue.StockName)
@@ -570,6 +570,8 @@ function OpenCloakroomMenu()
                 end)
             end
         end
+    end, function()
+        CurrentActionEnabled = true
     end)
 end
 

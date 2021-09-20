@@ -34,4 +34,4 @@ client_scripts {
 
 server_scripts {"config.lua", "server/main.lua", "**/*_sv.lua"}
 
-dependencies {"ava_core"}
+dependencies {"ava_core", "RageUI"}
