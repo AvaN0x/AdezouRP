@@ -526,14 +526,19 @@ Citizen.CreateThread(function()
     end
 end)
 function OpenCloakroomMenu()
+    local playerSkin = exports.ava_core:getPlayerSkinData()
+
     local jobName = CurrentJobName
     local job = playerJobs[jobName]
-    local outfits = CurrentZoneValue.Outfits
+    local outfits
 
-    if outfits then
-        for i = 1, #outfits do
-            local outfit = outfits[i]
-            outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
+    if CurrentZoneValue.Outfits then
+        outfits = CurrentZoneValue.Outfits[playerSkin.sex == 0 and "Male" or "Female"]
+        if outfits then
+            for i = 1, #outfits do
+                local outfit = outfits[i]
+                outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
+            end
         end
     end
 
@@ -541,14 +546,12 @@ function OpenCloakroomMenu()
     RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
         Items:AddButton(GetString("clothes_civil"), GetString("clothes_civil_subtitle"), nil, function(onSelected)
             if onSelected then
-                local skin = exports.ava_core:getPlayerSkinData()
-                TriggerEvent("skinchanger:loadSkin", skin)
+                TriggerEvent("skinchanger:loadSkin", playerSkin)
             end
         end)
         Items:AddButton(GetString("user_clothes"), GetString("user_clothes_subtitle"), nil, function(onSelected)
             if onSelected then
-                local skin = exports.ava_core:getPlayerSkinData()
-                TriggerEvent("skinchanger:loadSkin", skin)
+                -- TriggerEvent("openOutfitsMenu")
             end
         end)
         Items:CheckBox(GetString("take_service"), GetString("take_service_subtitle"), playerServices[jobName], nil, function(onSelected, IsChecked)
@@ -564,7 +567,7 @@ function OpenCloakroomMenu()
                 Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
                     if onSelected then
                         TriggerEvent("skinchanger:getSkin", function(skin)
-                            TriggerEvent("skinchanger:loadClothes", skin, skin.sex == 0 and outfit.Male or outfit.Female)
+                            TriggerEvent("skinchanger:loadClothes", skin, outfit.Outfit)
                         end)
                     end
                 end)
