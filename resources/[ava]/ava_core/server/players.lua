@@ -271,7 +271,7 @@ local function setupPlayer(src, oldSource)
         TriggerClientEvent("chat:addSuggestions", src, suggestions)
         suggestions = nil
 
-        -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. playerName .. "~s~ se connecte.")
+        TriggerEvent("ava_personalmenu:server:notifAdmins", "loginout", "~g~" .. playerName .. "~s~ se connecte.")
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
             .. " se connecte. (" .. citizenId .. ")", 311891)
@@ -346,7 +346,7 @@ AddEventHandler("playerDropped", function(reason)
     -- dprint(src, "playerDropped", reason)
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer then
-        -- TriggerEvent('esx_ava_personalmenu:notifStaff', "login", "~g~" .. aPlayer.name .. "~s~ se déconnecte.")
+        TriggerEvent("ava_personalmenu:server:notifAdmins", "loginout", "~g~" .. aPlayer.name .. "~s~ se déconnecte.")
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`"
             .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId .. ")", 16733269)

@@ -190,8 +190,7 @@ end)
 --------------- Others ---------------
 --------------------------------------
 
-RegisterNetEvent("ava_core:client:kill")
-AddEventHandler("ava_core:client:kill", function()
+RegisterNetEvent("ava_core:client:kill", function()
     SetEntityHealth(PlayerPedId(), 0)
     AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("killed_by_staff"), nil, nil, "ava_core_logo")
 end)

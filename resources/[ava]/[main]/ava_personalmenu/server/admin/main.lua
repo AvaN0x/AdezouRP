@@ -105,3 +105,16 @@ AddEventHandler("playerDropped", function()
     local src = source
     avaPlayerData[tostring(src)] = nil
 end)
+
+---------------------------------------------
+--------------- Notifications ---------------
+---------------------------------------------
+
+AddEventHandler("ava_personalmenu:server:notifAdmins", function(notifType, ...)
+    -- TODO somehow have an array of admins
+    for _, playerSrc in pairs(GetPlayers()) do
+        if IsPlayerAceAllowed(playerSrc, "ace.group.mod") then
+            TriggerClientEvent("ava_personalmenu:client:notifAdmins", playerSrc, notifType, ...)
+        end
+    end
+end)

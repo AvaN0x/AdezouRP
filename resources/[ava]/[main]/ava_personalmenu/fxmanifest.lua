@@ -32,6 +32,7 @@ client_scripts {
     "client/admin/main.lua",
     "client/admin/playerlist.lua",
     "client/admin/vehicles.lua",
+    "client/admin/settings.lua",
 }
 
 server_scripts {"server/main.lua", "server/admin/main.lua", "server/admin/commands.lua"}

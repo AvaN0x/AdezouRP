@@ -38,6 +38,7 @@ client_scripts {
     "client/inventories.lua",
     "client/tweaks.lua",
     "client/vehicles.lua",
+    "client/deaths.lua",
 }
 
 server_scripts {

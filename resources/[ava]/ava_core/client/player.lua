@@ -110,8 +110,9 @@ local function RespawnPlayer()
             Citizen.Wait(50)
         end
 
-        SetEntityCoordsNoOffset(playerPed, AVA.Player.Data.position, false, false, false, true)
-        NetworkResurrectLocalPlayer(AVA.Player.Data.position, 0.0, true, false)
+        local position = AVA.Player.Data and AVA.Player.Data.position or GetEntityCoords(playerPed)
+        SetEntityCoordsNoOffset(playerPed, position, false, false, false, true)
+        NetworkResurrectLocalPlayer(position, 0.0, true, false)
         SetPlayerInvincible(playerPed, false)
         ClearPedBloodDamage(playerPed)
         AVA.Player.IsDead = false
@@ -123,23 +124,7 @@ local function RespawnPlayer()
     end)
 end
 
-AddEventHandler("baseevents:onPlayerDied", function(killertype, killerpos)
-    dprint("baseevents:onPlayerDied")
-    AVA.Player.IsDead = true
-
-    Wait(2000)
-    RespawnPlayer()
-end)
-
-AddEventHandler("baseevents:onPlayerKilled", function(killerid, data)
-    -- data :
-    -- killertype
-    -- weaponhash
-    -- killerinveh
-    -- killervehseat
-    -- killervehname
-    -- killerpos
-    dprint("baseevents:onPlayerKilled")
+AddEventHandler("ava_core:client:playerDeath", function()
     AVA.Player.IsDead = true
 
     Wait(2000)

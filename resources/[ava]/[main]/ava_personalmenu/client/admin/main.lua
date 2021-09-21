@@ -12,10 +12,17 @@ playersData = {}
 local noclipEnabled = false
 local tpcoords_lastinput = ""
 
-RegisterCommand("adminmenu", function()
+function checkAdminPerms()
     if isAdmin == nil then
         isAdmin, perms = exports.ava_core:TriggerServerCallback("ava_core:isAdminAllowed")
+        if isAdmin then
+            TriggerEvent("ava_personalmenu:client:playerIsAdmin")
+        end
     end
+end
+
+RegisterCommand("adminmenu", function()
+    checkAdminPerms()
 
     if isAdmin then
         -- print(json.encode(perms, {indent = true}))
