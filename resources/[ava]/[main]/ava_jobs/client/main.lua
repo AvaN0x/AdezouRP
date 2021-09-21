@@ -530,14 +530,17 @@ function OpenCloakroomMenu()
 
     local jobName = CurrentJobName
     local job = playerJobs[jobName]
-    local outfits
+    local zoneOutfits, outfits = CurrentZoneValue.Outfits
 
-    if CurrentZoneValue.Outfits then
-        outfits = CurrentZoneValue.Outfits[playerSkin.sex == 0 and "Male" or "Female"]
-        if outfits then
-            for i = 1, #outfits do
-                local outfit = outfits[i]
+    if zoneOutfits then
+        outfits = {}
+        local count = 0
+        for i = 1, #zoneOutfits do
+            local outfit = zoneOutfits[i]
+            if outfit[playerSkin.sex == 0 and "Male" or "Female"] then
                 outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
+                count = count + 1
+                outfits[count] = outfit
             end
         end
     end
@@ -567,7 +570,7 @@ function OpenCloakroomMenu()
                 Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
                     if onSelected then
                         TriggerEvent("skinchanger:getSkin", function(skin)
-                            TriggerEvent("skinchanger:loadClothes", skin, outfit.Outfit)
+                            TriggerEvent("skinchanger:loadClothes", skin, outfit[playerSkin.sex == 0 and "Male" or "Female"])
                         end)
                     end
                 end)
