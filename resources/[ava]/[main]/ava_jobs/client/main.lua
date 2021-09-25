@@ -82,11 +82,11 @@ end)
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
-        -- if plants then
-        --     for k, v in pairs(plants) do
-        --         ESX.Game.DeleteObject(v.obj)
-        --     end
-        -- end
+        if plants then
+            for k, v in pairs(plants) do
+                exports.ava_core:DeleteObject(v.obj)
+            end
+        end
         if mainBlips then
             for _, blip in ipairs(mainBlips) do
                 RemoveBlip(blip)
@@ -474,7 +474,7 @@ Citizen.CreateThread(function()
             if CurrentHelpText ~= nil then
                 SetTextComponentFormat("STRING")
                 AddTextComponentString(CurrentHelpText)
-                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                EndTextCommandDisplayHelp(0, 0, 1, -1)
             end
 
             if IsControlJustReleased(0, 38) -- E
@@ -579,6 +579,162 @@ function OpenCloakroomMenu()
     end, function()
         CurrentActionEnabled = true
     end)
+end
+
+-------------
+-- Harvest --
+-------------
+
+local isPickingUp = false
+
+local function spawnedPlantsFindName(name)
+    for i = 1, #spawnedPlants, 1 do
+        if spawnedPlants[i].name == name then
+            return i
+        end
+    end
+
+    return nil
+end
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(200)
+        for jobName, job in pairs(playerJobs) do
+            if job.FieldZones then
+                for k, v in pairs(job.FieldZones) do
+                    if #(playerCoords - v.Pos) < 20 then
+                        Spawnplants(jobName, k, v)
+                    end
+                    Wait(500)
+                end
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(0)
+        for jobName, job in pairs(playerJobs) do
+            local nearbyObject, nearbyID
+
+            for i = 1, #plants, 1 do
+                if #(playerCoords - GetEntityCoords(plants[i].obj)) < 1.3 then
+                    nearbyObject, nearbyID = plants[i], i
+                end
+            end
+
+            if nearbyObject and nearbyObject.obj and IsPedOnFoot(playerPed) then
+                if not isPickingUp then
+                    AddTextEntry("AVA_JBS_NOTF_TE", GetString("press_collect"))
+                    BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
+                    EndTextCommandDisplayHelp(0, false, true, -1)
+                end
+
+                if IsControlJustReleased(0, 38) and not isPickingUp then -- E
+                    isPickingUp = true
+
+                    local canPickUp = exports.ava_core:TriggerServerCallback("ava_jobs:canPickUp", nearbyObject.jobName, nearbyObject.name)
+                    if canPickUp then
+                        TaskStartScenarioInPlace(playerPed, "world_human_gardener_plant", 0, false)
+
+                        Wait(2000)
+                        ClearPedTasks(playerPed)
+
+                        exports.ava_core:DeleteObject(nearbyObject.obj)
+                        table.remove(plants, nearbyID)
+
+                        local sPIndex = spawnedPlantsFindName(nearbyObject.name)
+                        spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
+                        TriggerServerEvent("ava_jobs:server:pickUp", nearbyObject.jobName, nearbyObject.name)
+                    else
+                        exports.ava_core:ShowNotification(GetString("inventoryfull"))
+                    end
+
+                    isPickingUp = false
+                end
+            else
+                Wait(500)
+            end
+        end
+    end
+end)
+
+function Spawnplants(jobName, k, v)
+    local sPIndex = spawnedPlantsFindName(k)
+    if sPIndex == nil then
+        table.insert(spawnedPlants, {jobName = jobName, name = k, quantity = 0})
+        sPIndex = spawnedPlantsFindName(k)
+    end
+
+    while spawnedPlants[sPIndex].quantity < 5 do
+        Wait(0)
+        local plantCoords = GeneratePlantCoords(k, v)
+
+        local obj = exports.ava_core:SpawnObjectLocal(v.PropHash, plantCoords)
+        PlaceObjectOnGroundProperly(obj)
+        FreezeEntityPosition(obj, true)
+
+        table.insert(plants, {obj = obj, jobName = jobName, name = k})
+        spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity + 1
+    end
+end
+
+function GeneratePlantCoords(k, v)
+    while true do
+        Wait(1)
+
+        if (v.Radius == nil) then
+            v.Radius = 8
+        end
+
+        local plantCoordX = v.Pos.x + math.random(-v.Radius, v.Radius)
+        local plantCoordY = v.Pos.y + math.random(-v.Radius, v.Radius)
+
+        local coordZ = GetCoordZ(plantCoordX, plantCoordY, v)
+        local coord = vector3(plantCoordX, plantCoordY, coordZ)
+
+        if ValidateplantCoord(coord, k, v) then
+            return coord
+        end
+    end
+end
+
+function ValidateplantCoord(plantCoord, k, v)
+    local sPIndex = spawnedPlantsFindName(k)
+    if spawnedPlants[sPIndex].quantity > 0 then
+        local validate = true
+        if not v.DistanceValidate then
+            v.DistanceValidate = v.Radius / 2
+        end
+
+        for k2, v2 in pairs(plants) do
+            if #(plantCoord - GetEntityCoords(v2.obj)) < v.DistanceValidate then
+                validate = false
+            end
+        end
+
+        if #(plantCoord - v.Pos) > 50 then
+            validate = false
+        end
+
+        return validate
+    else
+        return true
+    end
+end
+
+function GetCoordZ(x, y, v)
+    for i, height in ipairs(v.GroundCheckHeights) do
+        local foundGround, z = GetGroundZFor_3dCoord(x, y, height)
+
+        if foundGround then
+            return z
+        end
+    end
+
+    return v.Pos.z
 end
 
 ----------------

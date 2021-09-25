@@ -200,6 +200,55 @@ AVA.TeleportPlayerToCoords = function(x, y, z, allowVehicle)
 end
 exports("TeleportPlayerToCoords", AVA.TeleportPlayerToCoords)
 
+---------------------------------------
+--------------- Objects ---------------
+---------------------------------------
+
+---Spawn an object at a given coords
+---@param objectName string|number
+---@param coords vector3
+---@param isNetwork? boolean set the vehicle to be on network or only on local
+---@return vehicle
+AVA.SpawnObject = function(objectName, coords, isNetwork)
+    local p = promise.new()
+    isNetwork = (isNetwork == nil or isNetwork == true)
+
+    Citizen.CreateThread(function()
+        -- get vehicle model hash
+        local modelHash = type(objectName) == "number" and objectName or GetHashKey(objectName)
+
+        -- get object model
+        AVA.RequestModel(modelHash)
+
+        local obj = CreateObject(modelHash, coords.x, coords.y, coords.z, isNetwork, false, true)
+
+        -- unload veh model
+        SetModelAsNoLongerNeeded(modelHash)
+
+        p:resolve(obj)
+    end)
+
+    return Citizen.Await(p)
+end
+exports("SpawnObject", AVA.SpawnObject)
+
+---Spawn an object at a given coords on local
+---@param objectName string|number
+---@param coords vector3
+---@return vehicle
+AVA.SpawnObjectLocal = function(objectName, coords)
+    return AVA.SpawnObject(objectName, coords, false)
+end
+exports("SpawnObjectLocal", AVA.SpawnObjectLocal)
+
+---Delete an object
+---@param object any
+AVA.DeleteObject = function(object)
+    SetEntityAsMissionEntity(object, false, true)
+    DeleteObject(object)
+end
+exports("DeleteObject", AVA.DeleteObject)
+
 ----------------------------------------
 --------------- Vehicles ---------------
 ----------------------------------------

@@ -140,3 +140,38 @@ RegisterNetEvent("ava_jobs:server:job_center:subscribe", function(index)
 end)
 -- #endregion
 
+
+-------------
+-- Harvest --
+-------------
+exports.ava_core:RegisterServerCallback("ava_jobs:canPickUp", function(source, jobName, zoneName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local result = false
+    local job = Config.Jobs[jobName]
+    local zone = job.FieldZones[zoneName]
+    if zone then
+        local inventory = aPlayer.getInventory()
+        for k, item in ipairs(zone.Items) do
+            if inventory.canTake(item.name) > 0 then
+                result = true
+                break
+            end
+        end
+    end
+    return result
+end)
+
+RegisterServerEvent("ava_jobs:server:pickUp", function(jobName, zoneName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local job = Config.Jobs[jobName]
+    local zone = job.FieldZones[zoneName]
+    if zone then
+        local inventory = aPlayer.getInventory()
+        for k, item in ipairs(zone.Items) do
+            local canTake = inventory.canTake(item.name)
+            if canTake > 0 then
+                inventory.addItem(item.name, (canTake > item.quantity and item.quantity or canTake))
+            end
+        end
+    end
+end)
