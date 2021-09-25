@@ -472,9 +472,9 @@ Citizen.CreateThread(function()
 
         if CurrentZoneName ~= nil and CurrentActionEnabled then
             if CurrentHelpText ~= nil then
-                SetTextComponentFormat("STRING")
-                AddTextComponentString(CurrentHelpText)
-                EndTextCommandDisplayHelp(0, 0, 1, -1)
+                AddTextEntry("AVA_JBS_NOTF_TE", CurrentHelpText)
+                BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
+                EndTextCommandDisplayHelp(0, false, true, -1)
             end
 
             if IsControlJustReleased(0, 38) -- E
