@@ -581,6 +581,35 @@ function OpenCloakroomMenu()
     end)
 end
 
+----------------
+-- Job Center --
+----------------
+
+function JobCenterMenu()
+    local elements = {}
+
+    for i = 1, #Config.JobCenter.JobList, 1 do
+        local element = Config.JobCenter.JobList[i]
+        table.insert(elements, {index = i, Label = element.Label, Desc = element.Desc})
+    end
+
+    RageUI.CloseAll()
+    RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
+        for i = 1, #elements do
+            local element = elements[i]
+            Items:AddButton(element.Label, element.Desc, nil, function(onSelected)
+                if onSelected then
+                    TriggerServerEvent("ava_jobs:server:job_center:hire", element.index)
+                    RageUI.GoBack()
+                    CurrentActionEnabled = true
+                end
+            end)
+        end
+    end, function()
+        CurrentActionEnabled = true
+    end)
+
+end
 -----------
 -- Utils --
 -----------

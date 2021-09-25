@@ -66,7 +66,7 @@ function JobMenu(jobName)
     if playerJobsJobName.JobMenu and playerJobsJobName.JobMenu.Items then
         local elementCount = 0
         for k, v in pairs(playerJobsJobName.JobMenu.Items) do
-            if (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+            if (not v.MinimumGrade or (playerJobsJobName.grade == v.MinimumGrade or tableHasValue(playerJobsJobName.underGrades, v.MinimumGrade)))
                 and (not v.Condition or v.Condition(jobName, playerPed)) then
                 elementCount = elementCount + 1
                 JobMenuElements[elementCount] = {label = v.Label, name = k, desc = v.Desc, RightLabel = v.RightLabel}

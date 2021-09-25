@@ -65,3 +65,49 @@ function isInServiceOrHasJob(source, jobName)
 end
 exports("isInServiceOrHasJob", isInServiceOrHasJob)
 -- #endregion
+
+----------------
+-- Job Center --
+----------------
+-- #region job center
+RegisterNetEvent("ava_jobs:server:job_center:hire", function(index)
+    local src = source
+    if index == nil then
+        return
+    end
+    local job = Config.JobCenter.JobList[index]
+    if not job then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_error_happened"))
+        return
+    end
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if aPlayer.hasJob(job.JobName) then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_already_has_job"))
+        return
+    end
+
+    local playerJobs = aPlayer.getJobs()
+    for i = 1, #playerJobs do
+        if playerJobs[i].grade == "tempworker" then
+            aPlayer.removeJob(playerJobs[i].name)
+        end
+    end
+    if not aPlayer.canAddAnotherJob() then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_job_limit"))
+        return
+    end
+
+    local jobAdded = aPlayer.addJob(job.JobName)
+    if not jobAdded then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_could_not_add_job"))
+        return
+    end
+
+    if job.JobName == "unemployed" then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_subscribed_to_unemployment"))
+    else
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_subscribed"))
+    end
+end)
+-- #endregion
+
