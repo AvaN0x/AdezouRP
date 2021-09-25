@@ -1,0 +1,17 @@
+{
+    "killey_by_notification": "~r~%s~s~ got killed by **%s** with %s.",
+    "killey_by_embed": "**%s** got killed by %s with %s (`%s`) at distance : *%d*",
+    "killey_notification": "~r~%s~s~ died from %s.",
+    "killey_embed": "**%s** died from  %s  (`%s`).",
+    "suicide": "Suicide",
+    "melee": "Melee",
+    "bullet": "Bullet",
+    "knife": "Knife",
+    "car": "Car",
+    "animal": "Animal",
+    "fallDamage": "FallDamage",
+    "explosion": "Explosion",
+    "gas": "Gas",
+    "burn": "Burn",
+    "drown": "Drown"
+}

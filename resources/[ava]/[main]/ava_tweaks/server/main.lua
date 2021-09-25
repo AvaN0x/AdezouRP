@@ -12,10 +12,10 @@ end, GetString("vehweaphash_help"))
 
 -- * death verification
 local deathCauses = {
-    Suicide = {Label = "Suicide", Hash = {0}},
-    Melee = {Label = "Melee", Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184}},
+    Suicide = {Label = GetString("suicide"), Hash = {0}},
+    Melee = {Label = GetString("melee"), Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184}},
     Bullet = {
-        Label = "Bullet",
+        Label = GetString("bullet"),
         Hash = {
             -86904375,
             453432689,
@@ -41,12 +41,12 @@ local deathCauses = {
             -1045183535,
         },
     },
-    Knife = {Label = "Knife", Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060}},
-    Car = {Label = "Car", Hash = {133987706, -1553120962}},
-    Animal = {Label = "Animal", Hash = {-100946242, 148160082}},
-    FallDamage = {Label = "FallDamage", Hash = {-842959696}},
+    Knife = {Label = GetString("knife"), Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060}},
+    Car = {Label = GetString("car"), Hash = {133987706, -1553120962}},
+    Animal = {Label = GetString("animal"), Hash = {-100946242, 148160082}},
+    FallDamage = {Label = GetString("fallDamage"), Hash = {-842959696}},
     Explosion = {
-        Label = "Explosion",
+        Label = GetString("explosion"),
         Hash = {
             -1568386805,
             1305664598,
@@ -63,9 +63,9 @@ local deathCauses = {
             -1355376991,
         },
     },
-    Gas = {Label = "Gas", Hash = {-1600701090}},
-    Burn = {Label = "Burn", Hash = {615608432, 883325847, -544306709}},
-    Drown = {Label = "Drown", Hash = {-10959621, 1936677264}},
+    Gas = {Label = GetString("gas"), Hash = {-1600701090}},
+    Burn = {Label = GetString("burn"), Hash = {615608432, 883325847, -544306709}},
+    Drown = {Label = GetString("drown"), Hash = {-10959621, 1936677264}},
 }
 
 local function GetDeathCauseLabel(deathCause)
@@ -81,19 +81,18 @@ end
 
 RegisterNetEvent("ava_core:server:playerDeath", function(data)
     local src = source
+    local srcName = GetPlayerName(src)
     if data.killedByPlayer then
         local deathCauseLabel = GetDeathCauseLabel(data.weapon)
         local distance = math.abs(#(data.coords - data.killerCoords))
-        TriggerEvent("ava_personalmenu:server:notifAdmins", "death",
-            "~r~" .. GetPlayerName(src) .. "~s~ got killed by " .. GetPlayerName(data.killerId) .. " with " .. deathCauseLabel .. ".")
+        local killerName = GetPlayerName(data.killerId)
+        TriggerEvent("ava_personalmenu:server:notifAdmins", "death", GetString("killey_by_notification", srcName, killerName, deathCauseLabel))
         exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "",
-            GetPlayerName(src) .. " got killed by " .. GetPlayerName(data.killerId) .. " with " .. deathCauseLabel .. " (`" .. data.weapon .. "`) at distance : "
-                .. distance, 16711680) -- #ff0000
+            GetString("killey_by_embed", srcName, killerName, deathCauseLabel, tostring(data.weapon), tonumber(distance)), 16711680) -- #ff0000
     else
         local deathCauseLabel = GetDeathCauseLabel(data.cause)
-        TriggerEvent("ava_personalmenu:server:notifAdmins", "death", "~r~" .. GetPlayerName(src) .. "~s~ died from " .. deathCauseLabel .. ".")
-        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetPlayerName(src) .. " died from " .. deathCauseLabel .. " (`" .. data.cause .. "`).",
-            16711680) -- #ff0000
+        TriggerEvent("ava_personalmenu:server:notifAdmins", "death", GetString("killey_notification", srcName, deathCauseLabel))
+        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetString("killey_embed", srcName, deathCauseLabel, tostring(data.cause)), 16711680) -- #ff0000
     end
 end)
 

@@ -63,6 +63,8 @@ function RageUI.PoolMenus:AdminMenu()
                     end
                 end)
             end
+            Items:AddButton(GetString("admin_menu_admin_settings"), GetString("admin_menu_admin_settings_subtitle"), {RightLabel = "→→→"}, nil,
+                AdminSettingsSubMenu)
             if perms.noclip then
                 Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil, function(onSelected, IsChecked)
                     if (onSelected) then
@@ -78,6 +80,7 @@ function RageUI.PoolMenus:AdminMenu()
 
     PoolPlayerList()
     PoolVehicles()
+    PoolAdminSettings()
 end
 
 --------------------------------------

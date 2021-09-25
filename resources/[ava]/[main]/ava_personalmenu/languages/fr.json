@@ -89,5 +89,12 @@
     "vehicles_tpnearestvehicle": "TP véhicule le plus proche",
     "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche",
     "admin_menu_players_options_gamertags": "Afficher les noms des joueurs",
-    "admin_menu_players_options_gamertags_subtitle": "Afficher les noms des joueurs"
+    "admin_menu_players_options_gamertags_subtitle": "Afficher les noms des joueurs",
+    "admin_menu_admin_settings": "Paramètres",
+    "admin_menu_admin_settings_subtitle": "",
+    "admin_settings": "Paramètres",
+    "admin_notifications_death": "Notifications de morts",
+    "admin_notifications_death_subtitle": "",
+    "admin_notifications_loginout": "Notifications de connexions",
+    "admin_notifications_loginout_subtitle": ""
 }
