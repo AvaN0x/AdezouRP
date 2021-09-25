@@ -70,7 +70,20 @@ exports("isInServiceOrHasJob", isInServiceOrHasJob)
 -- Job Center --
 ----------------
 -- #region job center
-RegisterNetEvent("ava_jobs:server:job_center:hire", function(index)
+RegisterNetEvent("ava_jobs:server:job_center:unsubscribe", function()
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+
+    local playerJobs = aPlayer.getJobs()
+    for i = 1, #playerJobs do
+        if playerJobs[i].name == "unemployed" or playerJobs[i].grade == "tempworker" then
+            aPlayer.removeJob(playerJobs[i].name)
+        end
+    end
+    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_successfully_unsubscribed"))
+end)
+
+RegisterNetEvent("ava_jobs:server:job_center:subscribe", function(index)
     local src = source
     if index == nil then
         return
@@ -87,11 +100,27 @@ RegisterNetEvent("ava_jobs:server:job_center:hire", function(index)
     end
 
     local playerJobs = aPlayer.getJobs()
+    -- we stop here if the player already has a job that is not a tempworker job
+    if job.JobName == "unemployed" then
+        -- normal is not tempworker
+        local normalJobCount = 0
+        for i = 1, #playerJobs do
+            if playerJobs[i].grade ~= "tempworker" then
+                normalJobCount = normalJobCount + 1
+            end
+        end
+        if normalJobCount > 0 then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_cannot_subscribe_to_unmployement_has_job"))
+            return
+        end
+    end
+
     for i = 1, #playerJobs do
         if playerJobs[i].grade == "tempworker" then
             aPlayer.removeJob(playerJobs[i].name)
         end
     end
+
     if not aPlayer.canAddAnotherJob() then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_job_limit"))
         return
@@ -106,7 +135,7 @@ RegisterNetEvent("ava_jobs:server:job_center:hire", function(index)
     if job.JobName == "unemployed" then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_subscribed_to_unemployment"))
     else
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_subscribed"))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_engaged"))
     end
 end)
 -- #endregion

@@ -594,12 +594,19 @@ function JobCenterMenu()
     end
 
     RageUI.CloseAll()
-    RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
+    RageUI.OpenTempMenu(GetString("job_center"), function(Items)
+        Items:AddButton(GetString("job_center_unsubscribe"), GetString("job_center_unsubscribe_subtitle"), nil, function(onSelected)
+            if onSelected then
+                TriggerServerEvent("ava_jobs:server:job_center:unsubscribe")
+                RageUI.GoBack()
+                CurrentActionEnabled = true
+            end
+        end)
         for i = 1, #elements do
             local element = elements[i]
             Items:AddButton(element.Label, element.Desc, nil, function(onSelected)
                 if onSelected then
-                    TriggerServerEvent("ava_jobs:server:job_center:hire", element.index)
+                    TriggerServerEvent("ava_jobs:server:job_center:subscribe", element.index)
                     RageUI.GoBack()
                     CurrentActionEnabled = true
                 end
