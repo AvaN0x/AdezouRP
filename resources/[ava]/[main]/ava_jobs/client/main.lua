@@ -557,12 +557,14 @@ function OpenCloakroomMenu()
                 -- TriggerEvent("openOutfitsMenu")
             end
         end)
-        Items:CheckBox(GetString("take_service"), GetString("take_service_subtitle"), playerServices[jobName], nil, function(onSelected, IsChecked)
-            if (onSelected) then
-                playerServices[jobName] = not playerServices[jobName]
-                TriggerServerEvent("ava_jobs:setService", jobName, playerServices[jobName])
-            end
-        end)
+        if job.ServiceCounter then
+            Items:CheckBox(GetString("take_service"), GetString("take_service_subtitle"), playerServices[jobName], nil, function(onSelected, IsChecked)
+                if (onSelected) then
+                    playerServices[jobName] = not playerServices[jobName]
+                    TriggerServerEvent("ava_jobs:server:setService", jobName, playerServices[jobName])
+                end
+            end)
+        end
         if outfits then
             for i = 1, #outfits do
                 local outfit = outfits[i]
