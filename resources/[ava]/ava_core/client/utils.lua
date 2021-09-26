@@ -244,8 +244,10 @@ exports("SpawnObjectLocal", AVA.SpawnObjectLocal)
 ---Delete an object
 ---@param object any
 AVA.DeleteObject = function(object)
-    SetEntityAsMissionEntity(object, false, true)
-    DeleteObject(object)
+    if GetEntityType(object) == 3 then -- is entity an object
+        SetEntityAsMissionEntity(object, false, true)
+        DeleteObject(object)
+    end
 end
 exports("DeleteObject", AVA.DeleteObject)
 

@@ -16,10 +16,9 @@ local CurrentZoneCategory = nil
 local CurrentZoneValue = nil
 local CurrentHelpText = nil
 local CurrentJobName = nil
-local CurrentActionEnabled = false
+local CurrentActionEnabled = true
 
-local spawnedPlants = {}
-local plants = {}
+local fieldObjects = {}
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
@@ -82,9 +81,11 @@ end)
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
-        if plants then
-            for k, v in pairs(plants) do
-                exports.ava_core:DeleteObject(v.obj)
+        if fieldObjects then
+            for k, field in pairs(fieldObjects) do
+                for i = 1, #field do
+                    exports.ava_core:DeleteObject(field[i].obj)
+                end
             end
         end
         if mainBlips then
@@ -455,7 +456,6 @@ AddEventHandler("ava_jobs:hasEnteredMarker", function(jobName, zoneName, zoneCat
     CurrentZoneName = zoneName
     CurrentZoneCategory = zoneCategory
     CurrentZoneValue = zone
-    CurrentActionEnabled = true
 end)
 
 AddEventHandler("ava_jobs:hasExitedMarker", function(jobName, zoneName, zoneCategory)
@@ -525,6 +525,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 function OpenCloakroomMenu()
     local playerSkin = exports.ava_core:getPlayerSkinData()
 
@@ -587,18 +588,6 @@ end
 -- Harvest --
 -------------
 
-local isPickingUp = false
-
-local function spawnedPlantsFindName(name)
-    for i = 1, #spawnedPlants, 1 do
-        if spawnedPlants[i].name == name then
-            return i
-        end
-    end
-
-    return nil
-end
-
 Citizen.CreateThread(function()
     while true do
         Wait(200)
@@ -606,7 +595,7 @@ Citizen.CreateThread(function()
             if job.FieldZones then
                 for k, v in pairs(job.FieldZones) do
                     if #(playerCoords - v.Pos) < 20 then
-                        Spawnplants(jobName, k, v)
+                        SpawnPlants(jobName, k, v)
                     end
                     Wait(500)
                 end
@@ -618,125 +607,111 @@ end)
 Citizen.CreateThread(function()
     while true do
         Wait(0)
-        for jobName, job in pairs(playerJobs) do
-            local nearbyObject, nearbyID
+        if CurrentActionEnabled and IsPedOnFoot(playerPed) then
+            for fieldName, field in pairs(fieldObjects) do
+                for i = 1, #field do
+                    local object = field[i]
+                    if object and #(playerCoords - object.coords) < object.distance then
+                        AddTextEntry("AVA_JBS_NOTF_TE", GetString("press_collect"))
+                        BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
+                        EndTextCommandDisplayHelp(0, false, true, -1)
 
-            for i = 1, #plants, 1 do
-                if #(playerCoords - GetEntityCoords(plants[i].obj)) < 1.3 then
-                    nearbyObject, nearbyID = plants[i], i
-                end
-            end
+                        if IsControlJustReleased(0, 38) then -- E
+                            CurrentActionEnabled = false
 
-            if nearbyObject and nearbyObject.obj and IsPedOnFoot(playerPed) then
-                if not isPickingUp then
-                    AddTextEntry("AVA_JBS_NOTF_TE", GetString("press_collect"))
-                    BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
-                    EndTextCommandDisplayHelp(0, false, true, -1)
-                end
+                            local canPickUp = exports.ava_core:TriggerServerCallback("ava_jobs:canPickUp", object.jobName, object.zoneName)
+                            if canPickUp then
+                                TaskStartScenarioInPlace(playerPed, "world_human_gardener_plant", 0, false)
 
-                if IsControlJustReleased(0, 38) and not isPickingUp then -- E
-                    isPickingUp = true
+                                Wait(2000)
+                                ClearPedTasks(playerPed)
 
-                    local canPickUp = exports.ava_core:TriggerServerCallback("ava_jobs:canPickUp", nearbyObject.jobName, nearbyObject.name)
-                    if canPickUp then
-                        TaskStartScenarioInPlace(playerPed, "world_human_gardener_plant", 0, false)
+                                exports.ava_core:DeleteObject(object.obj)
+                                table.remove(field, i)
 
-                        Wait(2000)
-                        ClearPedTasks(playerPed)
+                                TriggerServerEvent("ava_jobs:server:pickUp", object.jobName, object.zoneName)
+                            else
+                                exports.ava_core:ShowNotification(GetString("inventoryfull"))
+                            end
 
-                        exports.ava_core:DeleteObject(nearbyObject.obj)
-                        table.remove(plants, nearbyID)
-
-                        local sPIndex = spawnedPlantsFindName(nearbyObject.name)
-                        spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity - 1
-                        TriggerServerEvent("ava_jobs:server:pickUp", nearbyObject.jobName, nearbyObject.name)
-                    else
-                        exports.ava_core:ShowNotification(GetString("inventoryfull"))
+                            CurrentActionEnabled = true
+                        end
                     end
-
-                    isPickingUp = false
                 end
-            else
-                Wait(500)
             end
+        else
+            Wait(50)
         end
     end
 end)
 
-function Spawnplants(jobName, k, v)
-    local sPIndex = spawnedPlantsFindName(k)
-    if sPIndex == nil then
-        table.insert(spawnedPlants, {jobName = jobName, name = k, quantity = 0})
-        sPIndex = spawnedPlantsFindName(k)
-    end
+local function ValidateplantCoord(plantCoord, jobName, zoneName, zone)
+    local field = fieldObjects[jobName .. zoneName]
 
-    while spawnedPlants[sPIndex].quantity < 5 do
-        Wait(0)
-        local plantCoords = GeneratePlantCoords(k, v)
-
-        local obj = exports.ava_core:SpawnObjectLocal(v.PropHash, plantCoords)
-        PlaceObjectOnGroundProperly(obj)
-        FreezeEntityPosition(obj, true)
-
-        table.insert(plants, {obj = obj, jobName = jobName, name = k})
-        spawnedPlants[sPIndex].quantity = spawnedPlants[sPIndex].quantity + 1
-    end
-end
-
-function GeneratePlantCoords(k, v)
-    while true do
-        Wait(1)
-
-        if (v.Radius == nil) then
-            v.Radius = 8
+    -- check if coords are not too close from an other plant
+    if #field > 0 then
+        if not zone.DistanceValidate then
+            zone.DistanceValidate = zone.Radius / 2
         end
-
-        local plantCoordX = v.Pos.x + math.random(-v.Radius, v.Radius)
-        local plantCoordY = v.Pos.y + math.random(-v.Radius, v.Radius)
-
-        local coordZ = GetCoordZ(plantCoordX, plantCoordY, v)
-        local coord = vector3(plantCoordX, plantCoordY, coordZ)
-
-        if ValidateplantCoord(coord, k, v) then
-            return coord
-        end
-    end
-end
-
-function ValidateplantCoord(plantCoord, k, v)
-    local sPIndex = spawnedPlantsFindName(k)
-    if spawnedPlants[sPIndex].quantity > 0 then
-        local validate = true
-        if not v.DistanceValidate then
-            v.DistanceValidate = v.Radius / 2
-        end
-
-        for k2, v2 in pairs(plants) do
-            if #(plantCoord - GetEntityCoords(v2.obj)) < v.DistanceValidate then
-                validate = false
+        for i = 1, #field do
+            if #(plantCoord - field[i].coords) < zone.DistanceValidate then
+                return false
             end
         end
-
-        if #(plantCoord - v.Pos) > 50 then
-            validate = false
-        end
-
-        return validate
-    else
-        return true
     end
+
+    -- coords should not be at a distance superior to 50 from central point
+    if #(plantCoord - zone.Pos) > 50 then
+        return false
+    end
+    return true
 end
 
-function GetCoordZ(x, y, v)
-    for i, height in ipairs(v.GroundCheckHeights) do
-        local foundGround, z = GetGroundZFor_3dCoord(x, y, height)
+local function GetObjectCoordZ(x, y, zone)
+    -- we use MinGroundHeight and MaxGroundHeight to be try and get the lowest possible ground
+    for i = zone.MinGroundHeight or (zone.Pos.z - 2.0), zone.MaxGroundHeight or (zone.Pos.z + 2.0), 1 do
+        local foundGround, z = GetGroundZFor_3dCoord(x, y, i + 0.0)
 
         if foundGround then
             return z
         end
     end
 
-    return v.Pos.z
+    return zone.Pos.z
+end
+local function GeneratePlantCoords(jobName, zoneName, zone)
+    local coords
+    repeat
+        Wait(0)
+        if (zone.Radius == nil) then
+            zone.Radius = 8
+        end
+
+        local x = zone.Pos.x + math.random(-zone.Radius, zone.Radius)
+        local y = zone.Pos.y + math.random(-zone.Radius, zone.Radius)
+        local z = GetObjectCoordZ(x, y, zone)
+
+        coords = vector3(x, y, z)
+    until ValidateplantCoord(coords, jobName, zoneName, zone)
+    return coords
+end
+
+function SpawnPlants(jobName, zoneName, zone)
+    if type(fieldObjects[jobName .. zoneName]) ~= "table" then
+        fieldObjects[jobName .. zoneName] = {}
+    end
+    local field = fieldObjects[jobName .. zoneName]
+
+    while #field < 5 do
+        Wait(0)
+        local plantCoords = GeneratePlantCoords(jobName, zoneName, zone)
+
+        local obj = exports.ava_core:SpawnObjectLocal(zone.PropHash, plantCoords)
+        PlaceObjectOnGroundProperly(obj)
+        FreezeEntityPosition(obj, true)
+
+        table.insert(field, {obj = obj, jobName = jobName, zoneName = zoneName, coords = GetEntityCoords(obj), distance = zone.Distance or 1.3})
+    end
 end
 
 ----------------
