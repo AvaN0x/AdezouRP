@@ -98,6 +98,23 @@ AddEventHandler("onResourceStop", function(resource)
     end
 end)
 
+RegisterNetEvent("ava_core:client:jobRemoved", function(jobName)
+    local job = Config.Jobs[jobName]
+    if fieldObjects and job then
+        if job.FieldZones then
+            for zoneName, _ in pairs(job.FieldZones) do
+                local field = fieldObjects[jobName .. zoneName]
+                if field and #field > 0 then
+                    for i = 1, #field do
+                        exports.ava_core:DeleteObject(field[i].obj)
+                    end
+                    fieldObjects[jobName .. zoneName] = nil
+                end
+            end
+        end
+    end
+end)
+
 function setJobsToUse()
     if not PlayerData.jobs then
         return
@@ -456,6 +473,7 @@ AddEventHandler("ava_jobs:hasEnteredMarker", function(jobName, zoneName, zoneCat
     CurrentZoneName = zoneName
     CurrentZoneCategory = zoneCategory
     CurrentZoneValue = zone
+    CurrentActionEnabled = true
 end)
 
 AddEventHandler("ava_jobs:hasExitedMarker", function(jobName, zoneName, zoneCategory)

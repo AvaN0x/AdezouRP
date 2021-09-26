@@ -460,6 +460,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                         if isUnemployed then
                             AVA.RemovePrincipal("player." .. self.src, "job.unemployed.grade." .. unemployedJob.grade)
                             table.remove(self.jobs, unemployedIndex)
+
+                            TriggerClientEvent("ava_core:client:jobRemoved", self.src, "unemployed")
                         end
                     end
 
@@ -483,6 +485,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         if hasJob then
             AVA.RemovePrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. job.grade)
             table.remove(self.jobs, index)
+            TriggerClientEvent("ava_core:client:jobRemoved", self.src, jobName)
 
             updatePlayerLocalJobs()
             return true
