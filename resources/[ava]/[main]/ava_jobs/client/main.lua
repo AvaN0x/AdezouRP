@@ -626,10 +626,12 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
         if CurrentActionEnabled and IsPedOnFoot(playerPed) then
+            local found = false
             for fieldName, field in pairs(fieldObjects) do
                 for i = 1, #field do
                     local object = field[i]
                     if object and #(playerCoords - object.coords) < object.distance then
+                        found = true
                         AddTextEntry("AVA_JBS_NOTF_TE", GetString("press_collect"))
                         BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
                         EndTextCommandDisplayHelp(0, false, true, -1)
@@ -656,6 +658,9 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
+            end
+            if not found then
+                Wait(500)
             end
         else
             Wait(50)
