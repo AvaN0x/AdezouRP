@@ -7,7 +7,7 @@ CoreJobs = exports.ava_core:GetJobsData()
 -- #region services
 local jobsServices = {}
 
-RegisterServerEvent("ava_jobs:server:setService", function(jobName, state)
+RegisterNetEvent("ava_jobs:server:setService", function(jobName, state)
     local src = source
     if not jobsServices[jobName] then
         jobsServices[jobName] = {}
@@ -144,6 +144,7 @@ end)
 -------------
 -- Harvest --
 -------------
+-- #region Harvest
 exports.ava_core:RegisterServerCallback("ava_jobs:canPickUp", function(source, jobName, zoneName)
     local aPlayer = exports.ava_core:GetPlayer(source)
     local result = false
@@ -161,7 +162,7 @@ exports.ava_core:RegisterServerCallback("ava_jobs:canPickUp", function(source, j
     return result
 end)
 
-RegisterServerEvent("ava_jobs:server:pickUp", function(jobName, zoneName)
+RegisterNetEvent("ava_jobs:server:pickUp", function(jobName, zoneName)
     local aPlayer = exports.ava_core:GetPlayer(source)
     local job = Config.Jobs[jobName]
     local zone = job.FieldZones[zoneName]
@@ -175,3 +176,100 @@ RegisterServerEvent("ava_jobs:server:pickUp", function(jobName, zoneName)
         end
     end
 end)
+-- #endregion
+
+---------------
+-- TREATMENT --
+---------------
+-- #region TREATMENT
+local playersProcessing = {}
+
+local function canCarryAll(source, items)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    for i = 1, #items, 1 do
+        print(inventory.canAddItem(items[i].name, items[i].quantity), items[i].name, items[i].quantity)
+        if not inventory.canAddItem(items[i].name, items[i].quantity) then
+            TriggerClientEvent("ava_core:client:ShowNotification", source, GetString("process_cant_carry"))
+            return false
+        end
+    end
+    return true
+end
+
+local function hasEnoughItems(source, items)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    local result = {}
+    for i = 1, #items, 1 do
+        local item = items[i]
+        local invItem = inventory.getItem(item.name)
+        if invItem.quantity < item.quantity then
+            local cfgItem = exports.ava_core:GetItemData(item.name)
+            table.insert(result, (item.quantity - invItem.quantity) .. " " .. (cfgItem and cfgItem.label or item.name))
+        end
+    end
+    if result[1] then
+        TriggerClientEvent("ava_core:client:ShowNotification", source, GetString("process_not_enough", table.concat(result, "~s~, ~g~")))
+        return false
+    else
+        return true
+    end
+end
+
+local function hasKey(source, keyName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    local hasOne = inventory.canRemoveItem(keyName, 1)
+    if not hasOne then
+        TriggerClientEvent("ava_core:client:ShowNotification", source, GetString("dont_have_keychain"))
+    end
+    return hasOne
+end
+
+exports.ava_core:RegisterServerCallback("ava_jobs:canprocess", function(source, process, jobName)
+    if not playersProcessing[source] then
+        local job = Config.Jobs[jobName]
+        if job and (job.isIllegal ~= true or not process.NeedKey or hasKey(source, job.KeyName)) and hasEnoughItems(source, process.ItemsGive)
+            and canCarryAll(source, process.ItemsGet) then
+            return true
+        end
+    else
+        print(("%s attempted to exploit processing!"):format(GetPlayerIdentifiers(source)[1]))
+    end
+    return false
+end)
+
+RegisterNetEvent("ava_jobs:server:process", function(process)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    local inventory = aPlayer.getInventory()
+    playersProcessing[src] = true
+    Wait(process.Delay)
+    for i = 1, #process.ItemsGive, 1 do
+        inventory.removeItem(process.ItemsGive[i].name, process.ItemsGive[i].quantity)
+    end
+    for i = 1, #process.ItemsGet, 1 do
+        inventory.addItem(process.ItemsGet[i].name, process.ItemsGet[i].quantity)
+    end
+    playersProcessing[src] = nil
+end)
+
+function CancelProcessing(playerID)
+    if playersProcessing[playerID] then
+        playersProcessing[playerID] = nil
+    end
+end
+
+RegisterNetEvent("ava_jobs:server:cancelProcessing", function()
+    CancelProcessing(source)
+end)
+
+AddEventHandler("playerDropped", function()
+    CancelProcessing(source)
+end)
+
+RegisterNetEvent("ava_core:server:playerDeath", function()
+    CancelProcessing(source)
+end)
+-- #endregion

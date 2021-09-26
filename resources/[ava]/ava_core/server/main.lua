@@ -154,6 +154,14 @@ AVA.GetItemsData = function()
 end
 exports("GetItemsData", AVA.GetItemsData)
 
+---Get all items data
+---@param name string
+---@return table
+AVA.GetItemData = function(name)
+    return AVAConfig.Items and AVAConfig.Items[name]
+end
+exports("GetItemData", AVA.GetItemData)
+
 -------------------------------------
 --------------- Jobs ---------------
 -------------------------------------

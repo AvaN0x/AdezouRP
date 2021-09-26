@@ -378,7 +378,7 @@ AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
 
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
-        aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]))
+        aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]) or 1)
     end
 end, GetString("give_item_help"), {
     {name = "player", help = GetString("player_id_or_zero")},

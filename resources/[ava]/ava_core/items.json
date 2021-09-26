@@ -72,6 +72,60 @@
         "limit": 180,
         "noIcon": true
     },
+    "woodenbox": {
+        "label": "Caisse en bois",
+        "weight": 500,
+        "limit": null,
+        "noIcon": true
+    },
+    "winebox": {
+        "label": "Caisse de vin",
+        "weight": 500,
+        "limit": null,
+        "noIcon": true
+    },
+    "wineluxebox": {
+        "label": "Caisse de grand cru",
+        "weight": 500,
+        "limit": null,
+        "noIcon": true
+    },
+    "champagnebox": {
+        "label": "Caisse de champagne ",
+        "weight": 500,
+        "limit": null,
+        "noIcon": true
+    },
+    "grapejuicebox": {
+        "label": "Caisse de jus de raisin",
+        "weight": 500,
+        "limit": null,
+        "noIcon": true
+    },
+    "wine": {
+        "label": "Vin",
+        "weight": 300,
+        "limit": 200,
+        "noIcon": true
+    },
+    "wineluxe": {
+        "label": "Grand cru",
+        "weight": 300,
+        "limit": 200,
+        "noIcon": true
+    },
+    "grapejuice": {
+        "label": "Jus de raisin",
+        "weight": 300,
+        "limit": 200,
+        "noIcon": true
+    },
+    "champagne": {
+        "label": "Champagne",
+        "weight": 300,
+        "limit": 200,
+        "noIcon": true
+    },
     "ziptie": {
         "label": "Serflex",
         "weight": 10,

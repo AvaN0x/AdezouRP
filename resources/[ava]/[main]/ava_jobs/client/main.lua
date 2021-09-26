@@ -518,15 +518,15 @@ Citizen.CreateThread(function()
                             --     else
                             --         TriggerEvent("esx_ava_garage:OpenSocietyVehiclesMenu", job.SocietyName, CurrentZoneValue)
                             --     end
-                            -- elseif CurrentZoneValue.Action then
-                            --     CurrentZoneValue.Action()
+                        elseif CurrentZoneValue.Action then
+                            CurrentZoneValue.Action()
                         end
 
-                        -- elseif CurrentZoneCategory == "ProcessZones" then
-                        --     ProcessZone(job)
+                    elseif CurrentZoneCategory == "ProcessZones" then
+                        ProcessZone(job)
 
-                        -- elseif CurrentZoneCategory == "ProcessMenuZones" then
-                        --     ProcessMenuZone(job)
+                    elseif CurrentZoneCategory == "ProcessMenuZones" then
+                        ProcessMenuZone(job)
 
                         -- elseif CurrentZoneCategory == "SellZones" then
                         --     SellZone(job)
@@ -600,6 +600,70 @@ function OpenCloakroomMenu()
     end, function()
         CurrentActionEnabled = true
     end)
+end
+
+function Process(process, pos)
+    local canProcess = exports.ava_core:TriggerServerCallback("ava_jobs:canprocess", process, CurrentJobName)
+    if canProcess then
+        TriggerServerEvent("ava_jobs:server:process", process)
+        local timeLeft = process.Delay / 1000
+
+        exports["progressBars"]:startUI(process.Delay, GetString("process_in_progress"))
+        TaskStartScenarioInPlace(playerPed, process.Scenario, 0, true)
+        while timeLeft > 0 do
+            Wait(1000)
+            timeLeft = timeLeft - 1
+
+            if #(playerCoords - (process.Pos or pos)) > 2 then
+                TriggerServerEvent("ava_jobs:server:cancelProcessing")
+                break
+            end
+        end
+        Wait(1500)
+        ClearPedTasks(playerPed)
+        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+    end
+    return canProcess
+end
+
+function ProcessZone(job)
+    Process(CurrentZoneValue)
+    CurrentActionEnabled = true
+end
+
+function ProcessMenuZone(job)
+    local elements = {}
+    for k, v in pairs(CurrentZoneValue.Process) do
+        table.insert(elements, {label = v.Name, desc = v.Desc, delay = v.Delay, value = v})
+    end
+
+    RageUI.CloseAll()
+    RageUI.OpenTempMenu(CurrentZoneValue.Title, function(Items)
+        for i = 1, #elements do
+            local element = elements[i]
+            Items:AddButton(element.label, element.desc, nil, function(onSelected)
+                if onSelected then
+                    RageUI.GoBack()
+                    local count = tonumber(exports.ava_core:KeyboardInput(GetString("process_how_much", CurrentZoneValue.MaxProcess), "", 10))
+
+                    if type(count) == "number" and math.floor(count) == count and count > 0 and quantity <= CurrentZoneValue.MaxProcess then
+                        for i = 1, count, 1 do
+                            if not Process(element.value, CurrentZoneValue.Pos) then
+                                break
+                            end
+                            Wait(500)
+                        end
+                    else
+                        exports.ava_core:ShowNotification(GetString("amount_invalid"))
+                    end
+                    CurrentActionEnabled = true
+                end
+            end)
+        end
+    end, function()
+        CurrentActionEnabled = true
+    end)
+
 end
 
 -------------
