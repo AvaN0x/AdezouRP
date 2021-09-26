@@ -31,6 +31,28 @@
             }
         ]
     },
+    "lspd": {
+        "label": "LSPD",
+        "grades": [
+            {
+                "name": "officer",
+                "label": "Officier",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
     "winemaker": {
         "label": "Vigneron",
         "grades": [

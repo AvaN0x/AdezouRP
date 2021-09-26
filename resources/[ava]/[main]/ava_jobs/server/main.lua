@@ -3,6 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 CoreJobs = exports.ava_core:GetJobsData()
+CoreItems = exports.ava_core:GetItemsData()
 
 -- #region services
 local jobsServices = {}
@@ -205,7 +206,7 @@ local function hasEnoughItems(source, items)
         local item = items[i]
         local invItem = inventory.getItem(item.name)
         if invItem.quantity < item.quantity then
-            local cfgItem = exports.ava_core:GetItemData(item.name)
+            local cfgItem = CoreItems[item.name]
             table.insert(result, (item.quantity - invItem.quantity) .. " " .. (cfgItem and cfgItem.label or item.name))
         end
     end
@@ -271,5 +272,90 @@ end)
 
 RegisterNetEvent("ava_core:server:playerDeath", function()
     CancelProcessing(source)
+end)
+-- #endregion
+
+-------------
+-- selling --
+-------------
+-- #region selling
+RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, count)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    local inventory = aPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.SellZones[zoneName]
+    if zone and inventory.canRemoveItem(item, count) then
+        local price = nil
+        for k, v in ipairs(zone.Items) do
+            if v.name == item then
+                price = v.price
+                break
+            end
+        end
+        if price == nil then
+            return
+        end
+        local total = tonumber(count) * tonumber(price)
+
+        local playerMoney, societyMoney
+        -- TODO
+        -- if he is a tempworker, he must earn less than the society
+        -- if aPlayer["job" .. (jobIndex ~= 1 and jobIndex or "")].grade_name == "interim" then
+        --     playerMoney = math.floor(total * 0.2)
+        --     societyMoney = math.floor(total * 0.4)
+        --     local stateMoney = math.floor(total * 0.4)
+        --     local stateAccount = nil
+        --     TriggerEvent("esx_addonaccount:getSharedAccount", "society_state", function(account)
+        --         stateAccount = account
+        --     end)
+        --     if stateAccount ~= nil then
+        --         stateAccount.addMoney(stateMoney)
+        --     end
+        -- else
+        playerMoney = math.floor(total / 100 * 60)
+        societyMoney = math.floor(total / 100 * 40)
+        -- end
+        inventory.removeItem(item, count)
+        local societyAccount = nil
+        -- TriggerEvent("esx_addonaccount:getSharedAccount", job.SocietyName, function(account)
+        --     societyAccount = account
+        -- end)
+        -- if societyAccount ~= nil then
+        -- aPlayer.addMoney(playerMoney)
+        inventory.addItem("cash", playerMoney)
+        -- societyAccount.addMoney(societyMoney)
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("have_earned", playerMoney))
+        -- TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", societyMoney))
+        -- end
+    else
+        print(("%s attempted to exploit selling!"):format(GetPlayerIdentifiers(src)[1]))
+    end
+end)
+
+exports.ava_core:RegisterServerCallback("ava_jobs:getSellElements", function(source, jobName, zoneName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.SellZones[zoneName]
+    if zone then
+        local elements = {}
+        for k, item in pairs(zone.Items) do
+            local invItem = inventory.getItem(item.name)
+            local cfgItem = CoreItems[item.name]
+            if cfgItem then
+                table.insert(elements, {
+                    itemLabel = cfgItem.label,
+                    label = GetString("sell_label", cfgItem.label, invItem.quantity),
+                    desc = item.desc,
+                    price = item.price,
+                    name = item.name,
+                    owned = invItem.quantity,
+                })
+            end
+        end
+        return elements
+    end
+    return nil
 end)
 -- #endregion

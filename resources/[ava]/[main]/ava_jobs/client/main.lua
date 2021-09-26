@@ -528,11 +528,11 @@ Citizen.CreateThread(function()
                     elseif CurrentZoneCategory == "ProcessMenuZones" then
                         ProcessMenuZone(job)
 
-                        -- elseif CurrentZoneCategory == "SellZones" then
-                        --     SellZone(job)
+                    elseif CurrentZoneCategory == "SellZones" then
+                        SellZone(job)
 
-                        -- elseif CurrentZoneCategory == "BuyZones" then
-                        --     BuyZone(job)
+                    elseif CurrentZoneCategory == "BuyZones" then
+                        BuyZone(job)
 
                     end
                 end
@@ -664,6 +664,39 @@ function ProcessMenuZone(job)
         CurrentActionEnabled = true
     end)
 
+end
+
+function SellZone(job)
+    local elements = exports.ava_core:TriggerServerCallback("ava_jobs:getSellElements", CurrentJobName, CurrentZoneName)
+    if not elements then
+        return
+    end
+
+    RageUI.CloseAll()
+    RageUI.OpenTempMenu(GetString("buyer_for", job.LabelName), function(Items)
+        for i = 1, #elements do
+            local element = elements[i]
+            Items:AddButton(element.label, element.desc, nil, function(onSelected)
+                if onSelected then
+                    RageUI.GoBack()
+                    local count = tonumber(exports.ava_core:KeyboardInput(GetString("sell_how_much", element.owned), "", 10))
+
+                    if type(count) == "number" and math.floor(count) == count and count > 0 then
+                        if tonumber(count) > tonumber(element.owned) then
+                            exports.ava_core:ShowNotification(GetString("sell_not_that_much", element.itemLabel))
+                        else
+                            TriggerServerEvent("ava_jobs:server:sellItems", CurrentJobName, CurrentZoneName, element.name, count)
+                        end
+                    else
+                        exports.ava_core:ShowNotification(GetString("amount_invalid"))
+                    end
+                    CurrentActionEnabled = true
+                end
+            end)
+        end
+    end, function()
+        CurrentActionEnabled = true
+    end)
 end
 
 -------------
