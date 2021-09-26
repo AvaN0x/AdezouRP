@@ -7,7 +7,7 @@ CoreJobs = exports.ava_core:GetJobsData()
 -- #region services
 local jobsServices = {}
 
-RegisterServerEvent("ava_jobs:setService", function(jobName, state)
+RegisterServerEvent("ava_jobs:server:setService", function(jobName, state)
     local src = source
     if not jobsServices[jobName] then
         jobsServices[jobName] = {}
