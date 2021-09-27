@@ -653,6 +653,10 @@ function Process(process, pos)
         Wait(1500)
         ClearPedTasks(playerPed)
         SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+
+        if process.Scenario == "WORLD_HUMAN_CLIPBOARD" then
+            ClearAreaOfObjects(playerCoords.x, playerCoords.y, playerCoords.z, 0.5, 0)
+        end
     end
     return canProcess
 end
@@ -677,7 +681,7 @@ function ProcessMenuZone(job)
                     RageUI.GoBack()
                     local count = tonumber(exports.ava_core:KeyboardInput(GetString("process_how_much", CurrentZoneValue.MaxProcess), "", 10))
 
-                    if type(count) == "number" and math.floor(count) == count and count > 0 and quantity <= CurrentZoneValue.MaxProcess then
+                    if type(count) == "number" and math.floor(count) == count and count > 0 and count <= CurrentZoneValue.MaxProcess then
                         for i = 1, count, 1 do
                             if not Process(element.value, CurrentZoneValue.Pos) then
                                 break
