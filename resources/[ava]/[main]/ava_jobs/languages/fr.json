@@ -55,6 +55,7 @@
     "press_sell": "Appuyez sur ~INPUT_CONTEXT~ pour vendre vos produits",
     "press_buy": "Appuyez sur ~INPUT_CONTEXT~ pour acheter des produits",
     "process_not_enough": "Il vous manque : ~g~%s",
+    "harvest_in_progress": "Récolte en cours",
     "process_in_progress": "Traitement en cours",
     "process_how_much": "Combien voulez-vous en traiter ? [Max : %s]",
     "access_chest": "Coffre",

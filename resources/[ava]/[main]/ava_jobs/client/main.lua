@@ -77,6 +77,19 @@ end)
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     PlayerData = data
     setJobsToUse()
+
+    -- mandatory wait!
+    Wait(500)
+    -- if player loaded, we remove all objects (we remove them if the player changed of character)
+    if fieldObjects then
+        for fieldName, field in pairs(fieldObjects) do
+            for i = 1, #field do
+                exports.ava_core:DeleteObject(field[i].obj)
+            end
+            fieldObjects[fieldName] = nil
+        end
+        fieldObjects = {}
+    end
 end)
 
 AddEventHandler("onResourceStop", function(resource)
@@ -439,8 +452,22 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-
         end
+        if fieldObjects then
+            for fieldName, field in pairs(fieldObjects) do
+                for i = 1, #field do
+                    local object = field[i]
+                    if object and #(playerCoords - object.coords) < object.distance then
+                        isInMarker = true
+                        zoneJob = fieldName
+                        zoneCategoryPlayerIsIn = "field"
+                        zoneNamePlayerIsIn = fieldName .. i
+                        zonePlayerIsIn = i
+                    end
+                end
+            end
+        end
+
         if Config.JobCenter ~= nil then
             local v<const> = Config.JobCenter
             if (#(playerCoords - v.Pos) < (v.Distance or 2)) then
@@ -465,7 +492,9 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler("ava_jobs:hasEnteredMarker", function(jobName, zoneName, zoneCategory, zone)
-    if zone.HelpText ~= nil then
+    if zoneCategory == "field" then
+        CurrentHelpText = GetString("press_collect")
+    else
         CurrentHelpText = zone.HelpText
     end
 
@@ -521,6 +550,8 @@ Citizen.CreateThread(function()
                         elseif CurrentZoneValue.Action then
                             CurrentZoneValue.Action()
                         end
+                    elseif CurrentZoneCategory == "field" then
+                        Harvest(fieldObjects[CurrentJobName], CurrentZoneValue)
 
                     elseif CurrentZoneCategory == "ProcessZones" then
                         ProcessZone(job)
@@ -712,58 +743,38 @@ Citizen.CreateThread(function()
                     if #(playerCoords - v.Pos) < 20 then
                         SpawnPlants(jobName, k, v)
                     end
-                    Wait(500)
                 end
             end
+            Wait(500)
         end
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(0)
-        if CurrentActionEnabled and IsPedOnFoot(playerPed) then
-            local found = false
-            for fieldName, field in pairs(fieldObjects) do
-                for i = 1, #field do
-                    local object = field[i]
-                    if object and #(playerCoords - object.coords) < object.distance then
-                        found = true
-                        AddTextEntry("AVA_JBS_NOTF_TE", GetString("press_collect"))
-                        BeginTextCommandDisplayHelp("AVA_JBS_NOTF_TE")
-                        EndTextCommandDisplayHelp(0, false, true, -1)
+function Harvest(field, i)
+    local object = field[i]
+    if object then
+        CurrentActionEnabled = false
 
-                        if IsControlJustReleased(0, 38) then -- E
-                            CurrentActionEnabled = false
+        local canPickUp = exports.ava_core:TriggerServerCallback("ava_jobs:canPickUp", object.jobName, object.zoneName)
+        if canPickUp then
+            TaskStartScenarioInPlace(playerPed, "world_human_gardener_plant", 0, false)
 
-                            local canPickUp = exports.ava_core:TriggerServerCallback("ava_jobs:canPickUp", object.jobName, object.zoneName)
-                            if canPickUp then
-                                TaskStartScenarioInPlace(playerPed, "world_human_gardener_plant", 0, false)
+            exports["progressBars"]:startUI(2000, GetString("harvest_in_progress"))
+            Wait(2000)
+            ClearPedTasks(playerPed)
 
-                                Wait(2000)
-                                ClearPedTasks(playerPed)
+            exports.ava_core:DeleteObject(object.obj)
+            table.remove(field, i)
 
-                                exports.ava_core:DeleteObject(object.obj)
-                                table.remove(field, i)
-
-                                TriggerServerEvent("ava_jobs:server:pickUp", object.jobName, object.zoneName)
-                            else
-                                exports.ava_core:ShowNotification(GetString("inventoryfull"))
-                            end
-
-                            CurrentActionEnabled = true
-                        end
-                    end
-                end
-            end
-            if not found then
-                Wait(500)
-            end
+            TriggerServerEvent("ava_jobs:server:pickUp", object.jobName, object.zoneName)
         else
-            Wait(50)
+            exports.ava_core:ShowNotification(GetString("inventoryfull"))
         end
+
+        CurrentZoneName = nil
+        CurrentActionEnabled = true
     end
-end)
+end
 
 local function ValidateplantCoord(plantCoord, jobName, zoneName, zone)
     local field = fieldObjects[jobName .. zoneName]
