@@ -47,6 +47,8 @@ server_scripts {
     "server/callbacks.lua",
     "server/classes/inventory.lua",
     "server/classes/player.lua",
+    "server/classes/job_accounts.lua",
+    "server/jobs.lua",
     "shared/utils.lua",
     "server/utils.lua",
     "server/commands.lua",

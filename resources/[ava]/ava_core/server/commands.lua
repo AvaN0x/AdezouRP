@@ -54,6 +54,10 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
 end
 exports("RegisterCommand", AVA.Commands.RegisterCommand)
 
+AVA.Commands.RegisterCommand("saveall", "superadmin", function(source, args, rawCommand)
+    AVA.SaveAll()
+end)
+
 ----------------------------------------
 --------------- Vehicles ---------------
 ----------------------------------------

@@ -34,7 +34,7 @@ function getCountInService(jobName)
     local debugString = ""
     if CoreJobs[jobName] and jobsServices[jobName] then
         local ace = "ace.job." .. jobName .. ".main"
-        for _, playerSrc in pairs(GetPlayers()) do
+        for _, playerSrc in ipairs(GetPlayers()) do
             if IsPlayerAceAllowed(playerSrc, ace) and jobsServices[jobName][tostring(playerSrc)] ~= nil then
                 count = count + 1
                 debugString = debugString .. tostring(playerSrc) .. " "
@@ -317,17 +317,13 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
         societyMoney = math.floor(total / 100 * 40)
         -- end
         inventory.removeItem(item, count)
-        local societyAccount = nil
-        -- TriggerEvent("esx_addonaccount:getSharedAccount", job.SocietyName, function(account)
-        --     societyAccount = account
-        -- end)
-        -- if societyAccount ~= nil then
-        -- aPlayer.addMoney(playerMoney)
+        local accounts = exports.ava_core:GetJobsAccounts(jobName)
+        if accounts then
+            accounts.addAccountBalance("bank", societyMoney)
+        end
         inventory.addItem("cash", playerMoney)
-        -- societyAccount.addMoney(societyMoney)
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("have_earned", playerMoney))
-        -- TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", societyMoney))
-        -- end
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", societyMoney))
     else
         print(("%s attempted to exploit selling!"):format(GetPlayerIdentifiers(src)[1]))
     end

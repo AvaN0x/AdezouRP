@@ -142,6 +142,11 @@ function setJobsToUse()
             playerJobs[job.name].grade = job.grade
             playerJobs[job.name].canManage = job.canManage
             playerJobs[job.name].underGrades = job.underGrades
+            if job.canManage and not playerJobs[job.name].isGang then
+                Citizen.CreateThread(function()
+                    playerJobs[job.name].bankBalance = exports.ava_core:TriggerServerCallback("ava_core:server:getJobAccountBalance", job.name, "bank")
+                end)
+            end
         end
     end
     for name, farm in pairs(Config.Jobs) do

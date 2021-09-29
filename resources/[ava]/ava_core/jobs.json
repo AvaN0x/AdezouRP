@@ -1,6 +1,7 @@
 {
     "unemployed": {
         "label": "Chômage",
+        "noBoss": true,
         "grades": [
             {
                 "name": "employee",

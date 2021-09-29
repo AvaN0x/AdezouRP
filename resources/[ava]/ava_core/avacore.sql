@@ -95,3 +95,11 @@ CREATE TABLE IF NOT EXISTS `ban_list` (
     `date_ban` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`license`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `name` varchar(50) NOT NULL,
+  `accounts` text DEFAULT NULL,
+  `salaries` text DEFAULT NULL,
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

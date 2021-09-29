@@ -287,9 +287,11 @@ AddEventHandler("playerJoining", function(oldSource)
     setupPlayer(src, oldSource)
 end)
 
-for _, source in ipairs(GetPlayers()) do
-    setupPlayer(source)
-end
+Citizen.CreateThread(function()
+    for _, source in ipairs(GetPlayers()) do
+        setupPlayer(source)
+    end
+end)
 
 -- * replaced with event playerJoining
 -- RegisterNetEvent('ava_core:server:playerJoined', function()
@@ -630,25 +632,13 @@ AVA.Players.SaveAll = function()
     end
 
     Citizen.Await(promise.all(promises))
-    print("^2[SAVE PLAYERS] ^0 Every players are now saved.")
+    print("^2[SAVE PLAYERS] ^0 Every players have been saved.")
 end
 exports("SaveAllPlayers", AVA.Players.SaveAll)
 
 AVA.Commands.RegisterCommand("saveplayers", "superadmin", function(source, args, rawCommand)
     AVA.Players.SaveAll()
 end)
-
------------------------------------------
---------------- Auto save ---------------
------------------------------------------
-
-if AVAConfig.SaveTimeout then
-    local function timeoutSavePlayers()
-        AVA.Players.SaveAll()
-        SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSavePlayers)
-    end
-    SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSavePlayers)
-end
 
 -------------------------------------------
 --------------- Select char ---------------

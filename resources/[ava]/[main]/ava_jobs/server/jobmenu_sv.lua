@@ -148,3 +148,10 @@ exports.ava_core:RegisterServerCallback("ava_jobs:getAllGrades", function(source
         return grades
     end
 end)
+
+RegisterNetEvent("ava_jobs:server:test", function(jobName)
+    local accounts = exports.ava_core:GetJobsAccounts(jobName)
+    if accounts then
+        accounts.addAccountBalance("bank", 1000)
+    end
+end)

@@ -42,7 +42,7 @@ function OpenJobMenu()
     end
 end
 
-local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, "", GetString("job_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
+local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, "", GetString("job_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
 local JobMenuElements = {}
 local openedMenuJobName = nil
 MainJobMenu.Closed = function()
@@ -74,6 +74,7 @@ function JobMenu(jobName)
         end
     end
 
+    MainJobMenu.Subtitle = GetString("job_menu_title", playerJobsJobName.LabelName)
     if not RageUI.Visible(MainJobMenu) then
         RageUI.Visible(MainJobMenu, true)
     end
@@ -120,6 +121,14 @@ function RageUI.PoolMenus:JobMenu()
             end
         end
         if playerJobsJobName.canManage then
+            if playerJobsJobName.bankBalance then
+                Items:AddButton(GetString("job_menu_bank_balance", playerJobsJobName.bankBalance), GetString("job_menu_bank_balance_subtitle"), nil,
+                    function(onSelected)
+                        if onSelected then
+                            TriggerServerEvent("ava_jobs:server:test", openedMenuJobName)
+                        end
+                    end)
+            end
             if playerJobsJobName.isGang then
                 Items:AddButton(GetString("job_menu_manage_gang"), GetString("job_menu_manage_gang_subtitle"), nil, function(onSelected)
                     if onSelected then
@@ -201,3 +210,10 @@ function RageUI.PoolMenus:JobMenu()
 
     end)
 end
+
+RegisterNetEvent("ava_core:client:updateAccountData", function(jobName, accountName, accountBalance)
+    print("ava_core:client:updateAccountData", jobName, accountName, accountBalance)
+    if accountName == "bank" and playerJobs[jobName] then
+        playerJobs[jobName].bankBalance = accountBalance
+    end
+end)
