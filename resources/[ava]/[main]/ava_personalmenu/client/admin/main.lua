@@ -72,6 +72,9 @@ function RageUI.PoolMenus:AdminMenu()
                     end
                 end)
             end
+            if perms.dev then
+                Items:AddButton(GetString("admin_menu_dev_menu"), GetString("admin_menu_dev_menu_subtitle"), {RightLabel = "→→→"}, nil, DevAdminMenu)
+            end
             if perms.vehicles then
                 Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), {RightLabel = "→→→"}, nil, VehiclesSubMenu)
             end
@@ -81,6 +84,8 @@ function RageUI.PoolMenus:AdminMenu()
     PoolPlayerList()
     PoolVehicles()
     PoolAdminSettings()
+
+    PoolDevMenu()
 end
 
 --------------------------------------

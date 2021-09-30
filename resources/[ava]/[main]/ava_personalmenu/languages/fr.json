@@ -96,5 +96,21 @@
     "admin_notifications_death": "Notifications de morts",
     "admin_notifications_death_subtitle": "",
     "admin_notifications_loginout": "Notifications de connexions",
-    "admin_notifications_loginout_subtitle": ""
+    "admin_notifications_loginout_subtitle": "",
+    "admin_menu_dev_menu": "Menu développeur",
+    "admin_menu_dev_menu_subtitle": "",
+    "dev_menu": "Menu développeur",
+    "dev_menu_showhash": "Toggle hash",
+    "dev_menu_showhash_subtitle": "",
+    "dev_menu_showhash_object": "→ Hash des props",
+    "dev_menu_showhash_object_subtitle": "",
+    "dev_menu_showhash_vehicle": "→ Hash des véhicules",
+    "dev_menu_showhash_vehicle_subtitle": "",
+    "dev_menu_showhash_ped": "→ Hash des peds",
+    "dev_menu_showhash_ped_subtitle": "",
+    "dev_menu_showcoordshelper": "Toggle aide coordonnées",
+    "dev_menu_showcoordshelper_subtitle": "",
+    "dev_menu_showcoords": "Toggle coordonnées",
+    "dev_menu_showcoords_subtitle": "",
+    "dev_show_coord_helper_display_text": "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_SPRINT~ pour voir les axes~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aides aux coordonnées"
 }

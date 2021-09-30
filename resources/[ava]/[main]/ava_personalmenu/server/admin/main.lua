@@ -10,6 +10,7 @@ local requiredPerms<const> = {
     tpcoords = true,
     tpwaypoint = true,
     noclip = true,
+    dev = {showhash = true, showcoordshelper = true, showcoords = true},
     adminmode = true,
 }
 

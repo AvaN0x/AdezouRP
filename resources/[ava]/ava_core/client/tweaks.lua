@@ -91,7 +91,7 @@ Citizen.CreateThread(function()
             loop = 0
             SetWeaponDrops()
 
-            if GetPlayerWantedLevel(playerId) ~= 0 then
+            if GetPlayerWantedLevel(playerId) > 0 then
                 SetPlayerWantedLevel(playerId, 0, false)
                 SetPlayerWantedLevelNow(playerId, false)
             end
