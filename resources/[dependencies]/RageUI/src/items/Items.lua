@@ -203,7 +203,7 @@ function Items:CheckBox(Label, Description, Checked, Style, Actions)
             StyleCheckBox(Active, Checked, 2, 4, BoxOffset)
         end
 
-        if (Active) and (CurrentMenu.Controls.Select.Active) then
+        if (Active) and (CurrentMenu.Controls.Select.Active) and not Style.IsDisabled then
             Selected = true;
             Checked = not Checked
             Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
