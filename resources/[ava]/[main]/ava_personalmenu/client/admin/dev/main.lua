@@ -25,8 +25,9 @@ function PoolDevMenu()
                         ExecuteCommand("showhash")
                     end
                 end)
-                Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"), showhash_object,
-                    {IsDisabled = not showhash, Style = not showhash and 2}, function(onSelected, IsChecked)
+                local style<const> = {IsDisabled = not showhash, Style = not showhash and 2}
+                Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"), showhash_object, style,
+                    function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_object = not showhash_object
                             SetResourceKvpInt("showhash_object", showhash_object and 0 or 1)
@@ -36,8 +37,8 @@ function PoolDevMenu()
                             end
                         end
                     end)
-                Items:CheckBox(GetString("dev_menu_showhash_vehicle"), GetString("dev_menu_showhash_vehicle_subtitle"), showhash_vehicle,
-                    {IsDisabled = not showhash, Style = not showhash and 2}, function(onSelected, IsChecked)
+                Items:CheckBox(GetString("dev_menu_showhash_vehicle"), GetString("dev_menu_showhash_vehicle_subtitle"), showhash_vehicle, style,
+                    function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_vehicle = not showhash_vehicle
                             SetResourceKvpInt("showhash_vehicle", showhash_vehicle and 0 or 1)
@@ -47,8 +48,8 @@ function PoolDevMenu()
                             end
                         end
                     end)
-                Items:CheckBox(GetString("dev_menu_showhash_ped"), GetString("dev_menu_showhash_ped_subtitle"), showhash_ped,
-                    {IsDisabled = not showhash, Style = not showhash and 2}, function(onSelected, IsChecked)
+                Items:CheckBox(GetString("dev_menu_showhash_ped"), GetString("dev_menu_showhash_ped_subtitle"), showhash_ped, style,
+                    function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_ped = not showhash_ped
                             SetResourceKvpInt("showhash_ped", showhash_ped and 0 or 1)
