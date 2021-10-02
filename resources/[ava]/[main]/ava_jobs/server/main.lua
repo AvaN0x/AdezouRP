@@ -435,3 +435,34 @@ exports.ava_core:RegisterServerCallback("ava_jobs:GetBuyElements", function(sour
     end
 end)
 -- #endregion
+
+----------------
+-- JOBS ITEMS --
+----------------
+
+-- #region WINEMAKER
+RegisterNetEvent("ava_jobs:UseBox")
+AddEventHandler("ava_jobs:UseBox", function(source, itembox, item)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    if not inventory.canAddItem(item, 6) or not inventory.canAddItem("woodenbox", 1) then
+        TriggerClientEvent("ava_core:client:ShowNotification", source, GetString("buy_cant_carry"))
+    else
+        inventory.removeItem(itembox, 1)
+        inventory.addItem(item, 6)
+        inventory.addItem("woodenbox", 1)
+    end
+end)
+exports.ava_core:RegisterUsableItem("winebox", function(source)
+    TriggerEvent("ava_jobs:UseBox", source, "winebox", "wine")
+end)
+exports.ava_core:RegisterUsableItem("grapejuicebox", function(source)
+    TriggerEvent("ava_jobs:UseBox", source, "grapejuicebox", "grapejuice")
+end)
+exports.ava_core:RegisterUsableItem("champagnebox", function(source)
+    TriggerEvent("ava_jobs:UseBox", source, "champagnebox", "champagne")
+end)
+exports.ava_core:RegisterUsableItem("wineluxebox", function(source)
+    TriggerEvent("ava_jobs:UseBox", source, "wineluxebox", "wineluxe")
+end)
+-- #endregion

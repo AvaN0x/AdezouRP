@@ -40,12 +40,12 @@ local function SortInventory()
 
     elseif indexName == "alpha" then
         table.sort(InventoryElements, function(a, b)
-            return a.item.label:lower() > b.item.label:lower()
+            return a.item.label:lower() < b.item.label:lower()
         end)
 
     elseif indexName == "type" then
         table.sort(InventoryElements, function(a, b)
-            return (a.item.type or a.item.label:lower()) > (b.item.type or b.item.label:lower())
+            return (a.item.type or a.item.label:lower()) < (b.item.type or b.item.label:lower())
         end)
 
     end
