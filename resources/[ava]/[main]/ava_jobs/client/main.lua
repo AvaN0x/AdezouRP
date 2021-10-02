@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
     local countMainBlips = 0
     for _, job in pairs(Config.Jobs) do
         if not job.isIllegal and not job.isGang and not job.Disabled then
-            local blip = AddBlipForCoord(job.Blip.Pos or job.Zones.JobActions.Pos)
+            local blip = AddBlipForCoord(job.Blip.Pos or job.Zones.ManagerMenu.Pos)
             SetBlipSprite(blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale(blip, job.Blip.Scale or 1.0)
@@ -588,8 +588,8 @@ Citizen.CreateThread(function()
                     local job = playerJobs[CurrentJobName]
 
                     if CurrentZoneCategory == "Zones" then
-                        if CurrentZoneName == "JobActions" then
-                            -- OpenJobActionsMenu(CurrentJobName)
+                        if CurrentZoneName == "ManagerMenu" then
+                            -- OpenManagerMenuMenu(CurrentJobName)
                         elseif CurrentZoneName == "Cloakroom" then
                             OpenCloakroomMenu()
                             -- elseif string.match(CurrentZoneName, "Stock$") then
@@ -743,7 +743,7 @@ function ProcessMenuZone(job)
                             Wait(500)
                         end
                     else
-                        exports.ava_core:ShowNotification(GetString("amount_invalid"))
+                        exports.ava_core:ShowNotification(GetString("invalid_quantity"))
                     end
                     CurrentActionEnabled = true
                 end
@@ -777,7 +777,7 @@ function SellZone(job)
                             TriggerServerEvent("ava_jobs:server:sellItems", CurrentJobName, CurrentZoneName, element.name, count)
                         end
                     else
-                        exports.ava_core:ShowNotification(GetString("amount_invalid"))
+                        exports.ava_core:ShowNotification(GetString("invalid_quantity"))
                     end
                     CurrentActionEnabled = true
                 end
@@ -786,6 +786,61 @@ function SellZone(job)
     end, function()
         CurrentActionEnabled = true
     end)
+end
+
+function BuyZone(job)
+    local items = exports.ava_core:TriggerServerCallback("ava_jobs:GetBuyElements", CurrentJobName, CurrentZoneName)
+    if not items then
+        return
+    end
+
+    local elements = {}
+    local count = 0
+    for i = 1, #items do
+        local item = items[i]
+        count = count + 1
+        elements[count] = {
+            label = item.label,
+            rightLabel = GetString("buy_item_right_label", item.isDirtyMoney and "~r~" or "", item.price),
+            leftBadge = not item.noIcon and function()
+                return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
+            end or nil,
+            price = item.price,
+            name = item.name,
+            maxCanTake = item.maxCanTake,
+            desc = item.desc,
+        }
+    end
+
+    if count > 0 then
+        RageUI.CloseAll()
+        RageUI.OpenTempMenu(GetString("seller_for", job.LabelName), function(Items)
+            for i = 1, #elements do
+                local element = elements[i]
+                Items:AddButton(element.label, element.desc, {RightLabel = element.rightLabel, LeftBadge = element.leftBadge}, function(onSelected)
+                    if onSelected then
+                        local count = tonumber(exports.ava_core:KeyboardInput(GetString("buy_how_much_max", element.maxCanTake or 0), "", 10))
+
+                        if type(count) == "number" and math.floor(count) == count and count > 0 then
+                            if count > element.maxCanTake then
+                                exports.ava_core:ShowNotification(GetString("buy_cant_carry"))
+                            else
+                                TriggerServerEvent("ava_stores:server:buyItem", CurrentJobName, CurrentZoneName, element.name, count)
+                                RageUI.CloseAllInternal()
+                            end
+                        else
+                            exports.ava_core:ShowNotification(GetString("invalid_quantity"))
+                        end
+                    end
+                end)
+            end
+        end, function()
+            CurrentActionEnabled = true
+        end)
+    else
+        exports.ava_core:ShowNotification(GetString("buy_nothing_can_buy"))
+    end
+
 end
 
 -------------

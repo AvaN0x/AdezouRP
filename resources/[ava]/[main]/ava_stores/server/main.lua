@@ -12,25 +12,25 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
         local aPlayer = exports.ava_core:GetPlayer(src)
         local inventory = aPlayer.getInventory()
 
-        local price = nil
-        local isIllegal = nil
-        for k, v in ipairs(store.Items) do
-            if v.name == item then
-                price = v.price
-                isIllegal = v.isDirtyMoney
-                break
-            end
-        end
-        if price == nil then
-            return
-        end
-
-        local totalprice = tonumber(count) * tonumber(price)
-
         if not inventory.canAddItem(item, count) then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_carry"))
         else
-            if isIllegal == true then
+            local price = nil
+            local isDirtyMoney = nil
+            for k, v in ipairs(store.Items) do
+                if v.name == item then
+                    price = v.price
+                    isDirtyMoney = v.isDirtyMoney
+                    break
+                end
+            end
+            if price == nil then
+                return
+            end
+
+            local totalprice = tonumber(count) * tonumber(price)
+
+            if isDirtyMoney then
                 if inventory.canRemoveItem("dirtycash", totalprice) then
                     inventory.removeItem("dirtycash", totalprice)
                     inventory.addItem(item, count)

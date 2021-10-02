@@ -401,7 +401,7 @@
         "noIcon": true
     },
     "necklace_diamond": {
-        "label": "collier en diamant",
+        "label": "Collier en diamant",
         "weight": 300,
         "limit": null,
         "closeInv": true,
@@ -409,7 +409,7 @@
         "noIcon": true
     },
     "necklace_emerald": {
-        "label": "collier en émeraude",
+        "label": "Collier en émeraude",
         "weight": 300,
         "limit": null,
         "closeInv": true,
@@ -417,7 +417,7 @@
         "noIcon": true
     },
     "necklace_gold": {
-        "label": "collier en or",
+        "label": "Collier en or",
         "weight": 300,
         "limit": null,
         "closeInv": true,
@@ -425,7 +425,7 @@
         "noIcon": true
     },
     "necklace_ruby": {
-        "label": "collier en ruby",
+        "label": "Collier en ruby",
         "weight": 300,
         "limit": null,
         "closeInv": true,
@@ -433,7 +433,7 @@
         "noIcon": true
     },
     "necklace_steel": {
-        "label": "collier en argent",
+        "label": "Collier en argent",
         "weight": 300,
         "limit": null,
         "closeInv": true,

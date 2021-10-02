@@ -250,7 +250,7 @@ Config.Jobs = {
             },
         },
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(465.03, -1009.06, 34.95),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
@@ -443,7 +443,7 @@ Config.Jobs = {
             },
         },
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(339.21, -595.63, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
@@ -559,7 +559,7 @@ Config.Jobs = {
             },
         },
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(-1151.45, -2032.61, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
@@ -691,7 +691,7 @@ Config.Jobs = {
         LabelName = "Vigneron",
         Blip = {Sprite = 85, Colour = 19},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(-1895.18, 2063.98, 140.03),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
@@ -839,7 +839,7 @@ Config.Jobs = {
         LabelName = "Couturier",
         Blip = {Sprite = 366, Colour = 0},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(708.48, -966.69, 29.42),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
@@ -953,7 +953,7 @@ Config.Jobs = {
         LabelName = "Cluckin Bell",
         Blip = {Sprite = 141, Colour = 46},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(-513.13, -699.59, 32.19),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
@@ -1122,7 +1122,7 @@ Config.Jobs = {
         LabelName = "Bahama",
         Blip = {Sprite = 93, Colour = 0},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(-1390.48, -600.57, 29.34),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
@@ -1183,7 +1183,7 @@ Config.Jobs = {
         LabelName = "Unicorn",
         Blip = {Sprite = 121, Colour = 0},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(132.14, -1290.15, 28.29),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
@@ -1267,7 +1267,7 @@ Config.Jobs = {
         LabelName = "Galaxy",
         Blip = {Pos = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(-1583.19, -3014.04, -76.99),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 156, g = 110, b = 175},
@@ -1327,7 +1327,7 @@ Config.Jobs = {
         LabelName = "Attack-A-Taco",
         Blip = {Sprite = 468, Colour = 46},
         Zones = {
-            JobActions = {
+            ManagerMenu = {
                 Pos = vector3(17.27, -1602.66, 28.40),
                 Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},

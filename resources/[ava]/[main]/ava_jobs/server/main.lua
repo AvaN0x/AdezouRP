@@ -355,3 +355,83 @@ exports.ava_core:RegisterServerCallback("ava_jobs:getSellElements", function(sou
     return nil
 end)
 -- #endregion
+
+------------
+-- buying --
+------------
+-- #region buying
+RegisterNetEvent("ava_stores:server:buyItem", function(jobName, zoneName, item, count)
+    local src = source
+    local job = Config.Jobs[jobName]
+    local zone = job and job.BuyZones[zoneName]
+
+    if zone and zone.Items then
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        local inventory = aPlayer.getInventory()
+
+        if not inventory.canAddItem(item, count) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("buy_cant_carry"))
+        else
+            local price = nil
+            local isDirtyMoney = nil
+            for k, v in ipairs(zone.Items) do
+                if v.name == item then
+                    price = v.price
+                    isDirtyMoney = v.isDirtyMoney
+                    break
+                end
+            end
+            if price == nil then
+                return
+            end
+            local totalprice = tonumber(count) * tonumber(price)
+
+            if isDirtyMoney then
+                if inventory.canRemoveItem("dirtycash", totalprice) then
+                    inventory.removeItem("dirtycash", totalprice)
+                    inventory.addItem(item, count)
+                else
+                    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("buy_cant_afford_dirty"))
+                end
+            else
+                if inventory.canRemoveItem("cash", totalprice) then
+                    inventory.removeItem("cash", totalprice)
+                    inventory.addItem(item, count)
+                else
+                    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("buy_cant_afford"))
+                end
+
+            end
+        end
+    else
+        print(("%s attempted to exploit buying!"):format(GetPlayerIdentifiers(src)[1]))
+    end
+end)
+
+exports.ava_core:RegisterServerCallback("ava_jobs:GetBuyElements", function(source, jobName, zoneName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    local inventory = aPlayer.getInventory()
+    local job = Config.Jobs[jobName]
+    local zone = job.BuyZones[zoneName]
+    if zone then
+        local items = {}
+        local count = 0
+        for k, v in pairs(zone.Items) do
+            local cfgItem = CoreItems[v.name]
+            if cfgItem then
+                count = count + 1
+                items[count] = {
+                    label = cfgItem.label,
+                    desc = cfgItem.description,
+                    noIcon = cfgItem.noIcon,
+                    price = v.price,
+                    name = v.name,
+                    maxCanTake = inventory.canTake(v.name),
+                    isDirtyMoney = v.isDirtyMoney,
+                }
+            end
+        end
+        return items
+    end
+end)
+-- #endregion
