@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-RegisterServerEvent("ava_jobs:server:job_menu_hire", function(target, jobName)
+RegisterNetEvent("ava_jobs:server:job_menu_hire", function(target, jobName)
     local src = source
 
     local cfgJob = CoreJobs[jobName]
@@ -36,7 +36,7 @@ RegisterServerEvent("ava_jobs:server:job_menu_hire", function(target, jobName)
     end
 end)
 
-RegisterServerEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
+RegisterNetEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
     local src = source
 
     local cfgJob = CoreJobs[jobName]
@@ -75,7 +75,7 @@ RegisterServerEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
     end
 end)
 
-RegisterServerEvent("ava_jobs:server:job_menu_change_grade", function(target, jobName, gradeName)
+RegisterNetEvent("ava_jobs:server:job_menu_change_grade", function(target, jobName, gradeName)
     local src = source
 
     print(target, jobName, gradeName)
@@ -149,9 +149,3 @@ exports.ava_core:RegisterServerCallback("ava_jobs:getAllGrades", function(source
     end
 end)
 
-RegisterNetEvent("ava_jobs:server:test", function(jobName)
-    local accounts = exports.ava_core:GetJobsAccounts(jobName)
-    if accounts then
-        accounts.addAccountBalance("bank", 1000)
-    end
-end)

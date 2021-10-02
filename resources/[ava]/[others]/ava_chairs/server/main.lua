@@ -13,7 +13,7 @@ AddEventHandler("playerDropped", function()
     end
 end)
 
-RegisterServerEvent("ava_chairs:sitDown")
+RegisterNetEvent("ava_chairs:sitDown")
 AddEventHandler("ava_chairs:sitDown", function(chair)
     local _source = source
     local coord = vector3(chair.x, chair.y, chair.z)
@@ -25,7 +25,7 @@ AddEventHandler("ava_chairs:sitDown", function(chair)
     end
 end)
 
-RegisterServerEvent("ava_chairs:standUp")
+RegisterNetEvent("ava_chairs:standUp")
 AddEventHandler("ava_chairs:standUp", function(chair)
     local _source = source
     local coord = vector3(chair.x, chair.y, chair.z)

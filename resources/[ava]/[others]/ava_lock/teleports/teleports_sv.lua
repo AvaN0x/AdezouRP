@@ -4,7 +4,7 @@
 -------------------------------------------
 local teleportersInfo = {}
 
-RegisterServerEvent("ava_teleports:updateState")
+RegisterNetEvent("ava_teleports:updateState")
 AddEventHandler("ava_teleports:updateState", function(tpID, state)
     local aPlayer = exports.ava_core:GetPlayer(source)
 

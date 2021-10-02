@@ -322,8 +322,8 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
             accounts.addAccountBalance("bank", societyMoney)
         end
         inventory.addItem("cash", playerMoney)
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("have_earned", playerMoney))
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", societyMoney))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("have_earned", exports.ava_core:FormatNumber(playerMoney)))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", exports.ava_core:FormatNumber(societyMoney)))
     else
         print(("%s attempted to exploit selling!"):format(GetPlayerIdentifiers(src)[1]))
     end

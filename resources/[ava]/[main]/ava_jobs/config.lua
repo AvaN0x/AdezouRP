@@ -2106,3 +2106,13 @@ Config.JobCenter = {
     HelpText = GetString("press_to_open"),
     Marker = 27,
 }
+
+Config.BankManagment = {
+    Blip = {Sprite = 525, Colour = 12, Scale = 0.6},
+    Pos = vector3(248.23, 222.42, 105.31),
+    Size = {x = 1.5, y = 1.5, z = 1.0},
+    Color = {r = 74, g = 159, b = 86},
+    Name = "Compte entreprise",
+    HelpText = GetString("press_to_open"),
+    Marker = 27,
+}

@@ -4,7 +4,7 @@
 -------------------------------------------
 local doorsInfo = {}
 
-RegisterServerEvent("ava_doors:updateState")
+RegisterNetEvent("ava_doors:updateState")
 AddEventHandler("ava_doors:updateState", function(doorID, state)
     local aPlayer = exports.ava_core:GetPlayer(source)
 

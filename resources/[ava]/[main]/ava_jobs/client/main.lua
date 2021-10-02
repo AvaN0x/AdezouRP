@@ -6,6 +6,7 @@ local TimeLastAction = 0
 PlayerData = {}
 playerJobs = {}
 playerServices = {}
+playerIsAManager = false
 
 local mainBlips = {}
 local JobBlips = {}
@@ -16,7 +17,7 @@ local CurrentZoneCategory = nil
 local CurrentZoneValue = nil
 local CurrentHelpText = nil
 local CurrentJobName = nil
-local CurrentActionEnabled = true
+CurrentActionEnabled = true
 
 local fieldObjects = {}
 
@@ -35,7 +36,7 @@ Citizen.CreateThread(function()
             local blip = AddBlipForCoord(job.Blip.Pos or job.Zones.JobActions.Pos)
             SetBlipSprite(blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
-            SetBlipScale(blip, 1.0)
+            SetBlipScale(blip, job.Blip.Scale or 1.0)
             SetBlipColour(blip, job.Blip.Colour)
             SetBlipAsShortRange(blip, true)
 
@@ -51,12 +52,12 @@ Citizen.CreateThread(function()
     local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Pos)
     SetBlipSprite(jobCenterBlip, Config.JobCenter.Blip.Sprite)
     SetBlipDisplay(jobCenterBlip, 4)
-    SetBlipScale(jobCenterBlip, 1.0)
+    SetBlipScale(jobCenterBlip, Config.JobCenter.Blip.Scale or 1.0)
     SetBlipColour(jobCenterBlip, Config.JobCenter.Blip.Colour)
     SetBlipAsShortRange(jobCenterBlip, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(Config.JobCenter.Blip.Name)
+    AddTextComponentString(Config.JobCenter.Name)
     EndTextCommandSetBlipName(jobCenterBlip)
 
     countMainBlips = countMainBlips + 1
@@ -89,6 +90,14 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
             fieldObjects[fieldName] = nil
         end
         fieldObjects = {}
+    end
+end)
+
+RegisterNetEvent("ava_core:client:updateAccountData", function(jobName, accountName, accountBalance)
+    print("ava_core:client:updateAccountData", jobName, accountName, accountBalance)
+    if accountName == "bank" and playerJobs[jobName] then
+        playerJobs[jobName].bankBalance = accountBalance
+        playerJobs[jobName].bankBalanceString = exports.ava_core:FormatNumber(playerJobs[jobName].bankBalance)
     end
 end)
 
@@ -135,6 +144,7 @@ function setJobsToUse()
 
     CurrentZoneName = nil
     playerJobs = {}
+    playerIsAManager = false
     for i = 1, #PlayerData.jobs do
         local job<const> = PlayerData.jobs[i]
         if Config.Jobs[job.name] ~= nil and not Config.Jobs[job.name].Disabled then
@@ -143,8 +153,10 @@ function setJobsToUse()
             playerJobs[job.name].canManage = job.canManage
             playerJobs[job.name].underGrades = job.underGrades
             if job.canManage and not playerJobs[job.name].isGang then
+                playerIsAManager = true
                 Citizen.CreateThread(function()
                     playerJobs[job.name].bankBalance = exports.ava_core:TriggerServerCallback("ava_core:server:getJobAccountBalance", job.name, "bank")
+                    playerJobs[job.name].bankBalanceString = exports.ava_core:FormatNumber(playerJobs[job.name].bankBalance)
                 end)
             end
         end
@@ -305,6 +317,22 @@ function createBlips()
             end
         end
     end
+
+    if Config.BankManagment and Config.BankManagment.Blip and playerIsAManager then
+        local bankManagmentBlip = AddBlipForCoord(Config.BankManagment.Pos)
+        SetBlipSprite(bankManagmentBlip, Config.BankManagment.Blip.Sprite)
+        SetBlipDisplay(bankManagmentBlip, 5)
+        SetBlipScale(bankManagmentBlip, Config.BankManagment.Blip.Scale or 1.0)
+        SetBlipColour(bankManagmentBlip, Config.BankManagment.Blip.Colour)
+        SetBlipAsShortRange(bankManagmentBlip, true)
+
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(Config.BankManagment.Name)
+        EndTextCommandSetBlipName(bankManagmentBlip)
+
+        countJobBlips = countJobBlips + 1
+        JobBlips[countJobBlips] = bankManagmentBlip
+    end
 end
 
 local playerCoords = nil
@@ -375,6 +403,14 @@ Citizen.CreateThread(function()
         end
         if Config.JobCenter ~= nil then
             local v = Config.JobCenter
+            if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
+                DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
+                    false, true, 2, false, false, false, false)
+                foundMarker = true
+            end
+        end
+        if Config.BankManagment ~= nil and playerIsAManager then
+            local v = Config.BankManagment
             if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
                 DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
                     false, true, 2, false, false, false, false)
@@ -484,6 +520,17 @@ Citizen.CreateThread(function()
             end
         end
 
+        if Config.BankManagment ~= nil and playerIsAManager then
+            local v<const> = Config.BankManagment
+            if (#(playerCoords - v.Pos) < (v.Distance or 2)) then
+                isInMarker = true
+                zoneJob = "BankManagment"
+                zoneCategoryPlayerIsIn = "BankManagment"
+                zoneNamePlayerIsIn = "BankManagment"
+                zonePlayerIsIn = v
+            end
+        end
+
         if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and CurrentZoneName ~= zoneNamePlayerIsIn) then
             HasAlreadyEnteredMarker = true
             TriggerEvent("ava_jobs:hasEnteredMarker", zoneJob, zoneNamePlayerIsIn, zoneCategoryPlayerIsIn, zonePlayerIsIn)
@@ -535,6 +582,8 @@ Citizen.CreateThread(function()
                 TimeLastAction = GetGameTimer()
                 if CurrentZoneName == "JobCenter" then
                     JobCenterMenu()
+                elseif CurrentZoneName == "BankManagment" then
+                    BankManagmentMenu()
                 else
                     local job = playerJobs[CurrentJobName]
 
@@ -888,8 +937,8 @@ function JobCenterMenu()
     end, function()
         CurrentActionEnabled = true
     end)
-
 end
+
 -----------
 -- Utils --
 -----------

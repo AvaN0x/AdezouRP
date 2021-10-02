@@ -10,7 +10,8 @@ local bank = nil
 local atm = nil
 
 local banks = {
-    {name = "Pacific Standard", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
+    {name = "Banque", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
+    -- {name = "Pacific Standard", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
     {name = "Banque", id = 108, colour = 4, x = -1212.980, y = -330.841, z = 37.787},
     {name = "Banque", id = 108, colour = 4, x = -2962.582, y = 482.627, z = 15.703},
     {name = "Banque", id = 108, colour = 4, x = -112.202, y = 6469.295, z = 31.626},

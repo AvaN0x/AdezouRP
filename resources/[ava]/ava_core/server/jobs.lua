@@ -81,7 +81,6 @@ AVA.RegisterServerCallback("ava_core:server:getJobAccountBalance", function(sour
 end)
 
 AVA.SaveAllJobsAccounts = function()
-    print("hehe")
     local promises = {}
     local count = 0
     for src, aPlayer in pairs(AVA.Players.List) do

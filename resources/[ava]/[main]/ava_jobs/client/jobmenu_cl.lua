@@ -30,18 +30,6 @@ local function updateJobsToSelect()
     end
 end
 
-function OpenJobMenu()
-    updateJobsToSelect()
-
-    if #JobsToSelect == 1 then
-        RageUI.CloseAll()
-        JobMenu(JobsToSelect[1].name)
-    elseif #JobsToSelect > 1 then
-        RageUI.CloseAll()
-        RageUI.Visible(SelectJobMenu, true)
-    end
-end
-
 local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, "", GetString("job_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
 local JobMenuElements = {}
 local openedMenuJobName = nil
@@ -53,7 +41,7 @@ MainJobMenu.Closed = function()
 end
 local JobMenuManage = RageUI.CreateSubMenu(MainJobMenu, "", GetString("job_menu_manage_job"))
 
-function JobMenu(jobName)
+local function JobMenu(jobName)
     local playerJobsJobName = playerJobs[jobName]
     if not playerJobsJobName then
         return
@@ -74,9 +62,21 @@ function JobMenu(jobName)
         end
     end
 
-    MainJobMenu.Subtitle = GetString("job_menu_title", playerJobsJobName.LabelName)
+    MainJobMenu.Subtitle = GetString(playerJobsJobName.isGang and "job_menu_title_gang" or "job_menu_title", playerJobsJobName.LabelName)
     if not RageUI.Visible(MainJobMenu) then
         RageUI.Visible(MainJobMenu, true)
+    end
+end
+
+function OpenJobMenu()
+    updateJobsToSelect()
+
+    if #JobsToSelect == 1 then
+        RageUI.CloseAll()
+        JobMenu(JobsToSelect[1].name)
+    elseif #JobsToSelect > 1 then
+        RageUI.CloseAll()
+        RageUI.Visible(SelectJobMenu, true)
     end
 end
 
@@ -121,13 +121,8 @@ function RageUI.PoolMenus:JobMenu()
             end
         end
         if playerJobsJobName.canManage then
-            if playerJobsJobName.bankBalance then
-                Items:AddButton(GetString("job_menu_bank_balance", playerJobsJobName.bankBalance), GetString("job_menu_bank_balance_subtitle"), nil,
-                    function(onSelected)
-                        if onSelected then
-                            TriggerServerEvent("ava_jobs:server:test", openedMenuJobName)
-                        end
-                    end)
+            if playerJobsJobName.bankBalance ~= nil then
+                Items:AddButton(GetString("job_menu_bank_balance", playerJobsJobName.bankBalanceString), GetString("job_menu_bank_balance_subtitle"))
             end
             if playerJobsJobName.isGang then
                 Items:AddButton(GetString("job_menu_manage_gang"), GetString("job_menu_manage_gang_subtitle"), nil, function(onSelected)
@@ -147,7 +142,7 @@ function RageUI.PoolMenus:JobMenu()
 
     JobMenuManage:IsVisible(function(Items)
         local playerJobsJobName = playerJobs[openedMenuJobName]
-        if not playerJobsJobName then
+        if not playerJobsJobName or not playerJobsJobName.canManage then
             RageUI.GoBack()
             return
         end
@@ -211,9 +206,3 @@ function RageUI.PoolMenus:JobMenu()
     end)
 end
 
-RegisterNetEvent("ava_core:client:updateAccountData", function(jobName, accountName, accountBalance)
-    print("ava_core:client:updateAccountData", jobName, accountName, accountBalance)
-    if accountName == "bank" and playerJobs[jobName] then
-        playerJobs[jobName].bankBalance = accountBalance
-    end
-end)
