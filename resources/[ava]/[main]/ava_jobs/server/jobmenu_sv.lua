@@ -36,7 +36,7 @@ RegisterNetEvent("ava_jobs:server:job_menu_hire", function(target, jobName)
     end
 end)
 
-RegisterNetEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
+function jobFireTarget(source, target, jobName)
     local src = source
 
     local cfgJob = CoreJobs[jobName]
@@ -73,12 +73,15 @@ RegisterNetEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
             end
         end
     end
+end
+
+RegisterNetEvent("ava_jobs:server:job_menu_fire", function(target, jobName)
+    jobFireTarget(source, target, jobName)
 end)
 
-RegisterNetEvent("ava_jobs:server:job_menu_change_grade", function(target, jobName, gradeName)
+function jobChangeGradeTarget(source, target, jobName, gradeName)
     local src = source
 
-    print(target, jobName, gradeName)
     local cfgJob = CoreJobs[jobName]
     if not cfgJob then
         return
@@ -118,6 +121,10 @@ RegisterNetEvent("ava_jobs:server:job_menu_change_grade", function(target, jobNa
             end
         end
     end
+end
+
+RegisterNetEvent("ava_jobs:server:job_menu_change_grade", function(target, jobName, gradeName)
+    jobChangeGradeTarget(source, target, jobName, gradeName)
 end)
 
 exports.ava_core:RegisterServerCallback("ava_jobs:getAllGrades", function(source, jobName, target)

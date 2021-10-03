@@ -197,6 +197,8 @@ function checkAuthorizations()
             for k, v in pairs(job.Zones) do
                 if job.isIllegal then
                     job.Zones[k].Allowed = true
+                elseif k == "ManagerMenu" then
+                    job.Zones[k].Allowed = job.canManage
                 else
                     job.Zones[k].Allowed = not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade))
                 end
@@ -589,7 +591,7 @@ Citizen.CreateThread(function()
 
                     if CurrentZoneCategory == "Zones" then
                         if CurrentZoneName == "ManagerMenu" then
-                            -- OpenManagerMenuMenu(CurrentJobName)
+                            OpenManagerMenuMenu(CurrentJobName)
                         elseif CurrentZoneName == "Cloakroom" then
                             OpenCloakroomMenu()
                             -- elseif string.match(CurrentZoneName, "Stock$") then

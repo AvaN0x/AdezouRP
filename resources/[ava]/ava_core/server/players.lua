@@ -622,6 +622,24 @@ AVA.Players.Save = function(src)
     end
 end
 
+AVA.Players.SavePlayerJobs = function(src)
+    local aPlayer = AVA.Players.GetPlayer(src)
+
+    if aPlayer and aPlayer.citizenId then
+        TriggerClientEvent("ava_core:client:startSave", src)
+        local p = promise.new()
+        exports.oxmysql:execute("UPDATE `players` SET `jobs` = :jobs WHERE `license` = :license AND `id` = :id",
+            {jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId}, function(result)
+                print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+                TriggerClientEvent("ava_core:client:endSave", src)
+                p:resolve()
+            end)
+        return p
+    else
+        error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+    end
+end
+
 ---Save all players and print when all saves are done
 AVA.Players.SaveAll = function()
     local promises = {}

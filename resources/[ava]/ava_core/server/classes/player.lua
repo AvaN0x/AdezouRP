@@ -361,8 +361,10 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     end
 
     ---Trigger client event with updated jobs data
-    local function updatePlayerLocalJobs()
+    ---and save data on database
+    local function savePlayerJobs()
         TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {jobs = self.getJobsClientData()})
+        AVA.Players.SavePlayerJobs(self.src)
     end
 
     ---Check if a player has a job
@@ -448,7 +450,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. gradeName)
                     job.grade = gradeName
 
-                    updatePlayerLocalJobs()
+                    savePlayerJobs()
                     return true, gradeName
                 end
             else
@@ -468,7 +470,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. gradeName)
                     self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName, isGang = cfgJob.isGang}
 
-                    updatePlayerLocalJobs()
+                    savePlayerJobs()
                     return true, gradeName
                 end
             end
@@ -487,7 +489,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             table.remove(self.jobs, index)
             TriggerClientEvent("ava_core:client:jobRemoved", self.src, jobName)
 
-            updatePlayerLocalJobs()
+            savePlayerJobs()
             return true
         end
         return false

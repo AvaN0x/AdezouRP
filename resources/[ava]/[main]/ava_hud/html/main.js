@@ -5,8 +5,11 @@ $(function () {
         if (event.data.action == "setJobs") {
             $('#jobs').empty();
             $('#gangs').empty();
+            let hasNonGangJob = false
             if (event.data.jobs.length > 0) {
                 for (const job of event.data.jobs) {
+                    if (!job.isGang)
+                        hasNonGangJob = true;
                     const target = job.isGang ? "gangs" : "jobs";
                     $(`#${target}`).append(`
                         <div class="stat">
@@ -14,7 +17,8 @@ $(function () {
                         </div>
                     `);
                 }
-            } else {
+            }
+            if (!hasNonGangJob) {
                 $('#jobs').append(`
                     <div class="stat">
                         <span>Sans emploi</span>

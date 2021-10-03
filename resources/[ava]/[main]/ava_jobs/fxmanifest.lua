@@ -29,9 +29,11 @@ client_scripts {
 
     "config.lua",
     "client/main.lua",
-    "**/*_cl.lua",
+    "client/jobmenu_cl.lua",
+    "client/bank_managment_cl.lua",
+    "client/manager_menu_cl.lua",
 }
 
-server_scripts {"config.lua", "server/main.lua", "**/*_sv.lua"}
+server_scripts {"config.lua", "server/main.lua", "server/jobmenu_sv.lua", "server/bank_managment_sv.lua", "server/manager_menu_sv.lua"}
 
 dependencies {"ava_core", "RageUI"}

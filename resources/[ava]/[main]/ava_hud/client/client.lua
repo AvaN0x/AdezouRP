@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
     -- mandatory wait!
-    Wait(100)
+    Wait(200)
 
     InitHUD()
     SendNUIMessage({action = "toggleMainStats", show = true})
