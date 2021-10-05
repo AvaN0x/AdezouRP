@@ -10,7 +10,7 @@ end
 
 local ManageEmployeesMenu = RageUI.CreateSubMenu(ManagerMenu, "", GetString("manager_menu_manage_employees"), 0, 0, "avaui", "avaui_title_adezou")
 local ManageEmployeeMenu = RageUI.CreateSubMenu(ManageEmployeesMenu, "", "name", 0, 0, "avaui", "avaui_title_adezou")
-local selectedEmployee = nil
+local selectedEmployee, myGrade
 
 function OpenManagerMenuMenu(jobName)
     local job = playerJobs[jobName]
@@ -35,8 +35,9 @@ local function fetchEmployees()
         end)
         local myCitizenId = PlayerData.character.citizenId
         for i = 1, #jobEmployees do
-            if jobEmployees[i].id == myCitizenId then
+            if tostring(jobEmployees[i].id) == tostring(myCitizenId) then
                 jobEmployees[i].myself = true
+                myGrade = jobEmployees[i].gradeId
             end
         end
         ManageEmployeesMenu.Description = nil
@@ -82,7 +83,8 @@ function RageUI.PoolMenus:ManagerMenu()
         if jobEmployees then
             for i = 1, #jobEmployees do
                 local employee = jobEmployees[i]
-                Items:AddButton(employee.name, nil, {RightLabel = employee.grade}, function(onSelected)
+                -- Items:AddButton(employee.name, nil, {RightLabel = employee.grade}, function(onSelected)
+                Items:AddButton(employee.name, nil, {RightLabel = employee.grade, LeftBadge = employee.myself and RageUI.BadgeStyle}, function(onSelected)
                     if onSelected then
                         -- TODO get all grades and their salaries
                         selectedEmployee = employee
@@ -106,8 +108,8 @@ function RageUI.PoolMenus:ManagerMenu()
                 CurrentActionEnabled = true
             end
         end)
-        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"), {IsDisabled = selectedEmployee.myself},
-            function(onSelected)
+        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"),
+            {IsDisabled = selectedEmployee.myself or selectedEmployee.gradeId > (myGrade or 0)}, function(onSelected)
                 if onSelected then
                     local jobIsGang<const> = playerJobs[openedMenuJobName].isGang
                     local grades = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName)
@@ -125,7 +127,8 @@ function RageUI.PoolMenus:ManagerMenu()
                             for i = 1, #grades do
                                 local grade = grades[i]
 
-                                Items:AddButton(grade.label, grade.desc, {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual},
+                                Items:AddButton(grade.label, grade.desc,
+                                    {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual or i > (myGrade or 0)},
                                     function(onSelected)
                                         if onSelected then
                                             TriggerServerEvent("ava_jobs:server:manager_menu_change_grade", selectedEmployee.id, openedMenuJobName, grade.name)

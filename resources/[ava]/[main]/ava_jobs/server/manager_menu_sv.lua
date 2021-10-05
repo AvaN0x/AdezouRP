@@ -79,10 +79,12 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
         local targetJobs = exports.oxmysql:scalarSync("SELECT `jobs` FROM `players` WHERE `id` = :id", {id = targetCitizenId})
         if not targetJobs then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
         end
         targetJobs = json.decode(targetJobs)
         if type(targetJobs) ~= "table" then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
         end
 
         local index
@@ -120,13 +122,64 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
         local aTargetPlayer = exports.ava_core:GetPlayerByCitizenId(targetCitizenId)
         if aTargetPlayer and aTargetPlayer.src then
             if aTargetPlayer.src == tostring(src) then
-                print("can't do this to yourself")
+                -- can't change your own grade
                 return
             end
             jobChangeGradeTarget(source, target, jobName, gradeName)
             return
         end
 
-        -- todo do things manually with database
+        if not exports.ava_core:GradeExistForJob(jobName, gradeName) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_menu_grade_do_not_exist"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        -- check if the player is not trying to change the grade of someone to a higher grade
+        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_to_higher_grade"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        local targetJobs = exports.oxmysql:scalarSync("SELECT `jobs` FROM `players` WHERE `id` = :id", {id = targetCitizenId})
+        if not targetJobs then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+        targetJobs = json.decode(targetJobs)
+        if type(targetJobs) ~= "table" then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        local index
+        for i = 1, #targetJobs do
+            local job = targetJobs[i]
+            if job.name == jobName then
+                index = i
+                break
+            end
+        end
+        if index == nil then
+            if cfgJob.isGang then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_gang"), nil, "ava_core_logo", cfgJob.label)
+            else
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_job"), nil, "ava_core_logo", cfgJob.label)
+            end
+            return
+        end
+
+        -- check if the player is not trying to change the grade of someone with a higher grade
+        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetJobs[index].grade) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_with_higher_grade"), nil, "ava_core_logo",
+                cfgJob.label)
+            return
+        end
+
+        targetJobs[index].grade = gradeName
+
+        exports.oxmysql:executeSync("UPDATE `players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
+
+        local gradeLabel = exports.ava_core:GetGradeLabel(jobName, gradeName)
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_grade_changed_to", gradeLabel), nil, "ava_core_logo", cfgJob.label)
     end
 end)

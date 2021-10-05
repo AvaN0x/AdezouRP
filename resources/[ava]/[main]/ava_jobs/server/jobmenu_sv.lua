@@ -89,6 +89,18 @@ function jobChangeGradeTarget(source, target, jobName, gradeName)
     if IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
         local aTargetPlayer = exports.ava_core:GetPlayer(target)
         if aTargetPlayer then
+            -- check if grade exists
+            if not exports.ava_core:GradeExistForJob(jobName, gradeName) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_menu_grade_do_not_exists"), nil, "ava_core_logo", cfgJob.label)
+                return
+            end
+
+            -- check if the player is not trying to change the grade of someone to a higher grade
+            if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_to_higher_grade"), nil, "ava_core_logo", cfgJob.label)
+                return
+            end
+
             local targetHasJob, targetJob = aTargetPlayer.hasJob(jobName)
             if not targetHasJob then
                 if cfgJob.isGang then
@@ -103,12 +115,6 @@ function jobChangeGradeTarget(source, target, jobName, gradeName)
             if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetJob.grade) then
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_with_higher_grade"), nil, "ava_core_logo",
                     cfgJob.label)
-                return
-            end
-
-            -- check if the player is not trying to change the grade of someone to a higher grade
-            if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
-                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_to_higher_grade"), nil, "ava_core_logo", cfgJob.label)
                 return
             end
 
