@@ -197,9 +197,9 @@ if AVAConfig.PayCheckTimeout then
                                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("received_job_center", salary), nil, "CHAR_BANK_MAZE",
                                     GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
                             else
-                                -- TODO check if society has money
-                                if true then
-                                    -- TODO take money from society
+                                local jobAccounts = AVA.JobsAccounts[job.name]
+                                if jobAccounts and salary <= jobAccounts.getAccountBalance("bank") then
+                                    jobAccounts.removeAccountBalance("bank", salary)
                                     aPlayer.addAccountBalance("bank", salary)
                                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("received_salary", salary), nil, "CHAR_BANK_MAZE",
                                         GetString("salary"), notificationSubtitle, 9, "CHAR_BANK_MAZE")
