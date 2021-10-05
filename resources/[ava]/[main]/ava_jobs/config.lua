@@ -451,7 +451,6 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
-                NoStock = true,
                 MinimumGrade = "boss",
             },
             Cloakroom = {
@@ -566,7 +565,6 @@ Config.Jobs = {
                 Name = "Actions patron",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
-                NoStock = true,
                 MinimumGrade = "boss",
             },
             MainStock = {

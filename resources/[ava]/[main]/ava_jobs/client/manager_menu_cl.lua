@@ -5,9 +5,7 @@
 local ManagerMenu = RageUI.CreateMenu("", GetString("manager_menu", ""), 0, 0, "avaui", "avaui_title_adezou")
 local openedMenuJobName = nil
 ManagerMenu.Closed = function()
-    -- if openedMenuJobName == nil then
-    --     CurrentActionEnabled = true
-    -- end
+    CurrentActionEnabled = true
 end
 
 local ManageEmployeesMenu = RageUI.CreateSubMenu(ManagerMenu, "", GetString("manager_menu_manage_employees"), 0, 0, "avaui", "avaui_title_adezou")
@@ -104,40 +102,42 @@ function RageUI.PoolMenus:ManagerMenu()
         Items:AddButton(GetString("job_menu_fire"), GetString("job_menu_fire_subtitle"), nil, function(onSelected)
             if onSelected then
                 TriggerServerEvent("ava_jobs:server:manager_menu_fire", selectedEmployee.id, openedMenuJobName)
-                RageUI.GoBack()
-                fetchEmployees()
+                RageUI.CloseAllInternal()
+                CurrentActionEnabled = true
             end
         end)
-        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"), {IsDisabled = selectedEmployee.myself}, function(onSelected)
-            if onSelected then
-                local jobIsGang<const> = playerJobs[openedMenuJobName].isGang
-                local grades = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName)
+        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"), {IsDisabled = selectedEmployee.myself},
+            function(onSelected)
+                if onSelected then
+                    local jobIsGang<const> = playerJobs[openedMenuJobName].isGang
+                    local grades = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName)
 
-                if grades then
-                    for i = 1, #grades do
-                        local grade = grades[i]
-                        grade.actual = i == selectedEmployee.gradeId
-                        grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
-                                         or (grade.canManage
-                                             and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
-                    end
-
-                    RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
+                    if grades then
                         for i = 1, #grades do
                             local grade = grades[i]
-
-                            Items:AddButton(grade.label, grade.desc, {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual},
-                                function(onSelected)
-                                    if onSelected then
-                                        TriggerServerEvent("ava_jobs:server:manager_menu_change_grade", selectedEmployee.id, openedMenuJobName, grade.name)
-                                        RageUI.CloseAllInternal()
-                                    end
-                                end)
+                            grade.actual = i == selectedEmployee.gradeId
+                            grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
+                                             or (grade.canManage
+                                                 and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
                         end
-                    end, nil, ManageEmployeeMenu.Sprite.Texture, ManageEmployeeMenu.Sprite.Dictionary)
+
+                        RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
+                            for i = 1, #grades do
+                                local grade = grades[i]
+
+                                Items:AddButton(grade.label, grade.desc, {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual},
+                                    function(onSelected)
+                                        if onSelected then
+                                            TriggerServerEvent("ava_jobs:server:manager_menu_change_grade", selectedEmployee.id, openedMenuJobName, grade.name)
+                                            RageUI.CloseAllInternal()
+                                            CurrentActionEnabled = true
+                                        end
+                                    end)
+                            end
+                        end, nil, ManageEmployeeMenu.Sprite.Texture, ManageEmployeeMenu.Sprite.Dictionary)
+                    end
                 end
-            end
-        end)
+            end)
 
     end)
 

@@ -91,7 +91,7 @@ RegisterNetEvent("ava_jobs:server:job_center:subscribe", function(index)
     end
     local job = Config.JobCenter.JobList[index]
     if not job then
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_center_error_happened"))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"))
         return
     end
     local aPlayer = exports.ava_core:GetPlayer(src)

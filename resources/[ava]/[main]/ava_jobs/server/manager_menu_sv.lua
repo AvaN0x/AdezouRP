@@ -76,12 +76,40 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
             return
         end
 
-        -- todo do things manually with database
+        local targetJobs = exports.oxmysql:scalarSync("SELECT `jobs` FROM `players` WHERE `id` = :id", {id = targetCitizenId})
+        if not targetJobs then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+        end
+        targetJobs = json.decode(targetJobs)
+        if type(targetJobs) ~= "table" then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+        end
+
+        local index
+        for i = 1, #targetJobs do
+            local job = targetJobs[i]
+            if job.name == jobName then
+                index = i
+                break
+            end
+        end
+        if index == nil then
+            if cfgJob.isGang then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_gang"), nil, "ava_core_logo", cfgJob.label)
+            else
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_job"), nil, "ava_core_logo", cfgJob.label)
+            end
+            return
+        end
+
+        table.remove(targetJobs, index)
+
+        exports.oxmysql:executeSync("UPDATE `players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_fired"), nil, "ava_core_logo", cfgJob.label)
     end
 end)
 
 RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCitizenId, jobName, gradeName)
-    print("ava_jobs:server:manager_menu_change_grade")
     local src = source
 
     local cfgJob = CoreJobs[jobName]
