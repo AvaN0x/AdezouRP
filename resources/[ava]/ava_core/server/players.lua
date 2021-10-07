@@ -650,7 +650,7 @@ AVA.Players.SaveAll = function()
     end
 
     Citizen.Await(promise.all(promises))
-    print("^2[SAVE PLAYERS] ^0 Every players have been saved.")
+    print("^2[SAVE PLAYERS] ^0 Every player has been saved.")
 end
 exports("SaveAllPlayers", AVA.Players.SaveAll)
 
