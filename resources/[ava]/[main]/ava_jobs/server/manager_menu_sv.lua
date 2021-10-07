@@ -200,7 +200,8 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade_salary", function(jo
     end
     if IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
         -- check if the player is not trying to change the grade of someone to a higher grade
-        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
+        -- or if the grade is tempworker
+        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) or gradeName == "tempworker" then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_salary_of_this_grade"), nil, "ava_core_logo", cfgJob.label)
             return
         end
@@ -223,11 +224,12 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade_salary", function(jo
             -- this should never happen
             return
         end
-        local myGradeId, targetGradeId
+        local myGradeId, targetGradeId, gradeLabel
         for i = 1, #grades do
             local grade = grades[i]
             if gradeName == grade.name then
                 targetGradeId = i
+                gradeLabel = grade.label
             end
             if job.grade == grade.name then
                 myGradeId = i
@@ -246,7 +248,8 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade_salary", function(jo
         end
 
         if exports.ava_core:SetGradeSalary(jobName, gradeName, amount) then
-            -- TODO save changment to database
+            TriggerClientEvent("ava_core:client:ShowNotification", src,
+                GetString("changed_salary_to", amount > 999 and exports.ava_core:FormatNumber(amount) or amount), nil, "ava_core_logo", cfgJob.label, gradeLabel)
         else
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("amount_invalid"), nil, "ava_core_logo", cfgJob.label)
         end

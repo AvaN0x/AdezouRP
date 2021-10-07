@@ -4,6 +4,8 @@
 -------------------------------------------
 ---@type aJobAccounts[]
 AVA.JobsAccounts = {}
+local CustomSalaries = {}
+
 ---Get all jobs data
 ---@return table
 AVA.GetJobsData = function()
@@ -32,6 +34,7 @@ Citizen.CreateThread(function()
 
                 local salaries = jobData.salaries and json.decode(jobData.salaries)
                 if type(salaries) == "table" then
+                    CustomSalaries[jobData.name] = salaries
                     for j = 1, #cfgJob.grades do
                         local grade = cfgJob.grades[j]
                         if grade.name ~= "tempworker" and salaries[grade.name] ~= nil and type(salaries[grade.name]) == "number" then
@@ -189,8 +192,14 @@ AVA.SetGradeSalary = function(jobName, gradeName, salary)
             for i = 1, #cfgJob.grades do
                 local grade<const> = cfgJob.grades[i]
                 if grade.name == gradeName then
-                    dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from SetGradeSalary"):format(salary, jobName, gradeName))
                     grade.salary = salary
+                    if type(CustomSalaries[jobName]) ~= "table" then
+                        CustomSalaries[jobName] = {}
+                    end
+                    CustomSalaries[jobName][gradeName] = salary
+                    exports.oxmysql:executeSync("UPDATE `jobs` SET `salaries` = :salaries WHERE `name` = :name",
+                        {name = jobName, salaries = json.encode(CustomSalaries[jobName])})
+                    dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from SetGradeSalary"):format(salary, jobName, gradeName))
                     return true
                 end
             end

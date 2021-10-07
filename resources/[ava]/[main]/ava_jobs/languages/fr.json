@@ -60,6 +60,7 @@
     "manager_menu_manage_salaries": "Gérer les salaires",
     "manager_menu_manage_salaries_subtitle": "",
     "bank_managment_change_salary_input": "Veuillez entrer un montant pour le salaire",
+    "changed_salary_to": "Salaire changé pour $%s",
     "cannot_change_salary_of_this_grade": "Vous ne pouvez pas changer le salaire de ce grade",
     "cannot_hold_that_much_cash": "Vous ne pouvez pas porter autant de liquide sur vous.",
     "player_target_grade_changed_to": "La personne est maintenant ~y~%s~s~",

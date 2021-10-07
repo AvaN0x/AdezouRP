@@ -85,7 +85,7 @@ function RageUI.PoolMenus:ManagerMenu()
                             end
                             for i = 1, #grades do
                                 local grade = grades[i]
-                                grade.disabled = i > (myGradeId or 0) or (i == myGradeId and i < #grades)
+                                grade.disabled = i > (myGradeId or 0) or (i == myGradeId and i < #grades) or grade.name == "tempworker"
 
                                 if type(grade.salary) ~= "number" then
                                     grade.RightLabel = GetString("money_right_label", 0)
