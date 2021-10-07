@@ -87,11 +87,12 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
             return
         end
 
-        local index
+        local index, targetGrade
         for i = 1, #targetJobs do
             local job = targetJobs[i]
             if job.name == jobName then
                 index = i
+                targetGrade = job.grade
                 break
             end
         end
@@ -101,6 +102,12 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_do_not_have_this_job"), nil, "ava_core_logo", cfgJob.label)
             end
+            return
+        end
+
+        -- check if the player is not trying to fire someone with a higher grade
+        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetGrade) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_fire_higher_grade"), nil, "ava_core_logo", cfgJob.label)
             return
         end
 
