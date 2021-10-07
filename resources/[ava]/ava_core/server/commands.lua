@@ -85,8 +85,8 @@ AVA.Commands.RegisterCommand({"tpnearestvehicle", "tpv"}, "admin", function(sour
 end, GetString("tpnearestvehicle_help"))
 
 AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(source, args)
-    TriggerClientEvent("ava_core:client:tuneVehiclePink", source)
-end, GetString("tune_vehicle_pink_help"))
+    TriggerClientEvent("ava_core:client:tuneVehiclePink", source, args[1])
+end, GetString("tune_vehicle_pink_help"), {{name = "[vehicle]", help = GetString("vehicle_name")}})
 
 ------------------------------------
 --------------- Kick ---------------

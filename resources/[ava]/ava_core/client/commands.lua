@@ -64,12 +64,22 @@ RegisterNetEvent("ava_core:client:tpNearestVehicle", function()
     end
 end)
 
-RegisterNetEvent("ava_core:client:tuneVehiclePink", function()
+RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
     local playerPed = PlayerPedId()
-    local vehicle = GetVehiclePedIsIn(playerPed, false)
-    if vehicle == 0 or GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
-        return
+    local vehicle
+
+    if type(vehicleName) == "string" then
+        vehicle = AVA.Vehicles.SpawnVehicle(vehicleName, GetEntityCoords(playerPed), GetEntityHeading(playerPed))
+
+        ClearPedTasksImmediately(playerPed)
+        TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+    else
+        vehicle = GetVehiclePedIsIn(playerPed, false)
+        if vehicle == 0 or GetPedInVehicleSeat(vehicle, -1) ~= playerPed then
+            return
+        end
     end
+
     SetVehicleModKit(vehicle, 0)
 
     SetVehicleColours(vehicle, 135, 135)
