@@ -190,3 +190,66 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_grade_changed_to", gradeLabel), nil, "ava_core_logo", cfgJob.label)
     end
 end)
+
+RegisterNetEvent("ava_jobs:server:manager_menu_change_grade_salary", function(jobName, gradeName, amount)
+    local src = source
+
+    local cfgJob = CoreJobs[jobName]
+    if not cfgJob then
+        return
+    end
+    if IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
+        -- check if the player is not trying to change the grade of someone to a higher grade
+        if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. gradeName) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_salary_of_this_grade"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then
+            -- player is nil
+            -- this should never happen
+            return
+        end
+        local grades = exports.ava_core:GetAllJobGrades(jobName)
+        if not grades then
+            -- grades is nil
+            -- this should never happen
+            return
+        end
+        local _, job = aPlayer.hasJob(jobName)
+        if not job then
+            -- job is nil
+            -- this should never happen
+            return
+        end
+        local myGradeId, targetGradeId
+        for i = 1, #grades do
+            local grade = grades[i]
+            if gradeName == grade.name then
+                targetGradeId = i
+            end
+            if job.grade == grade.name then
+                myGradeId = i
+            end
+        end
+        if not targetGradeId or not myGradeId then
+            -- could not find target grade id and aPlayer gride id
+            -- this should never happen
+            return
+        end
+
+        -- player cannot change its own salary if he/she do not have the highest grade
+        if targetGradeId == myGradeId and targetGradeId < #grades then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_salary_of_this_grade"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        if exports.ava_core:SetGradeSalary(jobName, gradeName, amount) then
+            -- TODO save changment to database
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("amount_invalid"), nil, "ava_core_logo", cfgJob.label)
+        end
+    end
+end)
+

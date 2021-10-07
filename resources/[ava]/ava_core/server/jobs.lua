@@ -29,7 +29,17 @@ Citizen.CreateThread(function()
             if cfgJob and not cfgJob.Disabled and not cfgJob.noBoss then
                 dprint(("Add JobsAccounts for ^5%s^0 from fetch"):format(jobData.name))
                 AVA.JobsAccounts[jobData.name] = CreateJobAccounts(jobData.name, jobData.accounts and json.decode(jobData.accounts) or {})
-                -- TODO work with jobData.salaries
+
+                local salaries = jobData.salaries and json.decode(jobData.salaries)
+                if type(salaries) == "table" then
+                    for j = 1, #cfgJob.grades do
+                        local grade = cfgJob.grades[j]
+                        if grade.name ~= "tempworker" and salaries[grade.name] ~= nil and type(salaries[grade.name]) == "number" then
+                            dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from fetch"):format(salaries[grade.name], jobData.name, grade.name))
+                            grade.salary = tonumber(salaries[grade.name])
+                        end
+                    end
+                end
             end
         end
     end
@@ -43,7 +53,7 @@ Citizen.CreateThread(function()
                 dprint(("Add missing JobsAccounts for ^5%s^0"):format(jobName))
                 AVA.JobsAccounts[jobName] = CreateJobAccounts(jobName)
                 exports.oxmysql:insert("INSERT INTO `jobs` (`name`, `accounts`, `salaries`) VALUES (:name, :accounts, :salaries)",
-                    {name = jobName, accounts = "[]", salaries = "[]"}, function()
+                    {name = jobName, accounts = "[]", salaries = "{}"}, function()
                         dprint(("Missing JobsAccounts for ^5%s^0 added to database"):format(jobName))
                     end)
             end
@@ -160,12 +170,36 @@ AVA.GetAllJobGrades = function(jobName)
         for i = 1, #cfgJob.grades do
             local grade = cfgJob.grades[i]
             gradeCount = gradeCount + 1
-            grades[gradeCount] = {label = grade.label, name = grade.name, canManage = grade.manage}
+            grades[gradeCount] = {label = grade.label, name = grade.name, canManage = grade.manage, salary = grade.salary}
         end
     end
     return grades
 end
 exports("GetAllJobGrades", AVA.GetAllJobGrades)
+
+---Set job grade salary
+---@param jobName string
+---@param gradeName string
+---@param salary number
+---@return success
+AVA.SetGradeSalary = function(jobName, gradeName, salary)
+    if type(salary) == "number" and salary > 0 then
+        local cfgJob<const> = AVAConfig.Jobs[jobName]
+        if cfgJob then
+            for i = 1, #cfgJob.grades do
+                local grade<const> = cfgJob.grades[i]
+                if grade.name == gradeName then
+                    dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from SetGradeSalary"):format(salary, jobName, gradeName))
+                    grade.salary = salary
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
+end
+exports("SetGradeSalary", AVA.SetGradeSalary)
 
 -----------------------------------------
 --------------- Paychecks ---------------

@@ -69,6 +69,7 @@ exports.ava_core.SaveAllPlayers = AVA.Players.SaveAll
 exports.ava_core.GradeExistForJob = AVA.GradeExistForJob
 exports.ava_core.GetGradeLabel = AVA.GetGradeLabel
 exports.ava_core.GetAllJobGrades = AVA.GetAllJobGrades
+exports.ava_core.SetGradeSalary = AVA.SetGradeSalary
 exports.ava_core.GetJobsAccounts = AVA.GetJobsAccounts
 
 exports.ava_core.GetRootingBucket = AVA.RB.GetRootingBucket

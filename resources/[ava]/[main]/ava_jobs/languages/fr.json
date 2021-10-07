@@ -1,4 +1,5 @@
 {
+    "money_right_label": "$%s",
     "job_client": "Client %s",
     "job_menu_key": "Menu de métier / gang",
     "need_in_service_subtitle": "Vous devez être en service pour faire cela\n\n",
@@ -48,7 +49,7 @@
     "bank_managment_menu_bank_wash_money": "Blanchir",
     "bank_managment_menu_bank_wash_money_subtitle": "Déposer de l'argent sale sur le compte en banque de l'entreprise pour le blanchir",
     "bank_managment_wash_money_input": "Veuillez entrer un montant à blanchir",
-    "manager_menu": "Menu gérant : ",
+    "manager_menu": "Menu gérant",
     "manager_menu_bills": "Factures",
     "manager_menu_bills_subtitle": "",
     "manager_menu_manage_employees": "Gérer les employés",
@@ -58,6 +59,8 @@
     "manager_menu_manage_members_subtitle": "",
     "manager_menu_manage_salaries": "Gérer les salaires",
     "manager_menu_manage_salaries_subtitle": "",
+    "bank_managment_change_salary_input": "Veuillez entrer un montant pour le salaire",
+    "cannot_change_salary_of_this_grade": "Vous ne pouvez pas changer le salaire de ce grade",
     "cannot_hold_that_much_cash": "Vous ne pouvez pas porter autant de liquide sur vous.",
     "player_target_grade_changed_to": "La personne est maintenant ~y~%s~s~",
     "grade_changed_to": "Vous êtes maintenant ~y~%s~s~",
