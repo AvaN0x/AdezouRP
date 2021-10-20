@@ -23,7 +23,7 @@ exports("GetJobsAccounts", AVA.GetJobsAccounts)
 
 Citizen.CreateThread(function()
     dprint("^6[JOBS] Start initializing datas for each jobs^0")
-    local data = exports.oxmysql:fetchSync("SELECT `jobs`.`name`, `jobs`.`accounts`, `jobs`.`salaries` FROM `jobs`")
+    local data = exports.oxmysql:fetchSync("SELECT `jobs`.`name`, `jobs`.`accounts`, `jobs`.`salaries` FROM `jobs`", {})
     if data then
         for i = 1, #data do
             local jobData = data[i]
