@@ -299,35 +299,3 @@ function CarWash()
         end
     end
 end
-
--- function Utils:StartWashParticle(actualZone)
---     local asset = "scr_carwash"
-
---     for i = 1, #actualZone.particlesStart do
---         local currentParticle = actualZone.particlesStart[i]
-
---         RequestNamedPtfxAsset(asset)
---         UseParticleFxAssetNextCall(asset)
-
---         while not HasNamedPtfxAssetLoaded(asset) do
---             Wait(100)
---         end
-
---         actualZone.particlesStart[i].createdParticle = StartParticleFxLoopedAtCoord(currentParticle.particle, currentParticle.pos, currentParticle.xRot, 0.0, 0.0, 1.0, 0, 0, 0)
-
---         if (currentParticle.nextWait > 0) then 
---             Wait(currentParticle.nextWait)
---         end
---     end
--- end
-
--- function Utils:StopAllParticles(actualZone)
---     for i = 1, #actualZone.particlesStart do
---         local particle = actualZone.particlesStart[i].createdParticle
-
---         StopParticleFxLooped(particle, 0)
---         RemoveParticleFx(particle, 0)
-
---         actualZone.particlesStart[i].createdParticle = nil
---     end
--- end
