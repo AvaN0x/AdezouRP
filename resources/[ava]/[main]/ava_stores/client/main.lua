@@ -13,7 +13,7 @@ local CurrentActionEnabled = false
 local mainBlips = {}
 
 Citizen.CreateThread(function()
-    Citizen.Wait(1000)
+    Wait(1000)
 
     for _, v in pairs(Config.Stores) do
         local function CreateBlip(coord)
@@ -76,10 +76,6 @@ Citizen.CreateThread(function()
         local isInMarker = false
         local currentZoneName = nil
 
-        local function CheckCoord(coord)
-
-        end
-
         for k, v in pairs(Config.Stores) do
             if v.Coords then
                 for _, coord in ipairs(v.Coords) do
@@ -112,7 +108,6 @@ Citizen.CreateThread(function()
             end
         end
 
-        Wait(waitTimer)
         if (isInMarker and not HasAlreadyEnteredMarker) or (isInMarker and CurrentZoneName ~= currentZoneName) then
             HasAlreadyEnteredMarker = true
             LastZone = currentZoneName
@@ -123,6 +118,7 @@ Citizen.CreateThread(function()
             HasAlreadyEnteredMarker = false
             TriggerEvent("ava_stores:client:hasExitedMarker", LastZone)
         end
+        Wait(waitTimer)
     end
 end)
 
@@ -136,7 +132,6 @@ AddEventHandler("ava_stores:client:hasEnteredMarker", function(zoneName)
 end)
 
 AddEventHandler("ava_stores:client:hasExitedMarker", function(zoneName)
-    -- TODO only close shop menu (check if visible)
     RageUI.CloseAllInternal()
     CurrentZoneName = nil
 end)
@@ -146,7 +141,7 @@ end)
 -----------------
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Wait(0)
 
         if CurrentZoneName ~= nil and CurrentActionEnabled then
             if CurrentHelpText ~= nil then
@@ -169,7 +164,7 @@ Citizen.CreateThread(function()
 
             end
         else
-            Citizen.Wait(50)
+            Wait(50)
         end
     end
 end)
@@ -252,7 +247,7 @@ function CarWash()
                     DisableAllControlActions(0)
                     EnableControlAction(0, 1, true) -- Enable horizontal cam
                     EnableControlAction(0, 2, true) -- Enable vertical cam
-                    Citizen.Wait(0)
+                    Wait(0)
                 end
             end)
 
@@ -266,7 +261,7 @@ function CarWash()
                     UseParticleFxAsset(assetName)
 
                     while not HasNamedPtfxAssetLoaded(assetName) do
-                        Citizen.Wait(10)
+                        Wait(10)
                     end
 
                     local particle = carwash.Carwash.Particles[i]
@@ -276,7 +271,7 @@ function CarWash()
             end
 
             exports.progressBars:startUI(carwash.Carwash.Duration or 5000, GetString("carwash_on_cleaning"))
-            Citizen.Wait(carwash.Carwash.Duration or 5000)
+            Wait(carwash.Carwash.Duration or 5000)
 
             WashDecalsFromVehicle(veh, 1.0)
             SetVehicleDirtLevel(veh)
