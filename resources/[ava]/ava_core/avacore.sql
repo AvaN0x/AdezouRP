@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   PRIMARY KEY (`id`),
   KEY `license` (`license`),
   KEY `last_updated` (`last_updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- {
 --     "id": 1,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `ban_list` (
     `staff` varchar(50) NOT NULL COMMENT 'discord id of the staff who banned the player',
     `date_ban` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`license`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `jobs` (
   `name` varchar(50) NOT NULL,
@@ -102,4 +102,4 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `salaries` text DEFAULT NULL,
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
