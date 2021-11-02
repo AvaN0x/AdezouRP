@@ -580,7 +580,7 @@ AVA.Players.Logout = function(src)
         local jobs = aPlayer.getJobs()
         for i = 1, #jobs do
             local job = jobs[i]
-            AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. "." .. job.grade)
+            AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. ".grade." .. job.grade)
         end
 
         dprint("^2[LOGOUT] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")

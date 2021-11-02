@@ -74,6 +74,7 @@ Citizen.CreateThread(function()
                     end
                     lastGradePrincipal = gradePrincipal
                 end
+                AVA.AddAce(lastGradePrincipal, principal .. ".highest")
             else
                 print("^1" .. jobName .. " is missing grades^0")
             end

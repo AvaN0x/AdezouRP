@@ -71,7 +71,6 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
     if IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
         local aTargetPlayer = exports.ava_core:GetPlayerByCitizenId(targetCitizenId)
         if aTargetPlayer and aTargetPlayer.src then
-            print(targetCitizenId)
             jobFireTarget(src, aTargetPlayer.src, jobName)
             return
         end
@@ -111,6 +110,28 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
             return
         end
 
+        -- check if the player is not trying to fire someone with the same grade while not having the highest grade
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then
+            -- player is nil
+            -- this should never happen
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        local _, job = aPlayer.hasJob(jobName)
+        if not job then
+            -- job is nil
+            -- this should never happen
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        if job.grade == targetGrade and not IsPlayerAceAllowed(src, "job." .. jobName .. ".highest") then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_fire_same_grade"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
         table.remove(targetJobs, index)
 
         exports.oxmysql:executeSync("UPDATE `players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
@@ -132,7 +153,7 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
                 -- can't change your own grade
                 return
             end
-            jobChangeGradeTarget(source, target, jobName, gradeName)
+            jobChangeGradeTarget(source, aTargetPlayer.src, jobName, gradeName)
             return
         end
 
@@ -178,6 +199,33 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
         -- check if the player is not trying to change the grade of someone with a higher grade
         if not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".grade." .. targetJobs[index].grade) then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_with_higher_grade"), nil, "ava_core_logo",
+                cfgJob.label)
+            return
+        end
+
+        -- check if the player is not trying to change the grade of someone with the same grade while not having the highest grade
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then
+            -- player is nil
+            -- this should never happen
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        local _, job = aPlayer.hasJob(jobName)
+        if not job then
+            -- job is nil
+            -- this should never happen
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
+            return
+        end
+
+        if job.grade == targetJobs[index].grade and not IsPlayerAceAllowed(src, "job." .. jobName .. ".highest") then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_with_same_grade"), nil, "ava_core_logo",
+                cfgJob.label)
+            return
+        elseif job.grade == gradeName and not IsPlayerAceAllowed(src, "job." .. jobName .. ".highest") then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cannot_change_grade_someone_to_same_grade"), nil, "ava_core_logo",
                 cfgJob.label)
             return
         end
