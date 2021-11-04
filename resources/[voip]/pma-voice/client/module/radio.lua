@@ -1,3 +1,5 @@
+local radioChannel = 0
+
 --- event syncRadioData
 --- syncs the current players on the radio to the client
 ---@param radioTable table the table of the current players on the radio
@@ -48,14 +50,14 @@ RegisterNetEvent('pma-voice:addPlayerToRadio', addPlayerToRadio)
 function removePlayerFromRadio(plySource)
 	if plySource == playerServerId then
 		logger.info('[radio] Left radio %s, cleaning up.', radioChannel)
-		for tgt, enabled in pairs(radioData) do
+		for tgt, _ in pairs(radioData) do
 			if tgt ~= playerServerId then
 				toggleVoice(tgt, false, 'radio')
 			end
 		end
 		radioData = {}
 		playerTargets(NetworkIsPlayerTalking(PlayerId()) and callData or {})
-		plyState:set('radioChannel', 0, GetConvarInt('voice_syncData', 0) == 1)
+		LocalPlayer.state:set('radioChannel', 0, GetConvarInt('voice_syncData', 1) == 1)
 	else
 		radioData[plySource] = nil
 		toggleVoice(plySource, false)
@@ -75,7 +77,7 @@ RegisterNetEvent('pma-voice:removePlayerFromRadio', removePlayerFromRadio)
 function setRadioChannel(channel)
 	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	TriggerServerEvent('pma-voice:setPlayerRadio', channel)
-	plyState:set('radioChannel', channel, GetConvarInt('voice_syncData', 0) == 1)
+	LocalPlayer.state:set('radioChannel', channel, GetConvarInt('voice_syncData', 1) == 1)
 	radioChannel = channel
 	if GetConvarInt('voice_enableUi', 1) == 1 then
 		SendNUIMessage({
@@ -101,8 +103,8 @@ end)
 --- exports addPlayerToRadio
 --- sets the local players current radio channel and updates the server
 ---@param radio number the channel to set the player to, or 0 to remove them.
-exports('addPlayerToRadio', function(radio)
-	local radio = tonumber(radio)
+exports('addPlayerToRadio', function(_radio)
+	local radio = tonumber(_radio)
 	if radio then
 		setRadioChannel(radio)
 	end
@@ -155,7 +157,7 @@ end, false)
 RegisterCommand('-radiotalk', function()
 	if radioChannel > 0 or radioEnabled and radioPressed then
 		radioPressed = false
-		MumbleClearVoiceTargetPlayers(1)
+		MumbleClearVoiceTargetPlayers(voiceTarget)
 		playerTargets(NetworkIsPlayerTalking(PlayerId()) and callData or {})
 		TriggerEvent("pma-voice:radioActive", false)
 		playMicClicks(false)
@@ -173,7 +175,7 @@ RegisterKeyMapping('+radiotalk', 'Talk over Radio', 'keyboard', GetConvar('voice
 function syncRadio(_radioChannel)
 	if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
 	logger.info('[radio] radio set serverside update to radio %s', radioChannel)
-	plyState:set('radioChannel', _radioChannel, GetConvarInt('voice_syncData', 0) == 1)
+	LocalPlayer.state:set('radioChannel', _radioChannel, GetConvarInt('voice_syncData', 1) == 1)
 	radioChannel = _radioChannel
 end
 RegisterNetEvent('pma-voice:clSetPlayerRadio', syncRadio)
