@@ -65,6 +65,7 @@ exports.ava_core.GetPlayerByCitizenId = AVA.Players.GetPlayerByCitizenId
 exports.ava_core.UseItem = AVA.Players.UseItem
 exports.ava_core.GetItemsData = AVA.GetItemsData
 exports.ava_core.GetItemData = AVA.GetItemData
+exports.ava_core.GetPlayerInventoryItems = AVA.GetPlayerInventoryItems
 exports.ava_core.SaveAllPlayers = AVA.Players.SaveAll
 exports.ava_core.GradeExistForJob = AVA.GradeExistForJob
 exports.ava_core.GetGradeLabel = AVA.GetGradeLabel

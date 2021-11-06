@@ -200,6 +200,14 @@ function PoolPlayerList()
                 RageUI.GoBack()
             else
                 local playerData = selectedPlayerData
+                if perms.playerlist.openinventory then
+                    Items:AddButton(GetString("player_manage_openinventory"), GetString("player_manage_openinventory_subtitle"),
+                        {IsDisabled = playerData.isMyself}, function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("openinventory " .. playerData.id)
+                            end
+                        end)
+                end
                 if perms.playerlist["goto"] then
                     Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), {IsDisabled = playerData.isMyself},
                         function(onSelected)
@@ -284,7 +292,7 @@ RegisterNetEvent("ava_personalmenu:client:playersData", function(data, myRB)
 
         if selectedPlayerDataId and player.id == selectedPlayerDataId then
             newSelectedPlayerData = player
-            selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(player.id)) == PlayerId()
+            newSelectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(player.id)) == PlayerId()
         end
     end
     selectedPlayerData = newSelectedPlayerData

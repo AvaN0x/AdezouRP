@@ -2,13 +2,13 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local InventoryElements, InventoryTopElements = nil, nil
+local InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu.Display.Glare = true
 InventoryMenu.Closed = function()
-    InventoryElements, InventoryTopElements = nil, nil
+    InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
 end
 InventoryMenu:AddInstructionButton({GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change")})
 local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
@@ -92,11 +92,12 @@ local function getQuantityUnit(itemType)
 end
 
 ---Get inventory data from server and process it
-local function ReloadInventoryData()
-    local invItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getInventoryItems")
+local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
-
     InventoryElements, InventoryTopElements = {}, {}
+    if not invItems then
+        return
+    end
     local invElementsCount = 0
 
     for i = 1, #invItems, 1 do
@@ -140,7 +141,7 @@ end
 
 local function OpenMyInventory()
     if not RageUI.Visible(InventoryMenu) then
-        ReloadInventoryData()
+        ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
 
         RageUI.CloseAll()
         RageUI.Visible(InventoryMenu, true)
@@ -187,34 +188,48 @@ function RageUI.PoolMenus:AvaCoreInventory()
 
     ItemSelectedMenu:IsVisible(function(Items)
         if selectedItem.quantity > 0 then
-            if selectedItem.usable then
-                Items:AddButton(GetString("inventory_use"), nil, nil, function(onSelected)
-                    if onSelected then
-                        selectedItem.quantity = selectedItem.quantity - 1
-                        local selectedItem = selectedItem
-                        if selectedItem.closeInv then
-                            RageUI.CloseAllInternal()
+            if not TargetInventoryId then
+                if selectedItem.usable then
+                    Items:AddButton(GetString("inventory_use"), nil, nil, function(onSelected)
+                        if onSelected then
+                            selectedItem.quantity = selectedItem.quantity - 1
+                            local selectedItem = selectedItem
+                            if selectedItem.closeInv then
+                                RageUI.CloseAllInternal()
+                            end
+                            TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
                         end
-                        TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
+                    end)
+                end
+                Items:AddButton(GetString("inventory_give"), nil, nil, function(onSelected)
+                    if onSelected then
+                        local selectedItem = selectedItem
+                        Citizen.CreateThread(function()
+                            local targetId = AVA.Utils.ChooseClosestPlayer()
+                            if targetId then
+                                local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
+                                    AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type)), "", 10))
+                                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                                    TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
+                                end
+                            end
+                            OpenMyInventory()
+                        end)
+                    end
+                end)
+            else
+                Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
+                    if onSelected then
+                        local selectedItem = selectedItem
+                        local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
+                            getQuantityUnit(selectedItem.type)), "", 10))
+                        if type(count) == "number" and math.floor(count) == count and count > 0 then
+                            TriggerServerEvent("ava_core:server:takeItem", TargetInventoryId, selectedItem.name, count)
+                        end
+                        TriggerEvent("ava_core:client:openTargetInventory", TargetInventoryId)
                     end
                 end)
             end
-            Items:AddButton(GetString("inventory_give"), nil, nil, function(onSelected)
-                if onSelected then
-                    local selectedItem = selectedItem
-                    Citizen.CreateThread(function()
-                        local targetId = AVA.Utils.ChooseClosestPlayer()
-                        if targetId then
-                            local count = tonumber(AVA.KeyboardInput(("%s - %s %s"):format("Entrez un nombre", AVA.Utils.FormatNumber(selectedItem.quantity),
-                                getQuantityUnit(selectedItem.type)), "", 10))
-                            if type(count) == "number" and math.floor(count) == count and count > 0 then
-                                TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
-                            end
-                        end
-                        OpenMyInventory()
-                    end)
-                end
-            end)
         else
             RageUI.GoBack()
         end
@@ -241,14 +256,22 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
         editItem_timelastReload = timer
         editItem_waitingToReload = false
         -- Only reload if inventory is still visible
-        if RageUI.Visible(InventoryMenu) then
-            ReloadInventoryData()
+        if RageUI.Visible(InventoryMenu) and not TargetInventoryId then
+            ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
         end
     end
     if selectedItem and selectedItem.name == itemName then
         selectedItem.quantity = newQuantity
         ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(selectedItem.label, AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type))
     end
+end)
+
+RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
+    RageUI.CloseAll()
+    TargetInventoryId = targetId
+    ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", targetId))
+
+    RageUI.Visible(InventoryMenu, true)
 end)
 
 RegisterCommand("+addtest", function()
