@@ -26,7 +26,6 @@ Citizen.CreateThread(function()
 
     InitHUD()
     SendNUIMessage({action = "toggleMainStats", show = true})
-
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
@@ -169,6 +168,27 @@ end)
 ------------------------
 ------ Car things ------
 ------------------------
+local shockScreenTimer = 0
+local function SetShockScreen(duration)
+    local gameTimer = GetGameTimer()
+    -- GetGameTimer() + 10 because the while loop uses 10ms
+    if shockScreenTimer > (gameTimer + 10) then
+        shockScreenTimer = shockScreenTimer + duration
+        return
+    end
+    shockScreenTimer = gameTimer + duration
+
+    Citizen.CreateThread(function()
+        AnimpostfxPlay("MP_Celeb_Lose", duration, true)
+        ShakeGameplayCam("DRUNK_SHAKE", 3.0)
+        while shockScreenTimer > GetGameTimer() do
+            Wait(10)
+        end
+        StopGameplayCamShaking(true)
+        AnimpostfxStop("MP_Celeb_Lose")
+    end)
+end
+
 local vehiclePlayerIsIn = 0
 Citizen.CreateThread(function()
     while true do
@@ -207,11 +227,9 @@ Citizen.CreateThread(function()
                     SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
                     Wait(1)
                     SetPedToRagdoll(ped, 1000, 1000, 0, 0, 0, 0)
+                    -- TODO break windshield
                 elseif GetPedInVehicleSeat(vehiclePlayerIsIn, -1) == ped then
-                    StartScreenEffect("MP_Celeb_Lose", 5000, false)
-                    ShakeGameplayCam("DRUNK_SHAKE", 3.0)
-                    Wait(5000)
-                    StopGameplayCamShaking(true)
+                    SetShockScreen(5000)
                 end
             end
 
