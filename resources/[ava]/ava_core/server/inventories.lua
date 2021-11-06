@@ -20,22 +20,20 @@ AVA.GetPlayerInventoryItems = function(src)
         for i = 1, #inventory.items, 1 do
             local invItem = inventory.items[i]
             local cfgItem = Items[invItem.name]
-            if invItem.quantity > 0 or cfgItem.alwaysDisplayed then
-                if cfgItem then
-                    itemsCount = itemsCount + 1
-                    items[itemsCount] = {
-                        name = invItem.name,
-                        quantity = invItem.quantity,
-                        label = cfgItem.label,
-                        desc = cfgItem.description,
-                        type = cfgItem.type,
-                        weight = cfgItem.weight,
-                        limit = cfgItem.limit,
-                        noIcon = cfgItem.noIcon,
-                        closeInv = cfgItem.closeInv,
-                        usable = cfgItem.usable,
-                    }
-                end
+            if cfgItem and (invItem.quantity > 0 or cfgItem.alwaysDisplayed) then
+                itemsCount = itemsCount + 1
+                items[itemsCount] = {
+                    name = invItem.name,
+                    quantity = invItem.quantity,
+                    label = cfgItem.label,
+                    desc = cfgItem.description,
+                    type = cfgItem.type,
+                    weight = cfgItem.weight,
+                    limit = cfgItem.limit,
+                    noIcon = cfgItem.noIcon,
+                    closeInv = cfgItem.closeInv,
+                    usable = cfgItem.usable,
+                }
             end
         end
 

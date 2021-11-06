@@ -47,7 +47,13 @@ AVAConfig.Licenses = {
 AVAConfig.Accounts = {bank = {label = "Banque"}}
 
 -- List of all items and their datas
-AVAConfig.Items = json.decode(LoadResourceFile(GetCurrentResourceName(), "items.json") or "{}")
+AVAConfig.Items = json.decode(LoadResourceFile(GetCurrentResourceName(), "items.json") or "{}") or {}
 
 -- List of all jobs
-AVAConfig.Jobs = json.decode(LoadResourceFile(GetCurrentResourceName(), "jobs.json") or "{}")
+AVAConfig.Jobs = json.decode(LoadResourceFile(GetCurrentResourceName(), "jobs.json") or "{}") or {}
+
+-- List of all weapons
+local weaponsJSON = json.decode(LoadResourceFile(GetCurrentResourceName(), "weapons.json") or "{}") or {}
+AVAConfig.Weapons = weaponsJSON.weapons or {}
+AVAConfig.WeaponsTypes = weaponsJSON.weaponsTypes or {}
+weaponsJSON = nil

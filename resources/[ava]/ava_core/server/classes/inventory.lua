@@ -60,12 +60,13 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
             quantity = math.floor(quantity)
             item.quantity = item.quantity + quantity
 
-            if self.playerSrc then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
-            end
-
             self.updateWeight()
             self.modified = true
+
+            if self.playerSrc then
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
+                TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
+            end
         end
     end
 
@@ -78,14 +79,16 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         if item then
             quantity = math.floor(quantity)
             local new_quantity = item.quantity - quantity
+            -- TODO remove totally element from inventory if 0?
             item.quantity = new_quantity >= 0 and new_quantity or 0
+
+            self.updateWeight()
+            self.modified = true
 
             if self.playerSrc then
                 TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, quantity, item.quantity)
+                TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, quantity, item.quantity)
             end
-            -- TODO remove totally element from inventory if 0?
-            self.updateWeight()
-            self.modified = true
         end
     end
 
@@ -185,11 +188,14 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
     self.clearInventory = function()
         for k, item in ipairs(self.items) do
-            if self.playerSrc and item.quantity > 0 and Items[item.name] then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, item.quantity, 0)
-            end
             -- TODO remove totally element from inventory ?
+            local oldQuantity = item.quantity
             item.quantity = 0
+
+            if self.playerSrc and oldQuantity > 0 and Items[item.name] then
+                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
+                TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
+            end
         end
         self.actual_weight = 0
         self.modified = true

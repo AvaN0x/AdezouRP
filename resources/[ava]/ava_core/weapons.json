@@ -1,0 +1,149 @@
+{
+    "weaponsTypes": [
+        "melee",
+        "handgun",
+        "smg",
+        "shotgun",
+        "ar",
+        "lmg",
+        "sniper",
+        "heavyweapon",
+        "throwables",
+        "miscweapon"
+    ],
+    "weapons": {
+        "weapon_pistol": {
+            "label": "Pistolet",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_pistol_mk2": {
+            "label": "Pistolet mk2",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_combatpistol": {
+            "label": "Pistolet de combat",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_appistol": {
+            "label": "Pistolet perforant",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_stungun": {
+            "label": "Taser",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_pistol50": {
+            "label": "Pistolet Cal 50",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_snspistol": {
+            "label": "Pistolet SNS",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_snspistol_mk2": {
+            "label": "Pistolet SNS MK2",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_heavypistol": {
+            "label": "Pistolet lourd",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_vintagepistol": {
+            "label": "Pistolet vintage",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_flaregun": {
+            "label": "Flare gun",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_marksmanpistol": {
+            "label": "Pistolet marksman",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_revolver": {
+            "label": "Revolver",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_revolver_mk2": {
+            "label": "Revolver MK2",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_doubleaction": {
+            "label": "Revolver double action",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_raypistol": {
+            "label": "Pistolet laser",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_ceramicpistol": {
+            "label": "Pistolet céramique",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_navyrevolver": {
+            "label": "Revolver navy",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_gadgetpistol": {
+            "label": "Pistolet gadget",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        }
+    }
+}

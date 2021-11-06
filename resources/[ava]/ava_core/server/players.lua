@@ -145,6 +145,7 @@ local function loadPlayer(src)
     end
     aPlayer.login()
     AVA.RB.MoveSourceToRB(src, 0)
+
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
         character = {
@@ -190,10 +191,10 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     -- we check if the player character is valid
     if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and aPlayer.character.sex
         and aPlayer.character.birthdate then
-        -- dprint("Player char is valid")
+        -- player char is valid
         loadPlayer(tostring(src))
     else
-        -- dprint("Player char need to create a char")
+        -- player char needs to create a char
         AVA.RB.MoveSourceToRBName(src, "createchar" .. src)
         TriggerClientEvent("ava_core:client:createChar", src)
     end
@@ -203,7 +204,6 @@ local function setupPlayer(src, oldSource)
     Citizen.CreateThread(function()
         -- mandatory wait!
         Wait(0)
-        -- dprint(src, "playerJoining, oldId : ", oldSource)
 
         local playerName = GetPlayerName(src)
         local license, discord = AVA.Players.GetSourceIdentifiers(src)
@@ -749,3 +749,41 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
         end
     end
 end, GetString("get_all_player_chars_help"))
+
+-------------------------------------------
+----------------- WEAPONS -----------------
+-------------------------------------------
+
+RegisterNetEvent("ava_core:server:reloadLoadout", function()
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+    if aPlayer then
+        local playerItems = aPlayer.getInventory().items
+        local TabHasValue<const> = AVA.Utils.TableHasValue
+        local Items<const> = AVAConfig.Items
+        local WeaponsTypes<const> = AVAConfig.WeaponsTypes
+        for i = 1, #playerItems do
+            local item = playerItems[i]
+            if item and item.quantity > 0 then
+                local cfgItem = Items[item.name]
+                if cfgItem and TabHasValue(WeaponsTypes, cfgItem.type) then
+                    print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
+                    aPlayer.addWeapon(item.name)
+                end
+            end
+        end
+    end
+end)
+
+AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, itemName, itemLabel, isAddition, editedQuantity, newQuantity)
+    if AVAConfig.Weapons[itemName] then
+        local aPlayer = AVA.Players.GetPlayer(src)
+        if isAddition and newQuantity == 1 then
+            print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
+            aPlayer.addWeapon(itemName)
+        elseif not isAddition and newQuantity == 0 then
+            print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
+            aPlayer.removeWeapon(itemName)
+        end
+    end
+end)

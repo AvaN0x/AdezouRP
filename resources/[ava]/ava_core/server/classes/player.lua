@@ -495,5 +495,86 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
+    ---------------------------------------
+    --------------- WEAPONS ---------------
+    ---------------------------------------
+
+    ---Get all player weapons
+    ---@return table
+    self.getWeapons = function()
+        return self.loadout
+    end
+
+    ---Check if a player has a weapon
+    ---@param weapon string|number
+    ---@return boolean hasWeapon
+    ---@return table weapon data
+    ---@return number index
+    self.hasWeapon = function(weapon)
+        if type(weapon) ~= "string" and type(weapon) ~= "number" then
+            return false
+        end
+        local weaponHash = type(weapon) == "number" and weapon or GetHashKey(weapon)
+        for i = 1, #self.loadout do
+            if self.loadout[i] and self.loadout[i].hash == weaponHash then
+                return true, self.loadout[i], i
+            end
+        end
+        return false
+    end
+
+    self.addWeapon = function(weaponName)
+        if type(weaponName) ~= "string" then
+            return false
+        end
+
+        -- if we can remove one item, then the player has the weapon
+        if self.getInventory().canRemoveItem(weaponName, 1) then
+            local playerPed = GetPlayerPed(self.src)
+            if playerPed then
+                local weaponHash = GetHashKey(weaponName)
+                local hasWeapon, weapon, weaponIndex = self.hasWeapon(weaponName)
+                if hasWeapon then
+                    GiveWeaponToPed(playerPed, weaponHash, weapon.ammo or 0, false, false)
+                    -- TODO ammo count
+
+                    if weapon.components then
+                        -- TODO weapon components
+                    end
+                else
+                    GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
+                    self.loadout[#self.loadout + 1] = {hash = weaponHash, ammo = 0}
+                end
+                return true
+            end
+        end
+        return false
+    end
+
+    self.removeWeapon = function(weaponName)
+        if type(weaponName) ~= "string" then
+            return false
+        end
+
+        -- if we can't remove one item, this means that the player do not have this weapon
+        if not self.getInventory().canRemoveItem(weaponName, 1) then
+            local playerPed = GetPlayerPed(self.src)
+            if playerPed then
+                local weaponHash = GetHashKey(weaponName)
+                local hasWeapon, weapon, weaponIndex = self.hasWeapon(weaponHash)
+                if hasWeapon then
+                    RemoveWeaponFromPed(playerPed, weaponHash)
+                    -- TODO remove from loadout ?
+                    -- TODO find a way to get ammo count in clip ?
+
+                    -- TODO give components back ?
+                    self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
+                    return true
+                end
+            end
+        end
+        return false
+    end
+
     return self
 end

@@ -360,7 +360,7 @@
         "description": "Nous on te suit partout!",
         "noIcon": true
     },
-    "Bracelet_diamond": {
+    "bracelet_diamond": {
         "label": "Bracelet en diamant",
         "weight": 150,
         "limit": null,
@@ -368,7 +368,7 @@
         "description": "",
         "noIcon": true
     },
-    "Bracelet_emerald": {
+    "bracelet_emerald": {
         "label": "Bracelet en émeraude",
         "weight": 150,
         "limit": null,
@@ -376,7 +376,7 @@
         "description": "",
         "noIcon": true
     },
-    "Bracelet_gold": {
+    "bracelet_gold": {
         "label": "Bracelet en or",
         "weight": 150,
         "limit": null,
@@ -384,7 +384,7 @@
         "description": "",
         "noIcon": true
     },
-    "Bracelet_ruby": {
+    "bracelet_ruby": {
         "label": "Bracelet en ruby",
         "weight": 150,
         "limit": null,
@@ -392,7 +392,7 @@
         "description": "",
         "noIcon": true
     },
-    "Bracelet_steel": {
+    "bracelet_steel": {
         "label": "Bracelet en argent",
         "weight": 150,
         "limit": null,
@@ -513,6 +513,14 @@
         "noIcon": true
     },
     "watch_steel": {
+        "label": "Montre en argent",
+        "weight": 200,
+        "limit": null,
+        "closeInv": true,
+        "description": "",
+        "noIcon": true
+    },
+    "weapon_pistol": {
         "label": "Montre en argent",
         "weight": 200,
         "limit": null,

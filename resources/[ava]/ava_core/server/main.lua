@@ -67,6 +67,15 @@ Console colors :
     ^8^ 8 : AvaN0x's Core
     ^9^ 9 : AvaN0x's Core^0]])
 
+-- Set weapons as items
+for weaponName, weapon in pairs(AVAConfig.Weapons) do
+    if AVAConfig.Items[weaponName] then
+        print("^3[WARN] Weapon named `" .. weaponName .. "` already exists in AVAConfig.Items^0")
+    end
+
+    AVAConfig.Items[weaponName] = weapon
+end
+
 -----------------------------------------------
 --------------- Init principals ---------------
 -----------------------------------------------

@@ -430,7 +430,7 @@ AVA.Commands.RegisterCommand("goto", "mod", function(source, args)
     end
 
     local targetPed = GetPlayerPed(args[1])
-    if targetPed and targetPed ~= 0 then
+    if targetPed then
         if GetPlayerRoutingBucket(source) ~= GetPlayerRoutingBucket(args[1]) then
             print("^1[ERROR] ^0Player ^3" .. args[1] .. "^0 is in another routing bucket")
         else

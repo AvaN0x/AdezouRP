@@ -236,11 +236,11 @@ function RageUI.PoolMenus:AvaCoreInventory()
     end)
 end
 
-RegisterCommand("+keyInventory", function()
+RegisterCommand("keyInventory", function()
     OpenMyInventory()
 end)
 
-RegisterKeyMapping("+keyInventory", GetString("inventory"), "keyboard", AVAConfig.InventoryKey)
+RegisterKeyMapping("keyInventory", GetString("inventory"), "keyboard", AVAConfig.InventoryKey)
 
 local editItem_timelastReload, editItem_waitingToReload = -1, false
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
@@ -274,8 +274,8 @@ RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
     RageUI.Visible(InventoryMenu, true)
 end)
 
-RegisterCommand("+addtest", function()
+RegisterCommand("addtest", function()
     TriggerServerEvent("ava_core:server:addtest")
 end)
 
-RegisterKeyMapping("+addtest", "addtest", "keyboard", "F3")
+RegisterKeyMapping("addtest", "addtest", "keyboard", "F3")

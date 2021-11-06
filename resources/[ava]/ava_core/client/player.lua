@@ -66,7 +66,7 @@ local function SpawnPlayer()
 
     end
 
-    -- TriggerEvent("ava_core:client:restoreLoadout") -- restore loadout
+    TriggerServerEvent("ava_core:server:reloadLoadout")
 end
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
