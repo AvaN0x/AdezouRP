@@ -820,11 +820,11 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
         local item = inventory.getItem(ammoType)
 
         if not item then
-            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
                 15685721)
 
         elseif ammoRemoved > item.quantity then
-            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "",
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
                     aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 15685721)
             TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), item.quantity)

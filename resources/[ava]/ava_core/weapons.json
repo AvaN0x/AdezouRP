@@ -4,7 +4,7 @@
         "handgun",
         "smg",
         "shotgun",
-        "ar",
+        "rifle",
         "lmg",
         "sniper",
         "heavyweapon",
@@ -209,20 +209,488 @@
             "weight": 500,
             "noIcon": true
         },
-        "weapon_smokegrenade": {
-            "label": "Fumigène",
-            "ammoType": "AMMO_SMOKEGRENADE",
-            "type": "throwable",
-            "description": "",
-            "weight": 500,
-            "noIcon": true
-        },
         "weapon_flare": {
             "label": "Flare",
             "ammoType": "AMMO_FLARE",
             "type": "throwable",
             "description": "",
             "weight": 500,
+            "noIcon": true
+        },
+        "weapon_dagger": {
+            "label": "Dague antique",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_bat": {
+            "label": "Batte",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_bottle": {
+            "label": "Bouteille cassé",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_crowbar": {
+            "label": "Pied de biche",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_flashlight": {
+            "label": "Lampe torche",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_golfclub": {
+            "label": "Club de golf",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_hammer": {
+            "label": "Marteau",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_hatchet": {
+            "label": "Hachette",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_knuckle": {
+            "label": "Poing américain",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_knife": {
+            "label": "Couteau",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_machete": {
+            "label": "Machète",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_switchblade": {
+            "label": "Cran d'arrêt",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_nightstick": {
+            "label": "Matraque",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_wrench": {
+            "label": "Clé anglaise",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_battleaxe": {
+            "label": "Hache de combat",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_poolcue": {
+            "label": "Queue de billard",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_stone_hatche": {
+            "label": "Hachette en pierre",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_microsmg": {
+            "label": "Micro SMG",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_smg": {
+            "label": "SMG",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_smg_mk2": {
+            "label": "SMG Mk2",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_assaultsmg": {
+            "label": "Mitraillette d'assault",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_combatpdw": {
+            "label": "ADP de combat",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_machinepistol": {
+            "label": "Pistolet automatique",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_minismg": {
+            "label": "Mini SMG",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_raycarabine": {
+            "label": "Dézingator infernal",
+            "type": "smg",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_pumpshotgun": {
+            "label": "Fusil à pompe",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_pumpshotgun_mk2": {
+            "label": "Fusil à pompe mk2",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_sawnoffshotgun": {
+            "label": "Fusil à canon scié",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_assaultshotgun": {
+            "label": "Pompe à pompe d'assaut",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_bullpupshotgun": {
+            "label": "Fusil à pompe bullpup",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_musket": {
+            "label": "Mousquet",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_heavyshotgun": {
+            "label": "Fusil à pompe lourd",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_dbshotgun": {
+            "label": "Fusil à double canon",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_autoshotgun": {
+            "label": "Fusil à pompe automatique",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_combatshotgun": {
+            "label": "Fusil à pompe de combat",
+            "type": "shotgun",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_assaultrifle": {
+            "label": "Fusil d'assaut",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_assaultrifle_mk2": {
+            "label": "Fusil d'assaut MK2",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_carbinerifle": {
+            "label": "Carabine",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_carbinerifle_mk2": {
+            "label": "Carabine MK2",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_advancedrifle": {
+            "label": "Fusil amélioré",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_specialcarbine": {
+            "label": "Carabine spéciale",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_specialcarbine_mk2": {
+            "label": "Carabine spéciale MK2",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_bullpuprifle": {
+            "label": "Fusil bullpup",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_bullpuprifle_mk2": {
+            "label": "Fusil bullpup MK2",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_compactrifle": {
+            "label": "Fusil compact",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_militaryrifle": {
+            "label": "Fusil militaire",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_mg": {
+            "label": "Mitrailleuse",
+            "type": "lmg",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_combatmg": {
+            "label": "Mitrailleuse de combat",
+            "type": "lmg",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_combatmg_mk2": {
+            "label": "Mitrailleuse de combat MK2",
+            "type": "lmg",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_gusenberg": {
+            "label": "Sulfateuse Gusenberg",
+            "type": "lmg",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
+        "weapon_sniperrifle": {
+            "label": "Sniper",
+            "type": "sniper",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_heavysniper": {
+            "label": "Sniper lourd",
+            "type": "sniper",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_heavysniper_mk2": {
+            "label": "Sniper lourd MK2",
+            "type": "sniper",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_marksmanrifle": {
+            "label": "Fusil à lunette",
+            "type": "sniper",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_marksmanrifle_mk2": {
+            "label": "Fusil à lunette MK2",
+            "type": "sniper",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_rpg": {
+            "label": "RPG",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_grenadelauncher": {
+            "label": "Lance-grenades",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_grenadelauncher_smoke": {
+            "label": "Lance-fumigènes",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_minigun": {
+            "label": "Minigun",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_firework": {
+            "label": "Lanceur pyrotechnique",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_railgun": {
+            "label": "Fusil à impulsion",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_hominglauncher": {
+            "label": "Lance-missiles",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_compactlauncher": {
+            "label": "Lance-grenades compact",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_rayminigun": {
+            "label": "Destructeur de l'infini",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "gadget_parachute": {
+            "label": "Parachute",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_petrolcan": {
+            "label": "Jerrycan",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_fireextinguisher": {
+            "label": "Extincteur",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_hazardcan": {
+            "label": "Bidon de produits chimique",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
             "noIcon": true
         }
     }

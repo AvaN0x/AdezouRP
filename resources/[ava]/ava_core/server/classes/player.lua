@@ -580,7 +580,9 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                         newItemQuantity)
                     if newItemQuantity == 0 then
                         RemoveWeaponFromPed(playerPed, weaponHash)
-                        self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
+                        if hasWeapon then
+                            self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
+                        end
                     end
                     return true
                 end
