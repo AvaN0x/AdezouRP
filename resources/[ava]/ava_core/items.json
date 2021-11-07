@@ -520,287 +520,287 @@
         "description": "",
         "noIcon": true
     },
-    "AMMO_GRENADELAUNCHER": {
+    "ammo_grenadelauncher": {
         "label": "Munitions lance grenade",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RPG": {
+    "ammo_rpg": {
         "label": "Munitions RPG",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MINIGUN": {
+    "ammo_minigun": {
         "label": "Munitions minigun",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_FIREEXTINGUISHER": {
+    "ammo_fireextinguisher": {
         "label": "Munitions extincteur",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PETROLCAN": {
+    "ammo_petrolcan": {
         "label": "Munitions jerrycan",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_HOMINGLAUNCHER": {
+    "ammo_hominglauncher": {
         "label": "Munitions lance-missiles",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RIFLE": {
+    "ammo_rifle": {
         "label": "Munitions assaut",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RIFLE_TRACER": {
+    "ammo_rifle_tracer": {
         "label": "Munitions assaut traçantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RIFLE_INCENDIARY": {
+    "ammo_rifle_incendiary": {
         "label": "Munitions assaut incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RIFLE_ARMORPIERCING": {
+    "ammo_rifle_armorpiercing": {
         "label": "Munitions assaut perforantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RIFLE_FMJ": {
+    "ammo_rifle_fmj": {
         "label": "Munitions assault blindées",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER": {
+    "ammo_sniper": {
         "label": "Munitions sniper",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER_TRACER": {
+    "ammo_sniper_tracer": {
         "label": "Munitions sniper traçantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER_INCENDIARY": {
+    "ammo_sniper_incendiary": {
         "label": "Munitions sniper incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER_ARMORPIERCING": {
+    "ammo_sniper_armorpiercing": {
         "label": "Munitions sniper perforantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER_FMJ": {
+    "ammo_sniper_fmj": {
         "label": "Munitions sniper blindées",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SNIPER_EXPLOSIVE": {
+    "ammo_sniper_explosive": {
         "label": "Munitions sniper explosives",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SHOTGUN": {
+    "ammo_shotgun": {
         "label": "Munitions pompe",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SHOTGUN_INCENDIARY": {
+    "ammo_shotgun_incendiary": {
         "label": "Munitions pompe incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SHOTGUN_ARMORPIERCING": {
+    "ammo_shotgun_armorpiercing": {
         "label": "Munitions pompe en acier",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SHOTGUN_HOLLOWPOINT": {
+    "ammo_shotgun_hollowpoint": {
         "label": "Munitions pompe à pointes creuses",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SHOTGUN_EXPLOSIVE": {
+    "ammo_shotgun_explosive": {
         "label": "Munitions pompe explosives",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PISTOL": {
+    "ammo_pistol": {
         "label": "Munitions pistolet",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PISTOL_TRACER": {
+    "ammo_pistol_tracer": {
         "label": "Munitions pistolet traçantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PISTOL_INCENDIARY": {
+    "ammo_pistol_incendiary": {
         "label": "Munitions pistolet incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PISTOL_HOLLOWPOINT": {
+    "ammo_pistol_hollowpoint": {
         "label": "Munitions pistolet à pointes creuses",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_PISTOL_FMJ": {
+    "ammo_pistol_fmj": {
         "label": "Munitions pistolet blindées",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SMG": {
+    "ammo_smg": {
         "label": "Munitions SMG",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SMG_TRACER": {
+    "ammo_smg_tracer": {
         "label": "Munitions SMG traçantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SMG_INCENDIARY": {
+    "ammo_smg_incendiary": {
         "label": "Munitions SMG incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SMG_HOLLOWPOINT": {
+    "ammo_smg_hollowpoint": {
         "label": "Munitions SMG à pointes creuses",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_SMG_FMJ": {
+    "ammo_smg_fmj": {
         "label": "Munitions SMG blindées",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MG": {
+    "ammo_mg": {
         "label": "Munitions MG",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MG_TRACER": {
+    "ammo_mg_tracer": {
         "label": "Munitions MG traçantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MG_INCENDIARY": {
+    "ammo_mg_incendiary": {
         "label": "Munitions MG incendiaires",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MG_ARMORPIERCING": {
+    "ammo_mg_armorpiercing": {
         "label": "Munitions MG perforantes",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_MG_FMJ": {
+    "ammo_mg_fmj": {
         "label": "Munitions MG blindées",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_FLAREGUN": {
+    "ammo_flaregun": {
         "label": "Munitions pistolet de détresse",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_HAZARDCAN": {
+    "ammo_hazardcan": {
         "label": "Munitions produits chimique",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_FIREWORK": {
+    "ammo_firework": {
         "label": "Munitions lanceur pyrotechnique",
         "type": "ammo",
         "description": "",
         "weight": 10,
         "noIcon": true
     },
-    "AMMO_RAILGUN": {
+    "ammo_railgun": {
         "label": "Munitions railgun",
         "type": "ammo",
         "description": "",

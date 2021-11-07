@@ -147,7 +147,7 @@
         },
         "weapon_grenade": {
             "label": "Grenade",
-            "ammoType": "AMMO_GRENADE",
+            "ammoType": "ammo_grenade",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -155,7 +155,7 @@
         },
         "weapon_bzgas": {
             "label": "Gaz BZ",
-            "ammoType": "AMMO_BZGAS",
+            "ammoType": "ammo_bzgas",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -163,7 +163,7 @@
         },
         "weapon_molotov": {
             "label": "Molotov",
-            "ammoType": "AMMO_MOLOTOV",
+            "ammoType": "ammo_molotov",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -171,7 +171,7 @@
         },
         "weapon_stickybomb": {
             "label": "Bombe collante",
-            "ammoType": "AMMO_STICKYBOMB",
+            "ammoType": "ammo_stickybomb",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -179,7 +179,7 @@
         },
         "weapon_proxmine": {
             "label": "Mine de proximité",
-            "ammoType": "AMMO_PROXMINE",
+            "ammoType": "ammo_proxmine",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -187,7 +187,7 @@
         },
         "weapon_snowball": {
             "label": "Boule de neige",
-            "ammoType": "AMMO_SNOWBALL",
+            "ammoType": "ammo_snowball",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -195,7 +195,7 @@
         },
         "weapon_pipebomb": {
             "label": "Bombe tube",
-            "ammoType": "AMMO_PIPEBOMB",
+            "ammoType": "ammo_pipebomb",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -203,7 +203,7 @@
         },
         "weapon_ball": {
             "label": "Balle",
-            "ammoType": "AMMO_BALL",
+            "ammoType": "ammo_ball",
             "type": "throwable",
             "description": "",
             "weight": 500,
@@ -211,7 +211,7 @@
         },
         "weapon_flare": {
             "label": "Flare",
-            "ammoType": "AMMO_FLARE",
+            "ammoType": "ammo_flare",
             "type": "throwable",
             "description": "",
             "weight": 500,
