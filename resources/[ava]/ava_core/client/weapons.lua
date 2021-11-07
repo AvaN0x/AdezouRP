@@ -101,8 +101,8 @@ Citizen.CreateThread(function()
         if IsPedShooting(playerPed) then
             local weaponHash = GetSelectedPedWeapon(playerPed)
             local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
-            local ammoItemName = ammoTypesToItem[ammoTypeHash] or ammoTypeHash
-            if ammoItemName ~= "INFINITE" then
+            local ammoItemName = ammoTypesToItem[ammoTypeHash]
+            if ammoItemName and ammoItemName ~= "INFINITE" then
                 shotAmmo(ammoItemName)
             end
         end
