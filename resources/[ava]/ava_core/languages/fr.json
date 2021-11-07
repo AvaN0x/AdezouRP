@@ -21,6 +21,7 @@
     "player_id_or_zero": "Player id, 0 pour soi-même",
     "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
     "clearinventory_help": "Clear player inventory",
+    "item_do_not_exist": "Le nom d'item n'existe pas",
     "give_item_help": "Give item",
     "remove_item_help": "Remove item ou le nombre de cette item que la personne a sur celle",
     "target_not_enough_place": "La personne n'a pas assez de place dans son inventaire.",

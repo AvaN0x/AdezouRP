@@ -382,7 +382,9 @@ AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
 
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
-        aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]) or 1)
+        if not aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]) or 1) then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_do_not_exist")}})
+        end
     end
 end, GetString("give_item_help"), {
     {name = "player", help = GetString("player_id_or_zero")},
@@ -397,7 +399,9 @@ AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
 
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
-        aTargetPlayer.getInventory().removeItem(args[2], tonumber(args[3]))
+        if not aTargetPlayer.getInventory().removeItem(args[2], tonumber(args[3])) then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_do_not_exist")}})
+        end
     end
 end, GetString("remove_item_help"), {
     {name = "player", help = GetString("player_id_or_zero")},
