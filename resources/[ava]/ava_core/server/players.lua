@@ -766,14 +766,14 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
         if not playerPed then
             return
         end
-        dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " all weapons ^9removed^0")
+        -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " all weapons ^9removed^0")
         RemoveAllPedWeapons(playerPed, true)
         for i = 1, #playerItems do
             local item = playerItems[i]
             if item and item.quantity > 0 then
                 local cfgItem = Items[item.name]
                 if cfgItem and TabHasValue(WeaponsTypes, cfgItem.type) then
-                    dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
+                    -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
                     aPlayer.addWeapon(item.name, item.quantity)
                 end
             end
@@ -787,7 +787,6 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
                 local cfgItem = Items[item.name]
                 if cfgItem and cfgItem.type == "ammo" then
                     TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(item.name), item.quantity)
-
                 end
             end
         end
@@ -799,10 +798,10 @@ AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, it
     if cfgWeapon then
         local aPlayer = AVA.Players.GetPlayer(src)
         if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
-            dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
+            -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
             aPlayer.addWeapon(itemName, editedQuantity)
         elseif not isAddition and (newQuantity == 0 or cfgWeapon.type == "throwable") then
-            dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
+            -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
             aPlayer.removeWeapon(itemName, newQuantity)
         end
         return
@@ -819,7 +818,7 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
     if aPlayer then
         local inventory = aPlayer.getInventory()
         local item = inventory.getItem(ammoType)
-        print(src, ammoType, ammoRemoved, item and item.quantity)
+
         if not item then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
                 15685721)

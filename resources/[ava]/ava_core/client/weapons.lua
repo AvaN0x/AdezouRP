@@ -66,6 +66,34 @@ RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, a
     SetPedAmmoByType(PlayerPedId(), ammoTypeHash, ammoCount)
 end)
 
+local shotAmmos = {}
+local timeLastTrigger, waitingToTrigger = -1, false
+
+---Trigger server with shot ammo count with an interval of 2000ms
+---@param ammoItemName Actually ammo item name
+local function shotAmmo(ammoItemName)
+    shotAmmos[ammoItemName] = (shotAmmos[ammoItemName] or 0) + 1
+
+    -- Only enter if we are not waiting to trigger
+    if not waitingToTrigger then
+        -- prevent spamming the server for data
+        -- this will do it with at least 3000ms between each calls
+        waitingToTrigger = true
+        Citizen.CreateThread(function()
+            local timer = GetGameTimer()
+            while (math.abs(timer - timeLastTrigger) < 3000) do
+                timer = GetGameTimer()
+                Wait(10)
+            end
+            timeLastTrigger = timer
+            waitingToTrigger = false
+            for itemName, count in pairs(shotAmmos) do
+                TriggerServerEvent("ava_core:server:playerShotAmmoType", itemName, count)
+                shotAmmos[itemName] = nil
+            end
+        end)
+    end
+end
 Citizen.CreateThread(function()
     while true do
         Wait(0)
@@ -73,9 +101,9 @@ Citizen.CreateThread(function()
         if IsPedShooting(playerPed) then
             local weaponHash = GetSelectedPedWeapon(playerPed)
             local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
-            local ammoItemName = ammoTypesToItem[ammoTypeHash] or "ERR"
+            local ammoItemName = ammoTypesToItem[ammoTypeHash] or ammoTypeHash
             if ammoItemName ~= "INFINITE" then
-                TriggerServerEvent("ava_core:server:playerShotAmmoType", ammoItemName, 1)
+                shotAmmo(ammoItemName)
             end
         end
     end
