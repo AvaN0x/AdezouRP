@@ -33,6 +33,7 @@ client_scripts {
     "shared/utils.lua",
     "client/utils.lua",
     "client/player.lua",
+    "client/weapons.lua",
     "client/createchar.lua",
     "client/commands.lua",
     "client/inventories.lua",

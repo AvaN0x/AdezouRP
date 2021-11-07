@@ -762,13 +762,32 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
         local TabHasValue<const> = AVA.Utils.TableHasValue
         local Items<const> = AVAConfig.Items
         local WeaponsTypes<const> = AVAConfig.WeaponsTypes
+        local playerPed = GetPlayerPed(src)
+        if not playerPed then
+            return
+        end
+        dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " all weapons ^9removed^0")
+        RemoveAllPedWeapons(playerPed, true)
         for i = 1, #playerItems do
             local item = playerItems[i]
             if item and item.quantity > 0 then
                 local cfgItem = Items[item.name]
                 if cfgItem and TabHasValue(WeaponsTypes, cfgItem.type) then
-                    print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
-                    aPlayer.addWeapon(item.name)
+                    dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
+                    aPlayer.addWeapon(item.name, item.quantity)
+                end
+            end
+        end
+        -- mandatory wait !
+        Wait(500)
+        -- Second loop for ammos, because we need to add them when the player has the weapons
+        for i = 1, #playerItems do
+            local item = playerItems[i]
+            if item and item.quantity > 0 then
+                local cfgItem = Items[item.name]
+                if cfgItem and cfgItem.type == "ammo" then
+                    TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(item.name), item.quantity)
+
                 end
             end
         end
@@ -776,14 +795,44 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
 end)
 
 AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    if AVAConfig.Weapons[itemName] then
+    local cfgWeapon<const> = AVAConfig.Weapons[itemName]
+    if cfgWeapon then
         local aPlayer = AVA.Players.GetPlayer(src)
-        if isAddition and newQuantity == 1 then
-            print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
-            aPlayer.addWeapon(itemName)
-        elseif not isAddition and newQuantity == 0 then
-            print("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
-            aPlayer.removeWeapon(itemName)
+        if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
+            dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
+            aPlayer.addWeapon(itemName, editedQuantity)
+        elseif not isAddition and (newQuantity == 0 or cfgWeapon.type == "throwable") then
+            dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
+            aPlayer.removeWeapon(itemName, newQuantity)
+        end
+        return
+    end
+    local cfgItem<const> = AVAConfig.Items[itemName]
+    if cfgItem and cfgItem.type == "ammo" then
+        TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(itemName), newQuantity)
+    end
+end)
+
+RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRemoved)
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+    if aPlayer then
+        local inventory = aPlayer.getInventory()
+        local item = inventory.getItem(ammoType)
+        print(src, ammoType, ammoRemoved, item and item.quantity)
+        if not item then
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
+                15685721)
+
+        elseif ammoRemoved > item.quantity then
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "",
+                ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
+                    aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 15685721)
+            TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), item.quantity)
+
+        elseif ammoRemoved <= item.quantity then
+            inventory.removeItem(item.name, ammoRemoved)
+
         end
     end
 end)

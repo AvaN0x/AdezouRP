@@ -296,6 +296,7 @@
 #inventoryNotifications {
     position: absolute;
     right: 20px;
+    text-align: right;
     bottom: 44px;
     font-size: 1.2rem;
     font-weight: bold;

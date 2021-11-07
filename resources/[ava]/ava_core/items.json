@@ -520,12 +520,312 @@
         "description": "",
         "noIcon": true
     },
-    "weapon_pistol": {
-        "label": "Montre en argent",
-        "weight": 200,
-        "limit": null,
-        "closeInv": true,
+    "AMMO_STUNGUN": {
+        "label": "AMMO_STUNGUN",
+        "type": "ammo",
         "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_GRENADELAUNCHER": {
+        "label": "AMMO_GRENADELAUNCHER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_GRENADELAUNCHER_SMOKE": {
+        "label": "AMMO_GRENADELAUNCHER_SMOKE",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RPG": {
+        "label": "AMMO_RPG",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MINIGUN": {
+        "label": "AMMO_MINIGUN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_FIREEXTINGUISHER": {
+        "label": "AMMO_FIREEXTINGUISHER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PETROLCAN": {
+        "label": "AMMO_PETROLCAN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_HOMINGLAUNCHER": {
+        "label": "AMMO_HOMINGLAUNCHER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RIFLE": {
+        "label": "AMMO_RIFLE",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RIFLE_TRACER": {
+        "label": "AMMO_RIFLE_TRACER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RIFLE_INCENDIARY": {
+        "label": "AMMO_RIFLE_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RIFLE_ARMORPIERCING": {
+        "label": "AMMO_RIFLE_ARMORPIERCING",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RIFLE_FMJ": {
+        "label": "AMMO_RIFLE_FMJ",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER": {
+        "label": "AMMO_SNIPER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER_TRACER": {
+        "label": "AMMO_SNIPER_TRACER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER_INCENDIARY": {
+        "label": "AMMO_SNIPER_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER_ARMORPIERCING": {
+        "label": "AMMO_SNIPER_ARMORPIERCING",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER_FMJ": {
+        "label": "AMMO_SNIPER_FMJ",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SNIPER_EXPLOSIVE": {
+        "label": "AMMO_SNIPER_EXPLOSIVE",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SHOTGUN": {
+        "label": "AMMO_SHOTGUN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SHOTGUN_INCENDIARY": {
+        "label": "AMMO_SHOTGUN_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SHOTGUN_ARMORPIERCING": {
+        "label": "AMMO_SHOTGUN_ARMORPIERCING",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SHOTGUN_HOLLOWPOINT": {
+        "label": "AMMO_SHOTGUN_HOLLOWPOINT",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SHOTGUN_EXPLOSIVE": {
+        "label": "AMMO_SHOTGUN_EXPLOSIVE",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PISTOL": {
+        "label": "AMMO_PISTOL",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PISTOL_TRACER": {
+        "label": "AMMO_PISTOL_TRACER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PISTOL_INCENDIARY": {
+        "label": "AMMO_PISTOL_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PISTOL_HOLLOWPOINT": {
+        "label": "AMMO_PISTOL_HOLLOWPOINT",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_PISTOL_FMJ": {
+        "label": "AMMO_PISTOL_FMJ",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SMG": {
+        "label": "AMMO_SMG",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SMG_TRACER": {
+        "label": "AMMO_SMG_TRACER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SMG_INCENDIARY": {
+        "label": "AMMO_SMG_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SMG_HOLLOWPOINT": {
+        "label": "AMMO_SMG_HOLLOWPOINT",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_SMG_FMJ": {
+        "label": "AMMO_SMG_FMJ",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MG": {
+        "label": "AMMO_MG",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MG_TRACER": {
+        "label": "AMMO_MG_TRACER",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MG_INCENDIARY": {
+        "label": "AMMO_MG_INCENDIARY",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MG_ARMORPIERCING": {
+        "label": "AMMO_MG_ARMORPIERCING",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_MG_FMJ": {
+        "label": "AMMO_MG_FMJ",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RAYPISTOL": {
+        "label": "AMMO_RAYPISTOL",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_FLAREGUN": {
+        "label": "AMMO_FLAREGUN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_HAZARDCAN": {
+        "label": "AMMO_HAZARDCAN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_FIREWORK": {
+        "label": "AMMO_FIREWORK",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "AMMO_RAILGUN": {
+        "label": "AMMO_RAILGUN",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
         "noIcon": true
     }
 }

@@ -8,7 +8,7 @@
         "lmg",
         "sniper",
         "heavyweapon",
-        "throwables",
+        "throwable",
         "miscweapon"
     ],
     "weapons": {
@@ -118,7 +118,7 @@
             "noIcon": true
         },
         "weapon_raypistol": {
-            "label": "Pistolet laser",
+            "label": "Up-n-Atomisateur",
             "type": "handgun",
             "description": "",
             "weight": 2000,
@@ -139,10 +139,90 @@
             "noIcon": true
         },
         "weapon_gadgetpistol": {
-            "label": "Pistolet gadget",
+            "label": "Pistolet Perico",
             "type": "handgun",
             "description": "",
             "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_grenade": {
+            "label": "Grenade",
+            "ammoType": "AMMO_GRENADE",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_bzgas": {
+            "label": "Gaz BZ",
+            "ammoType": "AMMO_BZGAS",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_molotov": {
+            "label": "Molotov",
+            "ammoType": "AMMO_MOLOTOV",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_stickybomb": {
+            "label": "Bombe collante",
+            "ammoType": "AMMO_STICKYBOMB",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_proxmine": {
+            "label": "Mine de proximité",
+            "ammoType": "AMMO_PROXMINE",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_snowball": {
+            "label": "Boule de neige",
+            "ammoType": "AMMO_SNOWBALL",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_pipebomb": {
+            "label": "Bombe tube",
+            "ammoType": "AMMO_PIPEBOMB",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_ball": {
+            "label": "Balle",
+            "ammoType": "AMMO_BALL",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_smokegrenade": {
+            "label": "Fumigène",
+            "ammoType": "AMMO_SMOKEGRENADE",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_flare": {
+            "label": "Flare",
+            "ammoType": "AMMO_FLARE",
+            "type": "throwable",
+            "description": "",
+            "weight": 500,
             "noIcon": true
         }
     }

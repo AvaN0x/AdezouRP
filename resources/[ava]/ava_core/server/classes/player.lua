@@ -523,27 +523,40 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
-    self.addWeapon = function(weaponName)
+    self.addWeapon = function(weaponName, itemQuantity)
         if type(weaponName) ~= "string" then
             return false
         end
 
+        local cfgWeapon<const> = AVAConfig.Weapons[weaponName]
         -- if we can remove one item, then the player has the weapon
-        if self.getInventory().canRemoveItem(weaponName, 1) then
+        if cfgWeapon and self.getInventory().canRemoveItem(weaponName, 1) then
             local playerPed = GetPlayerPed(self.src)
             if playerPed then
                 local weaponHash = GetHashKey(weaponName)
                 local hasWeapon, weapon, weaponIndex = self.hasWeapon(weaponName)
                 if hasWeapon then
-                    GiveWeaponToPed(playerPed, weaponHash, weapon.ammo or 0, false, false)
-                    -- TODO ammo count
+                    if cfgWeapon.type == "throwable" then
+                        -- if the weapon is throwable, we add the quantity as the ammo count
+                        -- may have some problems because I don't know how many of this throwable can be added
+                        GiveWeaponToPed(playerPed, weaponHash, itemQuantity, false, false)
+                    else
+                        GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
+                        -- TODO ammo count
 
-                    if weapon.components then
-                        -- TODO weapon components
+                        if weapon.components then
+                            -- TODO weapon components
+                        end
                     end
                 else
-                    GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
-                    self.loadout[#self.loadout + 1] = {hash = weaponHash, ammo = 0}
+                    local defaultAmmoCount = 0
+                    if cfgWeapon.type == "throwable" then
+                        -- if the weapon is throwable, we add the quantity as the ammo count
+                        defaultAmmoCount = itemQuantity
+                    end
+
+                    GiveWeaponToPed(playerPed, weaponHash, defaultAmmoCount, false, false)
+                    self.loadout[#self.loadout + 1] = {hash = weaponHash}
                 end
                 return true
             end
@@ -551,23 +564,30 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
-    self.removeWeapon = function(weaponName)
+    self.removeWeapon = function(weaponName, newItemQuantity)
         if type(weaponName) ~= "string" then
             return false
         end
 
-        -- if we can't remove one item, this means that the player do not have this weapon
-        if not self.getInventory().canRemoveItem(weaponName, 1) then
+        local cfgWeapon<const> = AVAConfig.Weapons[weaponName]
+        if cfgWeapon then
             local playerPed = GetPlayerPed(self.src)
             if playerPed then
                 local weaponHash = GetHashKey(weaponName)
                 local hasWeapon, weapon, weaponIndex = self.hasWeapon(weaponHash)
+                if cfgWeapon.type == "throwable" then
+                    TriggerClientEvent("ava_core:client:updateAmmoTypeCount", self.src, cfgWeapon.ammoType and GetHashKey(cfgWeapon.ammoType) or weaponHash,
+                        newItemQuantity)
+                    if newItemQuantity == 0 then
+                        RemoveWeaponFromPed(playerPed, weaponHash)
+                        self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
+                    end
+                    return true
+                end
                 if hasWeapon then
                     RemoveWeaponFromPed(playerPed, weaponHash)
-                    -- TODO remove from loadout ?
-                    -- TODO find a way to get ammo count in clip ?
 
-                    -- TODO give components back ?
+                    -- TODO give components back as items ?
                     self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
                     return true
                 end
