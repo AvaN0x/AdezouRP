@@ -1611,7 +1611,7 @@ Config.Jobs = {
         LabelName = "Vagos",
         Zones = {
             Stock = {
-                Pos = vector3(338.3, -2012.73, 21.41),
+                Pos = vector3(332.24, -2018.62, 21.37),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 250, g = 197, b = 50},
                 Name = "Coffre",
@@ -1620,7 +1620,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(341.44, -2021.80, 24.61),
+                Pos = vector3(335.83, -2021.79, 21.37),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 250, g = 197, b = 50},
                 Name = "Vestiaire",
@@ -1683,7 +1683,7 @@ Config.Jobs = {
         LabelName = "Families",
         Zones = {
             Stock = {
-                Pos = vector3(-157.71, -1603.08, 34.06),
+                Pos = vector3(-140.31, -1599.21, 33.85),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 72, g = 171, b = 57},
                 Name = "Coffre",
@@ -1692,7 +1692,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-155.54, -1604.27, 34.06),
+                Pos = vector3(-147.68, -1596.57, 33.85),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 72, g = 171, b = 57},
                 Name = "Vestiaire",
