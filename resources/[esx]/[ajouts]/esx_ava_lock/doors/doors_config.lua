@@ -558,33 +558,33 @@ Config.Doors = {
         },
 
         -- S1Q
-        { -- library
-            objHash = -1364226422,
-            objCoords = vector3(-75.65, 994.58, 234.57),
-            textCoords = vector3(-75.73, 994.61, 234.68),
-            authorizedGangs = {"orga_s1q"},
-            objYaw = 140.20,
-            size = 0.25,
-            locked = true,
-        },
-        { -- office
-            objHash = 736699661,
-            objCoords = vector3(-62.23, 990.82, 234.56),
-            textCoords = vector3(-62.25, 990.87, 234.73),
-            authorizedGangs = {"orga_s1q"},
-            objYaw = 230.0,
-            locked = true,
-        },
-        { -- entrance portal
-            textCoords = vector3(-135.34, 972.61, 235.05),
-            authorizedGangs = {"orga_s1q"},
-            locked = true,
-            distance = 5,
-            doors = {
-                {objHash = -1249591818, objYaw = 336.5, objCoords = vector3(-133.43, 971.91, 235.88)},
-                {objHash = 546378757, objYaw = 336.0, objCoords = vector3(-137.24, 973.39, 235.88)},
-            },
-        },
+        -- { -- library
+        --     objHash = -1364226422,
+        --     objCoords = vector3(-75.65, 994.58, 234.57),
+        --     textCoords = vector3(-75.73, 994.61, 234.68),
+        --     authorizedGangs = {"orga_s1q"},
+        --     objYaw = 140.20,
+        --     size = 0.25,
+        --     locked = true,
+        -- },
+        -- { -- office
+        --     objHash = 736699661,
+        --     objCoords = vector3(-62.23, 990.82, 234.56),
+        --     textCoords = vector3(-62.25, 990.87, 234.73),
+        --     authorizedGangs = {"orga_s1q"},
+        --     objYaw = 230.0,
+        --     locked = true,
+        -- },
+        -- { -- entrance portal
+        --     textCoords = vector3(-135.34, 972.61, 235.05),
+        --     authorizedGangs = {"orga_s1q"},
+        --     locked = true,
+        --     distance = 5,
+        --     doors = {
+        --         {objHash = -1249591818, objYaw = 336.5, objCoords = vector3(-133.43, 971.91, 235.88)},
+        --         {objHash = 546378757, objYaw = 336.0, objCoords = vector3(-137.24, 973.39, 235.88)},
+        --     },
+        -- },
 
         -- attack a taco
         {
