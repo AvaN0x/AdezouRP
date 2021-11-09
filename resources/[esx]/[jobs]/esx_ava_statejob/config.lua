@@ -42,7 +42,7 @@ Config.AuthorizedHelico = {
 Config.Zones = {
 
 	CloakRoom = {
-		Pos   = {x = -541.88, y = -192.23, z = 46.44},
+		Pos   = {x = -541.00, y = -203.99, z = 37.09},
 		Size  = {x = 1.2, y = 1.2, z = 1.0},
 		Color = {r = 0, g = 204, b = 3},
 		Marker = 27
@@ -56,7 +56,7 @@ Config.Zones = {
 	-- },
 
 	Armurerie = {
-		Pos   = {x = -541.14, y = -193.38, z = 46.44},
+		Pos   = {x = -547.26, y = -207.59, z = 37.10},
 		Size  = {x = 1.2, y = 1.2, z = 1.0},
 		Color = {r = 255, g = 0, b = 0},
 		Marker = 27
@@ -70,7 +70,7 @@ Config.Zones = {
 	},
 
 	StateAction = {
-		Pos   = {x = -547.14, y = -203.1, z = 46.43},
+		Pos   = {x = -545.33, y = -203.78, z = 37.24},
 		Size  = {x = 1.3, y = 1.3, z = 1.0},
 		Color = {r = 0, g = 204, b = 3},
 		Marker = 27

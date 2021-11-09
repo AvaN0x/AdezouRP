@@ -394,43 +394,43 @@ Config.Doors = {
         },
 
         -- GOUV
-        {
-            textCoords = vector3(-545.51, -203.39, 38.40), -- entrée
-            authorizedJobs = {"state", "lspd"},
-            locked = true,
-            doors = {
-                {
-                    -- Hash = GetHashKey('ball_prop_citydoor'),
-                    objHash = 2537604,
-                    objYaw = -150.0,
-                    objCoords = vector3(-545.97, -203.69, 38.22),
-                },
-                {
-                    -- Hash = GetHashKey('ball_prop_citydoor'),
-                    objHash = 2537604,
-                    objYaw = 30.0,
-                    objCoords = vector3(-544.96, -203.13, 38.22),
-                },
-            },
-        },
-        { -- porte arrière vers garage OUEST
-            textCoords = vector3(-582.69, -195.25, 38.60),
-            authorizedJobs = {"state"},
-            locked = true,
-            doors = {
-                {objHash = GetHashKey("ball_prop_citydoor2"), objYaw = -150.0, objCoords = vector3(-583.11, -195.59, 38.22)},
-                {objHash = GetHashKey("ball_prop_citydoor2"), objYaw = 30.0, objCoords = vector3(-582.15, -195.02, 38.22)},
-            },
-        },
-        { -- porte du bureau du gouverneur
-            textCoords = vector3(-549.37, -196.34, 47.54), -- entrée
-            authorizedJobs = {"state"},
-            locked = true,
-            doors = {
-                {objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = -150.0, objCoords = vector3(-548.72, -196.32, 47.41)},
-                {objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = 30.0, objCoords = vector3(-549.88, -196.99, 47.41)},
-            },
-        },
+        -- {
+        --     textCoords = vector3(-545.51, -203.39, 38.40), -- entrée
+        --     authorizedJobs = {"state", "lspd"},
+        --     locked = true,
+        --     doors = {
+        --         {
+        --             -- Hash = GetHashKey('ball_prop_citydoor'),
+        --             objHash = 2537604,
+        --             objYaw = -150.0,
+        --             objCoords = vector3(-545.97, -203.69, 38.22),
+        --         },
+        --         {
+        --             -- Hash = GetHashKey('ball_prop_citydoor'),
+        --             objHash = 2537604,
+        --             objYaw = 30.0,
+        --             objCoords = vector3(-544.96, -203.13, 38.22),
+        --         },
+        --     },
+        -- },
+        -- { -- porte arrière vers garage OUEST
+        --     textCoords = vector3(-582.69, -195.25, 38.60),
+        --     authorizedJobs = {"state"},
+        --     locked = true,
+        --     doors = {
+        --         {objHash = GetHashKey("ball_prop_citydoor2"), objYaw = -150.0, objCoords = vector3(-583.11, -195.59, 38.22)},
+        --         {objHash = GetHashKey("ball_prop_citydoor2"), objYaw = 30.0, objCoords = vector3(-582.15, -195.02, 38.22)},
+        --     },
+        -- },
+        -- { -- porte du bureau du gouverneur
+        --     textCoords = vector3(-549.37, -196.34, 47.54), -- entrée
+        --     authorizedJobs = {"state"},
+        --     locked = true,
+        --     doors = {
+        --         {objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = -150.0, objCoords = vector3(-548.72, -196.32, 47.41)},
+        --         {objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = 30.0, objCoords = vector3(-549.88, -196.99, 47.41)},
+        --     },
+        -- },
 
         -- CLUCKIN
         {
