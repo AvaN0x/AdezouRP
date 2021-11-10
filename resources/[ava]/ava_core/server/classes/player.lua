@@ -514,7 +514,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         if type(weapon) ~= "string" and type(weapon) ~= "number" then
             return false
         end
-        local weaponHash = type(weapon) == "number" and weapon or GetHashKey(weapon)
+        local weaponHash = type(weapon) == "number" and weapon or tonumber(GetHashKey(weapon))
         for i = 1, #self.loadout do
             if self.loadout[i] and self.loadout[i].hash == weaponHash then
                 return true, self.loadout[i], i
@@ -547,6 +547,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                         if weapon.components then
                             -- TODO weapon components
                         end
+
+                        TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
                     end
                 else
                     local defaultAmmoCount = 0
@@ -556,7 +558,9 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     end
 
                     GiveWeaponToPed(playerPed, weaponHash, defaultAmmoCount, false, false)
-                    self.loadout[#self.loadout + 1] = {hash = weaponHash}
+                    self.loadout[#self.loadout + 1] = {hash = tonumber(weaponHash)}
+
+                    TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
                 end
                 return true
             end
@@ -586,9 +590,9 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     end
                     return true
                 end
-                if hasWeapon then
-                    RemoveWeaponFromPed(playerPed, weaponHash)
 
+                RemoveWeaponFromPed(playerPed, weaponHash)
+                if hasWeapon then
                     -- TODO give components back as items ?
                     self.loadout[weaponIndex] = nil -- remove weapon from loadout ?
                     return true

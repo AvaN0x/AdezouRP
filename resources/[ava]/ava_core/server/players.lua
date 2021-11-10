@@ -287,7 +287,8 @@ AddEventHandler("playerJoining", function(oldSource)
     setupPlayer(src, oldSource)
 end)
 
-Citizen.CreateThread(function()
+-- Mandatory wait!
+SetTimeout(1000, function()
     for _, source in ipairs(GetPlayers()) do
         setupPlayer(source)
     end
@@ -775,18 +776,6 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
                 if cfgItem and TabHasValue(WeaponsTypes, cfgItem.type) then
                     -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
                     aPlayer.addWeapon(item.name, item.quantity)
-                end
-            end
-        end
-        -- mandatory wait !
-        Wait(500)
-        -- Second loop for ammos, because we need to add them when the player has the weapons
-        for i = 1, #playerItems do
-            local item = playerItems[i]
-            if item and item.quantity > 0 then
-                local cfgItem = Items[item.name]
-                if cfgItem and cfgItem.type == "ammo" then
-                    TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(item.name), item.quantity)
                 end
             end
         end

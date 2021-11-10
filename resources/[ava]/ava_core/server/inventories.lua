@@ -43,6 +43,18 @@ AVA.GetPlayerInventoryItems = function(src)
 end
 exports("GetPlayerInventoryData", AVA.GetPlayerInventoryItems)
 
+AVA.RegisterServerCallback("ava_core:server:getItemQuantity", function(source, itemName)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    if aPlayer then
+        local item = aPlayer.getInventory().getItem(itemName)
+
+        if item then
+            return item.quantity
+        end
+    end
+    return 0
+end)
+
 AVA.RegisterServerCallback("ava_core:server:getInventoryItems", function(source)
     local src = source
     return AVA.GetPlayerInventoryItems(src)

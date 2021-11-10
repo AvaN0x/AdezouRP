@@ -14,8 +14,8 @@ local ammoTypesToItem = {
     [GetHashKey("ammo_smokegrenade")] = "weapon_smokegrenade",
     [GetHashKey("ammo_flare")] = "weapon_flare",
 
-    [GetHashKey("ammo_stungun")] = "INFINITE",
-    [GetHashKey("ammo_raypistol")] = "INFINITE",
+    [GetHashKey("ammo_stungun")] = "infinite",
+    [GetHashKey("ammo_raypistol")] = "infinite",
 
     [GetHashKey("ammo_grenadelauncher")] = "ammo_grenadelauncher",
     [GetHashKey("ammo_grenadelauncher_smoke")] = "ammo_grenadelauncher_smoke",
@@ -61,11 +61,6 @@ local ammoTypesToItem = {
     [GetHashKey("ammo_railgun")] = "ammo_railgun",
 }
 
-RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, ammoCount)
-    dprint("UPDATE AMMO", ammoTypesToItem[ammoTypeHash] or "NOT_FOUND", ammoCount)
-    SetPedAmmoByType(PlayerPedId(), ammoTypeHash, ammoCount)
-end)
-
 local shotAmmos = {}
 local timeLastTrigger, waitingToTrigger = -1, false
 
@@ -102,9 +97,28 @@ Citizen.CreateThread(function()
             local weaponHash = GetSelectedPedWeapon(playerPed)
             local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
             local ammoItemName = ammoTypesToItem[ammoTypeHash]
-            if ammoItemName and ammoItemName ~= "INFINITE" then
+            if ammoItemName and ammoItemName ~= "infinite" then
                 shotAmmo(ammoItemName)
             end
         end
     end
+end)
+
+RegisterNetEvent("ava_core:client:weaponAdded", function(weaponHash)
+    local playerPed = PlayerPedId()
+    local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
+    local ammoItemName = ammoTypesToItem[ammoTypeHash]
+
+    if ammoItemName and ammoItemName ~= "infinite" then
+        local ammoCount = exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", ammoItemName)
+        if ammoCount then
+            dprint("UPDATE AMMO", ammoItemName, ammoCount)
+            SetPedAmmoByType(playerPed, ammoTypeHash, ammoCount)
+        end
+    end
+end)
+
+RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, ammoCount)
+    dprint("UPDATE AMMO", ammoTypesToItem[ammoTypeHash] or "NOT_FOUND", ammoCount)
+    SetPedAmmoByType(PlayerPedId(), ammoTypeHash, ammoCount)
 end)
