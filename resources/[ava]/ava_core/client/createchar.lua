@@ -116,7 +116,7 @@ end
 local function ValidateData()
     local hadError = false
     if not CharacterData.firstname or CharacterData.firstname == "" or not CharacterData.lastname or CharacterData.lastname == "" or not CharacterData.birthdate
-        or CharacterData.birthdate == "" or not string.find(CharacterData.birthdate, "%d%d/%d%d/%d%d%d%d") then
+        or CharacterData.birthdate == "" or not AVA.Utils.IsDateValid(CharacterData.birthdate) then
         hadError = true
         AVA.ShowNotification("~r~Les informations sur l'identité de votre personnage ne sont pas valides.", nil, "ava_core_logo", "Date de naissance", nil,
             nil, "ava_core_logo")
@@ -528,11 +528,13 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             if onSelected then
                 local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
                 if result and result ~= "" then
-                    if string.find(result, "%d%d/%d%d/%d%d%d%d") then
-                        CharacterData.birthdate = result
-                    else
+                    if not string.find(result, "%d%d?/%d%d?/%d%d%d%d") then
                         AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo", "Date de naissance", nil, nil,
                             "ava_core_logo")
+                    elseif not AVA.Utils.IsDateValid(result) then
+                        AVA.ShowNotification("La date n'est pas valide.", nil, "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
+                    else
+                        CharacterData.birthdate = result
                     end
                 end
             end

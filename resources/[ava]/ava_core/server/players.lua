@@ -309,7 +309,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
         -- we check if the player character is valid
     elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
-        and character.sex ~= "" and character.birthdate and character.birthdate ~= "" and type(skin) == "table" and skin.sex then
+        and character.sex ~= "" and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.sex then
         aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
         aPlayer.character = {firstname = character.firstname, lastname = character.lastname, sex = character.sex, birthdate = character.birthdate}
         aPlayer.skin = skin
