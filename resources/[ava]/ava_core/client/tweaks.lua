@@ -65,6 +65,9 @@ Citizen.CreateThread(function()
     StatSetInt(GetHashKey("MP0_SHOOTING_ABILITY"), 0, true)
     StatSetInt(GetHashKey("MP0_STEALTH_ABILITY"), 0, true)
 
+    SetWeaponsNoAutoreload(AVAConfig.DisableWeaponsAutoReload)
+    SetWeaponsNoAutoswap(AVAConfig.DisableWeaponsAutoSwap)
+
     local loop = 0
     local playerId = PlayerId()
     while true do

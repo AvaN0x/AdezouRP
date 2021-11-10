@@ -17,3 +17,7 @@ AVAConfig.EnablePVP = true
 
 ---Prevent player from falling at loading
 AVAConfig.PreventPlayerFromFalling = true
+
+AVAConfig.DisableWeaponsAutoReload = true
+
+AVAConfig.DisableWeaponsAutoSwap = true
