@@ -50,9 +50,10 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         end
     end
 
+    ---@return boolean success
     self.addItem = function(name, quantity)
         if quantity <= 0 then
-            return
+            return false
         end
 
         local item = self.getItem(name)
@@ -67,12 +68,15 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
                 TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
                 TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, true, quantity, item.quantity)
             end
+            return true
         end
+        return false
     end
 
+    ---@return boolean success
     self.removeItem = function(name, quantity)
         if quantity <= 0 then
-            return
+            return false
         end
 
         local item = self.getItem(name)
@@ -89,7 +93,9 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
                 TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, quantity, item.quantity)
                 TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, quantity, item.quantity)
             end
+            return true
         end
+        return false
     end
 
     self.setItem = function(name, quantity)
