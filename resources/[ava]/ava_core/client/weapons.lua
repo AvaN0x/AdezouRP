@@ -112,7 +112,7 @@ RegisterNetEvent("ava_core:client:weaponAdded", function(weaponHash)
     if ammoItemName and ammoItemName ~= "infinite" then
         local ammoCount = exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", ammoItemName)
         if ammoCount then
-            -- dprint("UPDATE AMMO", ammoItemName, ammoCount)
+            -- dprint("UPDATE AMMO", weaponHash, ammoItemName, ammoCount)
             SetPedAmmoByType(playerPed, ammoTypeHash, ammoCount)
         end
     end

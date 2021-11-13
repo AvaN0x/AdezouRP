@@ -523,7 +523,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
-    self.addWeapon = function(weaponName, itemQuantity)
+    self.addWeapon = function(weaponName)
         if type(weaponName) ~= "string" then
             return false
         end
@@ -536,31 +536,20 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                 local weaponHash = GetHashKey(weaponName)
                 local hasWeapon, weapon, weaponIndex = self.hasWeapon(weaponName)
                 if hasWeapon then
-                    if cfgWeapon.type == "throwable" then
-                        -- if the weapon is throwable, we add the quantity as the ammo count
-                        -- may have some problems because I don't know how many of this throwable can be added
-                        GiveWeaponToPed(playerPed, weaponHash, itemQuantity, false, false)
-                    else
-                        GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
+                    GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
 
-                        if weapon.components then
-                            -- TODO weapon components
-                        end
-
-                        TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
+                    if weapon.components then
+                        -- TODO weapon components
                     end
+
+                    TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
                 else
-                    local defaultAmmoCount = 0
-                    if cfgWeapon.type == "throwable" then
-                        -- if the weapon is throwable, we add the quantity as the ammo count
-                        defaultAmmoCount = itemQuantity
-                    end
-
-                    GiveWeaponToPed(playerPed, weaponHash, defaultAmmoCount, false, false)
+                    GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
                     self.loadout[#self.loadout + 1] = {hash = tonumber(weaponHash)}
 
                     TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
                 end
+
                 return true
             end
         end

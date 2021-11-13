@@ -788,7 +788,7 @@ AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, it
         local aPlayer = AVA.Players.GetPlayer(src)
         if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
             -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
-            aPlayer.addWeapon(itemName, editedQuantity)
+            aPlayer.addWeapon(itemName)
         elseif not isAddition and (newQuantity == 0 or cfgWeapon.type == "throwable") then
             -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
             aPlayer.removeWeapon(itemName, newQuantity)
