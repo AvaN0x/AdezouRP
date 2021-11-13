@@ -158,6 +158,7 @@ local function loadPlayer(src)
         position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
         skin = aPlayer.skin,
         jobs = aPlayer.getJobsClientData(),
+        health = aPlayer.metadata.health,
     })
 end
 
@@ -553,6 +554,14 @@ RegisterNetEvent("ava_core:server:updatePosition", function(position)
         if aPlayer then
             aPlayer.position = position
         end
+    end
+end)
+
+RegisterNetEvent("ava_core:server:updateHealth", function(health)
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+    if aPlayer then
+        aPlayer.metadata.health = health
     end
 end)
 

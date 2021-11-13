@@ -21,3 +21,6 @@ AVAConfig.PreventPlayerFromFalling = true
 AVAConfig.DisableWeaponsAutoReload = true
 
 AVAConfig.DisableWeaponsAutoSwap = true
+
+-- time between each player ped data saves (coords, healths, shield...)
+AVAConfig.SavePlayerPedDataTimeout = 1000

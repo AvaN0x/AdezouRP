@@ -25,15 +25,21 @@ Citizen.CreateThread(function()
     end
 
     while true do
-        Citizen.Wait(1000)
-        -- if not AVA.Player.IsDead then
-        local playerCoords = GetEntityCoords(PlayerPedId())
+        Wait(AVAConfig.SavePlayerPedDataTimeout)
+
+        local playerPed = PlayerPedId()
+        local playerCoords = GetEntityCoords(playerPed)
 
         if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
             TriggerServerEvent("ava_core:server:updatePosition", playerCoords)
             AVA.Player.Data.position = playerCoords
         end
-        -- end
+
+        local playerHealth = GetEntityHealth(playerPed)
+        if AVA.Player.Data.health ~= playerHealth then
+            TriggerServerEvent("ava_core:server:updateHealth", playerHealth)
+            AVA.Player.Data.health = playerHealth
+        end
     end
 end)
 
@@ -52,6 +58,7 @@ local function SpawnPlayer()
         SetEntityCoords(playerPed, AVA.Player.Data.position)
         SetEntityHeading(playerPed, 0.0)
     end
+    SetEntityHealth(playerPed, AVA.Player.Data.health or 200)
 
     if AVA.Player.FirstSpawn then
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
@@ -63,7 +70,6 @@ local function SpawnPlayer()
         else
             exports.skinchanger:loadSkin({sex = 0})
         end
-
     end
 
     TriggerServerEvent("ava_core:server:reloadLoadout")
