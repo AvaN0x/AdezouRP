@@ -141,3 +141,7 @@ AddEventHandler("playerSpawned", function()
     IsDead = false
 end)
 
+RegisterNetEvent("ava_status:client:heal", function()
+    local playerPed = PlayerPedId()
+    SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+end)
