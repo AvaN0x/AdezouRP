@@ -58,7 +58,7 @@ local function SpawnPlayer()
         SetEntityCoords(playerPed, AVA.Player.Data.position)
         SetEntityHeading(playerPed, 0.0)
     end
-    SetEntityHealth(playerPed, AVA.Player.Data.health or 200)
+    SetEntityHealth(playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or 200)
 
     if AVA.Player.FirstSpawn then
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
