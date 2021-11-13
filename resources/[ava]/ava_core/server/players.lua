@@ -431,9 +431,13 @@ AVA.Players.UseItem = function(src, itemName)
         return
     end
     if type(AVA.UsableItems[itemName]) ~= "nil" then
-        local item = aPlayer.inventory.getItem(itemName)
+        local item = aPlayer.getInventory().getItem(itemName)
+
         if item and item.quantity > 0 then
-            AVA.UsableItems[itemName](aPlayer.src)
+            local cfgItem = AVAConfig.Items[itemName]
+            if cfgItem then
+                AVA.UsableItems[itemName](aPlayer.src, aPlayer, cfgItem)
+            end
         end
     end
 end
