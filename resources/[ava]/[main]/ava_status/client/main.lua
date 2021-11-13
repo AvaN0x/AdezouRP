@@ -2,10 +2,13 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+IsDead = false
 -- Contains only name and value of statuses
 local PlayerStatus = nil
 -- Contain objects handling statuses
 local aPlayerStatus = {}
+
+StatusFunctions = {}
 
 Citizen.CreateThread(function()
     PlayerStatus = exports.ava_core:getPlayerData().status
@@ -27,7 +30,7 @@ end)
 
 function initStatus(statusArray)
     for i = 1, #statusArray do
-        local status = status[i]
+        local status = statusArray[i]
         if aPlayerStatus[status.name] then
             aPlayerStatus[status.name].value = status.value
         else
@@ -52,11 +55,30 @@ end
 Citizen.CreateThread(function()
     while true do
         Wait(AVAConfig.Interval)
+
+        local playerPed = PlayerPedId()
+        local playerHealth = GetEntityHealth(playerPed)
+        local newHealth = playerHealth
+
         for i = 1, #PlayerStatus do
             local status = PlayerStatus[i]
+
+            -- #region Update status
             local aStatus = aPlayerStatus[status.name]
             status.value = aStatus.update()
-            TriggerEvent("ava_hud:client:updateStatus", status.name, aStatus.getPercent())
+            local percent = aStatus.getPercent()
+            TriggerEvent("ava_hud:client:updateStatus", status.name, percent)
+            -- #endregion
+
+            -- #region Trigger status events
+            if type(StatusFunctions[status.name]) == "function" then
+                newHealth = StatusFunctions[status.name](status.value, percent, playerHealth, newHealth)
+            end
+            -- #endregion
+        end
+
+        if playerHealth ~= newHealth then
+            SetEntityHealth(playerPed, newHealth)
         end
     end
 end)
@@ -67,3 +89,55 @@ Citizen.CreateThread(function()
         TriggerServerEvent("ava_status:server:update", PlayerStatus)
     end
 end)
+
+local function getStatusIndex(name)
+    for i = 1, #PlayerStatus do
+        if PlayerStatus[i].name == name then
+            return i
+        end
+    end
+end
+RegisterNetEvent("ava_status:client:set", function(name, value)
+    local index = getStatusIndex(name)
+    if index ~= nil then
+        PlayerStatus[index].value = aPlayerStatus[name].set(value)
+    end
+end)
+
+RegisterNetEvent("ava_status:client:add", function(name, value)
+    local index = getStatusIndex(name)
+    if index ~= nil then
+        PlayerStatus[index].value = aPlayerStatus[name].add(value)
+    end
+end)
+
+RegisterNetEvent("ava_status:client:remove", function(name, value)
+    local index = getStatusIndex(name)
+    if index ~= nil then
+        PlayerStatus[index].value = aPlayerStatus[name].remove(value)
+    end
+end)
+
+--------------------------------------
+--------------- Events ---------------
+--------------------------------------
+
+AddEventHandler("ava_core:client:playerDeath", function()
+    IsDead = true
+end)
+
+AddEventHandler("playerSpawned", function()
+    if IsDead then
+        -- Add some to values when respawning
+        for name, cfgStatus in pairs(AVAConfig.Status) do
+            if cfgStatus.onrespawn then
+                if cfgStatus.onrespawn.under and aPlayerStatus[name].value < cfgStatus.onrespawn.under then
+                    TriggerEvent("ava_status:client:add", name, cfgStatus.onrespawn.add)
+                end
+            end
+        end
+    end
+
+    IsDead = false
+end)
+

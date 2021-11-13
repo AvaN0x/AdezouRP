@@ -1,21 +1,29 @@
 {
     "hunger": {
-        "update": -5,
+        "update": -2,
         "default": 5000,
-        "afterHeal": 10000
+        "afterHeal": 10000,
+        "onrespawn": {
+            "under": 500,
+            "add": 1000
+        }
     },
     "thirst": {
-        "update": -5,
+        "update": -3,
         "default": 5000,
-        "afterHeal": 10000
+        "afterHeal": 10000,
+        "onrespawn": {
+            "under": 500,
+            "add": 1000
+        }
     },
     "drunk": {
-        "update": -5,
+        "update": -3,
         "default": 0,
         "afterHeal": 0
     },
     "drugged": {
-        "update": -5,
+        "update": -3,
         "default": 0,
         "afterHeal": 0
     },

@@ -12,19 +12,45 @@ function CreateStatus(name, value)
     self.value = value or 0
     self.updateAddition = AVAConfig.Status[self.name].update
 
-    self.update = function()
-        local newValue = self.value + self.updateAddition
-        if newValue < 0 then
-            newValue = 0
+    self.getPercent = function()
+        -- 10000 / 1000 can be max 100
+        return self.value / 100
+    end
+
+    self.set = function(value)
+        if value > 0 then
+            self.value = value
         end
-        self.value = newValue
 
         return self.value
     end
 
-    self.getPercent = function()
-        -- 10000 / 1000 can be max 100
-        return self.value / 100
+    self.add = function(value)
+        if value > 0 then
+            self.value = self.value + value
+        end
+
+        return self.value
+    end
+
+    self.remove = function(value)
+        if value > 0 then
+            self.value = self.value - value
+            if self.value < 0 then
+                self.value = 0
+            end
+        end
+
+        return self.value
+    end
+
+    self.update = function()
+        self.value = self.value + self.updateAddition
+        if self.value < 0 then
+            self.value = 0
+        end
+
+        return self.value
     end
 
     return self

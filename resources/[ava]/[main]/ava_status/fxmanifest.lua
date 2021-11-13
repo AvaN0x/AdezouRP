@@ -10,7 +10,7 @@ lua54 "yes"
 
 files {"languages/**.json", "status.json"}
 
-client_scripts {"config.lua", "client/classes/status.lua", "client/main.lua"}
+client_scripts {"config.lua", "client/classes/status.lua", "client/main.lua", "client/hunger_thirst.lua"}
 
 server_scripts {"config.lua", "server/main.lua"}
 

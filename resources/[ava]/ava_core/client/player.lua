@@ -117,9 +117,11 @@ local function RespawnPlayer()
         end
 
         local position = AVA.Player.Data and AVA.Player.Data.position or GetEntityCoords(playerPed)
+
         SetEntityCoordsNoOffset(playerPed, position, false, false, false, true)
         NetworkResurrectLocalPlayer(position, 0.0, true, false)
         SetPlayerInvincible(playerPed, false)
+        TriggerEvent("playerSpawned", {x = position.x, y = position.y, z = position.z, heading = 0.0})
         ClearPedBloodDamage(playerPed)
         AVA.Player.IsDead = false
 
