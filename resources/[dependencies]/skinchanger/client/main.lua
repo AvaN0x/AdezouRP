@@ -203,7 +203,9 @@ for i=1, #Components, 1 do
 	Character[Components[i].name] = Components[i].value
 end
 
-function LoadDefaultModel(malePed, cb)
+function LoadDefaultModel(malePed)
+    local p = promise.new()
+
 	local playerPed = PlayerPedId()
 	local characterModel
 
@@ -228,15 +230,18 @@ function LoadDefaultModel(malePed, cb)
 
 		SetModelAsNoLongerNeeded(characterModel)
 
-		if cb ~= nil then
-			cb()
-		end
+        modelLoaded()
 
-		TriggerEvent('skinchanger:modelLoaded')
+        p:resolve()
 	end)
+    
+    return Citizen.Await(p)
 end
 AddEventHandler('skinchanger:loadDefaultModel', function(loadMale, cb)
-	LoadDefaultModel(loadMale, cb)
+	LoadDefaultModel(loadMale)
+    if cb ~= nil then
+        cb()
+    end
 end)
 exports("LoadDefaultModel", LoadDefaultModel)
 
@@ -556,7 +561,7 @@ exports("getSkin", function()
     return Character
 end)
 
-AddEventHandler('skinchanger:modelLoaded', function()
+function modelLoaded()
 	ClearPedProp(PlayerPedId(), 0)
 
 	if LoadSkin ~= nil then
@@ -568,26 +573,27 @@ AddEventHandler('skinchanger:modelLoaded', function()
 		ApplySkin(LoadClothes.playerSkin, LoadClothes.clothesSkin)
 		LoadClothes = nil
 	end
-end)
+end
+AddEventHandler('skinchanger:modelLoaded', modelLoaded)
 
 
 
-function loadSkin(skin, cb)
+function loadSkin(skin)
 	if skin['sex'] ~= LastSex then
 		LoadSkin = skin
 
 		if skin['sex'] == 0 then
-			LoadDefaultModel(true, cb)
+			LoadDefaultModel(true)
 		else
-			LoadDefaultModel(false, cb)
+			LoadDefaultModel(false)
 		end
 	else
 		ApplySkin(skin)
-
-		if cb ~= nil then
-			cb()
-		end
 	end
+
+    if cb ~= nil then
+        cb()
+    end
 
 	LastSex = skin['sex']
     return Character
