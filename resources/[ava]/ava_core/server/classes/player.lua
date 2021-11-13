@@ -542,7 +542,6 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                         GiveWeaponToPed(playerPed, weaponHash, itemQuantity, false, false)
                     else
                         GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
-                        -- TODO ammo count
 
                         if weapon.components then
                             -- TODO weapon components
