@@ -144,4 +144,39 @@ end)
 RegisterNetEvent("ava_status:client:heal", function()
     local playerPed = PlayerPedId()
     SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+    exports.ava_core:ShowNotification(nil, nil, "ava_core_logo", GetString("healed_by_staff"), nil, nil, "ava_core_logo")
 end)
+
+-----------------------------------------------
+--------------- Long animations ---------------
+-----------------------------------------------
+
+IsAnimated = false
+IsLongAnimated = false
+
+function SetLongAnimated(prop)
+    Citizen.CreateThread(function()
+        IsLongAnimated = true
+        local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_VEH_DUCK~", label = GetString("cancel_animation")}})
+
+        while IsLongAnimated do
+            Citizen.Wait(0)
+            DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+            if IsControlJustPressed(1, 73) or IsControlJustPressed(1, 24) or IsControlJustPressed(1, 25) then -- X, RMB or LMB
+                IsLongAnimated = false
+            end
+        end
+        ClearPedSecondaryTask(PlayerPedId())
+
+        if prop then
+            exports.ava_core:DeleteObject(prop)
+        end
+    end)
+end
+
+function StopLongAnimatedIfNeeded()
+    if IsLongAnimated then
+        IsLongAnimated = false
+        Wait(50)
+    end
+end

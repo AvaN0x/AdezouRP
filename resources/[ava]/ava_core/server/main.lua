@@ -164,14 +164,6 @@ AVA.RegisterUsableItem = function(itemName, callback)
 end
 exports("RegisterUsableItem", AVA.RegisterUsableItem)
 
-AVA.RegisterUsableItem("bread", function(src)
-    print(src .. " tried to eat bread, unfortunately this feature is not done.")
-    local aPlayer = AVA.Players.GetPlayer(src)
-    if aPlayer then
-        aPlayer.inventory.removeItem("bread", 1)
-    end
-end)
-
 ---Get all items data
 ---@return table
 AVA.GetItemsData = function()

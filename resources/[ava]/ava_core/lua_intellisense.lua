@@ -63,6 +63,7 @@ exports.ava_core.GetSourceIdentifiers = AVA.Players.GetSourceIdentifiers
 exports.ava_core.GetPlayer = AVA.Players.GetPlayer
 exports.ava_core.GetPlayerByCitizenId = AVA.Players.GetPlayerByCitizenId
 exports.ava_core.UseItem = AVA.Players.UseItem
+exports.ava_core.RegisterUsableItem = AVA.RegisterUsableItem
 exports.ava_core.GetItemsData = AVA.GetItemsData
 exports.ava_core.GetItemData = AVA.GetItemData
 exports.ava_core.GetPlayerInventoryItems = AVA.GetPlayerInventoryItems

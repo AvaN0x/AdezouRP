@@ -1,0 +1,61 @@
+[
+    {
+        "name": "bread",
+        "status": {
+            "hunger": 1000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "egochaser",
+        "status": {
+            "hunger": 500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "meteorite",
+        "status": {
+            "hunger": 500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "waterbottle",
+        "status": {
+            "hunger": 0,
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink"
+        }
+    },
+    {
+        "name": "ecola",
+        "status": {
+            "hunger": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink"
+        }
+    },
+    {
+        "name": "pisswasser",
+        "status": {
+            "thirst": -500,
+            "drunk": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_amb_beer_bottle"
+            ]
+        }
+    }
+]

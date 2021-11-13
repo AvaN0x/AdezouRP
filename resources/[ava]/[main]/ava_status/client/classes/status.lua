@@ -18,7 +18,7 @@ function CreateStatus(name, value)
     end
 
     self.set = function(value)
-        if type(value) == "number" and value > 0 then
+        if type(value) == "number" and value >= 0 then
             self.value = value
         end
 
@@ -26,7 +26,7 @@ function CreateStatus(name, value)
     end
 
     self.add = function(value)
-        if type(value) == "number" and value > 0 then
+        if type(value) == "number" then
             self.value = self.value + value
         end
 
@@ -34,7 +34,7 @@ function CreateStatus(name, value)
     end
 
     self.remove = function(value)
-        if type(value) == "number" and value > 0 then
+        if type(value) == "number" then
             self.value = self.value - value
             if self.value < 0 then
                 self.value = 0

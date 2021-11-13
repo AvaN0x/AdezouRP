@@ -22,8 +22,7 @@
         "label": "Pain",
         "type": "food",
         "weight": 100,
-        "limit": null,
-        "closeInv": true
+        "limit": null
     },
     "egochaser": {
         "label": "EgoChaser",
@@ -104,24 +103,28 @@
     },
     "wine": {
         "label": "Vin",
+        "type": "liquid",
         "weight": 300,
         "limit": 200,
         "noIcon": true
     },
     "wineluxe": {
         "label": "Grand cru",
+        "type": "liquid",
         "weight": 300,
         "limit": 200,
         "noIcon": true
     },
     "grapejuice": {
         "label": "Jus de raisin",
+        "type": "liquid",
         "weight": 300,
         "limit": 200,
         "noIcon": true
     },
     "champagne": {
         "label": "Champagne",
+        "type": "liquid",
         "weight": 300,
         "limit": 200,
         "noIcon": true
