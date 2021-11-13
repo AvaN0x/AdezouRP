@@ -30,8 +30,19 @@ $(function () {
                 $('.mainStats').fadeIn(500).fadeOut(2000);
             }
 
-            // } else if (event.data.action == "updateStatus") {
-            //     updateStatus(event.data.status);
+        } else if (event.data.action == "updateStatus") {
+            $(`#${event.data.name} .bg`).css('height', `${event.data.percent}%`)
+            switch (event.data.name) {
+                case "hunger":
+                case "thirst":
+                    break;
+                default:
+                    if (event.data.percent > 0)
+                        $(`#${event.data.name}`).show();
+                    else
+                        $(`#${event.data.name}`).hide();
+                    break;
+            }
         } else if (event.data.action == "itemNotification") {
             let elem = $('<div>' + (event.data.add ? '+' : '-') + event.data.count + ' ' + event.data.label + '</div>');
             $('#inventoryNotifications').append(elem);

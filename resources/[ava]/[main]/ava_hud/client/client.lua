@@ -43,6 +43,10 @@ function InitHUD()
     SendNUIMessage({action = "setJobs", jobs = PlayerData.jobs})
 end
 
+AddEventHandler("ava_hud:client:updateStatus", function(name, percent)
+    SendNUIMessage({action = "updateStatus", name = name, percent = percent})
+end)
+
 RegisterNetEvent("ui:toggle")
 AddEventHandler("ui:toggle", function(show)
     SendNUIMessage({action = "toggle", show = show})

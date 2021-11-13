@@ -159,6 +159,7 @@ local function loadPlayer(src)
         skin = aPlayer.skin,
         jobs = aPlayer.getJobsClientData(),
         health = aPlayer.metadata.health,
+        status = aPlayer.status,
     })
 end
 

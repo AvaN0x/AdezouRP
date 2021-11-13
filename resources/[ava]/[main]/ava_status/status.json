@@ -1,0 +1,27 @@
+{
+    "hunger": {
+        "update": -5,
+        "default": 5000,
+        "afterHeal": 10000
+    },
+    "thirst": {
+        "update": -5,
+        "default": 5000,
+        "afterHeal": 10000
+    },
+    "drunk": {
+        "update": -5,
+        "default": 0,
+        "afterHeal": 0
+    },
+    "drugged": {
+        "update": -5,
+        "default": 0,
+        "afterHeal": 0
+    },
+    "injured": {
+        "update": -5,
+        "default": 0,
+        "afterHeal": 0
+    }
+}

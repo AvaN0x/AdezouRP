@@ -240,6 +240,19 @@ end)
 --------------- Get data exports ---------------
 ------------------------------------------------
 
+local function waitLoadedPlayer()
+    local p = promise.new()
+
+    Citizen.CreateThread(function()
+        while not AVA.Player.Loaded do
+            Wait(10)
+        end
+        p:resolve()
+    end)
+
+    return Citizen.Await(p)
+end
+
 ---Get data from player
 ---@return any
 AVA.Player.getData = function()
