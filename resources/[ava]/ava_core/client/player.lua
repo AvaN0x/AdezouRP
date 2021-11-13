@@ -243,9 +243,7 @@ end)
 ---Get data from player
 ---@return any
 AVA.Player.getData = function()
-    while not AVA.Player.Loaded do
-        Wait(10)
-    end
+    waitLoadedPlayer()
     return AVA.Player.Data
 end
 exports("getPlayerData", AVA.Player.getData)
@@ -253,9 +251,7 @@ exports("getPlayerData", AVA.Player.getData)
 ---Get skin data from player
 ---@return any
 AVA.Player.getSkinData = function()
-    while not AVA.Player.Loaded do
-        Wait(10)
-    end
+    waitLoadedPlayer()
     return AVA.Player.Data.skin
 end
 exports("getPlayerSkinData", AVA.Player.getSkinData)
@@ -263,9 +259,7 @@ exports("getPlayerSkinData", AVA.Player.getSkinData)
 ---Get data from player character
 ---@return character
 AVA.Player.getCharacterData = function()
-    while not AVA.Player.Loaded do
-        Wait(10)
-    end
+    waitLoadedPlayer()
     return AVA.Player.Data.character
 end
 exports("getPlayerCharacterData", AVA.Player.getCharacterData)

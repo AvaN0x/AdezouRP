@@ -5,9 +5,6 @@
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
-    -- mandatory wait!
-    Wait(100)
-
     TriggerEvent("ava_lock:client:reloadAuthorizations")
 end)
 

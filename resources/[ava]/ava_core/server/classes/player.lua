@@ -38,6 +38,10 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
 
     self.lastSaveTime = nil
 
+    self.set = function(key, value)
+        self[key] = value
+    end
+
     self.login = function()
         return AVA.Players.Login(self.src)
     end

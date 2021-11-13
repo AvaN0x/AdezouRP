@@ -24,9 +24,6 @@ local fieldObjects = {}
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
-    -- mandatory wait!
-    Wait(100)
-
     setJobsToUse()
 
     -- #region Set blips
