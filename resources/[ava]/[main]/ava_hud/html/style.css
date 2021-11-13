@@ -39,8 +39,8 @@
     flex-wrap: wrap;
 }
 
-.vert-stat {
-    border-radius: 50%;
+.status .stat {
+    border-radius: 40%;
     width: 32px;
     height: 32px;
     position: relative;
@@ -51,14 +51,14 @@
     margin-right: 5px;
 }
 
-.vert-stat .bg {
+.status .stat .bg {
     height: 100%;
     width: 100%;
     position: absolute;
     bottom: 0;
 }
 
-.vert-stat img {
+.status .stat img {
     width: 60%;
     position: absolute;
     left: 50%;
