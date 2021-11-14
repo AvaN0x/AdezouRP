@@ -53,7 +53,7 @@
     },
     "pisswasser": {
         "label": "Pisswasser",
-        "type": "liquid",
+        "type": "alcohol",
         "description": "Bière de baston bavaroise.",
         "weight": 330,
         "noIcon": true
@@ -83,7 +83,7 @@
         "limit": null,
         "noIcon": true
     },
-    "wineluxebox": {
+    "luxurywinebox": {
         "label": "Caisse de grand cru",
         "weight": 500,
         "limit": null,
@@ -103,14 +103,14 @@
     },
     "wine": {
         "label": "Vin",
-        "type": "liquid",
+        "type": "alcohol",
         "weight": 300,
         "limit": 200,
         "noIcon": true
     },
-    "wineluxe": {
+    "luxurywine": {
         "label": "Grand cru",
-        "type": "liquid",
+        "type": "alcohol",
         "weight": 300,
         "limit": 200,
         "noIcon": true
@@ -124,7 +124,7 @@
     },
     "champagne": {
         "label": "Champagne",
-        "type": "liquid",
+        "type": "alcohol",
         "weight": 300,
         "limit": 200,
         "noIcon": true
@@ -174,7 +174,7 @@
         "weight": 500,
         "limit": 15,
         "closeInv": true,
-        "description": "Allez frotte!!",
+        "description": "Allez frotte!",
         "noIcon": true
     },
     "handcuff": {
@@ -194,6 +194,7 @@
     },
     "prisonoutfit": {
         "label": "Tenue de prison",
+        "type": "outfit",
         "weight": 1500,
         "limit": 15,
         "closeInv": true,
@@ -224,9 +225,9 @@
     },
     "dolizou": {
         "label": "Dolizou",
+        "type": "medicine",
         "weight": 100,
         "limit": null,
-        "closeInv": true,
         "description": "Sous prescription du médecin",
         "noIcon": true
     },
@@ -242,7 +243,6 @@
         "type": "drug",
         "weight": 1,
         "limit": 150,
-        "closeInv": true,
         "noIcon": true
     },
     "weedbag": {
@@ -250,7 +250,6 @@
         "type": "drug",
         "weight": 5,
         "limit": 150,
-        "closeInv": true,
         "noIcon": true
     },
     "keyweed": {
@@ -367,7 +366,6 @@
         "label": "Bracelet en diamant",
         "weight": 150,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -375,7 +373,6 @@
         "label": "Bracelet en émeraude",
         "weight": 150,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -383,7 +380,6 @@
         "label": "Bracelet en or",
         "weight": 150,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -391,7 +387,6 @@
         "label": "Bracelet en ruby",
         "weight": 150,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -399,7 +394,6 @@
         "label": "Bracelet en argent",
         "weight": 150,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -407,7 +401,6 @@
         "label": "Collier en diamant",
         "weight": 300,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -415,7 +408,6 @@
         "label": "Collier en émeraude",
         "weight": 300,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -423,7 +415,6 @@
         "label": "Collier en or",
         "weight": 300,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -431,7 +422,6 @@
         "label": "Collier en ruby",
         "weight": 300,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -439,7 +429,6 @@
         "label": "Collier en argent",
         "weight": 300,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -447,7 +436,6 @@
         "label": "Bague en diamant",
         "weight": 50,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -455,7 +443,6 @@
         "label": "Bague en émeraude",
         "weight": 50,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -463,7 +450,6 @@
         "label": "Bague en or",
         "weight": 50,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -471,7 +457,6 @@
         "label": "Bague en ruby",
         "weight": 50,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -479,7 +464,6 @@
         "label": "Bague en argent",
         "weight": 50,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -487,7 +471,6 @@
         "label": "Montre en diamant",
         "weight": 200,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -495,7 +478,6 @@
         "label": "Montre en émeraude",
         "weight": 200,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -503,7 +485,6 @@
         "label": "Montre en or",
         "weight": 200,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -511,7 +492,6 @@
         "label": "Montre en ruby",
         "weight": 200,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },
@@ -519,7 +499,6 @@
         "label": "Montre en argent",
         "weight": 200,
         "limit": null,
-        "closeInv": true,
         "description": "",
         "noIcon": true
     },

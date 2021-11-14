@@ -747,7 +747,7 @@ Config.Jobs = {
             },
             ChampagneProcess = {
                 ItemsGive = {{name = "grape", quantity = 10}},
-                ItemsGet = {{name = "champagne", quantity = 1}, {name = "wineluxe", quantity = 1}},
+                ItemsGet = {{name = "champagne", quantity = 1}, {name = "luxurywine", quantity = 1}},
                 Delay = 8000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
                 Pos = vector3(-1866.50, 2058.95, 140.02),
@@ -788,11 +788,11 @@ Config.Jobs = {
                         Delay = 2000,
                         Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
                     },
-                    WineLuxeProcess = {
+                    luxurywineProcess = {
                         Name = "Caisse de Grand Cru",
                         Desc = "Une caisse de six bouteilles",
-                        ItemsGive = {{name = "wineluxe", quantity = 6}, {name = "woodenbox", quantity = 1}},
-                        ItemsGet = {{name = "wineluxebox", quantity = 1}},
+                        ItemsGive = {{name = "luxurywine", quantity = 6}, {name = "woodenbox", quantity = 1}},
+                        ItemsGet = {{name = "luxurywinebox", quantity = 1}},
                         Delay = 2000,
                         Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
                     },

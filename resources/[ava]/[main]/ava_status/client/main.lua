@@ -99,22 +99,25 @@ local function getStatusIndex(name)
 end
 RegisterNetEvent("ava_status:client:set", function(name, value)
     local index = getStatusIndex(name)
-    if index ~= nil then
+    if index ~= nil and type(value) == "number" and value >= 0 then
         PlayerStatus[index].value = aPlayerStatus[name].set(value)
+        TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
     end
 end)
 
 RegisterNetEvent("ava_status:client:add", function(name, value)
     local index = getStatusIndex(name)
-    if index ~= nil then
+    if index ~= nil and type(value) == "number" then
         PlayerStatus[index].value = aPlayerStatus[name].add(value)
+        TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
     end
 end)
 
 RegisterNetEvent("ava_status:client:remove", function(name, value)
     local index = getStatusIndex(name)
-    if index ~= nil then
+    if index ~= nil and type(value) == "number" then
         PlayerStatus[index].value = aPlayerStatus[name].remove(value)
+        TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
     end
 end)
 
@@ -144,39 +147,7 @@ end)
 RegisterNetEvent("ava_status:client:heal", function()
     local playerPed = PlayerPedId()
     SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+    StopLongAnimatedIfNeeded()
     exports.ava_core:ShowNotification(nil, nil, "ava_core_logo", GetString("healed_by_staff"), nil, nil, "ava_core_logo")
 end)
 
------------------------------------------------
---------------- Long animations ---------------
------------------------------------------------
-
-IsAnimated = false
-IsLongAnimated = false
-
-function SetLongAnimated(prop)
-    Citizen.CreateThread(function()
-        IsLongAnimated = true
-        local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_VEH_DUCK~", label = GetString("cancel_animation")}})
-
-        while IsLongAnimated do
-            Citizen.Wait(0)
-            DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
-            if IsControlJustPressed(1, 73) or IsControlJustPressed(1, 24) or IsControlJustPressed(1, 25) then -- X, RMB or LMB
-                IsLongAnimated = false
-            end
-        end
-        ClearPedSecondaryTask(PlayerPedId())
-
-        if prop then
-            exports.ava_core:DeleteObject(prop)
-        end
-    end)
-end
-
-function StopLongAnimatedIfNeeded()
-    if IsLongAnimated then
-        IsLongAnimated = false
-        Wait(50)
-    end
-end

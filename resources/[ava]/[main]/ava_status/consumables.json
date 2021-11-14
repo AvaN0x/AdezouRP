@@ -2,7 +2,7 @@
     {
         "name": "bread",
         "status": {
-            "hunger": 1000
+            "hunger": 3000
         },
         "clientEvent": {
             "name": "ava_status:client:eat"
@@ -29,7 +29,6 @@
     {
         "name": "waterbottle",
         "status": {
-            "hunger": 0,
             "thirst": 2000
         },
         "clientEvent": {
@@ -39,7 +38,7 @@
     {
         "name": "ecola",
         "status": {
-            "hunger": 2000
+            "thirst": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
@@ -49,13 +48,91 @@
         "name": "pisswasser",
         "status": {
             "thirst": -500,
-            "drunk": 2000
+            "drunk": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
             "args": [
                 "prop_amb_beer_bottle"
             ]
+        }
+    },
+    {
+        "name": "wine",
+        "status": {
+            "thirst": -500,
+            "drunk": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_amb_40oz_03"
+            ]
+        }
+    },
+    {
+        "name": "luxurywine",
+        "status": {
+            "thirst": -500,
+            "drunk": 2200
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_amb_40oz_03"
+            ]
+        }
+    },
+    {
+        "name": "champagne",
+        "status": {
+            "thirst": -500,
+            "drunk": 3000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_amb_40oz_03"
+            ]
+        }
+    },
+    {
+        "name": "weedbag",
+        "status": {
+            "hunger": -500,
+            "drugged": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:smoke"
+        }
+    },
+    {
+        "name": "bagcoke",
+        "status": {
+            "hunger": -500,
+            "drugged": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:smoke"
+        }
+    },
+    {
+        "name": "methamphetamine",
+        "status": {
+            "hunger": -500,
+            "drugged": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:smoke"
+        }
+    },
+    {
+        "name": "dolizou",
+        "status": {
+            "injured": -1000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:takePill"
         }
     }
 ]

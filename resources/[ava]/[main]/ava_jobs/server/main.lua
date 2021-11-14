@@ -141,7 +141,6 @@ RegisterNetEvent("ava_jobs:server:job_center:subscribe", function(index)
 end)
 -- #endregion
 
-
 -------------
 -- Harvest --
 -------------
@@ -462,7 +461,7 @@ end)
 exports.ava_core:RegisterUsableItem("champagnebox", function(source)
     TriggerEvent("ava_jobs:UseBox", source, "champagnebox", "champagne")
 end)
-exports.ava_core:RegisterUsableItem("wineluxebox", function(source)
-    TriggerEvent("ava_jobs:UseBox", source, "wineluxebox", "wineluxe")
+exports.ava_core:RegisterUsableItem("luxurywinebox", function(source)
+    TriggerEvent("ava_jobs:UseBox", source, "luxurywinebox", "luxurywine")
 end)
 -- #endregion

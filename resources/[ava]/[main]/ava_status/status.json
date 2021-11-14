@@ -28,7 +28,7 @@
         "afterHeal": 0
     },
     "injured": {
-        "update": -5,
+        "update": -3,
         "default": 0,
         "afterHeal": 0
     }
