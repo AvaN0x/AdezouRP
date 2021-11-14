@@ -38,7 +38,6 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
         end
 
         if DrunkStage ~= stage then
-            DrunkStage = stage
             local shouldFade<const> = not IsDrunk
             Citizen.CreateThread(function()
                 local playerPed = PlayerPedId()
@@ -47,15 +46,15 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
                     Wait(1000)
                 end
 
-                if DrunkStage == 0 then
+                if stage == 0 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@slightlydrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@slightlydrunk", true)
                     ShakeGameplayCam("DRUNK_SHAKE", 1.0)
-                elseif DrunkStage == 1 then
+                elseif stage == 1 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@moderatedrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@moderatedrunk", true)
                     ShakeGameplayCam("DRUNK_SHAKE", 1.5)
-                elseif DrunkStage == 2 then
+                elseif stage == 2 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@verydrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@verydrunk", true)
                     ShakeGameplayCam("DRUNK_SHAKE", 2.0)
@@ -68,6 +67,7 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
                 if shouldFade then
                     DoScreenFadeIn(800)
                 end
+                DrunkStage = stage
             end)
             IsDrunk = true
         end
@@ -109,6 +109,67 @@ StatusFunctions["drugged"] = function(value, percent, playerHealth, newHealth)
     elseif IsDrugged then
         -- If drugged, reset
         IsDrugged = false
+        ResetPlayerStatusEffects()
+    end
+
+    return newHealth
+end
+
+---------------------------------------
+--------------- Injured ---------------
+---------------------------------------
+local IsInjured, InjuredStage, InjuredLoop = false, -1, 0
+
+StatusFunctions["injured"] = function(value, percent, playerHealth, newHealth)
+    if percent > 0 then
+        local stage = 0
+        if percent > 50 then
+            stage = 1
+            -- else
+            -- stage = 0
+        end
+
+        if InjuredStage ~= stage or InjureLoop >= 10 then
+            InjureLoop = 0
+            local shouldFade<const> = (stage == 1 and InjuredStage == 0) or (stage == 0 and InjuredStage == 1)
+            Citizen.CreateThread(function()
+                local playerPed = PlayerPedId()
+                if shouldFade then
+                    DoScreenFadeOut(800)
+                    Wait(1000)
+                end
+
+                exports.ava_core:RequestAnimDict("move_injured_generic")
+                SetPedMovementClipset(playerPed, "move_injured_generic", true)
+
+                if stage == 0 and InjuredStage == 1 then
+                    -- If previous was 1 and actual is 0
+                    ClearTimecycleModifier()
+                elseif stage == 1 then
+                    -- TODO Need to decide which timecycle modifier to use
+                    -- SetTimecycleModifier("phone_cam5")
+
+                    SetTimecycleModifier("pulse")
+
+                    -- SetTimecycleModifier("redmist")
+                    -- SetTimecycleModifierStrength(0.7)
+                end
+
+                SetPedMotionBlur(playerPed, true)
+
+                if shouldFade then
+                    DoScreenFadeIn(800)
+                end
+                InjuredStage = stage
+            end)
+            IsInjured = true
+        end
+        InjureLoop = InjureLoop + 1
+
+    elseif IsInjured then
+        -- If injured, reset
+        IsInjured = false
+        InjuredStage = -1
         ResetPlayerStatusEffects()
     end
 

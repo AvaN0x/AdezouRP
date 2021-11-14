@@ -4,7 +4,7 @@
         "default": 5000,
         "afterHeal": 10000,
         "onrespawn": {
-            "under": 500,
+            "addUnder": 500,
             "add": 1000
         }
     },
@@ -13,23 +13,26 @@
         "default": 5000,
         "afterHeal": 10000,
         "onrespawn": {
-            "under": 500,
+            "addUnder": 500,
             "add": 1000
         }
     },
     "drunk": {
-        "update": -3,
+        "update": -5,
         "default": 0,
         "afterHeal": 0
     },
     "drugged": {
-        "update": -3,
+        "update": -5,
         "default": 0,
         "afterHeal": 0
     },
     "injured": {
-        "update": -3,
+        "update": -4,
         "default": 0,
-        "afterHeal": 0
+        "afterHeal": 0,
+        "onrespawn": {
+            "add": 2000
+        }
     }
 }

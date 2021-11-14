@@ -134,7 +134,9 @@ AddEventHandler("playerSpawned", function()
         -- Add some to values when respawning
         for name, cfgStatus in pairs(AVAConfig.Status) do
             if cfgStatus.onrespawn then
-                if cfgStatus.onrespawn.under and aPlayerStatus[name].value < cfgStatus.onrespawn.under then
+                if cfgStatus.onrespawn.addUnder and aPlayerStatus[name].value < cfgStatus.onrespawn.addUnder then
+                    TriggerEvent("ava_status:client:add", name, cfgStatus.onrespawn.add)
+                elseif cfgStatus.onrespawn.add then
                     TriggerEvent("ava_status:client:add", name, cfgStatus.onrespawn.add)
                 end
             end
