@@ -19,7 +19,7 @@ exports.ava_core:RegisterCommand("heal", "admin", function(source, args)
         end
     end
     TriggerClientEvent("ava_status:client:heal", id)
-end, GetString("heal_subtitle"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("heal_subtitle"), {{name = "player?", help = GetString("player_id_or_empty")}})
 
 local Consumables<const> = json.decode(LoadResourceFile(GetCurrentResourceName(), "consumables.json") or "{}") or {}
 for i = 1, #Consumables do

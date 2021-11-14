@@ -86,7 +86,7 @@ end, GetString("tpnearestvehicle_help"))
 
 AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(source, args)
     TriggerClientEvent("ava_core:client:tuneVehiclePink", source, args[1])
-end, GetString("tune_vehicle_pink_help"), {{name = "[vehicle]", help = GetString("vehicle_name")}})
+end, GetString("tune_vehicle_pink_help"), {{name = "vehicle?", help = GetString("vehicle_name")}})
 
 ------------------------------------
 --------------- Kick ---------------
@@ -373,7 +373,7 @@ AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     if aTargetPlayer then
         aTargetPlayer.getInventory().clearInventory()
     end
-end, GetString("clearinventory_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("clearinventory_help"), {{name = "player?", help = GetString("player_id_or_empty")}})
 
 AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
@@ -507,7 +507,7 @@ AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand,
     else
         TriggerClientEvent("ava_core:client:kill", source)
     end
-end, GetString("kill_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("kill_help"), {{name = "player?", help = GetString("player_id_or_empty")}})
 
 AVA.Commands.RegisterCommand("ace", "superadmin", function(source, args, rawCommand, aPlayer)
     if aPlayer and args[1] then
