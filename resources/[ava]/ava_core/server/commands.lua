@@ -392,14 +392,40 @@ end, GetString("give_item_help"), {
     {name = "quantity", help = GetString("quantity")},
 })
 
-AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
-    if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
+AVA.Commands.RegisterCommand("giveitemtype", "superadmin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
 
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
-        if not aTargetPlayer.getInventory().removeItem(args[2], tonumber(args[3])) then
+        local inventory = aTargetPlayer.getInventory()
+        local quantity = type(args[3]) == "string" and tonumber(args[3]) or 1
+        local found = false
+        for itemName, item in pairs(AVAConfig.Items) do
+            if item.type == args[2] then
+                inventory.addItem(itemName, quantity)
+                found = true
+            end
+        end
+        if not found then
+            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_type_do_not_exist")}})
+        end
+    end
+end, GetString("give_item_help"), {
+    {name = "player", help = GetString("player_id_or_zero")},
+    {name = "itemTypeName", help = GetString("item_type_name")},
+    {name = "quantity?", help = GetString("quantity")},
+})
+
+AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
+        return
+    end
+
+    local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
+    if aTargetPlayer then
+        if not aTargetPlayer.getInventory().removeItem(args[2], type(args[3]) == "string" and tonumber(args[3]) or 1) then
             TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_do_not_exist")}})
         end
     end
