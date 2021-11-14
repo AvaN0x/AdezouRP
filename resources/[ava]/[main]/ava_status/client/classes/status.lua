@@ -17,7 +17,7 @@ function CreateStatus(name, value)
         return self.value / 100
     end
 
-    local checkValue = function(max)
+    self.checkValue = function(max)
         if self.value > (max or 10000) then
             self.value = (max or 10000)
         elseif self.value < 0 then
@@ -25,11 +25,11 @@ function CreateStatus(name, value)
         end
     end
     -- First call to checkValue(), to be sure that the value is correct at init
-    checkValue(10500)
+    self.checkValue(10500)
 
     self.set = function(value)
         self.value = value
-        checkValue()
+        self.checkValue()
 
         return self.value
     end
@@ -39,10 +39,10 @@ function CreateStatus(name, value)
         -- can be used for eaten too much or drinked too much
         if self.value > 9800 then
             self.value = self.value + value
-            checkValue(10500)
+            self.checkValue(10500)
         else
             self.value = self.value + value
-            checkValue()
+            self.checkValue()
         end
 
         return self.value
@@ -50,7 +50,7 @@ function CreateStatus(name, value)
 
     self.remove = function(value)
         self.value = self.value - value
-        checkValue()
+        self.checkValue()
 
         return self.value
     end

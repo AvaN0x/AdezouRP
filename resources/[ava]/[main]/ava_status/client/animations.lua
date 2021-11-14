@@ -126,3 +126,23 @@ RegisterNetEvent("ava_status:client:takePill", function()
     end
 end)
 
+-------------------------------------
+--------------- Reset ---------------
+-------------------------------------
+
+function ResetPlayerStatusEffects()
+    Citizen.CreateThread(function()
+        local playerPed = PlayerPedId()
+
+        DoScreenFadeOut(800)
+        Wait(1000)
+
+        ClearTimecycleModifier()
+        SetPedIsDrunk(playerPed, false) -- only sound
+        SetPedMotionBlur(playerPed, false)
+        ResetScenarioTypesEnabled()
+        ResetPedMovementClipset(playerPed, 0)
+
+        DoScreenFadeIn(800)
+    end)
+end

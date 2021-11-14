@@ -138,6 +138,7 @@ AddEventHandler("playerSpawned", function()
                     TriggerEvent("ava_status:client:add", name, cfgStatus.onrespawn.add)
                 end
             end
+            aPlayerStatus[name].checkValue()
         end
     end
 
