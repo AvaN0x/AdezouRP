@@ -82,3 +82,35 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
 
     return newHealth
 end
+
+-------------------------------------
+--------------- Drugged ---------------
+-------------------------------------
+local IsDrugged = false
+
+StatusFunctions["drugged"] = function(value, percent, playerHealth, newHealth)
+    if percent > 100 then
+        newHealth = playerHealth > 150 and (newHealth - 2) or (newHealth - 4)
+    elseif percent > 20 then
+        -- Only effect if above 20%
+        if not IsDrugged then
+            Citizen.CreateThread(function()
+                local playerPed = PlayerPedId()
+                DoScreenFadeOut(800)
+                Wait(1000)
+
+                SetTimecycleModifier("DRUG_gas_huffin")
+
+                DoScreenFadeIn(800)
+            end)
+            IsDrugged = true
+        end
+
+    elseif IsDrugged then
+        -- If drugged, reset
+        IsDrugged = false
+        ResetPlayerStatusEffects()
+    end
+
+    return newHealth
+end
