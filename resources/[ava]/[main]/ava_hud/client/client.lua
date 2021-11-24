@@ -47,13 +47,11 @@ AddEventHandler("ava_hud:client:updateStatus", function(name, percent)
     SendNUIMessage({action = "updateStatus", name = name, percent = percent})
 end)
 
-RegisterNetEvent("ui:toggle")
-AddEventHandler("ui:toggle", function(show)
+RegisterNetEvent("ava_hud:client:toggle", function(show)
     SendNUIMessage({action = "toggle", show = show})
 end)
 
-RegisterNetEvent("ui:togglePlayerStats")
-AddEventHandler("ui:togglePlayerStats", function(show)
+RegisterNetEvent("ava_hud:client:togglePlayerStats", function(show)
     SendNUIMessage({action = "togglePlayerStats", show = show})
 end)
 

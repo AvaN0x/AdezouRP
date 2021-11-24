@@ -91,10 +91,13 @@ function RageUI.PoolMenus:PersonalMenu()
                 ExecuteCommand("save")
             end
         end)
+        Items:AddButton(GetString("personal_menu_miscs"), nil, {RightLabel = "→→→"}, nil, MiscsSubMenu)
+
         if isAdmin then
             Items:AddButton(GetString("personal_menu_admin_menu"), nil, {RightLabel = "→→→", LeftBadge = RageUI.BadgeStyle.Alert}, nil, MainAdminMenu)
         end
     end)
 
+    PoolMiscs()
     PoolVehicleManagement()
 end
