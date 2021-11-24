@@ -2,7 +2,7 @@
     {
         "name": "bread",
         "status": {
-            "hunger": 3000
+            "hunger": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:eat"
@@ -29,7 +29,7 @@
     {
         "name": "waterbottle",
         "status": {
-            "thirst": 2000
+            "thirst": 1000
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
@@ -38,7 +38,7 @@
     {
         "name": "ecola",
         "status": {
-            "thirst": 1500
+            "thirst": 1000
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
@@ -48,7 +48,7 @@
         "name": "pisswasser",
         "status": {
             "thirst": -500,
-            "drunk": 1500
+            "drunk": 1000
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
@@ -61,7 +61,7 @@
         "name": "wine",
         "status": {
             "thirst": -500,
-            "drunk": 2000
+            "drunk": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
@@ -74,7 +74,7 @@
         "name": "luxurywine",
         "status": {
             "thirst": -500,
-            "drunk": 2200
+            "drunk": 2000
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
@@ -87,7 +87,7 @@
         "name": "champagne",
         "status": {
             "thirst": -500,
-            "drunk": 3000
+            "drunk": 2500
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
@@ -100,7 +100,7 @@
         "name": "weedbag",
         "status": {
             "hunger": -500,
-            "drugged": 2000
+            "drugged": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:smoke"
@@ -120,7 +120,7 @@
         "name": "methamphetamine",
         "status": {
             "hunger": -500,
-            "drugged": 2000
+            "drugged": 2500
         },
         "clientEvent": {
             "name": "ava_status:client:smoke"
