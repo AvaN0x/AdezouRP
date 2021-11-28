@@ -11,7 +11,7 @@ local aPlayerStatus = {}
 StatusFunctions = {}
 
 Citizen.CreateThread(function()
-    PlayerStatus = exports.ava_core:getPlayerData().status
+    PlayerStatus = exports.ava_core:getPlayerData().status or {}
 
     initStatus(PlayerStatus)
 end)
