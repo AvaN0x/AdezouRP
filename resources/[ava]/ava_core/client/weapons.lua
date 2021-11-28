@@ -62,7 +62,7 @@ local ammoTypesToItem = {
 }
 
 local shotAmmos = {}
-local timeLastTrigger, waitingToTrigger = -1, false
+local waitingToTrigger = false
 
 ---Trigger server with shot ammo count with an interval of 2000ms
 ---@param ammoItemName Actually ammo item name
@@ -75,12 +75,7 @@ local function shotAmmo(ammoItemName)
         -- this will do it with at least 3000ms between each calls
         waitingToTrigger = true
         Citizen.CreateThread(function()
-            local timer = GetGameTimer()
-            while (math.abs(timer - timeLastTrigger) < 3000) do
-                timer = GetGameTimer()
-                Wait(10)
-            end
-            timeLastTrigger = timer
+            Wait(3000)
             waitingToTrigger = false
             for itemName, count in pairs(shotAmmos) do
                 TriggerServerEvent("ava_core:server:playerShotAmmoType", itemName, count)
