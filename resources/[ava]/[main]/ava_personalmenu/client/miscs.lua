@@ -5,7 +5,7 @@
 MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"))
 
 local isHudActive, isBigMapActive, isCinematicModeActive = true, false, false
-local isDriftModeActive = false -- TODO KVP
+local isDriftModeActive = GetResourceKvpInt("miscs_menu_drift_mode") ~= 0
 
 local function SetHudActive(state)
     TriggerEvent("ava_hud:client:toggle", state)
@@ -62,6 +62,7 @@ function PoolMiscs()
                         isDriftModeEquipied = false
                     end
                     isDriftModeActive = not isDriftModeActive
+                    SetResourceKvpInt("miscs_menu_drift_mode", isDriftModeActive and 1 or 0)
                 end
             end)
         Items:CheckBox(GetString("miscs_menu_toggle_cinematic_mode"), GetString("miscs_menu_toggle_cinematic_mode_subtitle"), isCinematicModeActive, nil,
