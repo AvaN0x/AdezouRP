@@ -17,7 +17,7 @@ StatusFunctions["thirst"] = StatusFunctions["hunger"]
 -------------------------------------
 --------------- Drunk ---------------
 -------------------------------------
-local IsDrunk, DrunkStage = false, -1
+local DrunkStage = -1
 
 StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
     if percent > 100 then
@@ -38,7 +38,7 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
         end
 
         if DrunkStage ~= stage then
-            local shouldFade<const> = not IsDrunk
+            local shouldFade<const> = DrunkStage == -1
             Citizen.CreateThread(function()
                 local playerPed = PlayerPedId()
                 if shouldFade then
@@ -69,12 +69,10 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
                 end
                 DrunkStage = stage
             end)
-            IsDrunk = true
         end
 
-    elseif IsDrunk then
+    elseif DrunkStage ~= -1 then
         -- If drunk, reset
-        IsDrunk = false
         DrunkStage = -1
         ResetPlayerStatusEffects()
         ShakeGameplayCam("DRUNK_SHAKE", 0.0)
@@ -118,7 +116,7 @@ end
 ---------------------------------------
 --------------- Injured ---------------
 ---------------------------------------
-local IsInjured, InjuredStage, InjuredLoop = false, -1, 0
+local InjuredStage, InjuredLoop = -1, 0
 
 StatusFunctions["injured"] = function(value, percent, playerHealth, newHealth)
     if percent > 0 then
@@ -162,13 +160,11 @@ StatusFunctions["injured"] = function(value, percent, playerHealth, newHealth)
                 end
                 InjuredStage = stage
             end)
-            IsInjured = true
         end
         InjureLoop = InjureLoop + 1
 
-    elseif IsInjured then
+    elseif InjuredStage ~= -1 then
         -- If injured, reset
-        IsInjured = false
         InjuredStage = -1
         ResetPlayerStatusEffects()
     end
