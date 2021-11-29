@@ -53,8 +53,8 @@ function PoolMiscs()
                     SetHudActive(isHudActive)
                 end
             end)
-        Items:CheckBox(GetString("miscs_menu_toggle_drift_mode"), GetString("miscs_menu_toggle_drift_mode_subtitle"), isDriftModeActive, nil,
-            function(onSelected, IsChecked)
+        Items:CheckBox(GetString("miscs_menu_toggle_drift_mode"), GetString("miscs_menu_toggle_drift_mode_subtitle"), isDriftModeActive,
+            {LeftBadge = RageUI.BadgeStyle.Car}, function(onSelected, IsChecked)
                 if (onSelected) then
                     if isDriftModeActive and isDriftModeEquipied and actualVehicle ~= 0 then
                         SetDriftTyresEnabled(actualVehicle, false)
