@@ -90,14 +90,15 @@ Citizen.CreateThread(function()
         -- SetCreateRandomCopsNotOnScenarios(false)
         -- SetCreateRandomCopsOnScenarios(false)
 
+        -- Every 50 ms
+        if loop % 50 == 0 and GetPlayerWantedLevel(playerId) > 0 then
+            SetPlayerWantedLevel(playerId, 0, false)
+            SetPlayerWantedLevelNow(playerId, false)
+        end
+
         if loop == 500 then
             loop = 0
             SetWeaponDrops()
-
-            if GetPlayerWantedLevel(playerId) > 0 then
-                SetPlayerWantedLevel(playerId, 0, false)
-                SetPlayerWantedLevelNow(playerId, false)
-            end
         end
     end
 end)

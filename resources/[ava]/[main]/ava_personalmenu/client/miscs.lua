@@ -5,7 +5,9 @@
 MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"))
 
 local isHudActive, isBigMapActive, isCinematicModeActive = true, false, false
+
 local isDriftModeActive = GetResourceKvpInt("miscs_menu_drift_mode") ~= 0
+local actualDriftVehicle, isDriftModeEquipied = 0, false
 
 local function SetHudActive(state)
     TriggerEvent("ava_hud:client:toggle", state)
@@ -56,8 +58,8 @@ function PoolMiscs()
         Items:CheckBox(GetString("miscs_menu_toggle_drift_mode"), GetString("miscs_menu_toggle_drift_mode_subtitle"), isDriftModeActive,
             {LeftBadge = RageUI.BadgeStyle.Car}, function(onSelected, IsChecked)
                 if (onSelected) then
-                    if isDriftModeActive and isDriftModeEquipied and actualVehicle ~= 0 then
-                        SetDriftTyresEnabled(actualVehicle, false)
+                    if isDriftModeActive and isDriftModeEquipied and actualDriftVehicle ~= 0 then
+                        SetDriftTyresEnabled(actualDriftVehicle, false)
                         print("Drift mode disabled") -- TODO Remove this line, for debug only
                         isDriftModeEquipied = false
                     end
@@ -84,10 +86,13 @@ end
 ------------ Drift mode ------------
 ------------------------------------
 
-local actualVehicle = 0
-local isDriftModeEquipied = false
 AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
-    actualVehicle = vehicle
+    -- Only if ped is driver
+    if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() then
+        actualDriftVehicle = vehicle
+    else
+        actualDriftVehicle = 0
+    end
 end)
 AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
     if isDriftModeActive and isDriftModeEquipied then
@@ -95,13 +100,13 @@ AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
         print("Drift mode disabled") -- TODO Remove this line, for debug only
         isDriftModeEquipied = false
     end
-    actualVehicle = 0
+    actualDriftVehicle = 0
 end)
 
 RegisterCommand("+keyDriftMode", function()
     if isDriftModeActive then
-        if actualVehicle ~= 0 then
-            SetDriftTyresEnabled(actualVehicle, true)
+        if actualDriftVehicle ~= 0 then
+            SetDriftTyresEnabled(actualDriftVehicle, true)
             print("Drift mode enabled") -- TODO Remove this line, for debug only
             isDriftModeEquipied = true
         end
@@ -110,8 +115,8 @@ end, false)
 
 RegisterCommand("-keyDriftMode", function()
     if isDriftModeActive then
-        if actualVehicle ~= 0 then
-            SetDriftTyresEnabled(actualVehicle, false)
+        if actualDriftVehicle ~= 0 then
+            SetDriftTyresEnabled(actualDriftVehicle, false)
             print("Drift mode disabled") -- TODO Remove this line, for debug only
             isDriftModeEquipied = false
         end
