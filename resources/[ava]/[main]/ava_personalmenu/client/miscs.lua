@@ -5,13 +5,14 @@
 MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"))
 
 local isHudActive, isBigMapActive, isCinematicModeActive = true, false, false
+local isDriftModeActive = false -- TODO KVP
 
 local function SetHudActive(state)
     TriggerEvent("ava_hud:client:toggle", state)
     DisplayRadar(state)
 end
 
-local function SetCinematicModeActive()
+local function RefreshCinematicModeActive()
     if not isCinematicModeActive then
         return
     end
@@ -52,11 +53,22 @@ function PoolMiscs()
                     SetHudActive(isHudActive)
                 end
             end)
+        Items:CheckBox(GetString("miscs_menu_toggle_drift_mode"), GetString("miscs_menu_toggle_drift_mode_subtitle"), isDriftModeActive, nil,
+            function(onSelected, IsChecked)
+                if (onSelected) then
+                    if isDriftModeActive and isDriftModeEquipied and actualVehicle ~= 0 then
+                        SetDriftTyresEnabled(actualVehicle, false)
+                        print("Drift mode disabled") -- TODO Remove this line, for debug only
+                        isDriftModeEquipied = false
+                    end
+                    isDriftModeActive = not isDriftModeActive
+                end
+            end)
         Items:CheckBox(GetString("miscs_menu_toggle_cinematic_mode"), GetString("miscs_menu_toggle_cinematic_mode_subtitle"), isCinematicModeActive, nil,
             function(onSelected, IsChecked)
                 if (onSelected) then
                     isCinematicModeActive = not isCinematicModeActive
-                    SetCinematicModeActive()
+                    RefreshCinematicModeActive()
                     if isCinematicModeActive then
                         SetHudActive(false)
                     else
@@ -67,3 +79,42 @@ function PoolMiscs()
     end)
 end
 
+------------------------------------
+------------ Drift mode ------------
+------------------------------------
+
+local actualVehicle = 0
+local isDriftModeEquipied = false
+AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
+    actualVehicle = vehicle
+end)
+AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
+    if isDriftModeActive and isDriftModeEquipied then
+        SetDriftTyresEnabled(vehicle, false)
+        print("Drift mode disabled") -- TODO Remove this line, for debug only
+        isDriftModeEquipied = false
+    end
+    actualVehicle = 0
+end)
+
+RegisterCommand("+keyDriftMode", function()
+    if isDriftModeActive then
+        if actualVehicle ~= 0 then
+            SetDriftTyresEnabled(actualVehicle, true)
+            print("Drift mode enabled") -- TODO Remove this line, for debug only
+            isDriftModeEquipied = true
+        end
+    end
+end, false)
+
+RegisterCommand("-keyDriftMode", function()
+    if isDriftModeActive then
+        if actualVehicle ~= 0 then
+            SetDriftTyresEnabled(actualVehicle, false)
+            print("Drift mode disabled") -- TODO Remove this line, for debug only
+            isDriftModeEquipied = false
+        end
+    end
+end, false)
+
+RegisterKeyMapping("+keyDriftMode", GetString("miscs_menu_toggle_drift_mode_key"), "keyboard", "LSHIFT")
