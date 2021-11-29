@@ -86,12 +86,13 @@ function RageUI.PoolMenus:PersonalMenu()
                 end
             end, VehiclesManagementSubMenu)
 
+        Items:AddButton(GetString("personal_menu_miscs"), nil, {RightLabel = "→→→"}, nil, MiscsSubMenu)
+
         Items:AddButton(GetString("personal_menu_save_player"), nil, {LeftBadge = RageUI.BadgeStyle.Tick}, function(onSelected)
             if onSelected then
                 ExecuteCommand("save")
             end
         end)
-        Items:AddButton(GetString("personal_menu_miscs"), nil, {RightLabel = "→→→"}, nil, MiscsSubMenu)
 
         if isAdmin then
             Items:AddButton(GetString("personal_menu_admin_menu"), nil, {RightLabel = "→→→", LeftBadge = RageUI.BadgeStyle.Alert}, nil, MainAdminMenu)
