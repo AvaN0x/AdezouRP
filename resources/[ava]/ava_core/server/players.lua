@@ -154,6 +154,7 @@ local function loadPlayer(src)
             lastname = aPlayer.character.lastname,
             sex = aPlayer.character.sex,
             birthdate = aPlayer.character.birthdate,
+            mugshot = aPlayer.character.mugshot,
         },
         position = vector3(aPlayer.position.x, aPlayer.position.y, aPlayer.position.z),
         skin = aPlayer.skin,
@@ -192,7 +193,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
 
     -- we check if the player character is valid
     if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and aPlayer.character.sex
-        and aPlayer.character.birthdate then
+        and aPlayer.character.birthdate and aPlayer.character.mugshot then
         -- player char is valid
         loadPlayer(tostring(src))
     else
@@ -289,10 +290,12 @@ AddEventHandler("playerJoining", function(oldSource)
     setupPlayer(src, oldSource)
 end)
 
--- Mandatory wait!
-SetTimeout(1000, function()
-    for _, source in ipairs(GetPlayers()) do
+Citizen.CreateThread(function()
+    -- Mandatory wait!
+    Wait(1000)
+    for k, source in pairs(GetPlayers()) do
         setupPlayer(source)
+        Wait(0)
     end
 end)
 
@@ -312,9 +315,16 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
         -- we check if the player character is valid
     elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
-        and character.sex ~= "" and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.sex then
+        and character.sex ~= "" and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.sex
+        and character.mugshot and character.mugshot ~= "" then
         aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
-        aPlayer.character = {firstname = character.firstname, lastname = character.lastname, sex = character.sex, birthdate = character.birthdate}
+        aPlayer.character = {
+            firstname = character.firstname,
+            lastname = character.lastname,
+            sex = character.sex,
+            birthdate = character.birthdate,
+            mugshot = character.mugshot,
+        }
         aPlayer.skin = skin
         aPlayer.inventory = CreateInventory(tostring(src), json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
         aPlayer.accounts = json.decode(json.encode(AVAConfig.DefaultPlayerData.accounts)) or {}

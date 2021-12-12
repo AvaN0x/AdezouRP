@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 --         "firstname": "firstname",
 --         "lastname": "lastname",
 --         "sex": 0,
---         "birthdate": "1970-01-01"
+--         "birthdate": "1970-01-01",
+--         "mugshot": "data......."
 --     },
 --     "skin": {},
 --     "loadout": {},

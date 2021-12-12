@@ -4,7 +4,7 @@
 -------------------------------------------
 IsDead = false
 -- Contains only name and value of statuses
-local PlayerStatus = nil
+local PlayerStatus = {}
 -- Contain objects handling statuses
 local aPlayerStatus = {}
 

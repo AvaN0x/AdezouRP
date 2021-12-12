@@ -1020,11 +1020,15 @@ MainMenu.Closed = function()
     StopCharCreator()
     AVA.Player.CreatingChar = false
     CharacterSkin = exports.skinchanger:getSkin()
+
+    local mugshot = exports.MugShotBase64:GetMugShotBase64(PlayerPedId())
+    print(mugshot)
     TriggerServerEvent("ava_core:server:createdPlayer", {
         firstname = CharacterData.firstname,
         lastname = CharacterData.lastname,
         birthdate = CharacterData.birthdate,
         sex = CharacterData.sexIndex,
+        mugshot = mugshot,
     }, CharacterSkin)
 
     -- clear some global variables

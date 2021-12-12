@@ -40,6 +40,7 @@ client_scripts {
     "client/tweaks.lua",
     "client/vehicles.lua",
     "client/deaths.lua",
+    "client/licenses.lua",
 }
 
 server_scripts {
@@ -56,9 +57,10 @@ server_scripts {
     "server/routing_buckets.lua",
     "server/players.lua",
     "server/inventories.lua",
+    "server/licenses.lua",
 }
 
-dependencies {"RageUI"}
+dependencies {"RageUI", "ava_base64toruntime", "MugShotBase64"}
 
 -- comment this line to disable debug prints
 ava_config "debug_prints" "yes"

@@ -8,6 +8,8 @@ playerPed = 0
 playerVehicle = 0
 playerVehicleData = {}
 
+playerLicenses = {}
+
 isInMenuLoop = false
 local DoorsToCheck<const> = {{4, "hood"}, {5, "trunk"}, {0, "front_left"}, {1, "front_right"}, {2, "back_left"}, {3, "back_right"}}
 
@@ -78,7 +80,13 @@ RegisterKeyMapping("personalMenu", GetString("personal_menu"), "keyboard", "F5")
 
 function RageUI.PoolMenus:PersonalMenu()
     MainPersonalMenu:IsVisible(function(Items)
-        Items:AddButton(GetString("personal_menu_emotes"), nil, {RightLabel = "→→→"}, nil)
+        -- Items:AddButton(GetString("personal_menu_emotes"), nil, {RightLabel = "→→→"}, nil)
+        Items:AddButton(GetString("personal_menu_wallet"), nil, {RightLabel = "→→→"}, function(onSelected)
+            if onSelected then
+                playerLicenses = exports.ava_core:TriggerServerCallback("ava_core:server:getPlayerLicenses") or {}
+            end
+        end, WalletSubMenu)
+
         Items:AddButton(GetString("personal_menu_vehicle_management"), nil,
             {RightLabel = "→→→", IsDisabled = playerVehicle == 0 or playerVehicleData.playerSeat == 2}, function(onSelected)
                 if onSelected then
@@ -99,6 +107,7 @@ function RageUI.PoolMenus:PersonalMenu()
         end
     end)
 
+    PoolWallet()
     PoolMiscs()
     PoolVehicleManagement()
 end

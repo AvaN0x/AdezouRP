@@ -27,6 +27,7 @@ client_scripts {
 
     "client/utils.lua",
     "client/main.lua",
+    "client/wallet.lua",
     "client/miscs.lua",
     "client/vehicle_management.lua",
     "client/speedlimiter.lua",
