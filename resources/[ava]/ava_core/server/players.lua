@@ -369,7 +369,9 @@ AddEventHandler("playerDropped", function(reason)
         aPlayer.logout()
         Citizen.Await(aPlayer.save())
 
-        AVA.RemovePrincipal("player." .. src, "group." .. aPlayer.group)
+        if aPlayer.group then
+            AVA.RemovePrincipal("player." .. src, "group." .. aPlayer.group)
+        end
 
         AVA.Players.List[tostring(src)] = nil
     end
