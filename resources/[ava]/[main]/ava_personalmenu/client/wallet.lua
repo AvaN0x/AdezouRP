@@ -14,7 +14,7 @@ local function ListCardHandler(Index, onSelected, onListChange, cardName, licens
         if CardList[CardIndex].type == "see" then
             TriggerEvent("ava_core:client:showMyCard", cardName, license)
         else
-            local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
+            local targetId, localId = exports.ava_core:ChooseClosestPlayer()
             if targetId then
                 TriggerServerEvent("ava_core:server:showMyCard", targetId, cardName)
             end
