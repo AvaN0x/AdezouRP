@@ -11,6 +11,8 @@ local aPlayerStatus = {}
 StatusFunctions = {}
 
 Citizen.CreateThread(function()
+    -- mandatory wait!
+    Wait(1000)
     PlayerStatus = exports.ava_core:getPlayerData().status or {}
 
     initStatus(PlayerStatus)
