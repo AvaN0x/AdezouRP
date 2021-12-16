@@ -5,7 +5,7 @@
 local PlayerData = nil
 local isBigmapOn = false
 
-local vehiclesCars = {0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 20};
+local vehiclesClasses = {0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 20};
 -- 0 is on foot
 -- 7 is super
 -- 8 is motorcycle
@@ -199,7 +199,7 @@ Citizen.CreateThread(function()
             fuel = GetVehicleFuelLevel(vehiclePlayerIsIn)
             SendNUIMessage({action = "showcarhud", showhud = true, speed = carSpeed, fuel = fuel})
 
-            SendNUIMessage({action = "setbelt", isAccepted = has_value(vehiclesCars, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn})
+            SendNUIMessage({action = "setbelt", isAccepted = has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn})
         else
             SendNUIMessage({action = "showcarhud", showhud = false})
             beltOn = false
@@ -211,7 +211,7 @@ end)
 Citizen.CreateThread(function()
     Wait(500)
     while true do
-        if vehiclePlayerIsIn ~= 0 and (wasInCar or has_value(vehiclesCars, GetVehicleClass(vehiclePlayerIsIn))) then
+        if vehiclePlayerIsIn ~= 0 and (wasInCar or has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn))) then
             local ped = PlayerPedId()
 
             wasInCar = true
@@ -258,7 +258,7 @@ RegisterCommand("keyToggleBelt", function()
     local ped = PlayerPedId()
     if (IsPedInAnyVehicle(ped)) then
         local car = GetVehiclePedIsIn(ped, false)
-        local isAccepted = has_value(vehiclesCars, GetVehicleClass(car))
+        local isAccepted = has_value(vehiclesClasses, GetVehicleClass(car))
         if car and isAccepted then
             beltOn = not beltOn
             SendNUIMessage({action = "setbelt", isAccepted = isAccepted, belt = beltOn})

@@ -60,7 +60,7 @@ function PoolMiscs()
                 if (onSelected) then
                     if isDriftModeActive and isDriftModeEquipied and actualDriftVehicle ~= 0 then
                         SetDriftTyresEnabled(actualDriftVehicle, false)
-                        print("Drift mode disabled") -- TODO Remove this line, for debug only
+                        -- print("Drift mode disabled")
                         isDriftModeEquipied = false
                     end
                     isDriftModeActive = not isDriftModeActive
@@ -85,10 +85,33 @@ end
 ------------------------------------
 ------------ Drift mode ------------
 ------------------------------------
+local blacklistClasses<const> = {[8] = true, [13] = true, [14] = true, [15] = true, [16] = true, [19] = true, [21] = true}
+-- 0: Compacts
+-- 1: Sedans
+-- 2: SUVs
+-- 3: Coupes
+-- 4: Muscle
+-- 5: Sports Classics
+-- 6: Sports
+-- 7: Super
+-- 8: Motorcycles
+-- 9: Off-road
+-- 10: Industrial
+-- 11: Utility
+-- 12: Vans
+-- 13: Cycles
+-- 14: Boats
+-- 15: Helicopters
+-- 16: Planes
+-- 17: Service
+-- 18: Emergency
+-- 19: Military
+-- 20: Commercial
+-- 21: Trains
 
 AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
     -- Only if ped is driver
-    if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() then
+    if GetPedInVehicleSeat(vehicle, -1) == PlayerPedId() and not blacklistClasses[GetVehicleClass(vehicle)] then
         actualDriftVehicle = vehicle
     else
         actualDriftVehicle = 0
@@ -97,7 +120,7 @@ end)
 AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
     if isDriftModeActive and isDriftModeEquipied then
         SetDriftTyresEnabled(vehicle, false)
-        print("Drift mode disabled") -- TODO Remove this line, for debug only
+        -- print("Drift mode disabled")
         isDriftModeEquipied = false
     end
     actualDriftVehicle = 0
@@ -107,7 +130,7 @@ RegisterCommand("+keyDriftMode", function()
     if isDriftModeActive then
         if actualDriftVehicle ~= 0 then
             SetDriftTyresEnabled(actualDriftVehicle, true)
-            print("Drift mode enabled") -- TODO Remove this line, for debug only
+            -- print("Drift mode enabled")
             isDriftModeEquipied = true
         end
     end
@@ -117,7 +140,7 @@ RegisterCommand("-keyDriftMode", function()
     if isDriftModeActive then
         if actualDriftVehicle ~= 0 then
             SetDriftTyresEnabled(actualDriftVehicle, false)
-            print("Drift mode disabled") -- TODO Remove this line, for debug only
+            -- print("Drift mode disabled")
             isDriftModeEquipied = false
         end
     end
