@@ -73,6 +73,42 @@ end
 exports("ShowNotification", AVA.ShowNotification)
 RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)
 
+---ASYNC
+---Prompt the player with a confirmation message
+---@param title string
+---@param firstLine string
+---@param secondLine string
+---@param background boolean
+---@param instructionalKey integer
+---@return boolean
+AVA.ShowConfirmationMessage = function(title, firstLine, secondLine, background, instructionalKey)
+    AddTextEntry("AVA_SCM_TITLE", title)
+    AddTextEntry("AVA_SCM_FIRST_LINE", firstLine)
+    AddTextEntry("AVA_SCM_SECOND_LINE", secondLine)
+
+    local p = promise.new()
+
+    Citizen.CreateThread(function()
+        while true do
+            Wait(0)
+            SetWarningMessageWithHeaderAndSubstringFlags("AVA_SCM_TITLE", "AVA_SCM_FIRST_LINE", instructionalKey or 36, "AVA_SCM_SECOND_LINE", false, 0, 0,
+                background)
+
+            DisableAllControlActions(2)
+            if IsDisabledControlJustReleased(2, 201) or IsDisabledControlJustReleased(2, 217) then -- confirm
+                p:resolve(true)
+                break
+            elseif IsDisabledControlJustReleased(2, 202) then -- cancel
+                p:resolve(false)
+                break
+            end
+        end
+    end)
+
+    return Citizen.Await(p)
+end
+exports("ShowConfirmationMessage", AVA.ShowConfirmationMessage)
+
 AVA.ShowHelpNotification = function(text)
     AddTextEntry("AVA_NOTF_TE", text)
     BeginTextCommandDisplayHelp("AVA_NOTF_TE")
