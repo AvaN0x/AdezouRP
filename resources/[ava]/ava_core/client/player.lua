@@ -53,14 +53,14 @@ local function SpawnPlayer()
     local playerPed = PlayerPedId()
 
     -- dprint(AVA.Player.Data.position)
-    if AVA.Player.FirstSpawn then
-        if AVA.Player.Data.position then
-            RequestCollisionAtCoord(AVA.Player.Data.position)
-            SetEntityCoords(playerPed, AVA.Player.Data.position)
-            SetEntityHeading(playerPed, 0.0)
-        end
-        SetEntityHealth(playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(playerPed))
+    if AVA.Player.Data.position then
+        RequestCollisionAtCoord(AVA.Player.Data.position)
+        SetEntityCoords(playerPed, AVA.Player.Data.position)
+        SetEntityHeading(playerPed, 0.0)
+    end
+    SetEntityHealth(playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or 200)
 
+    if AVA.Player.FirstSpawn then
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
 
         -- dprint(json.encode(AVA.Player.Data.skin))
@@ -108,38 +108,35 @@ AddEventHandler("playerSpawned", function()
     SpawnPlayer()
 end)
 
--- local function RespawnPlayer()
---     Citizen.CreateThread(function()
---         local playerPed = PlayerPedId()
---         DoScreenFadeOut(800)
---         while not IsScreenFadedOut() do
---             Citizen.Wait(50)
---         end
+local function RespawnPlayer()
+    Citizen.CreateThread(function()
+        local playerPed = PlayerPedId()
+        DoScreenFadeOut(800)
+        while not IsScreenFadedOut() do
+            Citizen.Wait(50)
+        end
 
---         local position = AVA.Player.Data and AVA.Player.Data.position or GetEntityCoords(playerPed)
+        local position = AVA.Player.Data and AVA.Player.Data.position or GetEntityCoords(playerPed)
 
---         SetEntityCoordsNoOffset(playerPed, position, false, false, false, true)
---         NetworkResurrectLocalPlayer(position, 0.0, true, false)
---         SetPlayerInvincible(playerPed, false)
---         TriggerEvent("playerSpawned", {x = position.x, y = position.y, z = position.z, heading = 0.0})
---         ClearPedBloodDamage(playerPed)
---         AVA.Player.IsDead = false
+        SetEntityCoordsNoOffset(playerPed, position, false, false, false, true)
+        NetworkResurrectLocalPlayer(position, 0.0, true, false)
+        SetPlayerInvincible(playerPed, false)
+        TriggerEvent("playerSpawned", {x = position.x, y = position.y, z = position.z, heading = 0.0})
+        ClearPedBloodDamage(playerPed)
+        AVA.Player.IsDead = false
 
---         SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+        SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
 
---         StopScreenEffect("DeathFailOut")
---         DoScreenFadeIn(800)
---     end)
--- end
+        StopScreenEffect("DeathFailOut")
+        DoScreenFadeIn(800)
+    end)
+end
 
 AddEventHandler("ava_core:client:playerDeath", function()
     AVA.Player.IsDead = true
 
-    -- Wait(2000)
-    -- RespawnPlayer()
-end)
-AddEventHandler("ava_core:client:playerRevived", function()
-    IsDead = false
+    Wait(2000)
+    RespawnPlayer()
 end)
 
 ------------------------------------
@@ -285,4 +282,7 @@ exports("getPlayerCharacterData", AVA.Player.getCharacterData)
 -- DEBUG COMMAND
 RegisterCommand("respawn", function()
     SpawnPlayer()
+end)
+RegisterCommand("revive", function()
+    RespawnPlayer()
 end)
