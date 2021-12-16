@@ -13,9 +13,8 @@ StatusFunctions = {}
 Citizen.CreateThread(function()
     -- mandatory wait!
     Wait(1000)
-    PlayerStatus = exports.ava_core:getPlayerData().status or {}
 
-    initStatus(PlayerStatus)
+    initStatus(exports.ava_core:getPlayerData().status or {})
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
@@ -27,7 +26,12 @@ RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
 end)
 
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
+    aPlayerStatus = {}
     initStatus(data.status)
+end)
+
+RegisterNetEvent("ava_core:client:createChar", function()
+    initStatus({})
 end)
 
 function initStatus(statusArray)
@@ -90,6 +94,9 @@ Citizen.CreateThread(function()
         Wait(AVAConfig.SaveTimeout)
         TriggerServerEvent("ava_status:server:update", PlayerStatus)
     end
+end)
+RegisterNetEvent("ava_core:client:selectChar", function()
+    TriggerServerEvent("ava_status:server:update", PlayerStatus)
 end)
 
 local function getStatusIndex(name)
