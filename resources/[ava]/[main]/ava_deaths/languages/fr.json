@@ -4,7 +4,7 @@
     "dead_time_left": "Temps restant %02d:%02d",
     "button_respawn": "Appeler l'unité X",
     "button_call_ems": "Appeler les EMS",
-    "confirm_respawn_title": "Unité X",
+    "confirm_respawn_title": "~r~Unité X~s~",
     "confirm_respawn_firstline": "Voulez-vous vraiment appeler l'unité X ?",
     "confirm_respawn_secondline": "Vous serez transféré dans l'hopital le plus proche."
 }
