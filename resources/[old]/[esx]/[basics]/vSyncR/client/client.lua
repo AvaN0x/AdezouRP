@@ -6,12 +6,14 @@ local timer = 0
 local freezeTime = Config.FreezeTime
 local blackout = Config.Blackout
 local iem = Config.IEM
+local snow = Config.Snow
 
-RegisterNetEvent('vSync:updateWeather')
-AddEventHandler('vSync:updateWeather', function(NewWeather, newblackout, newIem)
+RegisterNetEvent("vSync:updateWeather")
+AddEventHandler("vSync:updateWeather", function(NewWeather, newblackout, newIem, newSnow)
     CurrentWeather = NewWeather
     blackout = newblackout
     iem = newIem
+    snow = newSnow
 end)
 
 Citizen.CreateThread(function()
@@ -25,14 +27,16 @@ Citizen.CreateThread(function()
         SetArtificialLightsState(blackout)
         SetArtificialLightsStateAffectsVehicles(iem)
 
-        SetAudioFlag('PlayerOnDLCHeist4Island', iem) -- disable all radios
+        SetAudioFlag("PlayerOnDLCHeist4Island", iem) -- disable all radios
+
+        ForceSnowPass(snow)
 
         ClearOverrideWeather()
         ClearWeatherTypePersist()
         SetWeatherTypePersist(lastWeather)
         SetWeatherTypeNow(lastWeather)
         SetWeatherTypeNowPersist(lastWeather)
-        if lastWeather == 'XMAS' then
+        if lastWeather == "XMAS" or snow then
             SetForceVehicleTrails(true)
             SetForcePedFootstepsTracks(true)
         else
@@ -42,8 +46,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('vSync:updateTime')
-AddEventHandler('vSync:updateTime', function(base, offset, freeze)
+RegisterNetEvent("vSync:updateTime")
+AddEventHandler("vSync:updateTime", function(base, offset, freeze)
     freezeTime = freeze
     timeOffset = offset
     baseTime = base
@@ -55,46 +59,49 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         local newBaseTime = baseTime
-        if GetGameTimer() - 500  > timer then
+        if GetGameTimer() - 500 > timer then
             newBaseTime = newBaseTime + 0.25
             timer = GetGameTimer()
         end
         if freezeTime then
-            timeOffset = timeOffset + baseTime - newBaseTime			
+            timeOffset = timeOffset + baseTime - newBaseTime
         end
         baseTime = newBaseTime
-        hour = math.floor(((baseTime+timeOffset)/60)%24)
-        minute = math.floor((baseTime+timeOffset)%60)
+        hour = math.floor(((baseTime + timeOffset) / 60) % 24)
+        minute = math.floor((baseTime + timeOffset) % 60)
         NetworkOverrideClockTime(hour, minute, 0)
     end
 end)
 
-AddEventHandler('playerSpawned', function()
-    TriggerServerEvent('vSync:requestSync')
+AddEventHandler("playerSpawned", function()
+    TriggerServerEvent("vSync:requestSync")
 end)
 
 Citizen.CreateThread(function()
-    TriggerEvent('chat:addSuggestion', '/weather', _U('help_weathercommand'), {{ name=_('help_weathertype'), help=_U('help_availableweather')}})
-    TriggerEvent('chat:addSuggestion', '/time', _U('help_timecommand'), {{ name=_('help_timehname'), help=_U('help_timeh')}, { name=_('help_timemname'), help=_U('help_timem')}})
-    TriggerEvent('chat:addSuggestion', '/freezetime', _U('help_freezecommand'))
-    TriggerEvent('chat:addSuggestion', '/freezeweather', _U('help_freezeweathercommand'))
-    TriggerEvent('chat:addSuggestion', '/morning', _U('help_morningcommand'))
-    TriggerEvent('chat:addSuggestion', '/noon', _U('help_nooncommand'))
-    TriggerEvent('chat:addSuggestion', '/evening', _U('help_eveningcommand'))
-    TriggerEvent('chat:addSuggestion', '/night', _U('help_nightcommand'))
-    TriggerEvent('chat:addSuggestion', '/blackout', _U('help_blackoutcommand'))
-    TriggerEvent('chat:addSuggestion', '/iem', _U('help_iemcommand'))
+    TriggerEvent("chat:addSuggestion", "/weather", _U("help_weathercommand"), {{name = _("help_weathertype"), help = _U("help_availableweather")}})
+    TriggerEvent("chat:addSuggestion", "/time", _U("help_timecommand"),
+        {{name = _("help_timehname"), help = _U("help_timeh")}, {name = _("help_timemname"), help = _U("help_timem")}})
+    TriggerEvent("chat:addSuggestion", "/freezetime", _U("help_freezecommand"))
+    TriggerEvent("chat:addSuggestion", "/freezeweather", _U("help_freezeweathercommand"))
+    TriggerEvent("chat:addSuggestion", "/morning", _U("help_morningcommand"))
+    TriggerEvent("chat:addSuggestion", "/noon", _U("help_nooncommand"))
+    TriggerEvent("chat:addSuggestion", "/evening", _U("help_eveningcommand"))
+    TriggerEvent("chat:addSuggestion", "/night", _U("help_nightcommand"))
+    TriggerEvent("chat:addSuggestion", "/blackout", _U("help_blackoutcommand"))
+    TriggerEvent("chat:addSuggestion", "/iem", _U("help_iemcommand"))
 end)
 
 -- Display a notification above the minimap.
 function ShowNotification(text, blink)
-    if blink == nil then blink = false end
+    if blink == nil then
+        blink = false
+    end
     SetNotificationTextEntry("STRING")
     AddTextComponentSubstringPlayerName(text)
     DrawNotification(blink, false)
 end
 
-RegisterNetEvent('vSync:notify')
-AddEventHandler('vSync:notify', function(message, blink)
+RegisterNetEvent("vSync:notify")
+AddEventHandler("vSync:notify", function(message, blink)
     ShowNotification(message, blink)
 end)

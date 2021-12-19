@@ -37,6 +37,14 @@ Locales['fr'] = {
     ['iem_disabled'] = 'L\'IEM est maintenant désactivée.',
     ['iem_disabledc'] = 'L\'IEM est maintenant ~b~désactivée~s~.',
 
+
+    ['snow_enabled'] = 'La neige est maintenant activée.',
+    ['snow_enabledc'] = 'La neige est maintenant ~b~activée~s~.',
+    ['snow_disabled'] = 'La neige est maintenant désactivée.',
+    ['snow_disabledc'] = 'La neige est maintenant ~b~désactivée~s~.',
+
+    
+
     ['help_weathercommand'] = 'Change la météo.',
     ['help_weathertype'] = 'typemétéo',
     ['help_availableweather'] = 'Météos valables : extrasunny, clear, neutral, smog, foggy, overcast, clouds, clearing, rain, thunder, snow, blizzard, snowlight, xmas, halloween',

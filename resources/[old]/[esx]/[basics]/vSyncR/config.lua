@@ -9,7 +9,8 @@ Config.BaseTime         = 8 -- Time                                             
 Config.TimeOffset       = 0 -- Time offset                                      default: 0
 Config.FreezeTime       = false -- freeze time                                  default: false
 Config.Blackout         = false -- Set blackout                                 default: false
-Config.IEM              = false -- Set iem                                 default: false
+Config.IEM              = false -- Set iem                                      default: false
+Config.Snow             = false -- Set snow on floor                            default: false
 Config.NewWeatherTimer  = 30 -- Time (in minutes) between each weather change   default: 10
 
 
