@@ -25,6 +25,7 @@ exports.ava_core.Vector3ToString = AVA.Utils.Vector3ToString
 exports.ava_core.KeyboardInput = AVA.KeyboardInput
 exports.ava_core.ShowNotification = AVA.ShowNotification
 exports.ava_core.ShowConfirmationMessage = AVA.ShowConfirmationMessage
+exports.ava_core.ForceHideConfirmationMessage = AVA.ForceHideConfirmationMessage
 exports.ava_core.ShowHelpNotification = AVA.ShowHelpNotification
 exports.ava_core.NetworkRequestControlOfEntity = AVA.NetworkRequestControlOfEntity
 exports.ava_core.RequestModel = AVA.RequestModel

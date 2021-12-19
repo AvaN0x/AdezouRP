@@ -73,6 +73,8 @@ end
 exports("ShowNotification", AVA.ShowNotification)
 RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)
 
+local displayConfirmationMessage = false
+
 ---ASYNC
 ---Prompt the player with a confirmation message
 ---@param title string
@@ -82,14 +84,15 @@ RegisterNetEvent("ava_core:client:ShowNotification", AVA.ShowNotification)
 ---@param instructionalKey integer
 ---@return boolean
 AVA.ShowConfirmationMessage = function(title, firstLine, secondLine, background, instructionalKey)
-    AddTextEntry("AVA_SCM_TITLE", title)
-    AddTextEntry("AVA_SCM_FIRST_LINE", firstLine)
-    AddTextEntry("AVA_SCM_SECOND_LINE", secondLine)
+    AddTextEntry("AVA_SCM_TITLE", tostring(title) or "")
+    AddTextEntry("AVA_SCM_FIRST_LINE", tostring(firstLine) or "")
+    AddTextEntry("AVA_SCM_SECOND_LINE", tostring(secondLine) or "")
 
     local p = promise.new()
 
     Citizen.CreateThread(function()
-        while true do
+        displayConfirmationMessage = true
+        while displayConfirmationMessage do
             Wait(0)
             SetWarningMessageWithHeaderAndSubstringFlags("AVA_SCM_TITLE", "AVA_SCM_FIRST_LINE", instructionalKey or 36, "AVA_SCM_SECOND_LINE", false, 0, 0,
                 background)
@@ -97,17 +100,28 @@ AVA.ShowConfirmationMessage = function(title, firstLine, secondLine, background,
             DisableAllControlActions(2)
             if IsDisabledControlJustReleased(2, 201) or IsDisabledControlJustReleased(2, 217) then -- confirm
                 p:resolve(true)
-                break
+                return
             elseif IsDisabledControlJustReleased(2, 202) then -- cancel
-                p:resolve(false)
                 break
             end
         end
+        p:resolve(false)
     end)
 
     return Citizen.Await(p)
 end
 exports("ShowConfirmationMessage", AVA.ShowConfirmationMessage)
+
+---Hide previously opened confirmation message
+---@return boolean "true if a confirmation message was opened"
+AVA.ForceHideConfirmationMessage = function()
+    if displayConfirmationMessage then
+        displayConfirmationMessage = false
+        return true
+    end
+    return false
+end
+exports("ForceHideConfirmationMessage", AVA.ForceHideConfirmationMessage)
 
 AVA.ShowHelpNotification = function(text)
     AddTextEntry("AVA_NOTF_TE", text)
