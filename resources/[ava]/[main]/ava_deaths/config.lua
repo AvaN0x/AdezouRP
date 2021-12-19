@@ -4,5 +4,7 @@
 -------------------------------------------
 AVAConfig = {}
 
--- AVAConfig.DeadScreenMaxDuration = 15 * 60 * 1000
-AVAConfig.DeadScreenMaxDuration = 2000
+-- In seconds
+AVAConfig.DeadScreenMaxDuration = 15 * 60
+
+AVAConfig.RespawnPoints = {{Coord = vector3(323.15, -582.64, 42.3), Heading = 50.73}}
