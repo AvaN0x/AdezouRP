@@ -130,6 +130,43 @@ AVA.ShowHelpNotification = function(text)
 end
 exports("ShowHelpNotification", AVA.ShowHelpNotification)
 
+---Prepare a freemode message for the player
+---It can be on top of the screen or in the middle
+---@param title string "Top text"
+---@param subtitle string "Bottom text"
+---@param onTop boolean "true = on top, false = in the middle"
+---@param duration number "Duration in milliseconds, if specified it will be shown for that amount of time the scaleform will be returned as a function result for the script to handle it
+---@return integer|nil "Only returned if duration is not specified"
+AVA.ShowFreemodeMessage = function(title, subtitle, onTop, duration)
+    local scaleform = RequestScaleformMovie("mp_big_message_freemode")
+    while not HasScaleformMovieLoaded(scaleform) do
+        Wait(0)
+    end
+
+    BeginScaleformMovieMethod(scaleform, onTop and "SHOW_SHARD_CENTERED_TOP_MP_MESSAGE" or "SHOW_SHARD_CENTERED_MP_MESSAGE")
+    PushScaleformMovieMethodParameterString(title)
+    PushScaleformMovieMethodParameterString(subtitle)
+    -- PushScaleformMovieMethodParameterInt(1)
+    EndScaleformMovieMethod()
+
+    if duration and duration > 0 then
+        Citizen.CreateThread(function()
+            local loop = true
+            SetTimeout(duration, function()
+                loop = false
+            end)
+            while loop do
+                Wait(0)
+                DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+            end
+            SetScaleformMovieAsNoLongerNeeded(scaleform)
+        end)
+    else
+        return scaleform
+    end
+end
+exports("ShowFreemodeMessage", AVA.ShowFreemodeMessage)
+
 ----------------------------------------
 --------------- Requests ---------------
 ----------------------------------------
@@ -444,7 +481,6 @@ exports("GetClosestVehicle", AVA.Vehicles.GetClosestVehicle)
 ---@return any scaleform
 AVA.Utils.GetScaleformInstructionalButtons = function(buttons)
     local instructionScaleform = RequestScaleformMovie("instructional_buttons")
-
     while not HasScaleformMovieLoaded(instructionScaleform) do
         Wait(0)
     end
