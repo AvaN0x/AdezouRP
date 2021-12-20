@@ -25,23 +25,6 @@ AddEventHandler("ava_core:client:playerDeath", function()
     onDeath()
 end)
 
--- DEBUG COMMAND
-RegisterCommand("revive", function()
-    DoScreenFadeOut(800)
-    Wait(800)
-
-    RenderScriptCams(false, false, 0, true, true)
-    DestroyAllCams(true)
-
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    RespawnPlayer(coords, 0.0)
-    StopScreenEffect("DeathFailOut")
-    StopAudioScene("DEATH_SCENE")
-
-    DoScreenFadeIn(800)
-end)
-
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() and IsDead then
         local playerPed = PlayerPedId()
@@ -169,3 +152,7 @@ function RevivePlayer(atHospital)
     DoScreenFadeIn(800)
 end
 
+RegisterNetEvent("ava_deaths:client:staff_revive", function()
+    RevivePlayer(false)
+    exports.ava_core:ShowNotification(nil, nil, "ava_core_logo", GetString("revived_by_staff"), nil, nil, "ava_core_logo")
+end)

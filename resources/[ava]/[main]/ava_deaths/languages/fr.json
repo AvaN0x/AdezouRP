@@ -1,4 +1,7 @@
 {
+    "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
+    "revived_by_staff": "Revive par un staff",
+    "revive_help": "Réanimer un joueur",
     "dead_message_title": "~r~Vous êtes dans le coma~s~",
     "dead_message_subtitle": "",
     "dead_time_left": "Temps restant %02d:%02d",
