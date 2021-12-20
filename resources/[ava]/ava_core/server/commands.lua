@@ -519,6 +519,16 @@ AVA.Commands.RegisterCommand("myid", "", function(source, args)
     TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
 end, GetString("myid_help"))
 
+AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) ~= "string" then
+        return
+    end
+    local message = table.concat(args, " ")
+    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("announce_embed_by_staff", aPlayer and aPlayer.getDiscordTag() or "console"), message,
+        16711798)
+    TriggerClientEvent("ava_core:client:announce", -1, message)
+end, "announce_help", {{name = "message", help = "announce_message"}})
+
 -- AVA.Commands.RegisterCommand("report", "", function(source, args)
 --     TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
 -- end, "report", {{name = "reason", help = "your_reason"}})
