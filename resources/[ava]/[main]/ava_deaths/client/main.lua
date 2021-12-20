@@ -27,8 +27,7 @@ end)
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() and IsDead then
-        local playerPed = PlayerPedId()
-        local coords = GetEntityCoords(playerPed)
+        local coords = GetEntityCoords(PlayerPedId())
         RespawnPlayer(coords, 0.0)
         StopScreenEffect("DeathFailOut")
         StopAudioScene("DEATH_SCENE")
@@ -36,15 +35,15 @@ AddEventHandler("onResourceStop", function(resource)
 end)
 
 local function getClosestHospital()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
+    local coords = GetEntityCoords(PlayerPedId())
     local closest, closestDistance = nil, nil
 
-    for k, v in ipairs(AVAConfig.RespawnPoints) do
-        local distance = #(coords - v.Coord)
+    for i = 1, #AVAConfig.RespawnPoints do
+        local hospital<const> = AVAConfig.RespawnPoints[i]
+        local distance<const> = #(coords - hospital.Coord)
         if not closestDistance or distance < closestDistance then
             closestDistance = distance
-            closest = v
+            closest = hospital
         end
     end
     return closest
