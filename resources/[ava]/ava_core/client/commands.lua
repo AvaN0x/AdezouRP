@@ -207,10 +207,11 @@ end)
 
 RegisterNetEvent("ava_core:client:announce", function(message)
     TriggerEvent("chat:addMessage", {color = {255, 60, 60}, multiline = false, args = {GetString("announce_chat_prefix"), message}})
-    AVA.ForceHideConfirmationMessage()
+    PlaySoundFrontend(-1, "Boss_Message_Orange", "GTAO_Biker_FM_Soundset", false)
     AVA.ShowFreemodeMessage(GetString("announce_freemode_message_title"), message, false, 10000)
 end)
 
 RegisterNetEvent("ava_core:client:staff_report", function(playerName, playerId, message)
     TriggerEvent("chat:addMessage", {color = {255, 60, 60}, multiline = false, args = {GetString("report_staff_chat_prefix", playerName, playerId), message}})
 end)
+
