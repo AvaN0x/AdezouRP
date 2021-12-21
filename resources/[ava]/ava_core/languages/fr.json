@@ -67,7 +67,7 @@
     "killed_by_staff": "Tué par un staff",
     "myid_help": "Récupérer mon ID",
     "announce_help": "Faire une annonce staff",
-    "announce_message": "Message",
+    "message": "Message",
     "announce_embed_by_staff": "**Annonce par %s**",
     "announce_chat_prefix": "[Annonce] ",
     "announce_freemode_message_title": "~r~ANNONCE STAFF~s~",
