@@ -530,9 +530,20 @@ AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args,
 end, GetString("announce_help"), {{name = "message", help = GetString("message")}})
 
 
--- AVA.Commands.RegisterCommand("report", "", function(source, args)
---     TriggerClientEvent("chat:addMessage", source, {args = {"hey this should report, maybe, maybe not"}})
--- end, "report", {{name = "reason", help = "your_reason"}})
+AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aPlayer)
+    if not aPlayer or type(args[1]) ~= "string" then
+        return
+    end
+    local message<const> = table.concat(args, " ")
+    local playerName<const> = aPlayer.getDiscordTag()
+
+    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName), message, 16711798)
+    -- Notify source
+    TriggerClientEvent("chat:addMessage", source,
+        {color = {255, 60, 60}, multiline = false, args = {GetString("report_chat_prefix"), GetString("report_chat_message")}})
+    -- Notify staff
+    AVA.Utils.TriggerClientWithAceEvent("ava_core:client:staff_report", "ace.group.mod", playerName, source, message)
+end, GetString("report_help"), {{name = "message", help = GetString("message")}})
 
 AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand, aPlayer)
     if type(args[1]) == "string" and args[1] ~= "0" and args[1] ~= tostring(source) then

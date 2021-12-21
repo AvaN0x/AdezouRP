@@ -210,3 +210,7 @@ RegisterNetEvent("ava_core:client:announce", function(message)
     AVA.ForceHideConfirmationMessage()
     AVA.ShowFreemodeMessage(GetString("announce_freemode_message_title"), message, false, 10000)
 end)
+
+RegisterNetEvent("ava_core:client:staff_report", function(playerName, playerId, message)
+    TriggerEvent("chat:addMessage", {color = {255, 60, 60}, multiline = false, args = {GetString("report_staff_chat_prefix", playerName, playerId), message}})
+end)
