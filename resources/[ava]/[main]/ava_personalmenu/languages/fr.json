@@ -26,7 +26,7 @@
     "miscs_menu_toggle_drift_mode_subtitle": "Activation du drift lors de la pression de la touche LSHIFT (par défaut)",
     "miscs_menu_toggle_drift_mode_key": "Mode de drift",
     "vehicle_management_speed_limit": "Limiteur de vitesse",
-    "vehicle_management_speed_limit_subtitle": "Activer le limiteur de vitesse",
+    "vehicle_management_speed_limit_subtitle": "Valider le nouveau limiteur de vitesse",
     "vehicle_management_doors": "Portes",
     "door_open": "Ouvrir",
     "door_close": "Fermer",
