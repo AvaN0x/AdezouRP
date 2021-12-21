@@ -529,6 +529,17 @@ AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args,
     TriggerClientEvent("ava_core:client:announce", -1, message)
 end, GetString("announce_help"), {{name = "message", help = GetString("message")}})
 
+AVA.Commands.RegisterCommand({"message", "pm", "dm"}, "mod", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) ~= "string" or type(args[2]) ~= "string" -- or tostring(args[1]) == tostring(source)
+    then
+        return
+    end
+    local targetId = args[1]
+    table.remove(args, 1)
+    local message<const> = table.concat(args, " ")
+    TriggerClientEvent("ava_core:client:ShowNotification", targetId, message, nil, "ava_core_logo", GetString("message_title"),
+        aPlayer and aPlayer.getDiscordTag() or "console", nil, "ava_core_logo")
+end, GetString("message_help"), {{name = "player", help = GetString("player_id")}, {name = "message", help = GetString("message")}})
 
 AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aPlayer)
     if not aPlayer or type(args[1]) ~= "string" then

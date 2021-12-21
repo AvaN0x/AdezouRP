@@ -66,6 +66,8 @@
     "kill_log": "**%s** a été tué par **%s**.",
     "killed_by_staff": "Tué par un staff",
     "myid_help": "Récupérer mon ID",
+    "message_help": "Envoyer un message à un joueur",
+    "message_title": "STAFF",
     "report_help": "Faire une annonce staff",
     "report_embed_by_player": "**Report par %s**",
     "report_chat_prefix": "[Report] ",
