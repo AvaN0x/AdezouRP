@@ -86,12 +86,15 @@ RegisterNetEvent("ava_core:server:playerDeath", function(data)
         local deathCauseLabel = GetDeathCauseLabel(data.weapon)
         local distance = math.abs(#(data.coords - data.killerCoords))
         local killerName = GetPlayerName(data.killerId)
-        TriggerEvent("ava_personalmenu:server:notifAdmins", "death", GetString("killey_by_notification", srcName, killerName, deathCauseLabel))
+        exports.ava_core:TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "death",
+            GetString("killey_by_notification", srcName, killerName, deathCauseLabel))
+
         exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "",
             GetString("killey_by_embed", srcName, killerName, deathCauseLabel, tostring(data.weapon), tonumber(distance)), 16711680) -- #ff0000
     else
         local deathCauseLabel = GetDeathCauseLabel(data.cause)
-        TriggerEvent("ava_personalmenu:server:notifAdmins", "death", GetString("killey_notification", srcName, deathCauseLabel))
+        exports.ava_core:TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "death",
+            GetString("killey_notification", srcName, deathCauseLabel))
         exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetString("killey_embed", srcName, deathCauseLabel, tostring(data.cause)), 16711680) -- #ff0000
     end
 end)

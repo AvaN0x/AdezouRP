@@ -84,4 +84,6 @@ exports.ava_core.MoveSourceToRBName = AVA.RB.MoveSourceToRBName
 exports.ava_core.DiscordRequest = AVA.Utils.DiscordRequest
 exports.ava_core.SendWebhookMessage = AVA.Utils.SendWebhookMessage
 exports.ava_core.SendWebhookEmbedMessage = AVA.Utils.SendWebhookEmbedMessage
+exports.ava_core.TriggerClientWithAceEvent = AVA.Utils.TriggerClientWithAceEvent
+
 -- #endregion

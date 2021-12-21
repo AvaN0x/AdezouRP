@@ -70,3 +70,13 @@ AVA.Utils.SendWebhookEmbedMessage = function(webhookName, title, description, co
     end
 end
 exports("SendWebhookEmbedMessage", AVA.Utils.SendWebhookEmbedMessage)
+
+AVA.Utils.TriggerClientWithAceEvent = function(eventName, aceName, ...)
+    for _, playerSrc in ipairs(GetPlayers()) do
+        if IsPlayerAceAllowed(playerSrc, aceName) then
+            TriggerClientEvent(eventName, playerSrc, ...)
+        end
+    end
+end
+exports("TriggerClientWithAceEvent", AVA.Utils.TriggerClientWithAceEvent)
+AddEventHandler("ava_core:server:TriggerClientWithAceEvent", AVA.Utils.TriggerClientWithAceEvent)
