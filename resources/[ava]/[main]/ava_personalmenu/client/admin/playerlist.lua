@@ -246,7 +246,9 @@ function PoolPlayerList()
                     Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), nil, function(onSelected)
                         if onSelected then
                             local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
-                            if reason and reason ~= "" then
+                            if reason and reason ~= ""
+                                and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_kick_confirm_title"),
+                                    GetString("player_manage_kick_confirm_firstline", playerData.n), GetString("player_manage_kick_confirm_reason", reason)) then
                                 ExecuteCommand("kick " .. playerData.id .. " " .. reason)
                             end
                         end
@@ -256,7 +258,9 @@ function PoolPlayerList()
                     Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), nil, function(onSelected)
                         if onSelected then
                             local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
-                            if reason and reason ~= "" then
+                            if reason and reason ~= ""
+                                and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_ban_confirm_title"),
+                                    GetString("player_manage_ban_confirm_firstline", playerData.n), GetString("player_manage_ban_confirm_reason", reason)) then
                                 ExecuteCommand("ban " .. playerData.id .. " " .. reason)
                             end
                         end
