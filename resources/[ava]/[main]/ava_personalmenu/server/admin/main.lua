@@ -82,7 +82,7 @@ CreateThread(function()
             data.c = coords
             data.rb = rb
 
-            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or "Not found"
+            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or "not found"
 
             count = count + 1
             newData[count] = data
