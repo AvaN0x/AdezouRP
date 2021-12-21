@@ -200,6 +200,17 @@ function PoolPlayerList()
                 RageUI.GoBack()
             else
                 local playerData = selectedPlayerData
+                if perms.playerlist.message then
+                    Items:AddButton(GetString("player_manage_message"), GetString("player_manage_message_subtitle"), {IsDisabled = playerData.isMyself},
+                        function(onSelected)
+                            if onSelected then
+                                local message = exports.ava_core:KeyboardInput(GetString("player_manage_message_input"), "" or "", 100)
+                                if message and message ~= "" then
+                                    ExecuteCommand("message " .. playerData.id .. " " .. message)
+                                end
+                            end
+                        end)
+                end
                 if perms.playerlist.openinventory then
                     Items:AddButton(GetString("player_manage_openinventory"), GetString("player_manage_openinventory_subtitle"),
                         {IsDisabled = playerData.isMyself}, function(onSelected)
