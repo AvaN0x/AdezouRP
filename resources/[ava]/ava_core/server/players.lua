@@ -76,7 +76,7 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
 
     if AVA.Players.BanList == nil then
         deferrals.done(GetString("connecting_error"))
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", GetString("connecting_error_ban_list_log"), 16711680)
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", GetString("connecting_error_ban_list_log"), 0xFF0000)
     else
         local license, discord, steam, ip, live, xbl = AVA.Players.GetSourceIdentifiers(src)
 
@@ -184,7 +184,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
                   .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
             "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-                .. " n'a pas pu se connecter car son personnage n'a pas été récupéré.", 16733269)
+                .. " n'a pas pu se connecter car son personnage n'a pas été récupéré.", 0xFF5455)
         return
     end
 
@@ -220,7 +220,7 @@ local function setupPlayer(src, oldSource)
                       .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
                 "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-                    .. " n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.", 16733269)
+                    .. " n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.", 0xFF5455)
             return
         end
 
@@ -278,7 +278,7 @@ local function setupPlayer(src, oldSource)
 
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-            .. " se connecte. (" .. citizenId .. ")", 311891)
+            .. " se connecte. (" .. citizenId .. ")", 0x4C253)
 
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
 
@@ -365,7 +365,7 @@ AddEventHandler("playerDropped", function(reason)
         AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout", "~r~" .. aPlayer.name .. "~s~ se déconnecte.")
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`"
-            .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId .. ")", 16733269)
+            .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId .. ")", 0xFF5455)
 
         aPlayer.logout()
         Citizen.Await(aPlayer.save())
@@ -538,7 +538,7 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
                 UpdateBanList()
             end)
 
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16711680) -- #ff0000
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 0xFF0000)
         return discordMessage
     end
 end, GetString("ban_help"), {{name = "player", help = GetString("player_id")}})
@@ -554,7 +554,7 @@ end, GetString("ban_help"), {{name = "player", help = GetString("player_id")}})
 -- 	})
 -- 	for i = 1, #AVA.Players.BanList, 1 do
 -- 		if AVA.Players.BanList[i].license == license then
--- 			AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", AVA.Players.BanList[i].name .. " got unbanned by **" .. GetPlayerName(src) .. "**.", 16575503)
+-- 			AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", AVA.Players.BanList[i].name .. " got unbanned by **" .. GetPlayerName(src) .. "**.", 0xFCEC0F)
 -- 			break
 -- 		end
 -- 	end
@@ -837,12 +837,12 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
 
         if not item then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
-                15685721)
+                0xEF5859)
 
         elseif ammoRemoved > item.quantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
-                    aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 15685721)
+                    aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 0xEF5859)
             TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), item.quantity)
 
         elseif ammoRemoved <= item.quantity then

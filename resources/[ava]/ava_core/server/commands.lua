@@ -38,8 +38,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
 
         if aPlayer then
             local logString = GetString("used_command", aPlayer and aPlayer.getDiscordTag() or GetPlayerName(source), rawCommand)
-            -- print("^5[COMMAND]^0 " .. logString)
-            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 15902015)
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 0xF2A53F)
         end
     end, needAce)
 
@@ -118,7 +117,7 @@ AVA.Commands.RegisterCommand("kick", "mod", function(source, args, rawCommand, a
             discordMessage = GetString("player_got_kicked", string.gsub(discord, "discord:", ""), name, reason)
         end
 
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 16522243) -- #fc1c03
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 0xFC1C03)
         return discordMessage
     end
 end)
@@ -525,7 +524,7 @@ AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args,
     end
     local message<const> = table.concat(args, " ")
     AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("announce_embed_by_staff", aPlayer and aPlayer.getDiscordTag() or "console"), message,
-        16711798)
+        0xFF0076)
     TriggerClientEvent("ava_core:client:announce", -1, message)
 end, GetString("announce_help"), {{name = "message", help = GetString("message")}})
 
@@ -548,7 +547,7 @@ AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aP
     local message<const> = table.concat(args, " ")
     local playerName<const> = aPlayer.getDiscordTag()
 
-    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName), message, 16711798)
+    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName), message, 0xFFD767)
     -- Notify source
     TriggerClientEvent("chat:addMessage", source,
         {color = {255, 60, 60}, multiline = false, args = {GetString("report_chat_prefix"), GetString("report_chat_message")}})

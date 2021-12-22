@@ -42,7 +42,7 @@ function getCountInService(jobName)
         end
     end
     exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_dev", "asked for count of " .. jobName,
-        "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 15902015)
+        "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 0xF2A53F)
     return count
 end
 exports("getCountInService", isInService)
