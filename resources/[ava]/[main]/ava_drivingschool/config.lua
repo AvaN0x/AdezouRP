@@ -1,0 +1,20 @@
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+AVAConfig = {}
+AVAConfig.DrawDistance = 15.0
+
+AVAConfig.DrivingSchool = {
+    Blip = {Sprite = 764, Colour = 0, Scale = 0.8},
+    Coord = vector3(208.52, -1383.02, 29.60),
+    Marker = 27,
+    Size = {x = 1.5, y = 1.5, z = 1.0},
+    Color = {r = 0, g = 122, b = 204},
+    Name = GetString("driving_school_blip"),
+    HelpText = GetString("press_open_menu", 80),
+}
+
+-- AVAConfig.MenuStyle = {textureName = nil, textureDirectory = nil}
+
+AVAConfig.Prices = {trafficLaws = 250, driver = 500}

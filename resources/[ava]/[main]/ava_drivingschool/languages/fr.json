@@ -1,0 +1,13 @@
+{
+    "driving_school": "Auto-école",
+    "driving_school_blip": "Auto-école",
+    "press_open_menu": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu",
+    "driving_school_already_has_licenses": "Vous avez déjà votre permis de conduire.",
+    "menu_traffic_laws": "Code de la route",
+    "menu_traffic_laws_subtitle": "Passer votre code de la route.",
+    "menu_driver": "Permis de conduire",
+    "menu_driver_subtitle": "Passer votre permis de conduire.",
+    "menu_driver_subtitle_disabled": "Vous devez passer votre code de la route avant de pouvoir obtenir un permis de conduire.",
+    "right_label_price": "%s $",
+    "not_enough_money": "Vous n'avez pas assez d'argent."
+}
