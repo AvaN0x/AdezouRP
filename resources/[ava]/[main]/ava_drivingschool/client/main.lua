@@ -8,7 +8,7 @@ local HasAlreadyEnteredMarker = false
 local LastZone = nil
 local CurrentZoneName = nil
 local CurrentHelpText = nil
-local CurrentActionEnabled = false
+CurrentActionEnabled = false
 
 local mainBlips = {}
 
@@ -159,7 +159,6 @@ function OpenDrivingSchoolMenu()
             {RightLabel = GetString("right_label_price", AVAConfig.Prices["trafficLaws"]), IsDisabled = not not trafficLawsLicense}, function(onSelected)
                 if onSelected then
                     if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "trafficLaws") then
-                        RageUI.CloseAllInternal()
                         TrafficLawsLicense()
                     else
                         exports.ava_core:ShowNotification(GetString("not_enough_money"))
@@ -170,7 +169,6 @@ function OpenDrivingSchoolMenu()
             {RightLabel = GetString("right_label_price", AVAConfig.Prices["driver"]), IsDisabled = DriverLicenseDisabled}, function(onSelected)
                 if onSelected then
                     if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "driver") then
-                        RageUI.CloseAllInternal()
                         DriverLicense()
                     else
                         exports.ava_core:ShowNotification(GetString("not_enough_money"))

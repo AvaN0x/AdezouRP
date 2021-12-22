@@ -1,0 +1,200 @@
+[
+    {
+        "question": "Un piéton traverse la route que pouvez-vous faire ?",
+        "answers": [
+            {
+                "label": "Vous accélérez"
+            },
+            {
+                "label": "Vous lui taillé les jambes"
+            },
+            {
+                "label": "Vous ralentissez pour lui laisser le temps de passer",
+                "right": true
+            },
+            {
+                "label": "Vous vous arretez",
+                "right": true
+            }
+        ]
+    },
+    {
+        "question": "Vous subissez un contrôle routier, l'agent vous fait un test alcoolémie, quelles doses sont tolérées ?",
+        "answers": [
+            {
+                "label": "0 g/l",
+                "right": true
+            },
+            {
+                "label": "0.5 g/l",
+                "right": true
+            },
+            {
+                "label": "0.4 g/l",
+                "right": true
+            },
+            {
+                "label": "1.5 g/l"
+            },
+            {
+                "label": "2 g/l"
+            }
+        ]
+    },
+    {
+        "question": "Quand vous arrivez en ville, quelle doit-être votre vitesse maximum ?",
+        "answers": [
+            {
+                "label": "30"
+            },
+            {
+                "label": "50"
+            },
+            {
+                "label": "90",
+                "right": true
+            },
+            {
+                "label": "130"
+            }
+        ],
+        "oneAnswer": true
+    },
+    {
+        "question": "Le feux est rouge, que faite-vous ?",
+        "answers": [
+            {
+                "label": "Vous ralentissez"
+            },
+            {
+                "label": "Vous accélérez en priant qu'aucun véhicule ne vous percute"
+            },
+            {
+                "label": "Vous vous arrêtez au feu",
+                "right": true
+            },
+            {
+                "label": "Vous écrasez mamie et vous continuez votre route"
+            }
+        ]
+    },
+    {
+        "question": "Vous vous rendez dans les quartiers luxueux, quelle est la vitesse maximum autorisée ?",
+        "answers": [
+            {
+                "label": "30",
+                "right": true
+            },
+            {
+                "label": "50",
+                "right": true
+            },
+            {
+                "label": "80"
+            },
+            {
+                "label": "100"
+            },
+            {
+                "label": "130"
+            }
+        ],
+        "oneAnswer": true
+    },
+    {
+        "question": "Un véhicule est accidenté et son conducteur également, que faite vous ?",
+        "answers": [
+            {
+                "label": "Vous vous arrêtez pour voir si tout va bien",
+                "right": true
+            },
+            {
+                "label": "Vous appelez les secours",
+                "right": true
+            },
+            {
+                "label": "Vous appelez le gouverneur"
+            },
+            {
+                "label": "Vous sortez le conducteur du véhicule vous-même"
+            }
+        ]
+    },
+    {
+        "question": "Vous roulez en campagne, un animal traverse, que faite-vous ?",
+        "answers": [
+            {
+                "label": "Vous le laissez passer",
+                "right": true
+            },
+            {
+                "label": "Vous observez ses réactions avant de continuer",
+                "right": true
+            },
+            {
+                "label": "Vous le klaxonner"
+            }
+        ]
+    },
+    {
+        "question": "Que pouvez-vous faire lors du dépassement d'un autre automobiliste ?",
+        "answers": [
+            {
+                "label": "Le suivre de près pour le doubler plus vite"
+            },
+            {
+                "label": "Le doubler en quittant la route"
+            },
+            {
+                "label": "Conduire sur la route opposée pour le dépasser si la ligne est continue"
+            },
+            {
+                "label": "Conduire sur la route opposée pour le dépasser si la ligne n'est pas continue",
+                "right": true
+            },
+            {
+                "label": "Dépasser la vitesse limite"
+            }
+        ]
+    },
+    {
+        "question": "Quel est la vitesse maximum autorisée sur l'autoroute ?",
+        "answers": [
+            {
+                "label": "50 kmh"
+            },
+            {
+                "label": "90 kmh"
+            },
+            {
+                "label": "130 kmh",
+                "right": true
+            },
+            {
+                "label": "145 kmh"
+            }
+        ]
+    },
+    {
+        "question": "Un automobiliste commencer à vous dépasser, que ne devez vous <b>pas</b> faire ?",
+        "answers": [
+            {
+                "label": "Ralentir"
+            },
+            {
+                "label": "Vérifiez vos rétroviseurs"
+            },
+            {
+                "label": "Regarder les autres conducteurs"
+            },
+            {
+                "label": "Augmenter votre vitesse",
+                "right": true
+            },
+            {
+                "label": "Changer de voie",
+                "right": true
+            }
+        ]
+    }
+]

@@ -18,3 +18,6 @@ AVAConfig.DrivingSchool = {
 -- AVAConfig.MenuStyle = {textureName = nil, textureDirectory = nil}
 
 AVAConfig.Prices = {trafficLaws = 250, driver = 500}
+
+AVAConfig.TrafficLawsQuestions = json.decode(LoadResourceFile(GetCurrentResourceName(), "questions.json") or "{}") or {}
+

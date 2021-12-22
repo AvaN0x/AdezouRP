@@ -3,6 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 function DriverLicense()
+    RageUI.CloseAll()
     print("DriverLicense")
-    TriggerServerEvent("ava_drivingschool:client:passedTest", "driver")
+    TriggerServerEvent("ava_drivingschool:client:passedDrivingTest", 0)
 end
