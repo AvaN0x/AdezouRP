@@ -263,13 +263,14 @@ end
 
 
 
-function RageUI.OpenTempMenu(title, ItemsFunction, OnClosed, textureName, textureDirectory)
+function RageUI.OpenTempMenu(title, ItemsFunction, OnClosed, textureName, textureDirectory, NotCloseable)
     Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
 
         local TempMenu = RageUI.CurrentMenu
             and RageUI.CreateSubMenu(RageUI.CurrentMenu, "", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
             or RageUI.CreateMenu("", title or "", 0, 0, textureDirectory or "avaui", textureName or "avaui_title_adezou")
+        TempMenu.Closable = not NotCloseable
         TempMenu.Closed = OnClosed
         local isMenuVisible = true
 
@@ -279,7 +280,7 @@ function RageUI.OpenTempMenu(title, ItemsFunction, OnClosed, textureName, textur
                 TempMenu:IsVisible(function(Items)
                     menuVisible = true
                     if ItemsFunction then
-                        ItemsFunction(Items)
+                        ItemsFunction(Items, TempMenu)
                     end
                 end)
             end
