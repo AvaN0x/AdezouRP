@@ -788,5 +788,19 @@
         "description": "",
         "weight": 10,
         "noIcon": true
+    },
+    "ammo_fertilizercan": {
+        "label": "Munitions ferlizant",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
+    "ammo_emplauncher": {
+        "label": "Munitions lanceur EMP",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
     }
 }

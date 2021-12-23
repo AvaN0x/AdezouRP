@@ -47,6 +47,13 @@
             "weight": 2000,
             "noIcon": true
         },
+        "weapon_stungun_mp": {
+            "label": "Taser MP",
+            "type": "handgun",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
         "weapon_pistol50": {
             "label": "Pistolet Cal 50",
             "type": "handgun",
@@ -539,6 +546,13 @@
             "weight": 1000,
             "noIcon": true
         },
+        "weapon_heavyrifle": {
+            "label": "Fusil lourd",
+            "type": "rifle",
+            "description": "",
+            "weight": 1000,
+            "noIcon": true
+        },
         "weapon_mg": {
             "label": "Mitrailleuse",
             "type": "lmg",
@@ -623,6 +637,13 @@
             "weight": 2000,
             "noIcon": true
         },
+        "weapon_emplauncher": {
+            "label": "Lance-IEM",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
         "weapon_minigun": {
             "label": "Minigun",
             "type": "heavyweapon",
@@ -688,6 +709,13 @@
         },
         "weapon_hazardcan": {
             "label": "Bidon de produits chimique",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_fertilizercan": {
+            "label": "Bidon de fertilizants",
             "type": "miscweapon",
             "description": "",
             "weight": 2000,

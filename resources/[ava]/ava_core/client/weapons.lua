@@ -59,6 +59,8 @@ local ammoTypesToItem = {
     [GetHashKey("ammo_hazardcan")] = "ammo_hazardcan",
     [GetHashKey("ammo_firework")] = "ammo_firework",
     [GetHashKey("ammo_railgun")] = "ammo_railgun",
+    [GetHashKey("ammo_fertilizercan")] = "ammo_fertilizercan",
+    [GetHashKey("ammo_emplauncher")] = "ammo_emplauncher",
 }
 
 local shotAmmos = {}
