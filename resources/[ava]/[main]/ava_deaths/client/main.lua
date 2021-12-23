@@ -153,5 +153,7 @@ end
 
 RegisterNetEvent("ava_deaths:client:staff_revive", function()
     RevivePlayer(false)
+    local playerPed = PlayerPedId()
+    SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
     exports.ava_core:ShowNotification(nil, nil, "ava_core_logo", GetString("revived_by_staff"), nil, nil, "ava_core_logo")
 end)
