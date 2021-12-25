@@ -198,7 +198,7 @@ local wideProps = {
 local objects = {}
 
 local function spawnProp(hash, x, y, z, h)
-    local object = CreateObjectNoOffset(hash, x + 0.0, y + 0.0, z + 0.0, false, true, false)
+    local object = CreateObjectNoOffset(hash, x + 0.0, y + 0.0, z + 0.0, true, true, false)
     SetEntityHeading(object, h + 0.0)
     FreezeEntityPosition(object, true)
     table.insert(objects, object)
@@ -210,14 +210,20 @@ Citizen.CreateThread(function()
     for index, coord in ipairs(Slots) do
         local prop = props[math.random(1, #props)]
         if coord.Coord then
-            coord.prop = prop
             spawnProp(GetHashKey(prop), coord.Coord.x, coord.Coord.y, coord.Coord.z, coord.Heading)
         else
             -- for _, coord2 in ipairs(coord) do
             local coord2 = coord[1]
-            coord2.prop = prop
             spawnProp(GetHashKey(prop), coord2.Coord.x, coord2.Coord.y, coord2.Coord.z, coord2.Heading)
             -- end
+        end
+    end
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        for k, object in ipairs(objects) do
+            DeleteEntity(object)
         end
     end
 end)
@@ -228,13 +234,11 @@ end)
 --         for i = 1, #Slots do
 --             local coord = Slots[i]
 --             if coord.Coord then
---                 -- DrawText3D(coord.Coord.x, coord.Coord.y, coord.Coord.z + ((i * 4) / 100), tostring(coord.prop))
 --                 DrawText3D(coord.Coord.x, coord.Coord.y, coord.Coord.z, tostring(i))
 --             else
 --                 local offset = 0.0
 --                 for j, coord2 in ipairs(coord) do
 --                     -- local coord2 = coord[1]
---                     -- DrawText3D(coord2.Coord.x, coord2.Coord.y, coord2.Coord.z + ((i * 4) / 100), tostring(coord2.prop))
 --                     DrawText3D(coord2.Coord.x, coord2.Coord.y, coord2.Coord.z + offset, tostring(i .. "." .. j))
 --                     offset = offset + 0.15
 --                 end
@@ -243,27 +247,19 @@ end)
 --     end
 -- end)
 
-AddEventHandler("onResourceStop", function(resource)
-    if resource == GetCurrentResourceName() then
-        for k, object in ipairs(objects) do
-            DeleteEntity(object)
-        end
-    end
-end)
+-- function DrawText3D(x, y, z, text, size, r, g, b)
+--     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
-function DrawText3D(x, y, z, text, size, r, g, b)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+--     if onScreen then
+--         SetTextScale(0.35, size or 0.35)
+--         SetTextFont(0)
+--         SetTextProportional(1)
+--         SetTextColour(r or 255, g or 255, b or 255, 215)
+--         SetTextEntry("STRING")
+--         AddTextComponentString(text)
+--         SetTextCentre(1)
+--         SetTextOutline()
 
-    if onScreen then
-        SetTextScale(0.35, size or 0.35)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(r or 255, g or 255, b or 255, 215)
-        SetTextEntry("STRING")
-        AddTextComponentString(text)
-        SetTextCentre(1)
-        SetTextOutline()
-
-        EndTextCommandDisplayText(_x, _y)
-    end
-end
+--         EndTextCommandDisplayText(_x, _y)
+--     end
+-- end
