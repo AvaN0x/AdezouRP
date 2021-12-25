@@ -61,7 +61,7 @@
         "oneAnswer": true
     },
     {
-        "question": "Le feux est rouge, que faite-vous ?",
+        "question": "Le feu est rouge, que faites-vous ?",
         "answers": [
             {
                 "label": "Vous ralentissez"
@@ -102,7 +102,7 @@
         "oneAnswer": true
     },
     {
-        "question": "Un véhicule est accidenté et son conducteur également, que faite vous ?",
+        "question": "Un véhicule est accidenté et son conducteur blessé, que faites-vous ?",
         "answers": [
             {
                 "label": "Vous vous arrêtez pour voir si tout va bien",
@@ -121,7 +121,7 @@
         ]
     },
     {
-        "question": "Vous roulez en campagne, un animal traverse, que faite-vous ?",
+        "question": "Vous roulez en campagne, un animal traverse, que faites-vous ?",
         "answers": [
             {
                 "label": "Vous le laissez passer",
