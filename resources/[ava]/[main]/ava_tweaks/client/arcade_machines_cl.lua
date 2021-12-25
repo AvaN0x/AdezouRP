@@ -31,12 +31,12 @@ local Slots = {
     [6] = {Coord = vector3(2730.043, -375.461, -50), Heading = 90},
     [7] = {Coord = vector3(2730.144, -378.494, -50), Heading = 90},
     [8] = {
+        {Coord = vector3(2730.144, -377.562, -50), Heading = 90},
         {Coord = vector3(2730.094, -377.572, -50), Heading = 90}, -- ch_prop_arcade_invade_01a
         {Coord = vector3(2730.474, -377.572, -50), Heading = 90}, -- ch_prop_arcade_gun_bird_01a, ch_prop_arcade_degenatron_01a
         {Coord = vector3(2730.444, -377.692, -50), Heading = 90}, -- ch_prop_arcade_race_car_01a, ch_prop_arcade_race_car_01b, ch_prop_arcade_race_truck_01a
         {Coord = vector3(2730.404, -377.572, -50), Heading = 90}, -- ch_prop_arcade_street_01d
         {Coord = vector3(2730.404, -377.572, -49.99), Heading = 90}, -- ch_prop_arcade_penetrator_01a
-        {Coord = vector3(2730.144, -377.562, -50), Heading = 90},
     },
 
     -- In front of the entrance
@@ -151,10 +151,6 @@ local props = {
 
     -- Arcade machines
     "ch_prop_arcade_space_01a",
-    "ch_prop_arcade_gun_01a",
-    "ch_prop_arcade_race_02a",
-    "ch_prop_arcade_race_01a",
-    "ch_prop_arcade_race_01b",
     "ch_prop_arcade_wizard_01a",
     "ch_prop_arcade_degenatron_01a",
     "ch_prop_arcade_monkey_01a",
@@ -165,9 +161,12 @@ local props = {
     "ch_prop_arcade_street_01c",
     "ch_prop_arcade_street_01d",
     "sum_prop_arcade_qub3d_01a",
-    "tr_prop_tr_camhedz_01a",
-    "ch_prop_arcade_love_01a",
-    "ch_prop_arcade_fortune_01a",
+    -- "ch_prop_arcade_gun_01a",
+    -- "ch_prop_arcade_race_02a",
+    -- "ch_prop_arcade_race_01a",
+    -- "tr_prop_tr_camhedz_01a",
+    -- "ch_prop_arcade_love_01a",
+    -- "ch_prop_arcade_fortune_01a",
 
     -- Scanners
     -- "ch_prop_fingerprint_scanner_01a",
@@ -198,21 +197,26 @@ local wideProps = {
 
 local objects = {}
 
+local function spawnProp(hash, x, y, z, h)
+    local object = CreateObjectNoOffset(hash, x + 0.0, y + 0.0, z + 0.0, false, true, false)
+    SetEntityHeading(object, h + 0.0)
+    FreezeEntityPosition(object, true)
+    table.insert(objects, object)
+end
+
 Citizen.CreateThread(function()
+    spawnProp(GetHashKey("ch_prop_arcade_fortune_01a"), 2728.25, -372.42, -48.4, 90.0)
+
     for index, coord in ipairs(Slots) do
         local prop = props[math.random(1, #props)]
         if coord.Coord then
             coord.prop = prop
-            local object = CreateObjectNoOffset(GetHashKey(prop), coord.Coord.x + 0.0, coord.Coord.y + 0.0, coord.Coord.z + 0.0, true, true, false)
-            SetEntityHeading(object, coord.Heading + 0.0)
-            table.insert(objects, object)
+            spawnProp(GetHashKey(prop), coord.Coord.x, coord.Coord.y, coord.Coord.z, coord.Heading)
         else
             -- for _, coord2 in ipairs(coord) do
             local coord2 = coord[1]
             coord2.prop = prop
-            local object = CreateObjectNoOffset(GetHashKey(prop), coord2.Coord.x + 0.0, coord2.Coord.y + 0.0, coord2.Coord.z + 0.0, true, true, false)
-            SetEntityHeading(object, coord2.Heading + 0.0)
-            table.insert(objects, object)
+            spawnProp(GetHashKey(prop), coord2.Coord.x, coord2.Coord.y, coord2.Coord.z, coord2.Heading)
             -- end
         end
     end
