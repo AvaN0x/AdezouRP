@@ -18,5 +18,8 @@
     "validate_answer": "Valider",
     "validate_answer_subtile": "Valider votre réponse",
     "traffic_laws_succeeded": "Vous ~g~avez obtenu~s~ votre code de la route avec un score de %s/%s.",
-    "traffic_laws_failed": "Vous ~r~n'avez pas obtenu~s~ votre code de la route, votre score est de %s/%s. Vous pouvez toujours réessayer."
+    "traffic_laws_failed": "Vous ~r~n'avez pas obtenu~s~ votre code de la route, votre score est de %s/%s. Vous pouvez toujours réessayer.",
+    "drive_to_the_road_on_right": "Rejoignez la route et passez à droite. Pensez à mettre votre ceinture de sécurité.",
+    "you_are_not_inside_the_vehicle": "~r~Vous n'êtes pas dans le véhicule d'auto-école, ne montez pas dans un autre véhicule !~s~",
+    "you_gave_up_the_test": "~r~Vous avez abandonné votre test de conduite !~s~"
 }
