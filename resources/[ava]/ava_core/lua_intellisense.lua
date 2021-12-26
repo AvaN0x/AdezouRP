@@ -86,4 +86,5 @@ exports.ava_core.SendWebhookMessage = AVA.Utils.SendWebhookMessage
 exports.ava_core.SendWebhookEmbedMessage = AVA.Utils.SendWebhookEmbedMessage
 exports.ava_core.TriggerClientWithAceEvent = AVA.Utils.TriggerClientWithAceEvent
 
+exports.ava_core.GetLicenseMaxPoints = AVA.GetLicenseMaxPoints
 -- #endregion
