@@ -77,8 +77,8 @@ function startDrivingTest()
             local newHealth = GetEntityHealth(testVehicle)
             if newHealth < testVehicleHealth then
                 countErrors = countErrors + 1
-                showAndHideNotification(GetString("you_damaged_the_vehicle", tostring(countErrors)), nil, "CHAR_BEVERLY", GetString("driving_school"),
-                    GetString("driving_test"))
+                showAndHideNotification(GetString("you_damaged_the_vehicle", tostring(countErrors), AVAConfig.DriverTest.MaxNumberOfErrorsAccepted), nil,
+                    "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
             end
             testVehicleHealth = newHealth
 
@@ -90,8 +90,8 @@ function startDrivingTest()
             if cannotHaveSpeedError == 0 and AVAConfig.DriverTest.Speeds[currentSpeedType] and math.ceil(GetEntitySpeed(testVehicle) * 3.6)
                 > (AVAConfig.DriverTest.Speeds[currentSpeedType] + 3) then
                 countErrors = countErrors + 1
-                showAndHideNotification(GetString("you_are_driving_too_fast", AVAConfig.DriverTest.Speeds[currentSpeedType], tostring(countErrors)), nil,
-                    "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
+                showAndHideNotification(GetString("you_are_driving_too_fast", AVAConfig.DriverTest.Speeds[currentSpeedType], tostring(countErrors),
+                    AVAConfig.DriverTest.MaxNumberOfErrorsAccepted), nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
                 cannotHaveSpeedError = 7 -- cannotSpeedError * 250 msg
             end
 
@@ -99,6 +99,19 @@ function startDrivingTest()
             local checkpointCoords = AVAConfig.DriverTest.Checkpoints[i].Coord
             if isInsideTestVehicle and #(GetEntityCoords(testVehicle) - checkpointCoords) < 8.0 then
                 PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", false)
+                local checkpointData<const> = AVAConfig.DriverTest.Checkpoints[i]
+
+                -- Change speed limit type
+                if checkpointData.ChangeSpeedType then
+                    currentSpeedType = checkpointData.ChangeSpeedType
+                    exports.ava_core:ShowNotification(GetString("new_driving_speed_limit_" .. currentSpeedType, AVAConfig.DriverTest.Speeds[currentSpeedType]),
+                        nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
+                end
+
+                if checkpointData.MissionText then
+                    DrawMissionText(checkpointData.MissionText, 5000)
+                end
+
                 i = i + 1
                 if i > #AVAConfig.DriverTest.Checkpoints then
                     playerIsPassingTest = false
@@ -195,13 +208,6 @@ function SetCheckpointAtIndex(i)
     SetCheckpointRgba2(currentCheckpoint, AVAConfig.DriverTest.CheckpointIconColor.r, AVAConfig.DriverTest.CheckpointIconColor.g,
         AVAConfig.DriverTest.CheckpointIconColor.b, 200)
     SetCheckpointCylinderHeight(currentCheckpoint, 1.0, 1.0, 3.0)
-
-    -- Change speed limit type
-    if checkpointData.ChangeSpeedType then
-        currentSpeedType = checkpointData.ChangeSpeedType
-        exports.ava_core:ShowNotification(GetString("new_driving_speed_limit_" .. currentSpeedType, AVAConfig.DriverTest.Speeds[currentSpeedType]), nil,
-            "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
-    end
 end
 
 local function DrawPlayerIsNotInsideVehicle()
