@@ -31,10 +31,12 @@ function PoolWallet()
         if playerLicenses then
             for i = 1, #playerLicenses do
                 local license = playerLicenses[i]
-                Items:AddList(GetString("wallet_card_" .. license.name), CardList, CardIndex, GetString("wallet_card_" .. license.name .. "_subtitle"), nil,
-                    function(Index, onSelected, onListChange)
-                        ListCardHandler(Index, onSelected, onListChange, license.name, license)
-                    end)
+                if license.name ~= "trafficLaws" then
+                    Items:AddList(GetString("wallet_card_" .. license.name), CardList, CardIndex, GetString("wallet_card_" .. license.name .. "_subtitle"), nil,
+                        function(Index, onSelected, onListChange)
+                            ListCardHandler(Index, onSelected, onListChange, license.name, license)
+                        end)
+                end
             end
         end
     end)
