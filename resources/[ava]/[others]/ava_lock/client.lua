@@ -69,7 +69,7 @@ function TableHasCondition(table, condition)
 end
 
 function ShowHelpNotification(text)
-    AddTextEntry("AVA_NOTF_TE", text)
-    BeginTextCommandDisplayHelp("AVA_NOTF_TE")
+    AddTextEntry("AVA_NOTF_HELP", text)
+    BeginTextCommandDisplayHelp("AVA_NOTF_HELP")
     EndTextCommandDisplayHelp(0, false, true, -1)
 end
