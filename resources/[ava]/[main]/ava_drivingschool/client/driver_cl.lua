@@ -50,7 +50,6 @@ function spawnDrivingCar()
 
         Wait(1500)
 
-        print("Vehicle back to normal")
         SetVehicleDoorsLocked(testVehicle, 0)
 
         NetworkSetPlayerIsPassive(false)
@@ -62,13 +61,19 @@ end
 
 function startDrivingTest()
     playerIsPassingTest = true
+    countErrors = 0
+
     Citizen.CreateThread(function()
         spawnDrivingCar()
         currentSpeedType = AVAConfig.DriverTest.DefaultSpeedType
         exports.ava_core:ShowNotification(GetString("new_driving_speed_limit_" .. currentSpeedType, AVAConfig.DriverTest.Speeds[currentSpeedType]), nil,
             "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
 
+        local cannotHaveSpeedError = 0 -- Will go down to zero if above zero
+        local i = 1
+        SetCheckpointAtIndex(i)
         while playerIsPassingTest and countErrors >= 0 do
+            -- Health error handling
             local newHealth = GetEntityHealth(testVehicle)
             if newHealth < testVehicleHealth then
                 countErrors = countErrors + 1
@@ -77,18 +82,34 @@ function startDrivingTest()
             end
             testVehicleHealth = newHealth
 
-            if AVAConfig.DriverTest.Speeds[currentSpeedType] and math.ceil(GetEntitySpeed(testVehicle) * 3.6)
+            -- Speed error handling
+            if cannotHaveSpeedError > 0 then
+                cannotHaveSpeedError = cannotHaveSpeedError - 1
+            end
+            -- If speed is above speed limit + 3
+            if cannotHaveSpeedError == 0 and AVAConfig.DriverTest.Speeds[currentSpeedType] and math.ceil(GetEntitySpeed(testVehicle) * 3.6)
                 > (AVAConfig.DriverTest.Speeds[currentSpeedType] + 3) then
                 countErrors = countErrors + 1
                 showAndHideNotification(GetString("you_are_driving_too_fast", AVAConfig.DriverTest.Speeds[currentSpeedType], tostring(countErrors)), nil,
                     "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
-                Wait(1000)
+                cannotHaveSpeedError = 7 -- cannotSpeedError * 250 msg
             end
 
-            -- TODO checkpoints things
-            Wait(500)
+            -- Checkpoints handling
+            local checkpointCoords = AVAConfig.DriverTest.Checkpoints[i].Coord
+            if isInsideTestVehicle and #(GetEntityCoords(testVehicle) - checkpointCoords) < 8.0 then
+                PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", false)
+                i = i + 1
+                if i > #AVAConfig.DriverTest.Checkpoints then
+                    playerIsPassingTest = false
+                    break
+                end
+                SetCheckpointAtIndex(i)
+            end
+            Wait(250)
         end
 
+        SetCheckpointAtIndex(#AVAConfig.DriverTest.Checkpoints + 1)
         if countErrors == -1 then
             -- FAILED
             exports.ava_core:ShowNotification(GetString("driving_test_failed_gaveup_or_destroyed"), nil, "CHAR_BEVERLY", GetString("driving_school"),
@@ -97,9 +118,90 @@ function startDrivingTest()
             TriggerServerEvent("ava_drivingschool:client:drivingTestScore", countErrors)
         end
 
+        if testVehicle then
+            exports.ava_core:DeleteVehicle(testVehicle)
+        end
+
         testVehicle = 0
         testVehicleHealth = nil
     end)
+end
+
+local currentCheckpoint = 0
+local currentBlip = 0
+local nextBlip = 0
+local function createNextBlip(x, y, z)
+    local blip = AddBlipForCoord(x, y, z)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString(GetString("driving_test"))
+    EndTextCommandSetBlipName(blip)
+    SetBlipSprite(blip, 1)
+    SetBlipColour(blip, 5)
+    SetBlipScale(blip, 0.4)
+    return blip
+end
+
+function SetCheckpointAtIndex(i)
+    if currentCheckpoint then
+        DeleteCheckpoint(currentCheckpoint)
+        currentCheckpoint = 0
+    end
+
+    -- One checkpoint too much, used to delete checkpoint and blip
+    if i > #AVAConfig.DriverTest.Checkpoints then
+        if currentBlip then
+            RemoveBlip(currentBlip)
+            currentBlip = 0
+        end
+        if nextBlip then
+            RemoveBlip(nextBlip)
+            nextBlip = 0
+        end
+        return
+    end
+
+    local checkpointData<const> = AVAConfig.DriverTest.Checkpoints[i]
+    -- Blips logic
+    -- If first checkpoint, we need to create the first blip as nextBlip for it to become the currentBlip
+    if i == 1 then
+        nextBlip = createNextBlip(checkpointData.Coord.x, checkpointData.Coord.y, checkpointData.Coord.z)
+    end
+
+    -- Next blip will become current blip
+    if currentBlip then
+        RemoveBlip(currentBlip)
+        currentBlip = 0
+    end
+    currentBlip = nextBlip
+    nextBlip = 0
+    SetBlipScale(currentBlip, 0.8)
+    SetBlipRoute(currentBlip, true)
+
+    -- If is last checkpoint
+    if i == #AVAConfig.DriverTest.Checkpoints then
+        currentCheckpoint = CreateCheckpoint(4, checkpointData.Coord.x, checkpointData.Coord.y, checkpointData.Coord.z, 0.0, 0.0, 0.0, 4.0,
+            AVAConfig.DriverTest.CheckpointColor.r, AVAConfig.DriverTest.CheckpointColor.g, AVAConfig.DriverTest.CheckpointColor.b, 180, 0)
+
+    else
+        local nextCheckpointData<const> = AVAConfig.DriverTest.Checkpoints[i + 1]
+        currentCheckpoint = CreateCheckpoint(0, checkpointData.Coord.x, checkpointData.Coord.y, checkpointData.Coord.z, nextCheckpointData.Coord.x,
+            nextCheckpointData.Coord.y, nextCheckpointData.Coord.z, 4.0, AVAConfig.DriverTest.CheckpointColor.r, AVAConfig.DriverTest.CheckpointColor.g,
+            AVAConfig.DriverTest.CheckpointColor.b, 180, 0)
+
+        -- Create a new next blip
+        nextBlip = createNextBlip(nextCheckpointData.Coord.x, nextCheckpointData.Coord.y, nextCheckpointData.Coord.z)
+
+    end
+    SetCheckpointRgba2(currentCheckpoint, AVAConfig.DriverTest.CheckpointIconColor.r, AVAConfig.DriverTest.CheckpointIconColor.g,
+        AVAConfig.DriverTest.CheckpointIconColor.b, 200)
+    SetCheckpointCylinderHeight(currentCheckpoint, 1.0, 1.0, 3.0)
+
+    -- Change speed limit type
+    if checkpointData.ChangeSpeedType then
+        currentSpeedType = checkpointData.ChangeSpeedType
+        exports.ava_core:ShowNotification(GetString("new_driving_speed_limit_" .. currentSpeedType, AVAConfig.DriverTest.Speeds[currentSpeedType]), nil,
+            "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
+    end
 end
 
 local function DrawPlayerIsNotInsideVehicle()
@@ -162,8 +264,7 @@ AddEventHandler("onResourceStop", function(resource)
             SetLocalPlayerAsGhost(false, false)
         end
         if testVehicle ~= 0 then
-            SetEntityAsMissionEntity(testVehicle)
-            DeleteVehicle(testVehicle)
+            exports.ava_core:DeleteVehicle(testVehicle)
             testVehicle = 0
             print("Deleted test vehicle")
 
@@ -189,3 +290,4 @@ function showAndHideNotification(...)
     end
     lastNotification = exports.ava_core:ShowNotification(...)
 end
+

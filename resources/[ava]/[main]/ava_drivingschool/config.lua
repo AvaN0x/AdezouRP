@@ -23,8 +23,27 @@ AVAConfig.Prices = {trafficLaws = 250, driver = 500}
 AVAConfig.TrafficLawsQuestions = json.decode(LoadResourceFile(GetCurrentResourceName(), "questions.json") or "{}") or {}
 
 AVAConfig.DriverTest = {
-    vehicleHash = GetHashKey("premier"),
+    vehicleHash = GetHashKey("ignus"),
     vehicleCoord = vector4(223.33, -1403.24, 29.93, 138.0),
     Speeds = {residence = 50, city = 90, freeway = 130},
+    CheckpointColor = {r = 254, g = 235, b = 169},
+    CheckpointIconColor = {r = 255, g = 133, b = 85},
+    MaxNumberOfErrorsAccepted = 5,
     DefaultSpeedType = "city",
+    Checkpoints = {
+        {Coord = vector3(212.51, -1418.44, 28.36)},
+        {
+            Coord = vector3(175.81, -1400.10, 28.36),
+            -- ChangeSpeedType = "residence"
+        },
+        {
+            Coord = vector3(110.45, -1364.71, 28.36),
+            -- ChangeSpeedType = "freeway"
+        },
+        {
+            Coord = vector3(-75.96, -1364.45, 28.44),
+            -- ChangeSpeedType = "city"
+        },
+        {Coord = vector3(-268.73, -1419.64, 30.25)},
+    },
 }

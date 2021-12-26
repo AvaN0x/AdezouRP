@@ -21,7 +21,7 @@ end)
 
 RegisterNetEvent("ava_drivingschool:client:passedTrafficLawsTest", function(score)
     local src = source
-    local aPlayer = exports.ava_core:GetPlayer(source)
+    local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then
         return
     end
@@ -30,23 +30,35 @@ RegisterNetEvent("ava_drivingschool:client:passedTrafficLawsTest", function(scor
 
     -- Put the score up to a hundred
     if score >= math.floor(scoreMax * 0.70) and score <= scoreMax then
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("traffic_laws_succeeded", math.ceil(score / scoreMax * 100), 100))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("traffic_laws_succeeded", math.ceil(score / scoreMax * 100), 100), nil,
+            "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
 
         if not aPlayer.hasLicense("trafficLaws") then
             aPlayer.addLicense("trafficLaws")
         end
     else
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("traffic_laws_failed", math.ceil(score / scoreMax * 100), 100))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("traffic_laws_failed", math.ceil(score / scoreMax * 100), 100), nil,
+            "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
     end
 end)
 
-RegisterNetEvent("ava_drivingschool:client:drivingTestScore", function(score)
-    local aPlayer = exports.ava_core:GetPlayer(source)
+RegisterNetEvent("ava_drivingschool:client:drivingTestScore", function(countErrors)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then
         return
     end
 
-    if not aPlayer.hasLicense("driver") then
-        aPlayer.addLicense("driver")
+    if countErrors <= AVAConfig.DriverTest.MaxNumberOfErrorsAccepted then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("driver_succeeded", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted),
+            nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
+
+        if not aPlayer.hasLicense("driver") then
+            aPlayer.addLicense("driver")
+        end
+    else
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("driver_failed", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted),
+            nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
+
     end
 end)
