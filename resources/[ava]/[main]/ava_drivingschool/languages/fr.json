@@ -29,6 +29,7 @@
     "new_driving_speed_limit_residence": "Vous devez rouler à ~y~%s~s~ km/h dans les quartiers résidentiel.",
     "new_driving_speed_limit_city": "Vous devez rouler à ~y~%s~s~ km/h en ville.",
     "new_driving_speed_limit_freeway": "Vous devez rouler à ~y~%s~s~ km/h sur la freeway.",
+    "driver_succeeded_added_points": "Tous vos points de permis de conduire vous ont été ~g~redonné~s~. Vous avez fait ~y~%s ~s~erreurs (maximum ~y~%s~s~).",
     "driver_succeeded": "Vous ~g~avez obtenu~s~ votre permis de conduire avec ~y~%s ~s~erreurs (maximum ~y~%s~s~).",
     "driver_failed": "Vous ~r~n'avez pas obtenu~s~ votre permis de conduire avec ~r~%s ~s~ erreurs (maximum ~r~%s~s~). Vous pouvez toujours réessayer.",
     "drive_to_the_road_on_right": "Rejoignez la route et passez à droite. Pensez à mettre votre ceinture de sécurité.",

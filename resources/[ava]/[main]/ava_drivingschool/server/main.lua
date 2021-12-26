@@ -50,15 +50,30 @@ RegisterNetEvent("ava_drivingschool:client:drivingTestScore", function(countErro
     end
 
     if countErrors <= AVAConfig.DriverTest.MaxNumberOfErrorsAccepted then
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("driver_succeeded", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted),
-            nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
 
-        if not aPlayer.hasLicense("driver") then
+        local hasLicense, license = aPlayer.hasLicense("driver")
+        if hasLicense then
+            local maxPoints<const> = exports.ava_core:GetLicenseMaxPoints("driver")
+            if license.points < maxPoints then
+                aPlayer.setLicensePoints("driver", maxPoints)
+                TriggerClientEvent("ava_core:client:ShowNotification", src,
+                    GetString("driver_succeeded_added_points", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted), nil, "CHAR_BEVERLY",
+                    GetString("driving_school"), GetString("driving_test"))
+            end
+        else
             aPlayer.addLicense("driver")
+            TriggerClientEvent("ava_core:client:ShowNotification", src,
+                GetString("driver_succeeded", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted), nil, "CHAR_BEVERLY", GetString("driving_school"),
+                GetString("driving_test"))
         end
     else
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("driver_failed", countErrors, AVAConfig.DriverTest.MaxNumberOfErrorsAccepted),
             nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
 
     end
+end)
+
+RegisterNetEvent("ava_drivingschool:server:setDrivingTestVehicle", function(vehNet)
+    local entityState = Entity(NetworkGetEntityFromNetworkId(vehNet))
+    entityState.state:set("drivingTestVehicle", true, true)
 end)

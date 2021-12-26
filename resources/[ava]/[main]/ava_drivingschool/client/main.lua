@@ -134,22 +134,27 @@ function OpenDrivingSchoolMenu()
     local playerLicenses = exports.ava_core:TriggerServerCallback("ava_core:server:getPlayerLicenses") or {}
     local trafficLawsLicense = nil
     local driverLicense = nil
+    local driverHasEnoughPoints = nil
 
     for i = 1, #playerLicenses do
         if playerLicenses[i].name == "trafficLaws" then
             trafficLawsLicense = playerLicenses[i]
         elseif playerLicenses[i].name == "driver" then
             driverLicense = playerLicenses[i]
+            local maxPoints<const> = exports.ava_core:TriggerServerCallback("ava_core:server:getLicenseMaxPoints", "driver")
+            if maxPoints and driverLicense.points >= maxPoints then
+                driverHasEnoughPoints = true
+            end
         end
     end
 
-    if trafficLawsLicense and driverLicense then
+    if trafficLawsLicense and driverHasEnoughPoints and driverLicense then
         exports.ava_core:ShowNotification(GetString("driving_school_already_has_licenses"))
         CurrentActionEnabled = true
         return
     end
 
-    local DriverLicenseDisabled = not not driverLicense or not trafficLawsLicense
+    local DriverLicenseDisabled = (driverLicense and driverHasEnoughPoints) or not trafficLawsLicense
 
     RageUI.CloseAll()
     RageUI.OpenTempMenu(GetString("driving_school"), function(Items)
