@@ -40,7 +40,7 @@ RegisterNetEvent("ava_drivingschool:client:passedTrafficLawsTest", function(scor
     end
 end)
 
-RegisterNetEvent("ava_drivingschool:client:passedDrivingTest", function(score)
+RegisterNetEvent("ava_drivingschool:client:drivingTestScore", function(score)
     local aPlayer = exports.ava_core:GetPlayer(source)
     if not aPlayer then
         return

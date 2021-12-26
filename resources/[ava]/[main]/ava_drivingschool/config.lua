@@ -23,7 +23,8 @@ AVAConfig.Prices = {trafficLaws = 250, driver = 500}
 AVAConfig.TrafficLawsQuestions = json.decode(LoadResourceFile(GetCurrentResourceName(), "questions.json") or "{}") or {}
 
 AVAConfig.DriverTest = {
-    -- vehicleHash = GetHashKey("premier"), --
-    vehicleHash = GetHashKey("ignus"), --
+    vehicleHash = GetHashKey("premier"),
     vehicleCoord = vector4(223.33, -1403.24, 29.93, 138.0),
+    Speeds = {residence = 50, city = 90, freeway = 130},
+    DefaultSpeedType = "city",
 }
