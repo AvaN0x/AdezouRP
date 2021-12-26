@@ -16,6 +16,11 @@ function TrafficLawsLicense()
     NextQuestion()
 
     RageUI.OpenTempMenu(GetString("driving_school"), function(Items, Menu)
+        DisableControlAction(0, 32, true)
+        DisableControlAction(0, 33, true)
+        DisableControlAction(0, 34, true)
+        DisableControlAction(0, 35, true)
+
         local question = AVAConfig.TrafficLawsQuestions[CurrentQuestionId]
         Items:AddButton(GetString("question", CurrentQuestionId, #AVAConfig.TrafficLawsQuestions), question.question, {}, nil)
 
@@ -24,7 +29,7 @@ function TrafficLawsLicense()
 
             for i = 1, #question.answers do
                 local answer = question.answers[i]
-                Items:AddButton(GetString("answer_number", string.char(string.byte("A") + i - 1)),
+                Items:AddButton(GetString("answer_number", string.char(string.byte("A") + i - 1) .. (answer.right and " right" or "")),
                     GetString("answer_subtitle", question.question, answer.label), {}, function(onSelected)
                         if onSelected then
                             -- Check answer
@@ -40,8 +45,8 @@ function TrafficLawsLicense()
 
             for i = 1, #question.answers do
                 local answer = question.answers[i]
-                Items:CheckBox(GetString("answer_number", string.char(string.byte("A") + i - 1)), GetString("answer_subtitle", question.question, answer.label),
-                    checkedAnswers[i], {}, function(onSelected, IsChecked)
+                Items:CheckBox(GetString("answer_number", string.char(string.byte("A") + i - 1) .. (answer.right and " right" or "")),
+                    GetString("answer_subtitle", question.question, answer.label), checkedAnswers[i], {}, function(onSelected, IsChecked)
                         if (onSelected) then
                             checkedAnswers[i] = not checkedAnswers[i]
                             canValidate = true
@@ -57,10 +62,14 @@ function TrafficLawsLicense()
             }, function(onSelected)
                 if onSelected then
                     -- Check answer
-                    for i, value in pairs(checkedAnswers) do
-                        if value and question.answers[i].right then
-                            CurrentScore = CurrentScore + 1
+                    local isRight = true
+                    for i = 1, #question.answers do
+                        if (question.answers[i].right and not checkedAnswers[i]) or (not question.answers[i].right and checkedAnswers[i]) then
+                            isRight = false
                         end
+                    end
+                    if isRight then
+                        CurrentScore = CurrentScore + 1
                     end
                     checkedAnswers = {}
                     canValidate = false

@@ -26,22 +26,10 @@ RegisterNetEvent("ava_drivingschool:client:passedTrafficLawsTest", function(scor
         return
     end
 
-    local scoreMax = 0
-    for i = 1, #AVAConfig.TrafficLawsQuestions do
-        local question<const> = AVAConfig.TrafficLawsQuestions[i]
-        if question.oneAnswer then
-            scoreMax = scoreMax + 1
-        elseif question.answers then
-            for j = 1, #question.answers do
-                if question.answers[j].right then
-                    scoreMax = scoreMax + 1
-                end
-            end
-        end
-    end
+    local scoreMax<const> = #AVAConfig.TrafficLawsQuestions
 
     -- Put the score up to a hundred
-    if score > math.floor(scoreMax * 0.8) then
+    if score >= math.floor(scoreMax * 0.70) and score <= scoreMax then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("traffic_laws_succeeded", math.ceil(score / scoreMax * 100), 100))
 
         if not aPlayer.hasLicense("trafficLaws") then
