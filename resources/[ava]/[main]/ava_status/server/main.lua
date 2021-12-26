@@ -10,7 +10,7 @@ RegisterNetEvent("ava_status:server:update", function(data)
     end
 end)
 
-exports.ava_core:RegisterCommand("heal", "admin", function(source, args)
+exports.ava_core:RegisterCommand({"heal", "h"}, "admin", function(source, args)
     local id = (type(args[1]) == "string" and args[1] ~= "0") and tonumber(args[1]) or source
 
     for name, cfgStatus in pairs(AVAConfig.Status) do
