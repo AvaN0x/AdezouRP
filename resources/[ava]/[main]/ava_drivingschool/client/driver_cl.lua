@@ -92,7 +92,7 @@ function startDrivingTest()
                 countErrors = countErrors + 1
                 showAndHideNotification(GetString("you_are_driving_too_fast", AVAConfig.DriverTest.Speeds[currentSpeedType], tostring(countErrors),
                     AVAConfig.DriverTest.MaxNumberOfErrorsAccepted), nil, "CHAR_BEVERLY", GetString("driving_school"), GetString("driving_test"))
-                cannotHaveSpeedError = 7 -- cannotSpeedError * 250 msg
+                cannotHaveSpeedError = 7 -- cannotSpeedError * 250 ms
             end
 
             -- Checkpoints handling
@@ -297,3 +297,20 @@ function showAndHideNotification(...)
     lastNotification = exports.ava_core:ShowNotification(...)
 end
 
+Citizen.CreateThread(function()
+    Wait(1000)
+    for i = 1, #AVAConfig.DriverTest.Checkpoints do
+        local blip = AddBlipForCoord(AVAConfig.DriverTest.Checkpoints[i].Coord.x, AVAConfig.DriverTest.Checkpoints[i].Coord.y,
+            AVAConfig.DriverTest.Checkpoints[i].Coord.z)
+        SetBlipColour(blip, AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType and 48 or AVAConfig.DriverTest.Checkpoints[i].MissionText and 1 or 5)
+        SetBlipScale(blip, 0.6)
+
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType and tostring(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType)
+                                   or AVAConfig.DriverTest.Checkpoints[i].MissionText and tostring(AVAConfig.DriverTest.Checkpoints[i].MissionText)
+                                   or tostring(i))
+        EndTextCommandSetBlipName(blip)
+
+    end
+
+end)
