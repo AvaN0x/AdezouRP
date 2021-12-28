@@ -1,4 +1,5 @@
 {
+    "press_open_menu": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu",
     "press_buy": "Appuyez sur ~INPUT_CONTEXT~ pour acheter des produits",
     "store_item_right_label": "%s%s $~s~",
     "how_much_max": "Combien voulez-vous en acheter ? (Max : %s)",

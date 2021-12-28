@@ -6,9 +6,9 @@ local GUI = {Time = 0}
 
 local HasAlreadyEnteredMarker = false
 local LastZone = nil
-local CurrentZoneName = nil
+CurrentZoneName = nil
 local CurrentHelpText = nil
-local CurrentActionEnabled = false
+CurrentActionEnabled = false
 
 local mainBlips = {}
 
@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
             SetBlipSprite(blip, v.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale(blip, v.Blip.Scale)
-            SetBlipColour(blip, v.Blip.Colour)
+            SetBlipColour(blip, v.Blip.Color)
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
@@ -158,6 +158,8 @@ Citizen.CreateThread(function()
 
                 if store.Items then
                     BuyZone()
+                elseif store.SkinElements then
+                    ClothesStore()
                 elseif store.Carwash then
                     CarWash()
                 end

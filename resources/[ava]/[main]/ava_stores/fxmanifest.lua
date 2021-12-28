@@ -29,6 +29,7 @@ client_scripts {
 
     "config.lua",
     "client/main.lua",
+    "client/clothes_stores.lua",
 }
 
 server_scripts {"config.lua", "server/main.lua"}

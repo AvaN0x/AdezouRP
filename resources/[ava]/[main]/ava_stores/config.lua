@@ -8,7 +8,7 @@ Config.DrawDistance = 15.0
 Config.Stores = {
     TwentyFourSeven = {
         Title = {textureName = "shopui_title_conveniencestore", textureDirectory = "shopui_title_conveniencestore"},
-        Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
+        Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
         Coords = {
             vector3(373.87, 325.87, 102.59), -- Clinton Ave
             vector3(2557.45, 382.28, 107.64), -- Route 15
@@ -40,7 +40,7 @@ Config.Stores = {
 
     RobsLiquor = {
         Title = {textureName = "shopui_title_liquorstore2", textureDirectory = "shopui_title_liquorstore2"},
-        Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
+        Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
         Coords = {
             vector3(1135.83, -982.10, 45.44), -- Vespucci Blvd
             vector3(-1222.91, -906.98, 11.34), -- San Andreas Ave
@@ -69,7 +69,7 @@ Config.Stores = {
 
     LTDgasoline = {
         Title = {textureName = "shopui_title_gasstation", textureDirectory = "shopui_title_gasstation"},
-        Blip = {Name = "Supérette", Sprite = 52, Colour = 4, Scale = 0.6},
+        Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
         Coords = {
             vector3(-48.05, -1756.84, 28.44), -- Grove Street
             vector3(1163.27, -323.11, 68.23), -- W Mirror Drive
@@ -97,7 +97,7 @@ Config.Stores = {
 
     Ammunation = {
         Title = {textureName = "shopui_title_gunclub", textureDirectory = "shopui_title_gunclub"},
-        Blip = {Sprite = 110, Colour = 1, Scale = 0.6},
+        Blip = {Sprite = 110, Color = 1, Scale = 0.6},
         Coords = {
             vector3(-662.31, -935.17, 20.85), -- Little Seoul
             vector3(1693.02, 3759.61, 33.73), -- Sandy Shores
@@ -129,7 +129,7 @@ Config.Stores = {
 
     ShootingAmmunation = {
         Title = {textureName = "shopui_title_gunclub", textureDirectory = "shopui_title_gunclub"},
-        Blip = {Sprite = 313, Colour = 1, Scale = 0.6},
+        Blip = {Sprite = 313, Color = 1, Scale = 0.6},
         Coords = {
             vector3(21.56, -1106.61, 28.82), -- Adam's Apple Blvd
             vector3(810.37, -2157.41, 28.64), -- Dry Dock Street
@@ -167,8 +167,154 @@ Config.Stores = {
         HelpText = GetString("press_buy"),
     },
 
+    -- Clothes stores
+    DiscountStore = {
+        Title = {textureName = "shopui_title_lowendfashion", textureDirectory = "shopui_title_lowendfashion"}, -- CHECKOUT! DISCOUNT STORE
+        Blip = {Sprite = 73, Color = 47, Scale = 0.8},
+        CanSave = true,
+        Coords = {
+            vector3(72.254, -1399.102, 28.396),
+            vector3(11.632, 6514.224, 30.897),
+            vector3(1696.291, 4829.312, 41.083),
+            vector3(1190.550, 2713.441, 37.242),
+            vector3(-1108.441, 2708.923, 18.127),
+        },
+        ClothesStore = true,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Magasin de vêtements",
+        HelpText = GetString("press_open_menu"),
+    },
+    Ponsonbys = {
+        Title = {textureName = "shopui_title_highendfashion", textureDirectory = "shopui_title_highendfashion"}, -- PONSONBYS
+        Blip = {Sprite = 73, Color = 47, Scale = 0.8},
+        CanSave = true,
+        Coords = {vector3(-703.776, -152.258, 36.435), vector3(-167.863, -298.969, 38.743), vector3(-1447.797, -242.461, 48.840)},
+        ClothesStore = true,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Magasin de vêtements",
+        HelpText = GetString("press_open_menu"),
+    },
+    Binco = {
+        Title = {textureName = "shopui_title_lowendfashion2", textureDirectory = "shopui_title_lowendfashion2"}, -- binco
+        Blip = {Sprite = 73, Color = 47, Scale = 0.8},
+        CanSave = true,
+        Coords = {vector3(428.694, -800.106, 28.511), vector3(-829.413, -1073.710, 10.348)},
+        ClothesStore = true,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Magasin de vêtements",
+        HelpText = GetString("press_open_menu"),
+    },
+    Suburban = {
+        Title = {textureName = "shopui_title_midfashion", textureDirectory = "shopui_title_midfashion"}, -- suburban
+        Blip = {Sprite = 73, Color = 47, Scale = 0.8},
+        CanSave = true,
+        Coords = {
+            vector3(123.646, -219.440, 53.577),
+            vector3(618.093, 2759.629, 41.108),
+            vector3(-1193.429, -772.262, 16.344),
+            vector3(-3172.496, 1048.133, 19.883),
+        },
+        ClothesStore = true,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Magasin de vêtements",
+        HelpText = GetString("press_open_menu"),
+    },
+
+    -- Barbershops
+    HairOnHawickBarber = {
+        Title = {textureName = "shopui_title_barber4", textureDirectory = "shopui_title_barber4"}, -- HAIR ON HAWICK TRADITIONAL BARBERS
+        Blip = {Sprite = 71, Color = 51, Scale = 0.8},
+        Coords = {vector3(-32.885, -152.319, 56.076)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Coiffeur",
+        HelpText = GetString("press_open_menu"),
+    },
+    BobMuletBarber = {
+        Title = {textureName = "shopui_title_highendsalon", textureDirectory = "shopui_title_highendsalon"}, -- bob mulét
+        Blip = {Sprite = 71, Color = 51, Scale = 0.8},
+        Coords = {vector3(-814.308, -183.823, 36.568)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Coiffeur",
+        HelpText = GetString("press_open_menu"),
+    },
+    HerrKutzBarber = {
+        Title = {textureName = "shopui_title_barber", textureDirectory = "shopui_title_barber"}, -- HERR KUTZ BARBER
+        Blip = {Sprite = 71, Color = 51, Scale = 0.8},
+        Coords = {vector3(136.826, -1708.373, 28.291), vector3(1212.840, -473.921, 65.450), vector3(-278.077, 6228.463, 30.695)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Coiffeur",
+        HelpText = GetString("press_open_menu"),
+    },
+    BeachComboverBarber = {
+        Title = {textureName = "shopui_title_barber2", textureDirectory = "shopui_title_barber2"}, -- BEACHCOMBOVER BARBERS
+        Blip = {Sprite = 71, Color = 51, Scale = 0.8},
+        Coords = {vector3(-1282.604, -1116.757, 5.990)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Coiffeur",
+        HelpText = GetString("press_open_menu"),
+    },
+    OSheasBarber = {
+        Title = {textureName = "shopui_title_barber3", textureDirectory = "shopui_title_barber3"}, -- O'SHEAS BARBERS
+        Blip = {Sprite = 71, Color = 51, Scale = 0.8},
+        Coords = {vector3(1931.513, 3729.671, 31.844)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Coiffeur",
+        HelpText = GetString("press_open_menu"),
+    },
+
+    MaskShop = {
+        Title = {textureName = "shopui_title_movie_masks", textureDirectory = "shopui_title_movie_masks"},
+        Blip = {Sprite = 671, Color = 31, Scale = 0.8},
+        Coords = {vector3(-1336.87, -1278.91, 3.88)},
+        ClothesStore = true,
+        -- CanSave = false,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 135, g = 0, b = 255},
+        Distance = 1.5,
+        Name = "Magasin de masques",
+        HelpText = GetString("press_open_menu"),
+    },
+
     Carwash_InnocenceBlvd = {
-        Blip = {Sprite = 100, Colour = 0, Scale = 0.6},
+        Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(29.06, -1391.93, 28.38),
         Carwash = {
             Particles = {
@@ -192,7 +338,7 @@ Config.Stores = {
     },
 
     Carwash_LittleSeoul = {
-        Blip = {Sprite = 100, Colour = 0, Scale = 0.6},
+        Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(-699.65, -933.13, 18.03),
         Carwash = {
             Particles = {
@@ -216,7 +362,7 @@ Config.Stores = {
     },
 
     Carwash_CarsonAve = {
-        Blip = {Sprite = 100, Colour = 0, Scale = 0.6},
+        Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(167.90, -1715.70, 28.31),
         Carwash = {
             Particles = {
@@ -240,7 +386,7 @@ Config.Stores = {
     },
 
     Carwash_Paleto = {
-        Blip = {Sprite = 100, Colour = 0, Scale = 0.6},
+        Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(-75.27, 6424.31, 30.51),
         Carwash = {Particles = {{Coord = vector3(-70.69, 6423.91, 31.68), Name = "ent_amb_car_wash_jet", Heading = -80.0}}, Price = 80, Duration = 5000},
         Marker = 27,
@@ -252,7 +398,7 @@ Config.Stores = {
     },
 
     Carwash_Sandy = {
-        Blip = {Sprite = 100, Colour = 0, Scale = 0.6},
+        Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(1362.08, 3592.20, 33.94),
         Carwash = {Price = 80, Duration = 5000},
         Marker = 27,
