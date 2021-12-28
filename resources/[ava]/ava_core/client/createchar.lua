@@ -10,7 +10,7 @@ local CharacterData = {}
 local CharacterSkin = {}
 local SkinMaxVals = {}
 
-local MainMenu = RageUI.CreateMenu("", "Création de personnage", 0, 0, "avaui", "avaui_title_adezou")
+local MainMenu = RageUI.CreateMenu("", GetString("create_char_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
 
 ---------------------------------------
 --------------- Cameras ---------------
@@ -118,12 +118,13 @@ local function ValidateData()
     if not CharacterData.firstname or CharacterData.firstname == "" or not CharacterData.lastname or CharacterData.lastname == "" or not CharacterData.birthdate
         or CharacterData.birthdate == "" or not AVA.Utils.IsDateValid(CharacterData.birthdate) then
         hadError = true
-        AVA.ShowNotification("~r~Les informations sur l'identité de votre personnage ne sont pas valides.", nil, "ava_core_logo", "Date de naissance", nil,
-            nil, "ava_core_logo")
+        AVA.ShowNotification(GetString("create_char_data_not_valid"), nil, "ava_core_logo", GetString("create_char_data_not_valid_title"), nil, nil,
+            "ava_core_logo")
     end
     if CharacterData.selectedOutfit == 0 then
         hadError = true
-        AVA.ShowNotification("~r~Vous n'avez pas séléctionné de tenue.", nil, "ava_core_logo", "Vêtements", nil, nil, "ava_core_logo")
+        AVA.ShowNotification(GetString("create_char_did_not_select_outfit"), nil, "ava_core_logo", GetString("create_char_data_not_valid_title"), nil, nil,
+            "ava_core_logo")
     end
 
     return not hadError
@@ -223,7 +224,7 @@ local Outfits = {
                 shoes_1 = 16,
                 shoes_2 = 5,
             },
-            label = "Tenue short",
+            label = GetString("outfit_short_tshirt"),
         },
         [2] = {
             outfit = {
@@ -241,7 +242,7 @@ local Outfits = {
                 shoes_1 = 22,
                 shoes_2 = 0,
             },
-            label = "Tenue lambda",
+            label = GetString("outfit_lambda"),
         },
         [3] = {
             outfit = {
@@ -259,7 +260,7 @@ local Outfits = {
                 shoes_1 = 9,
                 shoes_2 = 3,
             },
-            label = "Tenue jogging",
+            label = GetString("outfit_jogging"),
         },
         [4] = {
             outfit = {
@@ -277,7 +278,7 @@ local Outfits = {
                 shoes_1 = 10,
                 shoes_2 = 7,
             },
-            label = "Tenue homme d'affaire",
+            label = GetString("outfit_businessman"),
         },
         [5] = {
             outfit = {
@@ -295,7 +296,7 @@ local Outfits = {
                 shoes_1 = 54,
                 shoes_2 = 3,
             },
-            label = "Tenue hiver",
+            label = GetString("outfit_winter"),
         },
     },
 
@@ -338,7 +339,7 @@ local Outfits = {
                 shoes_2 = 0,
                 glasses_1 = 5,
             },
-            label = "Tenue short",
+            label = GetString("outfit_short_tshirt"),
         },
         [2] = {
             outfit = {
@@ -357,7 +358,7 @@ local Outfits = {
                 shoes_2 = 0,
                 glasses_1 = 5,
             },
-            label = "Tenue lambda",
+            label = GetString("outfit_lambda"),
         },
         [3] = {
             outfit = {
@@ -376,7 +377,7 @@ local Outfits = {
                 shoes_2 = 0,
                 glasses_1 = 5,
             },
-            label = "Tenue jogging",
+            label = GetString("outfit_jogging"),
         },
         [4] = {
             outfit = {
@@ -395,7 +396,7 @@ local Outfits = {
                 shoes_2 = 0,
                 glasses_1 = 5,
             },
-            label = "Tenue femme d'affaire",
+            label = GetString("outfit_businesswoman"),
         },
         [5] = {
             outfit = {
@@ -414,39 +415,39 @@ local Outfits = {
                 shoes_2 = 0,
                 glasses_1 = 5,
             },
-            label = "Tenue hiver",
+            label = GetString("outfit_winter"),
         },
     },
 }
 
-local SexList = {"Homme", "Femme"}
+local SexList = {GetString("create_char_sex_man"), GetString("create_char_sex_woman")}
 MainMenu.Closable = false
 
-local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", "Identité")
+local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_identity"))
 
-local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", "Hérédité")
+local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_heritage"))
 
 SubMenuHeritage.Closed = function()
     ToggleCamOnFace(false)
     exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
-local SubMenuVisage = RageUI.CreateSubMenu(MainMenu, "", "Traits du visage")
+local SubMenuFace = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_face"))
 
-SubMenuVisage.EnableMouse = true
-SubMenuVisage.Closed = function()
+SubMenuFace.EnableMouse = true
+SubMenuFace.Closed = function()
     ToggleCamOnFace(false)
     exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
-local SubMenuAppearance = RageUI.CreateSubMenu(MainMenu, "", "Apparence")
+local SubMenuAppearance = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_appearance"))
 SubMenuAppearance.EnableMouse = true
 SubMenuAppearance.Closed = function()
     ToggleCamOnFace(false)
     exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
-local SubMenuOutfits = RageUI.CreateSubMenu(MainMenu, "", "Tenues")
+local SubMenuOutfits = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_outfits"))
 local DisplayedOutfit = 0
 SubMenuOutfits.Closed = function()
     exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
@@ -455,12 +456,10 @@ end
 
 function RageUI.PoolMenus:AvaCoreCreateChar()
     MainMenu:IsVisible(function(Items)
-        -- Items:AddButton("AdezouRP", nil, { LeftBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end, RightBadge = function() return {BadgeDictionary = "avaui", BadgeTexture = "avaui_logo_menu"} end }, function(onSelected) end)
-
-        Items:AddList("Sexe", SexList, CharacterData.sexIndex + 1, nil, {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("create_char_gender"), SexList, CharacterData.sexIndex + 1, nil, {}, function(Index, onSelected, onListChange)
             if (onListChange) then
                 CharacterData.sexIndex = Index - 1
-                CharacterData.Visage = {}
+                CharacterData.Face = {}
                 CharacterData.Appearance = {}
                 CharacterData.selectedOutfit = 0
                 MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
@@ -471,9 +470,9 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             end
         end)
 
-        Items:AddButton("Identité", "", {RightLabel = "→→→"}, nil, SubMenuIdentity)
+        Items:AddButton(GetString("menu_title_identity"), "", {RightLabel = "→→→"}, nil, SubMenuIdentity)
 
-        Items:AddButton("Hérédité", "", {RightLabel = "→→→"}, function(onSelected)
+        Items:AddButton(GetString("menu_title_heritage"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
@@ -481,15 +480,15 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             end
         end, SubMenuHeritage)
 
-        Items:AddButton("Traits du visage", "", {RightLabel = "→→→"}, function(onSelected)
+        Items:AddButton(GetString("menu_title_face"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
                 playerPed = PlayerPedId()
             end
-        end, SubMenuVisage)
+        end, SubMenuFace)
 
-        Items:AddButton("Apparence", "", {RightLabel = "→→→"}, function(onSelected)
+        Items:AddButton(GetString("menu_title_appearance"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
                 exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
@@ -497,9 +496,9 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             end
         end, SubMenuAppearance)
 
-        Items:AddButton("Tenues", "", {RightLabel = "→→→"}, nil, SubMenuOutfits)
+        Items:AddButton(GetString("menu_title_outfits"), "", {RightLabel = "→→→"}, nil, SubMenuOutfits)
 
-        Items:AddButton("Sauvegarder et valider", nil,
+        Items:AddButton(GetString("create_char_save_and_submit"), nil,
             {Color = {BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight}}, function(onSelected)
                 if onSelected and ValidateData() then
                     RageUI.CloseAllInternal()
@@ -508,31 +507,31 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuIdentity:IsVisible(function(Items)
-        Items:AddButton("Prénom", "(50 caractères max.)", {RightLabel = CharacterData.firstname}, function(onSelected)
+        Items:AddButton(GetString("identity_firstname"), GetString("50_char_max"), {RightLabel = CharacterData.firstname}, function(onSelected)
             if onSelected then
-                local result = AVA.KeyboardInput("Entrez votre prénom (50 caractères max.)", "", 50)
+                local result = AVA.KeyboardInput(GetString("identity_firstname_input"), "", 50)
                 if result and result ~= "" then
                     CharacterData.firstname = result
                 end
             end
         end)
-        Items:AddButton("Nom", "(50 caractères max.)", {RightLabel = CharacterData.lastname}, function(onSelected)
+        Items:AddButton(GetString("identity_lastname"), GetString("50_char_max"), {RightLabel = CharacterData.lastname}, function(onSelected)
             if onSelected then
-                local result = AVA.KeyboardInput("Entrez votre nom (50 caractères max.)", "", 50)
+                local result = AVA.KeyboardInput(GetString("identity_lastname_input"), "", 50)
                 if result and result ~= "" then
                     CharacterData.lastname = result
                 end
             end
         end)
-        Items:AddButton("Date de naissance", "Format de date : jj/mm/aaaa\nExemple : 15/08/2020", {RightLabel = CharacterData.birthdate}, function(onSelected)
+        Items:AddButton(GetString("birthdate"), GetString("birthdate_subtitle"), {RightLabel = CharacterData.birthdate}, function(onSelected)
             if onSelected then
-                local result = AVA.KeyboardInput("Entrez votre date de naissance (jj/mm/aaaa)", "", 10)
+                local result = AVA.KeyboardInput(GetString("birthday_input"), "", 10)
                 if result and result ~= "" then
                     if not string.find(result, "%d%d?/%d%d?/%d%d%d%d") then
-                        AVA.ShowNotification("Le format de date spécifié n'est pas le bon.", nil, "ava_core_logo", "Date de naissance", nil, nil,
+                        AVA.ShowNotification(GetString("birthday_format_is_not_the_right_one"), nil, "ava_core_logo", GetString("birthdate"), nil, nil,
                             "ava_core_logo")
                     elseif not AVA.Utils.IsDateValid(result) then
-                        AVA.ShowNotification("La date n'est pas valide.", nil, "ava_core_logo", "Date de naissance", nil, nil, "ava_core_logo")
+                        AVA.ShowNotification(GetString("birthday_not_valid"), nil, "ava_core_logo", GetString("birthdate"), nil, nil, "ava_core_logo")
                     else
                         CharacterData.birthdate = result
                     end
@@ -543,148 +542,146 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
     SubMenuHeritage:IsVisible(function(Items)
         Items:Heritage(MomIndex, DadIndex)
-        Items:AddList("Mère", MomList, MomIndex, "Choisissez votre mère.", {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("mom"), MomList, MomIndex, GetString("mom_subtitle"), {}, function(Index, onSelected, onListChange)
             if onListChange then
                 MomIndex = Index
                 exports.skinchanger:change("mom", MomListId[MomIndex])
             end
         end)
-        Items:AddList("Père", DadList, DadIndex, "Choisissez votre père.", {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("dad"), DadList, DadIndex, GetString("dad_subtitle"), {}, function(Index, onSelected, onListChange)
             if onListChange then
                 DadIndex = Index
                 exports.skinchanger:change("dad", DadListId[DadIndex])
             end
         end)
-        Items:SliderHeritage("Ressemblance", Resemblance, "Déterminez de quel parent vous tenez le plus.",
+        Items:SliderHeritage(GetString("resemblance"), Resemblance, GetString("resemblance_subtitle"),
             function(Selected, Active, OnListChange, SliderIndex, Percent)
                 if OnListChange then
                     Resemblance = SliderIndex
                     exports.skinchanger:change("face_md_weight", Percent)
                 end
             end)
-        Items:SliderHeritage("Couleur de peau", SkinTone,
-            "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.",
-            function(Selected, Active, OnListChange, SliderIndex, Percent)
-                if OnListChange then
-                    SkinTone = SliderIndex
-                    exports.skinchanger:change("skin_md_weight", Percent)
-                end
-            end)
+        Items:SliderHeritage(GetString("skin_tone"), SkinTone, GetString("skin_tone_subtitle"), function(Selected, Active, OnListChange, SliderIndex, Percent)
+            if OnListChange then
+                SkinTone = SliderIndex
+                exports.skinchanger:change("skin_md_weight", Percent)
+            end
+        end)
     end)
 
-    SubMenuVisage:IsVisible(function(Items)
-        Items:AddButton("Bas du front", "Modifiez votre visage")
-        Items:AddButton("Yeux", "Modifiez votre visage")
-        Items:AddButton("Nez", "Modifiez votre visage")
-        Items:AddButton("Arête du nez", "Modifiez votre visage")
-        Items:AddButton("Bout du nez", "Modifiez votre visage")
-        Items:AddButton("Pommettes", "Modifiez votre visage")
-        Items:AddButton("Joues", "Modifiez votre visage")
-        Items:AddButton("Lèvres", "Modifiez votre visage")
-        Items:AddButton("Mâchoire", "Modifiez votre visage")
-        Items:AddButton("Profil menton", "Modifiez votre visage")
-        Items:AddButton("Forme du menton", "Modifiez votre visage")
-        Items:AddButton("Largeur du cou", "Modifiez votre visage")
+    SubMenuFace:IsVisible(function(Items)
+        Items:AddButton(GetString("forehead"), GetString("edit_your_face"))
+        Items:AddButton(GetString("eyes"), GetString("edit_your_face"))
+        Items:AddButton(GetString("nose"), GetString("edit_your_face"))
+        Items:AddButton(GetString("nosebone"), GetString("edit_your_face"))
+        Items:AddButton(GetString("nosepeak"), GetString("edit_your_face"))
+        Items:AddButton(GetString("cheekbone"), GetString("edit_your_face"))
+        Items:AddButton(GetString("cheek"), GetString("edit_your_face"))
+        Items:AddButton(GetString("lips"), GetString("edit_your_face"))
+        Items:AddButton(GetString("jaw"), GetString("edit_your_face"))
+        Items:AddButton(GetString("chin"), GetString("edit_your_face"))
+        Items:AddButton(GetString("chinshape"), GetString("edit_your_face"))
+        Items:AddButton(GetString("neck"), GetString("edit_your_face"))
     end, function(Panels)
-        Panels:Grid(CharacterData.Visage.ForeHeadX or 0.5, CharacterData.Visage.ForeHeadY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.ForeHeadX = X
-                CharacterData.Visage.ForeHeadY = Y
+        Panels:Grid(CharacterData.Face.ForeHeadX or 0.5, CharacterData.Face.ForeHeadY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
+            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.ForeHeadX = X
+                CharacterData.Face.ForeHeadY = Y
                 exports.skinchanger:changesNoApply({eyebrows_6 = CharacterX * 100, eyebrows_5 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 6, CharacterX) -- eyebrows_5
                 SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrows_6
             end, 1)
 
-        Panels:GridHorizontal(CharacterData.Visage.Eyes or 0.5, "Plissés", "Ouverts", function(X, _, CharacterX)
-            CharacterData.Visage.Eyes = X
+        Panels:GridHorizontal(CharacterData.Face.Eyes or 0.5, GetString("eyes_pleated"), GetString("eyes_open"), function(X, _, CharacterX)
+            CharacterData.Face.Eyes = X
             exports.skinchanger:changeNoApply("eye_squint", (1 - CharacterX) * 100)
             SetPedFaceFeature(playerPed, 11, (1 - CharacterX)) -- eye_squint
         end, 2)
 
-        Panels:Grid(CharacterData.Visage.NoseX or 0.5, CharacterData.Visage.NoseY or 0.5, "Relevé", "Bas", "Fin", "Epais",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.NoseX = X
-                CharacterData.Visage.NoseY = Y
+        Panels:Grid(CharacterData.Face.NoseX or 0.5, CharacterData.Face.NoseY or 0.5, GetString("top"), GetString("bottom"), GetString("thin"),
+            GetString("thick"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.NoseX = X
+                CharacterData.Face.NoseY = Y
                 exports.skinchanger:changesNoApply({nose_1 = CharacterX * 100, nose_2 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 0, CharacterX) -- nose_1
                 SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_2
             end, 3)
 
-        Panels:Grid(CharacterData.Visage.NoseBoneX or 0.5, CharacterData.Visage.NoseBoneY or 0.5, "Saillante", "Incurvée", "Courte", "Longue",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.NoseBoneX = X
-                CharacterData.Visage.NoseBoneY = Y
+        Panels:Grid(CharacterData.Face.NoseBoneX or 0.5, CharacterData.Face.NoseBoneY or 0.5, GetString("nosebone_top"), GetString("nosebone_bottom"),
+            GetString("nosebone_right"), GetString("nosebone_left"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.NoseBoneX = X
+                CharacterData.Face.NoseBoneY = Y
                 exports.skinchanger:changesNoApply({nose_3 = (1 - CharacterX) * 100, nose_4 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 2, (1 - CharacterX)) -- nose_3
                 SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_4
             end, 4)
 
-        Panels:Grid(CharacterData.Visage.NosePeakX or 0.5, CharacterData.Visage.NosePeakY or 0.5, "Bout vers le haut", "Bout vers le bas", "Cassé\ngauche",
-            "Cassé\ndroite", function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.NosePeakX = X
-                CharacterData.Visage.NosePeakY = Y
+        Panels:Grid(CharacterData.Face.NosePeakX or 0.5, CharacterData.Face.NosePeakY or 0.5, GetString("nosepeak_top"), GetString("nosepeak_bottom"),
+            GetString("nosepeak_right"), GetString("nosepeak_left"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.NosePeakX = X
+                CharacterData.Face.NosePeakY = Y
                 exports.skinchanger:changesNoApply({nose_6 = (1 - CharacterX) * 100, nose_5 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 5, (1 - CharacterX)) -- nose_6
                 SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_5
             end, 5)
 
-        Panels:Grid(CharacterData.Visage.CheekBoneX or 0.5, CharacterData.Visage.CheekBoneY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.CheekBoneX = X
-                CharacterData.Visage.CheekBoneY = Y
+        Panels:Grid(CharacterData.Face.CheekBoneX or 0.5, CharacterData.Face.CheekBoneY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
+            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.CheekBoneX = X
+                CharacterData.Face.CheekBoneY = Y
                 exports.skinchanger:changesNoApply({cheeks_2 = CharacterX * 100, cheeks_1 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 9, CharacterX) -- cheeks_2
                 SetPedFaceFeature(playerPed, 8, CharacterY) -- cheeks_1
             end, 6)
 
-        Panels:GridHorizontal(CharacterData.Visage.Cheek or 0.5, "Emacié", "Bouffi", function(X, _, CharacterX)
-            CharacterData.Visage.Cheek = X
+        Panels:GridHorizontal(CharacterData.Face.Cheek or 0.5, GetString("cheek_left"), GetString("cheek_right"), function(X, _, CharacterX)
+            CharacterData.Face.Cheek = X
             exports.skinchanger:changeNoApply("cheeks_3", (1 - CharacterX) * 100)
             SetPedFaceFeature(playerPed, 10, (1 - CharacterX)) -- cheeks_3
         end, 7)
 
-        Panels:GridHorizontal(CharacterData.Visage.Lips or 0.5, "Minces", "Epaisses", function(X, _, CharacterX)
-            CharacterData.Visage.Lips = X
+        Panels:GridHorizontal(CharacterData.Face.Lips or 0.5, GetString("lips_left"), GetString("lips_right"), function(X, _, CharacterX)
+            CharacterData.Face.Lips = X
             exports.skinchanger:changeNoApply("lip_thickness", (1 - CharacterX) * 100)
             SetPedFaceFeature(playerPed, 12, (1 - CharacterX)) -- lip_thickness
         end, 8)
 
-        Panels:Grid(CharacterData.Visage.JawX or 0.5, CharacterData.Visage.JawY or 0.5, "Ronde", "Carrée", "Etroite", "Large",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.JawX = X
-                CharacterData.Visage.JawY = Y
+        Panels:Grid(CharacterData.Face.JawX or 0.5, CharacterData.Face.JawY or 0.5, GetString("jaw_top"), GetString("jaw_bottom"), GetString("jaw_right"),
+            GetString("jaw_left"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.JawX = X
+                CharacterData.Face.JawY = Y
                 exports.skinchanger:changesNoApply({jaw_1 = CharacterX * 100, jaw_2 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 13, CharacterX) -- jaw_1
                 SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_2
             end, 9)
 
-        Panels:Grid(CharacterData.Visage.ChinX or 0.5, CharacterData.Visage.ChinY or 0.5, "Haut", "Bas", "Intérieur", "Extérieur",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.ChinX = X
-                CharacterData.Visage.ChinY = Y
+        Panels:Grid(CharacterData.Face.ChinX or 0.5, CharacterData.Face.ChinY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
+            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.ChinX = X
+                CharacterData.Face.ChinY = Y
                 exports.skinchanger:changesNoApply({chin_2 = CharacterX * 100, chin_1 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 16, CharacterX) -- chin_2
                 SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_1
             end, 10)
 
-        Panels:Grid(CharacterData.Visage.ChinShapeX or 0.5, CharacterData.Visage.ChinShapeY or 0.5, "Arrondi", "Fossette", "Carré", "Pointu",
-            function(X, Y, CharacterX, CharacterY)
-                CharacterData.Visage.ChinShapeX = X
-                CharacterData.Visage.ChinShapeY = Y
+        Panels:Grid(CharacterData.Face.ChinShapeX or 0.5, CharacterData.Face.ChinShapeY or 0.5, GetString("chinshape_top"), GetString("chinshape_bottom"),
+            GetString("chinshape_right"), GetString("chinshape_left"), function(X, Y, CharacterX, CharacterY)
+                CharacterData.Face.ChinShapeX = X
+                CharacterData.Face.ChinShapeY = Y
                 exports.skinchanger:changesNoApply({chin_3 = (1 - CharacterX) * 100, chin_4 = CharacterY * 100})
                 SetPedFaceFeature(playerPed, 17, (1 - CharacterX)) -- chin_3
                 SetPedFaceFeature(playerPed, 18, CharacterY) -- chin_4
             end, 11)
 
-        Panels:GridHorizontal(CharacterData.Visage.Neck or 0.5, "Mince", "Epais", function(X, _, CharacterX)
-            CharacterData.Visage.Neck = X
+        Panels:GridHorizontal(CharacterData.Face.Neck or 0.5, GetString("thin"), GetString("thick"), function(X, _, CharacterX)
+            CharacterData.Face.Neck = X
             exports.skinchanger:changeNoApply("neck_thickness", CharacterX * 100)
             SetPedFaceFeature(playerPed, 19, CharacterX) -- lip_thickness
         end, 12)
     end)
 
     SubMenuAppearance:IsVisible(function(Items)
-        Items:AddList("Coiffure", (SkinMaxVals.hair_1 or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, "Changez votre apparence.", {},
+        Items:AddList(GetString("hair"), (SkinMaxVals.hair_1 or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.HairCutIndex = Index
@@ -695,8 +692,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     -- SkinMaxVals.hair_2 = GetNumberOfPedTextureVariations(playerPed, 2, CharacterSkin.hair_1) - 1
                 end
             end)
-        Items:AddList("Sourcils", (SkinMaxVals.eyebrows_1 or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("eyebrows"), (SkinMaxVals.eyebrows_1 or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1,
+            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeBrowsIndex = Index
 
@@ -705,7 +702,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Pilosité faciale", (SkinMaxVals.beard_1 or -1) + 1, CharacterData.Appearance.BeardIndex or 1, "Changez votre apparence.", {},
+        Items:AddList(GetString("beard"), (SkinMaxVals.beard_1 or -1) + 1, CharacterData.Appearance.BeardIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BeardIndex = Index
@@ -715,8 +712,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Problèmes peau", (SkinMaxVals.blemishes_1 or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("blemishes"), (SkinMaxVals.blemishes_1 or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1,
+            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BlemishesIndex = Index
 
@@ -725,7 +722,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Signes de vieillissement", (SkinMaxVals.age_1 or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1, "Changez votre apparence.", {},
+        Items:AddList(GetString("age"), (SkinMaxVals.age_1 or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinAgingIndex = Index
@@ -735,8 +732,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Teint", (SkinMaxVals.complexion_1 or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("complexion"), (SkinMaxVals.complexion_1 or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1,
+            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.ComplexionIndex = Index
 
@@ -745,7 +742,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Taches cutanées", (SkinMaxVals.moles_1 or -1) + 1, CharacterData.Appearance.MolesIndex or 1, "Changez votre apparence.", {},
+        Items:AddList(GetString("moles"), (SkinMaxVals.moles_1 or -1) + 1, CharacterData.Appearance.MolesIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.MolesIndex = Index
@@ -755,7 +752,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Aspect de la peau", (SkinMaxVals.sun_1 or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1, "Changez votre apparence.", {},
+        Items:AddList(GetString("sun"), (SkinMaxVals.sun_1 or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinDamageIndex = Index
@@ -765,8 +762,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Couleur des yeux", (SkinMaxVals.eye_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("eye_color"), (SkinMaxVals.eye_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1,
+            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeColorIndex = Index
 
@@ -775,8 +772,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedEyeColor(playerPed, CharacterSkin.eye_color, 0, 1)
                 end
             end)
-        Items:AddList("Maquilage yeux", (SkinMaxVals.makeup_1 or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("makeup"), (SkinMaxVals.makeup_1 or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1, GetString("change_your_appearance"),
+            {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeMakeupIndex = Index
 
@@ -785,8 +782,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
                 end
             end)
-        Items:AddList("Rouge à lèvres", (SkinMaxVals.lipstick_1 or -1) + 1, CharacterData.Appearance.LipstickIndex or 1, "Changez votre apparence.", {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("lipstick"), (SkinMaxVals.lipstick_1 or -1) + 1, CharacterData.Appearance.LipstickIndex or 1,
+            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.LipstickIndex = Index
 
@@ -798,8 +795,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
     end, function(Panels)
         if CharacterSkin.hair_1 ~= 0 then
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1, CharacterData.Appearance.HairColorIndex or 1,
-                function(MinimumIndex, CurrentIndex)
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1,
+                CharacterData.Appearance.HairColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.HairColorMin = MinimumIndex
                     CharacterData.Appearance.HairColorIndex = CurrentIndex
 
@@ -807,7 +804,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     exports.skinchanger:changeNoApply("hair_color_1", CurrentIndex - 1)
                     SetPedHairColor(playerPed, CharacterSkin.hair_color_1, CharacterSkin.hair_color_2)
                 end, 1)
-            Panels:ColourPanel("Couleur des mèches", RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColor2Min or 1,
+            Panels:ColourPanel(GetString("wicks_color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColor2Min or 1,
                 CharacterData.Appearance.HairColor2Index or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.HairColor2Min = MinimumIndex
                     CharacterData.Appearance.HairColor2Index = CurrentIndex
@@ -826,7 +823,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
         end, 2)
         if CharacterSkin.eyebrows_2 > 0 then
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeBrowsColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeBrowsColorMin or 1,
                 CharacterData.Appearance.EyeBrowsColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeBrowsColorMin = MinimumIndex
                     CharacterData.Appearance.EyeBrowsColorIndex = CurrentIndex
@@ -845,7 +842,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
         end, 3)
         if CharacterSkin.beard_2 > 0 then
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.BodyHairsColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.BodyHairsColorMin or 1,
                 CharacterData.Appearance.BodyHairsColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.BodyHairsColorMin = MinimumIndex
                     CharacterData.Appearance.BodyHairsColorIndex = CurrentIndex
@@ -905,7 +902,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end, 10)
         if CharacterSkin.makeup_2 > 0 then
             -- TODO update PanelColour list of colours to a valid one
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColorMin or 1,
                 CharacterData.Appearance.EyeMakeupColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeMakeupColorMin = MinimumIndex
                     CharacterData.Appearance.EyeMakeupColorIndex = CurrentIndex
@@ -935,7 +932,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end, 11)
         if CharacterSkin.lipstick_2 > 0 then
             -- TODO update PanelColour list of colours to a valid one
-            Panels:ColourPanel("Couleur", RageUI.PanelColour.HairCut, CharacterData.Appearance.LipstickColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.LipstickColorMin or 1,
                 CharacterData.Appearance.LipstickColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.LipstickColorMin = MinimumIndex
                     CharacterData.Appearance.LipstickColorIndex = CurrentIndex
@@ -949,8 +946,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
 
     SubMenuOutfits:IsVisible(function(Items)
         for i = 1, #Outfits[CharacterData.sexIndex], 1 do
-            Items:AddButton(Outfits[CharacterData.sexIndex][i].label or "Tenue",
-                "Ceci est une tenue par défaut.\nElle pourra être changée par la suite dans un magasin de vêtements",
+            Items:AddButton(Outfits[CharacterData.sexIndex][i].label or GetString("outfit"), GetString("outfit_subtitle"),
                 {RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil)}, function(onSelected, onEntered)
                     if onEntered and DisplayedOutfit ~= i then
                         DisplayedOutfit = i
@@ -982,7 +978,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     RageUI.CloseAll()
 
-    CharacterData = {firstname = "", lastname = "", sexIndex = 0, birthdate = "", selectedOutfit = 0, Visage = {}, Appearance = {}}
+    CharacterData = {firstname = "", lastname = "", sexIndex = 0, birthdate = "", selectedOutfit = 0, Face = {}, Appearance = {}}
 
     exports.skinchanger:reset()
     CharacterSkin = exports.skinchanger:loadSkin(Outfits[0][0].outfit)
