@@ -137,7 +137,7 @@ RegisterCommand("v", function(source, args, rawCommand)
 	local v = GetVehiclePedIsIn(playerPed, false)
 
 	if v ~= 0 then
-        local vehicleProps = ESX.Game.GetVehicleProperties(vehicle)
+        local vehicleProps = ESX.Game.GetVehicleProperties(v)
         print(ESX.DumpTable(vehicleProps))
     end
 end, false)
