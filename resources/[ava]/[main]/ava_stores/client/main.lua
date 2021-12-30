@@ -160,6 +160,8 @@ Citizen.CreateThread(function()
                     BuyZone()
                 elseif store.SkinElements then
                     ClothesStore()
+                elseif store.SavedOutfits then
+                    SavedOutfits()
                 elseif store.Carwash then
                     CarWash()
                 end

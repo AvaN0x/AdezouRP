@@ -12,5 +12,6 @@
     "carwash_not_in_vehicle": "Vous n'êtes pas dans un véhicule",
     "carwash_driving_too_fast": "Vous conduisez trop vite",
     "carwash_on_cleaning": "Lavage en cours",
-    "carwash_vehicle_cleaned": "Le véhicule a été néttoyé."
+    "carwash_vehicle_cleaned": "Le véhicule a été néttoyé.",
+    "press_access_saved_outfits": "Appuyez sur ~INPUT_CONTEXT~ pour accéder à vos tenues sauvegardées"
 }

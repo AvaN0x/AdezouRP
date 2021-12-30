@@ -167,6 +167,35 @@ Config.Stores = {
         HelpText = GetString("press_buy"),
     },
 
+    SavedOutfits = {
+        Coords = {
+            -- discount stores
+            vector3(75.70, -1392.91, 28.40),
+            vector3(4.83, 6512.59, 30.90),
+            vector3(1693.62, 4822.74, 41.08),
+            vector3(1196.74, 2710.06, 37.24),
+            vector3(-1101.29, 2710.32, 18.13),
+            -- ponsonbys
+            vector3(-710.11, -152.83, 36.44),
+            vector3(-163.28, -303.10, 38.75),
+            vector3(-1450.34, -237.19, 48.83),
+            -- binco
+            vector3(425.34, -806.22, 28.51),
+            vector3(-822.32, -1073.78, 10.35),
+            -- suburban
+            vector3(125.83, -222.88, 53.58),
+            vector3(614.61, 2761.71, 41.11),
+            vector3(-1193.84, -768.85, 16.34),
+            vector3(-3170.48, 1044.45, 19.88),
+        },
+        SavedOutfits = true,
+        Distance = 1.5,
+        Marker = 27,
+        Size = {x = 0.6, y = 0.6, z = 1.0},
+        Color = {r = 0, g = 2255, b = 255},
+        HelpText = GetString("press_access_saved_outfits"),
+    },
+
     -- Clothes stores
     DiscountStore = {
         Title = {textureName = "shopui_title_lowendfashion", textureDirectory = "shopui_title_lowendfashion"}, -- CHECKOUT! DISCOUNT STORE
