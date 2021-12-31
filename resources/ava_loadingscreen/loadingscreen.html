@@ -50,7 +50,9 @@
     <div id="yt" style="display:none"></div>
 
     <script>
-        var player;
+        let player;
+        let play = false;
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt', {
                 width: 300,
@@ -60,38 +62,29 @@
                     start: 0
                 },
                 events: {
-                    onReady: initialize
+                    onReady: () => {
+                        var usespace = document.getElementById("usespace");
+                        usespace.classList.add("enable_music");
+                        usespace.style.display = "inline-block";
+                        player.setVolume(10);
+                        player.playVideo();
+                        usespace.innerHTML += "<br/><strong>" + player.getVideoData().title + "</strong>";
+                        play = true;
+                    }
                 }
             });
         }
-        function initialize() {
-            var usespace = document.getElementById("usespace");
-            usespace.classList.add("enable_music");
-            usespace.style.display = "inline-block";
-            player.setVolume(10);
-            player.playVideo();
-            usespace.innerHTML += "<br/><strong>" + player.getVideoData().title + "</strong>";
-        }
 
-        var play = false;
 
-        function onKeyDown(event) {
-            switch (event.keyCode) {
-                case 32: //SpaceBar
-                    if (play) {
-                        player.pauseVideo();
-                        play = false;
-                    } else {
-                        player.playVideo();
-                        play = true;
-                    }
-                    break;
+        window.addEventListener("keydown", (event) => {
+            if (event.keyCode == 32) {
+                if (play)
+                    player.pauseVideo();
+                else
+                    player.playVideo();
+                play = !play;
             }
-            return false;
-
-        }
-
-        window.addEventListener("keydown", onKeyDown, false);
+        }, false);
     </script>
 
 </body>

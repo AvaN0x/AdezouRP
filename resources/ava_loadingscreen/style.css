@@ -35,6 +35,7 @@ body {
   text-transform: uppercase;
   font-weight: 400;
   animation: travel 4s;
+  z-index: 100;
 }
 
 strong {
@@ -103,6 +104,7 @@ strong {
   text-transform: uppercase;
   font-weight: 100;
   animation: under 6s;
+  z-index: 100;
 }
 
 @keyframes under {
@@ -128,7 +130,6 @@ strong {
   background: rgba(255, 255, 255, 0);
   transform: translate(-50%, -50%);
   overflow: hidden;
-
 }
 
 .progress:after {
