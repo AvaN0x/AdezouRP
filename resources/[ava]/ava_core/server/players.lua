@@ -364,8 +364,9 @@ AddEventHandler("playerDropped", function(reason)
     if aPlayer then
         AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout", "~r~" .. aPlayer.name .. "~s~ se déconnecte.")
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`"
-            .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId .. ")", 0xFF5455)
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
+            "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId
+                .. ")\nRaison : " .. reason, 0xFF5455)
 
         aPlayer.logout()
         Citizen.Await(aPlayer.save())
