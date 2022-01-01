@@ -202,11 +202,11 @@ Config.Stores = {
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
         CanSave = true,
         Coords = {
-            vector3(72.254, -1399.102, 28.396),
-            vector3(11.632, 6514.224, 30.897),
-            vector3(1696.291, 4829.312, 41.083),
-            vector3(1190.550, 2713.441, 37.242),
-            vector3(-1108.441, 2708.923, 18.127),
+            vector3(72.254, -1399.102, 28.40),
+            vector3(11.632, 6514.224, 30.90),
+            vector3(1696.291, 4829.312, 41.08),
+            vector3(1190.550, 2713.441, 37.24),
+            vector3(-1108.441, 2708.923, 18.13),
         },
         ClothesStore = true,
         Marker = 27,
@@ -220,7 +220,7 @@ Config.Stores = {
         Title = {textureName = "shopui_title_highendfashion", textureDirectory = "shopui_title_highendfashion"}, -- PONSONBYS
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
         CanSave = true,
-        Coords = {vector3(-703.776, -152.258, 36.435), vector3(-167.863, -298.969, 38.743), vector3(-1447.797, -242.461, 48.840)},
+        Coords = {vector3(-703.776, -152.258, 36.44), vector3(-167.863, -298.969, 38.75), vector3(-1447.797, -242.461, 48.83)},
         ClothesStore = true,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
@@ -233,7 +233,7 @@ Config.Stores = {
         Title = {textureName = "shopui_title_lowendfashion2", textureDirectory = "shopui_title_lowendfashion2"}, -- binco
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
         CanSave = true,
-        Coords = {vector3(428.694, -800.106, 28.511), vector3(-829.413, -1073.710, 10.348)},
+        Coords = {vector3(428.694, -800.106, 28.51), vector3(-829.413, -1073.710, 10.35)},
         ClothesStore = true,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
@@ -247,10 +247,10 @@ Config.Stores = {
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
         CanSave = true,
         Coords = {
-            vector3(123.646, -219.440, 53.577),
-            vector3(618.093, 2759.629, 41.108),
-            vector3(-1193.429, -772.262, 16.344),
-            vector3(-3172.496, 1048.133, 19.883),
+            vector3(123.646, -219.440, 53.58),
+            vector3(618.093, 2759.629, 41.11),
+            vector3(-1193.429, -772.262, 16.34),
+            vector3(-3172.496, 1048.133, 19.88),
         },
         ClothesStore = true,
         Marker = 27,
@@ -265,7 +265,7 @@ Config.Stores = {
     HairOnHawickBarber = {
         Title = {textureName = "shopui_title_barber4", textureDirectory = "shopui_title_barber4"}, -- HAIR ON HAWICK TRADITIONAL BARBERS
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
-        Coords = {vector3(-32.885, -152.319, 56.076)},
+        Coords = {vector3(-32.885, -152.319, 56.10)},
         ClothesStore = true,
         -- CanSave = false,
         Marker = 27,
@@ -278,7 +278,7 @@ Config.Stores = {
     BobMuletBarber = {
         Title = {textureName = "shopui_title_highendsalon", textureDirectory = "shopui_title_highendsalon"}, -- bob mulét
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
-        Coords = {vector3(-814.308, -183.823, 36.568)},
+        Coords = {vector3(-814.308, -183.823, 36.59)},
         ClothesStore = true,
         -- CanSave = false,
         Marker = 27,
@@ -291,7 +291,7 @@ Config.Stores = {
     HerrKutzBarber = {
         Title = {textureName = "shopui_title_barber", textureDirectory = "shopui_title_barber"}, -- HERR KUTZ BARBER
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
-        Coords = {vector3(136.826, -1708.373, 28.291), vector3(1212.840, -473.921, 65.450), vector3(-278.077, 6228.463, 30.695)},
+        Coords = {vector3(136.826, -1708.373, 28.31), vector3(1212.840, -473.921, 65.23), vector3(-278.077, 6228.463, 30.72)},
         ClothesStore = true,
         -- CanSave = false,
         Marker = 27,
@@ -304,7 +304,7 @@ Config.Stores = {
     BeachComboverBarber = {
         Title = {textureName = "shopui_title_barber2", textureDirectory = "shopui_title_barber2"}, -- BEACHCOMBOVER BARBERS
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
-        Coords = {vector3(-1282.604, -1116.757, 5.990)},
+        Coords = {vector3(-1282.604, -1116.757, 6.01)},
         ClothesStore = true,
         -- CanSave = false,
         Marker = 27,
@@ -317,7 +317,7 @@ Config.Stores = {
     OSheasBarber = {
         Title = {textureName = "shopui_title_barber3", textureDirectory = "shopui_title_barber3"}, -- O'SHEAS BARBERS
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
-        Coords = {vector3(1931.513, 3729.671, 31.844)},
+        Coords = {vector3(1931.513, 3729.671, 31.86)},
         ClothesStore = true,
         -- CanSave = false,
         Marker = 27,
@@ -336,7 +336,7 @@ Config.Stores = {
         -- CanSave = false,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
-        Color = {r = 135, g = 0, b = 255},
+        Color = {r = 255, g = 255, b = 255},
         Distance = 1.5,
         Name = "Magasin de masques",
         HelpText = GetString("press_open_menu"),
