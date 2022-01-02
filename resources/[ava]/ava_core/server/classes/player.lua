@@ -31,6 +31,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     self.jobs = playerData.jobs and json.decode(playerData.jobs) or {}
     ---@class inventory
     self.inventory = CreateInventory(self.src, playerData.inventory and json.decode(playerData.inventory) or {}, AVAConfig.InventoryMaxWeight)
+    self.phoneNumber = playerData.phone_number or nil
 
     ---@class metadata
     ---@field licenses table

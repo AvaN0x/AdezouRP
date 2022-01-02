@@ -133,7 +133,8 @@ local function retrievePlayerData(id)
         return
     end
     local players = exports.oxmysql:fetchSync(
-        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `metadata` FROM `players` WHERE `id` = :id", {id = id})
+        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `phone_number`, `metadata` FROM `players` WHERE `id` = :id",
+        {id = id})
     return players[1]
 end
 
@@ -626,7 +627,7 @@ AVA.Players.Save = function(src)
         local p = promise.new()
         -- exports.oxmysql:execute('UPDATE `players` SET `position` = :position, `character` = :character, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `metadata` = :metadata WHERE `license` = :license AND `id` = :id', {
         exports.oxmysql:execute(
-            "UPDATE `players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
+            "UPDATE `players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
             {
                 position = json.encode(aPlayer.position),
                 -- character = json.encode(aPlayer.character),
@@ -636,6 +637,7 @@ AVA.Players.Save = function(src)
                 status = json.encode(aPlayer.status),
                 jobs = json.encode(aPlayer.jobs),
                 inventory = aPlayer.inventory and json.encode(aPlayer.inventory.items) or "[]",
+                phone_number = aPlayer.phoneNumber,
                 metadata = json.encode(aPlayer.metadata),
                 license = aPlayer.identifiers.license,
                 id = aPlayer.citizenId,

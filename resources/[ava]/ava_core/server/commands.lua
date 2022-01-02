@@ -518,6 +518,12 @@ AVA.Commands.RegisterCommand("myid", "", function(source, args)
     TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
 end, GetString("myid_help"))
 
+AVA.Commands.RegisterCommand("phonenumber", "", function(source, args, rawCommand, aPlayer)
+    if aPlayer then
+        TriggerClientEvent("chat:addMessage", source, {args = {GetString("phonenumber_message", aPlayer.phoneNumber)}})
+    end
+end, GetString("myid_help"))
+
 AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args, rawCommand, aPlayer)
     if type(args[1]) ~= "string" then
         return
