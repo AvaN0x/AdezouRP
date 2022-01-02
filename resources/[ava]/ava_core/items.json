@@ -12,6 +12,12 @@
         "weight": 0.1,
         "noIcon": true
     },
+    "phone": {
+        "label": "Téléphone",
+        "weight": 250,
+        "noIcon": true,
+        "closeInv": true
+    },
     "radio": {
         "label": "Radio",
         "weight": 250,
