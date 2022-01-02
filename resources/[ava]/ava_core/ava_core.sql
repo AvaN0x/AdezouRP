@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `status` text DEFAULT NULL,
   `jobs` text DEFAULT NULL,
   `inventory` longtext DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
   `metadata` longtext DEFAULT NULL,
   `last_played` boolean NOT NULL DEFAULT TRUE,
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -75,9 +76,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 --             "quantity": 1
 --         }
 --     ],
---     "metadata": {
---         "phone": "555-1234"
---     },
+--     "phone_number": "012-345-6789",
+--     "metadata": {},
 --     "last_played": true,
 --     "last_updated": "1970-01-01 00:00:00"
 -- }

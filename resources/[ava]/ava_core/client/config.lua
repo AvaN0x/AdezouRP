@@ -7,6 +7,9 @@ AVAConfig = {}
 -- edit 'debug_prints' in fxmanifest.lua, any value mean true, remove if false
 AVAConfig.Debug = false
 
+-- edit 'npwd' in fxmanifest.lua, any value mean true, remove if false
+AVAConfig.NPWD = false
+
 AVAConfig.InventoryKey = "F2"
 
 AVAConfig.InventoryMoneyOnTop = true

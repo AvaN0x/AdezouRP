@@ -11,6 +11,9 @@ AVAConfig.Discord = {}
 -- edit 'debug_prints' in fxmanifest.lua, any value mean true, remove if false
 AVAConfig.Debug = false
 
+-- edit 'npwd' in fxmanifest.lua, any value mean true, remove if false
+AVAConfig.NPWD = false
+
 -- edit 'max_characters' in fxmanifest.lua, value must be > 0
 AVAConfig.MaxChars = 5
 

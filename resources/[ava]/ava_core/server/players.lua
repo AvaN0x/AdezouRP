@@ -163,6 +163,18 @@ local function loadPlayer(src)
         health = aPlayer.metadata.health,
         status = aPlayer.status,
     })
+    if AVAConfig.NPWD then
+        while GetResourceState("npwd") ~= "started" do
+            Wait(0)
+        end
+        exports.npwd:newPlayer({
+            source = tonumber(src),
+            identifier = aPlayer.citizenId,
+            phoneNumber = aPlayer.phoneNumber,
+            firstname = aPlayer.character.firstname,
+            lastname = aPlayer.character.lastname,
+        })
+    end
 end
 
 local function logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
@@ -334,6 +346,11 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         aPlayer.jobs = json.decode(json.encode(AVAConfig.DefaultPlayerData.jobs)) or {}
         aPlayer.loadout = json.decode(json.encode(AVAConfig.DefaultPlayerData.loadout)) or {}
         aPlayer.metadata = json.decode(json.encode(AVAConfig.DefaultPlayerData.metadata)) or {}
+        if AVAConfig.NPWD then
+            aPlayer.phoneNumber = exports.npwd:generatePhoneNumber()
+        else
+            -- TODO: generate phone number
+        end
 
         dprint(json.encode(aPlayer.character, {indent = true}))
         exports.oxmysql:executeSync("UPDATE `players` SET `character` = :character WHERE `license` = :license AND `id` = :id",
@@ -611,6 +628,9 @@ AVA.Players.Logout = function(src)
         for i = 1, #jobs do
             local job = jobs[i]
             AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. ".grade." .. job.grade)
+        end
+        if AVAConfig.NPWD then
+            exports.npwd:unloadPlayer(tonumber(src))
         end
 
         dprint("^2[LOGOUT] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")

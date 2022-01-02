@@ -65,6 +65,8 @@ dependencies {"RageUI", "ava_base64toruntime", "MugShotBase64"}
 -- comment this line to disable debug prints
 ava_config "debug_prints" "yes"
 
+ava_config "npwd" "yes"
+
 ava_config "max_characters" "5"
 
 ava_config "max_jobs_count" "2"

@@ -274,6 +274,14 @@ RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
     RageUI.Visible(InventoryMenu, true)
 end)
 
+if AVAConfig.NPWD then
+    exports("hasPhoneItem", function()
+        -- FIXME waiting for a fix on the NPWD phone, I suggested it to the devs on discord https://discord.com/channels/791854454760013827/811371031104847883/927231590264889404
+        return true
+        -- return exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
+    end)
+end
+
 RegisterCommand("addtest", function()
     TriggerServerEvent("ava_core:server:addtest")
 end)

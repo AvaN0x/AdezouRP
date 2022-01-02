@@ -14,8 +14,13 @@ end)
 
 local resourceName<const> = GetCurrentResourceName()
 for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
-    if GetResourceMetadata(resourceName, "ava_config", i - 1) == "debug_prints" then
+    local dataName = GetResourceMetadata(resourceName, "ava_config", i - 1)
+
+    if dataName == "debug_prints" then
         AVAConfig.Debug = true
+
+    elseif dataName == "npwd" then
+        AVAConfig.NPWD = true
     end
 end
 

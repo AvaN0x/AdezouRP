@@ -21,6 +21,9 @@ for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
     elseif dataName == "debug_prints" then
         AVAConfig.Debug = true
 
+    elseif dataName == "npwd" then
+        AVAConfig.NPWD = true
+
     elseif dataName == "max_characters" then
         local value = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1)) or 0
         if value ~= "null" and tonumber(value) > 0 then
