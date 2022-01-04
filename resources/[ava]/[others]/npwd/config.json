@@ -5,7 +5,7 @@
         "exportFunction": "hasPhoneItem"
     },
     "general": {
-        "useResourceIntegration": false,
+        "useResourceIntegration": true,
         "toggleKey": "f1"
     },
     "database": {
