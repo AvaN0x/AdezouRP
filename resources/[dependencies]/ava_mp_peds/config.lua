@@ -5,16 +5,97 @@
 AVAConfig = {}
 
 -- If default exist, it will be used, else min will be the default
+-- {min = 0, default = 0, max = 100} means that the value will be reduced to be between 0.00 and 1.00
+-- {min = -100, default = 0, max = 100} means that the value will be reduced to be between -1.00 and 1.00
 AVAConfig.allComponents = {
+    gender = {min = 0, max = 1},
+    -- #region HeadBlendData
+    father = {min = 0, max = 44}, -- Father ids : 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44
+    mother = {min = 0, max = 45}, -- Mother ids : 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45
+    shape_mix = {min = 0, default = 50, max = 100},
+    skin_mix = {min = 0, default = 50, max = 100},
+    -- #endregion HeadBlendData
+
+    -- #region Ped face
+    -- Nose
+    nose_width = {min = -100, default = 0, max = 100},
+    nose_peak_hight = {min = -100, default = 0, max = 100},
+    nose_peak_lenght = {min = -100, default = 0, max = 100},
+    nose_bone_high = {min = -100, default = 0, max = 100},
+    nose_peak_lowering = {min = -100, default = 0, max = 100},
+    nose_bone_twist = {min = -100, default = 0, max = 100},
+
+    -- Eyebrows
+    eyebrown_high = {min = -100, default = 0, max = 100},
+    eyebrown_forward = {min = -100, default = 0, max = 100},
+
+    -- Cheeks
+    cheeks_bone_high = {min = -100, default = 0, max = 100},
+    cheeks_bone_width = {min = -100, default = 0, max = 100},
+    cheeks_width = {min = -100, default = 0, max = 100},
+
+    -- Eyes
+    eyes_openning = {min = -100, default = 0, max = 100},
+    eyes_color = {min = 0},
+
+    -- Lips
+    lips_thickness = {min = -100, default = 0, max = 100},
+
+    -- Jaw
+    jaw_bone_width = {min = -100, default = 0, max = 100},
+    jaw_bone_back_lenght = {min = -100, default = 0, max = 100},
+
+    -- Chin
+    chimp_bone_lowering = {min = -100, default = 0, max = 100},
+    chimp_bone_lenght = {min = -100, default = 0, max = 100},
+    chimp_bone_width = {min = -100, default = 0, max = 100},
+    chimp_hole = {min = -100, default = 0, max = 100},
+
+    -- Neck
+    neck_thickness = {min = -100, default = 0, max = 100},
+    -- #endregion Ped face
+
     gender = {category = "gender", min = 0, max = 1},
+    -- COMPONENTS
     -- Hairs
-    hair = {category = "hair", min = 0},
-    hair_txd = {category = "hair", min = 0},
-    main_hair_color = {category = "hair", min = 0},
-    scnd_hair_color = {category = "hair", min = 0},
+    hair = {min = 0},
+    hair_txd = {min = 0},
+    main_hair_color = {min = 0},
+    scnd_hair_color = {min = 0},
 }
 
-AVAConfig.skinComponents = {"gender", "hair", "hair_txd", "main_hair_color", "scnd_hair_color"}
+AVAConfig.skinComponents = {
+    "gender",
+    "mother",
+    "father",
+    "shape_mix",
+    "skin_mix",
+    "nose_width",
+    "nose_peak_hight",
+    "nose_peak_lenght",
+    "nose_bone_high",
+    "nose_peak_lowering",
+    "nose_bone_twist",
+    "eyebrown_high",
+    "eyebrown_forward",
+    "cheeks_bone_high",
+    "cheeks_bone_width",
+    "cheeks_width",
+    "eyes_openning",
+    "eyes_color",
+    "lips_thickness",
+    "jaw_bone_width",
+    "jaw_bone_back_lenght",
+    "chimp_bone_lowering",
+    "chimp_bone_lenght",
+    "chimp_bone_width",
+    "chimp_hole",
+    "neck_thickness",
+    "hair",
+    "hair_txd",
+    "main_hair_color",
+    "scnd_hair_color",
+}
 AVAConfig.clothesComponents = {}
 
 AVAConfig.HairOverlays = {
@@ -184,21 +265,3 @@ AVAConfig.HairOverlays = {
     },
 }
 
---[[
-
-
-0               Blemishes             0 - 23,   255  
-1               Facial Hair           0 - 28,   255  
-2               Eyebrows              0 - 33,   255  
-3               Ageing                0 - 14,   255  
-4               Makeup                0 - 74,   255  
-5               Blush                 0 - 6,    255  
-6               Complexion            0 - 11,   255  
-7               Sun Damage            0 - 10,   255  
-8               Lipstick              0 - 9,    255  
-9               Moles/Freckles        0 - 17,   255  
-10              Chest Hair            0 - 16,   255  
-11              Body Blemishes        0 - 11,   255  
-12              Add Body Blemishes    0 - 1,    255  
-
-]]

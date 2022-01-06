@@ -77,14 +77,54 @@ local function setPedSkinInternal(ped, skin)
     SetPedEyeColor(ped, 0)
     ClearAllPedProps(ped, 0)
 
-    -- #region HeadBlend
-    SetPedHeadBlendData(ped, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0, false)
+    -- #region HeadBlendData
+    SetPedHeadBlendData(ped, localSkin.mother, localSkin.father, 0, localSkin.mother, localSkin.father, 0, (localSkin.shape_mix / 100) + 0.0,
+        (localSkin.skin_mix / 100) + 0.0, 0.0, false)
     while not HasPedHeadBlendFinished(ped) do
         Wait(0)
     end
-    -- #endregion HeadBlend
-    -- TODO drawable 0
-    -- TODO drawable 1
+    -- #endregion HeadBlendData
+
+    -- #region Ped face
+    -- Nose
+    SetPedFaceFeature(ped, 0, (localSkin.nose_width / 100) + 0.0)
+    SetPedFaceFeature(ped, 1, (localSkin.nose_peak_hight / 100) + 0.0)
+    SetPedFaceFeature(ped, 2, (localSkin.nose_peak_lenght / 100) + 0.0)
+    SetPedFaceFeature(ped, 3, (localSkin.nose_bone_high / 100) + 0.0)
+    SetPedFaceFeature(ped, 4, (localSkin.nose_peak_lowering / 100) + 0.0)
+    SetPedFaceFeature(ped, 5, (localSkin.nose_bone_twist / 100) + 0.0)
+
+    -- Eyebrows
+    SetPedFaceFeature(ped, 6, (localSkin.eyebrown_high / 100) + 0.0) -- Eyebrow height
+    SetPedFaceFeature(ped, 7, (localSkin.eyebrown_forward / 100) + 0.0) -- Eyebrow depth
+
+    -- Cheeks
+    SetPedFaceFeature(ped, 8, (localSkin.cheeks_bone_high / 100) + 0.0) -- Cheekbones Height
+    SetPedFaceFeature(ped, 9, (localSkin.cheeks_bone_width / 100) + 0.0) -- Cheekbones Width
+    SetPedFaceFeature(ped, 10, (localSkin.cheeks_width / 100) + 0.0) -- Cheeks Width
+
+    -- Eyes
+    SetPedFaceFeature(ped, 11, (localSkin.eyes_openning / 100) + 0.0) -- Eyes squint
+    SetPedEyeColor(ped, localSkin.eyes_color) -- Eyes color
+
+    -- Lips
+    SetPedFaceFeature(ped, 12, (localSkin.lips_thickness / 100) + 0.0) -- Lip Fullness
+
+    -- Jaw
+    SetPedFaceFeature(ped, 13, (localSkin.jaw_bone_width / 100) + 0.0) -- Jaw Bone Width
+    SetPedFaceFeature(ped, 14, (localSkin.jaw_bone_back_lenght / 100) + 0.0) -- Jaw Bone Length
+
+    -- Chin
+    SetPedFaceFeature(ped, 15, (localSkin.chimp_bone_lowering / 100) + 0.0) -- Chin Height
+    SetPedFaceFeature(ped, 16, (localSkin.chimp_bone_lenght / 100) + 0.0) -- Chin Length
+    SetPedFaceFeature(ped, 17, (localSkin.chimp_bone_width / 100) + 0.0) -- Chin Width
+    SetPedFaceFeature(ped, 18, (localSkin.chimp_hole / 100) + 0.0) -- Chin Hole Size
+
+    -- Neck
+    SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0) -- Neck Thickness
+    -- #endregion Ped face
+
+
 
     -- Hair
     SetPedComponentVariation(ped, 2, localSkin.hair, localSkin.hair_txd, 0)
