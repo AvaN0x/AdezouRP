@@ -12,7 +12,7 @@ local NumHairColors<const> = GetNumHairColors()
 -- AVAConfig.skinComponents.scnd_hair_color.max = NumHairColors - 1
 
 -- Init local skin to default values
-for element, value in pairs(AVAConfig.allComponents) do
+for element, value in pairs(AVAConfig.skinComponents) do
     localSkin[element] = value.default or value.min
 end
 
@@ -25,7 +25,7 @@ local function saveOrRestorePlayerLocalSkin(ped)
         if localPlayerSkinSave then
             print("^1[DEBUG]^0 Restoring player skin")
             print("localPlayerSkinSave before", json.encode(localPlayerSkinSave, {indent = true}))
-            for element, value in pairs(AVAConfig.allComponents) do
+            for element, value in pairs(AVAConfig.skinComponents) do
                 localSkin[element] = localPlayerSkinSave[element] or value.default or value.min
             end
             print("localSkin after", json.encode(localSkin, {indent = true}))
@@ -38,7 +38,7 @@ local function saveOrRestorePlayerLocalSkin(ped)
             localPlayerSkinSave = {}
             print("^1[DEBUG]^0 Saving player skin")
             print("localSkin before", json.encode(localSkin, {indent = true}))
-            for element, value in pairs(AVAConfig.allComponents) do
+            for element, value in pairs(AVAConfig.skinComponents) do
                 -- Save value
                 localPlayerSkinSave[element] = localSkin[element] or value.default or value.min
                 -- Set value to default for localSkin
@@ -50,10 +50,31 @@ local function saveOrRestorePlayerLocalSkin(ped)
     end
 end
 
----Set ped components based on skin components, internal
+---Set ped components based on clothes components, internal
 ---@param ped entity
 ---@param skin table
-local function setPedSkinInternal(ped, skin)
+local function setPedClothesInternal(ped, skin)
+
+end
+
+-------------
+-- EXPORTS --
+-------------
+
+---Set ped components based on skin components
+---@param ped entity
+---@param skin table
+function setPedSkin(ped, skin)
+    saveOrRestorePlayerLocalSkin(ped)
+
+    if skin then
+        for component, _ in pairs(AVAConfig.skinComponents) do
+            if skin[component] then
+                localSkin[component] = skin[component]
+            end
+        end
+    end
+
     -- #region Set player model
     local model<const> = localSkin.gender == 0 and GetHashKey("mp_m_freemode_01") or GetHashKey("mp_f_freemode_01")
 
@@ -124,8 +145,6 @@ local function setPedSkinInternal(ped, skin)
     SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0) -- Neck Thickness
     -- #endregion Ped face
 
-
-
     -- Hair
     SetPedComponentVariation(ped, 2, localSkin.hair, localSkin.hair_txd, 0)
     -- Hair Color
@@ -133,54 +152,8 @@ local function setPedSkinInternal(ped, skin)
 
     -- Hair overlays and tattoos
     reloadPedOverlays(ped)
-end
 
----Set ped components based on clothes components, internal
----@param ped entity
----@param skin table
-local function setPedClothesInternal(ped, skin)
-
-end
-
--------------
--- EXPORTS --
--------------
-
----Set ped components based on all components
----@param ped entity
----@param skin table
-function setPedAllComponents(ped, skin)
-    saveOrRestorePlayerLocalSkin(ped)
-
-    if skin then
-        for component, _ in pairs(AVAConfig.allComponents) do
-            if skin[component] then
-                localSkin[component] = skin[component]
-            end
-        end
-    end
-
-    setPedSkinInternal(ped, skin)
     setPedClothesInternal(ped, skin)
-end
-exports("setPedAllComponents", setPedAllComponents)
-
----Set ped components based on skin components
----@param ped entity
----@param skin table
-function setPedSkin(ped, skin)
-    saveOrRestorePlayerLocalSkin(ped)
-
-    if skin then
-        for i = 0, #AVAConfig.skinComponents do
-            local component<const> = AVAConfig.skinComponents[i]
-            if skin[component] then
-                localSkin[component] = skin[component]
-            end
-        end
-    end
-
-    setPedSkinInternal(ped, skin)
 end
 exports("setPedSkin", setPedSkin)
 

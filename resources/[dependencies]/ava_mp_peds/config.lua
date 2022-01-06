@@ -7,7 +7,7 @@ AVAConfig = {}
 -- If default exist, it will be used, else min will be the default
 -- {min = 0, default = 0, max = 100} means that the value will be reduced to be between 0.00 and 1.00
 -- {min = -100, default = 0, max = 100} means that the value will be reduced to be between -1.00 and 1.00
-AVAConfig.allComponents = {
+AVAConfig.skinComponents = {
     gender = {min = 0, max = 1},
     -- #region HeadBlendData
     father = {min = 0, max = 44}, -- Father ids : 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44
@@ -55,7 +55,10 @@ AVAConfig.allComponents = {
     neck_thickness = {min = -100, default = 0, max = 100},
     -- #endregion Ped face
 
-    gender = {category = "gender", min = 0, max = 1},
+    -- #region Ped head
+
+    -- #endregion Ped head
+
     -- COMPONENTS
     -- Hairs
     hair = {min = 0},
@@ -64,38 +67,6 @@ AVAConfig.allComponents = {
     scnd_hair_color = {min = 0},
 }
 
-AVAConfig.skinComponents = {
-    "gender",
-    "mother",
-    "father",
-    "shape_mix",
-    "skin_mix",
-    "nose_width",
-    "nose_peak_hight",
-    "nose_peak_lenght",
-    "nose_bone_high",
-    "nose_peak_lowering",
-    "nose_bone_twist",
-    "eyebrown_high",
-    "eyebrown_forward",
-    "cheeks_bone_high",
-    "cheeks_bone_width",
-    "cheeks_width",
-    "eyes_openning",
-    "eyes_color",
-    "lips_thickness",
-    "jaw_bone_width",
-    "jaw_bone_back_lenght",
-    "chimp_bone_lowering",
-    "chimp_bone_lenght",
-    "chimp_bone_width",
-    "chimp_hole",
-    "neck_thickness",
-    "hair",
-    "hair_txd",
-    "main_hair_color",
-    "scnd_hair_color",
-}
 AVAConfig.clothesComponents = {}
 
 AVAConfig.HairOverlays = {
