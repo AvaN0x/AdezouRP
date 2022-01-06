@@ -54,7 +54,61 @@ end
 ---@param ped entity
 ---@param skin table
 local function setPedClothesInternal(ped, skin)
+    -- Mask
+    SetPedComponentVariation(ped, 1, localSkin.mask, localSkin.mask_txd, 0)
+    -- Torso
+    SetPedComponentVariation(ped, 3, localSkin.torso, localSkin.torso_txd, 0)
+    -- Leg
+    SetPedComponentVariation(ped, 4, localSkin.leg, localSkin.leg_txd, 0)
+    -- Bag
+    SetPedComponentVariation(ped, 5, localSkin.bag, localSkin.bag_txd, 0)
+    -- Shoes
+    SetPedComponentVariation(ped, 6, localSkin.shoes, localSkin.shoes_txd, 0)
+    -- Accessory
+    SetPedComponentVariation(ped, 7, localSkin.accessory, localSkin.accessory_txd, 0)
+    -- Undershirt
+    SetPedComponentVariation(ped, 8, localSkin.undershirt, localSkin.undershirt_txd, 0)
+    -- Kevlar
+    SetPedComponentVariation(ped, 9, localSkin.bodyarmor, localSkin.bodyarmor_txd, 0)
+    -- Decals
+    SetPedComponentVariation(ped, 10, localSkin.decals, localSkin.decals_txd, 0)
+    -- Torso
+    SetPedComponentVariation(ped, 11, localSkin.tops, localSkin.tops_txd, 0)
 
+    -- Hats
+    if localSkin.hats == -1 then
+        ClearPedProp(ped, 0)
+    else
+        SetPedPropIndex(ped, 0, localSkin.hats, localSkin.hats_txd, 0)
+    end
+
+    -- Glasses
+    if localSkin.glasses == -1 then
+        ClearPedProp(ped, 1)
+    else
+        SetPedPropIndex(ped, 1, localSkin.glasses, localSkin.glasses_txd, 0)
+    end
+
+    -- Ears
+    if localSkin.ears == -1 then
+        ClearPedProp(ped, 2)
+    else
+        SetPedPropIndex(ped, 2, localSkin.ears, localSkin.ears_txd, 0)
+    end
+
+    -- Watches
+    if localSkin.watches == -1 then
+        ClearPedProp(ped, 6)
+    else
+        SetPedPropIndex(ped, 6, localSkin.watches, localSkin.watches_txd, 0)
+    end
+
+    -- Bracelets
+    if localSkin.bracelets == -1 then
+        ClearPedProp(ped, 7)
+    else
+        SetPedPropIndex(ped, 7, localSkin.bracelets, localSkin.bracelets_txd, 0)
+    end
 end
 
 -------------
@@ -92,10 +146,7 @@ function setPedSkin(ped, skin)
     -- #endregion Set player model
 
     ClearPedDecorations(ped)
-    -- ClearPedDecorationsLeaveScars(ped)
     SetPedDefaultComponentVariation(ped)
-    SetPedHairColor(ped, 0, 0)
-    SetPedEyeColor(ped, 0)
     ClearAllPedProps(ped, 0)
 
     -- #region HeadBlendData
@@ -199,4 +250,101 @@ function reloadPedOverlays(ped)
     -- TODO tattoos
 end
 exports("reloadPlayerOverlays", reloadPlayerOverlays)
+
+-------------------
+-- DEBUG COMMAND -- 
+-------------------
+
+RegisterCommand("testmp", function(source, args, rawCommand)
+    local skin = {
+        [0] = {
+            gender = 0,
+            father = 12,
+            mother = 24,
+            shape_mix = 100,
+            skin_mix = 100,
+
+            -- Hairs
+            hair = 57,
+            hair_txd = 0,
+            main_hair_color = 18,
+            scnd_hair_color = 0,
+
+            nose_width = 100,
+            nose_peak_hight = 100,
+            nose_peak_lenght = 100,
+            nose_bone_high = 100,
+            nose_peak_lowering = 100,
+            nose_bone_twist = 100,
+
+            eyebrown_high = 100,
+            eyebrown_forward = 100,
+
+            cheeks_bone_high = 100,
+            cheeks_bone_width = 100,
+            cheeks_width = 100,
+
+            eyes_openning = 100,
+            eyes_color = 100,
+
+            lips_thickness = 100,
+
+            jaw_bone_width = 100,
+            jaw_bone_back_lenght = 100,
+
+            chimp_bone_lowering = 100,
+            chimp_bone_lenght = 100,
+            chimp_bone_width = 100,
+            chimp_hole = 100,
+
+            neck_thickness = 100,
+
+            mask = 0,
+            mask_txd = 0,
+            torso = 15,
+            torso_txd = 0,
+            leg = 61,
+            leg_txd = 1,
+            bag = 0,
+            bag_txd = 0,
+            shoes = 5,
+            shoes_txd = 0,
+            accessory = 0,
+            accessory_txd = 0,
+            undershirt = 15,
+            undershirt_txd = 0,
+            bodyarmor = 0,
+            bodyarmor_txd = 0,
+            decals = 0,
+            decals_txd = 0,
+            tops = 15,
+            tops_txd = 0,
+
+            hats = 28,
+            hats_txd = 3,
+            glasses = 10,
+            glasses_txd = 0,
+            ears = 1,
+            ears_txd = 0,
+            watches = 10,
+            watches_txd = 0,
+            bracelets = 2,
+            bracelets_txd = 0,
+        },
+        [1] = {
+            gender = 1,
+            -- Hairs
+            hair = 80,
+            hair_txd = 0,
+            main_hair_color = 40,
+            scnd_hair_color = 0,
+
+        },
+    }
+
+    exports.ava_mp_peds:setPedSkin(PlayerPedId(), skin[args[1] and tonumber(args[1]) or 0])
+
+    -- print(json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
+    TriggerServerEvent("ava_core:server:reloadLoadout")
+end)
 

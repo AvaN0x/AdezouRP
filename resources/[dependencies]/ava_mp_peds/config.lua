@@ -60,14 +60,93 @@ AVAConfig.skinComponents = {
     -- #endregion Ped head
 
     -- COMPONENTS
+    -- Mask
+    mask = {min = 0},
+    mask_txd = {min = 0},
+    -- Torso
+    torso = {min = 0},
+    torso_txd = {min = 0},
     -- Hairs
     hair = {min = 0},
     hair_txd = {min = 0},
     main_hair_color = {min = 0},
     scnd_hair_color = {min = 0},
+    -- Leg
+    leg = {min = 0},
+    leg_txd = {min = 0},
+    -- Bag
+    bag = {min = 0},
+    bag_txd = {min = 0},
+    -- Shoes
+    shoes = {min = 0},
+    shoes_txd = {min = 0},
+    -- Accessory
+    accessory = {min = 0},
+    accessory_txd = {min = 0},
+    -- Undershirt
+    undershirt = {min = 0},
+    undershirt_txd = {min = 0},
+    -- Kevlar
+    bodyarmor = {min = 0},
+    bodyarmor_txd = {min = 0},
+    -- Decals
+    decals = {min = 0},
+    decals_txd = {min = 0},
+    -- Torso
+    tops = {min = 0},
+    tops_txd = {min = 0},
+
+    -- PROPS
+    -- Hats
+    hats = {min = -1},
+    hats_txd = {min = 0},
+    -- Glasses
+    glasses = {min = -1},
+    glasses_txd = {min = 0},
+    -- Ears
+    ears = {min = -1},
+    ears_txd = {min = 0},
+    -- Watches
+    watches = {min = -1},
+    watches_txd = {min = 0},
+    -- Bracelets
+    bracelets = {min = -1},
+    bracelets_txd = {min = 0},
 }
 
-AVAConfig.clothesComponents = {}
+AVAConfig.clothesComponents = {
+    "mask",
+    "mask_txd",
+    "torso",
+    "torso_txd",
+    "leg",
+    "leg_txd",
+    "bag",
+    "bag_txd",
+    "shoes",
+    "shoes_txd",
+    "accessory",
+    "accessory_txd",
+    "undershirt",
+    "undershirt_txd",
+    "bodyarmor",
+    "bodyarmor_txd",
+    "decals",
+    "decals_txd",
+    "tops",
+    "tops_txd",
+
+    "hats",
+    "hats_txd",
+    "glasses",
+    "glasses_txd",
+    "ears",
+    "ears_txd",
+    "watches",
+    "watches_txd",
+    "bracelets",
+    "bracelets_txd",
+}
 
 AVAConfig.HairOverlays = {
     [0] = {
