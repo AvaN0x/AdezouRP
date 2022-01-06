@@ -99,3 +99,20 @@ RegisterNetEvent("ava_core:server:playerDeath", function(data)
     end
 end)
 
+------------------------------------------------
+--------------- EXPLOSION EVENTS ---------------
+------------------------------------------------
+
+local BlockedExplosions<const> = {1, 2, 4, 5, 25, 32, 33, 35, 36, 37, 38}
+
+AddEventHandler("explosionEvent", function(sender, event)
+    for i = 1, #BlockedExplosions do
+        if event.explosionType == BlockedExplosions[i] then
+            -- CancelEvent()
+            exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_dev", "", GetPlayerName(sender)
+                .. " made an explosionEvent that would have been canceled, value : " .. event.explosionType, 0xFF0000)
+            return
+        end
+    end
+    exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_dev", "", GetPlayerName(sender) .. " made an explosionEvent, value : " .. event.explosionType, 0xFF0000)
+end)
