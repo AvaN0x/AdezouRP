@@ -902,7 +902,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end, 10)
         if CharacterSkin.makeup_2 > 0 then
             -- TODO update PanelColour list of colours to a valid one
-            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.Makeup, CharacterData.Appearance.EyeMakeupColorMin or 1,
                 CharacterData.Appearance.EyeMakeupColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeMakeupColorMin = MinimumIndex
                     CharacterData.Appearance.EyeMakeupColorIndex = CurrentIndex
@@ -912,7 +912,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_3, CharacterSkin.makeup_4)
                 end, 10)
             -- TODO update PanelColour list of colours to a valid one
-            Panels:ColourPanel("Couleur 2", RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeMakeupColor2Min or 1,
+            Panels:ColourPanel("Couleur 2", RageUI.PanelColour.Makeup, CharacterData.Appearance.EyeMakeupColor2Min or 1,
                 CharacterData.Appearance.EyeMakeupColor2Index or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeMakeupColor2Min = MinimumIndex
                     CharacterData.Appearance.EyeMakeupColor2Index = CurrentIndex
@@ -932,7 +932,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         end, 11)
         if CharacterSkin.lipstick_2 > 0 then
             -- TODO update PanelColour list of colours to a valid one
-            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.LipstickColorMin or 1,
+            Panels:ColourPanel(GetString("color"), RageUI.PanelColour.Makeup, CharacterData.Appearance.LipstickColorMin or 1,
                 CharacterData.Appearance.LipstickColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.LipstickColorMin = MinimumIndex
                     CharacterData.Appearance.LipstickColorIndex = CurrentIndex
