@@ -38,6 +38,7 @@ local SecondMainMenu = RageUI.CreateMenu("", "SecondMainMenu", 0, 0, "arcadeui_r
 
 
 local minColorIndex, colorIndex = 1, 1
+local minColorMakeupIndex, colorMakeupIndex = 1, 1
 local percent = 0.5
 
 local sliderTest1 = 1
@@ -150,7 +151,9 @@ function RageUI.PoolMenus:Example()
 
         Items:AddButton("Nose", nil, nil, function(onSelected)
 		end)
-        Items:AddButton("Test Color", nil, {}, function(onSelected)
+        Items:AddButton("Test hair color", nil, {}, function(onSelected)
+		end)
+        Items:AddButton("Test makeup color", nil, {}, function(onSelected)
 		end)
         Items:AddButton("Test percent", nil, {}, function(onSelected)
 		end)
@@ -194,11 +197,16 @@ function RageUI.PoolMenus:Example()
             colorIndex = CurrentIndex
             print(RageUI.PanelColour.HairCut[colorIndex][1], RageUI.PanelColour.HairCut[colorIndex][2], RageUI.PanelColour.HairCut[colorIndex][3])
         end, 4)
+        Panels:ColourPanel("Couleur", RageUI.PanelColour.Makeup, minColorMakeupIndex, colorMakeupIndex, function(MinimumIndex, CurrentIndex)
+            minColorMakeupIndex = MinimumIndex
+            colorMakeupIndex = CurrentIndex
+            print(RageUI.PanelColour.Makeup[colorMakeupIndex][1], RageUI.PanelColour.Makeup[colorMakeupIndex][2], RageUI.PanelColour.Makeup[colorMakeupIndex][3])
+        end, 5)
 
         Panels:PercentagePanel(percent, nil, nil, nil, function(Percent)
             percent = Percent
             print(math.floor(percent * 10))
-        end, 5)
+        end, 6)
 	end)
 
 
