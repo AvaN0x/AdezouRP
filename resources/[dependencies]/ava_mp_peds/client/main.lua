@@ -5,11 +5,12 @@
 local localSkin = {}
 local localPlayerSkinSave = nil
 local NumHairColors<const> = GetNumHairColors()
+local NumMakeupColors<const> = GetNumMakeupColors()
 
 -- AVAConfig.skinComponents.hair.max = GetNumberOfPedDrawableVariations(ped, 2) - 1
 -- AVAConfig.skinComponents.hair_txd.max = GetNumberOfPedTextureVariations(ped, 2, localSkin.hair) - 1
--- AVAConfig.skinComponents.main_hair_color.max = NumHairColors - 1
--- AVAConfig.skinComponents.scnd_hair_color.max = NumHairColors - 1
+-- AVAConfig.skinComponents.hair_main_color.max = NumHairColors - 1
+-- AVAConfig.skinComponents.hair_scnd_color.max = NumHairColors - 1
 
 -- Init local skin to default values
 for element, value in pairs(AVAConfig.skinComponents) do
@@ -196,10 +197,46 @@ function setPedSkin(ped, skin)
     SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0) -- Neck Thickness
     -- #endregion Ped face
 
+    -- #region Ped head overlays
+    -- 255 is to disable
+    -- Blemishes
+    SetPedHeadOverlay(ped, 0, localSkin.blemishes, (localSkin.blemishes_op / 100) + 0.0)
+    -- Beard
+    SetPedHeadOverlay(ped, 1, localSkin.beard, (localSkin.beard_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 1, 1, localSkin.beard_color, localSkin.beard_color)
+    -- Eyebrows
+    SetPedHeadOverlay(ped, 2, localSkin.eyebrows, (localSkin.eyebrows_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 2, 1, localSkin.eyebrows_color, localSkin.eyebrows_color)
+    -- Ageing
+    SetPedHeadOverlay(ped, 3, localSkin.ageing, (localSkin.ageing_op / 100) + 0.0)
+    -- Makeup
+    SetPedHeadOverlay(ped, 4, localSkin.makeup, (localSkin.makeup_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 4, 2, localSkin.makeup_main_color, localSkin.makeup_scnd_color)
+    -- Blush
+    SetPedHeadOverlay(ped, 5, localSkin.blush, (localSkin.blush_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 5, 2, localSkin.blush_main_color) -- Blush Color
+    -- Complexion
+    SetPedHeadOverlay(ped, 6, localSkin.complexion, (localSkin.complexion_op / 100) + 0.0)
+    -- SunDamage
+    SetPedHeadOverlay(ped, 7, localSkin.sundamage, (localSkin.sundamage_op / 100) + 0.0)
+    -- Lipstick
+    SetPedHeadOverlay(ped, 8, localSkin.lipstick, (localSkin.lipstick_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 8, 1, localSkin.lipstick_main_color, localSkin.lipstick_scnd_color)
+    -- Moles/Freckles
+    SetPedHeadOverlay(ped, 9, localSkin.moles, (localSkin.moles_op / 100) + 0.0)
+    -- Chest Hair
+    SetPedHeadOverlay(ped, 10, localSkin.chesthair, (localSkin.chesthair_op / 100) + 0.0)
+    SetPedHeadOverlayColor(ped, 10, 1, localSkin.chesthair_color, localSkin.chesthair_color)
+    -- Body Blemishes
+    SetPedHeadOverlay(ped, 11, localSkin.bodyblemishes == -1 and 255 or localSkin.bodyblemishes, (localSkin.bodyblemishes_op / 100) + 0.0)
+    -- Add Body Blemishes
+    SetPedHeadOverlay(ped, 12, localSkin.addbodyblemishes == -1 and 255 or localSkin.addbodyblemishes, (localSkin.addbodyblemishes_op / 100) + 0.0) -- Blemishes 'added body effect' + opacity
+    -- #endregion Ped head overlays
+
     -- Hair
     SetPedComponentVariation(ped, 2, localSkin.hair, localSkin.hair_txd, 0)
     -- Hair Color
-    SetPedHairColor(ped, localSkin.main_hair_color, localSkin.scnd_hair_color)
+    SetPedHairColor(ped, localSkin.hair_main_color, localSkin.hair_scnd_color)
 
     -- Hair overlays and tattoos
     reloadPedOverlays(ped)
@@ -267,8 +304,8 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             -- Hairs
             hair = 57,
             hair_txd = 0,
-            main_hair_color = 18,
-            scnd_hair_color = 0,
+            hair_main_color = 34,
+            hair_scnd_color = 0,
 
             nose_width = 100,
             nose_peak_hight = 100,
@@ -320,9 +357,9 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             tops = 15,
             tops_txd = 0,
 
-            hats = 28,
-            hats_txd = 3,
-            glasses = 10,
+            hats = 35,
+            hats_txd = 0,
+            glasses = 31,
             glasses_txd = 0,
             ears = 1,
             ears_txd = 0,
@@ -330,14 +367,49 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             watches_txd = 0,
             bracelets = 2,
             bracelets_txd = 0,
+
+            blemishes = 4,
+            blemishes_op = 100,
+            beard = 8,
+            beard_op = 100,
+            beard_color = 34,
+            eyebrows = 0,
+            eyebrows_op = 100,
+            eyebrows_color = 34,
+            ageing = 4,
+            ageing_op = 100,
+            makeup = 12,
+            makeup_op = 100,
+            makeup_main_color = 0,
+            makeup_scnd_color = 0,
+            blush = 0,
+            blush_op = 100,
+            blush_main_color = 0,
+            complexion = 0,
+            complexion_op = 100,
+            sundamage = 0,
+            sundamage_op = 100,
+            lipstick = 4,
+            lipstick_op = 100,
+            lipstick_main_color = 0,
+            lipstick_scnd_color = 0,
+            moles = 5,
+            moles_op = 100,
+            chesthair = 8,
+            chesthair_op = 100,
+            chesthair_color = 34,
+            bodyblemishes = 9,
+            bodyblemishes_op = 100,
+            addbodyblemishes = 0,
+            addbodyblemishes_op = 100,
         },
         [1] = {
             gender = 1,
             -- Hairs
             hair = 80,
             hair_txd = 0,
-            main_hair_color = 40,
-            scnd_hair_color = 0,
+            hair_main_color = 40,
+            hair_scnd_color = 0,
 
         },
     }

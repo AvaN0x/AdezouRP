@@ -24,40 +24,79 @@ AVAConfig.skinComponents = {
     nose_bone_high = {min = -100, default = 0, max = 100},
     nose_peak_lowering = {min = -100, default = 0, max = 100},
     nose_bone_twist = {min = -100, default = 0, max = 100},
-
     -- Eyebrows
     eyebrown_high = {min = -100, default = 0, max = 100},
     eyebrown_forward = {min = -100, default = 0, max = 100},
-
     -- Cheeks
     cheeks_bone_high = {min = -100, default = 0, max = 100},
     cheeks_bone_width = {min = -100, default = 0, max = 100},
     cheeks_width = {min = -100, default = 0, max = 100},
-
     -- Eyes
     eyes_openning = {min = -100, default = 0, max = 100},
     eyes_color = {min = 0},
-
     -- Lips
     lips_thickness = {min = -100, default = 0, max = 100},
-
     -- Jaw
     jaw_bone_width = {min = -100, default = 0, max = 100},
     jaw_bone_back_lenght = {min = -100, default = 0, max = 100},
-
     -- Chin
     chimp_bone_lowering = {min = -100, default = 0, max = 100},
     chimp_bone_lenght = {min = -100, default = 0, max = 100},
     chimp_bone_width = {min = -100, default = 0, max = 100},
     chimp_hole = {min = -100, default = 0, max = 100},
-
     -- Neck
     neck_thickness = {min = -100, default = 0, max = 100},
     -- #endregion Ped face
 
-    -- #region Ped head
-
-    -- #endregion Ped head
+    -- #region Ped head overlays
+    -- Blemishes
+    blemishes = {min = 0},
+    blemishes_op = {min = 0, max = 100},
+    -- Beard
+    beard = {min = 0},
+    beard_op = {min = 0, default = 50, max = 100},
+    beard_color = {min = 0},
+    -- Eyebrows
+    eyebrows = {min = 0},
+    eyebrows_op = {min = 0, default = 50, max = 100},
+    eyebrows_color = {min = 0},
+    -- Ageing
+    ageing = {min = 0},
+    ageing_op = {min = 0, max = 100},
+    -- Makeup
+    makeup = {min = 0},
+    makeup_op = {min = 0, max = 100},
+    makeup_main_color = {min = 0},
+    makeup_scnd_color = {min = 0},
+    -- Blush
+    blush = {min = 0},
+    blush_op = {min = 0, max = 100},
+    blush_main_color = {min = 0},
+    -- Complexion
+    complexion = {min = 0},
+    complexion_op = {min = 0, max = 100},
+    -- SunDamage
+    sundamage = {min = 0},
+    sundamage_op = {min = 0, max = 100},
+    -- Lipstick
+    lipstick = {min = 0},
+    lipstick_op = {min = 0, max = 100},
+    lipstick_main_color = {min = 0},
+    lipstick_scnd_color = {min = 0},
+    -- Moles/Freckles
+    moles = {min = 0},
+    moles_op = {min = 0, max = 100},
+    -- Chest Hair
+    chesthair = {min = 0},
+    chesthair_op = {min = 0, max = 100},
+    chesthair_color = {min = 0},
+    -- Body Blemishes
+    bodyblemishes = {min = 0},
+    bodyblemishes_op = {min = 0, max = 100},
+    -- Add Body Blemishes
+    addbodyblemishes = {min = 0},
+    addbodyblemishes_op = {min = 0, max = 100},
+    -- #endregion Ped head overlays
 
     -- COMPONENTS
     -- Mask
@@ -69,8 +108,8 @@ AVAConfig.skinComponents = {
     -- Hairs
     hair = {min = 0},
     hair_txd = {min = 0},
-    main_hair_color = {min = 0},
-    scnd_hair_color = {min = 0},
+    hair_main_color = {min = 0},
+    hair_scnd_color = {min = 0},
     -- Leg
     leg = {min = 0},
     leg_txd = {min = 0},
