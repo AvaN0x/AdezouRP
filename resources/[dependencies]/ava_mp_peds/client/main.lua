@@ -252,7 +252,7 @@ function setPedClothes(ped, skin)
     saveOrRestorePlayerLocalSkin(ped)
 
     if skin then
-        for i = 0, #AVAConfig.clothesComponents do
+        for i = 1, #AVAConfig.clothesComponents do
             local component<const> = AVAConfig.clothesComponents[i]
             if skin[component] then
                 localSkin[component] = skin[component]
@@ -270,6 +270,21 @@ function getPlayerSkin()
     return localPlayerSkinSave or localSkin
 end
 exports("getPlayerSkin", getPlayerSkin)
+
+---Returns player clothes
+---@return table
+function getPlayerClothes()
+    local playerSkin<const> = getPlayerSkin()
+    local clothes = {}
+
+    for i = 1, #AVAConfig.clothesComponents do
+        local component<const> = AVAConfig.clothesComponents[i]
+        clothes[component] = playerSkin[component]
+    end
+
+    return clothes
+end
+exports("getPlayerClothes", getPlayerClothes)
 
 ---Reload ped overlays, hairs and tattoos
 ---@param ped entity
@@ -416,7 +431,8 @@ RegisterCommand("testmp", function(source, args, rawCommand)
 
     exports.ava_mp_peds:setPedSkin(PlayerPedId(), skin[args[1] and tonumber(args[1]) or 0])
 
-    -- print(json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
+    print("player skin", json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
+    print("player clothes", json.encode(exports.ava_mp_peds:getPlayerClothes(), {indent = true}))
     TriggerServerEvent("ava_core:server:reloadLoadout")
 end)
 
