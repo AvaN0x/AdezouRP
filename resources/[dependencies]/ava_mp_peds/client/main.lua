@@ -299,7 +299,15 @@ function reloadPedOverlays(ped)
         end
     end
 
-    -- TODO tattoos
+    if localSkin.tattoos then
+        for i = 1, #localSkin.tattoos do
+            local tattoo<const> = localSkin.tattoos[i]
+            if tattoo.collection and tattoo.overlay then
+                print("^3[DEBUG]^0 Set tattoo", tattoo.collection, tattoo.overlay)
+                AddPedDecorationFromHashes(ped, tattoo.collection, tattoo.overlay)
+            end
+        end
+    end
 end
 exports("reloadPlayerOverlays", reloadPlayerOverlays)
 
@@ -417,6 +425,29 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             bodyblemishes_op = 100,
             addbodyblemishes = 0,
             addbodyblemishes_op = 100,
+
+            tattoos = {
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_006_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_011_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_009_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_051_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_054_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_040_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_057_F"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_M_Head_001"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_M_Head_002"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_F_RSide_000"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_M_Neck_000"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_M_Neck_003"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_F_Neck_001"},
+                {collection = "mplowrider2_overlays", overlay = "MP_LR_Tat_018_F"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_Award_F_013"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_012"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_034"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_028"},
+                {collection = "mpstunt_overlays", overlay = "MP_MP_Stunt_tat_004_F"},
+            },
+
         },
         [1] = {
             gender = 1,
@@ -426,13 +457,131 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             hair_main_color = 40,
             hair_scnd_color = 0,
 
+            nose_width = 0,
+            nose_peak_hight = 0,
+            nose_peak_lenght = 0,
+            nose_bone_high = 0,
+            nose_peak_lowering = 0,
+            nose_bone_twist = 0,
+
+            eyebrown_high = 0,
+            eyebrown_forward = 0,
+
+            cheeks_bone_high = 0,
+            cheeks_bone_width = 0,
+            cheeks_width = 0,
+
+            eyes_openning = 0,
+            eyes_color = 0,
+
+            lips_thickness = 0,
+
+            jaw_bone_width = 0,
+            jaw_bone_back_lenght = 0,
+
+            chimp_bone_lowering = 0,
+            chimp_bone_lenght = 0,
+            chimp_bone_width = 0,
+            chimp_hole = 0,
+
+            neck_thickness = 0,
+
+            mask = 0,
+            mask_txd = 0,
+            torso = 15,
+            torso_txd = 0,
+            leg = 15,
+            leg_txd = 0,
+            bag = 0,
+            bag_txd = 0,
+            shoes = 5,
+            shoes_txd = 0,
+            accessory = 0,
+            accessory_txd = 0,
+            undershirt = 14,
+            undershirt_txd = 0,
+            bodyarmor = 0,
+            bodyarmor_txd = 0,
+            decals = 0,
+            decals_txd = 0,
+            tops = 15,
+            tops_txd = 0,
+
+            hats = 35,
+            hats_txd = 0,
+            glasses = 31,
+            glasses_txd = 0,
+            ears = 1,
+            ears_txd = 0,
+            watches = 10,
+            watches_txd = 0,
+            bracelets = 2,
+            bracelets_txd = 0,
+
+            blemishes = 4,
+            blemishes_op = 100,
+            beard = 0,
+            beard_op = 0,
+            beard_color = 0,
+            eyebrows = 0,
+            eyebrows_op = 100,
+            eyebrows_color = 34,
+            ageing = 4,
+            ageing_op = 100,
+            makeup = 12,
+            makeup_op = 100,
+            makeup_main_color = 0,
+            makeup_scnd_color = 0,
+            blush = 0,
+            blush_op = 100,
+            blush_main_color = 0,
+            complexion = 0,
+            complexion_op = 100,
+            sundamage = 0,
+            sundamage_op = 100,
+            lipstick = 4,
+            lipstick_op = 100,
+            lipstick_main_color = 0,
+            lipstick_scnd_color = 0,
+            moles = 5,
+            moles_op = 100,
+            chesthair = 8,
+            chesthair_op = 100,
+            chesthair_color = 34,
+            bodyblemishes = 9,
+            bodyblemishes_op = 100,
+            addbodyblemishes = 0,
+            addbodyblemishes_op = 100,
+
+            tattoos = {
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_006_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_011_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_009_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_051_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_054_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_040_F"},
+                {collection = "mpbiker_overlays", overlay = "MP_MP_Biker_Tat_057_F"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_M_Head_001"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_M_Head_002"},
+                {collection = "mpbeach_overlays", overlay = "MP_Bea_F_RSide_000"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_M_Neck_000"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_M_Neck_003"},
+                {collection = "mpbusiness_overlays", overlay = "MP_Buis_F_Neck_001"},
+                {collection = "mplowrider2_overlays", overlay = "MP_LR_Tat_018_F"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_Award_F_013"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_012"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_034"},
+                {collection = "multiplayer_overlays", overlay = "FM_Tat_F_028"},
+                {collection = "mpstunt_overlays", overlay = "MP_MP_Stunt_tat_004_F"},
+            },
         },
     }
 
+    print("Set skin")
     exports.ava_mp_peds:setPedSkin(PlayerPedId(), skin[args[1] and tonumber(args[1]) or 0])
 
-    print("player skin", json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
-    print("player clothes", json.encode(exports.ava_mp_peds:getPlayerClothes(), {indent = true}))
+    -- print("player skin", json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
+    -- print("player clothes", json.encode(exports.ava_mp_peds:getPlayerClothes(), {indent = true}))
     TriggerServerEvent("ava_core:server:reloadLoadout")
 end)
 

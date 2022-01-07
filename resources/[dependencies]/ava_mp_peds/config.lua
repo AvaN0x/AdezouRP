@@ -98,7 +98,7 @@ AVAConfig.skinComponents = {
     addbodyblemishes_op = {min = 0, max = 100},
     -- #endregion Ped head overlays
 
-    -- COMPONENTS
+    -- #region Components
     -- Mask
     mask = {min = 0},
     mask_txd = {min = 0},
@@ -134,8 +134,9 @@ AVAConfig.skinComponents = {
     -- Torso
     tops = {min = 0},
     tops_txd = {min = 0},
+    -- #endregion Components
 
-    -- PROPS
+    -- #region Props
     -- Hats
     hats = {min = -1},
     hats_txd = {min = 0},
@@ -151,6 +152,9 @@ AVAConfig.skinComponents = {
     -- Bracelets
     bracelets = {min = -1},
     bracelets_txd = {min = 0},
+    -- #endregion Props
+
+    tattoos = {default = {}},
 }
 
 AVAConfig.clothesComponents = {
