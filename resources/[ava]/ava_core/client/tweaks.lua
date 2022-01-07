@@ -17,6 +17,8 @@ local function SetWeaponDrops()
 end
 
 Citizen.CreateThread(function()
+    local playerId = PlayerId()
+
     -- calm all IA
     local hashKeyPlayer = GetHashKey("PLAYER")
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_HILLBILLY"), hashKeyPlayer)
@@ -55,6 +57,8 @@ Citizen.CreateThread(function()
 
     -- * remove wanted level
     SetMaxWantedLevel(0)
+    SetPoliceIgnorePlayer(playerId, true)
+    SetDispatchCopsForPlayer(playerId, false)
 
     -- * set some stats
     StatSetInt(GetHashKey("MP0_STAMINA"), 30, true)
@@ -69,7 +73,6 @@ Citizen.CreateThread(function()
     SetWeaponsNoAutoswap(AVAConfig.DisableWeaponsAutoSwap)
 
     local loop = 0
-    local playerId = PlayerId()
     while true do
         Wait(0)
         loop = loop + 1
@@ -90,7 +93,7 @@ Citizen.CreateThread(function()
         -- SetCreateRandomCopsNotOnScenarios(false)
         -- SetCreateRandomCopsOnScenarios(false)
 
-        -- Every 50 ms
+        -- Every 50 frames
         if loop % 50 == 0 and GetPlayerWantedLevel(playerId) > 0 then
             SetPlayerWantedLevel(playerId, 0, false)
             SetPlayerWantedLevelNow(playerId, false)
