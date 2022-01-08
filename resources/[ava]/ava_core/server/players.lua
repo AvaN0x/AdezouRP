@@ -329,8 +329,8 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
         -- we check if the player character is valid
     elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
-        and character.sex ~= "" and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.sex
-        and character.mugshot and character.mugshot ~= "" then
+        ~= nil and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.gender and character.mugshot
+        and character.mugshot ~= "" then
         aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
         aPlayer.character = {
             firstname = character.firstname,
@@ -366,6 +366,9 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
                   .. aPlayer.citizenId .. ")")
+        print("\tCharacter", json.encode(character))
+        print("\tBirthdate valid", character and AVA.Utils.IsDateValid(character.birthdate) or "false")
+        print("\tMugshot exist", character.mugshot and character.mugshot ~= "" and "true" or "false")
         TriggerClientEvent("ava_core:client:createChar", src)
     end
 

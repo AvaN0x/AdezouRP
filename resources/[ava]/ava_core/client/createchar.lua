@@ -95,16 +95,10 @@ local function StopCharCreator()
 
     FreezeEntityPosition(playerPed, false)
 
-    -- SetEntityCoords(playerPed, Config.PlayerSpawn.x, Config.PlayerSpawn.y, Config.PlayerSpawn.z)
-    -- SetEntityHeading(playerPed, Config.PlayerSpawn.h)
-
     Wait(1000)
 
     DisplayRadar(true)
     DoScreenFadeIn(1000)
-
-    -- TriggerServerEvent('esx_skin:save', Character)
-    -- TriggerEvent('skinchanger:loadSkin', Character)
 
     DestroyAllCams(true)
 end
@@ -131,7 +125,7 @@ local function ValidateData()
 end
 
 -- don't touch these lists
-local MomList = {
+local MotherList = {
     "Hannah",
     "Audrey",
     "Jasmine",
@@ -155,9 +149,9 @@ local MomList = {
     "Emma",
     "Misty",
 }
-local MomListId = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45}
+local MotherListId = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45}
 
-local DadList = {
+local FatherList = {
     "Benjamin",
     "Daniel",
     "Joshua",
@@ -183,8 +177,8 @@ local DadList = {
     "Niko",
     "Claude",
 }
-local DadListId = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44}
-local MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
+local FatherListId = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44}
+local MotherIndex, FatherIndex, Resemblance, SkinTone = 1, 1, 10, 10
 
 local Outfits = {
     -- Male
@@ -192,109 +186,109 @@ local Outfits = {
         -- Default outfit
         [0] = {
             outfit = {
-                sex = 0,
-                torso_1 = 15,
-                torso_2 = 0,
-                arms = 15,
-                arms_2 = 0,
-                tshirt_1 = 15,
-                tshirt_2 = 0,
-                pants_1 = 61,
-                pants_2 = 1,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 5,
-                shoes_2 = 0,
+                gender = 0,
+                tops = 15,
+                tops_txd = 0,
+                torso = 15,
+                torso_txd = 0,
+                undershirt = 15,
+                undershirt_txd = 0,
+                leg = 61,
+                leg_txd = 1,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 5,
+                shoes_txd = 0,
             },
         },
 
         [1] = {
             outfit = {
-                sex = 0,
-                torso_1 = 0,
-                torso_2 = 1,
-                arms = 0,
-                arms_2 = 0,
-                tshirt_1 = 15,
-                tshirt_2 = 0,
-                pants_1 = 62,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 16,
-                shoes_2 = 5,
+                gender = 0,
+                tops = 0,
+                tops_txd = 1,
+                torso = 0,
+                torso_txd = 0,
+                undershirt = 15,
+                undershirt_txd = 0,
+                leg = 62,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 16,
+                shoes_txd = 5,
             },
             label = GetString("outfit_short_tshirt"),
         },
         [2] = {
             outfit = {
-                sex = 0,
-                torso_1 = 0,
-                torso_2 = 5,
-                arms = 0,
-                arms_2 = 0,
-                tshirt_1 = 15,
-                tshirt_2 = 0,
-                pants_1 = 63,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 22,
-                shoes_2 = 0,
+                gender = 0,
+                tops = 0,
+                tops_txd = 5,
+                torso = 0,
+                torso_txd = 0,
+                undershirt = 15,
+                undershirt_txd = 0,
+                leg = 63,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 22,
+                shoes_txd = 0,
             },
             label = GetString("outfit_lambda"),
         },
         [3] = {
             outfit = {
-                sex = 0,
-                torso_1 = 7,
-                torso_2 = 13,
-                arms = 6,
-                arms_2 = 0,
-                tshirt_1 = 5,
-                tshirt_2 = 0,
-                pants_1 = 64,
-                pants_2 = 2,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 9,
-                shoes_2 = 3,
+                gender = 0,
+                tops = 7,
+                tops_txd = 13,
+                torso = 6,
+                torso_txd = 0,
+                undershirt = 5,
+                undershirt_txd = 0,
+                leg = 64,
+                leg_txd = 2,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 9,
+                shoes_txd = 3,
             },
             label = GetString("outfit_jogging"),
         },
         [4] = {
             outfit = {
-                sex = 0,
-                torso_1 = 72,
-                torso_2 = 2,
-                arms = 6,
-                arms_2 = 0,
-                tshirt_1 = 13,
-                tshirt_2 = 0,
-                pants_1 = 48,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 10,
-                shoes_2 = 7,
+                gender = 0,
+                tops = 72,
+                tops_txd = 2,
+                torso = 6,
+                torso_txd = 0,
+                undershirt = 13,
+                undershirt_txd = 0,
+                leg = 48,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 10,
+                shoes_txd = 7,
             },
             label = GetString("outfit_businessman"),
         },
         [5] = {
             outfit = {
-                sex = 0,
-                torso_1 = 167,
-                torso_2 = 0,
-                arms = 6,
-                arms_2 = 0,
-                tshirt_1 = 47,
-                tshirt_2 = 0,
-                pants_1 = 98,
-                pants_2 = 1,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 54,
-                shoes_2 = 3,
+                gender = 0,
+                tops = 167,
+                tops_txd = 0,
+                torso = 6,
+                torso_txd = 0,
+                undershirt = 47,
+                undershirt_txd = 0,
+                leg = 98,
+                leg_txd = 1,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 54,
+                shoes_txd = 3,
             },
             label = GetString("outfit_winter"),
         },
@@ -305,114 +299,114 @@ local Outfits = {
         -- Default outfit
         [0] = {
             outfit = {
-                sex = 1,
-                torso_1 = 15,
-                torso_2 = 0,
-                arms = 15,
-                arms_2 = 0,
-                tshirt_1 = 14,
-                tshirt_2 = 0,
-                pants_1 = 15,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 5,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 15,
+                tops_txd = 0,
+                torso = 15,
+                torso_txd = 0,
+                undershirt = 14,
+                undershirt_txd = 0,
+                leg = 15,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 5,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
         },
 
         [1] = {
             outfit = {
-                sex = 1,
-                torso_1 = 0,
-                torso_2 = 2,
-                arms = 0,
-                arms_2 = 0,
-                tshirt_1 = 14,
-                tshirt_2 = 0,
-                pants_1 = 25,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 1,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 0,
+                tops_txd = 2,
+                torso = 0,
+                torso_txd = 0,
+                undershirt = 14,
+                undershirt_txd = 0,
+                leg = 25,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 1,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
             label = GetString("outfit_short_tshirt"),
         },
         [2] = {
             outfit = {
-                sex = 1,
-                torso_1 = 2,
-                torso_2 = 0,
-                arms = 2,
-                arms_2 = 0,
-                tshirt_1 = 14,
-                tshirt_2 = 0,
-                pants_1 = 2,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 1,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 2,
+                tops_txd = 0,
+                torso = 2,
+                torso_txd = 0,
+                undershirt = 14,
+                undershirt_txd = 0,
+                leg = 2,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 1,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
             label = GetString("outfit_lambda"),
         },
         [3] = {
             outfit = {
-                sex = 1,
-                torso_1 = 4,
-                torso_2 = 14,
-                arms = 4,
-                arms_2 = 0,
-                tshirt_1 = 14,
-                tshirt_2 = 0,
-                pants_1 = 2,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 1,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 4,
+                tops_txd = 14,
+                torso = 4,
+                torso_txd = 0,
+                undershirt = 14,
+                undershirt_txd = 0,
+                leg = 2,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 1,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
             label = GetString("outfit_jogging"),
         },
         [4] = {
             outfit = {
-                sex = 1,
-                torso_1 = 7,
-                torso_2 = 4,
-                arms = 6,
-                arms_2 = 0,
-                tshirt_1 = 20,
-                tshirt_2 = 1,
-                pants_1 = 6,
-                pants_2 = 0,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 6,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 7,
+                tops_txd = 4,
+                torso = 6,
+                torso_txd = 0,
+                undershirt = 20,
+                undershirt_txd = 1,
+                leg = 6,
+                leg_txd = 0,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 6,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
             label = GetString("outfit_businesswoman"),
         },
         [5] = {
             outfit = {
-                sex = 1,
-                torso_1 = 64,
-                torso_2 = 0,
-                arms = 6,
-                arms_2 = 0,
-                tshirt_1 = 20,
-                tshirt_2 = 0,
-                pants_1 = 73,
-                pants_2 = 5,
-                helmet_1 = -1,
-                helmet_2 = 0,
-                shoes_1 = 8,
-                shoes_2 = 0,
+                gender = 1,
+                tops = 64,
+                tops_txd = 0,
+                torso = 6,
+                torso_txd = 0,
+                undershirt = 20,
+                undershirt_txd = 0,
+                leg = 73,
+                leg_txd = 5,
+                hats = -1,
+                hats_txd = 0,
+                shoes = 8,
+                shoes_txd = 0,
                 glasses_1 = 5,
             },
             label = GetString("outfit_winter"),
@@ -429,7 +423,7 @@ local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title
 
 SubMenuHeritage.Closed = function()
     ToggleCamOnFace(false)
-    exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
 local SubMenuFace = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_face"))
@@ -437,20 +431,20 @@ local SubMenuFace = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_fac
 SubMenuFace.EnableMouse = true
 SubMenuFace.Closed = function()
     ToggleCamOnFace(false)
-    exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
 local SubMenuAppearance = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_appearance"))
 SubMenuAppearance.EnableMouse = true
 SubMenuAppearance.Closed = function()
     ToggleCamOnFace(false)
-    exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
 local SubMenuOutfits = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_outfits"))
 local DisplayedOutfit = 0
 SubMenuOutfits.Closed = function()
-    exports.skinchanger:changes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
+    exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
     DisplayedOutfit = CharacterData.selectedOutfit
 end
 
@@ -462,10 +456,10 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 CharacterData.Face = {}
                 CharacterData.Appearance = {}
                 CharacterData.selectedOutfit = 0
-                MomIndex, DadIndex, Resemblance, SkinTone = 1, 1, 10, 10
-                exports.skinchanger:reset()
-                CharacterSkin = exports.skinchanger:loadSkin(Outfits[CharacterData.sexIndex][0].outfit)
-                SkinMaxVals = exports.skinchanger:GetMaxVals()
+                MotherIndex, FatherIndex, Resemblance, SkinTone = 1, 1, 10, 10
+                exports.ava_mp_peds:reset()
+                CharacterSkin = exports.ava_mp_peds:setPlayerSkin(Outfits[CharacterData.sexIndex][0].outfit)
+                SkinMaxVals = exports.ava_mp_peds:getMaxValues()
                 playerPed = PlayerPedId()
             end
         end)
@@ -475,7 +469,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton(GetString("menu_title_heritage"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
-                exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][0].outfit)
                 playerPed = PlayerPedId()
             end
         end, SubMenuHeritage)
@@ -483,7 +477,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton(GetString("menu_title_face"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
-                exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][0].outfit)
                 playerPed = PlayerPedId()
             end
         end, SubMenuFace)
@@ -491,7 +485,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton(GetString("menu_title_appearance"), "", {RightLabel = "→→→"}, function(onSelected)
             if onSelected then
                 ToggleCamOnFace(true)
-                exports.skinchanger:changes(Outfits[CharacterData.sexIndex][0].outfit)
+                exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][0].outfit)
                 playerPed = PlayerPedId()
             end
         end, SubMenuAppearance)
@@ -541,30 +535,30 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuHeritage:IsVisible(function(Items)
-        Items:Heritage(MomIndex, DadIndex)
-        Items:AddList(GetString("mom"), MomList, MomIndex, GetString("mom_subtitle"), {}, function(Index, onSelected, onListChange)
+        Items:Heritage(MotherIndex - 1, FatherIndex - 1)
+        Items:AddList(GetString("mother"), MotherList, MotherIndex, GetString("mother_subtitle"), {}, function(Index, onSelected, onListChange)
             if onListChange then
-                MomIndex = Index
-                exports.skinchanger:change("mom", MomListId[MomIndex])
+                MotherIndex = Index
+                exports.ava_mp_peds:setPlayerSkin({mother = MotherListId[MotherIndex]})
             end
         end)
-        Items:AddList(GetString("dad"), DadList, DadIndex, GetString("dad_subtitle"), {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("father"), FatherList, FatherIndex, GetString("father_subtitle"), {}, function(Index, onSelected, onListChange)
             if onListChange then
-                DadIndex = Index
-                exports.skinchanger:change("dad", DadListId[DadIndex])
+                FatherIndex = Index
+                exports.ava_mp_peds:setPlayerSkin({father = FatherListId[FatherIndex]})
             end
         end)
         Items:SliderHeritage(GetString("resemblance"), Resemblance, GetString("resemblance_subtitle"),
             function(Selected, Active, OnListChange, SliderIndex, Percent)
                 if OnListChange then
                     Resemblance = SliderIndex
-                    exports.skinchanger:change("face_md_weight", Percent)
+                    exports.ava_mp_peds:setPlayerSkin({shape_mix = Percent})
                 end
             end)
         Items:SliderHeritage(GetString("skin_tone"), SkinTone, GetString("skin_tone_subtitle"), function(Selected, Active, OnListChange, SliderIndex, Percent)
             if OnListChange then
                 SkinTone = SliderIndex
-                exports.skinchanger:change("skin_md_weight", Percent)
+                exports.ava_mp_peds:setPlayerSkin({skin_mix = Percent})
             end
         end)
     end)
@@ -587,329 +581,332 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             GetString("outsite"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.ForeHeadX = X
                 CharacterData.Face.ForeHeadY = Y
-                exports.skinchanger:changesNoApply({eyebrows_6 = CharacterX * 100, eyebrows_5 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 6, CharacterX) -- eyebrows_5
-                SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrows_6
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrown_forward = CharacterX * 100, eyebrown_high = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 6, CharacterX) -- eyebrown_high
+                SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrown_forward
             end, 1)
 
         Panels:GridHorizontal(CharacterData.Face.Eyes or 0.5, GetString("eyes_pleated"), GetString("eyes_open"), function(X, _, CharacterX)
             CharacterData.Face.Eyes = X
-            exports.skinchanger:changeNoApply("eye_squint", (1 - CharacterX) * 100)
-            SetPedFaceFeature(playerPed, 11, (1 - CharacterX)) -- eye_squint
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyes_openning = (1 - CharacterX) * 100})
+            SetPedFaceFeature(playerPed, 11, (1 - CharacterX)) -- eyes_openning
         end, 2)
 
         Panels:Grid(CharacterData.Face.NoseX or 0.5, CharacterData.Face.NoseY or 0.5, GetString("top"), GetString("bottom"), GetString("thin"),
             GetString("thick"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.NoseX = X
                 CharacterData.Face.NoseY = Y
-                exports.skinchanger:changesNoApply({nose_1 = CharacterX * 100, nose_2 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 0, CharacterX) -- nose_1
-                SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_2
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_width = CharacterX * 100, nose_peak_hight = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 0, CharacterX) -- nose_width
+                SetPedFaceFeature(playerPed, 1, CharacterY) -- nose_peak_hight
             end, 3)
 
         Panels:Grid(CharacterData.Face.NoseBoneX or 0.5, CharacterData.Face.NoseBoneY or 0.5, GetString("nosebone_top"), GetString("nosebone_bottom"),
             GetString("nosebone_right"), GetString("nosebone_left"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.NoseBoneX = X
                 CharacterData.Face.NoseBoneY = Y
-                exports.skinchanger:changesNoApply({nose_3 = (1 - CharacterX) * 100, nose_4 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 2, (1 - CharacterX)) -- nose_3
-                SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_4
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_peak_lenght = (1 - CharacterX) * 100, nose_bone_high = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 2, (1 - CharacterX)) -- nose_peak_lenght
+                SetPedFaceFeature(playerPed, 3, CharacterY) -- nose_bone_high
             end, 4)
 
         Panels:Grid(CharacterData.Face.NosePeakX or 0.5, CharacterData.Face.NosePeakY or 0.5, GetString("nosepeak_top"), GetString("nosepeak_bottom"),
             GetString("nosepeak_right"), GetString("nosepeak_left"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.NosePeakX = X
                 CharacterData.Face.NosePeakY = Y
-                exports.skinchanger:changesNoApply({nose_6 = (1 - CharacterX) * 100, nose_5 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 5, (1 - CharacterX)) -- nose_6
-                SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_5
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_bone_twist = CharacterX * -100, nose_peak_lowering = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 5, CharacterX * -1) -- nose_bone_twist
+                SetPedFaceFeature(playerPed, 4, CharacterY) -- nose_peak_lowering
             end, 5)
 
         Panels:Grid(CharacterData.Face.CheekBoneX or 0.5, CharacterData.Face.CheekBoneY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
             GetString("outsite"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.CheekBoneX = X
                 CharacterData.Face.CheekBoneY = Y
-                exports.skinchanger:changesNoApply({cheeks_2 = CharacterX * 100, cheeks_1 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 9, CharacterX) -- cheeks_2
-                SetPedFaceFeature(playerPed, 8, CharacterY) -- cheeks_1
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_bone_width = CharacterX * 100, cheeks_bone_high = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 9, CharacterX) -- cheeks_bone_width
+                SetPedFaceFeature(playerPed, 8, CharacterY) -- cheeks_bone_high
             end, 6)
 
         Panels:GridHorizontal(CharacterData.Face.Cheek or 0.5, GetString("cheek_left"), GetString("cheek_right"), function(X, _, CharacterX)
             CharacterData.Face.Cheek = X
-            exports.skinchanger:changeNoApply("cheeks_3", (1 - CharacterX) * 100)
-            SetPedFaceFeature(playerPed, 10, (1 - CharacterX)) -- cheeks_3
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_width = (1 - CharacterX) * 100})
+            SetPedFaceFeature(playerPed, 10, (1 - CharacterX)) -- cheeks_width
         end, 7)
 
         Panels:GridHorizontal(CharacterData.Face.Lips or 0.5, GetString("lips_left"), GetString("lips_right"), function(X, _, CharacterX)
             CharacterData.Face.Lips = X
-            exports.skinchanger:changeNoApply("lip_thickness", (1 - CharacterX) * 100)
-            SetPedFaceFeature(playerPed, 12, (1 - CharacterX)) -- lip_thickness
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({lips_thickness = (1 - CharacterX) * 100})
+            SetPedFaceFeature(playerPed, 12, (1 - CharacterX)) -- lips_thickness
         end, 8)
 
         Panels:Grid(CharacterData.Face.JawX or 0.5, CharacterData.Face.JawY or 0.5, GetString("jaw_top"), GetString("jaw_bottom"), GetString("jaw_right"),
             GetString("jaw_left"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.JawX = X
                 CharacterData.Face.JawY = Y
-                exports.skinchanger:changesNoApply({jaw_1 = CharacterX * 100, jaw_2 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 13, CharacterX) -- jaw_1
-                SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_2
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({jaw_bone_width = CharacterX * 100, jaw_bone_back_lenght = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 13, CharacterX) -- jaw_bone_width
+                SetPedFaceFeature(playerPed, 14, CharacterY) -- jaw_bone_back_lenght
             end, 9)
 
         Panels:Grid(CharacterData.Face.ChinX or 0.5, CharacterData.Face.ChinY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
             GetString("outsite"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.ChinX = X
                 CharacterData.Face.ChinY = Y
-                exports.skinchanger:changesNoApply({chin_2 = CharacterX * 100, chin_1 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 16, CharacterX) -- chin_2
-                SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_1
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_lenght = CharacterX * 100, chin_bone_lowering = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 16, CharacterX) -- chin_bone_lenght
+                SetPedFaceFeature(playerPed, 15, CharacterY) -- chin_bone_lowering
             end, 10)
 
         Panels:Grid(CharacterData.Face.ChinShapeX or 0.5, CharacterData.Face.ChinShapeY or 0.5, GetString("chinshape_top"), GetString("chinshape_bottom"),
             GetString("chinshape_right"), GetString("chinshape_left"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.ChinShapeX = X
                 CharacterData.Face.ChinShapeY = Y
-                exports.skinchanger:changesNoApply({chin_3 = (1 - CharacterX) * 100, chin_4 = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 17, (1 - CharacterX)) -- chin_3
-                SetPedFaceFeature(playerPed, 18, CharacterY) -- chin_4
+                exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_width = (1 - CharacterX) * 100, chin_hole = CharacterY * 100})
+                SetPedFaceFeature(playerPed, 17, (1 - CharacterX)) -- chin_bone_width
+                SetPedFaceFeature(playerPed, 18, CharacterY) -- chin_hole
             end, 11)
 
         Panels:GridHorizontal(CharacterData.Face.Neck or 0.5, GetString("thin"), GetString("thick"), function(X, _, CharacterX)
             CharacterData.Face.Neck = X
-            exports.skinchanger:changeNoApply("neck_thickness", CharacterX * 100)
-            SetPedFaceFeature(playerPed, 19, CharacterX) -- lip_thickness
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({neck_thickness = CharacterX * 100})
+            SetPedFaceFeature(playerPed, 19, CharacterX) -- lips_thickness
         end, 12)
     end)
 
     SubMenuAppearance:IsVisible(function(Items)
-        Items:AddList(GetString("hair"), (SkinMaxVals.hair_1 or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, GetString("change_your_appearance"), {},
+        Items:AddList(GetString("hair"), (SkinMaxVals.hair or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.HairCutIndex = Index
 
-                    CharacterSkin.hair_1 = Index - 1
-                    exports.skinchanger:changeNoApply("hair_1", Index - 1)
-                    SetPedComponentVariation(playerPed, 2, CharacterSkin.hair_1, CharacterSkin.hair_2, 2)
-                    -- SkinMaxVals.hair_2 = GetNumberOfPedTextureVariations(playerPed, 2, CharacterSkin.hair_1) - 1
+                    CharacterSkin.hair = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({hair = Index - 1})
+                    exports.ava_mp_peds:reloadPedOverlays(playerPed)
+                    SetPedComponentVariation(playerPed, 2, CharacterSkin.hair, CharacterSkin.hair_txd, 2)
+                    SkinMaxVals.hair_txd = GetNumberOfPedTextureVariations(playerPed, 2, CharacterSkin.hair) - 1
                 end
             end)
-        Items:AddList(GetString("eyebrows"), (SkinMaxVals.eyebrows_1 or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1,
-            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("eyebrows"), (SkinMaxVals.eyebrows or -1) + 1, CharacterData.Appearance.EyeBrowsIndex or 1, GetString("change_your_appearance"),
+            {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeBrowsIndex = Index
 
-                    CharacterSkin.eyebrows_1 = Index - 1
-                    exports.skinchanger:changeNoApply("eyebrows_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
+                    CharacterSkin.eyebrows = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrows = Index - 1})
+                    SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows, (CharacterSkin.eyebrows_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("beard"), (SkinMaxVals.beard_1 or -1) + 1, CharacterData.Appearance.BeardIndex or 1, GetString("change_your_appearance"), {},
+        Items:AddList(GetString("beard"), (SkinMaxVals.beard or -1) + 1, CharacterData.Appearance.BeardIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BeardIndex = Index
 
-                    CharacterSkin.beard_1 = Index - 1
-                    exports.skinchanger:changeNoApply("beard_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
+                    CharacterSkin.beard = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({beard = Index - 1})
+                    SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard, (CharacterSkin.beard_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("blemishes"), (SkinMaxVals.blemishes_1 or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1,
+        Items:AddList(GetString("blemishes"), (SkinMaxVals.blemishes or -1) + 1, CharacterData.Appearance.BlemishesIndex or 1,
             GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.BlemishesIndex = Index
 
-                    CharacterSkin.blemishes_1 = Index - 1
-                    exports.skinchanger:changeNoApply("blemishes_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
+                    CharacterSkin.blemishes = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({blemishes = Index - 1})
+                    SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes, (CharacterSkin.blemishes_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("age"), (SkinMaxVals.age_1 or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1, GetString("change_your_appearance"), {},
+        Items:AddList(GetString("age"), (SkinMaxVals.ageing or -1) + 1, CharacterData.Appearance.SkinAgingIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinAgingIndex = Index
 
-                    CharacterSkin.age_1 = Index - 1
-                    exports.skinchanger:changeNoApply("age_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
+                    CharacterSkin.ageing = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({ageing = Index - 1})
+                    SetPedHeadOverlay(playerPed, 3, CharacterSkin.ageing, (CharacterSkin.ageing_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("complexion"), (SkinMaxVals.complexion_1 or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1,
+        Items:AddList(GetString("complexion"), (SkinMaxVals.complexion or -1) + 1, CharacterData.Appearance.ComplexionIndex or 1,
             GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.ComplexionIndex = Index
 
-                    CharacterSkin.complexion_1 = Index - 1
-                    exports.skinchanger:changeNoApply("complexion_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
+                    CharacterSkin.complexion = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({complexion = Index - 1})
+                    SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion, (CharacterSkin.complexion_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("moles"), (SkinMaxVals.moles_1 or -1) + 1, CharacterData.Appearance.MolesIndex or 1, GetString("change_your_appearance"), {},
+        Items:AddList(GetString("moles"), (SkinMaxVals.moles or -1) + 1, CharacterData.Appearance.MolesIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.MolesIndex = Index
 
-                    CharacterSkin.moles_1 = Index - 1
-                    exports.skinchanger:changeNoApply("moles_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
+                    CharacterSkin.moles = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({moles = Index - 1})
+                    SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles, (CharacterSkin.moles_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("sun"), (SkinMaxVals.sun_1 or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1, GetString("change_your_appearance"), {},
-            function(Index, onSelected, onListChange)
+        Items:AddList(GetString("sun"), (SkinMaxVals.sundamage or -1) + 1, CharacterData.Appearance.SkinDamageIndex or 1, GetString("change_your_appearance"),
+            {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.SkinDamageIndex = Index
 
-                    CharacterSkin.sun_1 = Index - 1
-                    exports.skinchanger:changeNoApply("sun_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
+                    CharacterSkin.sundamage = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({sundamage = Index - 1})
+                    SetPedHeadOverlay(playerPed, 7, CharacterSkin.sundamage, (CharacterSkin.sundamage_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("eye_color"), (SkinMaxVals.eye_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1,
+        Items:AddList(GetString("eyes_color"), (SkinMaxVals.eyes_color or -1) + 1, CharacterData.Appearance.EyeColorIndex or 1,
             GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeColorIndex = Index
 
-                    CharacterSkin.eye_color = Index - 1
-                    exports.skinchanger:changeNoApply("eye_color", Index - 1)
-                    SetPedEyeColor(playerPed, CharacterSkin.eye_color, 0, 1)
+                    CharacterSkin.eyes_color = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyes_color = Index - 1})
+                    SetPedEyeColor(playerPed, CharacterSkin.eyes_color, 0, 1)
                 end
             end)
-        Items:AddList(GetString("makeup"), (SkinMaxVals.makeup_1 or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1, GetString("change_your_appearance"),
+        Items:AddList(GetString("makeup"), (SkinMaxVals.makeup or -1) + 1, CharacterData.Appearance.EyeMakeupIndex or 1, GetString("change_your_appearance"),
             {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.EyeMakeupIndex = Index
 
-                    CharacterSkin.makeup_1 = Index - 1
-                    exports.skinchanger:changeNoApply("makeup_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
+                    CharacterSkin.makeup = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({makeup = Index - 1})
+                    SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup, (CharacterSkin.makeup_op / 100) + 0.0)
                 end
             end)
-        Items:AddList(GetString("lipstick"), (SkinMaxVals.lipstick_1 or -1) + 1, CharacterData.Appearance.LipstickIndex or 1,
-            GetString("change_your_appearance"), {}, function(Index, onSelected, onListChange)
+        Items:AddList(GetString("lipstick"), (SkinMaxVals.lipstick or -1) + 1, CharacterData.Appearance.LipstickIndex or 1, GetString("change_your_appearance"),
+            {}, function(Index, onSelected, onListChange)
                 if (onListChange) then
                     CharacterData.Appearance.LipstickIndex = Index
 
-                    CharacterSkin.lipstick_1 = Index - 1
-                    exports.skinchanger:changeNoApply("lipstick_1", Index - 1)
-                    SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick_1, (CharacterSkin.lipstick_2 / 100) + 0.0)
+                    CharacterSkin.lipstick = Index - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({lipstick = Index - 1})
+                    SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick, (CharacterSkin.lipstick_op / 100) + 0.0)
                 end
             end)
 
     end, function(Panels)
-        if CharacterSkin.hair_1 ~= 0 then
+        if CharacterSkin.hair ~= 0 then
             Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColorMin or 1,
                 CharacterData.Appearance.HairColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.HairColorMin = MinimumIndex
                     CharacterData.Appearance.HairColorIndex = CurrentIndex
 
-                    CharacterSkin.hair_color_1 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("hair_color_1", CurrentIndex - 1)
-                    SetPedHairColor(playerPed, CharacterSkin.hair_color_1, CharacterSkin.hair_color_2)
+                    CharacterSkin.hair_main_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({hair_main_color = CurrentIndex - 1})
+                    exports.ava_mp_peds:reloadPedOverlays(playerPed)
+                    SetPedHairColor(playerPed, CharacterSkin.hair_main_color, CharacterSkin.hair_scnd_color)
                 end, 1)
             Panels:ColourPanel(GetString("wicks_color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.HairColor2Min or 1,
                 CharacterData.Appearance.HairColor2Index or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.HairColor2Min = MinimumIndex
                     CharacterData.Appearance.HairColor2Index = CurrentIndex
 
-                    CharacterSkin.hair_color_2 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("hair_color_2", CurrentIndex - 1)
-                    SetPedHairColor(playerPed, CharacterSkin.hair_color_1, CharacterSkin.hair_color_2)
+                    CharacterSkin.hair_scnd_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({hair_scnd_color = CurrentIndex - 1})
+                    exports.ava_mp_peds:reloadPedOverlays(playerPed)
+                    SetPedHairColor(playerPed, CharacterSkin.hair_main_color, CharacterSkin.hair_scnd_color)
                 end, 1)
         end
 
-        Panels:PercentagePanel(CharacterData.Appearance.EyeBrowsOpacity or 0.0, nil, nil, nil, function(Percent)
+        Panels:PercentagePanel(CharacterData.Appearance.EyeBrowsOpacity or 0.5, nil, nil, nil, function(Percent)
             CharacterData.Appearance.EyeBrowsOpacity = Percent
 
-            CharacterSkin.eyebrows_2 = Percent * 100
-            exports.skinchanger:changeNoApply("eyebrows_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows_1, (CharacterSkin.eyebrows_2 / 100) + 0.0)
+            CharacterSkin.eyebrows_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrows_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 2, CharacterSkin.eyebrows, (CharacterSkin.eyebrows_op / 100) + 0.0)
         end, 2)
-        if CharacterSkin.eyebrows_2 > 0 then
+        if CharacterSkin.eyebrows_op > 0 then
             Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.EyeBrowsColorMin or 1,
                 CharacterData.Appearance.EyeBrowsColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeBrowsColorMin = MinimumIndex
                     CharacterData.Appearance.EyeBrowsColorIndex = CurrentIndex
 
-                    CharacterSkin.eyebrows_3 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("eyebrows_3", CurrentIndex - 1)
-                    SetPedHeadOverlayColor(playerPed, 2, 1, CharacterSkin.eyebrows_3, CharacterSkin.eyebrows_4)
+                    CharacterSkin.eyebrows_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrows_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 2, 1, CharacterSkin.eyebrows_color, CharacterSkin.eyebrows_4)
                 end, 2)
         end
 
         Panels:PercentagePanel(CharacterData.Appearance.BodyHairsOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.BodyHairsOpacity = Percent
 
-            CharacterSkin.beard_2 = Percent * 100
-            exports.skinchanger:changeNoApply("beard_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard_1, (CharacterSkin.beard_2 / 100) + 0.0)
+            CharacterSkin.beard_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({beard_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 1, CharacterSkin.beard, (CharacterSkin.beard_op / 100) + 0.0)
         end, 3)
-        if CharacterSkin.beard_2 > 0 then
+        if CharacterSkin.beard_op > 0 then
             Panels:ColourPanel(GetString("color"), RageUI.PanelColour.HairCut, CharacterData.Appearance.BodyHairsColorMin or 1,
                 CharacterData.Appearance.BodyHairsColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.BodyHairsColorMin = MinimumIndex
                     CharacterData.Appearance.BodyHairsColorIndex = CurrentIndex
 
-                    CharacterSkin.beard_3 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("beard_3", CurrentIndex - 1)
-                    SetPedHeadOverlayColor(playerPed, 1, 1, CharacterSkin.beard_3, CharacterSkin.beard_4)
+                    CharacterSkin.beard_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({beard_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 1, 1, CharacterSkin.beard_color, CharacterSkin.beard_4)
                 end, 3)
         end
 
         Panels:PercentagePanel(CharacterData.Appearance.BlemishesOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.BlemishesOpacity = Percent
 
-            CharacterSkin.blemishes_2 = Percent * 100
-            exports.skinchanger:changeNoApply("blemishes_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes_1, (CharacterSkin.blemishes_2 / 100) + 0.0)
+            CharacterSkin.blemishes_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({blemishes_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 0, CharacterSkin.blemishes, (CharacterSkin.blemishes_op / 100) + 0.0)
         end, 4)
 
         Panels:PercentagePanel(CharacterData.Appearance.SkinAgingOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.SkinAgingOpacity = Percent
 
-            CharacterSkin.age_2 = Percent * 100
-            exports.skinchanger:changeNoApply("age_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 3, CharacterSkin.age_1, (CharacterSkin.age_2 / 100) + 0.0)
+            CharacterSkin.ageing_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({ageing_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 3, CharacterSkin.ageing, (CharacterSkin.ageing_op / 100) + 0.0)
         end, 5)
 
         Panels:PercentagePanel(CharacterData.Appearance.ComplexionOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.ComplexionOpacity = Percent
 
-            CharacterSkin.complexion_2 = Percent * 100
-            exports.skinchanger:changeNoApply("complexion_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion_1, (CharacterSkin.complexion_2 / 100) + 0.0)
+            CharacterSkin.complexion_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({complexion_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 6, CharacterSkin.complexion, (CharacterSkin.complexion_op / 100) + 0.0)
         end, 6)
 
         Panels:PercentagePanel(CharacterData.Appearance.MolesOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.MolesOpacity = Percent
 
-            CharacterSkin.moles_2 = Percent * 100
-            exports.skinchanger:changeNoApply("moles_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles_1, (CharacterSkin.moles_2 / 100) + 0.0)
+            CharacterSkin.moles_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({moles_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 9, CharacterSkin.moles, (CharacterSkin.moles_op / 100) + 0.0)
         end, 7)
 
         Panels:PercentagePanel(CharacterData.Appearance.SkinDamageOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.SkinDamageOpacity = Percent
 
-            CharacterSkin.sun_2 = Percent * 100
-            exports.skinchanger:changeNoApply("sun_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 7, CharacterSkin.sun_1, (CharacterSkin.sun_2 / 100) + 0.0)
+            CharacterSkin.sundamage_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({sundamage_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 7, CharacterSkin.sundamage, (CharacterSkin.sundamage_op / 100) + 0.0)
         end, 8)
 
         Panels:PercentagePanel(CharacterData.Appearance.EyeMakeupOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.EyeMakeupOpacity = Percent
 
-            CharacterSkin.makeup_2 = Percent * 100
-            exports.skinchanger:changeNoApply("makeup_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup_1, (CharacterSkin.makeup_2 / 100) + 0.0)
+            CharacterSkin.makeup_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({makeup_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 4, CharacterSkin.makeup, (CharacterSkin.makeup_op / 100) + 0.0)
         end, 10)
-        if CharacterSkin.makeup_2 > 0 then
+        if CharacterSkin.makeup_op > 0 then
             -- TODO update PanelColour list of colours to a valid one
             Panels:ColourPanel(GetString("color"), RageUI.PanelColour.Makeup, CharacterData.Appearance.EyeMakeupColorMin or 1,
                 CharacterData.Appearance.EyeMakeupColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.EyeMakeupColorMin = MinimumIndex
                     CharacterData.Appearance.EyeMakeupColorIndex = CurrentIndex
 
-                    CharacterSkin.makeup_3 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("makeup_3", CurrentIndex - 1)
-                    SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_3, CharacterSkin.makeup_4)
+                    CharacterSkin.makeup_main_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({makeup_main_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_main_color, CharacterSkin.makeup_scnd_color)
                 end, 10)
             -- TODO update PanelColour list of colours to a valid one
             Panels:ColourPanel("Couleur 2", RageUI.PanelColour.Makeup, CharacterData.Appearance.EyeMakeupColor2Min or 1,
@@ -917,29 +914,29 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     CharacterData.Appearance.EyeMakeupColor2Min = MinimumIndex
                     CharacterData.Appearance.EyeMakeupColor2Index = CurrentIndex
 
-                    CharacterSkin.makeup_4 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("makeup_4", CurrentIndex - 1)
-                    SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_3, CharacterSkin.makeup_4)
+                    CharacterSkin.makeup_scnd_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({makeup_scnd_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 4, 2, CharacterSkin.makeup_main_color, CharacterSkin.makeup_scnd_color)
                 end, 10)
         end
 
         Panels:PercentagePanel(CharacterData.Appearance.LipstickOpacity or 0.0, nil, nil, nil, function(Percent)
             CharacterData.Appearance.LipstickOpacity = Percent
 
-            CharacterSkin.lipstick_2 = Percent * 100
-            exports.skinchanger:changeNoApply("lipstick_2", Percent * 100)
-            SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick_1, (CharacterSkin.lipstick_2 / 100) + 0.0)
+            CharacterSkin.lipstick_op = Percent * 100
+            exports.ava_mp_peds:editPlayerSkinWithoutApplying({lipstick_op = Percent * 100})
+            SetPedHeadOverlay(playerPed, 8, CharacterSkin.lipstick, (CharacterSkin.lipstick_op / 100) + 0.0)
         end, 11)
-        if CharacterSkin.lipstick_2 > 0 then
+        if CharacterSkin.lipstick_op > 0 then
             -- TODO update PanelColour list of colours to a valid one
             Panels:ColourPanel(GetString("color"), RageUI.PanelColour.Makeup, CharacterData.Appearance.LipstickColorMin or 1,
                 CharacterData.Appearance.LipstickColorIndex or 1, function(MinimumIndex, CurrentIndex)
                     CharacterData.Appearance.LipstickColorMin = MinimumIndex
                     CharacterData.Appearance.LipstickColorIndex = CurrentIndex
 
-                    CharacterSkin.lipstick_3 = CurrentIndex - 1
-                    exports.skinchanger:changeNoApply("lipstick_3", CurrentIndex - 1)
-                    SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_3, CharacterSkin.lipstick_4)
+                    CharacterSkin.lipstick_main_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({lipstick_main_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_main_color, CharacterSkin.lipstick_scnd_color)
                 end, 11)
         end
     end)
@@ -950,7 +947,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 {RightBadge = (CharacterData.selectedOutfit == i and RageUI.BadgeStyle.Clothes or nil)}, function(onSelected, onEntered)
                     if onEntered and DisplayedOutfit ~= i then
                         DisplayedOutfit = i
-                        exports.skinchanger:changes(Outfits[CharacterData.sexIndex][DisplayedOutfit].outfit)
+                        exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][DisplayedOutfit].outfit)
                     end
                     if onSelected then
                         CharacterData.selectedOutfit = i
@@ -980,11 +977,11 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     CharacterData = {firstname = "", lastname = "", sexIndex = 0, birthdate = "", selectedOutfit = 0, Face = {}, Appearance = {}}
 
-    exports.skinchanger:reset()
-    CharacterSkin = exports.skinchanger:loadSkin(Outfits[0][0].outfit)
-    SkinMaxVals = exports.skinchanger:GetMaxVals()
+    exports.ava_mp_peds:reset()
+    CharacterSkin = exports.ava_mp_peds:setPlayerSkin(Outfits[0][0].outfit)
+    SkinMaxVals = exports.ava_mp_peds:getMaxValues()
 
-    MomIndex, DadIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
+    MotherIndex, FatherIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
 
     Citizen.CreateThread(function()
         while AVA.Player.CreatingChar do
@@ -1003,7 +1000,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
     StartCharCreator()
 
     playerPed = PlayerPedId()
-    SkinMaxVals = exports.skinchanger:GetMaxVals()
+    SkinMaxVals = exports.ava_mp_peds:getMaxValues()
     Wait(100)
     RageUI.CloseAll()
     RageUI.Visible(MainMenu, true)
@@ -1015,7 +1012,7 @@ MainMenu.Closed = function()
 
     StopCharCreator()
     AVA.Player.CreatingChar = false
-    CharacterSkin = exports.skinchanger:getSkin()
+    CharacterSkin = exports.ava_mp_peds:getPlayerCurrentSkin()
 
     local mugshot = exports.MugShotBase64:GetMugShotBase64(PlayerPedId())
     print(mugshot)
@@ -1043,77 +1040,77 @@ local function setPedData(ped, i)
     if i == 1 then
         SetPedHeadBlendData(ped, 21, 21, 21, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 57, 0, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 22, 0, 2) -- pants
         SetPedComponentVariation(ped, 6, 6, 0, 2) -- shoes
         SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
-        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 260, 12, 2) -- torso
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 260, 12, 2) -- tops
         SetPedHairColor(ped, 10, 21)
     elseif i == 2 then
         SetPedHeadBlendData(ped, 39, 39, 39, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 5, 4, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 1, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 1, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 10, 0, 2) -- pants
         SetPedComponentVariation(ped, 6, 10, 0, 2) -- shoes
         SetPedComponentVariation(ped, 7, 11, 2, 2) -- chain
-        SetPedComponentVariation(ped, 8, 13, 6, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 10, 0, 2) -- torso
+        SetPedComponentVariation(ped, 8, 13, 6, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 10, 0, 2) -- tops
         SetPedHairColor(ped, 35, 21)
     elseif i == 3 then
         SetPedHeadBlendData(ped, 34, 34, 34, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 1, 4, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 1, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 1, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 0, 1, 2) -- pants
         SetPedComponentVariation(ped, 6, 7, 4, 2) -- shoes
         SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
-        SetPedComponentVariation(ped, 8, 16, 0, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 6, 0, 2) -- torso
+        SetPedComponentVariation(ped, 8, 16, 0, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 6, 0, 2) -- tops
         SetPedHairColor(ped, 30, 21)
     elseif i == 4 then
         SetPedHeadBlendData(ped, 14, 14, 14, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 5, 3, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 5, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 5, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 15, 3, 2) -- pants
         SetPedComponentVariation(ped, 6, 7, 2, 2) -- shoes
         SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
-        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 78, 3, 2) -- torso
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 78, 3, 2) -- tops
         SetPedHairColor(ped, 10, 21)
     elseif i == 5 then
         SetPedHeadBlendData(ped, 39, 39, 39, 2, 2, 2, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 68, 0, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 12, 5, 2) -- pants
         SetPedComponentVariation(ped, 6, 6, 2, 2) -- shoes
         SetPedComponentVariation(ped, 7, 4, 3, 2) -- chain
         SetPedComponentVariation(ped, 8, 3, 0, 2) -- tshirt
-        SetPedComponentVariation(ped, 11, 79, 2, 2) -- torso
+        SetPedComponentVariation(ped, 11, 79, 2, 2) -- tops
         SetPedHairColor(ped, 10, 21)
     elseif i == 6 then
         SetPedHeadBlendData(ped, 27, 27, 27, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 7, 3, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 0, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 0, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 12, 0, 2) -- pants
         SetPedComponentVariation(ped, 6, 5, 2, 2) -- shoes
         SetPedComponentVariation(ped, 7, 5, 3, 2) -- chain
-        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 80, 2, 2) -- torso
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 80, 2, 2) -- tops
         SetPedHairColor(ped, 29, 31)
     elseif i == 7 then
         SetPedHeadBlendData(ped, 33, 33, 33, 0, 0, 0, 1.0, 1.0, 1.0, true)
         SetPedComponentVariation(ped, 2, 73, 0, 2) -- hairs
-        SetPedComponentVariation(ped, 3, 12, 0, 2) -- arms
+        SetPedComponentVariation(ped, 3, 12, 0, 2) -- torso
         SetPedComponentVariation(ped, 4, 27, 0, 2) -- pants
         SetPedComponentVariation(ped, 6, 15, 3, 2) -- shoes
         SetPedComponentVariation(ped, 7, 0, 0, 2) -- chain
-        SetPedComponentVariation(ped, 8, 15, 0, 2) -- tshirt_1
-        SetPedComponentVariation(ped, 11, 283, 7, 2) -- torso
+        SetPedComponentVariation(ped, 8, 15, 0, 2) -- undershirt
+        SetPedComponentVariation(ped, 11, 283, 7, 2) -- tops
         SetPedHairColor(ped, 62, 0)
     end
     SetPedComponentVariation(ped, 1, 0, 0, 2) -- mask
     SetPedComponentVariation(ped, 5, 0, 0, 2) -- bags
-    SetPedComponentVariation(ped, 9, 0, 0, 2) -- bproof
+    SetPedComponentVariation(ped, 9, 0, 0, 2) -- bodyarmor
     SetPedComponentVariation(ped, 10, 0, 0, 2) -- decals
     ClearPedProp(ped, 0)
     ClearPedProp(ped, 1)

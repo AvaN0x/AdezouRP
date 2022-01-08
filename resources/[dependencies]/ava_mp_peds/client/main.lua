@@ -134,11 +134,9 @@ local function saveOrRestorePlayerLocalSkin(ped)
         -- If we had a save, then we restore it
         if localPlayerSkinSave then
             print("^1[DEBUG]^0 Restoring player skin")
-            print("localPlayerSkinSave before", json.encode(localPlayerSkinSave, {indent = true}))
             for component, value in pairs(AVAConfig.skinComponents) do
                 localSkin[component] = localPlayerSkinSave[component] or value.default or value.min
             end
-            print("localSkin after", json.encode(localSkin, {indent = true}))
             localPlayerSkinSave = nil
         end
     else
@@ -147,15 +145,12 @@ local function saveOrRestorePlayerLocalSkin(ped)
         if not localPlayerSkinSave then
             localPlayerSkinSave = {}
             print("^1[DEBUG]^0 Saving player skin")
-            print("localSkin before", json.encode(localSkin, {indent = true}))
             for component, value in pairs(AVAConfig.skinComponents) do
                 -- Save value
                 localPlayerSkinSave[component] = localSkin[component] or value.default or value.min
                 -- Set value to default for localSkin
                 localSkin[component] = value.default or value.min
             end
-            print("localSkin after", json.encode(localSkin, {indent = true}))
-            print("localPlayerSkinSave after", json.encode(localPlayerSkinSave, {indent = true}))
         end
     end
 end
@@ -221,6 +216,29 @@ local function setPedClothesInternal(ped, skin)
     end
 end
 
+---Reload ped overlays, hairs and tattoos, internal
+---@param ped entity
+local function reloadPedOverlaysInternal(ped)
+    ClearPedDecorations(ped)
+
+    if AVAConfig.HairOverlays[localSkin.gender] then
+        local overlay<const> = AVAConfig.HairOverlays[localSkin.gender][localSkin.hair]
+        if overlay and overlay.collection and overlay.overlay then
+            print("^3[DEBUG]^0 Set hair overlays", overlay.collection, overlay.overlay)
+            AddPedDecorationFromHashes(ped, overlay.collection, overlay.overlay)
+        end
+    end
+
+    if localSkin.tattoos then
+        for i = 1, #localSkin.tattoos do
+            local tattoo<const> = localSkin.tattoos[i]
+            if tattoo.collection and tattoo.overlay then
+                print("^3[DEBUG]^0 Set tattoo", tattoo.collection, tattoo.overlay)
+                AddPedDecorationFromHashes(ped, tattoo.collection, tattoo.overlay)
+            end
+        end
+    end
+end
 -------------
 -- EXPORTS --
 -------------
@@ -228,13 +246,18 @@ end
 ---Set ped components based on skin components
 ---@param ped entity
 ---@param skin skin
+---@return skin "skin that got applied"
 function setPedSkin(ped, skin)
     saveOrRestorePlayerLocalSkin(ped)
 
+    local shouldReloadOverlays = false
     if skin then
         for component, _ in pairs(AVAConfig.skinComponents) do
             if skin[component] then
                 localSkin[component] = skin[component]
+                if not shouldReloadOverlays and AVAConfig.ShouldReloadOverlay[component] then
+                    shouldReloadOverlays = true
+                end
             end
         end
     end
@@ -252,19 +275,19 @@ function setPedSkin(ped, skin)
         ped = PlayerPedId()
 
         SetModelAsNoLongerNeeded(model)
+        ClearPedDecorations(ped)
+        shouldReloadOverlays = true
     end
     -- #endregion Set player model
 
-    ClearPedDecorations(ped)
-    SetPedDefaultComponentVariation(ped)
     ClearAllPedProps(ped, 0)
 
     -- #region HeadBlendData
     SetPedHeadBlendData(ped, localSkin.mother, localSkin.father, 0, localSkin.mother, localSkin.father, 0, (localSkin.shape_mix / 100) + 0.0,
         (localSkin.skin_mix / 100) + 0.0, 0.0, false)
-    while not HasPedHeadBlendFinished(ped) do
-        Wait(0)
-    end
+    -- while not HasPedHeadBlendFinished(ped) do
+    --     Wait(0)
+    -- end
     -- #endregion HeadBlendData
 
     -- #region Ped face
@@ -348,22 +371,27 @@ function setPedSkin(ped, skin)
     SetPedHairColor(ped, localSkin.hair_main_color, localSkin.hair_scnd_color)
 
     -- Hair overlays and tattoos
-    reloadPedOverlays(ped)
+    if shouldReloadOverlays then
+        reloadPedOverlaysInternal(ped)
+    end
 
     setPedClothesInternal(ped, skin)
+    return localSkin
 end
 exports("setPedSkin", setPedSkin)
 
 ---Set player ped components based on skin components
 ---@param skin skin
+---@return skin "skin that got applied"
 function setPlayerSkin(skin)
-    setPedSkin(PlayerPedId(), skin)
+    return setPedSkin(PlayerPedId(), skin)
 end
 exports("setPlayerSkin", setPlayerSkin)
 
 ---Set ped components based on clothes components
 ---@param ped entity
 ---@param skin skin
+---@return skin "skin that got applied"
 function setPedClothes(ped, skin)
     saveOrRestorePlayerLocalSkin(ped)
 
@@ -377,13 +405,14 @@ function setPedClothes(ped, skin)
     end
 
     setPedClothesInternal(ped, skin)
+    return localSkin
 end
 exports("setPedClothes", setPedClothes)
 
 ---Set player ped components based on clothes components
 ---@param skin skin
 function setPlayerClothes(skin)
-    setPedClothes(PlayerPedId(), skin)
+    return setPedClothes(PlayerPedId(), skin)
 end
 exports("setPlayerClothes", setPlayerClothes)
 
@@ -409,30 +438,189 @@ function getPlayerClothes()
 end
 exports("getPlayerClothes", getPlayerClothes)
 
+---Get max values for all skins
+---@param entity ped
+---@return skin
+function getMaxValues(ped)
+    ped = ped or PlayerPedId()
+    saveOrRestorePlayerLocalSkin(ped)
+
+    return {
+        gender = AVAConfig.skinComponents.gender.max,
+        -- #region HeadBlendData
+        father = AVAConfig.skinComponents.father.max,
+        mother = AVAConfig.skinComponents.mother.max,
+        shape_mix = AVAConfig.skinComponents.shape_mix.max,
+        skin_mix = AVAConfig.skinComponents.skin_mix.max,
+        -- #endregion HeadBlendData
+
+        -- #region Ped face
+        -- Nose
+        nose_width = AVAConfig.skinComponents.nose_width.max,
+        nose_peak_hight = AVAConfig.skinComponents.nose_peak_hight.max,
+        nose_peak_lenght = AVAConfig.skinComponents.nose_peak_lenght.max,
+        nose_bone_high = AVAConfig.skinComponents.nose_bone_high.max,
+        nose_peak_lowering = AVAConfig.skinComponents.nose_peak_lowering.max,
+        nose_bone_twist = AVAConfig.skinComponents.nose_bone_twist.max,
+        -- Eyebrows
+        eyebrown_high = AVAConfig.skinComponents.eyebrown_high.max,
+        eyebrown_forward = AVAConfig.skinComponents.eyebrown_forward.max,
+        -- Cheeks
+        cheeks_bone_high = AVAConfig.skinComponents.cheeks_bone_high.max,
+        cheeks_bone_width = AVAConfig.skinComponents.cheeks_bone_width.max,
+        cheeks_width = AVAConfig.skinComponents.cheeks_width.max,
+        -- Eyes
+        eyes_openning = AVAConfig.skinComponents.eyes_openning.max,
+        eyes_color = AVAConfig.skinComponents.eyes_color.max,
+        -- Lips
+        lips_thickness = AVAConfig.skinComponents.lips_thickness.max,
+        -- Jaw
+        jaw_bone_width = AVAConfig.skinComponents.jaw_bone_width.max,
+        jaw_bone_back_lenght = AVAConfig.skinComponents.jaw_bone_back_lenght.max,
+        -- Chin
+        chin_bone_lowering = AVAConfig.skinComponents.chin_bone_lowering.max,
+        chin_bone_lenght = AVAConfig.skinComponents.chin_bone_lenght.max,
+        chin_bone_width = AVAConfig.skinComponents.chin_bone_width.max,
+        chin_hole = AVAConfig.skinComponents.chin_hole.max,
+        -- Neck
+        neck_thickness = AVAConfig.skinComponents.neck_thickness.max,
+        -- #endregion Ped face
+
+        -- #region Ped head overlays
+        -- Blemishes
+        blemishes = GetNumHeadOverlayValues(0) - 1,
+        blemishes_op = AVAConfig.skinComponents.blemishes_op.max,
+        -- Beard
+        beard = GetNumHeadOverlayValues(1) - 1,
+        beard_op = AVAConfig.skinComponents.beard_op.max,
+        beard_color = NumHairColors - 1,
+        -- Eyebrows
+        eyebrows = GetNumHeadOverlayValues(2) - 1,
+        eyebrows_op = AVAConfig.skinComponents.eyebrows_op.max,
+        eyebrows_color = NumHairColors - 1,
+        -- Ageing
+        ageing = GetNumHeadOverlayValues(3) - 1,
+        ageing_op = AVAConfig.skinComponents.ageing_op.max,
+        -- Makeup
+        makeup = GetNumHeadOverlayValues(4) - 1,
+        makeup_op = AVAConfig.skinComponents.makeup_op.max,
+        makeup_main_color = NumMakeupColors - 1,
+        makeup_scnd_color = NumMakeupColors - 1,
+        -- Blush
+        blush = GetNumHeadOverlayValues(5) - 1,
+        blush_op = AVAConfig.skinComponents.blush_op.max,
+        blush_main_color = NumMakeupColors - 1,
+        -- Complexion
+        complexion = GetNumHeadOverlayValues(6) - 1,
+        complexion_op = AVAConfig.skinComponents.complexion_op.max,
+        -- SunDamage
+        sundamage = GetNumHeadOverlayValues(7) - 1,
+        sundamage_op = AVAConfig.skinComponents.sundamage_op.max,
+        -- Lipstick
+        lipstick = GetNumHeadOverlayValues(8) - 1,
+        lipstick_op = AVAConfig.skinComponents.lipstick_op.max,
+        lipstick_main_color = NumMakeupColors - 1,
+        lipstick_scnd_color = NumMakeupColors - 1,
+        -- Moles/Freckles
+        moles = GetNumHeadOverlayValues(8) - 1,
+        moles_op = AVAConfig.skinComponents.moles_op.max,
+        -- Chest Hair
+        chesthair = GetNumHeadOverlayValues(10) - 1,
+        chesthair_op = AVAConfig.skinComponents.chesthair_op.max,
+        chesthair_color = NumHairColors - 1,
+        -- Body Blemishes
+        bodyblemishes = GetNumHeadOverlayValues(11) - 1,
+        bodyblemishes_op = AVAConfig.skinComponents.bodyblemishes_op.max,
+        -- Add Body Blemishes
+        addbodyblemishes = GetNumHeadOverlayValues(12) - 1,
+        addbodyblemishes_op = AVAConfig.skinComponents.addbodyblemishes_op.max,
+        -- #endregion Ped head overlays
+
+        -- #region Components
+        -- Mask
+        mask = GetNumberOfPedDrawableVariations(ped, 1) - 1,
+        mask_txd = GetNumberOfPedTextureVariations(ped, 1, localSkin.mask) - 1,
+        -- Hairs
+        hair = GetNumberOfPedDrawableVariations(ped, 2) - 1,
+        hair_txd = GetNumberOfPedTextureVariations(ped, 2, localSkin.hair) - 1,
+        hair_main_color = NumHairColors - 1,
+        hair_scnd_color = NumHairColors - 1,
+        -- Torso
+        torso = GetNumberOfPedDrawableVariations(ped, 3) - 1,
+        torso_txd = GetNumberOfPedTextureVariations(ped, 3, localSkin.torso) - 1,
+        -- Leg
+        leg = GetNumberOfPedDrawableVariations(ped, 4) - 1,
+        leg_txd = GetNumberOfPedTextureVariations(ped, 4, localSkin.leg) - 1,
+        -- Bag
+        bag = GetNumberOfPedDrawableVariations(ped, 5) - 1,
+        bag_txd = GetNumberOfPedTextureVariations(ped, 5, localSkin.bag) - 1,
+        -- Shoes
+        shoes = GetNumberOfPedDrawableVariations(ped, 6) - 1,
+        shoes_txd = GetNumberOfPedTextureVariations(ped, 6, localSkin.shoes) - 1,
+        -- Accessory
+        accessory = GetNumberOfPedDrawableVariations(ped, 7) - 1,
+        accessory_txd = GetNumberOfPedTextureVariations(ped, 7, localSkin.accessory) - 1,
+        -- Undershirt
+        undershirt = GetNumberOfPedDrawableVariations(ped, 8) - 1,
+        undershirt_txd = GetNumberOfPedTextureVariations(ped, 8, localSkin.undershirt) - 1,
+        -- Kevlar
+        bodyarmor = GetNumberOfPedDrawableVariations(ped, 9) - 1,
+        bodyarmor_txd = GetNumberOfPedTextureVariations(ped, 9, localSkin.bodyarmor) - 1,
+        -- Decals
+        decals = GetNumberOfPedDrawableVariations(ped, 10) - 1,
+        decals_txd = GetNumberOfPedTextureVariations(ped, 10, localSkin.decals) - 1,
+        -- Torso
+        tops = GetNumberOfPedDrawableVariations(ped, 11) - 1,
+        tops_txd = GetNumberOfPedTextureVariations(ped, 11, localSkin.tops) - 1,
+        -- #endregion Components
+
+        -- #region Props
+        -- Hats
+        hats = GetNumberOfPedPropDrawableVariations(playerPed, 0) - 1,
+        hats_txd = GetNumberOfPedPropTextureVariations(playerPed, 0, localSkin.hats) - 1,
+        -- Glasses
+        glasses = GetNumberOfPedPropDrawableVariations(playerPed, 1) - 1,
+        glasses_txd = GetNumberOfPedPropTextureVariations(playerPed, 1, localSkin.glasses) - 1,
+        -- Ears
+        ears = GetNumberOfPedPropDrawableVariations(playerPed, 2) - 1,
+        ears_txd = GetNumberOfPedPropTextureVariations(playerPed, 2, localSkin.ears) - 1,
+        -- Watches
+        watches = GetNumberOfPedPropDrawableVariations(playerPed, 6) - 1,
+        watches_txd = GetNumberOfPedPropTextureVariations(playerPed, 6, localSkin.watches) - 1,
+        -- Bracelets
+        bracelets = GetNumberOfPedPropDrawableVariations(playerPed, 7) - 1,
+        bracelets_txd = GetNumberOfPedPropTextureVariations(playerPed, 7, localSkin.bracelets) - 1,
+        -- #endregion Props
+    }
+end
+exports("getMaxValues", getMaxValues)
+
 ---Reload ped overlays, hairs and tattoos
 ---@param ped entity
 function reloadPedOverlays(ped)
-    ClearPedDecorations(ped)
+    saveOrRestorePlayerLocalSkin(ped)
 
-    if AVAConfig.HairOverlays[localSkin.gender] then
-        local overlay<const> = AVAConfig.HairOverlays[localSkin.gender][localSkin.hair]
-        if overlay and overlay.collection and overlay.overlay then
-            print("^3[DEBUG]^0 Set hair overlays", overlay.collection, overlay.overlay)
-            AddPedDecorationFromHashes(ped, overlay.collection, overlay.overlay)
-        end
-    end
+    reloadPedOverlaysInternal(ped)
+end
+exports("reloadPedOverlays", reloadPedOverlays)
 
-    if localSkin.tattoos then
-        for i = 1, #localSkin.tattoos do
-            local tattoo<const> = localSkin.tattoos[i]
-            if tattoo.collection and tattoo.overlay then
-                print("^3[DEBUG]^0 Set tattoo", tattoo.collection, tattoo.overlay)
-                AddPedDecorationFromHashes(ped, tattoo.collection, tattoo.overlay)
+---Edit player skin array but do not apply it
+---@param skin skin
+---@return skin
+function editPlayerSkinWithoutApplying(skin)
+    saveOrRestorePlayerLocalSkin(PlayerPedId())
+
+    if skin then
+        for component, _ in pairs(AVAConfig.skinComponents) do
+            if skin[component] then
+                localSkin[component] = skin[component]
             end
         end
     end
+
+    return localSkin
 end
-exports("reloadPlayerOverlays", reloadPlayerOverlays)
+exports("editPlayerSkinWithoutApplying", editPlayerSkinWithoutApplying)
 
 -------------------
 -- DEBUG COMMAND -- 
@@ -700,7 +888,6 @@ RegisterCommand("testmp", function(source, args, rawCommand)
         },
     }
 
-    print("Set skin")
     exports.ava_mp_peds:setPedSkin(PlayerPedId(), skin[args[1] and tonumber(args[1]) or 0])
 
     -- print("player skin", json.encode(exports.ava_mp_peds:getPlayerCurrentSkin(), {indent = true}))

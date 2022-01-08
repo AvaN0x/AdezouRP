@@ -63,12 +63,13 @@ local function SpawnPlayer()
 
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
 
-        -- dprint(json.encode(AVA.Player.Data.skin))
+        dprint(json.encode(AVA.Player.Data.skin))
         AVA.Player.FirstSpawn = false
+        -- Utilise setPedSkin and not setPlayerSkin because we already got the playerPed
         if AVA.Player.Data.skin then
-            exports.skinchanger:loadSkin(AVA.Player.Data.skin)
+            exports.ava_mp_peds:setPedSkin(playerPed, AVA.Player.Data.skin)
         else
-            exports.skinchanger:loadSkin({sex = 0})
+            exports.ava_mp_peds:setPedSkin(playerPed, {gender = 0})
         end
     end
 

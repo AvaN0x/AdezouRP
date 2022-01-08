@@ -11,7 +11,7 @@ AVAConfig.skinComponents = {
     gender = {min = 0, max = 1},
     -- #region HeadBlendData
     father = {min = 0, max = 44}, -- Father ids : 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44
-    mother = {min = 0, max = 45}, -- Mother ids : 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45
+    mother = {min = 0, default = 21, max = 45}, -- Mother ids : 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45
     shape_mix = {min = 0, default = 50, max = 100},
     skin_mix = {min = 0, default = 50, max = 100},
     -- #endregion HeadBlendData
@@ -33,7 +33,7 @@ AVAConfig.skinComponents = {
     cheeks_width = {min = -100, default = 0, max = 100},
     -- Eyes
     eyes_openning = {min = -100, default = 0, max = 100},
-    eyes_color = {min = 0},
+    eyes_color = {min = 0, max = 32},
     -- Lips
     lips_thickness = {min = -100, default = 0, max = 100},
     -- Jaw
@@ -54,7 +54,7 @@ AVAConfig.skinComponents = {
     blemishes_op = {min = 0, max = 100},
     -- Beard
     beard = {min = 0},
-    beard_op = {min = 0, default = 50, max = 100},
+    beard_op = {min = 0, default = 0, max = 100},
     beard_color = {min = 0},
     -- Eyebrows
     eyebrows = {min = 0},
@@ -190,6 +190,8 @@ AVAConfig.clothesComponents = {
     "bracelets",
     "bracelets_txd",
 }
+
+AVAConfig.ShouldReloadOverlay = {["tattoos"] = true, ["hair"] = true, ["hair_txd"] = true, ["hair_main_color"] = true, ["hair_scnd_color"] = true}
 
 AVAConfig.HairOverlays = {
     [0] = {
