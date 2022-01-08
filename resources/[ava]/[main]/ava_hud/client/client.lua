@@ -62,6 +62,7 @@ end)
 function copyToClipboard(content)
     SendNUIMessage({action = "copyToClipboard", content = content})
 end
+AddEventHandler("ava_hud:client:copyToClipboard", copyToClipboard)
 
 local lastToggleMainStats = 0
 local toggleMainStatsKeyPressed = false
