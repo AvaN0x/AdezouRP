@@ -188,10 +188,10 @@ function setPedSkin(ped, skin)
     SetPedFaceFeature(ped, 14, (localSkin.jaw_bone_back_lenght / 100) + 0.0) -- Jaw Bone Length
 
     -- Chin
-    SetPedFaceFeature(ped, 15, (localSkin.chimp_bone_lowering / 100) + 0.0) -- Chin Height
-    SetPedFaceFeature(ped, 16, (localSkin.chimp_bone_lenght / 100) + 0.0) -- Chin Length
-    SetPedFaceFeature(ped, 17, (localSkin.chimp_bone_width / 100) + 0.0) -- Chin Width
-    SetPedFaceFeature(ped, 18, (localSkin.chimp_hole / 100) + 0.0) -- Chin Hole Size
+    SetPedFaceFeature(ped, 15, (localSkin.chin_bone_lowering / 100) + 0.0) -- Chin Height
+    SetPedFaceFeature(ped, 16, (localSkin.chin_bone_lenght / 100) + 0.0) -- Chin Length
+    SetPedFaceFeature(ped, 17, (localSkin.chin_bone_width / 100) + 0.0) -- Chin Width
+    SetPedFaceFeature(ped, 18, (localSkin.chin_hole / 100) + 0.0) -- Chin Hole Size
 
     -- Neck
     SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0) -- Neck Thickness
@@ -265,7 +265,7 @@ end
 exports("setPedClothes", setPedClothes)
 
 ---Returns player skin
----@return table
+---@return skin table
 function getPlayerSkin()
     return localPlayerSkinSave or localSkin
 end
@@ -352,10 +352,10 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             jaw_bone_width = 100,
             jaw_bone_back_lenght = 100,
 
-            chimp_bone_lowering = 100,
-            chimp_bone_lenght = 100,
-            chimp_bone_width = 100,
-            chimp_hole = 100,
+            chin_bone_lowering = 100,
+            chin_bone_lenght = 100,
+            chin_bone_width = 100,
+            chin_hole = 100,
 
             neck_thickness = 100,
 
@@ -479,10 +479,10 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             jaw_bone_width = 0,
             jaw_bone_back_lenght = 0,
 
-            chimp_bone_lowering = 0,
-            chimp_bone_lenght = 0,
-            chimp_bone_width = 0,
-            chimp_hole = 0,
+            chin_bone_lowering = 0,
+            chin_bone_lenght = 0,
+            chin_bone_width = 0,
+            chin_hole = 0,
 
             neck_thickness = 0,
 

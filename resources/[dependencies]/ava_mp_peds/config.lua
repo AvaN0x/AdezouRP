@@ -40,10 +40,10 @@ AVAConfig.skinComponents = {
     jaw_bone_width = {min = -100, default = 0, max = 100},
     jaw_bone_back_lenght = {min = -100, default = 0, max = 100},
     -- Chin
-    chimp_bone_lowering = {min = -100, default = 0, max = 100},
-    chimp_bone_lenght = {min = -100, default = 0, max = 100},
-    chimp_bone_width = {min = -100, default = 0, max = 100},
-    chimp_hole = {min = -100, default = 0, max = 100},
+    chin_bone_lowering = {min = -100, default = 0, max = 100},
+    chin_bone_lenght = {min = -100, default = 0, max = 100},
+    chin_bone_width = {min = -100, default = 0, max = 100},
+    chin_hole = {min = -100, default = 0, max = 100},
     -- Neck
     neck_thickness = {min = -100, default = 0, max = 100},
     -- #endregion Ped face
