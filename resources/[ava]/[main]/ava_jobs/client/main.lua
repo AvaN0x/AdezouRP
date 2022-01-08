@@ -640,7 +640,7 @@ function OpenCloakroomMenu()
         local count = 0
         for i = 1, #zoneOutfits do
             local outfit = zoneOutfits[i]
-            if outfit[playerSkin.sex == 0 and "Male" or "Female"] then
+            if outfit[playerSkin.gender == 0 and "Male" or "Female"] then
                 outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
                 count = count + 1
                 outfits[count] = outfit
@@ -652,12 +652,12 @@ function OpenCloakroomMenu()
     RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
         Items:AddButton(GetString("clothes_civil"), GetString("clothes_civil_subtitle"), nil, function(onSelected)
             if onSelected then
-                TriggerEvent("skinchanger:loadSkin", playerSkin)
+                exports.ava_mp_peds:setPlayerSkin(playerSkin)
             end
         end)
         Items:AddButton(GetString("user_clothes"), GetString("user_clothes_subtitle"), nil, function(onSelected)
             if onSelected then
-                -- TriggerEvent("openOutfitsMenu")
+                -- TriggerEvent("openOutfitsMenu") -- TODO
             end
         end)
         if job.ServiceCounter then
@@ -674,9 +674,7 @@ function OpenCloakroomMenu()
 
                 Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
                     if onSelected then
-                        TriggerEvent("skinchanger:getSkin", function(skin)
-                            TriggerEvent("skinchanger:loadClothes", skin, outfit[playerSkin.sex == 0 and "Male" or "Female"])
-                        end)
+                        exports.ava_mp_peds:setPlayerClothes(outfit[playerSkin.gender == 0 and "Male" or "Female"])
                     end
                 end)
             end
