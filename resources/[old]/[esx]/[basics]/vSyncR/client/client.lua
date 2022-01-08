@@ -14,6 +14,8 @@ AddEventHandler("vSync:updateWeather", function(NewWeather, newblackout, newIem,
     blackout = newblackout
     iem = newIem
     snow = newSnow
+    SetAudioFlag("PlayerOnDLCHeist4Island", iem) -- disable all radios
+    ForceSnowPass(snow)
 end)
 
 Citizen.CreateThread(function()
@@ -26,10 +28,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(100) -- Wait 0 seconds to prevent crashing.
         SetArtificialLightsState(blackout)
         SetArtificialLightsStateAffectsVehicles(iem)
-
-        SetAudioFlag("PlayerOnDLCHeist4Island", iem) -- disable all radios
-
-        ForceSnowPass(snow)
 
         ClearOverrideWeather()
         ClearWeatherTypePersist()
