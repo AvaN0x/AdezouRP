@@ -78,23 +78,21 @@ function Animation()
     local playerPed = PlayerPedId()
     oldCoords = GetEntityCoords(playerPed)
 
-    TriggerEvent("skinchanger:getSkin", function(skin)
-        local anim = Config.Anims[chair.type][skin.sex and "Female" or "Male"]
-        if anim.dict ~= nil then
-            SetEntityCoords(playerPed, chair.x, chair.y, chair.z)
-            SetEntityHeading(playerPed, chair.heading)
+    local anim = Config.Anims[chair.type][IsPedMale(playerPed) and "Male" or "Female"]
+    if anim.dict ~= nil then
+        SetEntityCoords(playerPed, chair.x, chair.y, chair.z)
+        SetEntityHeading(playerPed, chair.heading)
 
-            RequestAnimDict(anim.dict)
-            while not HasAnimDictLoaded(anim.dict) do
-                Citizen.Wait(0)
-            end
-
-            TaskPlayAnim(playerPed, anim.dict, anim.anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
-            FreezeEntityPosition(playerPed, true)
-        else
-            TaskStartScenarioAtPosition(playerPed, anim.scenario, chair.x, chair.y, chair.z, chair.heading, 0, true, true)
+        RequestAnimDict(anim.dict)
+        while not HasAnimDictLoaded(anim.dict) do
+            Citizen.Wait(0)
         end
-    end)
+
+        TaskPlayAnim(playerPed, anim.dict, anim.anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
+        FreezeEntityPosition(playerPed, true)
+    else
+        TaskStartScenarioAtPosition(playerPed, anim.scenario, chair.x, chair.y, chair.z, chair.heading, 0, true, true)
+    end
 end
 
 function StandUp()
