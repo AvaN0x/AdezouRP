@@ -196,6 +196,22 @@ RegisterNetEvent("ava_core:client:teleportToWaypoint", function()
     end
 end)
 
+------------------------------------
+--------------- SKIN ---------------
+------------------------------------
+
+RegisterNetEvent("ava_core:client:getskin", function()
+    local playerSkin<const> = json.encode(exports.ava_mp_peds:getPlayerCurrentSkin())
+    print(playerSkin)
+    TriggerEvent("ava_hud:client:copyToClipboard", playerSkin)
+end)
+
+RegisterNetEvent("ava_core:client:getclothes", function()
+    local playerClothes<const> = json.encode(exports.ava_mp_peds:getPlayerClothes())
+    print(playerClothes)
+    TriggerEvent("ava_hud:client:copyToClipboard", playerClothes)
+end)
+
 --------------------------------------
 --------------- Others ---------------
 --------------------------------------

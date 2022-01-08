@@ -497,6 +497,18 @@ AVA.Commands.RegisterCommand({"tpwaypoint", "tpm", "tpmarker", "tpw"}, "admin", 
     return GetString("tpwaypoint_log")
 end, GetString("tpwaypoint_help"))
 
+------------------------------------
+--------------- SKIN ---------------
+------------------------------------
+
+AVA.Commands.RegisterCommand("getskin", "", function(source, args)
+    TriggerClientEvent("ava_core:client:getskin", source)
+end, GetString("getskin_help"))
+
+AVA.Commands.RegisterCommand("getclothes", "", function(source, args)
+    TriggerClientEvent("ava_core:client:getclothes", source)
+end, GetString("getclothes_help"))
+
 --------------------------------------
 --------------- Others ---------------
 --------------------------------------

@@ -66,6 +66,8 @@
     "kill_log": "**%s** a été tué par **%s**.",
     "killed_by_staff": "Tué par un staff",
     "myid_help": "Récupérer mon ID",
+    "getskin_help": "Récupérer le skin du joueur",
+    "getclothes_help": "Récupérer les vêtements du joueur",
     "message_help": "Envoyer un message à un joueur",
     "message_title": "STAFF",
     "report_help": "Faire une annonce staff",
