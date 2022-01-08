@@ -108,10 +108,23 @@ local NumMakeupColors<const> = GetNumMakeupColors()
 -- AVAConfig.skinComponents.hair_main_color.max = NumHairColors - 1
 -- AVAConfig.skinComponents.hair_scnd_color.max = NumHairColors - 1
 
--- Init local skin to default values
-for element, value in pairs(AVAConfig.skinComponents) do
-    localSkin[element] = value.default or value.min
+-- Reset local skin to default values
+function reset()
+    for component, value in pairs(AVAConfig.skinComponents) do
+        localSkin[component] = value.default or value.min
+    end
 end
+exports("reset", reset)
+reset()
+
+-- Reset local skin clothes to default values
+function resetClothes()
+    for i = 1, #AVAConfig.clothesComponents do
+        local component = AVAConfig.clothesComponents[i]
+        localSkin[component] = AVAConfig.skinComponents[component].default or AVAConfig.skinComponents[component].min
+    end
+end
+exports("resetClothes", resetClothes)
 
 ---Depending on the ped type, it will either save the player skin from localSkin for later, either restore the player skin into localSkin
 ---@param ped entity
@@ -122,8 +135,8 @@ local function saveOrRestorePlayerLocalSkin(ped)
         if localPlayerSkinSave then
             print("^1[DEBUG]^0 Restoring player skin")
             print("localPlayerSkinSave before", json.encode(localPlayerSkinSave, {indent = true}))
-            for element, value in pairs(AVAConfig.skinComponents) do
-                localSkin[element] = localPlayerSkinSave[element] or value.default or value.min
+            for component, value in pairs(AVAConfig.skinComponents) do
+                localSkin[component] = localPlayerSkinSave[component] or value.default or value.min
             end
             print("localSkin after", json.encode(localSkin, {indent = true}))
             localPlayerSkinSave = nil
@@ -135,11 +148,11 @@ local function saveOrRestorePlayerLocalSkin(ped)
             localPlayerSkinSave = {}
             print("^1[DEBUG]^0 Saving player skin")
             print("localSkin before", json.encode(localSkin, {indent = true}))
-            for element, value in pairs(AVAConfig.skinComponents) do
+            for component, value in pairs(AVAConfig.skinComponents) do
                 -- Save value
-                localPlayerSkinSave[element] = localSkin[element] or value.default or value.min
+                localPlayerSkinSave[component] = localSkin[component] or value.default or value.min
                 -- Set value to default for localSkin
-                localSkin[element] = value.default or value.min
+                localSkin[component] = value.default or value.min
             end
             print("localSkin after", json.encode(localSkin, {indent = true}))
             print("localPlayerSkinSave after", json.encode(localPlayerSkinSave, {indent = true}))
@@ -149,7 +162,7 @@ end
 
 ---Set ped components based on clothes components, internal
 ---@param ped entity
----@param skin table
+---@param skin skin
 local function setPedClothesInternal(ped, skin)
     -- Mask
     SetPedComponentVariation(ped, 1, localSkin.mask, localSkin.mask_txd, 0)
@@ -214,7 +227,7 @@ end
 
 ---Set ped components based on skin components
 ---@param ped entity
----@param skin table
+---@param skin skin
 function setPedSkin(ped, skin)
     saveOrRestorePlayerLocalSkin(ped)
 
@@ -341,9 +354,16 @@ function setPedSkin(ped, skin)
 end
 exports("setPedSkin", setPedSkin)
 
+---Set player ped components based on skin components
+---@param skin skin
+function setPlayerSkin(skin)
+    setPedSkin(PlayerPedId(), skin)
+end
+exports("setPlayerSkin", setPlayerSkin)
+
 ---Set ped components based on clothes components
 ---@param ped entity
----@param skin table
+---@param skin skin
 function setPedClothes(ped, skin)
     saveOrRestorePlayerLocalSkin(ped)
 
@@ -360,17 +380,24 @@ function setPedClothes(ped, skin)
 end
 exports("setPedClothes", setPedClothes)
 
+---Set player ped components based on clothes components
+---@param skin skin
+function setPlayerClothes(skin)
+    setPedClothes(PlayerPedId(), skin)
+end
+exports("setPlayerClothes", setPlayerClothes)
+
 ---Returns player skin
 ---@return skin table
-function getPlayerSkin()
+function getPlayerCurrentSkin()
     return localPlayerSkinSave or localSkin
 end
-exports("getPlayerSkin", getPlayerSkin)
+exports("getPlayerCurrentSkin", getPlayerCurrentSkin)
 
 ---Returns player clothes
 ---@return table
 function getPlayerClothes()
-    local playerSkin<const> = getPlayerSkin()
+    local playerSkin<const> = getPlayerCurrentSkin()
     local clothes = {}
 
     for i = 1, #AVAConfig.clothesComponents do
@@ -676,7 +703,7 @@ RegisterCommand("testmp", function(source, args, rawCommand)
     print("Set skin")
     exports.ava_mp_peds:setPedSkin(PlayerPedId(), skin[args[1] and tonumber(args[1]) or 0])
 
-    -- print("player skin", json.encode(exports.ava_mp_peds:getPlayerSkin(), {indent = true}))
+    -- print("player skin", json.encode(exports.ava_mp_peds:getPlayerCurrentSkin(), {indent = true}))
     -- print("player clothes", json.encode(exports.ava_mp_peds:getPlayerClothes(), {indent = true}))
     TriggerServerEvent("ava_core:server:reloadLoadout")
 end)
