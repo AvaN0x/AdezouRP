@@ -492,7 +492,7 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
     end
 end, GetString("summon_help"), {{name = "player", help = GetString("player_id")}})
 
-AVA.Commands.RegisterCommand({"tpwaypoint", "tpm", "tpmarker", "tpw"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({"tpwaypoint", "tpw", "tpmarker", "tpm"}, "admin", function(source, args)
     TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
     return GetString("tpwaypoint_log")
 end, GetString("tpwaypoint_help"))
