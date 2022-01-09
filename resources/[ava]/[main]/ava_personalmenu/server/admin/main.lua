@@ -17,11 +17,12 @@ local requiredPerms<const> = {
         revive = true,
     },
     playersoptions = {playerblips = true, playertags = true},
-    vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     tpcoords = true,
     tpwaypoint = true,
-    noclip = true,
+    chars = true,
     dev = {showhash = true, showcoordshelper = true, showcoords = true},
+    noclip = true,
+    vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     adminmode = true,
 }
 

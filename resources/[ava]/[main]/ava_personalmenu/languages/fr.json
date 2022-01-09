@@ -91,6 +91,8 @@
     "player_manage_ban_confirm_title": "~r~Ban~s~",
     "player_manage_ban_confirm_firstline": "Voulez-vous vraiment bannir <b>%s</b> pour la raison suivante :",
     "player_manage_ban_confirm_reason": "<i>%s</i>",
+    "admin_menu_chars": "Changement de personnage",
+    "admin_menu_chars_subtitle": "Ouvrir le menu pour changer de personnage",
     "players_options": "Options des joueurs",
     "admin_menu_players_options_blips": "Blips des joueurs",
     "admin_menu_players_options_blips_subtitle": "Afficher les joueurs sur la map",

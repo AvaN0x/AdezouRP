@@ -63,6 +63,18 @@ function RageUI.PoolMenus:AdminMenu()
                     end
                 end)
             end
+            if perms.chars then
+                Items:AddButton(GetString("admin_menu_chars"), GetString("admin_menu_chars_subtitle"), {
+                    RightBadge = function()
+                        return {BadgeDictionary = "mpleaderboard", BadgeTexture = "leaderboard_male_icon"}
+                    end,
+                }, function(onSelected)
+                    if onSelected then
+                        RageUI.CloseAllInternal()
+                        ExecuteCommand("chars")
+                    end
+                end)
+            end
             Items:AddButton(GetString("admin_menu_admin_settings"), GetString("admin_menu_admin_settings_subtitle"), {RightLabel = "→→→"}, nil,
                 AdminSettingsSubMenu)
             if perms.noclip then
