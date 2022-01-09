@@ -29,7 +29,7 @@ function TrafficLawsLicense()
 
             for i = 1, #question.answers do
                 local answer = question.answers[i]
-                Items:AddButton(GetString("answer_number", string.char(string.byte("A") + i - 1) .. (answer.right and " right" or "")),
+                Items:AddButton(GetString("answer_number", string.char(string.byte("A") + i - 1)),
                     GetString("answer_subtitle", question.question, answer.label), {}, function(onSelected)
                         if onSelected then
                             -- Check answer
@@ -45,8 +45,8 @@ function TrafficLawsLicense()
 
             for i = 1, #question.answers do
                 local answer = question.answers[i]
-                Items:CheckBox(GetString("answer_number", string.char(string.byte("A") + i - 1) .. (answer.right and " right" or "")),
-                    GetString("answer_subtitle", question.question, answer.label), checkedAnswers[i], {}, function(onSelected, IsChecked)
+                Items:CheckBox(GetString("answer_number", string.char(string.byte("A") + i - 1)), GetString("answer_subtitle", question.question, answer.label),
+                    checkedAnswers[i], {}, function(onSelected, IsChecked)
                         if (onSelected) then
                             checkedAnswers[i] = not checkedAnswers[i]
                             canValidate = true
