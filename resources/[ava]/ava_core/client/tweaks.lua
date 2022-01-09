@@ -17,16 +17,18 @@ local function SetWeaponDrops()
 end
 
 Citizen.CreateThread(function()
-    local playerId = PlayerId()
+    local playerId<const> = PlayerId()
 
     -- calm all IA
-    local hashKeyPlayer = GetHashKey("PLAYER")
+    local hashKeyPlayer<const> = GetHashKey("PLAYER")
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_HILLBILLY"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_BALLAS"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_MEXICAN"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_FAMILY"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_MARABUNTE"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_SALVA"), hashKeyPlayer)
+    SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_WEICHENG"), hashKeyPlayer)
+    SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_LOST"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("GANG_1"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("GANG_2"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("GANG_9"), hashKeyPlayer)
@@ -34,6 +36,8 @@ Citizen.CreateThread(function()
     SetRelationshipBetweenGroups(1, GetHashKey("FIREMAN"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("MEDIC"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("COP"), hashKeyPlayer)
+    -- SetRelationshipBetweenGroups(1, GetHashKey("ARMY"), hashKeyPlayer)
+    -- SetRelationshipBetweenGroups(1, GetHashKey("SECURITY_GUARD"), hashKeyPlayer)
 
     -- DT_Invalid
     -- DT_PoliceAutomobile
