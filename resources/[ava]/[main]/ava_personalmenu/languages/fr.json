@@ -138,6 +138,8 @@
     "dev_menu_showhash_vehicle_subtitle": "",
     "dev_menu_showhash_ped": "→ Hash des peds",
     "dev_menu_showhash_ped_subtitle": "",
+    "dev_menu_showhash_dimensions": "→ Dimensions des entités",
+    "dev_menu_showhash_dimensions_subtitle": "Afficher ou non la dimension des entités\nN'affecte pas les peds",
     "dev_menu_showcoordshelper": "Toggle aide coordonnées",
     "dev_menu_showcoordshelper_subtitle": "",
     "dev_menu_showcoords": "Toggle coordonnées",

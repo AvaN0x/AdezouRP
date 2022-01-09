@@ -9,6 +9,7 @@ local showhash, showcoordshelper, showcoords = false, false, false
 local showhash_object = GetResourceKvpInt("showhash_object") == 0
 local showhash_vehicle = GetResourceKvpInt("showhash_vehicle") == 0
 local showhash_ped = GetResourceKvpInt("showhash_ped") == 0
+local showhash_dimensions = GetResourceKvpInt("showhash_dimensions") == 0
 
 function PoolDevMenu()
     DevAdminMenu:IsVisible(function(Items)
@@ -57,6 +58,13 @@ function PoolDevMenu()
                             if showhash and not showhash_object and not showhash_vehicle and not showhash_ped then
                                 showhash = false
                             end
+                        end
+                    end)
+                Items:CheckBox(GetString("dev_menu_showhash_dimensions"), GetString("dev_menu_showhash_dimensions_subtitle"), showhash_dimensions, style,
+                    function(onSelected, IsChecked)
+                        if (onSelected) then
+                            showhash_dimensions = not showhash_dimensions
+                            SetResourceKvpInt("showhash_dimensions", showhash_dimensions and 0 or 1)
                         end
                     end)
 
@@ -204,20 +212,29 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
     end)
 end)
 
+local visibleHash = {}
+local function clearVisibleHashOutlines()
+    for i = 1, #visibleHash do
+        SetEntityDrawOutline(visibleHash[i].entity, false)
+    end
+end
 RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
     showhash = not showhash
 
     if not showhash then
         return
     end
-    local visibleHash = {}
 
     Citizen.CreateThread(function()
+        SetEntityDrawOutlineColor(255, 133, 85, 255)
+        SetEntityDrawOutlineShader(0)
+
         while showhash do
             Wait(500)
             local playerPed = PlayerPedId()
             local playerCoords = GetEntityCoords(playerPed)
 
+            clearVisibleHashOutlines()
             visibleHash = {}
             local count = 0
             if showhash_object then
@@ -227,6 +244,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     if #(playerCoords - propCoords) < 5.0 then
                         count = count + 1
                         visibleHash[count] = {hash = GetEntityModel(prop), entity = prop}
+                        SetEntityDrawOutline(prop, true)
                     end
                 end
             end
@@ -237,6 +255,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     if #(playerCoords - vehCoords) < 10.0 then
                         count = count + 1
                         visibleHash[count] = {hash = GetEntityModel(veh), entity = veh}
+                        SetEntityDrawOutline(veh, true)
                     end
                 end
             end
@@ -246,77 +265,88 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local pedCoords = GetEntityCoords(ped)
                     if #(playerCoords - pedCoords) < 10.0 then
                         count = count + 1
-                        visibleHash[count] = {hash = GetEntityModel(ped), entity = ped}
+                        visibleHash[count] = {hash = GetEntityModel(ped), entity = ped, dimensions = true}
                     end
                 end
             end
         end
+        clearVisibleHashOutlines()
     end)
 
     Citizen.CreateThread(function()
+        local r<const>, g<const>, b<const> = 255, 0, 255
+        local lineAlpha<const> = 255
+        local polyAlpha<const> = 32
         while showhash do
             Wait(0)
             for _, entity in ipairs(visibleHash) do
                 local coords = GetEntityCoords(entity.entity)
                 DrawText3D(coords.x, coords.y, coords.z, entity.hash, 0.3)
 
-                local min, max = GetModelDimensions(GetEntityModel(entity.entity))
-                local pad = 0.001;
+                if showhash_dimensions or entity.dimensions then
+                    local min, max = GetModelDimensions(GetEntityModel(entity.entity))
+                    local pad = 0.001;
 
-                -- Bottom
-                local bottom1 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, min.y - pad, min.z - pad)
-                local bottom2 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, min.y - pad, min.z - pad)
-                local bottom3 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, max.y + pad, min.z - pad)
-                local bottom4 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, max.y + pad, min.z - pad)
+                    -- Bottom
+                    local bottom1 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, min.y - pad, min.z - pad)
+                    local bottom2 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, min.y - pad, min.z - pad)
+                    local bottom3 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, max.y + pad, min.z - pad)
+                    local bottom4 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, max.y + pad, min.z - pad)
 
-                -- Top
-                local top1 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, min.y - pad, max.z + pad)
-                local top2 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, min.y - pad, max.z + pad)
-                local top3 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, max.y + pad, max.z + pad)
-                local top4 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, max.y + pad, max.z + pad)
+                    -- Top
+                    local top1 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, min.y - pad, max.z + pad)
+                    local top2 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, min.y - pad, max.z + pad)
+                    local top3 = GetOffsetFromEntityInWorldCoords(entity.entity, max.x + pad, max.y + pad, max.z + pad)
+                    local top4 = GetOffsetFromEntityInWorldCoords(entity.entity, min.x - pad, max.y + pad, max.z + pad)
 
-                -- bottom
-                DrawLine(bottom1, bottom2, 255, 0, 255, 255)
-                DrawLine(bottom1, bottom4, 255, 0, 255, 255)
-                DrawLine(bottom2, bottom3, 255, 0, 255, 255)
-                DrawLine(bottom3, bottom4, 255, 0, 255, 255)
+                    -- bottom
+                    DrawLine(bottom1, bottom2, r, g, b, lineAlpha)
+                    DrawLine(bottom1, bottom4, r, g, b, lineAlpha)
+                    DrawLine(bottom2, bottom3, r, g, b, lineAlpha)
+                    DrawLine(bottom3, bottom4, r, g, b, lineAlpha)
 
-                -- top
-                DrawLine(top1, top2, 255, 0, 255, 255)
-                DrawLine(top1, top4, 255, 0, 255, 255)
-                DrawLine(top2, top3, 255, 0, 255, 255)
-                DrawLine(top3, top4, 255, 0, 255, 255)
+                    -- top
+                    DrawLine(top1, top2, r, g, b, lineAlpha)
+                    DrawLine(top1, top4, r, g, b, lineAlpha)
+                    DrawLine(top2, top3, r, g, b, lineAlpha)
+                    DrawLine(top3, top4, r, g, b, lineAlpha)
 
-                -- bottom to top
-                DrawLine(bottom1, top1, 255, 0, 255, 255)
-                DrawLine(bottom2, top2, 255, 0, 255, 255)
-                DrawLine(bottom3, top3, 255, 0, 255, 255)
-                DrawLine(bottom4, top4, 255, 0, 255, 255)
+                    -- bottom to top
+                    DrawLine(bottom1, top1, r, g, b, lineAlpha)
+                    DrawLine(bottom2, top2, r, g, b, lineAlpha)
+                    DrawLine(bottom3, top3, r, g, b, lineAlpha)
+                    DrawLine(bottom4, top4, r, g, b, lineAlpha)
 
-                -- top face
-                DrawPoly(top1, top2, top3, 255, 0, 255, 128)
-                DrawPoly(top4, top1, top3, 255, 0, 255, 128)
+                    -- top face
+                    DrawPoly(top1, top2, top3, r, g, b, polyAlpha)
+                    DrawPoly(top4, top1, top3, r, g, b, polyAlpha)
 
-                -- bottom face
-                DrawPoly(bottom2, bottom1, bottom3, 255, 0, 255, 128)
-                DrawPoly(bottom1, bottom4, bottom3, 255, 0, 255, 128)
+                    -- bottom face
+                    DrawPoly(bottom2, bottom1, bottom3, r, g, b, polyAlpha)
+                    DrawPoly(bottom1, bottom4, bottom3, r, g, b, polyAlpha)
 
-                -- back face
-                DrawPoly(top2, top1, bottom1, 255, 0, 255, 128)
-                DrawPoly(bottom1, bottom2, top2, 255, 0, 255, 128)
+                    -- back face
+                    DrawPoly(top2, top1, bottom1, r, g, b, polyAlpha)
+                    DrawPoly(bottom1, bottom2, top2, r, g, b, polyAlpha)
 
-                -- front face
-                DrawPoly(top4, top3, bottom4, 255, 0, 255, 128)
-                DrawPoly(bottom3, bottom4, top3, 255, 0, 255, 128)
+                    -- front face
+                    DrawPoly(top4, top3, bottom4, r, g, b, polyAlpha)
+                    DrawPoly(bottom3, bottom4, top3, r, g, b, polyAlpha)
 
-                -- right face
-                DrawPoly(top3, top2, bottom2, 255, 0, 255, 128)
-                DrawPoly(bottom2, bottom3, top3, 255, 0, 255, 128)
+                    -- right face
+                    DrawPoly(top3, top2, bottom2, r, g, b, polyAlpha)
+                    DrawPoly(bottom2, bottom3, top3, r, g, b, polyAlpha)
 
-                -- left face
-                DrawPoly(top1, top4, bottom1, 255, 0, 255, 128)
-                DrawPoly(bottom4, bottom1, top4, 255, 0, 255, 128)
+                    -- left face
+                    DrawPoly(top1, top4, bottom1, r, g, b, polyAlpha)
+                    DrawPoly(bottom4, bottom1, top4, r, g, b, polyAlpha)
+                end
             end
         end
     end)
+end)
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        clearVisibleHashOutlines()
+    end
 end)
