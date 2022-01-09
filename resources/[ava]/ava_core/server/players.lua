@@ -389,7 +389,7 @@ AddEventHandler("playerDropped", function(reason)
             "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId
                 .. ")\nRaison : " .. reason, 0xFF5455)
 
-        aPlayer.logout()
+        aPlayer.logout(true)
         Citizen.Await(aPlayer.save())
 
         if aPlayer.group then
@@ -622,7 +622,7 @@ AVA.Players.Login = function(src)
     end
 end
 
-AVA.Players.Logout = function(src)
+AVA.Players.Logout = function(src, isOnDrop)
     local aPlayer = AVA.Players.GetPlayer(src)
 
     if aPlayer then
@@ -632,7 +632,7 @@ AVA.Players.Logout = function(src)
             local job = jobs[i]
             AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. ".grade." .. job.grade)
         end
-        if AVAConfig.NPWD then
+        if AVAConfig.NPWD and not isOnDrop then
             exports.npwd:unloadPlayer(tonumber(src))
         end
 

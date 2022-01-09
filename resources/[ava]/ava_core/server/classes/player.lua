@@ -47,8 +47,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return AVA.Players.Login(self.src)
     end
 
-    self.logout = function()
-        return AVA.Players.Logout(self.src)
+    self.logout = function(...)
+        return AVA.Players.Logout(self.src, ...)
     end
 
     self.save = function()
