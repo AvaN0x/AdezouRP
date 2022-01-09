@@ -199,8 +199,8 @@ Config.Stores = {
     -- Clothes stores
     DiscountStore = {
         Title = {textureName = "shopui_title_lowendfashion", textureDirectory = "shopui_title_lowendfashion"}, -- CHECKOUT! DISCOUNT STORE
+        Subtitle = "DiscountStore",
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
-        CanSave = true,
         Coords = {
             vector3(72.254, -1399.102, 28.40),
             vector3(11.632, 6514.224, 30.90),
@@ -209,6 +209,9 @@ Config.Stores = {
             vector3(-1108.441, 2708.923, 18.13),
         },
         ClothesStore = true,
+        SkinElements = {
+            "undershirt",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -218,10 +221,14 @@ Config.Stores = {
     },
     Ponsonbys = {
         Title = {textureName = "shopui_title_highendfashion", textureDirectory = "shopui_title_highendfashion"}, -- PONSONBYS
+        Subtitle = "Ponsonbys",
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
-        CanSave = true,
         Coords = {vector3(-703.776, -152.258, 36.44), vector3(-167.863, -298.969, 38.75), vector3(-1447.797, -242.461, 48.83)},
         ClothesStore = true,
+        SkinElements = {
+            "undershirt",
+        },
+        Price = 250,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -231,10 +238,13 @@ Config.Stores = {
     },
     Binco = {
         Title = {textureName = "shopui_title_lowendfashion2", textureDirectory = "shopui_title_lowendfashion2"}, -- binco
+        Subtitle = "Binco",
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
-        CanSave = true,
         Coords = {vector3(428.694, -800.106, 28.51), vector3(-829.413, -1073.710, 10.35)},
         ClothesStore = true,
+        SkinElements = {
+            "undershirt",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -244,8 +254,8 @@ Config.Stores = {
     },
     Suburban = {
         Title = {textureName = "shopui_title_midfashion", textureDirectory = "shopui_title_midfashion"}, -- suburban
+        Subtitle = "Suburban",
         Blip = {Sprite = 73, Color = 47, Scale = 0.8},
-        CanSave = true,
         Coords = {
             vector3(123.646, -219.440, 53.58),
             vector3(618.093, 2759.629, 41.11),
@@ -253,6 +263,9 @@ Config.Stores = {
             vector3(-3172.496, 1048.133, 19.88),
         },
         ClothesStore = true,
+        SkinElements = {
+            "undershirt",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -264,10 +277,13 @@ Config.Stores = {
     -- Barbershops
     HairOnHawickBarber = {
         Title = {textureName = "shopui_title_barber4", textureDirectory = "shopui_title_barber4"}, -- HAIR ON HAWICK TRADITIONAL BARBERS
+        Subtitle = "Hair On Hawick Traditional Barbers",
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
         Coords = {vector3(-32.885, -152.319, 56.10)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {
+            "hair",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -277,10 +293,13 @@ Config.Stores = {
     },
     BobMuletBarber = {
         Title = {textureName = "shopui_title_highendsalon", textureDirectory = "shopui_title_highendsalon"}, -- bob mulét
+        Subtitle = "Bob Mulét",
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
         Coords = {vector3(-814.308, -183.823, 36.59)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {
+            "hair",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -290,10 +309,13 @@ Config.Stores = {
     },
     HerrKutzBarber = {
         Title = {textureName = "shopui_title_barber", textureDirectory = "shopui_title_barber"}, -- HERR KUTZ BARBER
+        Subtitle = "Herr Kutz Barber",
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
         Coords = {vector3(136.826, -1708.373, 28.31), vector3(1212.840, -473.921, 65.23), vector3(-278.077, 6228.463, 30.72)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {
+            "hair",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -303,10 +325,13 @@ Config.Stores = {
     },
     BeachComboverBarber = {
         Title = {textureName = "shopui_title_barber2", textureDirectory = "shopui_title_barber2"}, -- BEACHCOMBOVER BARBERS
+        Subtitle = "Beachcombover Barber",
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
         Coords = {vector3(-1282.604, -1116.757, 6.01)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {
+            "hair",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -316,10 +341,13 @@ Config.Stores = {
     },
     OSheasBarber = {
         Title = {textureName = "shopui_title_barber3", textureDirectory = "shopui_title_barber3"}, -- O'SHEAS BARBERS
+        Subtitle = "O'Sheas Barbers",
         Blip = {Sprite = 71, Color = 51, Scale = 0.8},
         Coords = {vector3(1931.513, 3729.671, 31.86)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {
+            "hair",
+        },
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -330,10 +358,11 @@ Config.Stores = {
 
     MaskShop = {
         Title = {textureName = "shopui_title_movie_masks", textureDirectory = "shopui_title_movie_masks"},
+        Subtitle = "Vespucci movie masks",
         Blip = {Sprite = 671, Color = 31, Scale = 0.8},
         Coords = {vector3(-1336.87, -1278.91, 3.88)},
         ClothesStore = true,
-        -- CanSave = false,
+        SkinElements = {"mask"},
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},

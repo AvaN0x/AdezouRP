@@ -124,3 +124,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:carwash:checkMoney", functio
     end
     return false
 end)
+
+exports.ava_core:RegisterCommand({"clothesmenu", "cm"}, "admin", function(source, args)
+    TriggerClientEvent("ava_jobs:client:OpenClothesMenu", source)
+end, GetString("clothesmenu_help"))

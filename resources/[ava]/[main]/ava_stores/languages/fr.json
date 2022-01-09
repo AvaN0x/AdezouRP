@@ -13,5 +13,12 @@
     "carwash_driving_too_fast": "Vous conduisez trop vite",
     "carwash_on_cleaning": "Lavage en cours",
     "carwash_vehicle_cleaned": "Le véhicule a été néttoyé.",
-    "press_access_saved_outfits": "Appuyez sur ~INPUT_CONTEXT~ pour accéder à vos tenues sauvegardées"
+    "press_access_saved_outfits": "Appuyez sur ~INPUT_CONTEXT~ pour accéder à vos tenues sauvegardées",
+    "clothes_menu": "Menu vêtements",
+    "clothesmenu_help": "Ouvrir le menu vêtements",
+    "clothes_menu_cancel": "~r~Annuler~s~",
+    "clothes_menu_cancel_subtitle": "Annuler les changements",
+    "clothes_menu_validate_right_label_money": "$%s",
+    "clothes_menu_validate": "Valider",
+    "clothes_menu_validate_subtitle": "Valider les changements"
 }
