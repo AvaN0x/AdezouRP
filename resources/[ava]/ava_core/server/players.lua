@@ -605,9 +605,7 @@ RegisterNetEvent("ava_core:server:updateHealth", function(health)
     end
 end)
 
-AVA.Players.Login = function(src)
-    local aPlayer = AVA.Players.GetPlayer(src)
-
+AVA.Players.Login = function(aPlayer)
     if aPlayer then
         -- add all RP related aces and principals
         local jobs = aPlayer.getJobs()
@@ -618,13 +616,11 @@ AVA.Players.Login = function(src)
 
         dprint("^2[LOGIN] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
     else
-        error("^1[AVA.Players.Login]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+        error("^1[AVA.Players.Login]^0 aPlayer is not valid.")
     end
 end
 
-AVA.Players.Logout = function(src, isOnDrop)
-    local aPlayer = AVA.Players.GetPlayer(src)
-
+AVA.Players.Logout = function(aPlayer, isOnDrop)
     if aPlayer then
         -- remove all RP related aces and principals
         local jobs = aPlayer.getJobs()
@@ -633,27 +629,23 @@ AVA.Players.Logout = function(src, isOnDrop)
             AVA.RemovePrincipal("player." .. aPlayer.src, "job." .. job.name .. ".grade." .. job.grade)
         end
         if AVAConfig.NPWD and not isOnDrop then
-            exports.npwd:unloadPlayer(tonumber(src))
+            exports.npwd:unloadPlayer(tonumber(aPlayer.src))
         end
 
         dprint("^2[LOGOUT] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
     else
-        error("^1[AVA.Players.Logout]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+        error("^1[AVA.Players.Logout]^0 aPlayer is not valid.")
     end
 end
 
-AVA.Players.Save = function(src)
-    local aPlayer = AVA.Players.GetPlayer(src)
-
+AVA.Players.Save = function(aPlayer)
     if aPlayer and aPlayer.citizenId then
-        TriggerClientEvent("ava_core:client:startSave", src)
+        TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
-        -- exports.oxmysql:execute('UPDATE `players` SET `position` = :position, `character` = :character, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `metadata` = :metadata WHERE `license` = :license AND `id` = :id', {
         exports.oxmysql:execute(
             "UPDATE `players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
             {
                 position = json.encode(aPlayer.position),
-                -- character = json.encode(aPlayer.character),
                 skin = json.encode(aPlayer.skin),
                 loadout = json.encode(aPlayer.loadout),
                 accounts = json.encode(aPlayer.accounts),
@@ -667,30 +659,32 @@ AVA.Players.Save = function(src)
             }, function(result)
                 print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
                 aPlayer.lastSaveTime = os.time()
-                TriggerClientEvent("ava_core:client:endSave", src)
+                TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
                 p:resolve()
             end)
         return p
+    elseif aPlayer then
+        error("^1[AVA.Players.Save]^0 aPlayer is not valid for src ^3" .. aPlayer.src .. "^0.")
     else
-        error("^1[AVA.Players.Save]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+        error("^1[AVA.Players.Save]^0 aPlayer is not valid.")
     end
 end
 
-AVA.Players.SavePlayerJobs = function(src)
-    local aPlayer = AVA.Players.GetPlayer(src)
-
+AVA.Players.SavePlayerJobs = function(aPlayer)
     if aPlayer and aPlayer.citizenId then
-        TriggerClientEvent("ava_core:client:startSave", src)
+        TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
         exports.oxmysql:execute("UPDATE `players` SET `jobs` = :jobs WHERE `license` = :license AND `id` = :id",
             {jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId}, function(result)
                 print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
-                TriggerClientEvent("ava_core:client:endSave", src)
+                TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
                 p:resolve()
             end)
         return p
+    elseif aPlayer then
+        error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid for src ^3" .. aPlayer.src .. "^0.")
     else
-        error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid for src ^3" .. src .. "^0.")
+        error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid.")
     end
 end
 

@@ -44,15 +44,15 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     end
 
     self.login = function()
-        return AVA.Players.Login(self.src)
+        return AVA.Players.Login(self)
     end
 
     self.logout = function(...)
-        return AVA.Players.Logout(self.src, ...)
+        return AVA.Players.Logout(self, ...)
     end
 
     self.save = function()
-        return AVA.Players.Save(self.src)
+        return AVA.Players.Save(self)
     end
 
     ---Get player discord tag if possible, else it will return the name
@@ -369,7 +369,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---and save data on database
     local function savePlayerJobs()
         TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {jobs = self.getJobsClientData()})
-        AVA.Players.SavePlayerJobs(self.src)
+        AVA.Players.SavePlayerJobs(self)
     end
 
     ---Check if a player has a job

@@ -107,12 +107,10 @@ AVA.SaveAllJobsAccounts = function()
         end
     end
     Citizen.Await(promise.all(promises))
-    print("^2[SAVE JOBS ACCOUNTS]^0 Every jobs accounts have been saved.")
+    print("^2[SAVE JOBS ACCOUNTS]^0 Every jobs accounts has been saved.")
 end
 
-AVA.SaveJobAccounts = function(jobName)
-    local aJobAccounts = AVA.JobsAccounts[jobName]
-
+AVA.SaveJobAccounts = function(aJobAccounts)
     if aJobAccounts then
         local p = promise.new()
         exports.oxmysql:execute("UPDATE `jobs` SET `accounts` = :accounts WHERE `name` = :name",
@@ -123,7 +121,7 @@ AVA.SaveJobAccounts = function(jobName)
             end)
         return p
     else
-        error("^1[AVA.SaveJobAccounts]^0 aJobAccounts is not valid for jobName ^3" .. jobName .. "^0.")
+        error("^1[AVA.SaveJobAccounts]^0 aJobAccounts is not valid.")
     end
 end
 

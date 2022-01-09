@@ -11,7 +11,7 @@ function CreateJobAccounts(name, accounts)
     self.modified = false
 
     self.save = function()
-        return AVA.SaveJobAccounts(self.name)
+        return AVA.SaveJobAccounts(self)
     end
 
     ---Get all accounts
