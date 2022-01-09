@@ -242,6 +242,20 @@ function PoolPlayerList()
                         end
                     end)
                 end
+                if perms.playerlist.heal then
+                    Items:AddButton(GetString("player_manage_heal"), GetString("player_manage_heal_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("heal " .. playerData.id)
+                        end
+                    end)
+                end
+                if perms.playerlist.revive then
+                    Items:AddButton(GetString("player_manage_revive"), GetString("player_manage_revive_subtitle"), nil, function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("revive " .. playerData.id)
+                        end
+                    end)
+                end
                 if perms.playerlist.kick then
                     Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), nil, function(onSelected)
                         if onSelected then

@@ -4,7 +4,18 @@
 -------------------------------------------
 ---@class adminmenu_perms
 local requiredPerms<const> = {
-    playerlist = {spec = true, ["goto"] = true, bring = true, kill = true, kick = true, ban = true, openinventory = true, message = true},
+    playerlist = {
+        spec = true,
+        ["goto"] = true,
+        bring = true,
+        kill = true,
+        kick = true,
+        ban = true,
+        openinventory = true,
+        message = true,
+        heal = true,
+        revive = true,
+    },
     playersoptions = {playerblips = true, playertags = true},
     vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
     tpcoords = true,
