@@ -565,7 +565,7 @@ AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aP
     local message<const> = table.concat(args, " ")
     local playerName<const> = aPlayer.getDiscordTag()
 
-    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName), message, 0xFFD767)
+    AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName, source), message, 0xFFD767)
     -- Notify source
     TriggerClientEvent("chat:addMessage", source,
         {color = {255, 60, 60}, multiline = false, args = {GetString("report_chat_prefix"), GetString("report_chat_message")}})

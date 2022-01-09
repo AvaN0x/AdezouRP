@@ -71,7 +71,7 @@
     "message_help": "Envoyer un message à un joueur",
     "message_title": "STAFF",
     "report_help": "Faire une annonce staff",
-    "report_embed_by_player": "**Report par %s**",
+    "report_embed_by_player": "**Report par %s** (`%s`)",
     "report_chat_prefix": "[Report] ",
     "report_chat_message": "Le staff a été notifié de votre report !",
     "report_staff_chat_prefix": "[Report par %s (%s)] ",

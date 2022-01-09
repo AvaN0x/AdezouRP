@@ -291,7 +291,7 @@ local function setupPlayer(src, oldSource)
 
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-            .. " se connecte. (" .. citizenId .. ")", 0x4C253)
+            .. " se connecte. (citizenId: " .. citizenId .. ", id: " .. src .. ")", 0x4C253)
 
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
 
@@ -386,8 +386,8 @@ AddEventHandler("playerDropped", function(reason)
         AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout", "~r~" .. aPlayer.name .. "~s~ se déconnecte.")
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
-            "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. aPlayer.name .. "`)" .. " se déconnecte. (" .. aPlayer.citizenId
-                .. ")\nRaison : " .. reason, 0xFF5455)
+            "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. aPlayer.name .. "`)" .. " se déconnecte. (citizenId: "
+                .. aPlayer.citizenId .. ", id: " .. src .. ")\nRaison : " .. reason, 0xFF5455)
 
         aPlayer.logout(true)
         Citizen.Await(aPlayer.save())
