@@ -14,12 +14,14 @@ Citizen.CreateThread(function()
     -- mandatory wait!
     Wait(1000)
 
+    print("[ava_status] initStatus thread")
     initStatus(exports.ava_core:getPlayerData().status or {})
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         if k == "status" then
+            print("[ava_status] initStatus playerUpdatedData")
             initStatus(v)
         end
     end
@@ -27,10 +29,12 @@ end)
 
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     aPlayerStatus = {}
+    print("[ava_status] initStatus playerLoaded")
     initStatus(data.status)
 end)
 
 RegisterNetEvent("ava_core:client:createChar", function()
+    print("[ava_status] initStatus createChar")
     initStatus({})
 end)
 
