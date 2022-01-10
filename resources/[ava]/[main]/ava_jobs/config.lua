@@ -25,7 +25,6 @@ Config.JobMenuElement = {
             GetHashKey("policet"),
             GetHashKey("sheriff"),
             GetHashKey("sheriff2"),
-            GetHashKey("riot"),
             GetHashKey("pranger"),
             GetHashKey("bcat"),
             GetHashKey("pbus"),
