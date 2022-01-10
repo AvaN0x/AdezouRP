@@ -319,7 +319,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
 
     local Option = RageUI.Options + 1
     if CurrentMenu and CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
-        if not Style then Style = {} end
+        if type(Style) ~= "table" then Style = {} end
 
         local Active = CurrentMenu.Index == Option;
         local onListChange = false;
@@ -364,32 +364,26 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
             Graphics.Text(ListText, CurrentMenu.X + 403 + 15 + CurrentMenu.WidthOffset, CurrentMenu.Y + 3 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, 0.35, 163, 159, 148, 255, 2)
         end
 
-        if type(Style) == "table" then
-            if Style.Enabled == true or Style.Enabled == nil then
-                if type(Style) == 'table' then
-                    if Style.LeftBadge ~= nil then
-                        if Style.LeftBadge ~= RageUI.BadgeStyle.None then
-                            local BadgeData = Style.LeftBadge(Active)
-                            Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour and BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.A or 255)
-                        end
-                    end
-
-                    if Style.RightBadge ~= nil then
-                        if Style.RightBadge ~= RageUI.BadgeStyle.None then
-                            local BadgeData = Style.RightBadge(Active)
-                            Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X + 385 + CurrentMenu.WidthOffset, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour and BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.A or 255)
-                        end
-                    end
+        if Style.Enabled == true or Style.Enabled == nil then
+            if Style.LeftBadge ~= nil then
+                if Style.LeftBadge ~= RageUI.BadgeStyle.None then
+                    local BadgeData = Style.LeftBadge(Active)
+                    Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour and BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.A or 255)
                 end
-            else
-                local LeftBadge = RageUI.BadgeStyle.Lock
-                if LeftBadge ~= RageUI.BadgeStyle.None and LeftBadge ~= nil then
-                    local BadgeData = LeftBadge(Active)
-                    Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour.A or 255)
+            end
+
+            if Style.RightBadge ~= nil then
+                if Style.RightBadge ~= RageUI.BadgeStyle.None then
+                    local BadgeData = Style.RightBadge(Active)
+                    Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X + 385 + CurrentMenu.WidthOffset, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour and BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour and BadgeData.BadgeColour.A or 255)
                 end
             end
         else
-            error("UICheckBox Style is not a `table`")
+            local LeftBadge = RageUI.BadgeStyle.Lock
+            if LeftBadge ~= RageUI.BadgeStyle.None and LeftBadge ~= nil then
+                local BadgeData = LeftBadge(Active)
+                Graphics.Sprite(BadgeData.BadgeDictionary or "commonmenu", BadgeData.BadgeTexture or "", CurrentMenu.X, CurrentMenu.Y + -2 + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 40, 40, 0, BadgeData.BadgeColour.R or 255, BadgeData.BadgeColour.G or 255, BadgeData.BadgeColour.B or 255, BadgeData.BadgeColour.A or 255)
+            end
         end
 
         RageUI.ItemOffset = RageUI.ItemOffset + 38
@@ -399,7 +393,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
             if (not Style.IsDisabled) then
                 if (CurrentMenu.Controls.Left.Active) and not (CurrentMenu.Controls.Right.Active) then
                     Index = Index - 1
-                    if Index < 1 then
+                    if Index < (Style.Min or 1) then
                         Index = ((type(Items) == "number") and Items or #Items)
                     end
                     onListChange = true
@@ -407,7 +401,7 @@ function Items:AddList(Label, Items, Index, Description, Style, Actions, Submenu
                 elseif (CurrentMenu.Controls.Right.Active) and not (CurrentMenu.Controls.Left.Active) then
                     Index = Index + 1
                     if Index > ((type(Items) == "number") and Items or #Items) then
-                        Index = 1
+                        Index = Style.Min or 1
                     end
                     onListChange = true
                     Audio.PlaySound(RageUI.Settings.Audio.LeftRight.audioName, RageUI.Settings.Audio.LeftRight.audioRef)
