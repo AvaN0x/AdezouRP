@@ -109,20 +109,24 @@ local NumMakeupColors<const> = GetNumMakeupColors()
 -- AVAConfig.skinComponents.hair_scnd_color.max = NumHairColors - 1
 
 -- Reset local skin to default values
+---@return skin localSkin
 function reset()
     for component, value in pairs(AVAConfig.skinComponents) do
         localSkin[component] = value.default or value.min
     end
+    return localSkin
 end
 exports("reset", reset)
 reset()
 
 -- Reset local skin clothes to default values
+---@return skin localSkin
 function resetClothes()
     for i = 1, #AVAConfig.clothesComponents do
         local component = AVAConfig.clothesComponents[i]
         localSkin[component] = AVAConfig.skinComponents[component].default or AVAConfig.skinComponents[component].min
     end
+    return localSkin
 end
 exports("resetClothes", resetClothes)
 
