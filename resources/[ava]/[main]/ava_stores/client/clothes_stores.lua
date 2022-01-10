@@ -4,8 +4,17 @@
 -------------------------------------------
 function ClothesStore()
     local store = Config.Stores[CurrentZoneName]
+    if not store then
+        return
+    end
 
-    OpenClothesMenu(store.SkinElements, store.Subtitle, store.Title.textureName, store.Title.textureDirectory)
+    local hasEnoughMoney<const> = exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:checkMoney", CurrentZoneName)
+    if not hasEnoughMoney then
+        exports.ava_core:ShowNotification(GetString("cant_afford"))
+        CurrentActionEnabled = true
+    else
+        OpenClothesMenu(store.SkinElements, store.Subtitle, store.Title.textureName, store.Title.textureDirectory)
+    end
 end
 
 local validateChanges = false
@@ -15,19 +24,25 @@ local SavePlayerSkin = nil
 local PlayerSkin = nil
 local MenuIndices = nil
 local SkinMaxVals = nil
+local SkinMinVals = nil
 local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainClothesMenu.Closable = false
 MainClothesMenu.Closed = function()
     print("menu closed, validate changes: " .. (validateChanges and "true" or "false"))
 
+    -- If did not validate, or do not have enough money, revert changes
+    if not validateChanges or not exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:payClothes", CurrentZoneName, PlayerSkin) then
+        -- Reset player skin to original
+        exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
+    end
+    SavePlayerSkin = nil
+    PlayerSkin = nil
+    SkinMaxVals = nil
+    SkinMinVals = nil
+    MenuIndices = nil
     if CurrentZoneName then
         CurrentActionEnabled = true
     end
-    -- Reset player skin to original
-    exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
-    SavePlayerSkin = nil
-    PlayerSkin = nil
-    MenuIndices = nil
 end
 
 AddEventHandler("onResourceStop", function(resource)
@@ -55,14 +70,17 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
 
     -- Init elements used to display the menu
     MenuIndices = {}
+    -- Get player current skin for the save
     SavePlayerSkin = exports.ava_mp_peds:getPlayerCurrentSkin()
-    PlayerSkin = {}
-    for k, v in pairs(SavePlayerSkin) do
-        PlayerSkin[k] = v
-    end
+    -- Get player skin saved from core, this one should be the same than the database
+    PlayerSkin = exports.ava_core:getPlayerSkinData()
+    -- Apply player skin in case of a modified values
+    exports.ava_mp_peds:setPlayerSkin(PlayerSkin)
+    -- Get min and max vals
+    SkinMinVals = exports.ava_mp_peds:getMinValues()
     SkinMaxVals = exports.ava_mp_peds:getMaxValues()
-    validateButtonRightLabel = nil
 
+    validateButtonRightLabel = nil
     -- If is inside a shop
     if CurrentZoneName then
         local store = Config.Stores[CurrentZoneName]
@@ -90,8 +108,6 @@ function RageUI.PoolMenus:ClothesMenu()
         DisableControlAction(0, 140, true) -- INPUT_MELEE_ATTACK_LIGHT
         DisableControlAction(0, 141, true) -- INPUT_MELEE_ATTACK_HEAVY
         DisableControlAction(0, 142, true) -- INPUT_MELEE_ATTACK_ALTERNATE
-
-        -- TODO reorder elements when all of them work
 
         if not menuElements or menuElements.gender then
             Items:AddList(GetString("cm_gender"), gendersList, PlayerSkin.gender + 1, nil, {}, function(Index, onSelected, onListChange)
@@ -248,80 +264,232 @@ function RageUI.PoolMenus:ClothesMenu()
             -- addbodyblemishes_op
         end
 
-        if not menuElements or menuElements.mask then
-            Items:AddButton("TODO mask", nil, {}, nil) -- TODO
-            -- mask
-            -- mask_txd
-        end
         if not menuElements or menuElements.torso then
-            Items:AddButton("TODO torso", nil, {}, nil) -- TODO
-            -- torso
-            -- torso_txd
+            Items:AddList(GetString("cm_torso"), SkinMaxVals.torso + 1, PlayerSkin.torso + 1, GetString("cm_torso_subtitle"), {Min = SkinMinVals.torso + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({torso = Index - 1, torso_txd = SkinMinVals.torso_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_torso_txd"), SkinMaxVals.torso_txd + 1, PlayerSkin.torso_txd + 1, GetString("cm_torso_txd_subtitle"),
+                {Min = SkinMinVals.torso_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({torso_txd = Index - 1})
+                    end
+                end)
         end
-        if not menuElements or menuElements.leg then
-            Items:AddButton("TODO leg", nil, {}, nil) -- TODO
-            -- leg
-            -- leg_txd
-        end
-        if not menuElements or menuElements.bag then
-            Items:AddButton("TODO bag", nil, {}, nil) -- TODO
-            -- bag
-            -- bag_txd
-        end
-        if not menuElements or menuElements.shoes then
-            Items:AddButton("TODO shoes", nil, {}, nil) -- TODO
-            -- shoes
-            -- shoes_txd
-        end
-        if not menuElements or menuElements.accessory then
-            Items:AddButton("TODO accessory", nil, {}, nil) -- TODO
-            -- accessory
-            -- accessory_txd
+
+        if not menuElements or menuElements.tops then
+            Items:AddList(GetString("cm_tops"), SkinMaxVals.tops + 1, PlayerSkin.tops + 1, GetString("cm_tops_subtitle"), {Min = SkinMinVals.tops + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({tops = Index - 1, tops_txd = SkinMinVals.tops_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_tops_txd"), SkinMaxVals.tops_txd + 1, PlayerSkin.tops_txd + 1, GetString("cm_tops_txd_subtitle"),
+                {Min = SkinMinVals.tops_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({tops_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.undershirt then
-            Items:AddButton("TODO undershirt", nil, {}, nil) -- TODO
-            -- undershirt
-            -- undershirt_txd
+            Items:AddList(GetString("cm_undershirt"), SkinMaxVals.undershirt + 1, PlayerSkin.undershirt + 1, GetString("cm_undershirt_subtitle"),
+                {Min = SkinMinVals.undershirt + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({undershirt = Index - 1, undershirt_txd = SkinMinVals.undershirt_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_undershirt_txd"), SkinMaxVals.undershirt_txd + 1, PlayerSkin.undershirt_txd + 1,
+                GetString("cm_undershirt_txd_subtitle"), {Min = SkinMinVals.undershirt_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({undershirt_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.bodyarmor then
-            Items:AddButton("TODO bodyarmor", nil, {}, nil) -- TODO
-            -- bodyarmor
-            -- bodyarmor_txd
+            Items:AddList(GetString("cm_bodyarmor"), SkinMaxVals.bodyarmor + 1, PlayerSkin.bodyarmor + 1, GetString("cm_bodyarmor_subtitle"),
+                {Min = SkinMinVals.bodyarmor + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bodyarmor = Index - 1, bodyarmor_txd = SkinMinVals.bodyarmor_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_bodyarmor_txd"), SkinMaxVals.bodyarmor_txd + 1, PlayerSkin.bodyarmor_txd + 1, GetString("cm_bodyarmor_txd_subtitle"),
+                {Min = SkinMinVals.bodyarmor_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bodyarmor_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.decals then
-            Items:AddButton("TODO decals", nil, {}, nil) -- TODO
-            -- decals
-            -- decals_txd
+            Items:AddList(GetString("cm_decals"), SkinMaxVals.decals + 1, PlayerSkin.decals + 1, GetString("cm_decals_subtitle"),
+                {Min = SkinMinVals.decals + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({decals = Index - 1, decals_txd = SkinMinVals.decals_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_decals_txd"), SkinMaxVals.decals_txd + 1, PlayerSkin.decals_txd + 1, GetString("cm_decals_txd_subtitle"),
+                {Min = SkinMinVals.decals_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({decals_txd = Index - 1})
+                    end
+                end)
         end
-        if not menuElements or menuElements.tops then
-            Items:AddButton("TODO tops", nil, {}, nil) -- TODO
-            -- tops
-            -- tops_txd
+        if not menuElements or menuElements.leg then
+            Items:AddList(GetString("cm_leg"), SkinMaxVals.leg + 1, PlayerSkin.leg + 1, GetString("cm_leg_subtitle"), {Min = SkinMinVals.leg + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({leg = Index - 1, leg_txd = SkinMinVals.leg_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_leg_txd"), SkinMaxVals.leg_txd + 1, PlayerSkin.leg_txd + 1, GetString("cm_leg_txd_subtitle"),
+                {Min = SkinMinVals.leg_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({leg_txd = Index - 1})
+                    end
+                end)
         end
+        if not menuElements or menuElements.shoes then
+            Items:AddList(GetString("cm_shoes"), SkinMaxVals.shoes + 1, PlayerSkin.shoes + 1, GetString("cm_shoes_subtitle"), {Min = SkinMinVals.shoes + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({shoes = Index - 1, shoes_txd = SkinMinVals.shoes_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_shoes_txd"), SkinMaxVals.shoes_txd + 1, PlayerSkin.shoes_txd + 1, GetString("cm_shoes_txd_subtitle"),
+                {Min = SkinMinVals.shoes_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({shoes_txd = Index - 1})
+                    end
+                end)
+        end
+        if not menuElements or menuElements.bag then
+            Items:AddList(GetString("cm_bag"), SkinMaxVals.bag + 1, PlayerSkin.bag + 1, GetString("cm_bag_subtitle"), {Min = SkinMinVals.bag + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bag = Index - 1, bag_txd = SkinMinVals.bag_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_bag_txd"), SkinMaxVals.bag_txd + 1, PlayerSkin.bag_txd + 1, GetString("cm_bag_txd_subtitle"),
+                {Min = SkinMinVals.bag_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bag_txd = Index - 1})
+                    end
+                end)
+        end
+        if not menuElements or menuElements.accessory then
+            Items:AddList(GetString("cm_accessory"), SkinMaxVals.accessory + 1, PlayerSkin.accessory + 1, GetString("cm_accessory_subtitle"),
+                {Min = SkinMinVals.accessory + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({accessory = Index - 1, accessory_txd = SkinMinVals.accessory_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_accessory_txd"), SkinMaxVals.accessory_txd + 1, PlayerSkin.accessory_txd + 1, GetString("cm_accessory_txd_subtitle"),
+                {Min = SkinMinVals.accessory_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({accessory_txd = Index - 1})
+                    end
+                end)
+        end
+        if not menuElements or menuElements.mask then
+            Items:AddList(GetString("cm_mask"), SkinMaxVals.mask + 1, PlayerSkin.mask + 1, GetString("cm_mask_subtitle"), {Min = SkinMinVals.mask + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({mask = Index - 1, mask_txd = SkinMinVals.mask_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_mask_txd"), SkinMaxVals.mask_txd + 1, PlayerSkin.mask_txd + 1, GetString("cm_mask_txd_subtitle"),
+                {Min = SkinMinVals.mask_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({mask_txd = Index - 1})
+                    end
+                end)
+        end
+
         if not menuElements or menuElements.hats then
-            Items:AddButton("TODO hats", nil, {}, nil) -- TODO
-            -- hats
-            -- hats_txd
+            Items:AddList(GetString("cm_hats"), SkinMaxVals.hats + 1, PlayerSkin.hats + 1, GetString("cm_hats_subtitle"), {Min = SkinMinVals.hats + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({hats = Index - 1, hats_txd = SkinMinVals.hats_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_hats_txd"), SkinMaxVals.hats_txd + 1, PlayerSkin.hats_txd + 1, GetString("cm_hats_txd_subtitle"),
+                {Min = SkinMinVals.hats_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({hats_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.glasses then
-            Items:AddButton("TODO glasses", nil, {}, nil) -- TODO
-            -- glasses
-            -- glasses_txd
+            Items:AddList(GetString("cm_glasses"), SkinMaxVals.glasses + 1, PlayerSkin.glasses + 1, GetString("cm_glasses_subtitle"),
+                {Min = SkinMinVals.glasses + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({glasses = Index - 1, glasses_txd = SkinMinVals.glasses_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_glasses_txd"), SkinMaxVals.glasses_txd + 1, PlayerSkin.glasses_txd + 1, GetString("cm_glasses_txd_subtitle"),
+                {Min = SkinMinVals.glasses_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({glasses_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.ears then
-            Items:AddButton("TODO ears", nil, {}, nil) -- TODO
-            -- ears
-            -- ears_txd
+            Items:AddList(GetString("cm_ears"), SkinMaxVals.ears + 1, PlayerSkin.ears + 1, GetString("cm_ears_subtitle"), {Min = SkinMinVals.ears + 1},
+                function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({ears = Index - 1, ears_txd = SkinMinVals.ears_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_ears_txd"), SkinMaxVals.ears_txd + 1, PlayerSkin.ears_txd + 1, GetString("cm_ears_txd_subtitle"),
+                {Min = SkinMinVals.ears_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({ears_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.watches then
-            Items:AddButton("TODO watches", nil, {}, nil) -- TODO
-            -- watches
-            -- watches_txd
+            Items:AddList(GetString("cm_watches"), SkinMaxVals.watches + 1, PlayerSkin.watches + 1, GetString("cm_watches_subtitle"),
+                {Min = SkinMinVals.watches + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({watches = Index - 1, watches_txd = SkinMinVals.watches_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_watches_txd"), SkinMaxVals.watches_txd + 1, PlayerSkin.watches_txd + 1, GetString("cm_watches_txd_subtitle"),
+                {Min = SkinMinVals.watches_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({watches_txd = Index - 1})
+                    end
+                end)
         end
         if not menuElements or menuElements.bracelets then
-            Items:AddButton("TODO bracelets", nil, {}, nil) -- TODO
-            -- bracelets
-            -- bracelets_txd
+            Items:AddList(GetString("cm_bracelets"), SkinMaxVals.bracelets + 1, PlayerSkin.bracelets + 1, GetString("cm_bracelets_subtitle"),
+                {Min = SkinMinVals.bracelets + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bracelets = Index - 1, bracelets_txd = SkinMinVals.bracelets_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_bracelets_txd"), SkinMaxVals.bracelets_txd + 1, PlayerSkin.bracelets_txd + 1, GetString("cm_bracelets_txd_subtitle"),
+                {Min = SkinMinVals.bracelets_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bracelets_txd = Index - 1})
+                    end
+                end)
         end
 
         Items:AddButton(GetString("clothes_menu_cancel"), GetString("clothes_menu_cancel_subtitle"), {}, function(onSelected)

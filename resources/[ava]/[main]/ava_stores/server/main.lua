@@ -125,6 +125,50 @@ exports.ava_core:RegisterServerCallback("ava_stores:carwash:checkMoney", functio
     return false
 end)
 
+exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:checkMoney", function(source, storeName)
+    local src = source
+    local store = Config.Stores[storeName]
+
+    if store and store.ClothesStore then
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if aPlayer then
+            local inventory = aPlayer.getInventory()
+            local price<const> = store.Price
+            print(inventory.getItem("cash").quantity)
+            if price and inventory.canRemoveItem("cash", price) then
+                return true
+            end
+        end
+    end
+    return false
+end)
+
 exports.ava_core:RegisterCommand({"clothesmenu", "cm"}, "admin", function(source, args)
     TriggerClientEvent("ava_jobs:client:OpenClothesMenu", source)
 end, GetString("clothesmenu_help"))
+
+exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payClothes", function(source, storeName, playerSkin)
+    local src = source
+
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if aPlayer then
+        if storeName == nil and IsPlayerAceAllowed(source, "command.clothesmenu") then
+            aPlayer.setSkin(playerSkin)
+            return true
+        else
+            local store = Config.Stores[storeName]
+            if store and store.ClothesStore then
+                local inventory = aPlayer.getInventory()
+                local price<const> = store.Price
+                print(inventory.getItem("cash").quantity)
+                if inventory.canRemoveItem("cash", price) then
+                    inventory.removeItem("cash", price)
+                    aPlayer.setSkin(playerSkin)
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end)
+
