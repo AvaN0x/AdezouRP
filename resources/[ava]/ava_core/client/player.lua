@@ -250,7 +250,7 @@ local function waitLoadedPlayer()
     local p = promise.new()
 
     Citizen.CreateThread(function()
-        while not AVA.Player.Loaded do
+        while not AVA.Player.Loaded or not AVA.Player.HasSpawned do
             Wait(10)
         end
         p:resolve()
