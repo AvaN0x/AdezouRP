@@ -99,6 +99,32 @@ RegisterNetEvent("ava_core:server:playerDeath", function(data)
     end
 end)
 
+-------------------------------------------------
+--------------- LOCK NPC VEHICLES ---------------
+-------------------------------------------------
+
+if AVAConfig.LockNPCVehicles then
+    local alwaysLocked = {}
+    for i = 1, #AVAConfig.AlwaysLockedVehicles do
+        alwaysLocked[GetHashKey(AVAConfig.AlwaysLockedVehicles[i])] = true
+    end
+    AVAConfig.AlwaysLockedVehicles = alwaysLocked
+    alwaysLocked = nil
+
+    AddEventHandler("entityCreated", function(entity)
+        -- entity is not a vehicle or is not a "random" population car
+        if GetEntityType(entity) ~= 2 or GetEntityPopulationType(entity) > 5 then
+            return
+        end
+
+        -- if random is under LockPercentage or vehicle should always be locked and vehicle is not a bike
+        if (math.random() < AVAConfig.LockPercentage or AVAConfig.AlwaysLockedVehicles[GetEntityModel(entity)]) then
+            -- lock vehicle
+            SetVehicleDoorsLocked(entity, 2)
+        end
+    end)
+end
+
 ------------------------------------------------
 --------------- EXPLOSION EVENTS ---------------
 ------------------------------------------------
