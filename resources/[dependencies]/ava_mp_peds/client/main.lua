@@ -575,20 +575,20 @@ function getMaxValues(ped)
 
         -- #region Props
         -- Hats
-        hats = GetNumberOfPedPropDrawableVariations(playerPed, 0) - 1,
-        hats_txd = GetNumberOfPedPropTextureVariations(playerPed, 0, localSkin.hats) - 1,
+        hats = GetNumberOfPedPropDrawableVariations(ped, 0) - 1,
+        hats_txd = localSkin.hats == -1 and 0 or (GetNumberOfPedPropTextureVariations(ped, 0, localSkin.hats) - 1),
         -- Glasses
-        glasses = GetNumberOfPedPropDrawableVariations(playerPed, 1) - 1,
-        glasses_txd = GetNumberOfPedPropTextureVariations(playerPed, 1, localSkin.glasses) - 1,
+        glasses = GetNumberOfPedPropDrawableVariations(ped, 1) - 1,
+        glasses_txd = localSkin.glasses == -1 and 0 or (GetNumberOfPedPropTextureVariations(ped, 1, localSkin.glasses) - 1),
         -- Ears
-        ears = GetNumberOfPedPropDrawableVariations(playerPed, 2) - 1,
-        ears_txd = GetNumberOfPedPropTextureVariations(playerPed, 2, localSkin.ears) - 1,
+        ears = GetNumberOfPedPropDrawableVariations(ped, 2) - 1,
+        ears_txd = localSkin.ears == -1 and 0 or (GetNumberOfPedPropTextureVariations(ped, 2, localSkin.ears) - 1),
         -- Watches
-        watches = GetNumberOfPedPropDrawableVariations(playerPed, 6) - 1,
-        watches_txd = GetNumberOfPedPropTextureVariations(playerPed, 6, localSkin.watches) - 1,
+        watches = GetNumberOfPedPropDrawableVariations(ped, 6) - 1,
+        watches_txd = localSkin.watches == -1 and 0 or (GetNumberOfPedPropTextureVariations(ped, 6, localSkin.watches) - 1),
         -- Bracelets
-        bracelets = GetNumberOfPedPropDrawableVariations(playerPed, 7) - 1,
-        bracelets_txd = GetNumberOfPedPropTextureVariations(playerPed, 7, localSkin.bracelets) - 1,
+        bracelets = GetNumberOfPedPropDrawableVariations(ped, 7) - 1,
+        bracelets_txd = localSkin.bracelets == -1 and 0 or (GetNumberOfPedPropTextureVariations(ped, 7, localSkin.bracelets) - 1),
         -- #endregion Props
     }
 end

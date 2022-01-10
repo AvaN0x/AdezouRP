@@ -91,10 +91,10 @@ AVAConfig.skinComponents = {
     chesthair_op = {min = 0, max = 100},
     chesthair_color = {min = 0},
     -- Body Blemishes
-    bodyblemishes = {min = 0},
+    bodyblemishes = {min = -1},
     bodyblemishes_op = {min = 0, max = 100},
     -- Add Body Blemishes
-    addbodyblemishes = {min = 0},
+    addbodyblemishes = {min = -1},
     addbodyblemishes_op = {min = 0, max = 100},
     -- #endregion Ped head overlays
 
