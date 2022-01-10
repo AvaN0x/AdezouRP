@@ -269,11 +269,11 @@ exports("getPlayerData", AVA.Player.getData)
 
 ---Get skin data from player
 ---@return any
-AVA.Player.getSkinData = function()
+AVA.Player.getPlayerSkinData = function()
     waitLoadedPlayer()
     return AVA.Player.Data.skin
 end
-exports("getPlayerSkinData", AVA.Player.getSkinData)
+exports("getPlayerSkinData", AVA.Player.getPlayerSkinData)
 
 ---Get data from player character
 ---@return character
