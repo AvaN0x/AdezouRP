@@ -20,5 +20,17 @@
     "clothes_menu_cancel_subtitle": "Annuler les changements",
     "clothes_menu_validate_right_label_money": "$%s",
     "clothes_menu_validate": "Valider",
-    "clothes_menu_validate_subtitle": "Valider les changements"
+    "clothes_menu_validate_subtitle": "Valider les changements",
+    "cm_gender": "Genre",
+    "cm_male": "Homme",
+    "cm_female": "Femme",
+    "cm_mother": "Mère",
+    "cm_mother_subtitle": "Choisissez votre mère.",
+    "cm_father": "Père",
+    "cm_father_subtitle": "Choisissez votre père.",
+    "cm_resemblance": "Ressemblance",
+    "cm_resemblance_subtitle": "Déterminez de quel parent vous tenez le plus.",
+    "cm_skin_tone": "Couleur de peau",
+    "cm_skin_tone_subtitle": "Déterminez qui de votre père ou de votre mère a le plus d'influence sur la couleur de votre peau.",
+    "TODOREMOVETHIS": ""
 }
