@@ -103,11 +103,6 @@ local localPlayerSkinSave = nil
 local NumHairColors<const> = GetNumHairColors()
 local NumMakeupColors<const> = GetNumMakeupColors()
 
--- AVAConfig.skinComponents.hair.max = GetNumberOfPedDrawableVariations(ped, 2) - 1
--- AVAConfig.skinComponents.hair_txd.max = GetNumberOfPedTextureVariations(ped, 2, localSkin.hair) - 1
--- AVAConfig.skinComponents.hair_main_color.max = NumHairColors - 1
--- AVAConfig.skinComponents.hair_scnd_color.max = NumHairColors - 1
-
 -- Reset local skin to default values
 ---@return skin localSkin
 function reset()
