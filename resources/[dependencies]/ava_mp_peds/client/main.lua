@@ -594,6 +594,17 @@ function getMaxValues(ped)
 end
 exports("getMaxValues", getMaxValues)
 
+---Get min values for all skins
+---@return skin
+function getMinValues()
+    local values = {}
+    for name, value in pairs(AVAConfig.skinComponents) do
+        values[name] = value.min
+    end
+    return values
+end
+exports("getMinValues", getMinValues)
+
 ---Reload ped overlays, hairs and tattoos
 ---@param ped entity
 function reloadPedOverlays(ped)
