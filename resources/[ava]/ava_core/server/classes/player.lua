@@ -82,6 +82,16 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         AVA.Players.UseItem(self.src, itemName)
     end
 
+    ------------------------------------
+    --------------- Skin ---------------
+    ------------------------------------
+
+    ---Set player skin, will trigger client event to tell the client that the skin changed
+    self.setSkin = function(skin)
+        self.skin = skin
+        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {skin = self.skin})
+    end
+
     ----------------------------------------
     --------------- Accounts ---------------
     ----------------------------------------
