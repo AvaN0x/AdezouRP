@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
         elseif isEnteringVehicle and (vehicle == 0 or AVA.Player.IsDead) then
             -- TriggerServerEvent("ava_core:server:quitEnteringVehicle", VehToNet(currentEnteringVehicle))
             TriggerEvent("ava_core:client:quitEnteringVehicle", currentEnteringVehicle)
-            dprint("ava_core:client:quitEnteringVehicle", currentVehicle)
+            dprint("ava_core:client:quitEnteringVehicle", currentEnteringVehicle)
 
             isEnteringVehicle = false
             currentEnteringVehicle = 0
