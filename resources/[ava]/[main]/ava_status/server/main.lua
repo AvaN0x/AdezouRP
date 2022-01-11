@@ -5,7 +5,7 @@
 RegisterNetEvent("ava_status:server:update", function(data)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    if aPlayer then
+    if aPlayer and type(data) == "table" then
         aPlayer.set("status", data)
     end
 end)
@@ -21,6 +21,7 @@ exports.ava_core:RegisterCommand({"heal", "h"}, "admin", function(source, args)
     TriggerClientEvent("ava_status:client:heal", id)
 end, GetString("heal_help"), {{name = "player?", help = GetString("player_id_or_empty")}})
 
+-- Items
 local Consumables<const> = json.decode(LoadResourceFile(GetCurrentResourceName(), "consumables.json") or "{}") or {}
 for i = 1, #Consumables do
     local consumable<const> = Consumables[i]

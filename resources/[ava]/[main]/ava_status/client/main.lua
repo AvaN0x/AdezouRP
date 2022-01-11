@@ -12,10 +12,10 @@ StatusFunctions = {}
 
 Citizen.CreateThread(function()
     -- mandatory wait!
-    Wait(1000)
+    Wait(0)
 
-    print("[ava_status] initStatus thread")
-    initStatus(exports.ava_core:getPlayerData().status or {})
+    aPlayerStatus = {}
+    initStatus(exports.ava_core:getPlayerData().status)
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
@@ -35,26 +35,31 @@ end)
 
 RegisterNetEvent("ava_core:client:createChar", function()
     print("[ava_status] initStatus createChar")
-    initStatus({})
+    aPlayerStatus = {}
+    initStatus()
 end)
 
 function initStatus(statusArray)
-    for i = 1, #statusArray do
-        local status = statusArray[i]
-        if aPlayerStatus[status.name] then
-            aPlayerStatus[status.name].value = status.value
-        else
-            local cfgStatus<const> = AVAConfig.Status[status.name]
-            if cfgStatus and cfgStatus.update then
-                aPlayerStatus[status.name] = CreateStatus(status.name, status.value)
+    if type(statusArray) ~= "table" then
+        statusArray = {}
+    else
+        for i = 1, #statusArray do
+            local status = statusArray[i]
+            if aPlayerStatus[status.name] then
+                aPlayerStatus[status.name].value = status.value
+            else
+                local cfgStatus<const> = AVAConfig.Status[status.name]
+                if cfgStatus and cfgStatus.update then
+                    aPlayerStatus[status.name] = CreateStatus(status.name, status.value)
+                end
             end
         end
     end
 
     for name, cfgStatus in pairs(AVAConfig.Status) do
-        if not aPlayerStatus[name] then
+        if type(aPlayerStatus[name]) ~= "table" then
             local value = cfgStatus.default or 10000
-            statusArray[#statusArray + 1] = {name = name, value = value}
+            table.insert(statusArray, {name = name, value = value})
             aPlayerStatus[name] = CreateStatus(name, value)
         end
     end
@@ -72,19 +77,21 @@ Citizen.CreateThread(function()
 
         for i = 1, #PlayerStatus do
             local status = PlayerStatus[i]
-
-            -- #region Update status
             local aStatus = aPlayerStatus[status.name]
-            status.value = aStatus.update()
-            local percent = aStatus.getPercent()
-            TriggerEvent("ava_hud:client:updateStatus", status.name, percent)
-            -- #endregion
 
-            -- #region Trigger status events
-            if type(StatusFunctions[status.name]) == "function" then
-                newHealth = StatusFunctions[status.name](status.value, percent, playerHealth, newHealth)
+            if aStatus then
+                -- #region Update status
+                status.value = aStatus.update()
+                local percent = aStatus.getPercent()
+                TriggerEvent("ava_hud:client:updateStatus", status.name, percent)
+                -- #endregion
+
+                -- #region Trigger status events
+                if type(StatusFunctions[status.name]) == "function" then
+                    newHealth = StatusFunctions[status.name](status.value, percent, playerHealth, newHealth)
+                end
+                -- #endregion
             end
-            -- #endregion
         end
 
         if playerHealth ~= newHealth then
