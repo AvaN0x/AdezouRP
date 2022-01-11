@@ -22,11 +22,13 @@ local validateButtonRightLabel = nil
 local menuElements = nil
 local SavePlayerSkin = nil
 local PlayerSkin = nil
-local MenuIndices = nil
+local MenuNeededValues = nil
+local MenuItemIndices = nil
 local SkinMaxVals = nil
 local SkinMinVals = nil
 local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainClothesMenu.Closable = false
+MainClothesMenu.EnableMouse = true
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min")})
 MainClothesMenu.Closed = function()
     print("menu closed, validate changes: " .. (validateChanges and "true" or "false"))
@@ -40,7 +42,8 @@ MainClothesMenu.Closed = function()
     PlayerSkin = nil
     SkinMaxVals = nil
     SkinMinVals = nil
-    MenuIndices = nil
+    MenuNeededValues = nil
+    MenuItemIndices = nil
     if CurrentZoneName then
         CurrentActionEnabled = true
     end
@@ -70,7 +73,8 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     end
 
     -- Init elements used to display the menu
-    MenuIndices = {}
+    MenuNeededValues = {}
+    MenuItemIndices = {}
     -- Get player current skin for the save
     SavePlayerSkin = exports.ava_mp_peds:getPlayerCurrentSkin()
     -- Get player skin saved from core, this one should be the same than the database
@@ -193,7 +197,22 @@ function RageUI.PoolMenus:ClothesMenu()
         end
 
         if not menuElements or menuElements.hair then
-            Items:AddButton("TODO hair", nil, {}, nil) -- TODO
+            MenuItemIndices.hair = Items:AddList(GetString("cm_hair"), SkinMaxVals.hair + 1, PlayerSkin.hair + 1, GetString("cm_hair_subtitle"),
+                {Min = SkinMinVals.hair + 1}, function(Index, onSelected, onListChange)
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                            hair = resetElement and SkinMinVals.hair or (Index - 1),
+                            hair_txd = SkinMinVals.hair_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
+            Items:AddList(GetString("cm_hair_txd"), SkinMaxVals.hair_txd + 1, PlayerSkin.hair_txd + 1, GetString("cm_hair_txd_subtitle"),
+                {Min = SkinMinVals.hair_txd + 1}, function(Index, onSelected, onListChange)
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1)})
+                    end
+                end)
         end
         if not menuElements or menuElements.beard then
             Items:AddButton("TODO beard", nil, {}, nil) -- TODO
@@ -531,7 +550,8 @@ function RageUI.PoolMenus:ClothesMenu()
 
         Items:AddButton(GetString("clothes_menu_cancel"), GetString("clothes_menu_cancel_subtitle"), {}, function(onSelected)
             if onSelected then
-                RageUI.CloseAllInternal()
+                -- Timeout 0 because there would be an error inside of panels
+                Citizen.SetTimeout(0, RageUI.CloseAllInternal)
             end
         end)
         Items:AddButton(GetString("clothes_menu_validate"), GetString("clothes_menu_validate_subtitle"), {
@@ -540,12 +560,26 @@ function RageUI.PoolMenus:ClothesMenu()
         }, function(onSelected)
             if onSelected then
                 validateChanges = true
-                RageUI.CloseAllInternal()
+                -- Timeout 0 because there would be an error inside of panels
+                Citizen.SetTimeout(0, RageUI.CloseAllInternal)
             end
         end)
 
     end, function(Panels)
-
+        if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
+            Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color
+                or (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)), PlayerSkin.hair_main_color + 1,
+                function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.hair_main_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_main_color = CurrentIndex - 1})
+                end, MenuItemIndices.hair)
+            Panels:ColourPanel(GetString("cm_hair_scnd_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_scnd_color
+                or (PlayerSkin.hair_scnd_color > 9 and (PlayerSkin.hair_scnd_color - 7) or (PlayerSkin.hair_scnd_color + 1)), PlayerSkin.hair_scnd_color + 1,
+                function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.hair_scnd_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_scnd_color = CurrentIndex - 1})
+                end, MenuItemIndices.hair)
+        end
     end)
 end
 
