@@ -614,7 +614,7 @@ function Items:Slider(Label, SliderIndex, SliderMax, Description, Divider, Style
             Audio.PlaySound(RageUI.Settings.Audio.Select.audioName, RageUI.Settings.Audio.Select.audioRef)
         end
 
-        if not Style.IsDisabled and Actions then
+        if Selected and not Style.IsDisabled and Actions then
             Actions(Selected, (Active and Selected), OnListChange, SliderIndex, CurrentMenu.NewIndex == CurrentMenu.Index)
         end
     end
