@@ -56,3 +56,4 @@ AVAConfig.AlwaysLockedVehicles = {
     "massacro",
     "seashark",
 }
+AVAConfig.AlwaysUnlockedVehicles = {"bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3"}

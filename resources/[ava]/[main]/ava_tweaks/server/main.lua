@@ -104,12 +104,22 @@ end)
 -------------------------------------------------
 
 if AVAConfig.LockNPCVehicles then
+    -- #region init AVAConfig.AlwaysLockedVehicles
     local alwaysLocked = {}
     for i = 1, #AVAConfig.AlwaysLockedVehicles do
         alwaysLocked[GetHashKey(AVAConfig.AlwaysLockedVehicles[i])] = true
     end
     AVAConfig.AlwaysLockedVehicles = alwaysLocked
     alwaysLocked = nil
+    -- #endregion init AVAConfig.AlwaysLockedVehicles
+    -- #region init AVAConfig.AlwaysUnlockedVehicles
+    local alwaysUnlocked = {}
+    for i = 1, #AVAConfig.AlwaysUnlockedVehicles do
+        alwaysUnlocked[GetHashKey(AVAConfig.AlwaysUnlockedVehicles[i])] = true
+    end
+    AVAConfig.AlwaysUnlockedVehicles = alwaysUnlocked
+    alwaysUnlocked = nil
+    -- #endregion init AVAConfig.AlwaysUnlockedVehicles
 
     AddEventHandler("entityCreated", function(entity)
         -- entity is not a vehicle or is not a "random" population car
@@ -117,8 +127,9 @@ if AVAConfig.LockNPCVehicles then
             return
         end
 
+        local vModel<const> = GetEntityModel(entity)
         -- if random is under LockPercentage or vehicle should always be locked and vehicle is not a bike
-        if (math.random() < AVAConfig.LockPercentage or AVAConfig.AlwaysLockedVehicles[GetEntityModel(entity)]) then
+        if not AVAConfig.AlwaysUnlockedVehicles[vModel] and (math.random() < AVAConfig.LockPercentage or AVAConfig.AlwaysLockedVehicles[vModel]) then
             -- lock vehicle
             SetVehicleDoorsLocked(entity, 2)
         end
