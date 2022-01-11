@@ -7,6 +7,7 @@
 -----------------------------------------
 local inLoop = false
 local playerVehicle = 0
+local disableAirControl = false
 
 local WeaponsToDisable = {
     -- [GetHashKey("VEHICLE_WEAPON_ROTORS")] = true,
@@ -111,10 +112,35 @@ local WeaponsToDisable = {
     [-1125578533] = true, -- scramjet ROCKET
 }
 
+local vehicleClassDisableAirControl = {
+    [0] = true, -- compacts
+    [1] = true, -- sedans
+    [2] = true, -- SUV's
+    [3] = true, -- coupes
+    [4] = true, -- muscle
+    [5] = true, -- sport classic
+    [6] = true, -- sport
+    [7] = true, -- super
+    [8] = false, -- motorcycle
+    [9] = true, -- offroad
+    [10] = true, -- industrial
+    [11] = true, -- utility
+    [12] = true, -- vans
+    [13] = false, -- bicycles
+    [14] = false, -- boats
+    [15] = false, -- helicopter
+    [16] = false, -- plane
+    [17] = true, -- service
+    [18] = true, -- emergency
+    [19] = false, -- military
+}
+
 local function Loop(value, vehicle)
     -- change come values to make the actual or next loop work
     if value then
         playerVehicle = vehicle
+        disableAirControl = AVAConfig.DisableAirControl and GetPedInVehicleSeat(vehicle, -1) == PlayerPedId()
+                                and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
     end
 
     if value and inLoop then
@@ -126,7 +152,6 @@ local function Loop(value, vehicle)
         Citizen.CreateThread(function()
             while inLoop do
                 if playerVehicle ~= 0 then
-                    local playerPed = PlayerPedId()
                     local vehicle = playerVehicle
 
                     if AVAConfig.DisableVehicleJump then
@@ -143,11 +168,17 @@ local function Loop(value, vehicle)
                     end
 
                     if AVAConfig.DisableVehicleWeapons and DoesVehicleHaveWeapons(vehicle) then
+                        local playerPed = PlayerPedId()
                         local hasWeapon, vehWeaponHash = GetCurrentPedVehicleWeapon(playerPed)
                         if hasWeapon and WeaponsToDisable[vehWeaponHash] then
                             DisableVehicleWeapon(true, vehWeaponHash, vehicle, playerPed)
                             SetCurrentPedWeapon(playerPed, GetHashKey("weapon_unarmed"))
                         end
+                    end
+
+                    if disableAirControl and IsEntityInAir(vehicle) then
+                        DisableControlAction(0, 59) -- INPUT_VEH_MOVE_LR
+                        DisableControlAction(0, 60) -- INPUT_VEH_MOVE_UD
                     end
                 end
                 Wait(0)
@@ -159,12 +190,18 @@ end
 Citizen.CreateThread(function()
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
     if isInVehicle then
-        Loop(true, vehicle)
+        Loop(true, vehicle, seat)
     end
 end)
 
-AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
-    Loop(true, vehicle)
+AddEventHandler("ava_core:client:enteredVehicle", function(vehicle, seat)
+    Loop(true, vehicle, seat)
+
+    -- * try to stop vehicle from despawning
+    if not IsEntityAMissionEntity(vehicle) then
+        print("SetEntityAsMissionEntity(vehicle)")
+        SetEntityAsMissionEntity(vehicle)
+    end
 end)
 AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
     playerVehicle = 0
@@ -185,3 +222,4 @@ RegisterNetEvent("ava_tweaks:client:vehweaphash", function()
     print(text)
     TriggerEvent("chat:addMessage", {args = {text}})
 end)
+

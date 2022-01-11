@@ -57,3 +57,5 @@ AVAConfig.AlwaysLockedVehicles = {
     "seashark",
 }
 AVAConfig.AlwaysUnlockedVehicles = {"bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3"}
+
+AVAConfig.DisableAirControl = true
