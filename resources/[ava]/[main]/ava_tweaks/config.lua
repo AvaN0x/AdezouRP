@@ -19,6 +19,7 @@ AVAConfig.AlwaysLockedVehicles = {
     "police2",
     "police3",
     "policet",
+    "policeb",
     "sheriff",
     "sheriff2",
     "pranger",
