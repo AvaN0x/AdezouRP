@@ -951,9 +951,9 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                     CharacterData.Appearance.LipstickColorMin = MinimumIndex
                     CharacterData.Appearance.LipstickColorIndex = CurrentIndex
 
-                    CharacterSkin.lipstick_main_color = CurrentIndex - 1
-                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({lipstick_main_color = CurrentIndex - 1})
-                    SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_main_color, CharacterSkin.lipstick_scnd_color)
+                    CharacterSkin.lipstick_color = CurrentIndex - 1
+                    exports.ava_mp_peds:editPlayerSkinWithoutApplying({lipstick_color = CurrentIndex - 1})
+                    SetPedHeadOverlayColor(playerPed, 8, 1, CharacterSkin.lipstick_color, CharacterSkin.lipstick_scnd_color)
                 end, 11)
         end
     end)

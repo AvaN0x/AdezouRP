@@ -71,7 +71,7 @@ AVAConfig.skinComponents = {
     -- Blush
     blush = {min = 0},
     blush_op = {min = 0, max = 100},
-    blush_main_color = {min = 0},
+    blush_color = {min = 0},
     -- Complexion
     complexion = {min = 0},
     complexion_op = {min = 0, max = 100},
@@ -81,8 +81,7 @@ AVAConfig.skinComponents = {
     -- Lipstick
     lipstick = {min = 0},
     lipstick_op = {min = 0, max = 100},
-    lipstick_main_color = {min = 0},
-    lipstick_scnd_color = {min = 0},
+    lipstick_color = {min = 0},
     -- Moles/Freckles
     moles = {min = 0},
     moles_op = {min = 0, max = 100},

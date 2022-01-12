@@ -45,15 +45,14 @@
 ---@field makeup_scnd_color number
 ---@field blush number
 ---@field blush_op number
----@field blush_main_color number
+---@field blush_color number
 ---@field complexion number
 ---@field complexion_op number
 ---@field sundamage number
 ---@field sundamage_op number
 ---@field lipstick number
 ---@field lipstick_op number
----@field lipstick_main_color number
----@field lipstick_scnd_color number
+---@field lipstick_color number
 ---@field moles number
 ---@field moles_op number
 ---@field chesthair number
@@ -345,14 +344,14 @@ function setPedSkin(ped, skin)
     SetPedHeadOverlayColor(ped, 4, 2, localSkin.makeup_main_color, localSkin.makeup_scnd_color)
     -- Blush
     SetPedHeadOverlay(ped, 5, localSkin.blush, (localSkin.blush_op / 100) + 0.0)
-    SetPedHeadOverlayColor(ped, 5, 2, localSkin.blush_main_color)
+    SetPedHeadOverlayColor(ped, 5, 2, localSkin.blush_color)
     -- Complexion
     SetPedHeadOverlay(ped, 6, localSkin.complexion, (localSkin.complexion_op / 100) + 0.0)
     -- SunDamage
     SetPedHeadOverlay(ped, 7, localSkin.sundamage, (localSkin.sundamage_op / 100) + 0.0)
     -- Lipstick
     SetPedHeadOverlay(ped, 8, localSkin.lipstick, (localSkin.lipstick_op / 100) + 0.0)
-    SetPedHeadOverlayColor(ped, 8, 1, localSkin.lipstick_main_color, localSkin.lipstick_scnd_color)
+    SetPedHeadOverlayColor(ped, 8, 1, localSkin.lipstick_color, localSkin.lipstick_color)
     -- Moles/Freckles
     SetPedHeadOverlay(ped, 9, localSkin.moles, (localSkin.moles_op / 100) + 0.0)
     -- Chest Hair
@@ -508,7 +507,7 @@ function getMaxValues(ped)
         -- Blush
         blush = GetNumHeadOverlayValues(5) - 1,
         blush_op = AVAConfig.skinComponents.blush_op.max,
-        blush_main_color = NumMakeupColors - 1,
+        blush_color = NumMakeupColors - 1,
         -- Complexion
         complexion = GetNumHeadOverlayValues(6) - 1,
         complexion_op = AVAConfig.skinComponents.complexion_op.max,
@@ -518,8 +517,7 @@ function getMaxValues(ped)
         -- Lipstick
         lipstick = GetNumHeadOverlayValues(8) - 1,
         lipstick_op = AVAConfig.skinComponents.lipstick_op.max,
-        lipstick_main_color = NumMakeupColors - 1,
-        lipstick_scnd_color = NumMakeupColors - 1,
+        lipstick_color = NumMakeupColors - 1,
         -- Moles/Freckles
         moles = GetNumHeadOverlayValues(8) - 1,
         moles_op = AVAConfig.skinComponents.moles_op.max,
@@ -728,15 +726,14 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             makeup_scnd_color = 0,
             blush = 0,
             blush_op = 100,
-            blush_main_color = 0,
+            blush_color = 0,
             complexion = 0,
             complexion_op = 100,
             sundamage = 0,
             sundamage_op = 100,
             lipstick = 4,
             lipstick_op = 100,
-            lipstick_main_color = 0,
-            lipstick_scnd_color = 0,
+            lipstick_color = 0,
             moles = 5,
             moles_op = 100,
             chesthair = 8,
@@ -855,15 +852,14 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             makeup_scnd_color = 0,
             blush = 0,
             blush_op = 100,
-            blush_main_color = 0,
+            blush_color = 0,
             complexion = 0,
             complexion_op = 100,
             sundamage = 0,
             sundamage_op = 100,
             lipstick = 4,
             lipstick_op = 100,
-            lipstick_main_color = 0,
-            lipstick_scnd_color = 0,
+            lipstick_color = 0,
             moles = 5,
             moles_op = 100,
             chesthair = 8,
