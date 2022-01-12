@@ -65,11 +65,12 @@ local function SpawnPlayer()
 
         dprint(json.encode(AVA.Player.Data.skin))
         AVA.Player.FirstSpawn = false
-        -- Utilise setPedSkin and not setPlayerSkin because we already got the playerPed
+        -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
+        -- Use return value to get a valid skin array
         if AVA.Player.Data.skin then
-            exports.ava_mp_peds:setPedSkin(playerPed, AVA.Player.Data.skin)
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(playerPed, AVA.Player.Data.skin)
         else
-            exports.ava_mp_peds:setPedSkin(playerPed, {gender = 0})
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(playerPed, {gender = 0})
         end
     end
 
