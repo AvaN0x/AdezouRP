@@ -113,6 +113,13 @@
     "cm_eyes_color_subtitle": "Choisissez vos lentilles.",
     "cm_blush": "Fard à joues",
     "cm_blush_subtitle": "Choisissez votre fard à joues.",
-    "cm_blush_main_color": "Couleur",
+    "cm_blush_color": "Couleur",
+    "cm_makeup": "Maquillage",
+    "cm_makeup_subtitle": "Choisissez votre maquillage.",
+    "cm_makeup_main_color": "Couleur principale",
+    "cm_makeup_scnd_color": "Couleur secondaire",
+    "cm_lipstick": "Rouge à lèvres",
+    "cm_lipstick_subtitle": "Choisissez votre rouge à lèvres.",
+    "cm_lipstick_color": "Couleur",
     "TODOREMOVETHIS": ""
 }

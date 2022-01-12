@@ -264,18 +264,28 @@ function RageUI.PoolMenus:ClothesMenu()
             -- ageing_op
         end
         if not menuElements or menuElements.makeup then
-            Items:AddButton("TODO makeup", nil, {}, nil) -- TODO
-            -- makeup
-            -- makeup_op
-            -- makeup_main_color
-            -- makeup_scnd_color
+            MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1, GetString("cm_makeup_subtitle"),
+                {Min = SkinMinVals.makeup + 1}, function(Index, onSelected, onListChange)
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                            makeup = resetElement and SkinMinVals.makeup or (Index - 1),
+                            makeup_txd = SkinMinVals.makeup_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
         end
         if not menuElements or menuElements.lipstick then
-            Items:AddButton("TODO lipstick", nil, {}, nil) -- TODO
-            -- lipstick
-            -- lipstick_op
-            -- lipstick_main_color
-            -- lipstick_scnd_color
+            MenuItemIndices.lipstick = Items:AddList(GetString("cm_lipstick"), SkinMaxVals.lipstick + 1, PlayerSkin.lipstick + 1,
+                GetString("cm_lipstick_subtitle"), {Min = SkinMinVals.lipstick + 1}, function(Index, onSelected, onListChange)
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                            lipstick = resetElement and SkinMinVals.lipstick or (Index - 1),
+                            lipstick_txd = SkinMinVals.lipstick_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                    end
+                end)
         end
         if not menuElements or menuElements.blush then
             MenuItemIndices.blush = Items:AddList(GetString("cm_blush"), SkinMaxVals.blush + 1, PlayerSkin.blush + 1, GetString("cm_blush_subtitle"),
@@ -653,12 +663,43 @@ function RageUI.PoolMenus:ClothesMenu()
                 PlayerSkin = exports.ava_mp_peds:setPlayerSkin({blush_op = Percent * 100})
             end, MenuItemIndices.blush)
 
-            Panels:ColourPanel(GetString("cm_blush_main_color"), RageUI.PanelColour.Makeup, MenuNeededValues.blush_main_color
-                or (PlayerSkin.blush_main_color > 9 and (PlayerSkin.blush_main_color - 7) or (PlayerSkin.blush_main_color + 1)),
-                PlayerSkin.blush_main_color + 1, function(MinimumIndex, CurrentIndex)
-                    MenuNeededValues.blush_main_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({blush_main_color = CurrentIndex - 1})
+            Panels:ColourPanel(GetString("cm_blush_color"), RageUI.PanelColour.Makeup,
+                MenuNeededValues.blush_color or (PlayerSkin.blush_color > 9 and (PlayerSkin.blush_color - 7) or (PlayerSkin.blush_color + 1)),
+                PlayerSkin.blush_color + 1, function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.blush_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({blush_color = CurrentIndex - 1})
                 end, MenuItemIndices.blush)
+        end
+
+        if (not menuElements or menuElements.makeup) and MenuItemIndices.makeup then
+            Panels:PercentagePanel(PlayerSkin.makeup_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_op = Percent * 100})
+            end, MenuItemIndices.makeup)
+
+            Panels:ColourPanel(GetString("cm_makeup_main_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_main_color
+                or (PlayerSkin.makeup_main_color > 9 and (PlayerSkin.makeup_main_color - 7) or (PlayerSkin.makeup_main_color + 1)),
+                PlayerSkin.makeup_main_color + 1, function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.makeup_main_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_main_color = CurrentIndex - 1})
+                end, MenuItemIndices.makeup)
+            Panels:ColourPanel(GetString("cm_makeup_scnd_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_scnd_color
+                or (PlayerSkin.makeup_scnd_color > 9 and (PlayerSkin.makeup_scnd_color - 7) or (PlayerSkin.makeup_scnd_color + 1)),
+                PlayerSkin.makeup_scnd_color + 1, function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.makeup_scnd_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_scnd_color = CurrentIndex - 1})
+                end, MenuItemIndices.makeup)
+        end
+        if (not menuElements or menuElements.lipstick) and MenuItemIndices.lipstick then
+            Panels:PercentagePanel(PlayerSkin.lipstick_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({lipstick_op = Percent * 100})
+            end, MenuItemIndices.lipstick)
+
+            Panels:ColourPanel(GetString("cm_lipstick_color"), RageUI.PanelColour.Makeup, MenuNeededValues.lipstick_color
+                or (PlayerSkin.lipstick_color > 9 and (PlayerSkin.lipstick_color - 7) or (PlayerSkin.lipstick_color + 1)), PlayerSkin.lipstick_color + 1,
+                function(MinimumIndex, CurrentIndex)
+                    MenuNeededValues.lipstick_color = MinimumIndex
+                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({lipstick_color = CurrentIndex - 1})
+                end, MenuItemIndices.lipstick)
         end
 
     end)
