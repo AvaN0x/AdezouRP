@@ -142,6 +142,7 @@
     "create_char_data_not_valid": "~r~Les informations sur l'identité de votre personnage ne sont pas valides.",
     "create_char_data_not_valid_title": "Création de personnage",
     "create_char_did_not_select_outfit": "~r~Vous n'avez pas séléctionné de tenue.",
+    "turn_face": "Tourner la tête",
     "outfit": "Tenue",
     "outfit_subtitle": "Ceci est une tenue par défaut.\nElle pourra être changée par la suite dans un magasin de vêtements",
     "outfit_short_tshirt": "Tenue short",

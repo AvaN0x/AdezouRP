@@ -16,10 +16,9 @@ local MainMenu = RageUI.CreateMenu("", GetString("create_char_menu_title"), 0, 0
 --------------- Cameras ---------------
 ---------------------------------------
 local bodyCam, faceCam, isCamOnFace = nil, nil, false
+local lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = nil, nil, nil
 
 local function StartCharCreator()
-    -- here I'm using PlayerPedId() instead of a var, in case the player ped model is changed while doing this function
-
     bodyCam, faceCam, isCamOnFace = nil, nil, false
 
     DoScreenFadeOut(1000)
@@ -41,8 +40,8 @@ local function StartCharCreator()
     -- set player position
     DoScreenFadeIn(2000)
     RequestCollisionAtCoord(405.59, -997.18, -99.00)
-    SetEntityCoords(PlayerPedId(), 405.59, -997.18, -99.00, 0.0, 0.0, 0.0, true)
-    SetEntityHeading(PlayerPedId(), 90.00)
+    SetEntityCoords(playerPed, 405.59, -997.18, -99.00, 0.0, 0.0, 0.0, true)
+    SetEntityHeading(playerPed, 90.00)
 
     Wait(500)
 
@@ -54,23 +53,21 @@ local function StartCharCreator()
         RequestAnimDict("mp_character_creation@customise@male_a")
         Wait(10)
     end
-    TaskPlayAnim(PlayerPedId(), "mp_character_creation@customise@male_a", "intro", 1.0, 1.0, 4000, 0, 1, 0, 0, 0)
+    TaskPlayAnim(playerPed, "mp_character_creation@customise@male_a", "intro", 1.0, 1.0, 4000, 0, 1, 0, 0, 0)
 
     Wait(5000)
 
     -- set precise position to the player
-    if #(GetEntityCoords(PlayerPedId()) - vector3(402.89, -996.87, -99.0)) > 0.5 then
-        SetEntityCoords(PlayerPedId(), 402.89, -996.87, -99.0, 0.0, 0.0, 0.0, true)
-        SetEntityHeading(PlayerPedId(), 173.97)
+    if #(GetEntityCoords(playerPed) - vector3(402.89, -996.87, -99.0)) > 0.5 then
+        SetEntityCoords(playerPed, 402.89, -996.87, -99.0, 0.0, 0.0, 0.0, true)
+        SetEntityHeading(playerPed, 173.97)
     end
 
     Wait(1000)
-    FreezeEntityPosition(PlayerPedId(), true)
+    FreezeEntityPosition(playerPed, true)
 
-    -- TaskLookAtCoord(PlayerPedId(), 405.59, -997.18, -99.00, -1, 0, 4)  -- its left
-    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), -20.0, 0.0, 0.0), -1, 0, 4)
-    -- TaskLookAtCoord(PlayerPedId(), GetOffsetFromEntityInWorldCoords(PlayerPedId(), 20.0, 0.0, 0.0), -1, 0, 4)
-
+    lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = GetOffsetFromEntityInWorldCoords(playerPed, 1.2, 0.5, 0.7),
+        GetOffsetFromEntityInWorldCoords(playerPed, -1.2, 0.5, 0.7), GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7)
 end
 
 local function ToggleCamOnFace(value)
@@ -92,8 +89,8 @@ local function StopCharCreator()
     RenderScriptCams(false, false, 0, true, true)
 
     EnableAllControlActions(0)
-
     FreezeEntityPosition(playerPed, false)
+    TaskClearLookAt(playerPed)
 
     Wait(1000)
 
@@ -420,24 +417,28 @@ MainMenu.Closable = false
 local SubMenuIdentity = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_identity"))
 
 local SubMenuHeritage = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_heritage"))
-
+SubMenuHeritage:AddInstructionButton({GetControlGroupInstructionalButton(2, 14, 0), GetString("turn_face")})
 SubMenuHeritage.Closed = function()
     ToggleCamOnFace(false)
+    TaskClearLookAt(playerPed)
     exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
 local SubMenuFace = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_face"))
-
 SubMenuFace.EnableMouse = true
+SubMenuFace:AddInstructionButton({GetControlGroupInstructionalButton(2, 14, 0), GetString("turn_face")})
 SubMenuFace.Closed = function()
     ToggleCamOnFace(false)
+    TaskClearLookAt(playerPed)
     exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
 local SubMenuAppearance = RageUI.CreateSubMenu(MainMenu, "", GetString("menu_title_appearance"))
+SubMenuAppearance:AddInstructionButton({GetControlGroupInstructionalButton(2, 14, 0), GetString("turn_face")})
 SubMenuAppearance.EnableMouse = true
 SubMenuAppearance.Closed = function()
     ToggleCamOnFace(false)
+    TaskClearLookAt(playerPed)
     exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
 end
 
@@ -446,6 +447,16 @@ local DisplayedOutfit = 0
 SubMenuOutfits.Closed = function()
     exports.ava_mp_peds:setPlayerClothes(Outfits[CharacterData.sexIndex][CharacterData.selectedOutfit].outfit)
     DisplayedOutfit = CharacterData.selectedOutfit
+end
+
+local function TurnHead()
+    if (IsDisabledControlPressed(0, 205)) then -- INPUT_FRONTEND_LB
+        TaskLookAtCoord(playerPed, lookAtCoordLeft, 2000, 0, 2)
+    elseif (IsDisabledControlPressed(0, 206)) then -- INPUT_FRONTEND_RB
+        TaskLookAtCoord(playerPed, lookAtCoordFront, 2000, 0, 2)
+    else
+        TaskLookAtCoord(playerPed, lookAtCoordRight, 2000, 0, 2)
+    end
 end
 
 function RageUI.PoolMenus:AvaCoreCreateChar()
@@ -535,6 +546,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuHeritage:IsVisible(function(Items)
+        TurnHead()
+
         Items:Heritage(MotherIndex - 1, FatherIndex - 1)
         Items:AddList(GetString("mother"), MotherList, MotherIndex, GetString("mother_subtitle"), {}, function(Index, onSelected, onListChange)
             if onListChange then
@@ -564,6 +577,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuFace:IsVisible(function(Items)
+        TurnHead()
+
         Items:AddButton(GetString("forehead"), GetString("edit_your_face"))
         Items:AddButton(GetString("eyes"), GetString("edit_your_face"))
         Items:AddButton(GetString("nose"), GetString("edit_your_face"))
@@ -675,6 +690,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
     end)
 
     SubMenuAppearance:IsVisible(function(Items)
+        TurnHead()
+
         Items:AddList(GetString("hair"), (SkinMaxVals.hair or -1) + 1, CharacterData.Appearance.HairCutIndex or 1, GetString("change_your_appearance"), {},
             function(Index, onSelected, onListChange)
                 if (onListChange) then
@@ -979,6 +996,7 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     exports.ava_mp_peds:reset()
     CharacterSkin = exports.ava_mp_peds:setPlayerSkin(Outfits[0][0].outfit)
+    exports.ava_mp_peds:reloadPedOverlays(PlayerPedId())
     SkinMaxVals = exports.ava_mp_peds:getMaxValues()
 
     MotherIndex, FatherIndex, Resemblance, SkinTone, DisplayedOutfit = 1, 1, 10, 10, 0
@@ -997,9 +1015,9 @@ RegisterNetEvent("ava_core:client:createChar", function()
 
     Wait(100)
 
+    playerPed = PlayerPedId()
     StartCharCreator()
 
-    playerPed = PlayerPedId()
     SkinMaxVals = exports.ava_mp_peds:getMaxValues()
     Wait(100)
     RageUI.CloseAll()
@@ -1026,6 +1044,7 @@ MainMenu.Closed = function()
 
     -- clear some global variables
     bodyCam, faceCam, isCamOnFace = nil, nil, false
+    lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = nil, nil, nil
     CharacterSkin = nil
     CharacterData = nil
     playerPed = nil
