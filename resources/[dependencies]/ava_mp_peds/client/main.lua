@@ -299,33 +299,33 @@ function setPedSkin(ped, skin)
     SetPedFaceFeature(ped, 5, (localSkin.nose_bone_twist / 100) + 0.0)
 
     -- Eyebrows
-    SetPedFaceFeature(ped, 6, (localSkin.eyebrown_high / 100) + 0.0) -- Eyebrow height
-    SetPedFaceFeature(ped, 7, (localSkin.eyebrown_forward / 100) + 0.0) -- Eyebrow depth
+    SetPedFaceFeature(ped, 6, (localSkin.eyebrown_high / 100) + 0.0)
+    SetPedFaceFeature(ped, 7, (localSkin.eyebrown_forward / 100) + 0.0)
 
     -- Cheeks
-    SetPedFaceFeature(ped, 8, (localSkin.cheeks_bone_high / 100) + 0.0) -- Cheekbones Height
-    SetPedFaceFeature(ped, 9, (localSkin.cheeks_bone_width / 100) + 0.0) -- Cheekbones Width
-    SetPedFaceFeature(ped, 10, (localSkin.cheeks_width / 100) + 0.0) -- Cheeks Width
+    SetPedFaceFeature(ped, 8, (localSkin.cheeks_bone_high / 100) + 0.0)
+    SetPedFaceFeature(ped, 9, (localSkin.cheeks_bone_width / 100) + 0.0)
+    SetPedFaceFeature(ped, 10, (localSkin.cheeks_width / 100) + 0.0)
 
     -- Eyes
-    SetPedFaceFeature(ped, 11, (localSkin.eyes_openning / 100) + 0.0) -- Eyes squint
-    SetPedEyeColor(ped, localSkin.eyes_color) -- Eyes color
+    SetPedFaceFeature(ped, 11, (localSkin.eyes_openning / 100) + 0.0)
+    SetPedEyeColor(ped, localSkin.eyes_color)
 
     -- Lips
-    SetPedFaceFeature(ped, 12, (localSkin.lips_thickness / 100) + 0.0) -- Lip Fullness
+    SetPedFaceFeature(ped, 12, (localSkin.lips_thickness / 100) + 0.0)
 
     -- Jaw
-    SetPedFaceFeature(ped, 13, (localSkin.jaw_bone_width / 100) + 0.0) -- Jaw Bone Width
-    SetPedFaceFeature(ped, 14, (localSkin.jaw_bone_back_lenght / 100) + 0.0) -- Jaw Bone Length
+    SetPedFaceFeature(ped, 13, (localSkin.jaw_bone_width / 100) + 0.0)
+    SetPedFaceFeature(ped, 14, (localSkin.jaw_bone_back_lenght / 100) + 0.0)
 
     -- Chin
-    SetPedFaceFeature(ped, 15, (localSkin.chin_bone_lowering / 100) + 0.0) -- Chin Height
-    SetPedFaceFeature(ped, 16, (localSkin.chin_bone_lenght / 100) + 0.0) -- Chin Length
-    SetPedFaceFeature(ped, 17, (localSkin.chin_bone_width / 100) + 0.0) -- Chin Width
-    SetPedFaceFeature(ped, 18, (localSkin.chin_hole / 100) + 0.0) -- Chin Hole Size
+    SetPedFaceFeature(ped, 15, (localSkin.chin_bone_lowering / 100) + 0.0)
+    SetPedFaceFeature(ped, 16, (localSkin.chin_bone_lenght / 100) + 0.0)
+    SetPedFaceFeature(ped, 17, (localSkin.chin_bone_width / 100) + 0.0)
+    SetPedFaceFeature(ped, 18, (localSkin.chin_hole / 100) + 0.0)
 
     -- Neck
-    SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0) -- Neck Thickness
+    SetPedFaceFeature(ped, 19, (localSkin.neck_thickness / 100) + 0.0)
     -- #endregion Ped face
 
     -- #region Ped head overlays
@@ -345,7 +345,7 @@ function setPedSkin(ped, skin)
     SetPedHeadOverlayColor(ped, 4, 2, localSkin.makeup_main_color, localSkin.makeup_scnd_color)
     -- Blush
     SetPedHeadOverlay(ped, 5, localSkin.blush, (localSkin.blush_op / 100) + 0.0)
-    SetPedHeadOverlayColor(ped, 5, 2, localSkin.blush_main_color) -- Blush Color
+    SetPedHeadOverlayColor(ped, 5, 2, localSkin.blush_main_color)
     -- Complexion
     SetPedHeadOverlay(ped, 6, localSkin.complexion, (localSkin.complexion_op / 100) + 0.0)
     -- SunDamage
@@ -361,7 +361,7 @@ function setPedSkin(ped, skin)
     -- Body Blemishes
     SetPedHeadOverlay(ped, 11, localSkin.bodyblemishes == -1 and 255 or localSkin.bodyblemishes, (localSkin.bodyblemishes_op / 100) + 0.0)
     -- Add Body Blemishes
-    SetPedHeadOverlay(ped, 12, localSkin.addbodyblemishes == -1 and 255 or localSkin.addbodyblemishes, (localSkin.addbodyblemishes_op / 100) + 0.0) -- Blemishes 'added body effect' + opacity
+    SetPedHeadOverlay(ped, 12, localSkin.addbodyblemishes == -1 and 255 or localSkin.addbodyblemishes, (localSkin.addbodyblemishes_op / 100) + 0.0)
     -- #endregion Ped head overlays
 
     -- Hair
