@@ -123,7 +123,7 @@ if AVAConfig.LockNPCVehicles then
 
     AddEventHandler("entityCreated", function(entity)
         -- entity is not a vehicle or is not a "random" population car
-        if GetEntityType(entity) ~= 2 or GetEntityPopulationType(entity) > 5 then
+        if not DoesEntityExist(entity) or GetEntityType(entity) ~= 2 or GetEntityPopulationType(entity) > 5 then
             return
         end
 
