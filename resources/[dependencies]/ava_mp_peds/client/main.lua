@@ -440,7 +440,9 @@ exports("getPlayerClothes", getPlayerClothes)
 ---@param entity ped
 ---@return skin
 function getMaxValues(ped)
-    ped = ped or PlayerPedId()
+    if not ped then
+        ped = PlayerPedId()
+    end
     saveOrRestorePlayerLocalSkin(ped)
 
     return {
