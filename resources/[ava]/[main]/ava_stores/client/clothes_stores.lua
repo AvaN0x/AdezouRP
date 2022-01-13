@@ -17,6 +17,8 @@ function ClothesStore()
     end
 end
 
+local playerPed = nil
+
 local validateChanges = false
 local validateButtonRightLabel = nil
 local menuElements = nil
@@ -81,9 +83,10 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     PlayerSkin = exports.ava_core:getPlayerSkinData()
     -- Apply player skin in case of a modified values
     exports.ava_mp_peds:setPlayerSkin(PlayerSkin)
+    playerPed = PlayerPedId()
     -- Get min and max vals
     SkinMinVals = exports.ava_mp_peds:getMinValues()
-    SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
 
     validateButtonRightLabel = nil
     -- If is inside a shop
@@ -120,33 +123,34 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_gender"), gendersList, PlayerSkin.gender + 1, GetString("cm_gender_subtitle"), {},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({gender = resetElement and SkinMinVals.gender or (Index - 1)})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {gender = resetElement and SkinMinVals.gender or (Index - 1)})
+                        playerPed = PlayerPedId()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
 
             Items:AddList(GetString("cm_mother"), SkinMaxVals.mother + 1, PlayerSkin.mother + 1, GetString("cm_mother_subtitle"), {},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({mother = resetElement and SkinMinVals.mother or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {mother = resetElement and SkinMinVals.mother or (Index - 1)})
                     end
                 end)
             Items:AddList(GetString("cm_father"), SkinMaxVals.father + 1, PlayerSkin.father + 1, GetString("cm_father_subtitle"), {},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({father = resetElement and SkinMinVals.father or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {father = resetElement and SkinMinVals.father or (Index - 1)})
                     end
                 end)
             Items:SliderHeritage(GetString("cm_resemblance"), PlayerSkin.shape_mix / 5, GetString("cm_resemblance_subtitle"),
                 function(Selected, Active, onListChange, SliderIndex, Percent)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({shape_mix = resetElement and SkinMinVals.shape_mix or Percent})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {shape_mix = resetElement and SkinMinVals.shape_mix or Percent})
                     end
                 end)
             Items:SliderHeritage(GetString("cm_skin_tone"), PlayerSkin.skin_mix / 5, GetString("cm_skin_tone_subtitle"),
                 function(Selected, Active, onListChange, SliderIndex, Percent)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({skin_mix = resetElement and SkinMinVals.skin_mix or Percent})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {skin_mix = resetElement and SkinMinVals.skin_mix or Percent})
                     end
                 end)
         end
@@ -200,17 +204,15 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.hair = Items:AddList(GetString("cm_hair"), SkinMaxVals.hair + 1, PlayerSkin.hair + 1, GetString("cm_hair_subtitle"),
                 {Min = SkinMinVals.hair + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
-                            hair = resetElement and SkinMinVals.hair or (Index - 1),
-                            hair_txd = SkinMinVals.hair_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            {hair = resetElement and SkinMinVals.hair or (Index - 1), hair_txd = SkinMinVals.hair_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_hair_txd"), SkinMaxVals.hair_txd + 1, PlayerSkin.hair_txd + 1, GetString("cm_hair_txd_subtitle"),
                 {Min = SkinMinVals.hair_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1)})
                     end
                 end)
         end
@@ -218,11 +220,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.beard = Items:AddList(GetString("cm_beard"), SkinMaxVals.beard + 1, PlayerSkin.beard + 1, GetString("cm_beard_subtitle"),
                 {Min = SkinMinVals.beard + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             beard = resetElement and SkinMinVals.beard or (Index - 1),
                             beard_txd = SkinMinVals.beard_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -230,11 +232,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.eyebrows = Items:AddList(GetString("cm_eyebrows"), SkinMaxVals.eyebrows + 1, PlayerSkin.eyebrows + 1,
                 GetString("cm_eyebrows_subtitle"), {Min = SkinMinVals.eyebrows + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             eyebrows = resetElement and SkinMinVals.eyebrows or (Index - 1),
                             eyebrows_txd = SkinMinVals.eyebrows_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -242,11 +244,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1, PlayerSkin.chesthair + 1,
                 GetString("cm_chesthair_subtitle"), {Min = SkinMinVals.chesthair + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             chesthair = resetElement and SkinMinVals.chesthair or (Index - 1),
                             chesthair_txd = SkinMinVals.chesthair_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -254,7 +256,7 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_eyes_color_txd"), SkinMaxVals.eyes_color + 1, PlayerSkin.eyes_color + 1, GetString("cm_eyes_color_subtitle"),
                 {Min = SkinMinVals.eyes_color + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({eyes_color = resetElement and SkinMinVals.eyes_color or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyes_color = resetElement and SkinMinVals.eyes_color or (Index - 1)})
                     end
                 end)
         end
@@ -267,11 +269,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1, GetString("cm_makeup_subtitle"),
                 {Min = SkinMinVals.makeup + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             makeup = resetElement and SkinMinVals.makeup or (Index - 1),
                             makeup_txd = SkinMinVals.makeup_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -279,11 +281,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.lipstick = Items:AddList(GetString("cm_lipstick"), SkinMaxVals.lipstick + 1, PlayerSkin.lipstick + 1,
                 GetString("cm_lipstick_subtitle"), {Min = SkinMinVals.lipstick + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             lipstick = resetElement and SkinMinVals.lipstick or (Index - 1),
                             lipstick_txd = SkinMinVals.lipstick_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -291,11 +293,11 @@ function RageUI.PoolMenus:ClothesMenu()
             MenuItemIndices.blush = Items:AddList(GetString("cm_blush"), SkinMaxVals.blush + 1, PlayerSkin.blush + 1, GetString("cm_blush_subtitle"),
                 {Min = SkinMinVals.blush + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerSkin({
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             blush = resetElement and SkinMinVals.blush or (Index - 1),
                             blush_txd = SkinMinVals.blush_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
@@ -329,17 +331,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_torso"), SkinMaxVals.torso + 1, PlayerSkin.torso + 1, GetString("cm_torso_subtitle"), {Min = SkinMinVals.torso + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             torso = resetElement and SkinMinVals.torso or (Index - 1),
                             torso_txd = SkinMinVals.torso_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_torso_txd"), SkinMaxVals.torso_txd + 1, PlayerSkin.torso_txd + 1, GetString("cm_torso_txd_subtitle"),
                 {Min = SkinMinVals.torso_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({torso_txd = resetElement and SkinMinVals.torso_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {torso_txd = resetElement and SkinMinVals.torso_txd or (Index - 1)})
                     end
                 end)
         end
@@ -348,15 +350,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_tops"), SkinMaxVals.tops + 1, PlayerSkin.tops + 1, GetString("cm_tops_subtitle"), {Min = SkinMinVals.tops + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({tops = resetElement and SkinMinVals.tops or (Index - 1), tops_txd = SkinMinVals.tops_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                            tops = resetElement and SkinMinVals.tops or (Index - 1),
+                            tops_txd = SkinMinVals.tops_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_tops_txd"), SkinMaxVals.tops_txd + 1, PlayerSkin.tops_txd + 1, GetString("cm_tops_txd_subtitle"),
                 {Min = SkinMinVals.tops_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({tops_txd = resetElement and SkinMinVals.tops_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {tops_txd = resetElement and SkinMinVals.tops_txd or (Index - 1)})
                     end
                 end)
         end
@@ -364,17 +368,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_undershirt"), SkinMaxVals.undershirt + 1, PlayerSkin.undershirt + 1, GetString("cm_undershirt_subtitle"),
                 {Min = SkinMinVals.undershirt + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             undershirt = resetElement and SkinMinVals.undershirt or (Index - 1),
                             undershirt_txd = SkinMinVals.undershirt_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_undershirt_txd"), SkinMaxVals.undershirt_txd + 1, PlayerSkin.undershirt_txd + 1,
                 GetString("cm_undershirt_txd_subtitle"), {Min = SkinMinVals.undershirt_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({undershirt_txd = resetElement and SkinMinVals.undershirt_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {undershirt_txd = resetElement and SkinMinVals.undershirt_txd or (Index - 1)})
                     end
                 end)
         end
@@ -382,17 +386,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_bodyarmor"), SkinMaxVals.bodyarmor + 1, PlayerSkin.bodyarmor + 1, GetString("cm_bodyarmor_subtitle"),
                 {Min = SkinMinVals.bodyarmor + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             bodyarmor = resetElement and SkinMinVals.bodyarmor or (Index - 1),
                             bodyarmor_txd = SkinMinVals.bodyarmor_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_bodyarmor_txd"), SkinMaxVals.bodyarmor_txd + 1, PlayerSkin.bodyarmor_txd + 1, GetString("cm_bodyarmor_txd_subtitle"),
                 {Min = SkinMinVals.bodyarmor_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bodyarmor_txd = resetElement and SkinMinVals.bodyarmor_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bodyarmor_txd = resetElement and SkinMinVals.bodyarmor_txd or (Index - 1)})
                     end
                 end)
         end
@@ -400,17 +404,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_decals"), SkinMaxVals.decals + 1, PlayerSkin.decals + 1, GetString("cm_decals_subtitle"),
                 {Min = SkinMinVals.decals + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             decals = resetElement and SkinMinVals.decals or (Index - 1),
                             decals_txd = SkinMinVals.decals_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_decals_txd"), SkinMaxVals.decals_txd + 1, PlayerSkin.decals_txd + 1, GetString("cm_decals_txd_subtitle"),
                 {Min = SkinMinVals.decals_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({decals_txd = resetElement and SkinMinVals.decals_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {decals_txd = resetElement and SkinMinVals.decals_txd or (Index - 1)})
                     end
                 end)
         end
@@ -418,15 +422,15 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_leg"), SkinMaxVals.leg + 1, PlayerSkin.leg + 1, GetString("cm_leg_subtitle"), {Min = SkinMinVals.leg + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({leg = resetElement and SkinMinVals.leg or (Index - 1), leg_txd = SkinMinVals.leg_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                            {leg = resetElement and SkinMinVals.leg or (Index - 1), leg_txd = SkinMinVals.leg_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_leg_txd"), SkinMaxVals.leg_txd + 1, PlayerSkin.leg_txd + 1, GetString("cm_leg_txd_subtitle"),
                 {Min = SkinMinVals.leg_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({leg_txd = resetElement and SkinMinVals.leg_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {leg_txd = resetElement and SkinMinVals.leg_txd or (Index - 1)})
                     end
                 end)
         end
@@ -434,17 +438,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_shoes"), SkinMaxVals.shoes + 1, PlayerSkin.shoes + 1, GetString("cm_shoes_subtitle"), {Min = SkinMinVals.shoes + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             shoes = resetElement and SkinMinVals.shoes or (Index - 1),
                             shoes_txd = SkinMinVals.shoes_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_shoes_txd"), SkinMaxVals.shoes_txd + 1, PlayerSkin.shoes_txd + 1, GetString("cm_shoes_txd_subtitle"),
                 {Min = SkinMinVals.shoes_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({shoes_txd = resetElement and SkinMinVals.shoes_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {shoes_txd = resetElement and SkinMinVals.shoes_txd or (Index - 1)})
                     end
                 end)
         end
@@ -452,15 +456,15 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_bag"), SkinMaxVals.bag + 1, PlayerSkin.bag + 1, GetString("cm_bag_subtitle"), {Min = SkinMinVals.bag + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({bag = resetElement and SkinMinVals.bag or (Index - 1), bag_txd = SkinMinVals.bag_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                            {bag = resetElement and SkinMinVals.bag or (Index - 1), bag_txd = SkinMinVals.bag_txd})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_bag_txd"), SkinMaxVals.bag_txd + 1, PlayerSkin.bag_txd + 1, GetString("cm_bag_txd_subtitle"),
                 {Min = SkinMinVals.bag_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bag_txd = resetElement and SkinMinVals.bag_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bag_txd = resetElement and SkinMinVals.bag_txd or (Index - 1)})
                     end
                 end)
         end
@@ -468,17 +472,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_accessory"), SkinMaxVals.accessory + 1, PlayerSkin.accessory + 1, GetString("cm_accessory_subtitle"),
                 {Min = SkinMinVals.accessory + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             accessory = resetElement and SkinMinVals.accessory or (Index - 1),
                             accessory_txd = SkinMinVals.accessory_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_accessory_txd"), SkinMaxVals.accessory_txd + 1, PlayerSkin.accessory_txd + 1, GetString("cm_accessory_txd_subtitle"),
                 {Min = SkinMinVals.accessory_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({accessory_txd = resetElement and SkinMinVals.accessory_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {accessory_txd = resetElement and SkinMinVals.accessory_txd or (Index - 1)})
                     end
                 end)
         end
@@ -486,15 +490,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_mask"), SkinMaxVals.mask + 1, PlayerSkin.mask + 1, GetString("cm_mask_subtitle"), {Min = SkinMinVals.mask + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({mask = resetElement and SkinMinVals.mask or (Index - 1), mask_txd = SkinMinVals.mask_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                            mask = resetElement and SkinMinVals.mask or (Index - 1),
+                            mask_txd = SkinMinVals.mask_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_mask_txd"), SkinMaxVals.mask_txd + 1, PlayerSkin.mask_txd + 1, GetString("cm_mask_txd_subtitle"),
                 {Min = SkinMinVals.mask_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({mask_txd = resetElement and SkinMinVals.mask_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {mask_txd = resetElement and SkinMinVals.mask_txd or (Index - 1)})
                     end
                 end)
         end
@@ -503,15 +509,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_hats"), SkinMaxVals.hats + 1, PlayerSkin.hats + 1, GetString("cm_hats_subtitle"), {Min = SkinMinVals.hats + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({hats = resetElement and SkinMinVals.hats or (Index - 1), hats_txd = SkinMinVals.hats_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                            hats = resetElement and SkinMinVals.hats or (Index - 1),
+                            hats_txd = SkinMinVals.hats_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_hats_txd"), SkinMaxVals.hats_txd + 1, PlayerSkin.hats_txd + 1, GetString("cm_hats_txd_subtitle"),
                 {Min = SkinMinVals.hats_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({hats_txd = resetElement and SkinMinVals.hats_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {hats_txd = resetElement and SkinMinVals.hats_txd or (Index - 1)})
                     end
                 end)
         end
@@ -519,17 +527,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_glasses"), SkinMaxVals.glasses + 1, PlayerSkin.glasses + 1, GetString("cm_glasses_subtitle"),
                 {Min = SkinMinVals.glasses + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             glasses = resetElement and SkinMinVals.glasses or (Index - 1),
                             glasses_txd = SkinMinVals.glasses_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_glasses_txd"), SkinMaxVals.glasses_txd + 1, PlayerSkin.glasses_txd + 1, GetString("cm_glasses_txd_subtitle"),
                 {Min = SkinMinVals.glasses_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({glasses_txd = resetElement and SkinMinVals.glasses_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {glasses_txd = resetElement and SkinMinVals.glasses_txd or (Index - 1)})
                     end
                 end)
         end
@@ -537,15 +545,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_ears"), SkinMaxVals.ears + 1, PlayerSkin.ears + 1, GetString("cm_ears_subtitle"), {Min = SkinMinVals.ears + 1},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPlayerClothes({ears = resetElement and SkinMinVals.ears or (Index - 1), ears_txd = SkinMinVals.ears_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                            ears = resetElement and SkinMinVals.ears or (Index - 1),
+                            ears_txd = SkinMinVals.ears_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_ears_txd"), SkinMaxVals.ears_txd + 1, PlayerSkin.ears_txd + 1, GetString("cm_ears_txd_subtitle"),
                 {Min = SkinMinVals.ears_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({ears_txd = resetElement and SkinMinVals.ears_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {ears_txd = resetElement and SkinMinVals.ears_txd or (Index - 1)})
                     end
                 end)
         end
@@ -553,17 +563,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_watches"), SkinMaxVals.watches + 1, PlayerSkin.watches + 1, GetString("cm_watches_subtitle"),
                 {Min = SkinMinVals.watches + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             watches = resetElement and SkinMinVals.watches or (Index - 1),
                             watches_txd = SkinMinVals.watches_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_watches_txd"), SkinMaxVals.watches_txd + 1, PlayerSkin.watches_txd + 1, GetString("cm_watches_txd_subtitle"),
                 {Min = SkinMinVals.watches_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({watches_txd = resetElement and SkinMinVals.watches_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {watches_txd = resetElement and SkinMinVals.watches_txd or (Index - 1)})
                     end
                 end)
         end
@@ -571,17 +581,17 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddList(GetString("cm_bracelets"), SkinMaxVals.bracelets + 1, PlayerSkin.bracelets + 1, GetString("cm_bracelets_subtitle"),
                 {Min = SkinMinVals.bracelets + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
                             bracelets = resetElement and SkinMinVals.bracelets or (Index - 1),
                             bracelets_txd = SkinMinVals.bracelets_txd,
                         })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues()
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
             Items:AddList(GetString("cm_bracelets_txd"), SkinMaxVals.bracelets_txd + 1, PlayerSkin.bracelets_txd + 1, GetString("cm_bracelets_txd_subtitle"),
                 {Min = SkinMinVals.bracelets_txd + 1}, function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPlayerClothes({bracelets_txd = resetElement and SkinMinVals.bracelets_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bracelets_txd = resetElement and SkinMinVals.bracelets_txd or (Index - 1)})
                     end
                 end)
         end
@@ -609,96 +619,96 @@ function RageUI.PoolMenus:ClothesMenu()
                 or (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)), PlayerSkin.hair_main_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.hair_main_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_main_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_main_color = CurrentIndex - 1})
                 end, MenuItemIndices.hair)
             Panels:ColourPanel(GetString("cm_hair_scnd_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_scnd_color
                 or (PlayerSkin.hair_scnd_color > 9 and (PlayerSkin.hair_scnd_color - 7) or (PlayerSkin.hair_scnd_color + 1)), PlayerSkin.hair_scnd_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.hair_scnd_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({hair_scnd_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_scnd_color = CurrentIndex - 1})
                 end, MenuItemIndices.hair)
         end
 
         if (not menuElements or menuElements.beard) and MenuItemIndices.beard then
             Panels:PercentagePanel(PlayerSkin.beard_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({beard_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {beard_op = Percent * 100})
             end, MenuItemIndices.beard)
 
             Panels:ColourPanel(GetString("cm_beard_color"), RageUI.PanelColour.HairCut,
                 MenuNeededValues.beard_color or (PlayerSkin.beard_color > 9 and (PlayerSkin.beard_color - 7) or (PlayerSkin.beard_color + 1)),
                 PlayerSkin.beard_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.beard_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({beard_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {beard_color = CurrentIndex - 1})
                 end, MenuItemIndices.beard)
         end
 
         if (not menuElements or menuElements.eyebrows) and MenuItemIndices.eyebrows then
             Panels:PercentagePanel(PlayerSkin.eyebrows_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({eyebrows_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyebrows_op = Percent * 100})
             end, MenuItemIndices.eyebrows)
 
             Panels:ColourPanel(GetString("cm_eyebrows_color"), RageUI.PanelColour.HairCut, MenuNeededValues.eyebrows_color
                 or (PlayerSkin.eyebrows_color > 9 and (PlayerSkin.eyebrows_color - 7) or (PlayerSkin.eyebrows_color + 1)), PlayerSkin.eyebrows_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.eyebrows_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({eyebrows_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyebrows_color = CurrentIndex - 1})
                 end, MenuItemIndices.eyebrows)
         end
 
         if (not menuElements or menuElements.chesthair) and MenuItemIndices.chesthair then
             Panels:PercentagePanel(PlayerSkin.chesthair_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({chesthair_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {chesthair_op = Percent * 100})
             end, MenuItemIndices.chesthair)
 
             Panels:ColourPanel(GetString("cm_chesthair_color"), RageUI.PanelColour.HairCut, MenuNeededValues.chesthair_color
                 or (PlayerSkin.chesthair_color > 9 and (PlayerSkin.chesthair_color - 7) or (PlayerSkin.chesthair_color + 1)), PlayerSkin.chesthair_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.chesthair_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({chesthair_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {chesthair_color = CurrentIndex - 1})
                 end, MenuItemIndices.chesthair)
         end
 
         if (not menuElements or menuElements.blush) and MenuItemIndices.blush then
             Panels:PercentagePanel(PlayerSkin.blush_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({blush_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {blush_op = Percent * 100})
             end, MenuItemIndices.blush)
 
             Panels:ColourPanel(GetString("cm_blush_color"), RageUI.PanelColour.Makeup,
                 MenuNeededValues.blush_color or (PlayerSkin.blush_color > 9 and (PlayerSkin.blush_color - 7) or (PlayerSkin.blush_color + 1)),
                 PlayerSkin.blush_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.blush_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({blush_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {blush_color = CurrentIndex - 1})
                 end, MenuItemIndices.blush)
         end
 
         if (not menuElements or menuElements.makeup) and MenuItemIndices.makeup then
             Panels:PercentagePanel(PlayerSkin.makeup_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_op = Percent * 100})
             end, MenuItemIndices.makeup)
 
             Panels:ColourPanel(GetString("cm_makeup_main_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_main_color
                 or (PlayerSkin.makeup_main_color > 9 and (PlayerSkin.makeup_main_color - 7) or (PlayerSkin.makeup_main_color + 1)),
                 PlayerSkin.makeup_main_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.makeup_main_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_main_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_main_color = CurrentIndex - 1})
                 end, MenuItemIndices.makeup)
             Panels:ColourPanel(GetString("cm_makeup_scnd_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_scnd_color
                 or (PlayerSkin.makeup_scnd_color > 9 and (PlayerSkin.makeup_scnd_color - 7) or (PlayerSkin.makeup_scnd_color + 1)),
                 PlayerSkin.makeup_scnd_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.makeup_scnd_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({makeup_scnd_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_scnd_color = CurrentIndex - 1})
                 end, MenuItemIndices.makeup)
         end
         if (not menuElements or menuElements.lipstick) and MenuItemIndices.lipstick then
             Panels:PercentagePanel(PlayerSkin.lipstick_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPlayerSkin({lipstick_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {lipstick_op = Percent * 100})
             end, MenuItemIndices.lipstick)
 
             Panels:ColourPanel(GetString("cm_lipstick_color"), RageUI.PanelColour.Makeup, MenuNeededValues.lipstick_color
                 or (PlayerSkin.lipstick_color > 9 and (PlayerSkin.lipstick_color - 7) or (PlayerSkin.lipstick_color + 1)), PlayerSkin.lipstick_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.lipstick_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPlayerSkin({lipstick_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {lipstick_color = CurrentIndex - 1})
                 end, MenuItemIndices.lipstick)
         end
 
