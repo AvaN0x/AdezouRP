@@ -131,7 +131,7 @@ local function UIGridPanel(Type, StartedX, StartedY, TopText, BottomText, LeftTe
             --end
         end
         if Grid.IndexDrawingIButtons ~= Index then
-            if Grid.IndexDrawingIButtons < Index then
+            if Grid.IndexDrawingIButtons < Index and not CurrentMenu:HasInstructionButton(Grid.InstructionalButtons) then
                 CurrentMenu:AddInstructionButton(Grid.InstructionalButtons)
             end
 
@@ -269,7 +269,7 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
 
 
         if Colour.IndexDrawingIButtons ~= Index then
-            if Colour.IndexDrawingIButtons < Index then
+            if Colour.IndexDrawingIButtons < Index and not CurrentMenu:HasInstructionButton(Colour.InstructionalButtons) then
                 CurrentMenu:AddInstructionButton(Colour.InstructionalButtons)
             end
             
@@ -352,7 +352,7 @@ function Panels:PercentagePanel(Percent, HeaderText, MinText, MaxText, Actions, 
         end
 
         if Percentage.IndexDrawingIButtons ~= Index then
-            if Percentage.IndexDrawingIButtons < Index then
+            if Percentage.IndexDrawingIButtons < Index and not CurrentMenu:HasInstructionButton(Percentage.InstructionalButtons) then
                 CurrentMenu:AddInstructionButton(Percentage.InstructionalButtons)
             end
             

@@ -158,6 +158,19 @@ function RageUIMenus:AddInstructionButton(button)
 	end
 end
 
+function RageUIMenus:HasInstructionButton(button)
+	if type(button) == "table" and #button == 2 then
+		for i = 1, #self.InstructionalButtons do
+			if button[1] == self.InstructionalButtons[i][1] and button[2] == self.InstructionalButtons[i][2] then
+				return true
+			end
+		end
+	elseif type(button) == "number" and self.InstructionalButtons[tonumber(button)] then
+        return true
+	end
+    return false
+end
+
 function RageUIMenus:RemoveInstructionButton(button)
 	if type(button) == "table" and #button == 2 then
 		for i = 1, #self.InstructionalButtons do
