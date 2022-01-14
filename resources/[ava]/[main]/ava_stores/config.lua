@@ -527,4 +527,4 @@ Config.Stores = {
 
 }
 
-Config.ClothesStore = {DefaultCamVerticalOffset = 0.6, MaxCamVerticalOffset = 0.7, MinCamVerticalOffset = -0.85}
+Config.ClothesStore = {DefaultCamVerticalOffset = 0.6, MaxCamVerticalOffset = 0.95, MinCamVerticalOffset = -0.85}

@@ -20,6 +20,7 @@ end
 local playerPed = nil
 
 local camVerticalOffset = 0.0
+local camHorizontalOffset = 0.0
 local camMaxVertical = 0.0
 local camMinVertical = 0.0
 local validateChanges = false
@@ -33,12 +34,12 @@ local SkinMaxVals = nil
 local SkinMinVals = nil
 local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainClothesMenu.Closable = false
-MainClothesMenu.EnableMouse = true
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min")})
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
 MainClothesMenu.Closed = function()
     RemoveMenuCam()
-    print("menu closed, validate changes: " .. (validateChanges and "true" or "false"))
+    SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
+    SetPedGravity(playerPed, 1.0, 1.0, 1.0)
 
     -- If did not validate, or do not have enough money, revert changes
     if not validateChanges or not exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:payClothes", CurrentZoneName, PlayerSkin) then
@@ -61,6 +62,8 @@ AddEventHandler("onResourceStop", function(resource)
         if SavePlayerSkin then
             exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
             RemoveMenuCam()
+            SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
+            SetPedGravity(playerPed, 1.0, 1.0, 1.0)
         end
     end
 end)
@@ -96,6 +99,7 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
 
     validateButtonRightLabel = nil
     camVerticalOffset = Config.ClothesStore.DefaultCamVerticalOffset
+    camHorizontalOffset = 0.0
     camMaxVertical = Config.ClothesStore.MaxCamVerticalOffset
     camMinVertical = Config.ClothesStore.MinCamVerticalOffset
     -- If is inside a shop
@@ -117,6 +121,9 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
         end
     end
     validateChanges = false
+    if IsPedArmed(playerPed, 7) then -- 7 is 4 | 2 | 1
+        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+    end
     AddMenuCam()
     RageUI.Visible(MainClothesMenu, true)
 end
@@ -127,6 +134,7 @@ local cam = nil
 local camInstructionalButton<const> = {GetControlGroupInstructionalButton(0, 25, 0), GetString("cm_move_cam")}
 function AddMenuCam()
     MainClothesMenu:AddInstructionButton(camInstructionalButton)
+    MainClothesMenu.EnableMouse = true
 
     cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
     SetCamCoords()
@@ -135,16 +143,24 @@ function AddMenuCam()
     RenderScriptCams(true, true, 500, true, true)
 end
 
+local cos = math.cos
+local sin = math.sin
 function SetCamCoords()
-    local playerCoords = GetEntityCoords(playerPed)
-    local camCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.0)
+    local playerCoords<const> = GetEntityCoords(playerPed)
+    local offsetCoords<const> = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0.7, 0.0)
+    local coordX<const> = playerCoords.x + (offsetCoords.x - playerCoords.x) * cos(camHorizontalOffset) - (offsetCoords.y - playerCoords.y)
+                              * sin(camHorizontalOffset)
 
-    SetCamCoord(cam, camCoords.x, camCoords.y, playerCoords.z + (camVerticalOffset < -0.7 and -0.7 or camVerticalOffset))
-    PointCamAtCoord(cam, playerCoords.x, playerCoords.y, playerCoords.z + camVerticalOffset - 0.05)
+    local coordY<const> = playerCoords.y + (offsetCoords.x - playerCoords.x) * sin(camHorizontalOffset) + (offsetCoords.y - playerCoords.y)
+                              * cos(camHorizontalOffset)
+
+    SetCamCoord(cam, coordX, coordY, playerCoords.z + (camVerticalOffset < -0.7 and -0.7 or camVerticalOffset))
+    PointCamAtCoord(cam, playerCoords.x, playerCoords.y, playerCoords.z + (camVerticalOffset > 0.7 and 0.7 or camVerticalOffset) - 0.05)
 end
 
 function RemoveMenuCam()
     MainClothesMenu:RemoveInstructionButton(camInstructionalButton)
+    MainClothesMenu.EnableMouse = false
     SetCamActive(cam, false)
     RenderScriptCams(false, true, 500, true, true)
     cam = nil
@@ -163,13 +179,29 @@ function RageUI.PoolMenus:ClothesMenu()
     MainClothesMenu:IsVisible(function(Items)
         ClearPedTasks(playerPed)
 
+        -- Prevent player from moving too far
+        SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
+        SetPedGravity(playerPed, 0.0, 0.0, 0.0)
+
         DisableControlAction(0, 24, true) -- INPUT_ATTACK
         DisableControlAction(0, 25, true) -- INPUT_AIM
+        DisableControlAction(0, 26, true) -- INPUT_LOOK_BEHIND
         DisableControlAction(0, 140, true) -- INPUT_MELEE_ATTACK_LIGHT
         DisableControlAction(0, 141, true) -- INPUT_MELEE_ATTACK_HEAVY
         DisableControlAction(0, 142, true) -- INPUT_MELEE_ATTACK_ALTERNATE
 
-        DisableControlAction(0, 26, true) -- INPUT_LOOK_BEHIND
+        DisableControlAction(0, 16, true) -- INPUT_SELECT_NEXT_WEAPON
+        DisableControlAction(0, 17, true) -- INPUT_SELECT_PREV_WEAPON
+        DisableControlAction(0, 37, true) -- INPUT_SELECT_WEAPON
+        -- DisableControlAction(0, 157, true) -- INPUT_SELECT_WEAPON_UNARMED
+        DisableControlAction(0, 158, true) -- INPUT_SELECT_WEAPON_MELEE
+        DisableControlAction(0, 159, true) -- INPUT_SELECT_WEAPON_HANDGUN
+        DisableControlAction(0, 160, true) -- INPUT_SELECT_WEAPON_SHOTGUN
+        DisableControlAction(0, 161, true) -- INPUT_SELECT_WEAPON_SMG
+        DisableControlAction(0, 162, true) -- INPUT_SELECT_WEAPON_AUTO_RIFLE
+        DisableControlAction(0, 163, true) -- INPUT_SELECT_WEAPON_SNIPER
+        DisableControlAction(0, 164, true) -- INPUT_SELECT_WEAPON_HEAVY
+        DisableControlAction(0, 165, true) -- INPUT_SELECT_WEAPON_SPECIAL
 
         -- Toggle cam
         if IsDisabledControlJustReleased(0, 26) then
@@ -194,10 +226,19 @@ function RageUI.PoolMenus:ClothesMenu()
                 camVerticalOffset = camVerticalOffset - 0.01
                 SetCamCoords()
             end
+
+            if IsDisabledControlPressed(0, 109) then
+                camHorizontalOffset = camHorizontalOffset + 0.02
+                SetCamCoords()
+            elseif IsDisabledControlPressed(0, 108) then
+                camHorizontalOffset = camHorizontalOffset - 0.02
+                SetCamCoords()
+            end
         end
 
         local resetElement<const> = IsDisabledControlJustReleased(0, 140)
 
+        -- #region elements
         if not menuElements or menuElements.gender then
             Items:AddList(GetString("cm_gender"), gendersList, PlayerSkin.gender + 1, GetString("cm_gender_subtitle"), {},
                 function(Index, onSelected, onListChange)
@@ -691,7 +732,7 @@ function RageUI.PoolMenus:ClothesMenu()
                 Citizen.SetTimeout(0, RageUI.CloseAllInternal)
             end
         end)
-
+        -- #endregion elements
     end, function(Panels)
         if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
             Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color
@@ -793,4 +834,3 @@ function RageUI.PoolMenus:ClothesMenu()
 
     end)
 end
-
