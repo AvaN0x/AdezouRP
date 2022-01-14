@@ -338,6 +338,7 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush"},
         Price = 150,
+        MinCamVerticalOffset = 0.2,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -353,6 +354,7 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush"},
         Price = 150,
+        MinCamVerticalOffset = 0.2,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -368,6 +370,7 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush"},
         Price = 150,
+        MinCamVerticalOffset = 0.2,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -383,6 +386,7 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush"},
         Price = 150,
+        MinCamVerticalOffset = 0.2,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -398,6 +402,7 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush"},
         Price = 150,
+        MinCamVerticalOffset = 0.2,
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -414,6 +419,8 @@ Config.Stores = {
         ClothesStore = true,
         SkinElements = {"mask"},
         Price = 50,
+        MinCamVerticalOffset = 0.5,
+        -- DefaultCamVerticalOffset
         Marker = 27,
         Size = {x = 1.0, y = 1.0, z = 1.0},
         Color = {r = 255, g = 255, b = 255},
@@ -520,3 +527,4 @@ Config.Stores = {
 
 }
 
+Config.ClothesStore = {DefaultCamVerticalOffset = 0.6, MaxCamVerticalOffset = 0.7, MinCamVerticalOffset = -0.85}

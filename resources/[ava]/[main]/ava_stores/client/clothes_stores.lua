@@ -19,6 +19,9 @@ end
 
 local playerPed = nil
 
+local camVerticalOffset = 0.0
+local camMaxVertical = 0.0
+local camMinVertical = 0.0
 local validateChanges = false
 local validateButtonRightLabel = nil
 local menuElements = nil
@@ -32,7 +35,9 @@ local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "
 MainClothesMenu.Closable = false
 MainClothesMenu.EnableMouse = true
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min")})
+MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
 MainClothesMenu.Closed = function()
+    RemoveMenuCam()
     print("menu closed, validate changes: " .. (validateChanges and "true" or "false"))
 
     -- If did not validate, or do not have enough money, revert changes
@@ -55,6 +60,7 @@ AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         if SavePlayerSkin then
             exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
+            RemoveMenuCam()
         end
     end
 end)
@@ -89,18 +95,62 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
 
     validateButtonRightLabel = nil
+    camVerticalOffset = Config.ClothesStore.DefaultCamVerticalOffset
+    camMaxVertical = Config.ClothesStore.MaxCamVerticalOffset
+    camMinVertical = Config.ClothesStore.MinCamVerticalOffset
     -- If is inside a shop
     if CurrentZoneName then
         local store = Config.Stores[CurrentZoneName]
 
+        if type(store.MaxCamVerticalOffset) == "number" and store.MaxCamVerticalOffset > camMinVertical and store.MaxCamVerticalOffset < camMaxVertical then
+            camMaxVertical = store.MaxCamVerticalOffset + 0.0
+        end
+        if type(store.MinCamVerticalOffset) == "number" and store.MinCamVerticalOffset > camMinVertical and store.MinCamVerticalOffset < camMaxVertical then
+            camMinVertical = store.MinCamVerticalOffset + 0.0
+        end
+        if type(store.DefaultCamVerticalOffset) == "number" and store.DefaultCamVerticalOffset > camMinVertical and store.DefaultCamVerticalOffset
+            < camMaxVertical then
+            camVerticalOffset = store.DefaultCamVerticalOffset + 0.0
+        end
         if store.Price then
             validateButtonRightLabel = GetString("clothes_menu_validate_right_label_money", store.Price)
         end
     end
     validateChanges = false
+    AddMenuCam()
     RageUI.Visible(MainClothesMenu, true)
 end
 RegisterNetEvent("ava_jobs:client:OpenClothesMenu", OpenClothesMenu)
+
+-- #region cam stuff
+local cam = nil
+local camInstructionalButton<const> = {GetControlGroupInstructionalButton(0, 25, 0), GetString("cm_move_cam")}
+function AddMenuCam()
+    MainClothesMenu:AddInstructionButton(camInstructionalButton)
+
+    cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+    SetCamCoords()
+
+    SetCamActive(cam, true)
+    RenderScriptCams(true, true, 500, true, true)
+end
+
+function SetCamCoords()
+    local playerCoords = GetEntityCoords(playerPed)
+    local camCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.0)
+
+    SetCamCoord(cam, camCoords.x, camCoords.y, playerCoords.z + (camVerticalOffset < -0.7 and -0.7 or camVerticalOffset))
+    PointCamAtCoord(cam, playerCoords.x, playerCoords.y, playerCoords.z + camVerticalOffset - 0.05)
+end
+
+function RemoveMenuCam()
+    MainClothesMenu:RemoveInstructionButton(camInstructionalButton)
+    SetCamActive(cam, false)
+    RenderScriptCams(false, true, 500, true, true)
+    cam = nil
+end
+
+-- #endregion cam stuff
 
 -- #region menu list stuff
 local gendersList<const> = {GetString("cm_male"), GetString("cm_female")}
@@ -111,11 +161,40 @@ local FatherListId<const> = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1
 
 function RageUI.PoolMenus:ClothesMenu()
     MainClothesMenu:IsVisible(function(Items)
+        ClearPedTasks(playerPed)
+
         DisableControlAction(0, 24, true) -- INPUT_ATTACK
         DisableControlAction(0, 25, true) -- INPUT_AIM
         DisableControlAction(0, 140, true) -- INPUT_MELEE_ATTACK_LIGHT
         DisableControlAction(0, 141, true) -- INPUT_MELEE_ATTACK_HEAVY
         DisableControlAction(0, 142, true) -- INPUT_MELEE_ATTACK_ALTERNATE
+
+        DisableControlAction(0, 26, true) -- INPUT_LOOK_BEHIND
+
+        -- Toggle cam
+        if IsDisabledControlJustReleased(0, 26) then
+            if cam then
+                RemoveMenuCam()
+            else
+                AddMenuCam()
+            end
+        end
+
+        -- Cam is on? allow the user to move the cam
+        if cam then
+            DisableControlAction(0, 108, true) -- INPUT_VEH_FLY_ROLL_LEFT_ONLY left
+            DisableControlAction(0, 109, true) -- INPUT_VEH_FLY_ROLL_RIGHT_ONLY right
+            DisableControlAction(0, 110, true) -- INPUT_VEH_FLY_PITCH_UD down
+            DisableControlAction(0, 111, true) -- INPUT_VEH_FLY_PITCH_UP_ONLY up
+
+            if IsDisabledControlPressed(0, 111) and camVerticalOffset < camMaxVertical then
+                camVerticalOffset = camVerticalOffset + 0.01
+                SetCamCoords()
+            elseif IsDisabledControlPressed(0, 110) and camVerticalOffset > camMinVertical then
+                camVerticalOffset = camVerticalOffset - 0.01
+                SetCamCoords()
+            end
+        end
 
         local resetElement<const> = IsDisabledControlJustReleased(0, 140)
 

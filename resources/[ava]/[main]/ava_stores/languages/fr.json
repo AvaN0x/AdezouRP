@@ -22,6 +22,8 @@
     "clothes_menu_validate": "Valider",
     "clothes_menu_validate_subtitle": "Valider les changements",
     "cm_reset_to_min": "Valeur minimale",
+    "cm_toggle_cam": "Changer de caméra",
+    "cm_move_cam": "Déplacer la caméra",
     "cm_gender": "Genre",
     "cm_gender_subtitle": "Choississez votre genre.",
     "cm_male": "Homme",
