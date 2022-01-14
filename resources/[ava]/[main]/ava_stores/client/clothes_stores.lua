@@ -19,27 +19,30 @@ end
 
 local playerPed = nil
 
+-- Camera vars
 local camVerticalOffset = 0.0
 local camHorizontalOffset = 0.0
 local camMaxVertical = 0.0
 local camMinVertical = 0.0
+-- Menu things
+local playerChangedGender = false -- Used to restor player weapons if gender changed
 local validateChanges = false
 local validateButtonRightLabel = nil
 local menuElements = nil
-local SavePlayerSkin = nil
-local PlayerSkin = nil
 local MenuNeededValues = nil
 local MenuItemIndices = nil
+-- Player skin
+local SavePlayerSkin = nil
+local PlayerSkin = nil
 local SkinMaxVals = nil
 local SkinMinVals = nil
+
 local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainClothesMenu.Closable = false
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min")})
 MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
 MainClothesMenu.Closed = function()
-    RemoveMenuCam()
-    SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
-    SetPedGravity(playerPed, 1.0, 1.0, 1.0)
+    CloseClothesMenu()
 
     -- If did not validate, or do not have enough money, revert changes
     if not validateChanges or not exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:payClothes", CurrentZoneName, PlayerSkin) then
@@ -60,13 +63,24 @@ end
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         if SavePlayerSkin then
+            CloseClothesMenu()
             exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
-            RemoveMenuCam()
-            SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
-            SetPedGravity(playerPed, 1.0, 1.0, 1.0)
         end
     end
 end)
+
+function CloseClothesMenu()
+    -- Restore hidden skin elements
+    HideSkinElementsOnItem()
+
+    RemoveMenuCam()
+    SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
+    SetPedGravity(playerPed, 1.0, 1.0, 1.0)
+
+    if playerChangedGender then
+        TriggerServerEvent("ava_core:server:reloadLoadout")
+    end
+end
 
 function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory)
     RageUI.CloseAll()
@@ -121,7 +135,8 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
         end
     end
     validateChanges = false
-    if IsPedArmed(playerPed, 7) then -- 7 is 4 | 2 | 1
+    playerChangedGender = false
+    if IsPedArmed(playerPed, 7) then -- 7 == 4 | 2 | 1
         SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
     end
     AddMenuCam()
@@ -165,18 +180,42 @@ function RemoveMenuCam()
     RenderScriptCams(false, true, 500, true, true)
     cam = nil
 end
-
 -- #endregion cam stuff
+
+-- #region skin modification based on current element
+local savedSkinElements = nil
+---Hide elements on certain menu items, ex: hide hats on hair menu
+---@param index number "start at 1"
+function HideSkinElementsOnItem(index)
+    -- Restor player skin
+    if savedSkinElements then
+        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, savedSkinElements)
+        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+        savedSkinElements = nil
+    end
+
+    -- Check if a save is needed based on current index
+    if index ~= nil and Config.ClothesStore.ElementsHiddenOnItems and Config.ClothesStore.ElementsHiddenOnItems[index]
+        and Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender] then
+        savedSkinElements = {}
+        for elementName, _ in pairs(Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender]) do
+            savedSkinElements[elementName] = PlayerSkin[elementName]
+        end
+        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender])
+        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+    end
+end
+-- #endregion skin modification based on current element
 
 -- #region menu list stuff
 local gendersList<const> = {GetString("cm_male"), GetString("cm_female")}
-local MotherListId<const> = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 45}
-local FatherListId<const> = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 42, 43, 44}
 
 -- #endregion menu list stuff
 
+local lastElementsIndexToHide = nil
 function RageUI.PoolMenus:ClothesMenu()
     MainClothesMenu:IsVisible(function(Items)
+        local elementsIndexToHide = nil
         ClearPedTasks(playerPed)
 
         -- Prevent player from moving too far
@@ -246,6 +285,9 @@ function RageUI.PoolMenus:ClothesMenu()
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {gender = resetElement and SkinMinVals.gender or (Index - 1)})
                         playerPed = PlayerPedId()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+
+                        -- Used to restore weapons
+                        playerChangedGender = true
                     end
                 end)
 
@@ -283,30 +325,36 @@ function RageUI.PoolMenus:ClothesMenu()
             -- nose_bone_high
             -- nose_peak_lowering
             -- nose_bone_twist
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.eyebrown then
             Items:AddButton("TODO eyebrown", nil, {}, nil) -- TODO
             -- eyebrown_high
             -- eyebrown_forward
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.cheeks then
             Items:AddButton("TODO cheeks", nil, {}, nil) -- TODO
             -- cheeks_bone_high
             -- cheeks_bone_width
             -- cheeks_width
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.eyes then
             Items:AddButton("TODO eyes", nil, {}, nil) -- TODO
             -- eyes_openning
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.lips then
             Items:AddButton("TODO lips", nil, {}, nil) -- TODO
             -- lips_thickness
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.jaw then
             Items:AddButton("TODO jaw", nil, {}, nil) -- TODO
             -- jaw_bone_width
             -- jaw_bone_back_lenght
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.chin then
             Items:AddButton("TODO chin", nil, {}, nil) -- TODO
@@ -314,15 +362,18 @@ function RageUI.PoolMenus:ClothesMenu()
             -- chin_bone_lenght
             -- chin_bone_width
             -- chin_hole
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.neck then
             Items:AddButton("TODO neck", nil, {}, nil) -- TODO
             -- neck_thickness
+            -- elementsIndexToHide = 1 -- Head
         end
 
         if not menuElements or menuElements.hair then
             MenuItemIndices.hair = Items:AddList(GetString("cm_hair"), SkinMaxVals.hair + 1, PlayerSkin.hair + 1, GetString("cm_hair_subtitle"),
                 {Min = SkinMinVals.hair + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
                             {hair = resetElement and SkinMinVals.hair or (Index - 1), hair_txd = SkinMinVals.hair_txd})
@@ -331,6 +382,7 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
             Items:AddList(GetString("cm_hair_txd"), SkinMaxVals.hair_txd + 1, PlayerSkin.hair_txd + 1, GetString("cm_hair_txd_subtitle"),
                 {Min = SkinMinVals.hair_txd + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1)})
                     end
@@ -339,6 +391,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.beard then
             MenuItemIndices.beard = Items:AddList(GetString("cm_beard"), SkinMaxVals.beard + 1, PlayerSkin.beard + 1, GetString("cm_beard_subtitle"),
                 {Min = SkinMinVals.beard + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             beard = resetElement and SkinMinVals.beard or (Index - 1),
@@ -351,6 +404,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.eyebrows then
             MenuItemIndices.eyebrows = Items:AddList(GetString("cm_eyebrows"), SkinMaxVals.eyebrows + 1, PlayerSkin.eyebrows + 1,
                 GetString("cm_eyebrows_subtitle"), {Min = SkinMinVals.eyebrows + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             eyebrows = resetElement and SkinMinVals.eyebrows or (Index - 1),
@@ -363,6 +417,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.chesthair then
             MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1, PlayerSkin.chesthair + 1,
                 GetString("cm_chesthair_subtitle"), {Min = SkinMinVals.chesthair + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 2 -- Clothes
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             chesthair = resetElement and SkinMinVals.chesthair or (Index - 1),
@@ -375,6 +430,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.eyes_color then
             Items:AddList(GetString("cm_eyes_color_txd"), SkinMaxVals.eyes_color + 1, PlayerSkin.eyes_color + 1, GetString("cm_eyes_color_subtitle"),
                 {Min = SkinMinVals.eyes_color + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyes_color = resetElement and SkinMinVals.eyes_color or (Index - 1)})
                     end
@@ -384,10 +440,12 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddButton("TODO ageing", nil, {}, nil) -- TODO
             -- ageing
             -- ageing_op
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.makeup then
             MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1, GetString("cm_makeup_subtitle"),
                 {Min = SkinMinVals.makeup + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             makeup = resetElement and SkinMinVals.makeup or (Index - 1),
@@ -400,6 +458,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.lipstick then
             MenuItemIndices.lipstick = Items:AddList(GetString("cm_lipstick"), SkinMaxVals.lipstick + 1, PlayerSkin.lipstick + 1,
                 GetString("cm_lipstick_subtitle"), {Min = SkinMinVals.lipstick + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             lipstick = resetElement and SkinMinVals.lipstick or (Index - 1),
@@ -412,6 +471,7 @@ function RageUI.PoolMenus:ClothesMenu()
         if not menuElements or menuElements.blush then
             MenuItemIndices.blush = Items:AddList(GetString("cm_blush"), SkinMaxVals.blush + 1, PlayerSkin.blush + 1, GetString("cm_blush_subtitle"),
                 {Min = SkinMinVals.blush + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
                             blush = resetElement and SkinMinVals.blush or (Index - 1),
@@ -425,26 +485,31 @@ function RageUI.PoolMenus:ClothesMenu()
             Items:AddButton("TODO complexion", nil, {}, nil) -- TODO
             -- complexion
             -- complexion_op
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.sundamage then
             Items:AddButton("TODO sundamage", nil, {}, nil) -- TODO
             -- sundamage
             -- sundamage_op
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.moles then
             Items:AddButton("TODO moles", nil, {}, nil) -- TODO
             -- moles
             -- moles_op
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.bodyblemishes then
             Items:AddButton("TODO bodyblemishes", nil, {}, nil) -- TODO
             -- bodyblemishes
             -- bodyblemishes_op
+            -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.addbodyblemishes then
             Items:AddButton("TODO addbodyblemishes", nil, {}, nil) -- TODO
             -- addbodyblemishes
             -- addbodyblemishes_op
+            -- elementsIndexToHide = 1 -- Head
         end
 
         if not menuElements or menuElements.torso then
@@ -733,6 +798,11 @@ function RageUI.PoolMenus:ClothesMenu()
             end
         end)
         -- #endregion elements
+
+        if lastElementsIndexToHide ~= elementsIndexToHide then
+            lastElementsIndexToHide = elementsIndexToHide
+            HideSkinElementsOnItem(lastElementsIndexToHide)
+        end
     end, function(Panels)
         if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
             Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color

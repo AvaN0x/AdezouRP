@@ -527,4 +527,21 @@ Config.Stores = {
 
 }
 
-Config.ClothesStore = {DefaultCamVerticalOffset = 0.6, MaxCamVerticalOffset = 0.95, MinCamVerticalOffset = -0.85}
+Config.ClothesStore = {
+    DefaultCamVerticalOffset = 0.6,
+    MaxCamVerticalOffset = 0.95,
+    MinCamVerticalOffset = -0.85,
+    ElementsHiddenOnItems = {
+        -- Don't change the order
+        -- Head
+        [1] = {
+            [0] = {hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 0, glasses_txd = 0},
+            [1] = {hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 5, glasses_txd = 0},
+        },
+        -- All clothes
+        [2] = {
+            [0] = {tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61, leg_txd = 1, shoes = 5, shoes_txd = 0},
+            [1] = {tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15, leg_txd = 0, shoes = 5, shoes_txd = 0},
+        },
+    },
+}
