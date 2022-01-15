@@ -4,6 +4,7 @@
 -------------------------------------------
 local island = vector3(4858.0, -5171.0, 2.0)
 local isIslandLoaded = nil
+local isIslandMinimapLoaded = nil
 
 -- ? source : islandhopper.meta
 -- local ipls = {
@@ -488,9 +489,11 @@ Citizen.CreateThread(function()
         if isIslandLoaded ~= isInIsland then
             print((isInIsland and "Load" or "Unload") .. " Cayo Perico.")
             isIslandLoaded = isInIsland
+            isIslandMinimapLoaded = isInIsland
 
             -- switch island (will disable Los Santos)
-            -- SetIslandHopperEnabled('HeistIsland', isIslandLoaded) -- or use false to disable it
+            -- SetIslandHopperEnabled('HeistIsland', isIslandLoaded)
+
             SetDeepOceanScaler(isIslandLoaded and 0.0 or 1.0)
 
             -- switch radar interior
@@ -507,7 +510,7 @@ Citizen.CreateThread(function()
             SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", not isIslandLoaded, true)
 
             -- load the terrain of the island / los santos
-            Citizen.Wait(1000)
+            Wait(1000)
             if isIslandLoaded then
                 for k, v in ipairs(ipls.neededWhileClose) do
                     RequestIpl(v)
@@ -520,6 +523,26 @@ Citizen.CreateThread(function()
 
         end
 
-        Citizen.Wait(5000)
+        Wait(5000)
+    end
+end)
+
+-- Load both islands on minimap
+CreateThread(function()
+    while true do
+        local wait = 500
+        if IsPauseMenuActive() and not IsMinimapInInterior() then
+            if isIslandMinimapLoaded then
+                isIslandMinimapLoaded = false
+                SetToggleMinimapHeistIsland(false)
+            end
+            SetRadarAsExteriorThisFrame()
+            SetRadarAsInteriorThisFrame(GetHashKey("h4_fake_islandx"), 4700.0, -5145.0, 0, 0)
+            wait = 0
+        elseif not isIslandMinimapLoaded and isIslandLoaded then
+            isIslandMinimapLoaded = true
+            SetToggleMinimapHeistIsland(true)
+        end
+        Wait(wait)
     end
 end)
