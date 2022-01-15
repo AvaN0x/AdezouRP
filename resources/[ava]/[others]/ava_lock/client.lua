@@ -23,7 +23,7 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 end)
 
 AddEventHandler("ava_lock:client:dooranim", function()
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     if not IsPedSittingInAnyVehicle(playerPed) then
         exports.ava_core:RequestAnimDict("anim@heists@keycard@")
         TaskPlayAnim(playerPed, "anim@heists@keycard@", "exit", 8.0, -8, 1200, 0, 0, 0, 0, 0)

@@ -271,7 +271,7 @@ AddEventHandler("ava_lockpick:onUse", function()
     closestDoor = nil
     closestDoor = FindClosestDoor()
     if closestDoor then
-        local playerPed = GetPlayerPed(-1)
+        local playerPed = PlayerPedId()
         TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
         TriggerEvent("avan0x_lockpicking:StartLockPicking")
     end
@@ -279,7 +279,7 @@ end)
 
 RegisterNetEvent("avan0x_lockpicking:LockpickingComplete")
 AddEventHandler("avan0x_lockpicking:LockpickingComplete", function(result)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     ClearPedTasksImmediately(playerPed)
     if result and closestDoor then
         CurrentAction = "lockpick"

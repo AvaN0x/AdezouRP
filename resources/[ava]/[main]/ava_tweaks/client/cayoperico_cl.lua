@@ -482,7 +482,7 @@ Citizen.CreateThread(function()
     end
 
     while true do
-        local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+        local playerCoords = GetEntityCoords(PlayerPedId())
         local isInIsland = #(playerCoords - island) < 2200.0
 
         if isIslandLoaded ~= isInIsland then

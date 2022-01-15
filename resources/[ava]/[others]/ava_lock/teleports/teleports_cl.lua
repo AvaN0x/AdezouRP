@@ -109,7 +109,7 @@ AddEventHandler("ava_teleports:setState", function(tpID, state)
 end)
 
 function Teleport(coords, allowVehicles, heading)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     local vehicle = nil
     RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
@@ -157,7 +157,7 @@ AddEventHandler("ava_lockpick:onUse", function()
     closestTeleport = nil
     closestTeleport = FindClosestTeleport()
     if closestTeleport then
-        local playerPed = GetPlayerPed(-1)
+        local playerPed = PlayerPedId()
         TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
         TriggerEvent("avan0x_lockpicking:StartLockPicking")
     end
@@ -165,7 +165,7 @@ end)
 
 RegisterNetEvent("avan0x_lockpicking:LockpickingComplete")
 AddEventHandler("avan0x_lockpicking:LockpickingComplete", function(result)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     ClearPedTasksImmediately(playerPed)
     if result and closestTeleport then
         closestTeleport.teleport.locked = not closestTeleport.teleport.locked
