@@ -53,6 +53,8 @@ AVAConfig.AlwaysLockedVehicles = {
     "zentorno",
     "infernus",
     "voltic",
+    "bullet",
+    "carbonizzare",
     "turismor",
     "massacro",
     "seashark",
