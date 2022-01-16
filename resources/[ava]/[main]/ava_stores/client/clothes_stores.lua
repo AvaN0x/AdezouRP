@@ -414,19 +414,6 @@ function RageUI.PoolMenus:ClothesMenu()
                     end
                 end)
         end
-        if not menuElements or menuElements.chesthair then
-            MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1, PlayerSkin.chesthair + 1,
-                GetString("cm_chesthair_subtitle"), {Min = SkinMinVals.chesthair + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 2 -- Clothes
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
-                            chesthair = resetElement and SkinMinVals.chesthair or (Index - 1),
-                            chesthair_txd = SkinMinVals.chesthair_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-        end
         if not menuElements or menuElements.eyes_color then
             Items:AddList(GetString("cm_eyes_color_txd"), SkinMaxVals.eyes_color + 1, PlayerSkin.eyes_color + 1, GetString("cm_eyes_color_subtitle"),
                 {Min = SkinMinVals.eyes_color + 1}, function(Index, onSelected, onListChange)
@@ -437,10 +424,14 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
         end
         if not menuElements or menuElements.ageing then
-            Items:AddButton("TODO ageing", nil, {}, nil) -- TODO
-            -- ageing
-            -- ageing_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.ageing = Items:AddList(GetString("cm_ageing"), SkinMaxVals.ageing + 1, PlayerSkin.ageing + 1, GetString("cm_ageing_subtitle"),
+                {Min = SkinMinVals.ageing + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {ageing = resetElement and SkinMinVals.ageing or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
         if not menuElements or menuElements.makeup then
             MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1, GetString("cm_makeup_subtitle"),
@@ -481,35 +472,70 @@ function RageUI.PoolMenus:ClothesMenu()
                     end
                 end)
         end
+        if not menuElements or menuElements.chesthair then
+            MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1, PlayerSkin.chesthair + 1,
+                GetString("cm_chesthair_subtitle"), {Min = SkinMinVals.chesthair + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 2 -- Clothes
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
+                            chesthair = resetElement and SkinMinVals.chesthair or (Index - 1),
+                            chesthair_txd = SkinMinVals.chesthair_txd,
+                        })
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
+        end
         if not menuElements or menuElements.complexion then
-            Items:AddButton("TODO complexion", nil, {}, nil) -- TODO
-            -- complexion
-            -- complexion_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.complexion = Items:AddList(GetString("cm_complexion"), SkinMaxVals.complexion + 1, PlayerSkin.complexion + 1,
+                GetString("cm_complexion_subtitle"), {Min = SkinMinVals.complexion + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {complexion = resetElement and SkinMinVals.complexion or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
         if not menuElements or menuElements.sundamage then
-            Items:AddButton("TODO sundamage", nil, {}, nil) -- TODO
-            -- sundamage
-            -- sundamage_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.sundamage = Items:AddList(GetString("cm_sundamage"), SkinMaxVals.sundamage + 1, PlayerSkin.sundamage + 1,
+                GetString("cm_sundamage_subtitle"), {Min = SkinMinVals.sundamage + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {sundamage = resetElement and SkinMinVals.sundamage or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
         if not menuElements or menuElements.moles then
-            Items:AddButton("TODO moles", nil, {}, nil) -- TODO
-            -- moles
-            -- moles_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.moles = Items:AddList(GetString("cm_moles"), SkinMaxVals.moles + 1, PlayerSkin.moles + 1, GetString("cm_moles_subtitle"),
+                {Min = SkinMinVals.moles + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 1 -- Head
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {moles = resetElement and SkinMinVals.moles or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
         if not menuElements or menuElements.bodyblemishes then
-            Items:AddButton("TODO bodyblemishes", nil, {}, nil) -- TODO
-            -- bodyblemishes
-            -- bodyblemishes_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.bodyblemishes = Items:AddList(GetString("cm_bodyblemishes"), SkinMaxVals.bodyblemishes + 1, PlayerSkin.bodyblemishes + 1,
+                GetString("cm_bodyblemishes_subtitle"), {Min = SkinMinVals.bodyblemishes + 1}, function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 2 -- Clothes
+                    if onListChange or resetElement then
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {bodyblemishes = resetElement and SkinMinVals.bodyblemishes or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
         if not menuElements or menuElements.addbodyblemishes then
-            Items:AddButton("TODO addbodyblemishes", nil, {}, nil) -- TODO
-            -- addbodyblemishes
-            -- addbodyblemishes_op
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.addbodyblemishes = Items:AddList(GetString("cm_addbodyblemishes"), SkinMaxVals.addbodyblemishes + 1,
+                PlayerSkin.addbodyblemishes + 1, GetString("cm_addbodyblemishes_subtitle"), {Min = SkinMinVals.addbodyblemishes + 1},
+                function(Index, onSelected, onListChange)
+                    elementsIndexToHide = 2 -- Clothes
+                    if onListChange or resetElement then
+                        PlayerSkin =
+                            exports.ava_mp_peds:setPedSkin(playerPed, {addbodyblemishes = resetElement and SkinMinVals.addbodyblemishes or (Index - 1)})
+                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                    end
+                end)
         end
 
         if not menuElements or menuElements.torso then
@@ -869,6 +895,37 @@ function RageUI.PoolMenus:ClothesMenu()
                     MenuNeededValues.blush_color = MinimumIndex
                     PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {blush_color = CurrentIndex - 1})
                 end, MenuItemIndices.blush)
+        end
+
+        if (not menuElements or menuElements.ageing) and MenuItemIndices.ageing then
+            Panels:PercentagePanel(PlayerSkin.ageing_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {ageing_op = Percent * 100})
+            end, MenuItemIndices.ageing)
+        end
+        if (not menuElements or menuElements.complexion) and MenuItemIndices.complexion then
+            Panels:PercentagePanel(PlayerSkin.complexion_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {complexion_op = Percent * 100})
+            end, MenuItemIndices.complexion)
+        end
+        if (not menuElements or menuElements.sundamage) and MenuItemIndices.sundamage then
+            Panels:PercentagePanel(PlayerSkin.sundamage_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {sundamage_op = Percent * 100})
+            end, MenuItemIndices.sundamage)
+        end
+        if (not menuElements or menuElements.moles) and MenuItemIndices.moles then
+            Panels:PercentagePanel(PlayerSkin.moles_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {moles_op = Percent * 100})
+            end, MenuItemIndices.moles)
+        end
+        if (not menuElements or menuElements.bodyblemishes) and MenuItemIndices.bodyblemishes then
+            Panels:PercentagePanel(PlayerSkin.bodyblemishes_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {bodyblemishes_op = Percent * 100})
+            end, MenuItemIndices.bodyblemishes)
+        end
+        if (not menuElements or menuElements.addbodyblemishes) and MenuItemIndices.addbodyblemishes then
+            Panels:PercentagePanel(PlayerSkin.addbodyblemishes_op / 100, nil, nil, nil, function(Percent)
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {addbodyblemishes_op = Percent * 100})
+            end, MenuItemIndices.addbodyblemishes)
         end
 
         if (not menuElements or menuElements.makeup) and MenuItemIndices.makeup then

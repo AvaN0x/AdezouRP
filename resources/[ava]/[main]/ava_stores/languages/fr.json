@@ -123,5 +123,17 @@
     "cm_lipstick": "Rouge à lèvres",
     "cm_lipstick_subtitle": "Choisissez votre rouge à lèvres.",
     "cm_lipstick_color": "Couleur",
+    "cm_ageing": "Signes de vieillesse",
+    "cm_ageing_subtitle": "Choisissez vos signes de vieillesse.",
+    "cm_complexion": "Complexion",
+    "cm_complexion_subtitle": "",
+    "cm_sundamage": "Dégats du soleil",
+    "cm_sundamage_subtitle": "Choisissez les dégats que le soleil a eu sur votre peau.",
+    "cm_moles": "Grains de beauté",
+    "cm_moles_subtitle": "Choisissez vos grains de beauté.",
+    "cm_bodyblemishes": "Imperfections du corps",
+    "cm_bodyblemishes_subtitle": "Choisissez vos imperfections du corps.",
+    "cm_addbodyblemishes": "Boutons sur le corps",
+    "cm_addbodyblemishes_subtitle": "Choisissez vos boutons sur le corps.",
     "TODOREMOVETHIS": ""
 }
