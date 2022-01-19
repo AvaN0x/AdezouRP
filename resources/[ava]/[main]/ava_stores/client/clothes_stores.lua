@@ -60,6 +60,12 @@ MainClothesMenu.Closed = function()
     end
 end
 
+local TattoosMenu = RageUI.CreateSubMenu(MainClothesMenu, "", GetString("tattoos_menu"), 0, 0, "avaui", "avaui_title_adezou")
+-- TattoosMenu.Closable = false
+TattoosMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
+TattoosMenu.Closed = function()
+end
+
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         if SavePlayerSkin then
@@ -70,6 +76,7 @@ AddEventHandler("onResourceStop", function(resource)
 end)
 
 function CloseClothesMenu()
+    playerPed = PlayerPedId()
     -- Restore hidden skin elements
     HideSkinElementsOnItem()
 
@@ -87,6 +94,9 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     MainClothesMenu.Sprite.Dictionary = titleTextureDirectory or "avaui"
     MainClothesMenu.Sprite.Texture = titleTexture or "avaui_title_adezou"
     MainClothesMenu.Subtitle = menuName or GetString("clothes_menu")
+    TattoosMenu.Sprite.Dictionary = titleTextureDirectory or "avaui"
+    TattoosMenu.Sprite.Texture = titleTexture or "avaui_title_adezou"
+    TattoosMenu.Subtitle = menuName or GetString("clothes_menu")
 
     if type(elements) == "table" then
         menuElements = {}
@@ -212,68 +222,72 @@ local gendersList<const> = {GetString("cm_male"), GetString("cm_female")}
 
 -- #endregion menu list stuff
 
+local function InsideOfClothesMenuControls()
+    ClearPedTasks(playerPed)
+
+    -- Prevent player from moving too far
+    SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
+    SetPedGravity(playerPed, 0.0, 0.0, 0.0)
+
+    DisableControlAction(0, 24, true) -- INPUT_ATTACK
+    DisableControlAction(0, 25, true) -- INPUT_AIM
+    DisableControlAction(0, 26, true) -- INPUT_LOOK_BEHIND
+    DisableControlAction(0, 140, true) -- INPUT_MELEE_ATTACK_LIGHT
+    DisableControlAction(0, 141, true) -- INPUT_MELEE_ATTACK_HEAVY
+    DisableControlAction(0, 142, true) -- INPUT_MELEE_ATTACK_ALTERNATE
+
+    DisableControlAction(0, 16, true) -- INPUT_SELECT_NEXT_WEAPON
+    DisableControlAction(0, 17, true) -- INPUT_SELECT_PREV_WEAPON
+    DisableControlAction(0, 37, true) -- INPUT_SELECT_WEAPON
+    -- DisableControlAction(0, 157, true) -- INPUT_SELECT_WEAPON_UNARMED
+    DisableControlAction(0, 158, true) -- INPUT_SELECT_WEAPON_MELEE
+    DisableControlAction(0, 159, true) -- INPUT_SELECT_WEAPON_HANDGUN
+    DisableControlAction(0, 160, true) -- INPUT_SELECT_WEAPON_SHOTGUN
+    DisableControlAction(0, 161, true) -- INPUT_SELECT_WEAPON_SMG
+    DisableControlAction(0, 162, true) -- INPUT_SELECT_WEAPON_AUTO_RIFLE
+    DisableControlAction(0, 163, true) -- INPUT_SELECT_WEAPON_SNIPER
+    DisableControlAction(0, 164, true) -- INPUT_SELECT_WEAPON_HEAVY
+    DisableControlAction(0, 165, true) -- INPUT_SELECT_WEAPON_SPECIAL
+
+    -- Toggle cam
+    if IsDisabledControlJustReleased(0, 26) then
+        if cam then
+            RemoveMenuCam()
+        else
+            AddMenuCam()
+        end
+    end
+
+    -- Cam is on? allow the user to move the cam
+    if cam then
+        DisableControlAction(0, 108, true) -- INPUT_VEH_FLY_ROLL_LEFT_ONLY left
+        DisableControlAction(0, 109, true) -- INPUT_VEH_FLY_ROLL_RIGHT_ONLY right
+        DisableControlAction(0, 110, true) -- INPUT_VEH_FLY_PITCH_UD down
+        DisableControlAction(0, 111, true) -- INPUT_VEH_FLY_PITCH_UP_ONLY up
+
+        if IsDisabledControlPressed(0, 111) and camVerticalOffset < camMaxVertical then
+            camVerticalOffset = camVerticalOffset + 0.01
+            SetCamCoords()
+        elseif IsDisabledControlPressed(0, 110) and camVerticalOffset > camMinVertical then
+            camVerticalOffset = camVerticalOffset - 0.01
+            SetCamCoords()
+        end
+
+        if IsDisabledControlPressed(0, 109) then
+            camHorizontalOffset = camHorizontalOffset + 0.02
+            SetCamCoords()
+        elseif IsDisabledControlPressed(0, 108) then
+            camHorizontalOffset = camHorizontalOffset - 0.02
+            SetCamCoords()
+        end
+    end
+end
+
 local lastElementsIndexToHide = nil
 function RageUI.PoolMenus:ClothesMenu()
     MainClothesMenu:IsVisible(function(Items)
         local elementsIndexToHide = nil
-        ClearPedTasks(playerPed)
-
-        -- Prevent player from moving too far
-        SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
-        SetPedGravity(playerPed, 0.0, 0.0, 0.0)
-
-        DisableControlAction(0, 24, true) -- INPUT_ATTACK
-        DisableControlAction(0, 25, true) -- INPUT_AIM
-        DisableControlAction(0, 26, true) -- INPUT_LOOK_BEHIND
-        DisableControlAction(0, 140, true) -- INPUT_MELEE_ATTACK_LIGHT
-        DisableControlAction(0, 141, true) -- INPUT_MELEE_ATTACK_HEAVY
-        DisableControlAction(0, 142, true) -- INPUT_MELEE_ATTACK_ALTERNATE
-
-        DisableControlAction(0, 16, true) -- INPUT_SELECT_NEXT_WEAPON
-        DisableControlAction(0, 17, true) -- INPUT_SELECT_PREV_WEAPON
-        DisableControlAction(0, 37, true) -- INPUT_SELECT_WEAPON
-        -- DisableControlAction(0, 157, true) -- INPUT_SELECT_WEAPON_UNARMED
-        DisableControlAction(0, 158, true) -- INPUT_SELECT_WEAPON_MELEE
-        DisableControlAction(0, 159, true) -- INPUT_SELECT_WEAPON_HANDGUN
-        DisableControlAction(0, 160, true) -- INPUT_SELECT_WEAPON_SHOTGUN
-        DisableControlAction(0, 161, true) -- INPUT_SELECT_WEAPON_SMG
-        DisableControlAction(0, 162, true) -- INPUT_SELECT_WEAPON_AUTO_RIFLE
-        DisableControlAction(0, 163, true) -- INPUT_SELECT_WEAPON_SNIPER
-        DisableControlAction(0, 164, true) -- INPUT_SELECT_WEAPON_HEAVY
-        DisableControlAction(0, 165, true) -- INPUT_SELECT_WEAPON_SPECIAL
-
-        -- Toggle cam
-        if IsDisabledControlJustReleased(0, 26) then
-            if cam then
-                RemoveMenuCam()
-            else
-                AddMenuCam()
-            end
-        end
-
-        -- Cam is on? allow the user to move the cam
-        if cam then
-            DisableControlAction(0, 108, true) -- INPUT_VEH_FLY_ROLL_LEFT_ONLY left
-            DisableControlAction(0, 109, true) -- INPUT_VEH_FLY_ROLL_RIGHT_ONLY right
-            DisableControlAction(0, 110, true) -- INPUT_VEH_FLY_PITCH_UD down
-            DisableControlAction(0, 111, true) -- INPUT_VEH_FLY_PITCH_UP_ONLY up
-
-            if IsDisabledControlPressed(0, 111) and camVerticalOffset < camMaxVertical then
-                camVerticalOffset = camVerticalOffset + 0.01
-                SetCamCoords()
-            elseif IsDisabledControlPressed(0, 110) and camVerticalOffset > camMinVertical then
-                camVerticalOffset = camVerticalOffset - 0.01
-                SetCamCoords()
-            end
-
-            if IsDisabledControlPressed(0, 109) then
-                camHorizontalOffset = camHorizontalOffset + 0.02
-                SetCamCoords()
-            elseif IsDisabledControlPressed(0, 108) then
-                camHorizontalOffset = camHorizontalOffset - 0.02
-                SetCamCoords()
-            end
-        end
+        InsideOfClothesMenuControls()
 
         local resetElement<const> = IsDisabledControlJustReleased(0, 140)
 
@@ -807,6 +821,14 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
         end
 
+        if not menuElements or menuElements.tattoos then
+            Items:AddButton(GetString("cm_tattoos"), GetString("cm_tattoos_subtitle"), {}, function(onSelected)
+                if onSelected then
+                    elementsIndexToHide = 3 -- All elements
+                end
+            end, TattoosMenu)
+        end
+
         Items:AddButton(GetString("clothes_menu_cancel"), GetString("clothes_menu_cancel_subtitle"), {}, function(onSelected)
             if onSelected then
                 -- Timeout 0 because there would be an error inside of panels
@@ -830,6 +852,7 @@ function RageUI.PoolMenus:ClothesMenu()
             HideSkinElementsOnItem(lastElementsIndexToHide)
         end
     end, function(Panels)
+        -- #region panels
         if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
             Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color
                 or (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)), PlayerSkin.hair_main_color + 1,
@@ -958,6 +981,16 @@ function RageUI.PoolMenus:ClothesMenu()
                     PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {lipstick_color = CurrentIndex - 1})
                 end, MenuItemIndices.lipstick)
         end
+        -- #endregion panels
+    end)
+
+    TattoosMenu:IsVisible(function(Items)
+        InsideOfClothesMenuControls()
+
+        Items:AddButton("WIP tattoos", "", {}, function(onSelected)
+
+        end)
 
     end)
+
 end
