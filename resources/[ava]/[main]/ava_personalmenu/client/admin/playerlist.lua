@@ -127,6 +127,8 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function()
         }
         local shownTags = {}
 
+        SetMpGamerTagsUseVehicleBehavior(false)
+        SetMpGamerTagsVisibleDistance(150.0)
         while displayPlayerTags do
             local newTags = {}
 
