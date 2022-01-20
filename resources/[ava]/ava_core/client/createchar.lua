@@ -16,7 +16,7 @@ local MainMenu = RageUI.CreateMenu("", GetString("create_char_menu_title"), 0, 0
 --------------- Cameras ---------------
 ---------------------------------------
 local bodyCam, faceCam, isCamOnFace = nil, nil, false
-local lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = nil, nil, nil
+local lookAtCoordLeft, lookAtCoordRight, lookAtCoordFront = nil, nil, nil
 
 local function StartCharCreator()
     bodyCam, faceCam, isCamOnFace = nil, nil, false
@@ -66,7 +66,7 @@ local function StartCharCreator()
     Wait(1000)
     FreezeEntityPosition(playerPed, true)
 
-    lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = GetOffsetFromEntityInWorldCoords(playerPed, 1.2, 0.5, 0.7),
+    lookAtCoordLeft, lookAtCoordRight, lookAtCoordFront = GetOffsetFromEntityInWorldCoords(playerPed, 1.2, 0.5, 0.7),
         GetOffsetFromEntityInWorldCoords(playerPed, -1.2, 0.5, 0.7), GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7)
 end
 
@@ -459,9 +459,9 @@ local function TurnHead()
     if (IsDisabledControlPressed(0, 205)) then -- INPUT_FRONTEND_LB
         TaskLookAtCoord(playerPed, lookAtCoordLeft, 2000, 0, 2)
     elseif (IsDisabledControlPressed(0, 206)) then -- INPUT_FRONTEND_RB
-        TaskLookAtCoord(playerPed, lookAtCoordFront, 2000, 0, 2)
-    else
         TaskLookAtCoord(playerPed, lookAtCoordRight, 2000, 0, 2)
+    else
+        TaskLookAtCoord(playerPed, lookAtCoordFront, 2000, 0, 2)
     end
 end
 
@@ -1050,7 +1050,7 @@ MainMenu.Closed = function()
 
     -- clear some global variables
     bodyCam, faceCam, isCamOnFace = nil, nil, false
-    lookAtCoordLeft, lookAtCoordFront, lookAtCoordRight = nil, nil, nil
+    lookAtCoordLeft, lookAtCoordRight, lookAtCoordFront = nil, nil, nil
     CharacterSkin = nil
     CharacterData = nil
     playerPed = nil
