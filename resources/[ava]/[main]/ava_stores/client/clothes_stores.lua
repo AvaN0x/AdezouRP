@@ -14,7 +14,7 @@ function ClothesStore()
 
     local hasEnoughMoney<const> = exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:checkMoney", CurrentZoneName)
     if not hasEnoughMoney then
-        exports.ava_core:ShowNotification(GetString("cant_afford"))
+        exports.ava_core:ShowNotification(GetString("cant_afford_amount", exports.ava_core:FormatNumber(store.Price)))
         CurrentActionEnabled = true
     else
         OpenClothesMenu(store.SkinElements, store.Subtitle, store.Title.textureName, store.Title.textureDirectory)
