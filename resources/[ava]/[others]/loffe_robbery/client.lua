@@ -1,55 +1,30 @@
-ESX = nil
-local ESXLoaded = false
 local robbing = false
 local minutesBeforeNextRobbery = 0
-
-Citizen.CreateThread(function ()
-    while ESX == nil do
-        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-        Citizen.Wait(0)
-    end
-
-    while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(10)
-	end
-
-    ESXLoaded = true
-end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-  ESX.PlayerData = xPlayer
-end)
-
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-    ESX.PlayerData.job = job
-end)
 
 local peds = {}
 local objects = {}
 
-RegisterNetEvent('loffe_robbery:onPedDeath')
-AddEventHandler('loffe_robbery:onPedDeath', function(store)
+RegisterNetEvent("loffe_robbery:onPedDeath")
+AddEventHandler("loffe_robbery:onPedDeath", function(store)
     SetEntityHealth(peds[store], 0)
 end)
 
-RegisterNetEvent('loffe_robbery:removePickup')
-AddEventHandler('loffe_robbery:removePickup', function(bank)
-    for i = 1, #objects do 
-        if objects[i].bank == bank and DoesEntityExist(objects[i].object) then 
-            DeleteObject(objects[i].object) 
-        end 
+RegisterNetEvent("loffe_robbery:removePickup")
+AddEventHandler("loffe_robbery:removePickup", function(bank)
+    for i = 1, #objects do
+        if objects[i].bank == bank and DoesEntityExist(objects[i].object) then
+            DeleteObject(objects[i].object)
+        end
     end
 end)
 
-RegisterNetEvent('loffe_robbery:robberyOver')
-AddEventHandler('loffe_robbery:robberyOver', function()
+RegisterNetEvent("loffe_robbery:robberyOver")
+AddEventHandler("loffe_robbery:robberyOver", function()
     robbing = false
 end)
 
-RegisterNetEvent('loffe_robbery:waitBeforeRobbery')
-AddEventHandler('loffe_robbery:waitBeforeRobbery', function()
+RegisterNetEvent("loffe_robbery:waitBeforeRobbery")
+AddEventHandler("loffe_robbery:waitBeforeRobbery", function()
     minutesBeforeNextRobbery = 15
     local timeBeforeNext = GetGameTimer() + minutesBeforeNextRobbery * 60000
     while timeBeforeNext >= GetGameTimer() and minutesBeforeNextRobbery > 0 do
@@ -59,8 +34,8 @@ AddEventHandler('loffe_robbery:waitBeforeRobbery', function()
     minutesBeforeNextRobbery = 0
 end)
 
-RegisterNetEvent('loffe_robbery:talk')
-AddEventHandler('loffe_robbery:talk', function(store, text, time)
+RegisterNetEvent("loffe_robbery:talk")
+AddEventHandler("loffe_robbery:talk", function(store, text, time)
     robbing = false
     local endTime = GetGameTimer() + 1000 * time
     while endTime >= GetGameTimer() do
@@ -70,20 +45,22 @@ AddEventHandler('loffe_robbery:talk', function(store, text, time)
     end
 end)
 
-RegisterCommand('animation', function(source, args)
+RegisterCommand("animation", function(source, args)
     if args[1] and args[2] then
         loadDict(args[1])
         TaskPlayAnim(PlayerPedId(), args[1], args[2], 8.0, -8.0, -1, 2, 0, false, false, false)
     end
 end)
 
-RegisterNetEvent('loffe_robbery:rob')
-AddEventHandler('loffe_robbery:rob', function(i)
+RegisterNetEvent("loffe_robbery:rob")
+AddEventHandler("loffe_robbery:rob", function(i)
     if not IsPedDeadOrDying(peds[i]) then
         SetEntityCoords(peds[i], Config.Shops[i].coords)
-        loadDict('mp_am_hold_up')
+        loadDict("mp_am_hold_up")
         TaskPlayAnim(peds[i], "mp_am_hold_up", "holdup_victim_20s", 8.0, -8.0, -1, 2, 0, false, false, false)
-        while not IsEntityPlayingAnim(peds[i], "mp_am_hold_up", "holdup_victim_20s", 3) do Wait(0) end
+        while not IsEntityPlayingAnim(peds[i], "mp_am_hold_up", "holdup_victim_20s", 3) do
+            Wait(0)
+        end
         local timer = GetGameTimer() + 10800
         while timer >= GetGameTimer() do
             if IsPedDeadOrDying(peds[i]) then
@@ -93,12 +70,12 @@ AddEventHandler('loffe_robbery:rob', function(i)
         end
 
         if not IsPedDeadOrDying(peds[i]) then
-            local cashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey('prop_till_01'))
+            local cashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey("prop_till_01"))
             if DoesEntityExist(cashRegister) then
-                CreateModelSwap(GetEntityCoords(cashRegister), 0.5, GetHashKey('prop_till_01'), GetHashKey('prop_till_01_dam'), false)
+                CreateModelSwap(GetEntityCoords(cashRegister), 0.5, GetHashKey("prop_till_01"), GetHashKey("prop_till_01_dam"), false)
             end
 
-            timer = GetGameTimer() + 200 
+            timer = GetGameTimer() + 200
             while timer >= GetGameTimer() do
                 if IsPedDeadOrDying(peds[i]) then
                     break
@@ -106,9 +83,11 @@ AddEventHandler('loffe_robbery:rob', function(i)
                 Wait(0)
             end
 
-            local model = GetHashKey('prop_poly_bag_01')
+            local model = GetHashKey("prop_poly_bag_01")
             RequestModel(model)
-            while not HasModelLoaded(model) do Wait(0) end
+            while not HasModelLoaded(model) do
+                Wait(0)
+            end
             local bag = CreateObject(model, GetEntityCoords(peds[i]), false, false)
 
             AttachEntityToEntity(bag, peds[i], GetPedBoneIndex(peds[i], 60309), 0.1, -0.11, 0.08, 0.0, -75.0, -75.0, 1, 1, 0, 0, 2, 1)
@@ -136,8 +115,8 @@ AddEventHandler('loffe_robbery:rob', function(i)
                         Wait(5)
                         if DoesEntityExist(bag) then
                             if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), GetEntityCoords(bag), true) <= 1.5 then
-                                PlaySoundFrontend(-1, 'ROBBERY_MONEY_TOTAL', 'HUD_FRONTEND_CUSTOM_SOUNDSET', true)
-                                TriggerServerEvent('loffe_robbery:pickUp', i)
+                                PlaySoundFrontend(-1, "ROBBERY_MONEY_TOTAL", "HUD_FRONTEND_CUSTOM_SOUNDSET", true)
+                                TriggerServerEvent("loffe_robbery:pickUp", i)
                                 break
                             end
                         else
@@ -149,10 +128,12 @@ AddEventHandler('loffe_robbery:rob', function(i)
                 DeleteObject(bag)
             end
         end
-        loadDict('mp_am_hold_up')
+        loadDict("mp_am_hold_up")
         TaskPlayAnim(peds[i], "mp_am_hold_up", "cower_intro", 8.0, -8.0, -1, 0, 0, false, false, false)
         timer = GetGameTimer() + 2500
-        while timer >= GetGameTimer() do Wait(0) end
+        while timer >= GetGameTimer() do
+            Wait(0)
+        end
         TaskPlayAnim(peds[i], "mp_am_hold_up", "cower_loop", 8.0, -8.0, -1, 1, 0, false, false, false)
         local stop = GetGameTimer() + 120000
         while stop >= GetGameTimer() do
@@ -164,17 +145,16 @@ AddEventHandler('loffe_robbery:rob', function(i)
     end
 end)
 
-RegisterNetEvent('loffe_robbery:resetStore')
-AddEventHandler('loffe_robbery:resetStore', function(i)
-    while not ESXLoaded do Wait(0) end
+RegisterNetEvent("loffe_robbery:resetStore")
+AddEventHandler("loffe_robbery:resetStore", function(i)
     if DoesEntityExist(peds[i]) then
         DeletePed(peds[i])
     end
     Wait(250)
     peds[i] = _CreatePed(Config.Shopkeeper, Config.Shops[i].coords, Config.Shops[i].heading)
-    local brokenCashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey('prop_till_01_dam'))
+    local brokenCashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey("prop_till_01_dam"))
     if DoesEntityExist(brokenCashRegister) then
-        CreateModelSwap(GetEntityCoords(brokenCashRegister), 0.5, GetHashKey('prop_till_01_dam'), GetHashKey('prop_till_01'), false)
+        CreateModelSwap(GetEntityCoords(brokenCashRegister), 0.5, GetHashKey("prop_till_01_dam"), GetHashKey("prop_till_01"), false)
     end
 end)
 
@@ -198,13 +178,12 @@ function _CreatePed(hash, coords, heading)
 end
 
 Citizen.CreateThread(function()
-    while not ESXLoaded do Wait(0) end
-    for i = 1, #Config.Shops do 
+    for i = 1, #Config.Shops do
         peds[i] = _CreatePed(Config.Shopkeeper, Config.Shops[i].coords, Config.Shops[i].heading)
 
-        local brokenCashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey('prop_till_01_dam'))
+        local brokenCashRegister = GetClosestObjectOfType(GetEntityCoords(peds[i]), 5.0, GetHashKey("prop_till_01_dam"))
         if DoesEntityExist(brokenCashRegister) then
-            CreateModelSwap(GetEntityCoords(brokenCashRegister), 0.5, GetHashKey('prop_till_01_dam'), GetHashKey('prop_till_01'), false)
+            CreateModelSwap(GetEntityCoords(brokenCashRegister), 0.5, GetHashKey("prop_till_01_dam"), GetHashKey("prop_till_01"), false)
         end
     end
 
@@ -212,7 +191,7 @@ Citizen.CreateThread(function()
         while true do
             for i = 1, #peds do
                 if IsPedDeadOrDying(peds[i]) then
-                    TriggerServerEvent('loffe_robbery:pedDead', i)
+                    TriggerServerEvent("loffe_robbery:pedDead", i)
                 end
             end
             Wait(5000)
@@ -226,67 +205,76 @@ Citizen.CreateThread(function()
             local selectedWeapon = GetSelectedPedWeapon(me)
             if (IsPlayerFreeAiming(PlayerId()) and selectedWeapon ~= GetHashKey("weapon_flashlight")) or selectedWeapon == GetHashKey("weapon_knife") then
                 for i = 1, #peds do
-                    if HasEntityClearLosToEntityInFront(me, peds[i], 19) and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 5.0 then
+                    if HasEntityClearLosToEntityInFront(me, peds[i], 19) and not IsPedDeadOrDying(peds[i])
+                        and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 5.0 then
                         if minutesBeforeNextRobbery > 0 then
                             local wait = GetGameTimer() + 5000
                             while wait >= GetGameTimer() do
                                 Wait(0)
-                                DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['wait_before_next'] .. " (" .. minutesBeforeNextRobbery .. " minutes)")
+                                DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4),
+                                    Translation[Config.Locale]["wait_before_next"] .. " (" .. minutesBeforeNextRobbery .. " minutes)")
                             end
                         elseif not robbing then
-                            local canRob = nil
-                            ESX.TriggerServerCallback('loffe_robbery:canRob', function(cb)
-                                canRob = cb
-                            end, i)
-                            while canRob == nil do
-                                Wait(0)
-                            end
+                            local canRob = exports.ava_core:TriggerServerCallback("loffe_robbery:canRob", i)
                             if canRob == true then
                                 Citizen.CreateThread(function()
                                     Wait(2000)
-                                    TriggerServerEvent("esx_phone:sendEmergency", 'lspd', "Braquage de superette en cours !", true, { ["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z })
+                                    -- TODO phone alert
+                                    -- TriggerServerEvent("esx_phone:sendEmergency", "lspd", "Braquage de superette en cours !", true,
+                                    --     {["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z})
                                 end)
 
                                 robbing = true
                                 Citizen.CreateThread(function()
-                                    while robbing do Wait(0) if IsPedDeadOrDying(peds[i]) then robbing = false end end
+                                    while robbing do
+                                        Wait(0)
+                                        if IsPedDeadOrDying(peds[i]) then
+                                            robbing = false
+                                        end
+                                    end
                                 end)
-                                loadDict('missheist_agency2ahands_up')
+                                loadDict("missheist_agency2ahands_up")
                                 TaskPlayAnim(peds[i], "missheist_agency2ahands_up", "handsup_anxious", 8.0, -8.0, -1, 1, 0, false, false, false)
 
                                 local delay = 40
                                 local timer = 0
-                                exports['progressBars']:startUI(delay * 1000, "Braquage en cours")
-                                while timer < delay and not IsPedDeadOrDying(peds[i]) and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 do
+                                exports["progressBars"]:startUI(delay * 1000, "Braquage en cours")
+                                while timer < delay and not IsPedDeadOrDying(peds[i])
+                                    and GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 do
                                     SetEntityAnimSpeed(peds[i], "missheist_agency2ahands_up", "handsup_anxious", 1.0)
                                     Wait(1000)
                                     timer = timer + 1
                                 end
-                                exports['progressBars']:startUI(0, "Reset bar")
+                                exports["progressBars"]:startUI(0, "Reset bar")
 
                                 if GetDistanceBetweenCoords(GetEntityCoords(me), GetEntityCoords(peds[i]), true) <= 7.5 then
                                     if not IsPedDeadOrDying(peds[i]) then
-                                        TriggerServerEvent('loffe_robbery:rob', i)
-                                        while robbing do Wait(0) if IsPedDeadOrDying(peds[i]) then robbing = false end end
+                                        TriggerServerEvent("loffe_robbery:rob", i)
+                                        while robbing do
+                                            Wait(0)
+                                            if IsPedDeadOrDying(peds[i]) then
+                                                robbing = false
+                                            end
+                                        end
                                     end
                                 else
-                                    TriggerServerEvent('loffe_robbery:setRobbed', i, false)
+                                    TriggerServerEvent("loffe_robbery:setRobbed", i, false)
                                     ClearPedTasks(peds[i])
                                     local wait = GetGameTimer() + 5000
                                     while wait >= GetGameTimer() do
                                         Wait(0)
-                                        DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]['walked_too_far'])
+                                        DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale]["walked_too_far"])
                                     end
                                     robbing = false
                                 end
-                            elseif canRob == 'no_cops' or canRob == 'wait' then
+                            elseif canRob == "no_cops" or canRob == "wait" then
                                 local wait = GetGameTimer() + 5000
                                 while wait >= GetGameTimer() do
                                     Wait(0)
                                     DrawText3D(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.5, 0.4), Translation[Config.Locale][canRob])
                                 end
                             else
-                                TriggerEvent('loffe_robbery:talk', i, Translation[Config.Locale]['robbed'], 5)
+                                TriggerEvent("loffe_robbery:talk", i, Translation[Config.Locale]["robbed"], 5)
                                 Wait(2500)
                             end
                         end
@@ -307,7 +295,7 @@ end
 function DrawText3D(coords, text)
     local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
     local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
-  
+
     SetTextScale(0.4, 0.4)
     SetTextFont(4)
     SetTextProportional(1)
@@ -315,7 +303,7 @@ function DrawText3D(coords, text)
     SetTextCentre(1)
     SetTextColour(255, 255, 255, 255)
     SetTextOutline()
-  
+
     AddTextComponentString(text)
     DrawText(_x, _y)
 end
