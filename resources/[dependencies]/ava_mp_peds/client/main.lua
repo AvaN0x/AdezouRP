@@ -14,8 +14,8 @@
 ---@field nose_bone_high number
 ---@field nose_peak_lowering number
 ---@field nose_bone_twist number
----@field eyebrown_high number
----@field eyebrown_forward number
+---@field eyebrow_high number
+---@field eyebrow_forward number
 ---@field cheeks_bone_high number
 ---@field cheeks_bone_width number
 ---@field cheeks_width number
@@ -298,8 +298,8 @@ function setPedSkin(ped, skin)
     SetPedFaceFeature(ped, 5, (localSkin.nose_bone_twist / 100) + 0.0)
 
     -- Eyebrows
-    SetPedFaceFeature(ped, 6, (localSkin.eyebrown_high / 100) + 0.0)
-    SetPedFaceFeature(ped, 7, (localSkin.eyebrown_forward / 100) + 0.0)
+    SetPedFaceFeature(ped, 6, (localSkin.eyebrow_high / 100) + 0.0)
+    SetPedFaceFeature(ped, 7, (localSkin.eyebrow_forward / 100) + 0.0)
 
     -- Cheeks
     SetPedFaceFeature(ped, 8, (localSkin.cheeks_bone_high / 100) + 0.0)
@@ -463,8 +463,8 @@ function getMaxValues(ped)
         nose_peak_lowering = AVAConfig.skinComponents.nose_peak_lowering.max,
         nose_bone_twist = AVAConfig.skinComponents.nose_bone_twist.max,
         -- Eyebrows
-        eyebrown_high = AVAConfig.skinComponents.eyebrown_high.max,
-        eyebrown_forward = AVAConfig.skinComponents.eyebrown_forward.max,
+        eyebrow_high = AVAConfig.skinComponents.eyebrow_high.max,
+        eyebrow_forward = AVAConfig.skinComponents.eyebrow_forward.max,
         -- Cheeks
         cheeks_bone_high = AVAConfig.skinComponents.cheeks_bone_high.max,
         cheeks_bone_width = AVAConfig.skinComponents.cheeks_bone_width.max,
@@ -658,8 +658,8 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             nose_peak_lowering = 100,
             nose_bone_twist = 100,
 
-            eyebrown_high = 100,
-            eyebrown_forward = 100,
+            eyebrow_high = 100,
+            eyebrow_forward = 100,
 
             cheeks_bone_high = 100,
             cheeks_bone_width = 100,
@@ -784,8 +784,8 @@ RegisterCommand("testmp", function(source, args, rawCommand)
             nose_peak_lowering = 0,
             nose_bone_twist = 0,
 
-            eyebrown_high = 0,
-            eyebrown_forward = 0,
+            eyebrow_high = 0,
+            eyebrow_forward = 0,
 
             cheeks_bone_high = 0,
             cheeks_bone_width = 0,

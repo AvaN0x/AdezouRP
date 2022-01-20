@@ -25,8 +25,8 @@ AVAConfig.skinComponents = {
     nose_peak_lowering = {min = -100, default = 0, max = 100},
     nose_bone_twist = {min = -100, default = 0, max = 100},
     -- Eyebrows
-    eyebrown_high = {min = -100, default = 0, max = 100},
-    eyebrown_forward = {min = -100, default = 0, max = 100},
+    eyebrow_high = {min = -100, default = 0, max = 100},
+    eyebrow_forward = {min = -100, default = 0, max = 100},
     -- Cheeks
     cheeks_bone_high = {min = -100, default = 0, max = 100},
     cheeks_bone_width = {min = -100, default = 0, max = 100},
