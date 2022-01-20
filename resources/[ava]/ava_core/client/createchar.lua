@@ -603,8 +603,8 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
                 CharacterData.Face.ForeHeadX = X
                 CharacterData.Face.ForeHeadY = Y
                 exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrow_forward = CharacterX * 100, eyebrow_high = CharacterY * 100})
-                SetPedFaceFeature(playerPed, 6, CharacterX) -- eyebrow_high
-                SetPedFaceFeature(playerPed, 7, CharacterY) -- eyebrow_forward
+                SetPedFaceFeature(playerPed, 7, CharacterX) -- eyebrow_forward
+                SetPedFaceFeature(playerPed, 6, CharacterY) -- eyebrow_high
             end, 1)
 
         Panels:GridHorizontal(CharacterData.Face.Eyes or 0.5, GetString("eyes_pleated"), GetString("eyes_open"), function(X, _, CharacterX)
