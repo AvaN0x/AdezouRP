@@ -531,6 +531,7 @@ Config.ClothesStore = {
     DefaultCamVerticalOffset = 0.6,
     MaxCamVerticalOffset = 0.95,
     MinCamVerticalOffset = -0.85,
+    Tattoos = json.decode(LoadResourceFile(GetCurrentResourceName(), "tattooList.json") or "{}") or {},
     ElementsHiddenOnItems = {
         -- Don't change the order
         -- Head

@@ -8,7 +8,7 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json"}
+files {"languages/**.json", "tattooList.json"}
 
 shared_scripts {"@ava_core/shared/language.lua"}
 

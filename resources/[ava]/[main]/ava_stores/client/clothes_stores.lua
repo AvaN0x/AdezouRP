@@ -2,6 +2,10 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+-- local functions
+local setCurrentTattoosDlc, prepareTattoosMenu, InsideOfClothesMenuControls, CloseClothesMenu, OpenClothesMenu, AddMenuCam, SetCamCoords, RemoveMenuCam,
+    HideSkinElementsOnItem
+
 function ClothesStore()
     local store = Config.Stores[CurrentZoneName]
     if not store then
@@ -31,6 +35,9 @@ local validateButtonRightLabel = nil
 local menuElements = nil
 local MenuNeededValues = nil
 local MenuItemIndices = nil
+local lastElementsIndexToHide = nil
+local lastTattooToApply = nil
+
 -- Player skin
 local SavePlayerSkin = nil
 local PlayerSkin = nil
@@ -64,6 +71,8 @@ local TattoosMenu = RageUI.CreateSubMenu(MainClothesMenu, "", GetString("tattoos
 -- TattoosMenu.Closable = false
 TattoosMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
 TattoosMenu.Closed = function()
+    lastTattooToApply = nil
+    exports.ava_mp_peds:reloadPedOverlays(playerPed)
 end
 
 AddEventHandler("onResourceStop", function(resource)
@@ -144,6 +153,11 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
             validateButtonRightLabel = GetString("clothes_menu_validate_right_label_money", store.Price)
         end
     end
+    -- If needed, prepare tattoos menu
+    if not menuElements or menuElements.tattoos then
+        prepareTattoosMenu()
+    end
+
     validateChanges = false
     playerChangedGender = false
     if IsPedArmed(playerPed, 7) then -- 7 == 4 | 2 | 1
@@ -219,10 +233,47 @@ end
 
 -- #region menu list stuff
 local gendersList<const> = {GetString("cm_male"), GetString("cm_female")}
-
+local tattoosDLCList = nil
+local tattoosZonesList = nil
 -- #endregion menu list stuff
+function setCurrentTattoosDlc(index)
+    MenuNeededValues.currentTattooCollection = Config.ClothesStore.Tattoos[tostring(PlayerSkin.gender)][index]
+    MenuNeededValues.tattooZoneIndex = 1
+    tattoosZonesList = {}
+    local count = 0
+    for zoneName, _ in pairs(MenuNeededValues.currentTattooCollection.Zones) do
+        count = count + 1
+        tattoosZonesList[count] = {Name = GetString("cm_t_" .. zoneName), zoneName = zoneName}
+    end
+    table.sort(tattoosZonesList, function(a, b)
+        return a.zoneName < b.zoneName
+    end)
 
-local function InsideOfClothesMenuControls()
+    -- get current player tattoos to display them as possessed
+    MenuNeededValues.currentCollectionAppliedTattoos = {}
+    for i = 1, #PlayerSkin.tattoos do
+        if PlayerSkin.tattoos[i].collection == MenuNeededValues.currentTattooCollection.name then
+            MenuNeededValues.currentCollectionAppliedTattoos[PlayerSkin.tattoos[i].overlay] = true
+        end
+    end
+end
+
+function prepareTattoosMenu()
+    local tattoos = Config.ClothesStore.Tattoos[tostring(PlayerSkin.gender)]
+    tattoosDLCList = {}
+    local count = 0
+    for i = 1, #tattoos do
+        if tattoos[i].name then
+            count = count + 1
+            tattoosDLCList[count] = {Name = GetString("cm_t_" .. tattoos[i].name), index = i}
+        end
+    end
+
+    -- Init to first dlc
+    setCurrentTattoosDlc(tattoosDLCList[1].index)
+end
+
+function InsideOfClothesMenuControls()
     ClearPedTasks(playerPed)
 
     -- Prevent player from moving too far
@@ -283,7 +334,6 @@ local function InsideOfClothesMenuControls()
     end
 end
 
-local lastElementsIndexToHide = nil
 function RageUI.PoolMenus:ClothesMenu()
     MainClothesMenu:IsVisible(function(Items)
         local elementsIndexToHide = nil
@@ -822,7 +872,7 @@ function RageUI.PoolMenus:ClothesMenu()
         end
 
         if not menuElements or menuElements.tattoos then
-            Items:AddButton(GetString("cm_tattoos"), GetString("cm_tattoos_subtitle"), {}, function(onSelected)
+            Items:AddButton(GetString("cm_tattoos"), GetString("cm_tattoos_subtitle"), {RightBadge = RageUI.BadgeStyle.Tattoo}, function(onSelected)
                 if onSelected then
                     elementsIndexToHide = 3 -- All elements
                 end
@@ -985,12 +1035,53 @@ function RageUI.PoolMenus:ClothesMenu()
     end)
 
     TattoosMenu:IsVisible(function(Items)
+        local tattooToApply = nil
         InsideOfClothesMenuControls()
 
-        Items:AddButton("WIP tattoos", "", {}, function(onSelected)
+        Items:AddList(GetString("cm_t_dlclist"), tattoosDLCList, MenuNeededValues.tattooDLCIndex or 1, GetString("cm_t_dlclist_subtitle"), nil,
+            function(Index, onSelected, onListChange)
+                if onListChange then
+                    MenuNeededValues.tattooDLCIndex = Index
+                    setCurrentTattoosDlc(tattoosDLCList[MenuNeededValues.tattooDLCIndex].index)
+                end
+            end)
 
-        end)
+        Items:AddList(GetString("cm_t_zonelist"), tattoosZonesList, MenuNeededValues.tattooZoneIndex or 1, GetString("cm_t_zonelist_subtitle"), nil,
+            function(Index, onSelected, onListChange)
+                if onListChange then
+                    MenuNeededValues.tattooZoneIndex = Index
+                end
+            end)
 
+        local tattoos<const> = MenuNeededValues.currentTattooCollection.Zones[tattoosZonesList[MenuNeededValues.tattooZoneIndex].zoneName]
+        if tattoos then
+            for i = 1, #tattoos do
+                local tattoo<const> = tattoos[i]
+                local isApplied<const> = MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name]
+                Items:AddButton(GetString("cm_t_tattoo_number", i), GetString("cm_t_enter_to_apply_tattoo"),
+                    {RightBadge = isApplied and RageUI.BadgeStyle.Tattoo}, function(onSelected)
+                        if not isApplied then
+                            tattooToApply = tattoo.name
+                            if onSelected then
+                                lastTattooToApply = nil
+                                tattooToApply = nil
+
+                                MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name] = true
+                                table.insert(PlayerSkin.tattoos, {collection = MenuNeededValues.currentTattooCollection.name, overlay = tattoo.name})
+                                PlayerSkin = exports.ava_mp_peds:setPedSkin(PlayerPedId(), {tattoos = PlayerSkin.tattoos})
+                            end
+                        end
+                    end)
+            end
+        end
+
+        if lastTattooToApply ~= tattooToApply then
+            lastTattooToApply = tattooToApply
+            exports.ava_mp_peds:reloadPedOverlays(playerPed)
+            if lastTattooToApply then
+                AddPedDecorationFromHashes(PlayerPedId(), MenuNeededValues.currentTattooCollection.name, lastTattooToApply)
+            end
+        end
     end)
 
 end
