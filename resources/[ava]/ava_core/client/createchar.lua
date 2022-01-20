@@ -599,7 +599,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
         Items:AddButton(GetString("neck"), GetString("edit_your_face"))
     end, function(Panels)
         Panels:Grid(CharacterData.Face.ForeHeadX or 0.5, CharacterData.Face.ForeHeadY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
-            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+            GetString("outside"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.ForeHeadX = X
                 CharacterData.Face.ForeHeadY = Y
                 exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrow_forward = CharacterX * 100, eyebrow_high = CharacterY * 100})
@@ -641,7 +641,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             end, 5)
 
         Panels:Grid(CharacterData.Face.CheekBoneX or 0.5, CharacterData.Face.CheekBoneY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
-            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+            GetString("outside"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.CheekBoneX = X
                 CharacterData.Face.CheekBoneY = Y
                 exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_bone_width = CharacterX * 100, cheeks_bone_high = CharacterY * 100})
@@ -671,7 +671,7 @@ function RageUI.PoolMenus:AvaCoreCreateChar()
             end, 9)
 
         Panels:Grid(CharacterData.Face.ChinX or 0.5, CharacterData.Face.ChinY or 0.5, GetString("top"), GetString("bottom"), GetString("inside"),
-            GetString("outsite"), function(X, Y, CharacterX, CharacterY)
+            GetString("outside"), function(X, Y, CharacterX, CharacterY)
                 CharacterData.Face.ChinX = X
                 CharacterData.Face.ChinY = Y
                 exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_lenght = CharacterX * 100, chin_bone_lowering = CharacterY * 100})
