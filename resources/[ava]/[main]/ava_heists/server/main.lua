@@ -2,37 +2,33 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
-ESX = nil
 local heistsData = {}
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
-math.randomseed(GetGameTimer())
+exports.ava_core:RegisterServerCallback("ava_heists:server:canStartHeist", function(source, heistName)
+    local heist = AVAConfig.Heists[heistName]
 
-ESX.RegisterServerCallback('esx_ava_heists:canStartHeist', function(source, cb, heistName)
-    local heist = Config.Heists[heistName]
-    local cops = exports.esx_ava_jobs:getCountInService("lspd")
-    
     if not heist or heist.Disabled then
-        cb(false)
-    elseif Config.Debug or (heist.CopsCount and cops >= heist.CopsCount) then
-        cb(true)
-    else
-        cb(false)
+        return false
     end
+
+    local cops<const> = exports.ava_jobs:getCountInService("lspd")
+    if AVAConfig.Debug or (heist.CopsCount and cops >= heist.CopsCount) then
+        return true
+    end
+    return false
 end)
 
 -- TODO add some sort of reset for heists
 
-RegisterNetEvent("esx_ava_heists:serverEvent")
-AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
-    local _source = source
-    local configHeist = Config.Heists[heistName]
+RegisterNetEvent("ava_heists:server:triggerAction", function(heistName, options)
+    local src = source
+    local configHeist = AVAConfig.Heists[heistName]
     -- check if options exist, if the heist exist and it is not disabled
-    if not options or not configHeist or configHeist.Disabled then return end
-    local xPlayer = nil
+    if not options or not configHeist or configHeist.Disabled then
+        return
+    end
 
-    TriggerClientEvent("esx_ava_heists:clientCallback", -1, heistName, options)
+    TriggerClientEvent("ava_heists:client:actionTriggered", -1, heistName, options)
 
     if type(heistsData[heistName]) ~= "table" then
         heistsData[heistName] = {}
@@ -81,33 +77,24 @@ AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
                     if type(heistsData[heistName].Stages[options.StageIndex].Stealables[options.StealableName]) ~= "table" then
                         heistsData[heistName].Stages[options.StageIndex].Stealables[options.StealableName] = {}
                     end
-        
+
                     if not heistsData[heistName].Stages[options.StageIndex].Stealables[options.StealableName][options.TrayIndex] then
                         heistsData[heistName].Stages[options.StageIndex].Stealables[options.StealableName][options.TrayIndex] = true
                         if stealable.Loot then
-                            if xPlayer == nil then
-                                xPlayer = ESX.GetPlayerFromId(_source)
-                            end
+                            local aPlayer = exports.ava_core:GetPlayer(src)
                             if stealable.Loot.Items then
-                                local inventory = xPlayer.getInventory()
-                                local min = type(stealable.Loot.ItemCount) == "table"
-                                    and stealable.Loot.ItemCount.Min
-                                    or stealable.Loot.ItemCount
-                                    or 1
-                                local max = type(stealable.Loot.ItemCount) == "table"
-                                    and stealable.Loot.ItemCount.Max
-                                    or stealable.Loot.ItemCount
-                                    or 1
+                                local inventory = aPlayer.getInventory()
+                                local min = type(stealable.Loot.ItemCount) == "table" and stealable.Loot.ItemCount.Min or stealable.Loot.ItemCount or 1
+                                local max = type(stealable.Loot.ItemCount) == "table" and stealable.Loot.ItemCount.Max or stealable.Loot.ItemCount or 1
                                 if max < min then
                                     max = min
                                 end
                                 for i = 1, math.random(min, max), 1 do
                                     local item = stealable.Loot.Items[math.random(#stealable.Loot.Items)]
-                                    print(item)
                                     if inventory.canAddItem(item, 1) then
                                         inventory.addItem(item, 1)
                                     end
-                                    Citizen.Wait(250)
+                                    Wait(250)
                                 end
                             end
                         end
@@ -116,7 +103,7 @@ AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
                 end
             end
         end
-    
+
     end
     if options.Reset then
         heistsData[heistName].Started = false
@@ -125,17 +112,13 @@ AddEventHandler("esx_ava_heists:serverEvent", function(heistName, options)
     end
 end)
 
-ESX.RegisterServerCallback("esx_ava_heists:stealables:canSteal", function(source, cb, heistName, stageIndex, stealableName, trayIndex)
+exports.ava_core:RegisterServerCallback("ava_heists:server:stealables:canSteal", function(source, heistName, stageIndex, stealableName, trayIndex)
     -- does heist exist
-    if Config.Heists[heistName] == nil 
-        or Config.Heists[heistName].Stages == nil
-        or Config.Heists[heistName].Stages[stageIndex] == nil
-        or Config.Heists[heistName].Stages[stageIndex].Stealables == nil
-        or Config.Heists[heistName].Stages[stageIndex].Stealables[stealableName] == nil
-        or Config.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones == nil
-        or Config.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex] == nil
-    then 
-        return
+    if AVAConfig.Heists[heistName] == nil or AVAConfig.Heists[heistName].Stages == nil or AVAConfig.Heists[heistName].Stages[stageIndex] == nil
+        or AVAConfig.Heists[heistName].Stages[stageIndex].Stealables == nil or AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName] == nil
+        or AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones == nil
+        or AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex] == nil then
+        return false
     end
 
     if type(heistsData[heistName]) ~= "table" then
@@ -152,16 +135,12 @@ ESX.RegisterServerCallback("esx_ava_heists:stealables:canSteal", function(source
     end
 
     if type(heistsData[heistName].Stages[stageIndex].Stealables[stealableName]) == "table" then
-        cb(not heistsData[heistName].Stages[stageIndex].Stealables[stealableName][trayIndex])
-    else
-        heistsData[heistName].Stages[stageIndex].Stealables[stealableName] = {}
-        cb(true)
-    end    
+        return not heistsData[heistName].Stages[stageIndex].Stealables[stealableName][trayIndex]
+    end
+    heistsData[heistName].Stages[stageIndex].Stealables[stealableName] = {}
+    return true
 end)
 
-
-RegisterNetEvent("esx_ava_heists:data:fetch")
-AddEventHandler("esx_ava_heists:data:fetch", function()
-    local _source = source
-    TriggerClientEvent("esx_ava_heists:data:get", _source, heistsData)
+RegisterNetEvent("ava_heists:server:data:fetch", function()
+    TriggerClientEvent("ava_heists:client:data:get", source, heistsData)
 end)

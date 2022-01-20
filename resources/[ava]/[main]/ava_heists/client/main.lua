@@ -2,57 +2,38 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
-ESX = nil
-local GUI = {
-    Time = 0
-}
+LastActionTimer = 0
 PlayerData = {}
 playerIsInAction = false
-
+playerPed = nil
 
 Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
+    PlayerData = exports.ava_core:getPlayerData()
 
-	while ESX.GetPlayerData().job == nil or ESX.GetPlayerData().job2 == nil do
-		Citizen.Wait(10)
-	end
-
-	PlayerData = ESX.GetPlayerData()
-
-    TriggerServerEvent("esx_ava_heists:data:fetch")
+    TriggerServerEvent("ava_heists:server:data:fetch")
 end)
 
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(xPlayer)
-	PlayerData = xPlayer
+RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
+    for k, v in pairs(data) do
+        PlayerData[k] = v
+    end
 end)
 
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-	PlayerData.job = job
+RegisterNetEvent("ava_core:client:playerLoaded", function(data)
+    PlayerData = data
 end)
 
-RegisterNetEvent('esx:setJob2')
-AddEventHandler('esx:setJob2', function(job2)
-	PlayerData.job2 = job2
-end)
-
-RegisterNetEvent('esx_ava_heists:data:get')
-AddEventHandler('esx_ava_heists:data:get', function(heists)
+RegisterNetEvent("ava_heists:client:data:get", function(heists)
     print(json.encode(heists))
-	for heistName, heist in pairs(heists) do
+    for heistName, heist in pairs(heists) do
         if heist.Started then
-            Config.Heists[heistName].Started = heist.Started
+            AVAConfig.Heists[heistName].Started = heist.Started
         end
         if heist.CurrentStage then
-            Config.Heists[heistName].CurrentStage = heist.CurrentStage
+            AVAConfig.Heists[heistName].CurrentStage = heist.CurrentStage
         end
-        if heist.IsAlarmOn and Config.Heists[heistName].TriggerAlarm then
-            Config.Heists[heistName].TriggerAlarm()
+        if heist.IsAlarmOn and AVAConfig.Heists[heistName].TriggerAlarm then
+            AVAConfig.Heists[heistName].TriggerAlarm()
         end
         if heist.Stages then
             for stageIndex, stage in pairs(heist.Stages) do
@@ -60,7 +41,7 @@ AddEventHandler('esx_ava_heists:data:get', function(heists)
                     for stealableName, stolenArray in pairs(stage.Stealables) do
                         -- stealable is array of stolen items
                         for trayIndex, _ in pairs(stolenArray) do
-                            Config.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].Stolen = true
+                            AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].Stolen = true
                         end
                     end
                 end
@@ -70,8 +51,7 @@ AddEventHandler('esx_ava_heists:data:get', function(heists)
     end
 end)
 
-
---* different alarms name
+-- * different alarms name
 -- local alarms = {
 --     -- {name = "PRISON_ALARMS", p2 = 1}, --* prison alarm
 --     -- {name = "AGENCY_HEIST_FIB_TOWER_ALARMS", p2 = 0}, --* can be heard at the bottom of the tower
@@ -90,7 +70,7 @@ end)
 -- Citizen.CreateThread(function()
 --     for i = 1, #alarms, 1 do
 --         while not PrepareAlarm(alarms[i].name) do
---             Citizen.Wait(100)
+--             Wait(100)
 --         end
 --         print(alarms[i].name, alarms[i].p2)
 --         StartAlarm(alarms[i].name, alarms[i].p2)
@@ -101,21 +81,17 @@ end)
 --     if resource == GetCurrentResourceName() then
 --         for i = 1, #alarms, 1 do
 --             while not PrepareAlarm(alarms[i].name) do
---                 Citizen.Wait(100)
+--                 Wait(100)
 --             end
 --             StopAlarm(alarms[i].name, true)
 --         end
 --     end
 -- end)
 
-
-
-
-
 -- Citizen.CreateThread(function()
 --     local lastInterior = nil
---     while Config.Debug do
---         Citizen.Wait(100)
+--     while AVAConfig.Debug do
+--         Wait(100)
 --         local interior = GetInteriorFromEntity(PlayerPedId())
 --         if lastInterior ~= interior then
 --             print(interior)
@@ -124,34 +100,38 @@ end)
 --     end
 -- end)
 
-
-playerPed = nil
-
 Citizen.CreateThread(function()
-	while true do
-		playerPed = PlayerPedId()
+    while true do
+        playerPed = PlayerPedId()
 
-		Citizen.Wait(5000)
-	end
+        Wait(5000)
+    end
 end)
 
 local function HasRequiredJob(jobs)
-    for k, jobName in ipairs(jobs) do
-        if (PlayerData.job ~= nil and PlayerData.job.name == jobName) or (PlayerData.job2 ~= nil and PlayerData.job2.name == jobName) then
-            return true
+    for i = 1, #PlayerData.jobs do
+        local jobName<const> = PlayerData.jobs[i].name
+        for j = 1, #jobs do
+            if jobName == jobs[j] then
+                -- TODO be in service
+                return true
+            end
         end
     end
     return false
 end
 
 Citizen.CreateThread(function()
-	while true do
-		local waitTime = 500
-        
-		local playerInterior = GetInteriorFromEntity(playerPed)
+    -- mandatory wait!
+    Wait(1000)
+
+    while true do
+        local waitTime = 500
+
+        local playerInterior = GetInteriorFromEntity(playerPed)
         local actualHeistName = nil
 
-		for k, heist in pairs(Config.Heists) do
+        for k, heist in pairs(AVAConfig.Heists) do
             if heist.Disabled then
             elseif heist.InteriorId and playerInterior == heist.InteriorId then
                 actualHeistName = k
@@ -170,7 +150,7 @@ Citizen.CreateThread(function()
         if actualHeistName then
             local playerCoords = GetEntityCoords(playerPed)
 
-            local heist = Config.Heists[actualHeistName]
+            local heist = AVAConfig.Heists[actualHeistName]
             local stage = heist.Stages[heist.CurrentStage]
             if stage.Function then
                 stage.Function(playerPed)
@@ -180,24 +160,26 @@ Citizen.CreateThread(function()
                     for zoneIndex, zone in pairs(stealable.Zones) do
                         if not zone.Stolen then
                             local distance = #(playerCoords - zone.Coord)
-                            if distance < Config.DrawDistance then
+                            if distance < AVAConfig.DrawDistance then
                                 if stealable.Marker then
-                                    DrawMarker(stealable.Marker, zone.MarkerCoord or zone.Coord, 0.0, 0.0, 0.0, stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0, stealable.Size.y or 1.0, stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255, stealable.Color.b or 255, 100, stealable.BobUpAndDown or false, true, 2, false, false, false, false)
+                                    DrawMarker(stealable.Marker, zone.MarkerCoord or zone.Coord, 0.0, 0.0, 0.0,
+                                        stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0, stealable.Size.y or 1.0,
+                                        stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255, stealable.Color.b or 255, 100,
+                                        stealable.BobUpAndDown or false, true, 2, false, false, false, false)
                                 end
 
                                 if not playerIsInAction and distance < (stealable.Distance or stealable.Size.x or 1.0) then
                                     if stealable.HelpText ~= nil then
-                                        SetTextComponentFormat('STRING')
+                                        SetTextComponentFormat("STRING")
                                         AddTextComponentString(stealable.HelpText)
                                         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
                                     end
 
                                     if IsControlJustReleased(0, 38) -- E
-                                        and (GetGameTimer() - GUI.Time) > 300
-                                    then
-                                        GUI.Time = GetGameTimer()
+                                    and (GetGameTimer() - LastActionTimer) > 300 then
+                                        LastActionTimer = GetGameTimer()
 
-                                        if stealable.Type and stealable.Type == Config.StealablesType.Tray then
+                                        if stealable.Type and stealable.Type == AVAConfig.StealablesType.Tray then
                                             SmashTray(actualHeistName, heist.CurrentStage, stealableName, zoneIndex)
                                         end
                                     end
@@ -205,7 +187,7 @@ Citizen.CreateThread(function()
                             end
                         else
                             if stealable.Type then
-                                if stealable.Type == Config.StealablesType.Tray and not playerIsInAction then
+                                if stealable.Type == AVAConfig.StealablesType.Tray and not playerIsInAction then
                                     local object = GetRayfireMapObject(zone.PropCoord, 1.0, zone.RayFireName)
                                     if GetStateOfRayfireMapObject(object) < 6 then
                                         SetStateOfRayfireMapObject(object, 4)
@@ -221,25 +203,27 @@ Citizen.CreateThread(function()
                 for interactableName, interactable in pairs(heist.Interactables) do
                     if not interactable.JobNeeded or HasRequiredJob(interactable.JobNeeded) then
                         local distance = #(playerCoords - interactable.Coord)
-                        if distance < Config.DrawDistance then
+                        if distance < AVAConfig.DrawDistance then
                             if interactable.Marker then
-                                DrawMarker(interactable.Marker, interactable.Coord, 0.0, 0.0, 0.0, interactable.MarkerRotation or vector3(0.0, 0.0, 0.0), interactable.Size.x or 1.0, interactable.Size.y or 1.0, interactable.Size.z or 1.0, interactable.Color.r or 255, interactable.Color.g or 255, interactable.Color.b or 255, 100, interactable.BobUpAndDown or false, true, 2, false, false, false, false)
+                                DrawMarker(interactable.Marker, interactable.Coord, 0.0, 0.0, 0.0, interactable.MarkerRotation or vector3(0.0, 0.0, 0.0),
+                                    interactable.Size.x or 1.0, interactable.Size.y or 1.0, interactable.Size.z or 1.0, interactable.Color.r or 255,
+                                    interactable.Color.g or 255, interactable.Color.b or 255, 100, interactable.BobUpAndDown or false, true, 2, false, false,
+                                    false, false)
                             end
 
                             if not playerIsInAction and distance < (interactable.Distance or interactable.Size.x or 1.0) then
                                 if interactable.HelpText ~= nil then
-                                    SetTextComponentFormat('STRING')
+                                    SetTextComponentFormat("STRING")
                                     AddTextComponentString(interactable.HelpText)
                                     DisplayHelpTextFromStringLabel(0, 0, 1, -1)
                                 end
 
                                 if interactable.Action then
                                     if IsControlJustReleased(0, 38) -- E
-                                        and (GetGameTimer() - GUI.Time) > 300
-                                    then
-                                        GUI.Time = GetGameTimer()
+                                    and (GetGameTimer() - LastActionTimer) > 300 then
+                                        LastActionTimer = GetGameTimer()
                                         interactable.Action()
-                                        
+
                                     end
                                 end
                             end
@@ -249,17 +233,15 @@ Citizen.CreateThread(function()
             end
         end
 
-		Citizen.Wait(waitTime)
-	end
+        Wait(waitTime)
+    end
 end)
 
-
-
-
-RegisterNetEvent('esx_ava_heists:clientCallback')
-AddEventHandler("esx_ava_heists:clientCallback", function(heistName, options)
-    local heist = Config.Heists[heistName]
-    if not heist or heist.Disabled or not options then return end
+RegisterNetEvent("ava_heists:client:actionTriggered", function(heistName, options)
+    local heist = AVAConfig.Heists[heistName]
+    if not heist or heist.Disabled or not options then
+        return
+    end
 
     if options.TriggerHeist then
         heist.Started = true
@@ -314,10 +296,9 @@ AddEventHandler("esx_ava_heists:clientCallback", function(heistName, options)
     end
 end)
 
-
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
-		for k, heist in pairs(Config.Heists) do
+        for k, heist in pairs(AVAConfig.Heists) do
             if heist.Reset then
                 heist.Reset()
             end

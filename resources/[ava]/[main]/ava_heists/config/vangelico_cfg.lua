@@ -2,8 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-
-Config.Heists.vangelico = {
+AVAConfig.Heists.vangelico = {
     -- Disabled = true,
     Started = false,
     InteriorId = 82690,
@@ -18,12 +17,8 @@ Config.Heists.vangelico = {
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", true)
     end,
     ServerTriggerAlarm = function()
-        TriggerEvent("esx_phone:sendEmergency",
-            "lspd",
-            _("vangelico_alarm_notif"),
-            true,
-            vector3(-631.88, -237.82, 38.06)
-        )
+        -- TODO phonealert
+        -- TriggerEvent("esx_phone:sendEmergency", "lspd", GetString("vangelico_alarm_notif"), true, vector3(-631.88, -237.82, 38.06))
     end,
     StopAlarm = function()
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
@@ -33,20 +28,15 @@ Config.Heists.vangelico = {
     Stages = {
         [0] = {
             Function = function(playerPed)
-                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun")then
-                    ESX.TriggerServerCallback("esx_ava_heists:canStartHeist", function(canRob)
-                        if canRob then
-                            TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
-                                TriggerHeist = true,
-                                TriggerAlarm = true,
-                                Stage = 1
-                            })
-                        else
-                            ESX.ShowNotification(_("not_enough_cops"))
-                        end
-                    end, "vangelico")
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", {TriggerHeist = true, TriggerAlarm = true, Stage = 1})
+                    else
+                        LastActionTimer = GetGameTimer()
+                        exports.ava_core:ShowNotification(GetString("not_enough_cops"))
+                    end
                 end
-            end
+            end,
         },
         [1] = {
             Stealables = {
@@ -58,7 +48,7 @@ Config.Heists.vangelico = {
                             MarkerCoord = vector3(-627.60, -234.38, 38.42),
                             Coord = vector3(-628.18, -233.53, 38.06),
                             Heading = 212.0,
-                            RayFireName = "DES_Jewel_Cab"
+                            RayFireName = "DES_Jewel_Cab",
                         },
                         {
                             PropCoord = vector3(-626.716, -233.68, 37.858),
@@ -202,36 +192,33 @@ Config.Heists.vangelico = {
                             Coord = vector3(-617.93, -230.73, 38.06),
                             Heading = 303.0,
                             RayFireName = "DES_Jewel_Cab2",
-                        }       
+                        },
                     },
                     Loot = {
                         Items = {
-                            'diamond',
-                            'watch_gold',
-                            'watch_diamond',
-                            'watch_steel',
-                            'watch_emerald',
-                            'watch_ruby',
-                            'necklace_gold',
-                            'necklace_diamond',
-                            'necklace_steel',
-                            'necklace_emerald',
-                            'necklace_ruby',
-                            'ring_gold',
-                            'ring_diamond',
-                            'ring_steel',
-                            'ring_emerald',
-                            'ring_ruby',
-                            'bracelet_gold',
-                            'bracelet_diamond',
-                            'bracelet_steel',
-                            'bracelet_emerald',
-                            'bracelet_ruby'
+                            "diamond",
+                            "watch_gold",
+                            "watch_diamond",
+                            "watch_steel",
+                            "watch_emerald",
+                            "watch_ruby",
+                            "necklace_gold",
+                            "necklace_diamond",
+                            "necklace_steel",
+                            "necklace_emerald",
+                            "necklace_ruby",
+                            "ring_gold",
+                            "ring_diamond",
+                            "ring_steel",
+                            "ring_emerald",
+                            "ring_ruby",
+                            "bracelet_gold",
+                            "bracelet_diamond",
+                            "bracelet_steel",
+                            "bracelet_emerald",
+                            "bracelet_ruby",
                         },
-                        ItemCount = {
-                            Min = 3,
-                            Max = 6
-                        },
+                        ItemCount = {Min = 3, Max = 6},
                         -- ItemCount = 1,
                     },
                     Size = {x = 0.1, y = 0.1, z = 0.1},
@@ -239,12 +226,12 @@ Config.Heists.vangelico = {
                     MarkerRotation = vector3(180.0, 0.0, 0.0),
                     BobUpAndDown = true,
                     Distance = 1.2,
-                    HelpText = _("vangelico_press_break_tray"),
+                    HelpText = GetString("vangelico_press_break_tray"),
                     Marker = 20,
-                    Type = Config.StealablesType.Tray
-                }
-            }
-        }
+                    Type = AVAConfig.StealablesType.Tray,
+                },
+            },
+        },
     },
     Interactables = {
         {
@@ -252,25 +239,23 @@ Config.Heists.vangelico = {
             Size = {x = 1.0, y = 1.0, z = 1.0},
             Color = {r = 255, g = 255, b = 255},
             Distance = 1.2,
-            Name = _("alarm"),
-            HelpText = _("press_stop_alarm"),
+            Name = GetString("alarm"),
+            HelpText = GetString("press_stop_alarm"),
             Marker = 27,
             Action = function(playerPed)
-                TriggerServerEvent("esx_ava_heists:serverEvent", "vangelico", {
-                    StopAlarm = true,
-                })
+                TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", {StopAlarm = true})
             end,
-            JobNeeded = {"lspd"}
-        }
+            JobNeeded = {"lspd"},
+        },
     },
     -- Reset = function()
     -- end,
     ClientReset = function()
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
-        
-        for _, tray in ipairs(Config.Heists.vangelico.Stages[1].Stealables.Trays.Zones) do
+
+        for _, tray in ipairs(AVAConfig.Heists.vangelico.Stages[1].Stealables.Trays.Zones) do
             local object = GetRayfireMapObject(tray.PropCoord, 0.5, tray.RayFireName)
             SetStateOfRayfireMapObject(object, 2)
         end
-    end
+    end,
 }
