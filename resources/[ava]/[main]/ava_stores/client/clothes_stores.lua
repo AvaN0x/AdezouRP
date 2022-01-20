@@ -385,28 +385,29 @@ function RageUI.PoolMenus:ClothesMenu()
         end
 
         if not menuElements or menuElements.nose then
-            Items:AddButton("TODO nose", nil, {}, nil) -- TODO
-            -- nose_width
-            -- nose_peak_hight
-            -- nose_peak_lenght
-            -- nose_bone_high
-            -- nose_peak_lowering
-            -- nose_bone_twist
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.nose = Items:AddButton(GetString("cm_nose"), GetString("cm_nose_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
+            MenuItemIndices.nosebone = Items:AddButton(GetString("cm_nosebone"), GetString("cm_nosebone_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
+            MenuItemIndices.nosepeak = Items:AddButton(GetString("cm_nosepeak"), GetString("cm_nosepeak_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
 
         end
-        if not menuElements or menuElements.eyebrown then
-            Items:AddButton("TODO eyebrown", nil, {}, nil) -- TODO
-            -- eyebrown_high
-            -- eyebrown_forward
-            -- elementsIndexToHide = 1 -- Head
+        if not menuElements or menuElements.eyebrow then
+            MenuItemIndices.eyebrow = Items:AddButton(GetString("cm_eyebrow"), GetString("cm_eyebrow_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.cheeks then
-            Items:AddButton("TODO cheeks", nil, {}, nil) -- TODO
-            -- cheeks_bone_high
-            -- cheeks_bone_width
-            -- cheeks_width
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.cheekbone = Items:AddButton(GetString("cm_cheekbone"), GetString("cm_cheekbone_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
+            MenuItemIndices.cheek = Items:AddButton(GetString("cm_cheek"), GetString("cm_cheek_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.eyes then
             MenuItemIndices.eyes = Items:AddButton(GetString("cm_eyes"), GetString("cm_eyes_subtitle"), {}, function(onSelected)
@@ -419,18 +420,17 @@ function RageUI.PoolMenus:ClothesMenu()
             end)
         end
         if not menuElements or menuElements.jaw then
-            Items:AddButton("TODO jaw", nil, {}, nil) -- TODO
-            -- jaw_bone_width
-            -- jaw_bone_back_lenght
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.jaw = Items:AddButton(GetString("cm_jaw"), GetString("cm_jaw_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.chin then
-            Items:AddButton("TODO chin", nil, {}, nil) -- TODO
-            -- chin_bone_lowering
-            -- chin_bone_lenght
-            -- chin_bone_width
-            -- chin_hole
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.chin = Items:AddButton(GetString("cm_chin"), GetString("cm_chin_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
+            MenuItemIndices.chinshape = Items:AddButton(GetString("cm_chinshape"), GetString("cm_chinshape_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.neck then
             MenuItemIndices.neck = Items:AddButton(GetString("cm_neck"), GetString("cm_neck_subtitle"), {}, function(onSelected)
@@ -624,7 +624,6 @@ function RageUI.PoolMenus:ClothesMenu()
                     end
                 end)
         end
-
         if not menuElements or menuElements.tops then
             Items:AddList(GetString("cm_tops"), SkinMaxVals.tops + 1, PlayerSkin.tops + 1, GetString("cm_tops_subtitle"), {Min = SkinMinVals.tops + 1},
                 function(Index, onSelected, onListChange)
@@ -907,6 +906,69 @@ function RageUI.PoolMenus:ClothesMenu()
         end
     end, function(Panels)
         -- #region panels
+        if (not menuElements or menuElements.eyebrow) and MenuItemIndices.eyebrow then
+            Panels:Grid(((PlayerSkin.eyebrow_forward / 100) + 1) / 2, ((PlayerSkin.eyebrow_high / 100) + 1) / 2, GetString("cm_top"), GetString("cm_bottom"),
+                GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrow_forward = CharacterX * 100, eyebrow_high = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 7, PlayerSkin.eyebrow_forward / 100) -- eyebrow_forward
+                    SetPedFaceFeature(playerPed, 6, PlayerSkin.eyebrow_high / 100) -- eyebrow_high
+                end, MenuItemIndices.eyebrow)
+        end
+        if (not menuElements or menuElements.jaw) and MenuItemIndices.jaw then
+            Panels:Grid(((PlayerSkin.jaw_bone_width / 100) + 1) / 2, ((PlayerSkin.jaw_bone_back_lenght / 100) + 1) / 2, GetString("cm_jaw_top"),
+                GetString("cm_jaw_bottom"), GetString("cm_jaw_right"), GetString("cm_jaw_left"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({jaw_bone_width = CharacterX * 100, jaw_bone_back_lenght = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 13, PlayerSkin.jaw_bone_width / 100) -- jaw_bone_width
+                    SetPedFaceFeature(playerPed, 14, PlayerSkin.jaw_bone_back_lenght / 100) -- jaw_bone_back_lenght
+                end, MenuItemIndices.jaw)
+        end
+        if (not menuElements or menuElements.nose) and MenuItemIndices.nose then
+            Panels:Grid(((PlayerSkin.nose_width / 100) + 1) / 2, ((PlayerSkin.nose_peak_hight / 100) + 1) / 2, GetString("cm_top"), GetString("cm_bottom"),
+                GetString("cm_thin"), GetString("cm_thick"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_width = CharacterX * 100, nose_peak_hight = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 0, PlayerSkin.nose_width / 100) -- nose_width
+                    SetPedFaceFeature(playerPed, 1, PlayerSkin.nose_peak_hight / 100) -- nose_peak_hight
+                end, MenuItemIndices.nose)
+            Panels:Grid(((PlayerSkin.nose_peak_lenght / 100) + 1) / 2, ((PlayerSkin.nose_bone_high / 100) + 1) / 2, GetString("cm_nosebone_top"),
+                GetString("cm_nosebone_bottom"), GetString("cm_nosebone_right"), GetString("cm_nosebone_left"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_peak_lenght = CharacterX * 100, nose_bone_high = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 2, PlayerSkin.nose_peak_lenght / 100) -- nose_peak_lenght
+                    SetPedFaceFeature(playerPed, 3, PlayerSkin.nose_bone_high / 100) -- nose_bone_high
+                end, MenuItemIndices.nosebone)
+            Panels:Grid(((PlayerSkin.nose_bone_twist / -100) + 1) / 2, ((PlayerSkin.nose_peak_lowering / 100) + 1) / 2, GetString("cm_nosepeak_top"),
+                GetString("cm_nosepeak_bottom"), GetString("cm_nosepeak_right"), GetString("cm_nosepeak_left"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_bone_twist = CharacterX * -100, nose_peak_lowering = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 5, PlayerSkin.nose_bone_twist / 100) -- nose_bone_twist
+                    SetPedFaceFeature(playerPed, 4, PlayerSkin.nose_peak_lowering / 100) -- nose_peak_lowering
+                end, MenuItemIndices.nosepeak)
+        end
+        if (not menuElements or menuElements.cheek) and MenuItemIndices.cheek then
+            Panels:Grid(((PlayerSkin.cheeks_bone_width / 100) + 1) / 2, ((PlayerSkin.cheeks_bone_high / 100) + 1) / 2, GetString("cm_top"),
+                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_bone_width = CharacterX * 100, cheeks_bone_high = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 9, PlayerSkin.cheeks_bone_width / 100) -- cheeks_bone_width
+                    SetPedFaceFeature(playerPed, 8, PlayerSkin.cheeks_bone_high / 100) -- cheeks_bone_high
+                end, MenuItemIndices.cheekbone)
+            Panels:GridHorizontal(((PlayerSkin.cheeks_width / -100) + 1) / 2, GetString("cm_cheek_left"), GetString("cm_cheek_right"),
+                function(X, _, CharacterX)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_width = CharacterX * -100})
+                    SetPedFaceFeature(playerPed, 10, PlayerSkin.cheeks_width / 100) -- cheeks_width
+                end, MenuItemIndices.cheek)
+        end
+        if (not menuElements or menuElements.chin) and MenuItemIndices.chin then
+            Panels:Grid(((PlayerSkin.chin_bone_lenght / 100) + 1) / 2, ((PlayerSkin.chin_bone_lowering / 100) + 1) / 2, GetString("cm_top"),
+                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_lenght = CharacterX * 100, chin_bone_lowering = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 16, PlayerSkin.chin_bone_lenght / 100) -- chin_bone_lenght
+                    SetPedFaceFeature(playerPed, 15, PlayerSkin.chin_bone_lowering / 100) -- chin_bone_lowering
+                end, MenuItemIndices.chin)
+            Panels:Grid(((PlayerSkin.chin_bone_width / -100) + 1) / 2, ((PlayerSkin.chin_hole / 100) + 1) / 2, GetString("cm_chinshape_top"),
+                GetString("cm_chinshape_bottom"), GetString("cm_chinshape_right"), GetString("cm_chinshape_left"), function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_width = CharacterX * -100, chin_hole = CharacterY * 100})
+                    SetPedFaceFeature(playerPed, 17, PlayerSkin.chin_bone_width / 100) -- chin_bone_width
+                    SetPedFaceFeature(playerPed, 18, PlayerSkin.chin_hole / 100) -- chin_hole
+                end, MenuItemIndices.chinshape)
+        end
         if (not menuElements or menuElements.eyes) and MenuItemIndices.eyes then
             Panels:GridHorizontal(((PlayerSkin.eyes_openning / -100) + 1) / 2, GetString("cm_eyes_pleated"), GetString("cm_eyes_open"),
                 function(X, _, CharacterX)
