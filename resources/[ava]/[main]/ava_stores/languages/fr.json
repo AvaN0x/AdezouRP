@@ -173,5 +173,17 @@
     "cm_t_ZONE_LEFT_ARM": "Bras gauche",
     "cm_t_tattoo_number": "Tatouage #%d",
     "cm_t_enter_to_apply_tattoo": "Appuyez pour appliquer le tatouage.",
+    "cm_neck": "Largeur du cou",
+    "cm_neck_subtitle": "Modifiez votre visage.",
+    "cm_thin": "Mince",
+    "cm_thick": "Epais",
+    "cm_lips": "Lèvres",
+    "cm_lips_subtitle": "Modifiez votre visage.",
+    "cm_lips_left": "Minces",
+    "cm_lips_right": "Epaisses",
+    "cm_eyes": "Yeux",
+    "cm_eyes_subtitle": "Modifiez votre visage.",
+    "cm_eyes_pleated": "Plissés",
+    "cm_eyes_open": "Ouverts",
     "TODOREMOVETHIS": ""
 }

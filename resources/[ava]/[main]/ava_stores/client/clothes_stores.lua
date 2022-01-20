@@ -92,6 +92,7 @@ function CloseClothesMenu()
     RemoveMenuCam()
     SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
     SetPedGravity(playerPed, 1.0, 1.0, 1.0)
+    TaskClearLookAt(playerPed)
 
     if playerChangedGender then
         TriggerServerEvent("ava_core:server:reloadLoadout")
@@ -276,6 +277,8 @@ end
 function InsideOfClothesMenuControls()
     ClearPedTasks(playerPed)
 
+    TaskLookAtCoord(playerPed, GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7), 2000, 0, 2)
+
     -- Prevent player from moving too far
     SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
     SetPedGravity(playerPed, 0.0, 0.0, 0.0)
@@ -390,6 +393,7 @@ function RageUI.PoolMenus:ClothesMenu()
             -- nose_peak_lowering
             -- nose_bone_twist
             -- elementsIndexToHide = 1 -- Head
+
         end
         if not menuElements or menuElements.eyebrown then
             Items:AddButton("TODO eyebrown", nil, {}, nil) -- TODO
@@ -405,14 +409,14 @@ function RageUI.PoolMenus:ClothesMenu()
             -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.eyes then
-            Items:AddButton("TODO eyes", nil, {}, nil) -- TODO
-            -- eyes_openning
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.eyes = Items:AddButton(GetString("cm_eyes"), GetString("cm_eyes_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.lips then
-            Items:AddButton("TODO lips", nil, {}, nil) -- TODO
-            -- lips_thickness
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.lips = Items:AddButton(GetString("cm_lips"), GetString("cm_lips_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
         if not menuElements or menuElements.jaw then
             Items:AddButton("TODO jaw", nil, {}, nil) -- TODO
@@ -429,9 +433,9 @@ function RageUI.PoolMenus:ClothesMenu()
             -- elementsIndexToHide = 1 -- Head
         end
         if not menuElements or menuElements.neck then
-            Items:AddButton("TODO neck", nil, {}, nil) -- TODO
-            -- neck_thickness
-            -- elementsIndexToHide = 1 -- Head
+            MenuItemIndices.neck = Items:AddButton(GetString("cm_neck"), GetString("cm_neck_subtitle"), {}, function(onSelected)
+                elementsIndexToHide = 1 -- Head
+            end)
         end
 
         if not menuElements or menuElements.hair then
@@ -903,6 +907,27 @@ function RageUI.PoolMenus:ClothesMenu()
         end
     end, function(Panels)
         -- #region panels
+        if (not menuElements or menuElements.eyes) and MenuItemIndices.eyes then
+            Panels:GridHorizontal(((PlayerSkin.eyes_openning / -100) + 1) / 2, GetString("cm_eyes_pleated"), GetString("cm_eyes_open"),
+                function(X, _, CharacterX)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyes_openning = CharacterX * -100})
+                    SetPedFaceFeature(playerPed, 11, PlayerSkin.eyes_openning / 100) -- eyes_openning
+                end, MenuItemIndices.eyes)
+        end
+        if (not menuElements or menuElements.lips) and MenuItemIndices.lips then
+            Panels:GridHorizontal(((PlayerSkin.lips_thickness / -100) + 1) / 2, GetString("cm_lips_left"), GetString("cm_lips_right"),
+                function(X, _, CharacterX)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({lips_thickness = CharacterX * -100})
+                    SetPedFaceFeature(playerPed, 12, PlayerSkin.lips_thickness / 100) -- lips_thickness
+                end, MenuItemIndices.lips)
+        end
+        if (not menuElements or menuElements.neck) and MenuItemIndices.neck then
+            Panels:GridHorizontal(((PlayerSkin.neck_thickness / 100) + 1) / 2, GetString("cm_thin"), GetString("cm_thick"), function(X, _, CharacterX)
+                PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({neck_thickness = CharacterX * 100})
+                SetPedFaceFeature(playerPed, 19, PlayerSkin.neck_thickness / 100) -- neck_thickness
+            end, MenuItemIndices.neck)
+        end
+
         if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
             Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color
                 or (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)), PlayerSkin.hair_main_color + 1,
