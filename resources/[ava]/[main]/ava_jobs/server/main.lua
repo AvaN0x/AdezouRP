@@ -45,7 +45,7 @@ function getCountInService(jobName)
         "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 0xF2A53F)
     return count
 end
-exports("getCountInService", isInService)
+exports("getCountInService", getCountInService)
 
 ---Check if a player is in service
 ---@param source any
