@@ -78,8 +78,8 @@ exports.ava_core.SetGradeSalary = AVA.SetGradeSalary
 exports.ava_core.GetJobsAccounts = AVA.GetJobsAccounts
 
 exports.ava_core.GetRootingBucket = AVA.RB.GetRootingBucket
-exports.ava_core.MoveSourceToRB = AVA.RB.MoveSourceToRB
-exports.ava_core.MoveSourceToRBName = AVA.RB.MoveSourceToRBName
+exports.ava_core.MovePlayerToRB = AVA.RB.MovePlayerToRB
+exports.ava_core.MovePlayerToRBName = AVA.RB.MovePlayerToRBName
 
 exports.ava_core.DiscordRequest = AVA.Utils.DiscordRequest
 exports.ava_core.SendWebhookMessage = AVA.Utils.SendWebhookMessage

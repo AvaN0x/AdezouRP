@@ -145,7 +145,7 @@ local function loadPlayer(src)
         return
     end
     aPlayer.login()
-    AVA.RB.MoveSourceToRB(src, 0)
+    AVA.RB.MovePlayerToRB(src, 0)
 
     TriggerClientEvent("ava_core:client:playerLoaded", src, {
         citizenId = aPlayer.citizenId,
@@ -211,7 +211,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
         loadPlayer(tostring(src))
     else
         -- player char needs to create a char
-        AVA.RB.MoveSourceToRBName(src, "createchar" .. src)
+        AVA.RB.MovePlayerToRBName(src, "createchar" .. src)
         TriggerClientEvent("ava_core:client:createChar", src)
     end
 end

@@ -28,7 +28,7 @@ exports("GetRootingBucket", AVA.RB.GetRootingBucket)
 ---Move source player to a given rooting bucket
 ---@param src string
 ---@param rb integer
-AVA.RB.MoveSourceToRB = function(src, rb)
+AVA.RB.MovePlayerToRB = function(src, rb)
     rb = type(rb) == "number" and rb or 0
     if GetPlayerRoutingBucket(src) ~= rb then
         print("^5ID " .. src .. "^0 is moved in routing bucket ^3" .. tostring(rb) .. "^0")
@@ -36,18 +36,18 @@ AVA.RB.MoveSourceToRB = function(src, rb)
         exports["pma-voice"]:updateRoutingBucket(src)
     end
 end
-exports("MoveSourceToRB", AVA.RB.MoveSourceToRB)
+exports("MovePlayerToRB", AVA.RB.MovePlayerToRB)
 
 ---Move source player to a rooting bucket with a given name
 ---@param src string
 ---@param rbName string
-AVA.RB.MoveSourceToRBName = function(src, rbName)
+AVA.RB.MovePlayerToRBName = function(src, rbName)
     local rb = rbName and AVA.RB.GetRootingBucket(rbName) or 0
-    AVA.RB.MoveSourceToRB(src, rb)
+    AVA.RB.MovePlayerToRB(src, rb)
 end
-exports("MoveSourceToRBName", AVA.RB.MoveSourceToRBName)
+exports("MovePlayerToRBName", AVA.RB.MovePlayerToRBName)
 
 AVA.Commands.RegisterCommand("rb", "superadmin", function(source, args)
     local src = source
-    AVA.RB.MoveSourceToRBName(src, args[1])
+    AVA.RB.MovePlayerToRBName(src, args[1])
 end, "move_to_rb", {{name = "rb", help = "rb"}})
