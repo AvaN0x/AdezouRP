@@ -41,13 +41,13 @@ exports("MovePlayerToRB", AVA.RB.MovePlayerToRB)
 ---Move source player to a rooting bucket with a given name
 ---@param src string
 ---@param rbName string
-AVA.RB.MovePlayerToRBName = function(src, rbName)
+AVA.RB.MovePlayerToNamedRB = function(src, rbName)
     local rb = rbName and AVA.RB.GetRootingBucket(rbName) or 0
     AVA.RB.MovePlayerToRB(src, rb)
 end
-exports("MovePlayerToRBName", AVA.RB.MovePlayerToRBName)
+exports("MovePlayerToNamedRB", AVA.RB.MovePlayerToNamedRB)
 
 AVA.Commands.RegisterCommand("rb", "superadmin", function(source, args)
     local src = source
-    AVA.RB.MovePlayerToRBName(src, args[1])
+    AVA.RB.MovePlayerToNamedRB(src, args[1])
 end, "move_to_rb", {{name = "rb", help = "rb"}})

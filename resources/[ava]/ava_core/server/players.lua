@@ -211,7 +211,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
         loadPlayer(tostring(src))
     else
         -- player char needs to create a char
-        AVA.RB.MovePlayerToRBName(src, "createchar" .. src)
+        AVA.RB.MovePlayerToNamedRB(src, "createchar" .. src)
         TriggerClientEvent("ava_core:client:createChar", src)
     end
 end
