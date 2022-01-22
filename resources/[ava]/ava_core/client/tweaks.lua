@@ -97,8 +97,7 @@ Citizen.CreateThread(function()
         -- SetCreateRandomCopsNotOnScenarios(false)
         -- SetCreateRandomCopsOnScenarios(false)
 
-        -- Every 50 frames
-        if loop % 50 == 0 and GetPlayerWantedLevel(playerId) > 0 then
+        if GetPlayerWantedLevel(playerId) > 0 then
             SetPlayerWantedLevel(playerId, 0, false)
             SetPlayerWantedLevelNow(playerId, false)
         end
