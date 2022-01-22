@@ -1,0 +1,13 @@
+{
+    "house_weak_door": "Serrure fragile",
+    "house_user_inside_door": "Quelqu'un est à l'intérieur",
+    "house_burglarized_door": "Cambriolé récemment",
+    "press_exit": "~g~[E]~w~ Sortir",
+    "press_search": "~g~[E]~w~ Chercher",
+    "empty": "~r~Vide",
+    "search_in_distance": "📍",
+    "searching": "Rercherche en cours",
+    "found_in_furniture": "Tu as trouvé un objet dans ce meuble",
+    "found_nothing_in_furniture": "Tu n'as rien trouvé dans ce meuble",
+    "cant_carry": "Vous n'avez pas assez de place dans vos poches"
+}
