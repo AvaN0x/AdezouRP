@@ -34,6 +34,14 @@ client_scripts {
     "client/manager_menu_cl.lua",
 }
 
-server_scripts {"config.lua", "server/main.lua", "server/jobmenu_sv.lua", "server/bank_managment_sv.lua", "server/manager_menu_sv.lua"}
+server_scripts {
+    "@oxmysql/lib/MySQL.lua",
+
+    "config.lua",
+    "server/main.lua",
+    "server/jobmenu_sv.lua",
+    "server/bank_managment_sv.lua",
+    "server/manager_menu_sv.lua",
+}
 
 dependencies {"RageUI", "ava_core", "ava_mp_peds"}

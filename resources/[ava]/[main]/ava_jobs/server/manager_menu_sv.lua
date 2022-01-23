@@ -30,7 +30,7 @@ exports.ava_core:RegisterServerCallback("ava_jobs:getAllEmployees", function(sou
 
         local employees = {}
         local countEmployees = 0
-        local result = exports.oxmysql:fetchSync("SELECT `id`, `character`, `jobs` FROM `players` WHERE INSTR(`jobs`, :jobName)", {jobName = jobName})
+        local result = MySQL.query.await("SELECT `id`, `character`, `jobs` FROM `ava_players` WHERE INSTR(`jobs`, :jobName)", {jobName = jobName})
         if result then
             for i = 1, #result do
                 local res = result[i]
@@ -75,7 +75,7 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
             return
         end
 
-        local targetJobs = exports.oxmysql:scalarSync("SELECT `jobs` FROM `players` WHERE `id` = :id", {id = targetCitizenId})
+        local targetJobs = MySQL.scalar.await("SELECT `jobs` FROM `ava_players` WHERE `id` = :id", {id = targetCitizenId})
         if not targetJobs then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
             return
@@ -134,7 +134,7 @@ RegisterNetEvent("ava_jobs:server:manager_menu_fire", function(targetCitizenId, 
 
         table.remove(targetJobs, index)
 
-        exports.oxmysql:executeSync("UPDATE `players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
+        MySQL.update.await("UPDATE `ava_players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_fired"), nil, "ava_core_logo", cfgJob.label)
     end
 end)
@@ -168,7 +168,7 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
             return
         end
 
-        local targetJobs = exports.oxmysql:scalarSync("SELECT `jobs` FROM `players` WHERE `id` = :id", {id = targetCitizenId})
+        local targetJobs = MySQL.scalar.await("SELECT `jobs` FROM `ava_players` WHERE `id` = :id", {id = targetCitizenId})
         if not targetJobs then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("error_happened"), nil, "ava_core_logo", cfgJob.label)
             return
@@ -232,7 +232,7 @@ RegisterNetEvent("ava_jobs:server:manager_menu_change_grade", function(targetCit
 
         targetJobs[index].grade = gradeName
 
-        exports.oxmysql:executeSync("UPDATE `players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
+        MySQL.update.await("UPDATE `ava_players` SET `jobs` = :jobs WHERE `id` = :id", {jobs = json.encode(targetJobs), id = targetCitizenId})
 
         local gradeLabel = exports.ava_core:GetGradeLabel(jobName, gradeName)
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_target_grade_changed_to", gradeLabel), nil, "ava_core_logo", cfgJob.label)

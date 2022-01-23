@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `players` (
+CREATE TABLE IF NOT EXISTS `ava_players` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `license` varchar(64) NOT NULL,
   `discord` varchar(64) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `ban_list` (
     PRIMARY KEY (`license`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
-CREATE TABLE IF NOT EXISTS `jobs` (
+CREATE TABLE IF NOT EXISTS `ava_jobs` (
   `name` varchar(50) NOT NULL,
   `accounts` text DEFAULT NULL,
   `salaries` text DEFAULT NULL,

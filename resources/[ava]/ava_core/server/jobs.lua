@@ -23,7 +23,7 @@ exports("GetJobsAccounts", AVA.GetJobsAccounts)
 
 Citizen.CreateThread(function()
     dprint("^6[JOBS] Start initializing datas for each jobs^0")
-    local data = exports.oxmysql:fetchSync("SELECT `jobs`.`name`, `jobs`.`accounts`, `jobs`.`salaries` FROM `jobs`", {})
+    local data = MySQL.query.await("SELECT `name`, `accounts`, `salaries` FROM `ava_jobs`", {})
     if data then
         for i = 1, #data do
             local jobData = data[i]
@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
             if not AVA.JobsAccounts[jobName] and not job.isGang and not job.noBoss then
                 dprint(("Add missing JobsAccounts for ^5%s^0"):format(jobName))
                 AVA.JobsAccounts[jobName] = CreateJobAccounts(jobName)
-                exports.oxmysql:insert("INSERT INTO `jobs` (`name`, `accounts`, `salaries`) VALUES (:name, :accounts, :salaries)",
+                MySQL.insert("INSERT INTO `ava_jobs` (`name`, `accounts`, `salaries`) VALUES (:name, :accounts, :salaries)",
                     {name = jobName, accounts = "[]", salaries = "{}"}, function()
                         dprint(("Missing JobsAccounts for ^5%s^0 added to database"):format(jobName))
                     end)
@@ -113,7 +113,7 @@ end
 AVA.SaveJobAccounts = function(aJobAccounts)
     if aJobAccounts then
         local p = promise.new()
-        exports.oxmysql:execute("UPDATE `jobs` SET `accounts` = :accounts WHERE `name` = :name",
+        MySQL.update("UPDATE `ava_jobs` SET `accounts` = :accounts WHERE `name` = :name",
             {name = aJobAccounts.name, accounts = json.encode(aJobAccounts.getAccounts())}, function(result)
                 aJobAccounts.modified = false
                 print("^2[SAVE JOB ACCOUNTS] ^0" .. aJobAccounts.name)
@@ -196,7 +196,7 @@ AVA.SetGradeSalary = function(jobName, gradeName, salary)
                         CustomSalaries[jobName] = {}
                     end
                     CustomSalaries[jobName][gradeName] = salary
-                    exports.oxmysql:executeSync("UPDATE `jobs` SET `salaries` = :salaries WHERE `name` = :name",
+                    MySQL.update.await("UPDATE `ava_jobs` SET `salaries` = :salaries WHERE `name` = :name",
                         {name = jobName, salaries = json.encode(CustomSalaries[jobName])})
                     dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from SetGradeSalary"):format(salary, jobName, gradeName))
                     return true

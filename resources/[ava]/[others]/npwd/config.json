@@ -10,7 +10,7 @@
   },
   "database": {
     "useIdentifierPrefix": true,
-    "playerTable": "players",
+    "playerTable": "ava_players",
     "identifierColumn": "license",
     "identifierType": "license",
     "profileQueries": true,
