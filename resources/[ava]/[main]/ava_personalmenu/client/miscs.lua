@@ -7,7 +7,12 @@ MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"
 local isHudActive, isBigMapActive, isCinematicModeActive = true, false, false
 
 local isDriftModeActive = GetResourceKvpInt("miscs_menu_drift_mode") ~= 0
+local isIdleCamDisabled = GetResourceKvpInt("miscs_menu_disabled_idle_cam") ~= 0
 local actualDriftVehicle, isDriftModeEquipied = 0, false
+
+Citizen.CreateThread(function()
+    DisableIdleCamera(isIdleCamDisabled)
+end)
 
 local function SetHudActive(state)
     TriggerEvent("ava_hud:client:toggle", state)
@@ -65,6 +70,14 @@ function PoolMiscs()
                     end
                     isDriftModeActive = not isDriftModeActive
                     SetResourceKvpInt("miscs_menu_drift_mode", isDriftModeActive and 1 or 0)
+                end
+            end)
+        Items:CheckBox(GetString("miscs_menu_toggle_disable_idle_cam"), GetString("miscs_menu_toggle_disable_idle_cam_subtitle"), isIdleCamDisabled, {},
+            function(onSelected, IsChecked)
+                if (onSelected) then
+                    isIdleCamDisabled = not isIdleCamDisabled
+                    SetResourceKvpInt("miscs_menu_disabled_idle_cam", isIdleCamDisabled and 1 or 0)
+                    DisableIdleCamera(isIdleCamDisabled)
                 end
             end)
         Items:CheckBox(GetString("miscs_menu_toggle_cinematic_mode"), GetString("miscs_menu_toggle_cinematic_mode_subtitle"), isCinematicModeActive, nil,
