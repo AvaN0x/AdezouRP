@@ -613,7 +613,7 @@ Config.ClothesStore = {
         -- Head
         [1] = {
             [0] = {hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 0, glasses_txd = 0},
-            [1] = {hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 5, glasses_txd = 0},
+            [1] = {hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = -1, glasses_txd = 0},
         },
         -- All clothes
         [2] = {
@@ -701,7 +701,7 @@ Config.ClothesStore = {
                 hats_txd = 0,
                 mask = 0,
                 mask_txd = 0,
-                glasses = 5,
+                glasses = -1,
                 glasses_txd = 0,
             },
         },
