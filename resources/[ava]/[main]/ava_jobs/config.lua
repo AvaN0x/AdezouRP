@@ -189,6 +189,7 @@ Config.JobMenuElement = {
 }
 
 Config.Jobs = {
+    -- #region jobs
     lspd = {
         SocietyName = "society_lspd",
         LabelName = "LSPD",
@@ -1462,7 +1463,9 @@ Config.Jobs = {
             },
         },
     },
+    -- #endregion jobs
 
+    -- #region drugs
     weed = {
         isIllegal = true,
         KeyName = "keyweed",
@@ -1604,7 +1607,9 @@ Config.Jobs = {
             },
         },
     },
+    -- #endregion drugs
 
+    -- #region gangs / organizations
     gang_vagos = {
         isGang = true,
         LabelName = "Vagos",
@@ -2086,7 +2091,7 @@ Config.Jobs = {
             },
         },
     },
-
+    -- #endregion gangs / organizations
 }
 
 Config.JobCenter = {
