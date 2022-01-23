@@ -98,10 +98,10 @@ AVA.ShowConfirmationMessage = function(title, firstLine, secondLine, background,
                 background)
 
             DisableAllControlActions(2)
-            if IsDisabledControlJustReleased(2, 201) or IsDisabledControlJustReleased(2, 217) then -- confirm
+            if IsDisabledControlJustPressed(2, 201) or IsDisabledControlJustPressed(2, 217) then -- confirm
                 p:resolve(true)
                 return
-            elseif IsDisabledControlJustReleased(2, 202) then -- cancel
+            elseif IsDisabledControlJustPressed(2, 202) then -- cancel
                 break
             end
         end
