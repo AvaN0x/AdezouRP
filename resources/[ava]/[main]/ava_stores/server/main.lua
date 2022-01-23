@@ -160,7 +160,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payCloth
             if store and store.ClothesStore then
                 local inventory = aPlayer.getInventory()
                 local price<const> = store.Price
-                print(inventory.getItem("cash").quantity)
+
                 if inventory.canRemoveItem("cash", price) then
                     inventory.removeItem("cash", price)
                     aPlayer.setSkin(playerSkin)

@@ -30,9 +30,9 @@ client_scripts {
     "config.lua",
     "client/main.lua",
     "client/clothes_stores.lua",
-    "client/saved_outfits.lua",
+    "client/player_outfits.lua",
 }
 
-server_scripts {"config.lua", "server/main.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua", "server/player_outfits.lua"}
 
 dependencies {"ava_core", "RageUI"}

@@ -227,5 +227,15 @@
     "cm_chinshape_bottom": "Fossette",
     "cm_chinshape_right": "Carré",
     "cm_chinshape_left": "Pointu",
-    "TODOREMOVETHIS": ""
+    "po_title": "Tenues sauvegardées",
+    "po_input_label": "Entrez un nom de tenue",
+    "po_placeholder_number": "Tenue #%s",
+    "po_equip": "Equiper",
+    "po_delete": "~r~Supprimer~s~",
+    "po_confirm_title": "Suppression de tenue",
+    "po_confirm_firstline": "Voulez vous vraiment supprimer la tenue \"%s\" ?",
+    "po_confirm_secondline": "",
+    "po_invalid_label": "Nom de tenue invalide",
+    "po_add_outfit": "Ajouter une tenue",
+    "po_add_outfit_subtitle": "Ajouter une tenue à vos tenues sauvegardées"
 }
