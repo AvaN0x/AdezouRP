@@ -859,6 +859,10 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
                 0xEF5859)
 
+        elseif ammoRemoved < 0 then
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
+                ("**%s** removed a negative number of ammo `%s` : `%d`"):format(aPlayer.getDiscordTag(), ammoType, ammoRemoved), 0xEF5859)
+
         elseif ammoRemoved > item.quantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
