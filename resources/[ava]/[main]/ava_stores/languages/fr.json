@@ -23,6 +23,7 @@
     "clothes_menu_validate_right_label_money": "$%s",
     "clothes_menu_validate": "Valider",
     "clothes_menu_validate_subtitle": "Valider les changements",
+    "outfitsmenu_help": "Ouvrir le menu des tenues sauvegardées",
     "cm_reset_to_min": "Valeur minimale",
     "cm_toggle_cam": "Changer de caméra",
     "cm_move_cam": "Déplacer la caméra",

@@ -167,7 +167,7 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     AddMenuCam()
     RageUI.Visible(MainClothesMenu, true)
 end
-RegisterNetEvent("ava_jobs:client:OpenClothesMenu", OpenClothesMenu)
+RegisterNetEvent("ava_stores:client:OpenClothesMenu", OpenClothesMenu)
 
 -- #region cam stuff
 local cam = nil

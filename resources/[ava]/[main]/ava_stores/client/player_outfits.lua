@@ -81,3 +81,4 @@ function OpenPlayerOutfitsMenu()
     end)
 
 end
+RegisterNetEvent("ava_stores:client:OpenPlayerOutfitsMenu", OpenPlayerOutfitsMenu)

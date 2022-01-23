@@ -144,8 +144,12 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:checkMon
 end)
 
 exports.ava_core:RegisterCommand({"clothesmenu", "cm"}, "admin", function(source, args)
-    TriggerClientEvent("ava_jobs:client:OpenClothesMenu", source)
+    TriggerClientEvent("ava_stores:client:OpenClothesMenu", source)
 end, GetString("clothesmenu_help"))
+
+exports.ava_core:RegisterCommand({"outfitsmenu", "om"}, "admin", function(source, args)
+    TriggerClientEvent("ava_stores:client:OpenPlayerOutfitsMenu", source)
+end, GetString("outfitsmenu_help"))
 
 exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payClothes", function(source, storeName, playerSkin)
     local src = source
