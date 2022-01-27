@@ -21,8 +21,11 @@ AddEventHandler("ava_core:client:playerRevived", function()
 end)
 
 AddEventHandler("ava_core:client:playerDeath", function()
-    IsDead = true
-    onDeath()
+    -- Prevent the onDeath screen from showing when you're already dead
+    if not IsDead then
+        IsDead = true
+        onDeath()
+    end
 end)
 
 AddEventHandler("onResourceStop", function(resource)
