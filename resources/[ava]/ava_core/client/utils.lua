@@ -516,14 +516,15 @@ exports("GetScaleformInstructionalButtons", AVA.Utils.GetScaleformInstructionalB
 ---@param r? number
 ---@param g? number
 ---@param b? number
-AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b)
+---@param a? number
+AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b, a)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
 
     if onScreen then
         SetTextScale(0.35, size or 0.35)
         SetTextFont(0)
         SetTextProportional(1)
-        SetTextColour(r or 255, g or 255, b or 255, 215)
+        SetTextColour(r or 255, g or 255, b or 255, a or 215)
         SetTextEntry("STRING")
         AddTextComponentString(text)
         SetTextCentre(1)
