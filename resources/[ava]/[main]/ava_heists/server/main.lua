@@ -91,9 +91,7 @@ RegisterNetEvent("ava_heists:server:triggerAction", function(heistName, options)
                                 end
                                 for i = 1, math.random(min, max), 1 do
                                     local item = stealable.Loot.Items[math.random(#stealable.Loot.Items)]
-                                    if inventory.canAddItem(item, 1) then
-                                        inventory.addItem(item, 1)
-                                    end
+                                    inventory.addOrDropItem(item, 1)
                                     Wait(250)
                                 end
                             end
