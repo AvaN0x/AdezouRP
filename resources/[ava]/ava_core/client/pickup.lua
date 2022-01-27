@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
             if Entity(object).state.pickup then
                 local propCoords = GetEntityCoords(object)
                 local distance = #(playerCoords - propCoords)
-                if distance < 5.0 then
+                if distance < 2.5 then
                     count = count + 1
                     local _, max = GetModelDimensions(GetEntityModel(object))
 
