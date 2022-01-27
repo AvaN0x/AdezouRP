@@ -4,12 +4,14 @@
         "type": "money",
         "description": "Argent liquide",
         "weight": 0.1,
+        "model": "xs_prop_arena_cash_pile_l",
         "alwaysDisplayed": true
     },
     "dirtycash": {
         "label": "Argent sale",
         "type": "money",
         "weight": 0.1,
+        "model": "h4_prop_h4_cash_bag_01a",
         "noIcon": true
     },
     "phone": {
@@ -256,6 +258,7 @@
         "type": "drug",
         "weight": 5,
         "limit": 150,
+        "model": "sf_prop_sf_bag_weed_01a",
         "noIcon": true
     },
     "keyweed": {

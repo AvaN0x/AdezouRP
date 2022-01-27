@@ -55,6 +55,9 @@ exports.ava_core.getPlayerCharacterData = AVA.Player.getCharacterData
 exports.ava_core.getPlayerSkinData = AVA.Player.getPlayerSkinData
 
 exports.ava_core.IsPlayerInVehicle = AVA.Player.IsInVehicle
+
+exports.ava_core.GeneratePickupCoords = AVA.GeneratePickupCoords
+
 -- #endregion
 
 -- #region server side

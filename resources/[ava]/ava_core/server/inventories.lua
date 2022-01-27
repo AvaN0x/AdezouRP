@@ -77,6 +77,30 @@ AVA.Commands.RegisterCommand("openinventory", "admin", function(source, args)
     TriggerClientEvent("ava_core:client:openTargetInventory", source, args[1])
 end, GetString("openinventory_help"), {{name = "player", help = GetString("player_id")}})
 
+RegisterNetEvent("ava_core:server:dropItem", function(coords, itemName, count)
+    local src = source
+    local aPlayer = AVA.Players.GetPlayer(src)
+
+    if aPlayer then
+        local inventory = aPlayer.getInventory()
+        if count and count > 0 and inventory.canRemoveItem(itemName, count) then
+            local playerPed = GetPlayerPed(src)
+            if playerPed then
+                local playerCoords = GetEntityCoords(playerPed)
+                -- Player should not send coords that are too far away
+                if type(coords) == "vector3" and #(coords - playerCoords) < 3.0 then
+                    local playerHeading = GetEntityHeading(playerPed)
+                    local propCoords = vector4(coords.x, coords.y, coords.z, playerHeading)
+                    AVA.CreatePickup(propCoords, itemName, count)
+                    inventory.removeItem(itemName, count)
+                end
+            end
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("inventory_drop_not_enough_items"))
+        end
+    end
+end)
+
 RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
     local src = source
     if src == targetId then

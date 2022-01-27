@@ -37,6 +37,7 @@ client_scripts {
     "client/createchar.lua",
     "client/commands.lua",
     "client/inventories.lua",
+    "client/pickup.lua",
     "client/tweaks.lua",
     "client/vehicles.lua",
     "client/deaths.lua",
@@ -59,6 +60,7 @@ server_scripts {
     "server/routing_buckets.lua",
     "server/players.lua",
     "server/inventories.lua",
+    "server/pickup.lua",
     "server/licenses.lua",
 }
 

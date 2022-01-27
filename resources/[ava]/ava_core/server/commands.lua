@@ -434,6 +434,19 @@ end, GetString("remove_item_help"), {
     {name = "quantity", help = GetString("quantity")},
 })
 
+AVA.Commands.RegisterCommand("createpickup", "admin", function(source, args)
+    if type(args[1]) ~= "string" then
+        return
+    end
+
+    local playerPed = GetPlayerPed(source)
+    if playerPed then
+        local playerCoords = GetEntityCoords(playerPed)
+
+        AVA.CreatePickup(vector3(playerCoords.x, playerCoords.y, playerCoords.z - 1.0), args[1], type(args[2]) == "string" and tonumber(args[2]) or 1)
+    end
+end, GetString("create_pickup_help"), {{name = "itemName", help = GetString("item_name")}, {name = "quantity", help = GetString("quantity")}})
+
 -----------------------------------------
 --------------- Teleports ---------------
 -----------------------------------------
