@@ -73,6 +73,34 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         return false
     end
 
+    --- Automatically check how much the inventory can carry, and drop the item when it's too heavy
+    --- Only works with player inventories
+    ---@param name string
+    ---@param quantity number
+    ---@return boolean|nil "wether item was dropped or not"
+    self.addOrDropItem = function(name, quantity)
+        if quantity <= 0 or not self.playerSrc or not Items[name] then
+            return nil
+        end
+
+        local canTake = self.canTake(name)
+        if canTake >= quantity then
+            self.addItem(name, quantity)
+            return false
+        else
+            self.addItem(name, canTake)
+
+            -- Drop pickup
+            local playerPed = GetPlayerPed(self.playerSrc)
+            if playerPed then
+                local playerCoords = GetEntityCoords(playerPed)
+
+                AVA.CreatePickup(vector3(playerCoords.x, playerCoords.y, playerCoords.z - 1.0), name, quantity - canTake)
+            end
+            return true
+        end
+    end
+
     ---@return boolean success
     self.removeItem = function(name, quantity)
         if quantity <= 0 then
