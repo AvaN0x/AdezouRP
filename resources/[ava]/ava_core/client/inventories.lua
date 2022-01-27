@@ -217,7 +217,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         end)
                     end
                 end)
-                Items:AddButton(GetString("inventory_drop"), nil, nil, function(onSelected)
+                Items:AddButton(GetString("inventory_drop"), nil, {IsDisabled = AVA.Player.isInVehicle}, function(onSelected)
                     if onSelected then
                         local selectedItem = selectedItem
                         local count = tonumber(AVA.KeyboardInput(GetString("inventory_drop_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
@@ -236,22 +236,23 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         OpenMyInventory()
                     end
                 end)
-                Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        local selectedItem = selectedItem
-                        RequestAnimDict("pickup_object")
-                        while not HasAnimDictLoaded("pickup_object") do
-                            Wait(0)
+                Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), {IsDisabled = AVA.Player.isInVehicle},
+                    function(onSelected)
+                        if onSelected then
+                            local selectedItem = selectedItem
+                            RequestAnimDict("pickup_object")
+                            while not HasAnimDictLoaded("pickup_object") do
+                                Wait(0)
+                            end
+
+                            TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                            Wait(500)
+                            TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
+                            RemoveAnimDict("pickup_object")
+
+                            OpenMyInventory()
                         end
-
-                        TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
-                        Wait(500)
-                        TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
-                        RemoveAnimDict("pickup_object")
-
-                        OpenMyInventory()
-                    end
-                end)
+                    end)
             else
                 Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
                     if onSelected then
