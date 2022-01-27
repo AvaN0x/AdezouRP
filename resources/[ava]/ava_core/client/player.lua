@@ -20,6 +20,15 @@ AVA.Player.IsDead = false
 -- end)
 
 Citizen.CreateThread(function()
+    while true do
+        Wait(500)
+
+        AVA.Player.playerPed = PlayerPedId()
+        AVA.Player.playerCoords = GetEntityCoords(AVA.Player.playerPed)
+    end
+end)
+
+Citizen.CreateThread(function()
     while not AVA.Player.Data do
         Wait(10)
     end
@@ -27,15 +36,12 @@ Citizen.CreateThread(function()
     while true do
         Wait(AVAConfig.SavePlayerPedDataTimeout)
 
-        local playerPed = PlayerPedId()
-        local playerCoords = GetEntityCoords(playerPed)
-
-        if AVA.Player.Data.position ~= playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
-            TriggerServerEvent("ava_core:server:updatePosition", playerCoords)
-            AVA.Player.Data.position = playerCoords
+        if AVA.Player.Data.position ~= AVA.Player.playerCoords and AVA.Player.HasSpawned and not AVA.Player.CreatingChar then
+            AVA.Player.Data.position = AVA.Player.playerCoords
+            TriggerServerEvent("ava_core:server:updatePosition", AVA.Player.Data.position)
         end
 
-        local playerHealth = GetEntityHealth(playerPed)
+        local playerHealth = GetEntityHealth(AVA.Player.playerPed)
         if AVA.Player.Data.health ~= playerHealth then
             TriggerServerEvent("ava_core:server:updateHealth", playerHealth)
             AVA.Player.Data.health = playerHealth
@@ -50,16 +56,16 @@ local function SpawnPlayer()
     while not AVA.Player.Loaded do
         Wait(10)
     end
-    local playerPed = PlayerPedId()
+    AVA.Player.playerPed = PlayerPedId()
 
     -- dprint(AVA.Player.Data.position)
     if AVA.Player.FirstSpawn then
         if AVA.Player.Data.position then
             RequestCollisionAtCoord(AVA.Player.Data.position)
-            SetEntityCoords(playerPed, AVA.Player.Data.position)
-            SetEntityHeading(playerPed, 0.0)
+            SetEntityCoords(AVA.Player.playerPed, AVA.Player.Data.position)
+            SetEntityHeading(AVA.Player.playerPed, 0.0)
         end
-        SetEntityHealth(playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(playerPed))
+        SetEntityHealth(AVA.Player.playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(AVA.Player.playerPed))
 
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
 
@@ -68,9 +74,9 @@ local function SpawnPlayer()
         -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
         -- Use return value to get a valid skin array
         if AVA.Player.Data.skin then
-            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(playerPed, AVA.Player.Data.skin)
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, AVA.Player.Data.skin)
         else
-            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(playerPed, {gender = 0})
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, {gender = 0})
         end
     end
 

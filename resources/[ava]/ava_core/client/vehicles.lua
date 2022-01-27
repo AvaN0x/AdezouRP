@@ -28,12 +28,10 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local playerPed = PlayerPedId()
-
-        local vehicle = GetVehiclePedIsUsing(playerPed, false)
+        local vehicle = GetVehiclePedIsUsing(AVA.Player.playerPed, false)
         -- check if player is not in a vehicle, or if the vehicle the player is using is different from the last one
         if (not isInVehicle or vehicle ~= currentVehicle) and not AVA.Player.IsDead and vehicle ~= 0 then
-            if vehicle == GetVehiclePedIsIn(playerPed) then
+            if vehicle == GetVehiclePedIsIn(AVA.Player.playerPed) then
                 isEnteringVehicle = false
                 currentEnteringVehicle = 0
                 isInVehicle = true
@@ -45,7 +43,7 @@ Citizen.CreateThread(function()
                 end
 
                 currentVehicle = vehicle
-                currentSeat = GetPedVehicleSeat(playerPed, currentVehicle)
+                currentSeat = GetPedVehicleSeat(AVA.Player.playerPed, currentVehicle)
 
                 -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(currentVehicle), currentSeat)
                 TriggerEvent("ava_core:client:enteredVehicle", currentVehicle, currentSeat)
@@ -54,7 +52,7 @@ Citizen.CreateThread(function()
             elseif currentEnteringVehicle ~= vehicle then
                 isEnteringVehicle = true
                 currentEnteringVehicle = vehicle
-                local seat = GetSeatPedIsTryingToEnter(playerPed)
+                local seat = GetSeatPedIsTryingToEnter(AVA.Player.playerPed)
 
                 -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(currentEnteringVehicle), currentSeat)
                 TriggerEvent("ava_core:client:enteringVehicle", currentEnteringVehicle, seat)

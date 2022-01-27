@@ -24,9 +24,6 @@ local closestPickupIndex = nil
 Citizen.CreateThread(function()
     while true do
         Wait(1000)
-        local playerPed = PlayerPedId()
-        local playerCoords = GetEntityCoords(playerPed)
-
         local newPickups = {}
         local newClosestPickupIndex = nil
         local closestDistance = nil
@@ -35,7 +32,7 @@ Citizen.CreateThread(function()
             local object = GetObjectIndexFromEntityIndex(v)
             if Entity(object).state.pickup then
                 local propCoords = GetEntityCoords(object)
-                local distance = #(playerCoords - propCoords)
+                local distance = #(AVA.Player.playerCoords - propCoords)
                 if distance < 2.5 then
                     count = count + 1
                     local _, max = GetModelDimensions(GetEntityModel(object))
@@ -87,7 +84,7 @@ Citizen.CreateThread(function()
                     Wait(0)
                 end
 
-                TaskPlayAnim(PlayerPedId(), "pickup_object", "pickup_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "pickup_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
                 Wait(500)
                 if AVA.TriggerServerCallback("ava_core:server:pickup", pickup.id) then
                     PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)

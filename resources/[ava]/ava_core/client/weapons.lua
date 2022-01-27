@@ -89,10 +89,9 @@ end
 Citizen.CreateThread(function()
     while true do
         Wait(0)
-        local playerPed = PlayerPedId()
-        if IsPedShooting(playerPed) then
-            local weaponHash = GetSelectedPedWeapon(playerPed)
-            local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
+        if IsPedShooting(AVA.Player.playerPed) then
+            local weaponHash = GetSelectedPedWeapon(AVA.Player.playerPed)
+            local ammoTypeHash = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weaponHash)
             local ammoItemName = ammoTypesToItem[ammoTypeHash]
             if ammoItemName and ammoItemName ~= "infinite" then
                 shotAmmo(ammoItemName)

@@ -19,62 +19,60 @@ end
 Citizen.CreateThread(function()
     local isDead = false
 
+    local player = PlayerId()
+    while not NetworkIsPlayerActive(player) do
+        Wait(0)
+    end
     while true do
         Wait(0)
+        local pedFatallyInjured<const> = IsPedFatallyInjured(AVA.Player.playerPed)
 
-        local player = PlayerId()
+        if pedFatallyInjured and not isDead then
+            isDead = true
+            local data = {}
+            local deathCoords = GetEntityCoords(AVA.Player.playerPed)
 
-        if NetworkIsPlayerActive(player) then
-            local playerPed = PlayerPedId()
-            local pedFatallyInjured<const> = IsPedFatallyInjured(playerPed)
+            local killerPed, killerWeapon = NetworkGetEntityKillerOfPlayer(player)
+            local killerId = NetworkGetPlayerIndexFromPed(killerPed)
 
-            if pedFatallyInjured and not isDead then
-                isDead = true
-                local data = {}
-                local deathCoords = GetEntityCoords(playerPed)
+            killerId = (killerPed ~= AVA.Player.playerPed and killerId ~= nil and NetworkIsPlayerActive(killerId)) and GetPlayerServerId(killerId) or -1
 
-                local killerPed, killerWeapon = NetworkGetEntityKillerOfPlayer(player)
-                local killerId = NetworkGetPlayerIndexFromPed(killerPed)
+            if killerPed == AVA.Player.playerPed or killerPed == -1 or killerId == -1 then
+                data = {killedByPlayer = false, coords = deathCoords, cause = GetPedCauseOfDeath(AVA.Player.playerPed)}
+            else
+                local killerCoords = GetEntityCoords(killerPed)
 
-                killerId = (killerPed ~= playerPed and killerId ~= nil and NetworkIsPlayerActive(killerId)) and GetPlayerServerId(killerId) or -1
-
-                if killerPed == playerPed or killerPed == -1 or killerId == -1 then
-                    data = {killedByPlayer = false, coords = deathCoords, cause = GetPedCauseOfDeath(playerPed)}
-                else
-                    local killerCoords = GetEntityCoords(killerPed)
-
-                    local killerInVeh = false
-                    local killerVehModel, killerVehSeat
-                    if GetEntityType(killerPed) == 1 then -- killer is a ped
-                        local killerVehicle = GetVehiclePedIsUsing(killerPed)
-                        if killerVehicle ~= 0 then
-                            killerInVeh = true
-                            killerVehModel = GetEntityModel(GetVehiclePedIsUsing(killerPed))
-                            killerVehSeat = GetPedVehicleSeat(killerPed, killerVehicle)
-                        else
-                            killerInVeh = false
-                        end
+                local killerInVeh = false
+                local killerVehModel, killerVehSeat
+                if GetEntityType(killerPed) == 1 then -- killer is a ped
+                    local killerVehicle = GetVehiclePedIsUsing(killerPed)
+                    if killerVehicle ~= 0 then
+                        killerInVeh = true
+                        killerVehModel = GetEntityModel(GetVehiclePedIsUsing(killerPed))
+                        killerVehSeat = GetPedVehicleSeat(killerPed, killerVehicle)
+                    else
+                        killerInVeh = false
                     end
-
-                    data = {
-                        killedByPlayer = true,
-                        coords = deathCoords,
-                        weapon = killerWeapon,
-                        killerCoords = killerCoords,
-                        killerId = killerId,
-                        killerInVeh = killerInVeh,
-                        killerVehModel = killerVehModel,
-                        killerVehSeat = killerVehSeat,
-                    }
-
                 end
 
-                TriggerEvent("ava_core:client:playerDeath", data)
-                TriggerServerEvent("ava_core:server:playerDeath", data)
+                data = {
+                    killedByPlayer = true,
+                    coords = deathCoords,
+                    weapon = killerWeapon,
+                    killerCoords = killerCoords,
+                    killerId = killerId,
+                    killerInVeh = killerInVeh,
+                    killerVehModel = killerVehModel,
+                    killerVehSeat = killerVehSeat,
+                }
 
-            elseif not pedFatallyInjured and isDead then
-                isDead = false
             end
+
+            TriggerEvent("ava_core:client:playerDeath", data)
+            TriggerServerEvent("ava_core:server:playerDeath", data)
+
+        elseif not pedFatallyInjured and isDead then
+            isDead = false
         end
     end
 end)

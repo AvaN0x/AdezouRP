@@ -116,7 +116,7 @@ if AVAConfig.ClearMissionrowPD then
             Wait(10)
         end
         while true do
-            Wait((#(AVA.Player.Data.position - missionrowPDCoords) < 80) and 0 or 1000)
+            Wait((#(AVA.Player.Data.position - missionrowPDCoords) < 100) and 0 or 1000)
             ClearAreaOfPeds(missionrowPDCoords.x, missionrowPDCoords.y, missionrowPDCoords.z, 80.0, 1)
 
             ClearAreaOfVehicles(missionrowPDCoords.x, missionrowPDCoords.y, missionrowPDCoords.z, 300, false, false, false, false, false)
