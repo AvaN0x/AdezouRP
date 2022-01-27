@@ -21,10 +21,10 @@ AVA.Player.IsDead = false
 
 Citizen.CreateThread(function()
     while true do
-        Wait(500)
-
         AVA.Player.playerPed = PlayerPedId()
         AVA.Player.playerCoords = GetEntityCoords(AVA.Player.playerPed)
+
+        Wait(500)
     end
 end)
 
@@ -41,7 +41,7 @@ Citizen.CreateThread(function()
             TriggerServerEvent("ava_core:server:updatePosition", AVA.Player.Data.position)
         end
 
-        local playerHealth = GetEntityHealth(AVA.Player.playerPed)
+        local playerHealth = AVA.Player.IsDead == true and 0 or GetEntityHealth(AVA.Player.playerPed)
         if AVA.Player.Data.health ~= playerHealth then
             TriggerServerEvent("ava_core:server:updateHealth", playerHealth)
             AVA.Player.Data.health = playerHealth
@@ -69,7 +69,6 @@ local function SpawnPlayer()
 
         exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
 
-        dprint(json.encode(AVA.Player.Data.skin))
         AVA.Player.FirstSpawn = false
         -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
         -- Use return value to get a valid skin array
@@ -92,7 +91,6 @@ end)
 
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     AVA.Player.Data = data
-    dprint("jobs", json.encode(AVA.Player.Data.jobs))
     dprint(AVA.Player.Data.citizenId, json.encode(AVA.Player.Data.character), AVA.Player.Data.position)
     AVA.Player.Loaded = true
     dprint("AVA.Player.Loaded loaded")
@@ -147,7 +145,7 @@ AddEventHandler("ava_core:client:playerDeath", function()
     -- RespawnPlayer()
 end)
 AddEventHandler("ava_core:client:playerRevived", function()
-    IsDead = false
+    AVA.Player.IsDead = false
 end)
 
 ------------------------------------
