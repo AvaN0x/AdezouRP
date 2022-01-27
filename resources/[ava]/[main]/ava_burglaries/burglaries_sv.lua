@@ -26,11 +26,10 @@ exports.ava_core:RegisterServerCallback("ava_burglaries:server:searchFurniture",
     local itemName = AVAConfig.StealableItems[math.random(#AVAConfig.StealableItems)]
     -- 80% chance to find an item
     if math.random(0, 100) < 80 then
-        if inventory.canAddItem(itemName, 1) then
-            inventory.addItem(itemName, 1)
-            return true
+        if inventory.addOrDropItem(itemName, 1) then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_carry"))
         end
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_carry"))
+        return true
     end
     return false
 end)
