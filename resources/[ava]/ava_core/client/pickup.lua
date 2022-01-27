@@ -20,20 +20,17 @@ end
 exports("GeneratePickupCoords", AVA.GeneratePickupCoords)
 
 local pickups = {}
-local closestPickupIndex = nil
 Citizen.CreateThread(function()
     while true do
-        Wait(1000)
+        Wait(5000)
         local newPickups = {}
-        local newClosestPickupIndex = nil
-        local closestDistance = nil
         local count = 0
         for _, v in ipairs(GetGamePool("CObject")) do
             local object = GetObjectIndexFromEntityIndex(v)
             if Entity(object).state.pickup then
                 local propCoords = GetEntityCoords(object)
                 local distance = #(AVA.Player.playerCoords - propCoords)
-                if distance < 2.5 then
+                if distance < 15.0 then
                     count = count + 1
                     local _, max = GetModelDimensions(GetEntityModel(object))
 
@@ -41,58 +38,84 @@ Citizen.CreateThread(function()
                         id = Entity(object).state.id,
                         coords = vector3(propCoords.x, propCoords.y, propCoords.z + max.z + 0.1),
                         label = Entity(object).state.label,
+                        object = object,
                     }
-                    if distance < 2.0 and (not closestDistance or distance < closestDistance) then
-                        closestDistance = distance
-                        newClosestPickupIndex = count
-                    end
                 end
-
             end
         end
         pickups = newPickups
-        closestPickupIndex = newClosestPickupIndex
     end
 end)
 
+local closestPickupIndex = nil
 Citizen.CreateThread(function()
     local r<const>, g<const>, b<const> = 115, 173, 93
     local closestR<const>, closestG<const>, closestB<const> = 255, 133, 85
     while true do
         local wait = 500
+
+        local newClosestPickupIndex = nil
+        local closestDistance = nil
         for i = 1, #pickups do
-            wait = 0
             local pickup<const> = pickups[i]
-            local isClosest<const> = i == closestPickupIndex
-            local coords<const> = pickup.coords
-            if isClosest then
-                AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, "[E] " .. pickup.label, nil, closestR, closestG, closestB)
-                DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, closestR, closestG, closestB, 155, false, false,
-                    2, true, false, false, false)
-            else
-                AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, pickup.label, nil, r, g, b)
-                DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, r, g, b, 155, false, false, 2, true, false, false,
-                    false)
+            if pickup and not pickup.hidden then
+                if not DoesEntityExist(pickup.object) then
+                    pickup.hidden = true
+                end
+                local coords<const> = pickup.coords
+                local distance<const> = #(AVA.Player.playerCoords - coords)
+                if distance < 3.0 then
+                    wait = 0
+                    -- If is the actual closest
+                    if i == closestPickupIndex then
+                        AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, "[E] " .. pickup.label, nil, closestR, closestG, closestB)
+                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, closestR, closestG, closestB, 155, false,
+                            false, 2, true, false, false, false)
+                    else
+                        AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, pickup.label, nil, r, g, b, 196)
+                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, r, g, b, 155, false, false, 2, true,
+                            false, false, false)
+                    end
+
+                    -- If is valid to be the next closest
+                    if distance < 1.2 and (not closestDistance or distance < closestDistance) then
+                        closestDistance = distance
+                        newClosestPickupIndex = i
+                    end
+                end
             end
         end
         if closestPickupIndex and IsControlJustPressed(0, 38) and (GetGameTimer() - TimeLastAction) > 500 then -- E
             TimeLastAction = GetGameTimer()
-            local pickup = pickups[closestPickupIndex]
-            Citizen.CreateThread(function()
-                RequestAnimDict("pickup_object")
-                while not HasAnimDictLoaded("pickup_object") do
-                    Wait(0)
-                end
+            if pickups[closestPickupIndex] then
+                Citizen.CreateThread(function()
+                    RequestAnimDict("pickup_object")
+                    while not HasAnimDictLoaded("pickup_object") do
+                        Wait(0)
+                    end
 
-                TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "pickup_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
-                Wait(500)
-                if AVA.TriggerServerCallback("ava_core:server:pickup", pickup.id) then
-                    PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
-                end
+                    TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "pickup_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                    Wait(500)
+                    if AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
+                        PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+                    end
 
-                RemoveAnimDict("pickup_object")
-            end)
+                    RemoveAnimDict("pickup_object")
+
+                    -- mandatory wait! (might be less than 200 but it's not an issue)
+                    Wait(200)
+                    if pickups[closestPickupIndex] then
+                        if DoesEntityExist(pickups[closestPickupIndex].object) then
+                            pickups[closestPickupIndex].label = Entity(pickups[closestPickupIndex].object).state.label
+                        else
+                            pickups[closestPickupIndex].hidden = true
+                        end
+                    end
+                end)
+            end
         end
+
+        closestPickupIndex = newClosestPickupIndex
         Wait(wait)
     end
 end)
