@@ -3,15 +3,15 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 ---@type boolean
-local isEnteringVehicle = false
+AVA.Player.isEnteringVehicle = false
 ---@type entity vehicle
-local currentEnteringVehicle = 0
+AVA.Player.currentEnteringVehicle = 0
 ---@type boolean
-local isInVehicle = false
+AVA.Player.isInVehicle = false
 ---@type entity vehicle
-local currentVehicle = 0
+AVA.Player.currentVehicle = 0
 ---@type integer
-local currentSeat = 0
+AVA.Player.currentSeat = 0
 
 ---Get player seat index
 ---@param ped entity
@@ -30,50 +30,50 @@ Citizen.CreateThread(function()
     while true do
         local vehicle = GetVehiclePedIsUsing(AVA.Player.playerPed, false)
         -- check if player is not in a vehicle, or if the vehicle the player is using is different from the last one
-        if (not isInVehicle or vehicle ~= currentVehicle) and not AVA.Player.IsDead and vehicle ~= 0 then
+        if (not AVA.Player.isInVehicle or vehicle ~= AVA.Player.currentVehicle) and not AVA.Player.IsDead and vehicle ~= 0 then
             if vehicle == GetVehiclePedIsIn(AVA.Player.playerPed) then
-                isEnteringVehicle = false
-                currentEnteringVehicle = 0
-                isInVehicle = true
+                AVA.Player.isEnteringVehicle = false
+                AVA.Player.currentEnteringVehicle = 0
+                AVA.Player.isInVehicle = true
 
-                if currentVehicle ~= 0 then
-                    -- TriggerServerEvent("ava_core:server:leftVehicle", VehToNet(currentVehicle), currentSeat)
-                    TriggerEvent("ava_core:client:leftVehicle", currentVehicle, currentSeat)
-                    dprint("ava_core:client:leftVehicle", currentVehicle, currentSeat)
+                if AVA.Player.currentVehicle ~= 0 then
+                    -- TriggerServerEvent("ava_core:server:leftVehicle", VehToNet(AVA.Player.currentVehicle), AVA.Player.currentSeat)
+                    TriggerEvent("ava_core:client:leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
+                    dprint("ava_core:client:leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
                 end
 
-                currentVehicle = vehicle
-                currentSeat = GetPedVehicleSeat(AVA.Player.playerPed, currentVehicle)
+                AVA.Player.currentVehicle = vehicle
+                AVA.Player.currentSeat = GetPedVehicleSeat(AVA.Player.playerPed, AVA.Player.currentVehicle)
 
-                -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(currentVehicle), currentSeat)
-                TriggerEvent("ava_core:client:enteredVehicle", currentVehicle, currentSeat)
-                dprint("ava_core:client:enteredVehicle", currentVehicle, currentSeat)
+                -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(AVA.Player.currentVehicle), AVA.Player.currentSeat)
+                TriggerEvent("ava_core:client:enteredVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
+                dprint("ava_core:client:enteredVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
 
-            elseif currentEnteringVehicle ~= vehicle then
-                isEnteringVehicle = true
-                currentEnteringVehicle = vehicle
+            elseif AVA.Player.currentEnteringVehicle ~= vehicle then
+                AVA.Player.isEnteringVehicle = true
+                AVA.Player.currentEnteringVehicle = vehicle
                 local seat = GetSeatPedIsTryingToEnter(AVA.Player.playerPed)
 
-                -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(currentEnteringVehicle), currentSeat)
-                TriggerEvent("ava_core:client:enteringVehicle", currentEnteringVehicle, seat)
-                dprint("ava_core:client:enteringVehicle", currentEnteringVehicle, seat)
+                -- TriggerServerEvent("ava_core:server:enteredVehicle", VehToNet(AVA.Player.currentEnteringVehicle), AVA.Player.currentSeat)
+                TriggerEvent("ava_core:client:enteringVehicle", AVA.Player.currentEnteringVehicle, seat)
+                dprint("ava_core:client:enteringVehicle", AVA.Player.currentEnteringVehicle, seat)
             end
 
-        elseif isEnteringVehicle and (vehicle == 0 or AVA.Player.IsDead) then
-            -- TriggerServerEvent("ava_core:server:quitEnteringVehicle", VehToNet(currentEnteringVehicle))
-            TriggerEvent("ava_core:client:quitEnteringVehicle", currentEnteringVehicle)
-            dprint("ava_core:client:quitEnteringVehicle", currentEnteringVehicle)
+        elseif AVA.Player.isEnteringVehicle and (vehicle == 0 or AVA.Player.IsDead) then
+            -- TriggerServerEvent("ava_core:server:quitEnteringVehicle", VehToNet(AVA.Player.currentEnteringVehicle))
+            TriggerEvent("ava_core:client:quitEnteringVehicle", AVA.Player.currentEnteringVehicle)
+            dprint("ava_core:client:quitEnteringVehicle", AVA.Player.currentEnteringVehicle)
 
-            isEnteringVehicle = false
-            currentEnteringVehicle = 0
-        elseif isInVehicle and (vehicle == 0 or AVA.Player.IsDead) then
-            -- TriggerServerEvent("ava_core:server:leftVehicle", VehToNet(currentVehicle), currentSeat)
-            TriggerEvent("ava_core:client:leftVehicle", currentVehicle, currentSeat)
-            dprint("ava_core:client:leftVehicle", currentVehicle, currentSeat)
+            AVA.Player.isEnteringVehicle = false
+            AVA.Player.currentEnteringVehicle = 0
+        elseif AVA.Player.isInVehicle and (vehicle == 0 or AVA.Player.IsDead) then
+            -- TriggerServerEvent("ava_core:server:leftVehicle", VehToNet(AVA.Player.currentVehicle), AVA.Player.currentSeat)
+            TriggerEvent("ava_core:client:leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
+            dprint("ava_core:client:leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
 
-            isInVehicle = false
-            currentVehicle = 0
-            currentSeat = 0
+            AVA.Player.isInVehicle = false
+            AVA.Player.currentVehicle = 0
+            AVA.Player.currentSeat = 0
         end
         Wait(50)
     end
@@ -83,7 +83,7 @@ end)
 ---@return boolean "is in a vehicle"
 ---@return entity "current vehicle"
 ---@return integer "current seat"
-AVA.Player.IsInVehicle = function()
-    return currentVehicle ~= 0, currentVehicle, currentSeat
+AVA.Player.isInVehicle = function()
+    return AVA.Player.isInVehicle, AVA.Player.currentVehicle, AVA.Player.currentSeat
 end
-exports("IsPlayerInVehicle", AVA.Player.IsInVehicle)
+exports("IsPlayerInVehicle", AVA.Player.isInVehicle)

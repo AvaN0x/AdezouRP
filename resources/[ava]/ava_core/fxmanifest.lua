@@ -33,14 +33,14 @@ client_scripts {
     "shared/utils.lua",
     "client/utils.lua",
     "client/player.lua",
+    "client/vehicles.lua",
+    "client/deaths.lua",
     "client/weapons.lua",
     "client/createchar.lua",
     "client/commands.lua",
     "client/inventories.lua",
     "client/pickup.lua",
     "client/tweaks.lua",
-    "client/vehicles.lua",
-    "client/deaths.lua",
     "client/licenses.lua",
 }
 
