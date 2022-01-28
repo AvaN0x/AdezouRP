@@ -88,6 +88,16 @@ AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(
 end, GetString("tune_vehicle_pink_help"), {{name = "vehicle?", help = GetString("vehicle_name")}})
 
 ------------------------------------
+--------------- Anim ---------------
+------------------------------------
+
+AVA.Commands.RegisterCommand({"anim", "a"}, "admin", function(source, args)
+    if source > 0 and type(args[1]) == "string" and type(args[2]) == "string" then
+        TriggerClientEvent("ava_core:client:anim", source, args[1], args[2])
+    end
+end, GetString("anim_help"), {{name = "animdict", help = GetString("anim_dict")}, {name = "animname", help = GetString("anim_name")}})
+
+------------------------------------
 --------------- Kick ---------------
 ------------------------------------
 

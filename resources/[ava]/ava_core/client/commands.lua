@@ -178,6 +178,15 @@ RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
     end)
 end)
 
+------------------------------------
+--------------- Anim ---------------
+------------------------------------
+
+RegisterNetEvent("ava_core:client:anim", function(animDict, animName)
+    exports.ava_core:RequestAnimDict(animDict)
+    TaskPlayAnim(PlayerPedId(), animDict, animName, 8.0, -8.0, -1, 0, 0.0, false, false, false)
+    RemoveAnimDict(animDict)
+end)
 -----------------------------------------
 --------------- Teleports ---------------
 -----------------------------------------
