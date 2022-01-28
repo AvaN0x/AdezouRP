@@ -191,7 +191,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         local item = self.getItem(name)
         if item then
             local fromWeight = math.floor((self.max_weight - self.actual_weight) / Items[item.name].weight)
-            if self.playerSrc == nil and Items[item.name].limit then -- only check limit if player inventory
+            if self.playerSrc ~= nil and Items[item.name].limit then -- only check limit if player inventory
                 local fromLimit = Items[item.name].limit - item.quantity
                 if fromLimit < 0 then
                     fromLimit = 0
