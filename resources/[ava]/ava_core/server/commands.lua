@@ -569,7 +569,7 @@ AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args,
     TriggerClientEvent("ava_core:client:announce", -1, message)
 end, GetString("announce_help"), {{name = "message", help = GetString("message")}})
 
-AVA.Commands.RegisterCommand({"message", "pm", "dm"}, "mod", function(source, args, rawCommand, aPlayer)
+AVA.Commands.RegisterCommand({"message", "msg", "pm", "dm"}, "mod", function(source, args, rawCommand, aPlayer)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" -- or tostring(args[1]) == tostring(source)
     then
         return
