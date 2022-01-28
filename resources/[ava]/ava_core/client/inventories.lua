@@ -227,11 +227,11 @@ function RageUI.PoolMenus:AvaCoreInventory()
                             while not HasAnimDictLoaded("pickup_object") do
                                 Wait(0)
                             end
-
                             TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, -8, 1200, 16, 0, 0, 0, 0)
+                            RemoveAnimDict("pickup_object")
+
                             Wait(500)
                             TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, count)
-                            RemoveAnimDict("pickup_object")
                         end
                         OpenMyInventory()
                     end
@@ -244,11 +244,11 @@ function RageUI.PoolMenus:AvaCoreInventory()
                             while not HasAnimDictLoaded("pickup_object") do
                                 Wait(0)
                             end
-
                             TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                            RemoveAnimDict("pickup_object")
+
                             Wait(500)
                             TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
-                            RemoveAnimDict("pickup_object")
 
                             OpenMyInventory()
                         end

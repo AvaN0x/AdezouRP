@@ -51,6 +51,7 @@ RegisterNetEvent("ava_status:client:eat", function(prop_name)
 
             exports.ava_core:RequestAnimDict("mp_player_inteat@burger")
             TaskPlayAnim(playerPed, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 8.0, -8, -1, 49, 0, 0, 0, 0)
+            RemoveAnimDict("mp_player_inteat@burger")
 
             Wait(3000)
             IsAnimated = false
@@ -75,6 +76,7 @@ RegisterNetEvent("ava_status:client:drink", function(prop_name)
 
             exports.ava_core:RequestAnimDict("mp_player_intdrink")
             TaskPlayAnim(playerPed, "mp_player_intdrink", "loop_bottle", 8.0, -8, -1, 49, 0, 0, 0, 0)
+            RemoveAnimDict("mp_player_intdrink")
 
             Wait(3000)
             IsAnimated = false
@@ -99,6 +101,7 @@ RegisterNetEvent("ava_status:client:smoke", function()
 
             exports.ava_core:RequestAnimDict("amb@world_human_smoking_pot@male@base")
             TaskPlayAnim(playerPed, "amb@world_human_smoking_pot@male@base", "base", 8.0, -8, -1, 49, 0, 0, 0, 0)
+            RemoveAnimDict("amb@world_human_smoking_pot@male@base")
 
             SetLongAnimated(prop)
 
@@ -116,10 +119,11 @@ RegisterNetEvent("ava_status:client:takePill", function()
             local playerPed = PlayerPedId()
 
             exports.ava_core:RequestAnimDict("mp_player_intdrink")
-
             TaskPlayAnim(playerPed, "mp_player_intdrink", "loop_bottle", 8.0, -8, -1, 49, 0, 0, 0, 0)
+            RemoveAnimDict("mp_player_intdrink")
 
             Citizen.Wait(1000)
+
             IsAnimated = false
             ClearPedSecondaryTask(playerPed)
         end)

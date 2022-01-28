@@ -27,6 +27,7 @@ AddEventHandler("ava_lock:client:dooranim", function()
     if not IsPedSittingInAnyVehicle(playerPed) then
         exports.ava_core:RequestAnimDict("anim@heists@keycard@")
         TaskPlayAnim(playerPed, "anim@heists@keycard@", "exit", 8.0, -8, 1200, 0, 0, 0, 0, 0)
+        RemoveAnimDict("anim@heists@keycard@")
 
         Wait(1200)
         ClearPedSecondaryTask(playerPed)

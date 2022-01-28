@@ -54,6 +54,7 @@ local function StartCharCreator()
         Wait(10)
     end
     TaskPlayAnim(playerPed, "mp_character_creation@customise@male_a", "intro", 1.0, 1.0, 4000, 0, 1, 0, 0, 0)
+    RemoveAnimDict("mp_character_creation@customise@male_a")
 
     Wait(5000)
 

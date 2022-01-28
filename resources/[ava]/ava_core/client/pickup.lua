@@ -94,14 +94,13 @@ Citizen.CreateThread(function()
                     while not HasAnimDictLoaded("pickup_object") do
                         Wait(0)
                     end
-
                     TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "pickup_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                    RemoveAnimDict("pickup_object")
+
                     Wait(500)
                     if AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
                         PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
                     end
-
-                    RemoveAnimDict("pickup_object")
 
                     -- mandatory wait! (might be less than 200 but it's not an issue)
                     Wait(200)

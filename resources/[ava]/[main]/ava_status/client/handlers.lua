@@ -49,14 +49,17 @@ StatusFunctions["drunk"] = function(value, percent, playerHealth, newHealth)
                 if stage == 0 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@slightlydrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@slightlydrunk", true)
+                    RemoveAnimDict("move_m@drunk@slightlydrunk")
                     ShakeGameplayCam("DRUNK_SHAKE", 1.0)
                 elseif stage == 1 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@moderatedrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@moderatedrunk", true)
+                    RemoveAnimDict("move_m@drunk@moderatedrunk")
                     ShakeGameplayCam("DRUNK_SHAKE", 1.5)
                 elseif stage == 2 then
                     exports.ava_core:RequestAnimDict("move_m@drunk@verydrunk")
                     SetPedMovementClipset(playerPed, "move_m@drunk@verydrunk", true)
+                    RemoveAnimDict("move_m@drunk@verydrunk")
                     ShakeGameplayCam("DRUNK_SHAKE", 2.0)
                 end
 
@@ -139,6 +142,7 @@ StatusFunctions["injured"] = function(value, percent, playerHealth, newHealth)
 
                 exports.ava_core:RequestAnimDict("move_injured_generic")
                 SetPedMovementClipset(playerPed, "move_injured_generic", true)
+                RemoveAnimDict("move_injured_generic")
 
                 if stage == 0 and InjuredStage == 1 then
                     -- If previous was 1 and actual is 0

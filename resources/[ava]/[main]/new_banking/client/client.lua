@@ -63,10 +63,12 @@ Citizen.CreateThread(function()
                     ClearPedTasksImmediately(playerPed)
                     exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@enter")
                     TaskPlayAnim(playerPed, "amb@prop_human_atm@male@enter", "enter", 8.0, -8, 4000, 0, 0, 0, 0, 0)
+                    RemoveAnimDict("amb@prop_human_atm@male@enter")
                     Citizen.Wait(4000)
 
                     exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@base")
                     TaskPlayAnim(playerPed, "amb@prop_human_atm@male@base", "base", 8.0, 8, -1, 1, 0, 0, 0, 0)
+                    RemoveAnimDict("amb@prop_human_atm@male@base")
                     Citizen.Wait(1000)
 
                     OpenBank()
@@ -95,6 +97,8 @@ function CloseBank()
         local playerPed = PlayerPedId()
         exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@exit")
         TaskPlayAnim(playerPed, "amb@prop_human_atm@male@exit", "exit", 8.0, -8, 7000, 0, 0, 0, 0, 0)
+        RemoveAnimDict("amb@prop_human_atm@male@exit")
+
         Citizen.Wait(7000)
 
         ClearPedTasksImmediately(playerPed)

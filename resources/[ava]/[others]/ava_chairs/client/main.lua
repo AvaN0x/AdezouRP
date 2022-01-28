@@ -87,8 +87,9 @@ function Animation()
         while not HasAnimDictLoaded(anim.dict) do
             Citizen.Wait(0)
         end
-
         TaskPlayAnim(playerPed, anim.dict, anim.anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
+        RemoveAnimDict(anim.dict)
+
         FreezeEntityPosition(playerPed, true)
     else
         TaskStartScenarioAtPosition(playerPed, anim.scenario, chair.x, chair.y, chair.z, chair.heading, 0, true, true)

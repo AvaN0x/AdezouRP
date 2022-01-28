@@ -75,6 +75,7 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
                         break
                     end
                 end
+                RemoveAnimDict("missheist_jewel")
 
                 ClearPedTasks(playerPed)
                 if hasFinishedAnimation then
