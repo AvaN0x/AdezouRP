@@ -11,6 +11,8 @@ AVAConfig.DisableVehicleRocketBoost = true -- 351
 AVAConfig.DisableBikeWings = false -- 354
 AVAConfig.DisableVehicleTransform = false -- 357
 
+AVAConfig.DisableBikeHelmet = true
+
 AVAConfig.LockNPCVehicles = true
 AVAConfig.LockPercentage = 0.5
 AVAConfig.AlwaysLockedVehicles = {

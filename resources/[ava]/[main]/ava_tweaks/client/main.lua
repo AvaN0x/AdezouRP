@@ -201,6 +201,10 @@ AddEventHandler("ava_core:client:enteredVehicle", function(vehicle, seat)
         print("SetEntityAsMissionEntity(vehicle)")
         SetEntityAsMissionEntity(vehicle)
     end
+
+    if AVAConfig.DisableBikeHelmet then
+        SetPedConfigFlag(PlayerPedId(), 35, false) -- CPED_CONFIG_FLAG_UseHelmet 
+    end
 end)
 AddEventHandler("ava_core:client:leftVehicle", function(vehicle)
     playerVehicle = 0
