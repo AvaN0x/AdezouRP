@@ -14,6 +14,10 @@ exports.ava_core:RegisterCommand("noclip", "admin", function(source, args)
     TriggerClientEvent("ava_personalmenu:client:toggleNoclip", source)
 end, GetString("admin_menu_noclip_subtitle"))
 
+exports.ava_core:RegisterCommand("cleararea", "admin", function(source, args)
+    TriggerClientEvent("ava_personalmenu:client:clearArea", source)
+end, GetString("admin_menu_cleararea_subtitle"))
+
 exports.ava_core:RegisterCommand("showhash", "admin", function(source, args)
     TriggerClientEvent("ava_personalmenu:client:toggleShowHash", source)
 end, GetString("dev_menu_showhash_subtitle"))
@@ -25,3 +29,4 @@ end, GetString("dev_menu_showcoords_subtitle"))
 exports.ava_core:RegisterCommand("showcoordshelper", "admin", function(source, args)
     TriggerClientEvent("ava_personalmenu:client:toggleShowCoordsHelper", source)
 end, GetString("dev_menu_showcoordshelper_subtitle"))
+

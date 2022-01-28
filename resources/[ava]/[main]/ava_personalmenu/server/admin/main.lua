@@ -19,6 +19,7 @@ local requiredPerms<const> = {
     playersoptions = {playerblips = true, playertags = true},
     tpcoords = true,
     tpwaypoint = true,
+    cleararea = true,
     chars = true,
     dev = {showhash = true, showcoordshelper = true, showcoords = true},
     noclip = true,

@@ -104,6 +104,8 @@
     "admin_menu_noclip_accelerate": "Accélerer",
     "admin_menu_noclip_up_down": "Monter / Descendre",
     "admin_menu_noclip_move": "Se déplacer",
+    "admin_menu_cleararea": "Clear area",
+    "admin_menu_cleararea_subtitle": "Clear la zone",
     "admin_menu_vehicles": "Véhicules",
     "admin_menu_vehicles_subtitle": "Gestion de véhicules",
     "routing_bucket_different": "Routing Bucket différent.",

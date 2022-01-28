@@ -64,6 +64,14 @@ function RageUI.PoolMenus:AdminMenu()
                 end)
             end
             if perms.chars then
+                Items:AddButton(GetString("admin_menu_cleararea"), GetString("admin_menu_cleararea_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                    function(onSelected)
+                        if onSelected then
+                            ExecuteCommand("cleararea")
+                        end
+                    end)
+            end
+            if perms.chars then
                 Items:AddButton(GetString("admin_menu_chars"), GetString("admin_menu_chars_subtitle"), {
                     RightBadge = function()
                         return {BadgeDictionary = "mpleaderboard", BadgeTexture = "leaderboard_male_icon"}
@@ -257,3 +265,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
     end)
 end)
 
+RegisterNetEvent("ava_personalmenu:client:clearArea", function()
+    local coords = GetEntityCoords(PlayerPedId(), true)
+    ClearAreaLeaveVehicleHealth(coords.x, coords.y, coords.z, 150.0, true, true, true, true)
+end)
