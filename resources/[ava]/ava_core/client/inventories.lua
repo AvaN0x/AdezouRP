@@ -165,7 +165,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
             SetSortingIndex(sortIndex < (#SortIndexes - 1) and (sortIndex + 1) or 0)
         end
 
-        if AVAConfig.InventoryMoneyOnTop then
+        if AVAConfig.InventoryMoneyOnTop and InventoryTopElements then
             for i = 1, #InventoryTopElements, 1 do
                 local element = InventoryTopElements[i]
                 Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
@@ -176,13 +176,15 @@ function RageUI.PoolMenus:AvaCoreInventory()
             end
         end
 
-        for i = 1, #InventoryElements, 1 do
-            local element = InventoryElements[i]
-            Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
-                if onSelected then
-                    SelectItem(element.item)
-                end
-            end, ItemSelectedMenu)
+        if InventoryElements then
+            for i = 1, #InventoryElements, 1 do
+                local element = InventoryElements[i]
+                Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
+                    if onSelected then
+                        SelectItem(element.item)
+                    end
+                end, ItemSelectedMenu)
+            end
         end
     end)
 
