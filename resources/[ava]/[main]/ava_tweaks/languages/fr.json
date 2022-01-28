@@ -16,5 +16,6 @@
     "explosion": "Explosion",
     "gas": "Gas",
     "burn": "Feu",
-    "drown": "Noyade"
+    "drown": "Noyade",
+    "mutesiren": "Rendre les sirenes muettes"
 }

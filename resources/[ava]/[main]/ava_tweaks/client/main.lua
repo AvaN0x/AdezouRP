@@ -135,12 +135,11 @@ local vehicleClassDisableAirControl = {
     [19] = false, -- military
 }
 
-local function Loop(value, vehicle)
+local function Loop(value, vehicle, seat)
     -- change come values to make the actual or next loop work
     if value then
         playerVehicle = vehicle
-        disableAirControl = AVAConfig.DisableAirControl and GetPedInVehicleSeat(vehicle, -1) == PlayerPedId()
-                                and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
+        disableAirControl = AVAConfig.DisableAirControl and seat == -1 and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
     end
 
     if value and inLoop then
