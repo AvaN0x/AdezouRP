@@ -27,7 +27,8 @@ Citizen.CreateThread(function()
         local count = 0
         for _, v in ipairs(GetGamePool("CObject")) do
             local object = GetObjectIndexFromEntityIndex(v)
-            if Entity(object).state.pickup then
+            local entity = Entity(object)
+            if entity.state.pickup then
                 local propCoords = GetEntityCoords(object)
                 local distance = #(AVA.Player.playerCoords - propCoords)
                 if distance < 15.0 then
@@ -35,9 +36,9 @@ Citizen.CreateThread(function()
                     local _, max = GetModelDimensions(GetEntityModel(object))
 
                     newPickups[count] = {
-                        id = Entity(object).state.id,
+                        id = entity.state.id,
                         coords = vector3(propCoords.x, propCoords.y, propCoords.z + max.z + 0.1),
-                        label = Entity(object).state.label,
+                        label = entity.state.label,
                         object = object,
                     }
                 end
