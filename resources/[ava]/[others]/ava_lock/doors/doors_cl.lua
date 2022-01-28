@@ -264,31 +264,19 @@ function FindClosestDoor()
     return nil
 end
 
-local closestDoor = nil
-
-RegisterNetEvent("ava_lockpick:onUse")
-AddEventHandler("ava_lockpick:onUse", function()
-    closestDoor = nil
-    closestDoor = FindClosestDoor()
-    if closestDoor then
-        local playerPed = PlayerPedId()
-        TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
-        TriggerEvent("avan0x_lockpicking:StartLockPicking")
+RegisterNetEvent("ava_items:client:useLockpick", function()
+    local closestDoor = FindClosestDoor()
+    if not closestDoor then
+        return
     end
-end)
 
-RegisterNetEvent("avan0x_lockpicking:LockpickingComplete")
-AddEventHandler("avan0x_lockpicking:LockpickingComplete", function(result)
     local playerPed = PlayerPedId()
+    TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+    local minigameSuccess<const> = exports.ava_lockpicking:StartMinigame()
     ClearPedTasksImmediately(playerPed)
-    if result and closestDoor then
-        CurrentAction = "lockpick"
-        if CurrentAction ~= nil then
-            closestDoor.door.locked = not closestDoor.door.locked
-            TriggerServerEvent("ava_doors:updateState", closestDoor.name, closestDoor.door.locked)
-        end
 
-        CurrentAction = nil
-        closestDoor = nil
+    if minigameSuccess then
+        closestDoor.door.locked = not closestDoor.door.locked
+        TriggerServerEvent("ava_doors:updateState", closestDoor.name, closestDoor.door.locked)
     end
 end)

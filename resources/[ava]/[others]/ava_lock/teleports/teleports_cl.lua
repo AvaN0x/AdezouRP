@@ -150,27 +150,20 @@ function FindClosestTeleport()
     return nil
 end
 
-local closestTeleport = nil
-
-RegisterNetEvent("ava_lockpick:onUse")
-AddEventHandler("ava_lockpick:onUse", function()
-    closestTeleport = nil
-    closestTeleport = FindClosestTeleport()
-    if closestTeleport then
-        local playerPed = PlayerPedId()
-        TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
-        TriggerEvent("avan0x_lockpicking:StartLockPicking")
+RegisterNetEvent("ava_items:client:useLockpick", function()
+    local closestTeleport = FindClosestTeleport()
+    if not closestTeleport then
+        return
     end
-end)
 
-RegisterNetEvent("avan0x_lockpicking:LockpickingComplete")
-AddEventHandler("avan0x_lockpicking:LockpickingComplete", function(result)
     local playerPed = PlayerPedId()
+    TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+    local minigameSuccess<const> = exports.ava_lockpicking:StartMinigame()
     ClearPedTasksImmediately(playerPed)
-    if result and closestTeleport then
+
+    if minigameSuccess then
         closestTeleport.teleport.locked = not closestTeleport.teleport.locked
         TriggerServerEvent("ava_teleports:updateState", closestTeleport.name, closestTeleport.teleport.locked)
-
-        closestTeleport = nil
     end
 end)
+
