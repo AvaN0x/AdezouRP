@@ -208,7 +208,7 @@
         "closeInv": true,
         "noIcon": true
     },
-    "bproof_vest": {
+    "bodyarmor": {
         "label": "Gilet pare balles",
         "weight": 5000,
         "limit": 4,

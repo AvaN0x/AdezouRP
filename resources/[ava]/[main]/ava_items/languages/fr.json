@@ -1,4 +1,8 @@
 {
     "lockpick_success": "Tu as cassé le verrou",
-    "lockpick_fail": "Tu n'as pas réussi à casser le verrou"
+    "lockpick_fail": "Tu n'as pas réussi à casser le verrou",
+    "bodyarmor_equip": "Vous avez équipé un gilet",
+    "bodyarmor_equip_progressbar": "Mets le gilet",
+    "bodyarmor_unequip": "Vous avez enlevé un gilet",
+    "bodyarmor_unequip_progressbar": "Enlève le gilet"
 }
