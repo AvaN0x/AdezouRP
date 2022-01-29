@@ -419,19 +419,24 @@ Citizen.CreateThread(function()
     end
 end)
 
--- Load both islands on minimap
+---Handle the minimap loading and unloading
 CreateThread(function()
     while true do
         local wait = 500
         if IsPauseMenuActive() and not IsMinimapInInterior() then
+            -- If the player is in the pause menu and not looking at an interior minimap
             if isCayoMinimapLoaded then
+                -- If the minimap was loaded with SetToggleMinimapHeistIsland, then we disable it
                 isCayoMinimapLoaded = false
                 SetToggleMinimapHeistIsland(false)
             end
+            -- We force load the cayo perico minimap
             SetRadarAsExteriorThisFrame()
             SetRadarAsInteriorThisFrame(GetHashKey("h4_fake_islandx"), 4700.0, -5145.0, 0, 0)
             wait = 0
+
         elseif not isCayoMinimapLoaded and isCayoLoaded then
+            -- If the minimap is not loaded with SetToggleMinimapHeistIsland and the player is close to cayo perico, then we load it
             isCayoMinimapLoaded = true
             SetToggleMinimapHeistIsland(true)
         end
