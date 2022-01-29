@@ -8,7 +8,7 @@ AddEventHandler('avan0x_dealer:Sold', function(item,price,count)
 	while not xPlayer do xPlayer = ESX.GetPlayerFromId(source); Citizen.Wait(0); end
 	local iItem = xPlayer.getInventoryItem(item)
 	local iCount = iItem.count
-	if iCount and iCount >= count then
+	if iCount and iCount >= count and count > 0 then
 		xPlayer.removeInventoryItem(item, count)
 		xPlayer.addAccountMoney('black_money', count * price)
 		TriggerClientEvent('esx:showNotification', xPlayer.source, "Vous avez vendu " .. count .. " " .. iItem.label .. " pour $" .. (count * price) .. ".")
