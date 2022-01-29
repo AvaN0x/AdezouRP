@@ -2,7 +2,10 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local ConfigBlips = {{Coord = vector3(783.37, -1867.88, 28.26), Sprite = 777, Colour = 0, Scale = 0.8, Name = "LS Car Meet"}}
+local ConfigBlips = {
+    {Coord = vector3(783.37, -1867.88, 0.0), Sprite = 777, Colour = 0, Scale = 0.8, Name = "LS Car Meet"},
+    {Coord = vector3(5943.0, -6272.0, 0.0), Sprite = 575, Colour = 0, Scale = 0.0, Name = "Cayo Perico"},
+}
 local placedBlips = {}
 
 Citizen.CreateThread(function()
