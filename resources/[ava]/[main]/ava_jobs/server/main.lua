@@ -55,16 +55,6 @@ function isInService(source, jobName)
     return (CoreJobs[jobName] and jobsServices[jobName]) and jobsServices[jobName][tostring(source)] == true or false
 end
 exports("isInService", isInService)
-
----Check if a player is in service or has a job
----@param source any
----@param jobName string
----@return boolean
-function isInServiceOrHasJob(source, jobName)
-    local aPlayer = exports.ava_core:GetPlayer(source)
-    return isInService(source, jobName) or aPlayer.hasJob(jobName)
-end
-exports("isInServiceOrHasJob", isInServiceOrHasJob)
 -- #endregion
 
 ----------------
