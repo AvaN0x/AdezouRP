@@ -62,29 +62,39 @@ end)
 ----------------------------------------
 
 AVA.Commands.RegisterCommand({"spawnvehicle", "vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
-    if type(args[1]) == "string" then
+    if source > 0 and type(args[1]) == "string" then
         TriggerClientEvent("ava_core:client:spawnVehicle", source, args[1])
     end
 end, GetString("spawn_vehicle_help"), {{name = "vehicle", help = GetString("vehicle_name")}})
 
 AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
-    TriggerClientEvent("ava_core:client:deleteVehicle", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:deleteVehicle", source)
+    end
 end, GetString("delete_vehicle_help"))
 
 AVA.Commands.RegisterCommand({"repairvehicle", "repair", "r"}, "admin", function(source, args)
-    TriggerClientEvent("ava_core:client:repairVehicle", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:repairVehicle", source)
+    end
 end, GetString("repair_vehicle_help"))
 
 AVA.Commands.RegisterCommand({"flipvehicle", "flipv"}, "admin", function(source, args)
-    TriggerClientEvent("ava_core:client:flipVehicle", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:flipVehicle", source)
+    end
 end, GetString("flip_vehicle_help"))
 
 AVA.Commands.RegisterCommand({"tpnearestvehicle", "tpv"}, "admin", function(source, args)
-    TriggerClientEvent("ava_core:client:tpNearestVehicle", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:tpNearestVehicle", source)
+    end
 end, GetString("tpnearestvehicle_help"))
 
 AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(source, args)
-    TriggerClientEvent("ava_core:client:tuneVehiclePink", source, args[1])
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:tuneVehiclePink", source, args[1])
+    end
 end, GetString("tune_vehicle_pink_help"), {{name = "vehicle?", help = GetString("vehicle_name")}})
 
 ------------------------------------
@@ -516,8 +526,10 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
 end, GetString("summon_help"), {{name = "player", help = GetString("player_id")}})
 
 AVA.Commands.RegisterCommand({"tpwaypoint", "tpw", "tpmarker", "tpm"}, "admin", function(source, args)
-    TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
-    return GetString("tpwaypoint_log")
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
+        return GetString("tpwaypoint_log")
+    end
 end, GetString("tpwaypoint_help"))
 
 ------------------------------------
@@ -525,11 +537,15 @@ end, GetString("tpwaypoint_help"))
 ------------------------------------
 
 AVA.Commands.RegisterCommand("getskin", "", function(source, args)
-    TriggerClientEvent("ava_core:client:getskin", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:getskin", source)
+    end
 end, GetString("getskin_help"))
 
 AVA.Commands.RegisterCommand("getclothes", "", function(source, args)
-    TriggerClientEvent("ava_core:client:getclothes", source)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:getclothes", source)
+    end
 end, GetString("getclothes_help"))
 
 --------------------------------------
@@ -550,7 +566,9 @@ AVA.Commands.RegisterCommand("save", "", function(_, _, _, aPlayer)
 end)
 
 AVA.Commands.RegisterCommand("myid", "", function(source, args)
-    TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
+    if source > 0 then
+        TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
+    end
 end, GetString("myid_help"))
 
 AVA.Commands.RegisterCommand("phonenumber", "", function(source, args, rawCommand, aPlayer)
