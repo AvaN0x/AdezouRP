@@ -98,7 +98,7 @@ Citizen.CreateThread(function()
                     RemoveAnimDict("pickup_object")
 
                     Wait(500)
-                    if AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
+                    if pickups[closestPickupIndex] and AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
                         PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
                     end
 
