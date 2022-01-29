@@ -11,3 +11,4 @@ AVAConfig.Interval = 2000
 -- In ms
 AVAConfig.SaveTimeout = 15 * 1000
 
+AVAConfig.SaveMinInterval = 500

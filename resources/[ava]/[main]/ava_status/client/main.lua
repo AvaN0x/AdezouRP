@@ -100,10 +100,24 @@ Citizen.CreateThread(function()
     end
 end)
 
+local waitingToSave = false
+local function saveStatusWithMaxCooldown()
+    -- Only enter if we are not waiting to save
+    if not waitingToSave then
+        -- prevent spamming the server for data
+        -- this will do it with at least AVAConfig.SaveMinInterval between each calls
+        waitingToSave = true
+        Citizen.CreateThread(function()
+            Wait(AVAConfig.SaveMinInterval)
+            waitingToSave = false
+            TriggerServerEvent("ava_status:server:update", PlayerStatus)
+        end)
+    end
+end
 Citizen.CreateThread(function()
     while true do
         Wait(AVAConfig.SaveTimeout)
-        TriggerServerEvent("ava_status:server:update", PlayerStatus)
+        saveStatusWithMaxCooldown()
     end
 end)
 RegisterNetEvent("ava_core:client:selectChar", function()
@@ -122,6 +136,7 @@ RegisterNetEvent("ava_status:client:set", function(name, value)
     if index ~= nil and type(value) == "number" and value >= 0 then
         PlayerStatus[index].value = aPlayerStatus[name].set(value)
         TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
+        saveStatusWithMaxCooldown()
     end
 end)
 
@@ -130,6 +145,7 @@ RegisterNetEvent("ava_status:client:add", function(name, value)
     if index ~= nil and type(value) == "number" then
         PlayerStatus[index].value = aPlayerStatus[name].add(value)
         TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
+        saveStatusWithMaxCooldown()
     end
 end)
 
@@ -138,6 +154,7 @@ RegisterNetEvent("ava_status:client:remove", function(name, value)
     if index ~= nil and type(value) == "number" then
         PlayerStatus[index].value = aPlayerStatus[name].remove(value)
         TriggerEvent("ava_hud:client:updateStatus", name, aPlayerStatus[name].getPercent())
+        saveStatusWithMaxCooldown()
     end
 end)
 
