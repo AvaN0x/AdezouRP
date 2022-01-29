@@ -4,5 +4,17 @@
     "bodyarmor_equip": "Vous avez équipé un gilet",
     "bodyarmor_equip_progressbar": "Mets le gilet",
     "bodyarmor_unequip": "Vous avez enlevé un gilet",
-    "bodyarmor_unequip_progressbar": "Enlève le gilet"
+    "bodyarmor_unequip_progressbar": "Enlève le gilet",
+    "repairkits_cant_inside_vehicle": "Vous ne pouvez pas faire cela dans un véhicule",
+    "repairkits_repairkit_using": "Réparation du moteur",
+    "repairkits_repairkit_done": "Moteur réparé",
+    "repairkits_bodykit_done": "Carrosserie réparée",
+    "repairkits_bodykit_using": "Réparation de la carrosserie",
+    "repairkits_rag_using": "Nettoyage en cours",
+    "repairkits_rag_done": "Véhicule nettoyé",
+    "repairkits_blowtorch_using": "Ouverture du véhicule",
+    "repairkits_blowtorch_not_closed": "Ce véhicule est déjà ouvert.",
+    "repairkits_blowtorch_done": "Véhicule ouvert",
+    "repairkits_cant_use_now": "Vous ne pouvez pas utiliser cela actuellement.",
+    "repairkits_need_to_be_mechanic": "Vous devez être un mécanicien pour pouvoir faire ceci."
 }

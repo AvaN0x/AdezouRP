@@ -47,7 +47,7 @@ equipBodyArmor = function(playerPed)
             Wait(500)
             if GetPedArmour(PlayerPedId()) == 0 then
                 removeBodyArmor(PlayerPedId())
-                TriggerServerEvent("ava_items:server:removeBodyArmor")
+                TriggerServerEvent("ava_items:server:bodyarmor:remove")
             end
         end
     end)
