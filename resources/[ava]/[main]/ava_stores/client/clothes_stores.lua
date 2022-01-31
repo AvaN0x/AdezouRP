@@ -75,6 +75,22 @@ TattoosMenu.Closed = function()
     exports.ava_mp_peds:reloadPedOverlays(playerPed)
 end
 
+-- #region cancel player movement inside of menus
+-- The menu will enable some controls himself, we can simply remove the controls from it that will be re-enabled so they can't anymore
+local function RemovePlayerMovementFromMenu(menu)
+    if menu and menu.Controls and menu.Controls.Enabled and menu.Controls.Enabled.Keyboard then
+        for i = #menu.Controls.Enabled.Keyboard, 1, -1 do
+            local control<const> = menu.Controls.Enabled.Keyboard[i]
+            if control[2] == 30 or control[2] == 31 then
+                table.remove(menu.Controls.Enabled.Keyboard, i)
+            end
+        end
+    end
+end
+RemovePlayerMovementFromMenu(MainClothesMenu)
+RemovePlayerMovementFromMenu(TattoosMenu)
+-- #endregion cancel player movement inside of menus
+
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         if SavePlayerSkin then
@@ -90,8 +106,6 @@ function CloseClothesMenu()
     HideSkinElementsOnItem()
 
     RemoveMenuCam()
-    SetEntityVelocity(playerPed, 1.0, 1.0, 1.0)
-    SetPedGravity(playerPed, 1.0, 1.0, 1.0)
     TaskClearLookAt(playerPed)
 
     if playerChangedGender then
@@ -171,7 +185,7 @@ RegisterNetEvent("ava_stores:client:OpenClothesMenu", OpenClothesMenu)
 
 -- #region cam stuff
 local cam = nil
-local camInstructionalButton<const> = {GetControlGroupInstructionalButton(0, 25, 0), GetString("cm_move_cam")}
+local camInstructionalButton<const> = {GetControlGroupInstructionalButton(0, 0, 0), GetString("cm_move_cam")}
 function AddMenuCam()
     MainClothesMenu:AddInstructionButton(camInstructionalButton)
     MainClothesMenu.EnableMouse = true
@@ -280,8 +294,6 @@ function InsideOfClothesMenuControls()
     TaskLookAtCoord(playerPed, GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7), 2000, 0, 2)
 
     -- Prevent player from moving too far
-    SetEntityVelocity(playerPed, 0.0, 0.0, 0.0)
-    SetPedGravity(playerPed, 0.0, 0.0, 0.0)
 
     DisableControlAction(0, 24, true) -- INPUT_ATTACK
     DisableControlAction(0, 25, true) -- INPUT_AIM
@@ -303,6 +315,9 @@ function InsideOfClothesMenuControls()
     DisableControlAction(0, 164, true) -- INPUT_SELECT_WEAPON_HEAVY
     DisableControlAction(0, 165, true) -- INPUT_SELECT_WEAPON_SPECIAL
 
+    DisableControlAction(0, 30, true) -- INPUT_MOVE_LR
+    DisableControlAction(0, 31, true) -- INPUT_MOVE_UD
+
     -- Toggle cam
     if IsDisabledControlJustReleased(0, 26) then
         if cam then
@@ -314,23 +329,23 @@ function InsideOfClothesMenuControls()
 
     -- Cam is on? allow the user to move the cam
     if cam then
-        DisableControlAction(0, 108, true) -- INPUT_VEH_FLY_ROLL_LEFT_ONLY left
-        DisableControlAction(0, 109, true) -- INPUT_VEH_FLY_ROLL_RIGHT_ONLY right
-        DisableControlAction(0, 110, true) -- INPUT_VEH_FLY_PITCH_UD down
-        DisableControlAction(0, 111, true) -- INPUT_VEH_FLY_PITCH_UP_ONLY up
+        DisableControlAction(0, 34, true) -- INPUT_MOVE_LEFT_ONLY left
+        DisableControlAction(0, 35, true) -- INPUT_MOVE_RIGHT_ONLY right
+        DisableControlAction(0, 33, true) -- INPUT_MOVE_DOWN_ONLY down
+        DisableControlAction(0, 32, true) -- INPUT_MOVE_UP_ONLY up
 
-        if IsDisabledControlPressed(0, 111) and camVerticalOffset < camMaxVertical then
+        if IsDisabledControlPressed(0, 32) and camVerticalOffset < camMaxVertical then
             camVerticalOffset = camVerticalOffset + 0.01
             SetCamCoords()
-        elseif IsDisabledControlPressed(0, 110) and camVerticalOffset > camMinVertical then
+        elseif IsDisabledControlPressed(0, 33) and camVerticalOffset > camMinVertical then
             camVerticalOffset = camVerticalOffset - 0.01
             SetCamCoords()
         end
 
-        if IsDisabledControlPressed(0, 109) then
+        if IsDisabledControlPressed(0, 35) then
             camHorizontalOffset = camHorizontalOffset + 0.02
             SetCamCoords()
-        elseif IsDisabledControlPressed(0, 108) then
+        elseif IsDisabledControlPressed(0, 34) then
             camHorizontalOffset = camHorizontalOffset - 0.02
             SetCamCoords()
         end

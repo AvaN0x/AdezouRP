@@ -115,7 +115,6 @@ exports.ava_core:RegisterServerCallback("ava_stores:carwash:checkMoney", functio
         if aPlayer then
             local inventory = aPlayer.getInventory()
             local price = store.Carwash.Price or 80
-            print(inventory.getItem("cash").quantity)
             if inventory.canRemoveItem("cash", price) then
                 inventory.removeItem("cash", price)
                 return true
@@ -134,7 +133,6 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:checkMon
         if aPlayer then
             local inventory = aPlayer.getInventory()
             local price<const> = store.Price
-            print(inventory.getItem("cash").quantity)
             if price and inventory.canRemoveItem("cash", price) then
                 return true
             end
