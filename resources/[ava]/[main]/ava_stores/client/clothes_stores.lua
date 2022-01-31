@@ -79,6 +79,8 @@ end
 -- The menu will enable some controls himself, we can simply remove the controls from it that will be re-enabled so they can't anymore
 local function RemovePlayerMovementFromMenu(menu)
     if menu and menu.Controls and menu.Controls.Enabled and menu.Controls.Enabled.Keyboard then
+        -- Copy table to avoid modifying the original
+        menu.Controls = json.decode(json.encode(RageUI.Settings.Controls))
         for i = #menu.Controls.Enabled.Keyboard, 1, -1 do
             local control<const> = menu.Controls.Enabled.Keyboard[i]
             if control[2] == 30 or control[2] == 31 then
