@@ -68,8 +68,7 @@ function DrawText3D(x, y, z, text)
     end
 end
 
-RegisterNetEvent("ava_chairs:sitDown")
-AddEventHandler("ava_chairs:sitDown", function()
+RegisterNetEvent("ava_chairs:sitDown", function()
     Animation()
 end)
 
@@ -106,15 +105,21 @@ function StandUp()
     SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z - 0.98)
 end
 
-local playerDied = function()
+AddEventHandler("ava_core:client:playerDeath", function()
     if isSitting then
         StandUp()
     end
     IsDead = true
-end
-AddEventHandler("baseevents:onPlayerDied", playerDied)
-AddEventHandler("baseevents:onPlayerKilled", playerDied)
+end)
 
 AddEventHandler("playerSpawned", function(spawn)
     IsDead = false
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        if isSitting then
+            StandUp()
+        end
+    end
 end)

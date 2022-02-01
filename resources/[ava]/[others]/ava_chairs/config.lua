@@ -15,7 +15,7 @@ Config.Props = {
     {hash = GetHashKey("v_corp_offchair"), offX = 0.0, offY = 0.05, offZ = -0.4, offHeading = 180.0, type = "Chair"},
     {hash = -853526657, offX = 0.0, offY = 0.05, offZ = -1.0, offHeading = 180.0, type = "Chair"}, -- ls custom office
     {hash = 558578166, offX = 0.0, offY = 0.05, offZ = -0.9, offHeading = 180.0, type = "Chair"},
-
+    {hash = 1840174940, offX = 0.0, offY = 0.05, offZ = -0.1, offHeading = 180.0, type = "Chair"}, -- gabz vu bar
 }
 
 Config.Anims = {
