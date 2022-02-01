@@ -187,6 +187,44 @@ RegisterNetEvent("ava_core:client:anim", function(animDict, animName)
     TaskPlayAnim(PlayerPedId(), animDict, animName, 8.0, -8.0, -1, 0, 0.0, false, false, false)
     RemoveAnimDict(animDict)
 end)
+
+-----------------------------------
+--------------- Ped ---------------
+-----------------------------------
+
+RegisterNetEvent("ava_core:client:setped", function(model)
+    local modelHash<const> = GetHashKey(model)
+
+    if IsModelValid(modelHash) and IsModelInCdimage(modelHash) then
+        AVA.Player.playerPed = PlayerPedId() -- safety
+        if GetEntityModel(AVA.Player.playerPed) ~= modelHash then
+            RequestModel(modelHash)
+            while not HasModelLoaded(modelHash) do
+                Citizen.Wait(0)
+            end
+            SetPlayerModel(PlayerId(), modelHash)
+            SetModelAsNoLongerNeeded(modelHash)
+
+            AVA.Player.playerPed = PlayerPedId() -- reload playerPed as it have changed
+            TriggerServerEvent("ava_core:server:reloadLoadout")
+
+            SetPedDefaultComponentVariation(AVA.Player.playerPed)
+            ClearAllPedProps(AVA.Player.playerPed)
+            ClearPedDecorations(AVA.Player.playerPed)
+            ClearPedFacialDecorations(AVA.Player.playerPed)
+        end
+    else
+        print("[AVA] Invalid model: " .. model .. " (modelHash: " .. modelHash .. ")")
+    end
+end)
+RegisterNetEvent("ava_core:client:resetped", function()
+    Citizen.CreateThread(function()
+        exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, AVA.Player.Data.skin)
+        AVA.Player.playerPed = PlayerPedId()
+        TriggerServerEvent("ava_core:server:reloadLoadout")
+    end)
+end)
+
 -----------------------------------------
 --------------- Teleports ---------------
 -----------------------------------------

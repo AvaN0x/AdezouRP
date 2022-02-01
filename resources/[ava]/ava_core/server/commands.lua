@@ -467,6 +467,36 @@ AVA.Commands.RegisterCommand("createpickup", "admin", function(source, args)
     end
 end, GetString("create_pickup_help"), {{name = "itemName", help = GetString("item_name")}, {name = "quantity", help = GetString("quantity")}})
 
+-----------------------------------
+--------------- Ped ---------------
+-----------------------------------
+
+exports.ava_core:RegisterCommand("setped", "admin", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) == "string" and type(args[2]) == "string" then
+        local src = args[1] == "0" and source or tonumber(args[1])
+        if src > 0 then
+            local aTargetPlayer = AVA.Players.GetPlayer(src)
+            if aTargetPlayer then
+                TriggerClientEvent("ava_core:client:setped", src, args[2])
+                return GetString("setped_log", aTargetPlayer.getDiscordTag(), args[2], aPlayer and aPlayer.getDiscordTag() or "console")
+            end
+        end
+    end
+end, GetString("setped_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "pedName", help = GetString("ped_name")}})
+
+exports.ava_core:RegisterCommand("resetped", "admin", function(source, args, rawCommand, aPlayer)
+    if type(args[1]) == "string" and args[1] ~= "0" and args[1] ~= tostring(source) then
+        local aTargetPlayer = AVA.Players.GetPlayer(args[1])
+        if aTargetPlayer then
+            TriggerClientEvent("ava_core:client:resetped", args[1])
+            return GetString("resetped_log", aTargetPlayer.getDiscordTag(), aPlayer and aPlayer.getDiscordTag() or "console")
+        end
+    elseif aPlayer then
+        TriggerClientEvent("ava_core:client:resetped", source)
+        return GetString("resetped_log", aPlayer.getDiscordTag(), aPlayer.getDiscordTag())
+    end
+end, GetString("resetped_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+
 -----------------------------------------
 --------------- Teleports ---------------
 -----------------------------------------
