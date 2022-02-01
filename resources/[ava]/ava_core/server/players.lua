@@ -804,25 +804,44 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
-        local playerItems = aPlayer.getInventory().items
-        local TabHasValue<const> = AVA.Utils.TableHasValue
-        local Items<const> = AVAConfig.Items
-        local WeaponsTypes<const> = AVAConfig.WeaponsTypes
         local playerPed = GetPlayerPed(src)
         if not playerPed then
             return
         end
+        local playerItems = aPlayer.getInventory().items
+        local TabHasValue<const> = AVA.Utils.TableHasValue
+        local Items<const> = AVAConfig.Items
+        local WeaponsTypes<const> = AVAConfig.WeaponsTypes
+
+        -- Used to set all ammo counts at the end
+        local playerWeapons = {}
+        local weaponCount = 0
+        local playerAmmos = {}
+
         -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " all weapons ^9removed^0")
         RemoveAllPedWeapons(playerPed, true)
         for i = 1, #playerItems do
             local item = playerItems[i]
             if item and item.quantity > 0 then
                 local cfgItem = Items[item.name]
-                if cfgItem and TabHasValue(WeaponsTypes, cfgItem.type) then
-                    -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
-                    aPlayer.addWeapon(item.name, item.quantity)
+                if cfgItem then
+                    if TabHasValue(WeaponsTypes, cfgItem.type) then
+                        -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
+                        if aPlayer.addWeapon(item.name, true) then
+                            weaponCount = weaponCount + 1
+                            playerWeapons[weaponCount] = GetHashKey(item.name)
+                            if cfgItem.type == "throwable" then
+                                playerAmmos[item.name] = item.quantity
+                            end
+                        end
+                    elseif cfgItem.type == "ammo" then
+                        playerAmmos[item.name] = item.quantity
+                    end
                 end
             end
+        end
+        if weaponCount > 0 then
+            TriggerClientEvent("ava_core:client:setLoadoutAmmos", src, playerWeapons, playerAmmos)
         end
     end
 end)

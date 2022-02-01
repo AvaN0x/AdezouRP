@@ -100,21 +100,41 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent("ava_core:client:weaponAdded", function(weaponHash)
-    local playerPed = PlayerPedId()
-    local ammoTypeHash = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
-    local ammoItemName = ammoTypesToItem[ammoTypeHash]
+RegisterNetEvent("ava_core:client:weaponCheckAmmos", function(weaponHash)
+    if IsWeaponValid(weaponHash) then
+        local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weaponHash)
+        local ammoItemName = ammoTypesToItem[ammoTypeHash]
 
-    if ammoItemName and ammoItemName ~= "infinite" then
-        local ammoCount = exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", ammoItemName)
-        if ammoCount then
-            -- dprint("UPDATE AMMO", weaponHash, ammoItemName, ammoCount)
-            SetPedAmmoByType(playerPed, ammoTypeHash, ammoCount)
+        if ammoItemName and ammoItemName ~= "infinite" then
+            local ammoCount = exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", ammoItemName)
+            if ammoCount then
+                -- dprint("UPDATE AMMO", weaponHash, ammoItemName, ammoCount)
+                SetPedAmmoByType(AVA.Player.playerPed, ammoTypeHash, ammoCount)
+            end
         end
     end
 end)
 
 RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, ammoCount)
     -- dprint("UPDATE AMMO", ammoTypesToItem[ammoTypeHash] or "NOT_FOUND", ammoCount)
-    SetPedAmmoByType(PlayerPedId(), ammoTypeHash, ammoCount)
+    SetPedAmmoByType(AVA.Player.playerPed, ammoTypeHash, ammoCount)
+end)
+
+RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
+    -- mandatory wait!
+    Wait(50)
+    for i = 1, #weapons do
+        if IsWeaponValid(weapons[i]) then
+            local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
+            local ammoItemName = ammoTypesToItem[ammoTypeHash]
+
+            if ammoItemName and ammoItemName ~= "infinite" then
+                local ammoCount = ammos[ammoItemName] or 0
+                if ammoCount then
+                    -- dprint("UPDATE AMMO", weapons[i], ammoItemName, ammoCount)
+                    SetPedAmmoByType(AVA.Player.playerPed, ammoTypeHash, ammoCount)
+                end
+            end
+        end
+    end
 end)

@@ -538,7 +538,11 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         return false
     end
 
-    self.addWeapon = function(weaponName)
+    ---Add a weapon to a player
+    ---@param weaponName string
+    ---@param doNotCheckAmmos boolean "will not trigger the client event that will check the ammos"
+    ---@return boolean success
+    self.addWeapon = function(weaponName, doNotCheckAmmos)
         if type(weaponName) ~= "string" then
             return false
         end
@@ -556,13 +560,14 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     if weapon.components then
                         -- TODO weapon components
                     end
-
-                    TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
                 else
                     GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
                     self.loadout[#self.loadout + 1] = {hash = tonumber(weaponHash)}
+                end
 
-                    TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
+                TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
+                if not doNotCheckAmmos then
+                    TriggerClientEvent("ava_core:client:weaponCheckAmmos", self.src, weaponHash)
                 end
 
                 return true
