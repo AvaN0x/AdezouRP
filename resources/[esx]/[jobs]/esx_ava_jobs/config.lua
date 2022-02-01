@@ -505,8 +505,8 @@ Config.Jobs = {
         BuyZones = {
             BuyItems = {
                 Items = {
-                    {name = 'bproof_vest', price = 15000},
-                    {name = 'handcuffs', price = 10000},
+                    {name = 'bproof_vest', price = 1500},
+                    {name = 'handcuffs', price = 1000},
                     {name = 'balisegps', price = 2000},
                 },
                 Pos = vector3(812.26, -2153.55, 28.64),
