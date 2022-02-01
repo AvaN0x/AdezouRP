@@ -274,42 +274,42 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_door_orangesolid"), -- Dressing
+            objHash = GetHashKey("ba_prop_door_club_edgy_generic"), -- Dressing
             objYaw = -60.0,
             objCoords = vector3(113.9822, -1297.43, 29.41868),
-            textCoords = vector3(113.38, -1296.39, 29.42),
+            textCoords = vector3(114.00, -1297.33, 29.35),
             authorizedJobs = {"unicorn"},
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_roc_door2"), -- Bureau 2
+            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- DJ booth
+            objYaw = 210.0,
+            objCoords = vector3(128.0708, -1279.346, 29.43696),
+            textCoords = vector3(127.05, -1279.97, 29.43),
+            authorizedJobs = {"unicorn"},
+            locked = true,
+        },
+        {
+            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- Opposite door to the dj booth
+            objYaw = 30.0,
+            objCoords = vector3(133.26, -1287.69, 29.43),
+            textCoords = vector3(133.26, -1287.69, 29.43),
+            authorizedJobs = {"unicorn"},
+            locked = true,
+        },
+        {
+            objHash = GetHashKey("ba_prop_door_club_edgy_generic"), -- Office
             objYaw = 30.0,
             objCoords = vector3(99.08321, -1293.701, 29.41868),
-            textCoords = vector3(100.12, -1293.10, 29.42),
+            textCoords = vector3(100.12, -1293.10, 29.35),
             authorizedJobs = {"unicorn"},
             locked = true,
         },
         {
-            objHash = GetHashKey("prop_magenta_door"), -- Derrière
+            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- Backdoor
             objYaw = -150.0,
             objCoords = vector3(96.09197, -1284.854, 29.43878),
             textCoords = vector3(95.05, -1285.45, 29.44),
-            authorizedJobs = {"unicorn"},
-            locked = true,
-        },
-        {
-            objHash = GetHashKey("v_ilev_roc_door2"), -- porte mapping intérieur, accès bar
-            objYaw = 30.0,
-            objCoords = vector3(134.36, -1290.70, 29.27),
-            textCoords = vector3(134.88, -1290.45, 29.41),
-            authorizedJobs = {"unicorn"},
-            locked = true,
-        },
-        {
-            objHash = GetHashKey("v_ilev_roc_door2"), -- porte sur le coté
-            objYaw = -60.0,
-            objCoords = vector3(135.28, -1279.47, 29.42),
-            textCoords = vector3(135.70, -1279.78, 29.57),
             authorizedJobs = {"unicorn"},
             locked = true,
         },
