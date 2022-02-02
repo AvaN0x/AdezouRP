@@ -122,7 +122,7 @@ end)
 
 RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
     -- mandatory wait!
-    Wait(50)
+    Wait(100)
     for i = 1, #weapons do
         if IsWeaponValid(weapons[i]) then
             local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
