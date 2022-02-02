@@ -5,7 +5,7 @@
 PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("player_list"))
 PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("players_options"))
 local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, "", "player_name")
-local playersOptions = {{Name = "Gérer", task = "manage"}, {Name = "Spectate", task = "spec"}}
+local playersOptions = {{Name = GetString("player_manage"), task = "manage"}, {Name = GetString("player_spectate"), task = "spectate"}}
 local playerlistTaskIndex = 1
 PlayerListSubMenu.Closed = function()
     playerlistTaskIndex = 1
@@ -189,8 +189,8 @@ function PoolPlayerList()
                                 selectedPlayerData = playerData
                                 selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(playerData.id)) == PlayerId()
                                 PlayersManageSubMenu.Subtitle = playerData.n
-                            elseif task == "spec" then
-                                print("spec")
+                            elseif task == "spectate" then
+                                ExecuteCommand("spectate " .. playerData.id)
                             end
                         end
                     end, {PlayersManageSubMenu})
@@ -258,29 +258,38 @@ function PoolPlayerList()
                         end
                     end)
                 end
-                if perms.playerlist.kick then
-                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), nil, function(onSelected)
+                if perms.playerlist.spectate then
+                    Items:AddButton(GetString("player_spectate"), GetString("player_spectate_subtitle"), nil, function(onSelected)
                         if onSelected then
-                            local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
-                            if reason and reason ~= ""
-                                and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_kick_confirm_title"),
-                                    GetString("player_manage_kick_confirm_firstline", playerData.n), GetString("player_manage_kick_confirm_reason", reason)) then
-                                ExecuteCommand("kick " .. playerData.id .. " " .. reason)
-                            end
+                            ExecuteCommand("spectate " .. playerData.id)
                         end
                     end)
                 end
-                if perms.playerlist.ban then
-                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), nil, function(onSelected)
-                        if onSelected then
-                            local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
-                            if reason and reason ~= ""
-                                and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_ban_confirm_title"),
-                                    GetString("player_manage_ban_confirm_firstline", playerData.n), GetString("player_manage_ban_confirm_reason", reason)) then
-                                ExecuteCommand("ban " .. playerData.id .. " " .. reason)
+                if perms.playerlist.kick then
+                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                        function(onSelected)
+                            if onSelected then
+                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
+                                if reason and reason ~= ""
+                                    and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_kick_confirm_title"),
+                                        GetString("player_manage_kick_confirm_firstline", playerData.n), GetString("player_manage_kick_confirm_reason", reason)) then
+                                    ExecuteCommand("kick " .. playerData.id .. " " .. reason)
+                                end
                             end
-                        end
-                    end)
+                        end)
+                end
+                if perms.playerlist.ban then
+                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                        function(onSelected)
+                            if onSelected then
+                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
+                                if reason and reason ~= ""
+                                    and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_ban_confirm_title"),
+                                        GetString("player_manage_ban_confirm_firstline", playerData.n), GetString("player_manage_ban_confirm_reason", reason)) then
+                                    ExecuteCommand("ban " .. playerData.id .. " " .. reason)
+                                end
+                            end
+                        end)
                 end
             end
         end)

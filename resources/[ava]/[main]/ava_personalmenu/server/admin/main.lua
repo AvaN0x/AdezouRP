@@ -15,6 +15,7 @@ local requiredPerms<const> = {
         message = true,
         heal = true,
         revive = true,
+        spectate = true,
     },
     playersoptions = {playerblips = true, playertags = true},
     tpcoords = true,

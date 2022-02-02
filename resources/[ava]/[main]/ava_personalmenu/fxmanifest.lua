@@ -36,11 +36,12 @@ client_scripts {
     "client/admin/playerlist.lua",
     "client/admin/vehicles.lua",
     "client/admin/settings.lua",
+    "client/admin/spectate.lua",
 
     "client/admin/dev/main.lua",
 }
 
-server_scripts {"server/main.lua", "server/admin/main.lua", "server/admin/commands.lua"}
+server_scripts {"server/main.lua", "server/admin/main.lua", "server/admin/commands.lua", "server/admin/spectate.lua"}
 
 shared_scripts {"@ava_core/shared/language.lua"}
 
