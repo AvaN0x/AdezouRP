@@ -102,6 +102,13 @@ local localPlayerSkinSave = nil
 local NumHairColors<const> = GetNumHairColors()
 local NumMakeupColors<const> = GetNumMakeupColors()
 
+local function round(x)
+    if type(x) == "number" then
+        return math.floor(x + 0.5)
+    end
+    return x
+end
+
 -- Reset local skin to default values
 ---@return skin localSkin
 function reset()
@@ -117,8 +124,8 @@ reset()
 ---@return skin localSkin
 function resetClothes()
     for i = 1, #AVAConfig.clothesComponents do
-        local component = AVAConfig.clothesComponents[i]
-        localSkin[component] = AVAConfig.skinComponents[component].default or AVAConfig.skinComponents[component].min
+        local componentName<const> = AVAConfig.clothesComponents[i]
+        localSkin[componentName] = AVAConfig.skinComponents[componentName].default or AVAConfig.skinComponents[componentName].min
     end
     return localSkin
 end
@@ -252,7 +259,7 @@ function setPedSkin(ped, skin)
     if skin then
         for component, _ in pairs(AVAConfig.skinComponents) do
             if skin[component] then
-                localSkin[component] = skin[component]
+                localSkin[component] = round(skin[component])
                 if not shouldReloadOverlays and AVAConfig.ShouldReloadOverlay[component] then
                     shouldReloadOverlays = true
                 end
@@ -397,7 +404,7 @@ function setPedClothes(ped, skin)
         for i = 1, #AVAConfig.clothesComponents do
             local component<const> = AVAConfig.clothesComponents[i]
             if skin[component] then
-                localSkin[component] = skin[component]
+                localSkin[component] = round(skin[component])
             end
         end
     end
