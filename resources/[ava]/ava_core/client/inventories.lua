@@ -318,8 +318,3 @@ if AVAConfig.NPWD then
     end)
 end
 
-RegisterCommand("addtest", function()
-    TriggerServerEvent("ava_core:server:addtest")
-end)
-
-RegisterKeyMapping("addtest", "addtest", "keyboard", "F3")

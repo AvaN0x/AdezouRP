@@ -149,14 +149,3 @@ RegisterNetEvent("ava_core:server:takeItem", function(targetId, itemName, count)
         end
     end
 end)
-
-RegisterNetEvent("ava_core:server:addtest", function()
-    local src = source
-    local aPlayer = exports.ava_core:GetPlayer(src)
-    if aPlayer then
-        local inventory = aPlayer.inventory
-        for k, v in pairs(AVAConfig.Items) do
-            inventory.addItem(k, 1)
-        end
-    end
-end)
