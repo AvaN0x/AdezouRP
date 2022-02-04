@@ -121,21 +121,35 @@ RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, a
 end)
 
 RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
-    -- mandatory wait!
-    Wait(100)
-    while not NetworkIsSessionStarted() do
-        Wait(50)
-    end
+    AVA.Player.playerPed = PlayerPedId()
     for i = 1, #weapons do
         if IsWeaponValid(weapons[i]) then
-            local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
-            local ammoItemName = ammoTypesToItem[ammoTypeHash]
+            -- #region Wait for the player to get the weapon
+            local tryGetPedWeaponCount = 0
+            while not HasPedGotWeapon(AVA.Player.playerPed, weapons[i], false) do
+                -- Prevent infinite loop
+                if tryGetPedWeaponCount > 50 then
+                    break
+                end
+                tryGetPedWeaponCount = tryGetPedWeaponCount + 1
 
-            if ammoItemName and ammoItemName ~= "infinite" then
-                local ammoCount = ammos[ammoItemName] or 0
-                if ammoCount then
-                    -- dprint("UPDATE AMMO", weapons[i], ammoItemName, ammoCount)
-                    SetPedAmmoByType(AVA.Player.playerPed, ammoTypeHash, ammoCount)
+                Wait(50)
+                print("WAITING FOR WEAPON", weapons[i])
+            end
+            -- #endregion Wait for the player to get the weapon
+
+            if tryGetPedWeaponCount > 50 then
+                dprint("Failed to get ped weapon", weapons[i])
+            else
+                local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
+                local ammoItemName = ammoTypesToItem[ammoTypeHash]
+
+                if ammoItemName and ammoItemName ~= "infinite" then
+                    local ammoCount = ammos[ammoItemName] or 0
+                    if ammoCount then
+                        -- dprint("UPDATE AMMO", weapons[i], ammoItemName, ammoCount)
+                        SetPedAmmoByType(AVA.Player.playerPed, ammoTypeHash, ammoCount)
+                    end
                 end
             end
         end
