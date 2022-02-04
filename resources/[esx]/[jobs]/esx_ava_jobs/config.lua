@@ -1998,8 +1998,8 @@ Config.Jobs = {
                     {name = 'methpseudophedrine', quantity = 15}
                 },
                 PropHash = GetHashKey('prop_barrel_01a'),
-                Pos = vector3(1762.37, -1654.8, 112.68),
-                GroundCheckHeights = {112.0, 113.0},
+                Pos = vector3(584.86, -491.21, 24.75),
+                GroundCheckHeights = {23.0, 24.0, 24.0},
                 Radius = 5
             },
             MethaField = {
