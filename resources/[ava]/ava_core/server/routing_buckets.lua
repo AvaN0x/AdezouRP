@@ -33,7 +33,6 @@ AVA.RB.MovePlayerToRB = function(src, rb)
     if GetPlayerRoutingBucket(src) ~= rb then
         print("^5ID " .. src .. "^0 is moved in routing bucket ^3" .. tostring(rb) .. "^0")
         SetPlayerRoutingBucket(src, rb)
-        exports["pma-voice"]:updateRoutingBucket(src)
     end
 end
 exports("MovePlayerToRB", AVA.RB.MovePlayerToRB)
