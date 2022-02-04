@@ -121,6 +121,8 @@ RegisterNetEvent("ava_core:client:updateAmmoTypeCount", function(ammoTypeHash, a
 end)
 
 RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
+    -- mandatory wait!
+    Wait(100)
     AVA.Player.playerPed = PlayerPedId()
     for i = 1, #weapons do
         if IsWeaponValid(weapons[i]) then
