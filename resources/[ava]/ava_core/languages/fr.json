@@ -27,7 +27,7 @@
     "item_do_not_exist": "Le nom d'item n'existe pas",
     "item_type_do_not_exist": "Le nom de type d'item n'existe pas",
     "give_item_help": "Give item",
-    "give_all_item_help": "Give tous les items",
+    "give_all_items_help": "Give tous les items",
     "remove_item_help": "Remove item ou le nombre de cette item que la personne a sur celle",
     "create_pickup_help": "Créé un pickup aux pieds du joueur",
     "target_not_enough_place": "La personne n'a pas assez de place dans son inventaire.",

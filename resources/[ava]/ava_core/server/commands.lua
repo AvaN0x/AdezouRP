@@ -437,7 +437,7 @@ end, GetString("give_item_help"), {
     {name = "quantity?", help = GetString("quantity")},
 })
 
-AVA.Commands.RegisterCommand("giveallitem", "superadmin", function(source, args)
+AVA.Commands.RegisterCommand("giveallitems", "superadmin", function(source, args)
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] and (args[1] == "0" and source or args[1]) or source)
     if aTargetPlayer then
         local inventory = aTargetPlayer.inventory
@@ -445,7 +445,7 @@ AVA.Commands.RegisterCommand("giveallitem", "superadmin", function(source, args)
             inventory.addItem(k, 1)
         end
     end
-end, GetString("give_all_item_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("give_all_items_help"), {{name = "player", help = GetString("player_id_or_empty")}})
 
 AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
