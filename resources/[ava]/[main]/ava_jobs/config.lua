@@ -1537,9 +1537,9 @@ Config.Jobs = {
             PseudoField = {
                 Items = {{name = "methpseudophedrine", quantity = 15}},
                 PropHash = GetHashKey("prop_barrel_01a"),
-                Pos = vector3(1762.37, -1654.8, 112.68),
-                MinGroundHeight = 112,
-                MaxGroundHeight = 113,
+                Pos = vector3(584.86, -491.21, 24.75),
+                MinGroundHeight = 23,
+                MaxGroundHeight = 24,
                 Radius = 5,
             },
             MethaField = {
