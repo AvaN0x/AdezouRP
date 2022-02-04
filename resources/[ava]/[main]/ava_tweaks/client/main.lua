@@ -269,3 +269,14 @@ Citizen.CreateThread(function()
     SetStaticEmitterEnabled("LOS_SANTOS_AMMUNATION_GUN_RANGE", false)
     SetStaticEmitterEnabled("SE_AMMUNATION_CYPRESS_FLATS_GUN_RANGE", false)
 end)
+
+------------------------------------
+-------- Animation keybinds --------
+------------------------------------
+local onHandsup = false
+RegisterCommand("handsup", function()
+    onHandsup = not onHandsup
+    ExecuteCommand(onHandsup and "e handsup" or "e c")
+end)
+
+RegisterKeyMapping("handsup", GetString("handsup_help"), "keyboard", "M")
