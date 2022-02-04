@@ -136,7 +136,6 @@ RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
                 tryGetPedWeaponCount = tryGetPedWeaponCount + 1
 
                 Wait(50)
-                print("WAITING FOR WEAPON", weapons[i])
             end
             -- #endregion Wait for the player to get the weapon
 
