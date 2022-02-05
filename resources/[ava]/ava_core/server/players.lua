@@ -332,8 +332,8 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         and character.mugshot ~= "" then
         aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
         aPlayer.character = {
-            firstname = character.firstname,
-            lastname = character.lastname,
+            firstname = character.firstname:sub(0, 50),
+            lastname = character.lastname:sub(0, 50),
             sex = character.sex,
             birthdate = character.birthdate,
             mugshot = character.mugshot,

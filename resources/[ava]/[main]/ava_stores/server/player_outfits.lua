@@ -19,7 +19,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:savePlayerOutfit", fu
     end
 
     local id = MySQL.insert.await("INSERT INTO `ava_playeroutfits` (`citizenid`, `label`, `outfit`) VALUES (:citizenid, :label, :outfit)",
-        {citizenid = aPlayer.citizenId, label = label, outfit = json.encode(outfit)})
+        {citizenid = aPlayer.citizenId, label = label:sub(0, 50), outfit = json.encode(outfit)})
     return id
 end)
 
