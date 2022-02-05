@@ -10,6 +10,6 @@ lua54 "yes"
 
 server_only "yes"
 
-server_scripts {"server/main.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua"}
 
-dependencies {"ava_core"}
+dependencies {"ava_core", "oxmysql"}
