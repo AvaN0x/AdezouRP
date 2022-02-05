@@ -64,7 +64,7 @@ server_scripts {
     "server/licenses.lua",
 }
 
-dependencies {"RageUI", "ava_base64toruntime", "MugShotBase64", "ava_mp_peds"}
+dependencies {"oxmysql", "RageUI", "ava_base64toruntime", "MugShotBase64", "ava_mp_peds"}
 
 -- comment this line to disable debug prints
 ava_config "debug_prints" "yes"
