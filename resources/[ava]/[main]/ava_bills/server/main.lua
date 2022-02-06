@@ -90,23 +90,27 @@ end)
 
 -- #region getters
 local getPlayerBills = function(citizenId)
-    return MySQL.query.await("SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, `date` FROM `ava_bills` WHERE `player_to` = :citizenId",
+    return MySQL.query.await(
+        "SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `player_to` = :citizenId ORDER BY `date` DESC",
         {citizenId = citizenId}) or {}
 end
 exports("getPlayerBills", getPlayerBills)
 local getPlayerBillsSent = function(citizenId)
-    return MySQL.query.await("SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, `date` FROM `ava_bills` WHERE `player_from` = :citizenId",
+    return MySQL.query.await(
+        "SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `player_from` = :citizenId ORDER BY `date` DESC",
         {citizenId = citizenId}) or {}
 end
 exports("getPlayerBillsSent", getPlayerBillsSent)
 
 local getJobBills = function(jobName)
-    return MySQL.query.await("SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, `date` FROM `ava_bills` WHERE `job_to` = :jobName",
+    return MySQL.query.await(
+        "SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `job_to` = :jobName ORDER BY `date` DESC",
         {jobName = jobName}) or {}
 end
 exports("getJobBills", getJobBills)
 local getJobBillsSent = function(jobName)
-    return MySQL.query.await("SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, `date` FROM `ava_bills` WHERE `job_from` = :jobName",
+    return MySQL.query.await(
+        "SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `job_from` = :jobName ORDER BY `date` DESC",
         {jobName = jobName}) or {}
 end
 exports("getJobBillsSent", getJobBillsSent)
