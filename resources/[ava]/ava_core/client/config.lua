@@ -27,3 +27,5 @@ AVAConfig.DisableWeaponsAutoSwap = true
 
 -- time between each player ped data saves (coords, healths, shield...)
 AVAConfig.SavePlayerPedDataTimeout = 2000
+
+AVAConfig.CallbackTimeout = 30000
