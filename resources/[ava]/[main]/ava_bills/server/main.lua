@@ -2,6 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+-- #region inserts
 ---Send a bill from a player to another player
 ---@param sourceCitizenId "source player's citizen id"
 ---@param targetCitizenId "target player's citizen id"
@@ -84,5 +85,36 @@ end)
 
 RegisterNetEvent("ava_bills:server:sendJobBillToJob", function(jobName)
     -- TODO
+end)
+-- #endregion inserts
+
+-- #region getters
+local getPlayerBills = function(citizenId)
+    return MySQL.query.await("SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, `date` FROM `ava_bills` WHERE `player_to` = :citizenId",
+        {citizenId = citizenId}) or {}
+end
+exports("getPlayerBills", getPlayerBills)
+local getPlayerBillsSent = function(citizenId)
+    return MySQL.query.await("SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, `date` FROM `ava_bills` WHERE `player_from` = :citizenId",
+        {citizenId = citizenId}) or {}
+end
+exports("getPlayerBillsSent", getPlayerBillsSent)
+
+local getJobBills = function(jobName)
+    return MySQL.query.await("SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, `date` FROM `ava_bills` WHERE `job_to` = :jobName",
+        {jobName = jobName}) or {}
+end
+exports("getJobBills", getJobBills)
+local getJobBillsSent = function(jobName)
+    return MySQL.query.await("SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, `date` FROM `ava_bills` WHERE `job_from` = :jobName",
+        {jobName = jobName}) or {}
+end
+exports("getJobBillsSent", getJobBillsSent)
+-- #endregion getters
+
+RegisterNetEvent("ava_bills:server:payBill", function(jobName)
+    -- TODO
+    -- if bill to source player : pay with player bank money
+    -- if bill to source job : pay with job bank money
 end)
 
