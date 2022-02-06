@@ -114,11 +114,85 @@ local getJobBillsSent = function(jobName)
         {jobName = jobName}) or {}
 end
 exports("getJobBillsSent", getJobBillsSent)
--- #endregion getters
 
-RegisterNetEvent("ava_bills:server:payBill", function(jobName)
-    -- TODO
-    -- if bill to source player : pay with player bank money
-    -- if bill to source job : pay with job bank money
+exports.ava_core:RegisterServerCallback("ava_bills:server:getPlayerBills", function(source)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    if aPlayer then
+        return getPlayerBills(aPlayer.citizenId)
+    end
 end)
 
+exports.ava_core:RegisterServerCallback("ava_bills:server:getJobBills", function(source, jobName)
+    local src = source
+    if type(jobName) ~= "string" or not IsPlayerAceAllowed(src, "job." .. jobName .. ".manage") then
+        return
+    end
+    return getJobBills(jobName)
+end)
+
+-- #endregion getters
+
+RegisterNetEvent("ava_bills:server:payBill", function(billId)
+    local src = source
+    if not billId or type(billId) ~= "number" then
+        return
+    end
+    local bill = MySQL.single.await(
+        "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", {billId = billId})
+    print("json", json.encode(bill, {indent = true}))
+    if not bill then
+        return
+    end
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then
+        return
+    end
+
+    if bill.player_to and bill.player_to == aPlayer.citizenId then
+        -- Is bill to player, will be paid with player bank account
+        if aPlayer.getAccountBalance("bank") < bill.amount then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_not_enough_money"))
+            return
+        end
+
+        if bill.type == 0 then
+            -- Player to player
+            -- TODO
+
+        elseif bill.type == 2 then
+            -- Job to player
+            -- TODO
+
+        end
+    elseif bill.job_to and IsPlayerAceAllowed(src, "job." .. bill.job_to .. ".manage") then
+        -- Is bill to job, will be paid with job bank account
+        local accounts = exports.ava_core:GetJobAccounts(bill.job_to)
+        if not accounts then
+            return
+        end
+        if accounts.getAccountBalance("bank") < bill.amount then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_not_enough_money"))
+            return
+        end
+
+        if bill.type == 1 then
+            -- Player to job
+            -- TODO
+
+        elseif bill.type == 2 then
+            -- Job to job
+            -- TODO
+
+        end
+    end
+end)
+
+-- Citizen.CreateThread(function()
+--     print("sendBillToPlayer", sendBillToPlayer(76, 58, 10, "Lorem ipsum"))
+--     print("sendJobBillToPlayer", sendJobBillToPlayer("lspd", 58, 500, "Lorem ipsum"))
+--     print("sendBillToJob", sendBillToJob(58, "lspd", 538, "Lorem ipsum"))
+--     print("sendJobBillToJob", sendJobBillToJob("mechanic", "lspd", 12345, "Lorem ipsum"))
+
+--     print(json.encode(getPlayerBills(58), {indent = true}))
+--     print(json.encode(getJobBills("lspd"), {indent = true}))
+-- end)
