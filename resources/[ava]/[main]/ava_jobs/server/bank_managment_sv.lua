@@ -5,7 +5,7 @@
 RegisterNetEvent("ava_jobs:server:bank_managment:deposit", function(jobName, amount)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    local accounts = exports.ava_core:GetJobsAccounts(jobName)
+    local accounts = exports.ava_core:GetJobAccounts(jobName)
 
     if accounts then
         local inventory = aPlayer.getInventory()
@@ -23,7 +23,7 @@ end)
 RegisterNetEvent("ava_jobs:server:bank_managment:withdraw", function(jobName, amount)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    local accounts = exports.ava_core:GetJobsAccounts(jobName)
+    local accounts = exports.ava_core:GetJobAccounts(jobName)
 
     if accounts then
         local inventory = aPlayer.getInventory()
@@ -43,7 +43,7 @@ end)
 RegisterNetEvent("ava_jobs:server:bank_managment:washMoney", function(jobName, amount)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    local accounts = exports.ava_core:GetJobsAccounts(jobName)
+    local accounts = exports.ava_core:GetJobAccounts(jobName)
 
     if accounts then
         local inventory = aPlayer.getInventory()

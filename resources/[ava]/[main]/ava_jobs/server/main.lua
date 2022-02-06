@@ -306,7 +306,7 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
         societyMoney = math.floor(total / 100 * 40)
         -- end
         inventory.removeItem(item, count)
-        local accounts = exports.ava_core:GetJobsAccounts(jobName)
+        local accounts = exports.ava_core:GetJobAccounts(jobName)
         if accounts then
             accounts.addAccountBalance("bank", societyMoney)
         end

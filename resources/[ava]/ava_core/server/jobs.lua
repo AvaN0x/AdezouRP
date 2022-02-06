@@ -16,10 +16,10 @@ exports("GetJobsData", AVA.GetJobsData)
 ---Get accounts
 ---@param jobName string
 ---@return aJobAccounts
-AVA.GetJobsAccounts = function(jobName)
+AVA.GetJobAccounts = function(jobName)
     return AVA.JobsAccounts[jobName]
 end
-exports("GetJobsAccounts", AVA.GetJobsAccounts)
+exports("GetJobAccounts", AVA.GetJobAccounts)
 
 Citizen.CreateThread(function()
     dprint("^6[JOBS] Start initializing datas for each jobs^0")
