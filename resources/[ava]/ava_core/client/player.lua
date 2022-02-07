@@ -114,35 +114,12 @@ AddEventHandler("playerSpawned", function()
     SpawnPlayer()
 end)
 
--- local function RespawnPlayer()
---     Citizen.CreateThread(function()
---         local playerPed = PlayerPedId()
---         DoScreenFadeOut(800)
---         while not IsScreenFadedOut() do
---             Citizen.Wait(50)
---         end
-
---         local position = AVA.Player.Data and AVA.Player.Data.position or GetEntityCoords(playerPed)
-
---         SetEntityCoordsNoOffset(playerPed, position, false, false, false, true)
---         NetworkResurrectLocalPlayer(position, 0.0, true, false)
---         SetPlayerInvincible(playerPed, false)
---         TriggerEvent("playerSpawned", {x = position.x, y = position.y, z = position.z, heading = 0.0})
---         ClearPedBloodDamage(playerPed)
---         AVA.Player.IsDead = false
-
---         SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
-
---         StopScreenEffect("DeathFailOut")
---         DoScreenFadeIn(800)
---     end)
--- end
-
 AddEventHandler("ava_core:client:playerDeath", function()
     AVA.Player.IsDead = true
 
-    -- Wait(2000)
-    -- RespawnPlayer()
+    if AVAConfig.NPWD then
+        exports.npwd:setPhoneVisible(false)
+    end
 end)
 AddEventHandler("ava_core:client:playerRevived", function()
     AVA.Player.IsDead = false
