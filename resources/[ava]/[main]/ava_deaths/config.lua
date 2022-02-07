@@ -12,3 +12,5 @@ AVAConfig.RespawnPoints = {
     -- {Coord = vector3(1815.82, 3678.94, 33.30), Heading = 30.0}, -- Sandy Shores
     -- {Coord = vector3(-379.50, 6118.27, 30.87), Heading = 45.0}, -- Paleto Bay
 }
+
+AVAConfig.ReviveBillAmount = 2000

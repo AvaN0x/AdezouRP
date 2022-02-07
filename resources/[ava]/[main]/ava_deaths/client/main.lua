@@ -149,6 +149,7 @@ function RevivePlayer(atHospital)
     else
         RespawnPlayer(GetEntityCoords(PlayerPedId()), 0.0)
     end
+    TriggerServerEvent("ava_deaths:server:playerRevived", atHospital)
 
     StopScreenEffect("DeathFailOut")
     DoScreenFadeIn(800)
