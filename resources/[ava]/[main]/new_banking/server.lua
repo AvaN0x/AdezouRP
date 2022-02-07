@@ -3,6 +3,9 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 RegisterNetEvent("bank:deposit", function(amount)
+    if not amount then
+        return
+    end
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     local inventory = aPlayer.getInventory()
@@ -17,6 +20,9 @@ RegisterNetEvent("bank:deposit", function(amount)
 end)
 
 RegisterNetEvent("bank:withdraw", function(amount)
+    if not amount then
+        return
+    end
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     local inventory = aPlayer.getInventory()
