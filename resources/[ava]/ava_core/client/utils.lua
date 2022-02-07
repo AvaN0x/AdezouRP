@@ -614,8 +614,8 @@ local function SelectEntity(title, entitiesToSelect, cb)
                     end)
 
                     local targetCoords = GetEntityCoords(entity.entity)
-                    DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.3, targetCoords.x, targetCoords.y, targetCoords.z + 0.3, 255, 128, 0, 128)
-                    AVA.Utils.DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 0.3, entity.label, 0.3)
+                    DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.15, targetCoords.x, targetCoords.y, targetCoords.z + 0.15, 255, 128, 0, 196)
+                    AVA.Utils.DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 0.3, entity.text3d or entity.label, 0.35, nil, nil, nil, 255)
                 end
             end)
             if not menuVisible then
@@ -669,7 +669,8 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
                     entity = targetPed,
                     localId = player,
                     serverId = GetPlayerServerId(player),
-                    label = player ~= playerId and GetString("person_number", entityCount) or "Moi",
+                    label = player ~= playerId and GetString("person_number", entityCount) or GetString("me"),
+                    text3d = player ~= playerId and GetString("text3d_person_number", entityCount) or GetString("text3d_me"),
                 }
             end
         end
