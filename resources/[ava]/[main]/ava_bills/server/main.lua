@@ -143,7 +143,7 @@ local sourcePayBill = function(source, billId)
     end
     local bill = MySQL.single.await(
         "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", {billId = billId})
-    print(json.encode(bill, {indent = true}))
+    print(billId, json.encode(bill, {indent = true}))
     if not bill then
         return false
     end
@@ -166,7 +166,7 @@ local sourcePayBill = function(source, billId)
             -- Player to player
             local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
             if not aPlayerFrom then
-                -- TODO disconnected player
+                -- TODO pay disconnected player
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("target_is_not_in_city"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
                 return false
             end
@@ -178,14 +178,15 @@ local sourcePayBill = function(source, billId)
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("you_paid_bill", formatedAmount), nil, "CHAR_BANK_FLEECA", GetString("bank"))
             TriggerClientEvent("ava_core:client:ShowNotification", aPlayerFrom.src, GetString("bill_paid_by_player", formatedAmount), nil, "CHAR_BANK_FLEECA",
                 GetString("bank"))
+
         elseif bill.type == 2 then
             -- Job to player
-            local accounts = exports.ava_core:GetJobAccounts(bill.job_from)
-            if not accounts then
+            local accountsFrom = exports.ava_core:GetJobAccounts(bill.job_from)
+            if not accountsFrom then
                 return false
             end
             aPlayer.removeAccountBalance("bank", bill.amount)
-            accounts.addAccountBalance("bank", bill.amount)
+            accountsFrom.addAccountBalance("bank", bill.amount)
             billWasPaid = true
 
             local formatedAmount<const> = exports.ava_core:FormatNumber(bill.amount)
@@ -194,11 +195,10 @@ local sourcePayBill = function(source, billId)
             -- Send notification to the player that sended the job bill, if there is one
             if bill.player_from then
                 local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
-                if not aPlayerFrom then
-                    return false
+                if aPlayerFrom then
+                    TriggerClientEvent("ava_core:client:ShowNotification", aPlayerFrom.src, GetString("job_bill_paid_by_player", formatedAmount), nil,
+                        "CHAR_BANK_FLEECA", GetString("bank"))
                 end
-                TriggerClientEvent("ava_core:client:ShowNotification", accounts.src, GetString("job_bill_paid_by_player", formatedAmount), nil,
-                    "CHAR_BANK_FLEECA", GetString("bank"))
             end
         end
 
@@ -215,12 +215,44 @@ local sourcePayBill = function(source, billId)
 
         if bill.type == 1 then
             -- Player to job
-            -- TODO
+            local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
+            if not aPlayerFrom then
+                -- TODO pay disconnected player
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("target_is_not_in_city"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+                return false
+            end
+            accounts.removeAccountBalance("bank", bill.amount)
+            aPlayerFrom.addAccountBalance("bank", bill.amount)
+            billWasPaid = true
 
-        elseif bill.type == 2 then
+            local formatedAmount<const> = exports.ava_core:FormatNumber(bill.amount)
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("your_job_paid_bill", formatedAmount), nil, "CHAR_BANK_FLEECA",
+                GetString("bank"))
+            TriggerClientEvent("ava_core:client:ShowNotification", aPlayerFrom.src, GetString("bill_paid_by_job", formatedAmount), nil, "CHAR_BANK_FLEECA",
+                GetString("bank"))
+
+        elseif bill.type == 3 then
             -- Job to job
-            -- TODO
+            local accountsFrom = exports.ava_core:GetJobAccounts(bill.job_from)
+            if not accountsFrom then
+                return false
+            end
+            accounts.removeAccountBalance("bank", bill.amount)
+            accountsFrom.addAccountBalance("bank", bill.amount)
+            billWasPaid = true
 
+            local formatedAmount<const> = exports.ava_core:FormatNumber(bill.amount)
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("your_job_paid_bill", formatedAmount), nil, "CHAR_BANK_FLEECA",
+                GetString("bank"))
+
+            -- Send notification to the player that sended the job bill, if there is one
+            if bill.player_from then
+                local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
+                if not aPlayerFrom then
+                    TriggerClientEvent("ava_core:client:ShowNotification", aPlayerFrom.src, GetString("job_bill_paid_by_job", formatedAmount), nil,
+                        "CHAR_BANK_FLEECA", GetString("bank"))
+                end
+            end
         end
     end
 
