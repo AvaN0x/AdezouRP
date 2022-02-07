@@ -54,6 +54,33 @@
             }
         ]
     },
+    "ems": {
+        "label": "EMS",
+        "grades": [
+            {
+                "name": "paramedic",
+                "label": "Ambulancier",
+                "salary": 100
+            },
+            {
+                "name": "medic",
+                "label": "Médecin",
+                "salary": 150
+            },
+            {
+                "name": "chief",
+                "label": "Gérant",
+                "manage": true,
+                "salary": 175
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
     "winemaker": {
         "label": "Vigneron",
         "grades": [
