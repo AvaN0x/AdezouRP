@@ -133,6 +133,27 @@ function RageUI.PoolMenus:JobMenu()
                 end, JobMenuManage)
 
             else
+                Items:AddButton(GetString("job_menu_write_bills"), GetString("job_menu_write_bills_subtitle"), nil, function(onSelected)
+                    if onSelected then
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
+                        if targetId then
+                            local amount = tonumber(exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_amount"), "", 10))
+
+                            if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
+                                local content = exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_content"), "", 256)
+                                if content and content ~= "" then
+                                    local playerPed = PlayerPedId()
+                                    TaskStartScenarioInPlace(playerPed, "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 0, true)
+                                    Wait(5000)
+                                    TriggerServerEvent("ava_bills:server:sendJobBillToPlayer", openedMenuJobName, targetId, amount, content)
+                                    ClearPedTasks(playerPed)
+                                end
+                            else
+                                exports.ava_core:ShowNotification(GetString("amount_invalid"))
+                            end
+                        end
+                    end
+                end)
                 Items:AddButton(GetString("job_menu_bills"), GetString("job_menu_bills_subtitle"), nil, function(onSelected)
                     if onSelected then
                         jobBills = {}
