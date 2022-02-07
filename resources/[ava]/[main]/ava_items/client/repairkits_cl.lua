@@ -9,7 +9,7 @@ function GetVehicleInFrontOrChooseClosestVehicle()
     if vehicle then
         return vehicle
     end
-    return exporrts.ava_core:ChooseClosestVehicle()
+    return exports.ava_core:ChooseClosestVehicle()
 end
 
 ---------------
