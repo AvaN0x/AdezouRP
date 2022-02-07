@@ -87,6 +87,12 @@ function RageUI.PoolMenus:PersonalMenu()
             end
         end, WalletSubMenu)
 
+        Items:AddButton(GetString("personal_menu_bills"), nil, {RightLabel = "→→→"}, function(onSelected)
+            if onSelected then
+                prepareBills()
+            end
+        end, BillsSubMenu)
+
         Items:AddButton(GetString("personal_menu_vehicle_management"), nil,
             {RightLabel = "→→→", IsDisabled = playerVehicle == 0 or playerVehicleData.playerSeat == 2}, function(onSelected)
                 if onSelected then
@@ -108,6 +114,7 @@ function RageUI.PoolMenus:PersonalMenu()
     end)
 
     PoolWallet()
+    PoolBills()
     PoolMiscs()
     PoolVehicleManagement()
 end
