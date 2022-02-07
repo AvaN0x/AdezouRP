@@ -6,7 +6,8 @@
   },
   "general": {
     "useResourceIntegration": true,
-    "toggleKey": "f1"
+    "toggleKey": "f1",
+    "toggleCommand": "phone"
   },
   "database": {
     "useIdentifierPrefix": true,
@@ -24,6 +25,20 @@
     "authorizationPrefix": "Client-ID",
     "useAuthorization": true,
     "returnedDataIndexes": ["data", "link"]
+  },
+  "imageSafety": {
+    "filterUnsafeImageUrls": true,
+    "embedUnsafeImages": false,
+    "embedUrl": "https://i.example.com/embed",
+    "safeImageUrls": [
+      "imgur.com",
+      "file.glass",
+      "dropbox.com",
+      "tenor.com",
+      "discord.com",
+      "discordapp.com",
+      "wikipedia.org"
+    ]
   },
   "twitter": {
     "showNotifications": true,
@@ -43,7 +58,7 @@
     "allowEditableProfileName": true
   },
   "debug": {
-    "level": "silly",
+    "level": "error",
     "enabled": true,
     "sentryEnabled": true
   }
