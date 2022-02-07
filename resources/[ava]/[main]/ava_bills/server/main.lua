@@ -25,12 +25,13 @@ exports("sendBillToPlayer", sendBillToPlayer)
 ---@param targetCitizenId "target player's citizen id"
 ---@param amount "amount of money"
 ---@param content "content of the bill"
+---@param sourceCitizenId? "source player's citizen id or nil"
 ---@return integer|nil "bill id or nil"
-local sendJobBillToPlayer = function(sourceJobName, targetCitizenId, amount, content)
+local sendJobBillToPlayer = function(sourceJobName, targetCitizenId, amount, content, sourceCitizenId)
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 then
         local id = MySQL.insert.await(
-            "INSERT INTO `ava_bills`(`type`, `player_to`, `job_from`, `amount`, `content`) VALUES (2, :player_to, :job_from, :amount, :content)",
-            {player_to = targetCitizenId, job_from = sourceJobName, amount = amount, content = content:sub(0, 256)})
+            "INSERT INTO `ava_bills`(`type`, `player_to`, `job_from`, `player_from`, `amount`, `content`) VALUES (2, :player_to, :job_from, :player_from, :amount, :content)",
+            {player_to = targetCitizenId, job_from = sourceJobName, amount = amount, content = content:sub(0, 256), player_from = sourceCitizenId})
         return id
     end
     return nil
@@ -131,48 +132,85 @@ exports.ava_core:RegisterServerCallback("ava_bills:server:getJobBills", function
 end)
 
 -- #endregion getters
-
-RegisterNetEvent("ava_bills:server:payBill", function(billId)
+---Make source pay a bill
+---@param source number
+---@param billId number
+---@return boolean "success"
+local sourcePayBill = function(source, billId)
     local src = source
     if not billId or type(billId) ~= "number" then
-        return
+        return false
     end
     local bill = MySQL.single.await(
         "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", {billId = billId})
-    print("json", json.encode(bill, {indent = true}))
+    print(json.encode(bill, {indent = true}))
     if not bill then
-        return
+        return false
     end
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then
-        return
+        return false
     end
+
+    local billWasPaid = false
 
     if bill.player_to and bill.player_to == aPlayer.citizenId then
         -- Is bill to player, will be paid with player bank account
         if aPlayer.getAccountBalance("bank") < bill.amount then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("player_not_enough_money"))
-            return
+            return false
         end
 
+        print("type", bill.type)
         if bill.type == 0 then
             -- Player to player
-            -- TODO
+            local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
+            if not aPlayerFrom then
+                -- TODO disconnected player
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("target_is_not_in_city"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+                return false
+            end
+            aPlayer.removeAccountBalance("bank", bill.amount)
+            aPlayerFrom.addAccountBalance("bank", bill.amount)
+            billWasPaid = true
 
+            local formatedAmount<const> = exports.ava_core:FormatNumber(bill.amount)
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("you_paid_bill", formatedAmount), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+            TriggerClientEvent("ava_core:client:ShowNotification", aPlayerFrom.src, GetString("bill_paid_by_player", formatedAmount), nil, "CHAR_BANK_FLEECA",
+                GetString("bank"))
         elseif bill.type == 2 then
             -- Job to player
-            -- TODO
+            local accounts = exports.ava_core:GetJobAccounts(bill.job_from)
+            if not accounts then
+                return false
+            end
+            aPlayer.removeAccountBalance("bank", bill.amount)
+            accounts.addAccountBalance("bank", bill.amount)
+            billWasPaid = true
 
+            local formatedAmount<const> = exports.ava_core:FormatNumber(bill.amount)
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("you_paid_bill", formatedAmount), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+
+            -- Send notification to the player that sended the job bill, if there is one
+            if bill.player_from then
+                local aPlayerFrom = exports.ava_core:GetPlayerByCitizenId(bill.player_from)
+                if not aPlayerFrom then
+                    return false
+                end
+                TriggerClientEvent("ava_core:client:ShowNotification", accounts.src, GetString("job_bill_paid_by_player", formatedAmount), nil,
+                    "CHAR_BANK_FLEECA", GetString("bank"))
+            end
         end
+
     elseif bill.job_to and IsPlayerAceAllowed(src, "job." .. bill.job_to .. ".manage") then
         -- Is bill to job, will be paid with job bank account
         local accounts = exports.ava_core:GetJobAccounts(bill.job_to)
         if not accounts then
-            return
+            return false
         end
         if accounts.getAccountBalance("bank") < bill.amount then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_not_enough_money"))
-            return
+            return false
         end
 
         if bill.type == 1 then
@@ -185,14 +223,15 @@ RegisterNetEvent("ava_bills:server:payBill", function(billId)
 
         end
     end
+
+    if billWasPaid then
+        MySQL.update.await("DELETE FROM `ava_bills` WHERE `id` = :id", {id = billId})
+    end
+    return billWasPaid
+end
+exports("sourcePayBill", sourcePayBill)
+
+exports.ava_core:RegisterServerCallback("ava_bills:server:payBill", function(source, billId)
+    return sourcePayBill(source, billId)
 end)
 
--- Citizen.CreateThread(function()
---     print("sendBillToPlayer", sendBillToPlayer(76, 58, 10, "Lorem ipsum"))
---     print("sendJobBillToPlayer", sendJobBillToPlayer("lspd", 58, 500, "Lorem ipsum"))
---     print("sendBillToJob", sendBillToJob(58, "lspd", 538, "Lorem ipsum"))
---     print("sendJobBillToJob", sendJobBillToJob("mechanic", "lspd", 12345, "Lorem ipsum"))
-
---     print(json.encode(getPlayerBills(58), {indent = true}))
---     print(json.encode(getJobBills("lspd"), {indent = true}))
--- end)

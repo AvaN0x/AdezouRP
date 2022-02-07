@@ -7,6 +7,7 @@
 -- Type must be between 0 and 3
 -- Amount cannot be negative or 0
 -- A bill cannot be from and to the same player / job
+-- If type is 2, we also save player source to be able to send him a notification when paid
 CREATE TABLE IF NOT EXISTS `ava_bills` (
     `id` int NOT NULL AUTO_INCREMENT,
     `type` tinyint NOT NULL COMMENT '0 = player to player\n1 = player to job\n2 = job to player\n3 = job to job',
