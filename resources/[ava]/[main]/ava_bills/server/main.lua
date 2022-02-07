@@ -60,32 +60,62 @@ exports("sendBillToJob", sendBillToJob)
 ---@param targetJobName "target job name"
 ---@param amount "amount of money"
 ---@param content "content of the bill"
+---@param sourceCitizenId? "source player's citizen id or nil"
 ---@return integer|nil "bill id or nil"
-local sendJobBillToJob = function(sourceJobName, targetJobName, amount, content)
+local sendJobBillToJob = function(sourceJobName, targetJobName, amount, content, sourceCitizenId)
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 and sourceJobName ~= targetJobName then
         local id = MySQL.insert.await(
-            "INSERT INTO `ava_bills`(`type`, `job_from`, `job_to`, `amount`, `content`) VALUES (3, :job_from, :job_to, :amount, :content)",
-            {job_from = sourceJobName, job_to = targetJobName, amount = amount, content = content:sub(0, 256)})
+            "INSERT INTO `ava_bills`(`type`, `job_from`, `job_to`, `player_from`, `amount`, `content`) VALUES (3, :job_from, :job_to, :player_from, :amount, :content)",
+            {job_from = sourceJobName, job_to = targetJobName, player_from = sourceCitizenId, amount = amount, content = content:sub(0, 256)})
         return id
     end
     return nil
 end
 exports("sendJobBillToJob", sendJobBillToJob)
 
-RegisterNetEvent("ava_bills:server:sendBillToPlayer", function(target)
-    -- TODO
+RegisterNetEvent("ava_bills:server:sendBillToPlayer", function(targetId, amount, content)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if aPlayer and aTargetPlayer and sendBillToPlayer(aPlayer.citizenId, aTargetPlayer.citizenId, amount, content) then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+        TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("bill_received"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+    end
 end)
 
-RegisterNetEvent("ava_bills:server:sendJobBillToPlayer", function(target)
-    -- TODO
+RegisterNetEvent("ava_bills:server:sendJobBillToPlayer", function(sourceJobName, targetId, amount, content)
+    local src = source
+    if type(sourceJobName) == "string" and IsPlayerAceAllowed(src, "job." .. sourceJobName .. ".manage") then
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+        if aPlayer and aTargetPlayer then
+            if sendJobBillToPlayer(sourceJobName, aTargetPlayer.citizenId, amount, content, aPlayer.citizenId) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+                TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("bill_received"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+            end
+        end
+    end
 end)
 
-RegisterNetEvent("ava_bills:server:sendBillToJob", function(jobName)
-    -- TODO
+RegisterNetEvent("ava_bills:server:sendBillToJob", function(targetJobName, amount, content)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if aPlayer and sendBillToJob(aPlayer.citizenId, targetJobName, amount, content) then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+    end
 end)
 
-RegisterNetEvent("ava_bills:server:sendJobBillToJob", function(jobName)
-    -- TODO
+RegisterNetEvent("ava_bills:server:sendJobBillToJob", function(sourceJobName, targetJobName, amount, content)
+    local src = source
+    if type(sourceJobName) == "string" and IsPlayerAceAllowed(src, "job." .. sourceJobName .. ".manage") then
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+        if aPlayer and aTargetPlayer then
+            if sendJobBillToJob(sourceJobName, targetJobName, amount, content, aPlayer.citizenId) then
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
+            end
+        end
+    end
 end)
 -- #endregion inserts
 
@@ -266,4 +296,3 @@ exports("sourcePayBill", sourcePayBill)
 exports.ava_core:RegisterServerCallback("ava_bills:server:payBill", function(source, billId)
     return sourcePayBill(source, billId)
 end)
-
