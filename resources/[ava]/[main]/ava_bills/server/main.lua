@@ -76,7 +76,7 @@ exports("sendJobBillToJob", sendJobBillToJob)
 RegisterNetEvent("ava_bills:server:sendBillToPlayer", function(targetId, amount, content)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
-    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    local aTargetPlayer = src == targetId and aPlayer or exports.ava_core:GetPlayer(targetId)
     if aPlayer and aTargetPlayer and sendBillToPlayer(aPlayer.citizenId, aTargetPlayer.citizenId, amount, content) then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
         TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("bill_received"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
@@ -87,9 +87,9 @@ RegisterNetEvent("ava_bills:server:sendJobBillToPlayer", function(sourceJobName,
     local src = source
     if type(sourceJobName) == "string" and IsPlayerAceAllowed(src, "job." .. sourceJobName .. ".manage") then
         local aPlayer = exports.ava_core:GetPlayer(src)
-        local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+        local aTargetPlayer = src == targetId and aPlayer or exports.ava_core:GetPlayer(targetId)
         if aPlayer and aTargetPlayer then
-            if sendJobBillToPlayer(sourceJobName, aTargetPlayer.citizenId, amount, content, aPlayer.citizenId) then
+            if sendJobBillToPlayer(sourceJobName, aTargetPlayer.citizenId, amount, content, src ~= targetId and aPlayer.citizenId or nil) then
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
                 TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("bill_received"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
             end
@@ -109,8 +109,7 @@ RegisterNetEvent("ava_bills:server:sendJobBillToJob", function(sourceJobName, ta
     local src = source
     if type(sourceJobName) == "string" and IsPlayerAceAllowed(src, "job." .. sourceJobName .. ".manage") then
         local aPlayer = exports.ava_core:GetPlayer(src)
-        local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
-        if aPlayer and aTargetPlayer then
+        if aPlayer then
             if sendJobBillToJob(sourceJobName, targetJobName, amount, content, aPlayer.citizenId) then
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("bill_sent"), nil, "CHAR_BANK_FLEECA", GetString("bank"))
             end
@@ -173,7 +172,6 @@ local sourcePayBill = function(source, billId)
     end
     local bill = MySQL.single.await(
         "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", {billId = billId})
-    print(billId, json.encode(bill, {indent = true}))
     if not bill then
         return false
     end
