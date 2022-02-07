@@ -40,6 +40,7 @@ MainJobMenu.Closed = function()
     updateJobsToSelect()
 end
 local JobMenuManage = RageUI.CreateSubMenu(MainJobMenu, "", GetString("job_menu_manage_job"))
+local JobMenuBills = RageUI.CreateSubMenu(MainJobMenu, "", GetString("job_menu_bills"))
 
 local function JobMenu(jobName)
     local playerJobsJobName = playerJobs[jobName]
@@ -130,7 +131,27 @@ function RageUI.PoolMenus:JobMenu()
                         JobMenuManage.Subtitle = GetString("job_menu_manage_gang")
                     end
                 end, JobMenuManage)
+
             else
+                Items:AddButton(GetString("job_menu_bills"), GetString("job_menu_bills_subtitle"), nil, function(onSelected)
+                    if onSelected then
+                        jobBills = {}
+                        local count = 0
+                        local bills = exports.ava_core:TriggerServerCallback("ava_bills:server:getJobBills", openedMenuJobName) or {}
+                        for i = 1, #bills do
+                            local bill = bills[i]
+                            count = count + 1
+                            jobBills[count] = {
+                                label = bill.content:len() > 36 and bill.content:sub(0, 33) .. "..." or bill.content,
+                                desc = GetString("bill_description", bill.date, bill.content),
+                                rightLabel = GetString("bill_amount", exports.ava_core:FormatNumber(bill.amount)),
+                                id = bill.id,
+                            }
+                        end
+                        JobMenuBills.Description = nil
+                    end
+                end, JobMenuBills)
+
                 Items:AddButton(GetString("job_menu_manage_job"), GetString("job_menu_manage_job_subtitle"), nil, function(onSelected)
                     if onSelected then
                         JobMenuManage.Subtitle = GetString("job_menu_manage_job")
@@ -202,7 +223,25 @@ function RageUI.PoolMenus:JobMenu()
                 end
             end
         end)
+    end)
 
+    JobMenuBills:IsVisible(function(Items)
+        if jobBills then
+            for i = 1, #jobBills do
+                local bill = jobBills[i]
+                if bill then
+                    Items:AddButton(bill.label, bill.desc, {RightLabel = bill.rightLabel}, function(onSelected)
+                        if onSelected then
+                            Citizen.CreateThread(function()
+                                if exports.ava_core:TriggerServerCallback("ava_bills:server:payBill", bill.id) then
+                                    table.remove(jobBills, i)
+                                end
+                            end)
+                        end
+                    end)
+                end
+            end
+        end
     end)
 end
 
