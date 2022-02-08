@@ -13,6 +13,17 @@ function SavedOutfits()
     OpenPlayerOutfitsMenu()
 end
 
+local function applyClothesAnimation()
+    local playerPed = PlayerPedId()
+    exports.ava_core:RequestAnimDict("mp_safehouseshower@male@")
+    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8, 9500, 0, 0, 0, 0, 0)
+    RemoveAnimDict("mp_safehouseshower@male@")
+
+    exports.progressBars:startUI(9500, "")
+    Wait(9500)
+    ClearPedSecondaryTask(playerPed)
+end
+
 function OpenPlayerOutfitsMenu()
     if not playerOutfits then
         playerOutfits = exports.ava_core:TriggerServerCallback("ava_stores:server:getPlayerOutfits")
@@ -58,6 +69,7 @@ function OpenPlayerOutfitsMenu()
                         local action = outfitOptions[indices[i] or 1].action
                         if action == "equip" then
                             outfitChanged = true
+                            applyClothesAnimation()
                             exports.ava_mp_peds:setPlayerClothes(outfit.outfit)
 
                         elseif action == "delete"
