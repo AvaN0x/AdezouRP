@@ -628,6 +628,17 @@ Citizen.CreateThread(function()
     end
 end)
 
+local function applyClothesAnimation()
+    local playerPed = PlayerPedId()
+    exports.ava_core:RequestAnimDict("mp_safehouseshower@male@")
+    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8, 9500, 0, 0, 0, 0, 0)
+    RemoveAnimDict("mp_safehouseshower@male@")
+
+    exports.progressBars:startUI(9500, "")
+    Wait(9500)
+    ClearPedSecondaryTask(playerPed)
+end
+
 function OpenCloakroomMenu()
     local playerSkin = exports.ava_core:getPlayerSkinData()
 
@@ -652,12 +663,13 @@ function OpenCloakroomMenu()
     RageUI.OpenTempMenu(GetString("cloakroom"), function(Items)
         Items:AddButton(GetString("clothes_civil"), GetString("clothes_civil_subtitle"), nil, function(onSelected)
             if onSelected then
+                applyClothesAnimation()
                 exports.ava_mp_peds:setPlayerSkin(playerSkin)
             end
         end)
         Items:AddButton(GetString("user_clothes"), GetString("user_clothes_subtitle"), nil, function(onSelected)
             if onSelected then
-                -- TriggerEvent("openOutfitsMenu") -- TODO
+                TriggerEvent("ava_stores:client:OpenPlayerOutfitsMenu")
             end
         end)
         if job.ServiceCounter then
@@ -674,6 +686,7 @@ function OpenCloakroomMenu()
 
                 Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
                     if onSelected then
+                        applyClothesAnimation()
                         exports.ava_mp_peds:setPlayerClothes(outfit[playerSkin.gender == 0 and "Male" or "Female"])
                     end
                 end)
