@@ -44,42 +44,42 @@
             "label": "Taser",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 1000,
             "noIcon": true
         },
         "weapon_stungun_mp": {
             "label": "Taser MP",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 1000,
             "noIcon": true
         },
         "weapon_pistol50": {
             "label": "Pistolet Cal 50",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3000,
             "noIcon": true
         },
         "weapon_snspistol": {
             "label": "Pistolet SNS",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 500,
             "noIcon": true
         },
         "weapon_snspistol_mk2": {
             "label": "Pistolet SNS MK2",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 700,
             "noIcon": true
         },
         "weapon_heavypistol": {
             "label": "Pistolet lourd",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 2500,
             "noIcon": true
         },
         "weapon_vintagepistol": {
@@ -100,28 +100,28 @@
             "label": "Pistolet marksman",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 4000,
             "noIcon": true
         },
         "weapon_revolver": {
             "label": "Revolver",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3500,
             "noIcon": true
         },
         "weapon_revolver_mk2": {
             "label": "Revolver MK2",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3500,
             "noIcon": true
         },
         "weapon_doubleaction": {
             "label": "Revolver double action",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3000,
             "noIcon": true
         },
         "weapon_raypistol": {
@@ -135,21 +135,21 @@
             "label": "Pistolet céramique",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 1000,
             "noIcon": true
         },
         "weapon_navyrevolver": {
             "label": "Revolver navy",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3000,
             "noIcon": true
         },
         "weapon_gadgetpistol": {
             "label": "Pistolet Perico",
             "type": "handgun",
             "description": "",
-            "weight": 2000,
+            "weight": 3100,
             "noIcon": true
         },
         "weapon_grenade": {
@@ -347,49 +347,49 @@
             "label": "Micro SMG",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 2500,
             "noIcon": true
         },
         "weapon_smg": {
             "label": "SMG",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 4000,
             "noIcon": true
         },
         "weapon_smg_mk2": {
             "label": "SMG Mk2",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 4100,
             "noIcon": true
         },
         "weapon_assaultsmg": {
             "label": "Mitraillette d'assault",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 4000,
             "noIcon": true
         },
         "weapon_combatpdw": {
             "label": "ADP de combat",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 4000,
             "noIcon": true
         },
         "weapon_machinepistol": {
             "label": "Pistolet automatique",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 1700,
             "noIcon": true
         },
         "weapon_minismg": {
             "label": "Mini SMG",
             "type": "smg",
             "description": "",
-            "weight": 500,
+            "weight": 1700,
             "noIcon": true
         },
         "weapon_raycarabine": {
@@ -403,21 +403,21 @@
             "label": "Fusil à pompe",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 5000,
             "noIcon": true
         },
         "weapon_pumpshotgun_mk2": {
             "label": "Fusil à pompe mk2",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 5000,
             "noIcon": true
         },
         "weapon_sawnoffshotgun": {
             "label": "Fusil à canon scié",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 3800,
             "noIcon": true
         },
         "weapon_assaultshotgun": {
@@ -438,21 +438,21 @@
             "label": "Mousquet",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 2300,
             "noIcon": true
         },
         "weapon_heavyshotgun": {
             "label": "Fusil à pompe lourd",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 5000,
             "noIcon": true
         },
         "weapon_dbshotgun": {
             "label": "Fusil à double canon",
             "type": "shotgun",
             "description": "",
-            "weight": 500,
+            "weight": 3800,
             "noIcon": true
         },
         "weapon_autoshotgun": {
@@ -473,161 +473,161 @@
             "label": "Fusil d'assaut",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_assaultrifle_mk2": {
             "label": "Fusil d'assaut MK2",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_carbinerifle": {
             "label": "Carabine",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_carbinerifle_mk2": {
             "label": "Carabine MK2",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_advancedrifle": {
             "label": "Fusil amélioré",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_specialcarbine": {
             "label": "Carabine spéciale",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_specialcarbine_mk2": {
             "label": "Carabine spéciale MK2",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_bullpuprifle": {
             "label": "Fusil bullpup",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_bullpuprifle_mk2": {
             "label": "Fusil bullpup MK2",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5360,
             "noIcon": true
         },
         "weapon_compactrifle": {
             "label": "Fusil compact",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 4360,
             "noIcon": true
         },
         "weapon_militaryrifle": {
             "label": "Fusil militaire",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 5000,
             "noIcon": true
         },
         "weapon_heavyrifle": {
             "label": "Fusil lourd",
             "type": "rifle",
             "description": "",
-            "weight": 1000,
+            "weight": 6000,
             "noIcon": true
         },
         "weapon_mg": {
             "label": "Mitrailleuse",
             "type": "lmg",
             "description": "",
-            "weight": 1000,
+            "weight": 12000,
             "noIcon": true
         },
         "weapon_combatmg": {
             "label": "Mitrailleuse de combat",
             "type": "lmg",
             "description": "",
-            "weight": 1000,
+            "weight": 12000,
             "noIcon": true
         },
         "weapon_combatmg_mk2": {
             "label": "Mitrailleuse de combat MK2",
             "type": "lmg",
             "description": "",
-            "weight": 1000,
+            "weight": 12000,
             "noIcon": true
         },
         "weapon_gusenberg": {
             "label": "Sulfateuse Gusenberg",
             "type": "lmg",
             "description": "",
-            "weight": 1000,
+            "weight": 7800,
             "noIcon": true
         },
         "weapon_sniperrifle": {
             "label": "Sniper",
             "type": "sniper",
             "description": "",
-            "weight": 2000,
+            "weight": 5000,
             "noIcon": true
         },
         "weapon_heavysniper": {
             "label": "Sniper lourd",
             "type": "sniper",
             "description": "",
-            "weight": 2000,
+            "weight": 6000,
             "noIcon": true
         },
         "weapon_heavysniper_mk2": {
             "label": "Sniper lourd MK2",
             "type": "sniper",
             "description": "",
-            "weight": 2000,
+            "weight": 6000,
             "noIcon": true
         },
         "weapon_marksmanrifle": {
             "label": "Fusil à lunette",
             "type": "sniper",
             "description": "",
-            "weight": 2000,
+            "weight": 7500,
             "noIcon": true
         },
         "weapon_marksmanrifle_mk2": {
             "label": "Fusil à lunette MK2",
             "type": "sniper",
             "description": "",
-            "weight": 2000,
+            "weight": 8000,
             "noIcon": true
         },
         "weapon_rpg": {
             "label": "RPG",
             "type": "heavyweapon",
             "description": "",
-            "weight": 2000,
+            "weight": 20000,
             "noIcon": true
         },
         "weapon_grenadelauncher": {
             "label": "Lance-grenades",
             "type": "heavyweapon",
             "description": "",
-            "weight": 2000,
+            "weight": 15000,
             "noIcon": true
         },
         "weapon_grenadelauncher_smoke": {
@@ -648,7 +648,7 @@
             "label": "Minigun",
             "type": "heavyweapon",
             "description": "",
-            "weight": 2000,
+            "weight": 40000,
             "noIcon": true
         },
         "weapon_firework": {

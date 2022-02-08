@@ -68,7 +68,7 @@
     },
     "lockpick": {
         "label": "Lockpick",
-        "weight": 500,
+        "weight": 50,
         "limit": null,
         "closeInv": true,
         "noIcon": true
@@ -167,19 +167,19 @@
     },
     "bumber_part_worn": {
         "label": "Pare-chocs usagé",
-        "weight": 6000,
+        "weight": 2000,
         "limit": 20,
         "noIcon": true
     },
     "bumber_part_revamped": {
         "label": "Pare-chocs retapé",
-        "weight": 5500,
+        "weight": 3500,
         "limit": 20,
         "noIcon": true
     },
     "rag": {
         "label": "Chiffon",
-        "weight": 500,
+        "weight": 10,
         "limit": 15,
         "closeInv": true,
         "description": "Allez frotte!",
@@ -195,7 +195,7 @@
     },
     "ethylotest": {
         "label": "Ethylotest",
-        "weight": 1000,
+        "weight": 500,
         "limit": 20,
         "closeInv": true,
         "noIcon": true
@@ -225,7 +225,7 @@
     },
     "defibrilator": {
         "label": "Défibrilateur",
-        "weight": 0,
+        "weight": 1000,
         "limit": 0,
         "closeInv": true,
         "description": "Chef on est en train de le perdre!",
@@ -234,7 +234,7 @@
     "dolizou": {
         "label": "Dolizou",
         "type": "medicine",
-        "weight": 100,
+        "weight": 10,
         "limit": null,
         "description": "Sous prescription du médecin",
         "noIcon": true
@@ -277,14 +277,14 @@
     "coke": {
         "label": "Cocaïne",
         "type": "drug",
-        "weight": 150,
+        "weight": 15,
         "limit": 1,
         "noIcon": true
     },
     "bagcoke": {
         "label": "Pochon de cocaïne",
         "type": "drug",
-        "weight": 150,
+        "weight": 15,
         "limit": 5,
         "noIcon": true
     },
@@ -311,11 +311,18 @@
     "extazyp": {
         "label": "Extazy en poudre",
         "type": "drug",
-        "weight": 1,
+        "weight": 3,
         "limit": 250,
         "noIcon": true
     },
     "bagexta": {
+        "label": "Pochon d'Extazy",
+        "type": "drug",
+        "weight": 6,
+        "limit": 250,
+        "noIcon": true
+    },
+    "keyexta": {
         "label": "Porte clé dinosaure",
         "weight": 5,
         "limit": 5,
@@ -331,21 +338,21 @@
     "methpseudophedrine": {
         "label": "Pseudophédrine",
         "type": "drug",
-        "weight": 1,
+        "weight": 150,
         "limit": 150,
         "noIcon": true
     },
     "methacide": {
         "label": "Acide Phénilacétique",
         "type": "drug",
-        "weight": 1,
+        "weight": 150,
         "limit": 150,
         "noIcon": true
     },
     "methamphetamine": {
         "label": "Pochon de meth",
         "type": "drug",
-        "weight": 5,
+        "weight": 25,
         "limit": 150,
         "noIcon": true
     },
@@ -522,7 +529,7 @@
         "label": "Munitions RPG",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 3000,
         "noIcon": true
     },
     "ammo_minigun": {
@@ -557,7 +564,7 @@
         "label": "Munitions assaut",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 95,
         "noIcon": true
     },
     "ammo_rifle_tracer": {
@@ -634,7 +641,7 @@
         "label": "Munitions pompe",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 36,
         "noIcon": true
     },
     "ammo_shotgun_incendiary": {
@@ -669,7 +676,7 @@
         "label": "Munitions pistolet",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 12,
         "noIcon": true
     },
     "ammo_pistol_tracer": {
@@ -704,7 +711,7 @@
         "label": "Munitions SMG",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 12,
         "noIcon": true
     },
     "ammo_smg_tracer": {
@@ -739,7 +746,7 @@
         "label": "Munitions MG",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 12,
         "noIcon": true
     },
     "ammo_mg_tracer": {
@@ -774,7 +781,7 @@
         "label": "Munitions pistolet de détresse",
         "type": "ammo",
         "description": "",
-        "weight": 10,
+        "weight": 5,
         "noIcon": true
     },
     "ammo_hazardcan": {
