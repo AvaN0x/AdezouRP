@@ -25,5 +25,6 @@
     "repairkits_blowtorch_not_closed": "Ce véhicule est déjà ouvert.",
     "repairkits_blowtorch_done": "Véhicule ouvert",
     "repairkits_cant_use_now": "Vous ne pouvez pas utiliser cela actuellement.",
-    "repairkits_need_to_be_mechanic": "Vous devez être un mécanicien pour pouvoir faire ceci."
+    "repairkits_need_to_be_mechanic": "Vous devez être un mécanicien pour pouvoir faire ceci.",
+    "you_must_remove_applied_outfit": "Vous devez enlever votre tenue avant de pouvoir en changer."
 }

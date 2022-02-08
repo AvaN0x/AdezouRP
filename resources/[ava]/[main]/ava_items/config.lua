@@ -4,3 +4,4 @@
 -------------------------------------------
 AVAConfig = {}
 
+AVAConfig.OutfitItemNames = {jailoutfit = "jail"}
