@@ -6,6 +6,7 @@ AVAConfig = {}
 
 -- In seconds
 AVAConfig.DeadScreenMaxDuration = 15 * 60
+AVAConfig.AskRespawnDuration = 10 * 60
 
 AVAConfig.RespawnPoints = {
     {Coord = vector3(323.15, -582.64, 42.3), Heading = 50.73}, -- Pillbox Hill

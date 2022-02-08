@@ -64,12 +64,21 @@ end
 
 function onDeath()
     TriggerEvent("RageUI.CloseAll")
+    local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_DETONATE~", label = GetString("button_call_ems")}})
 
     local secondsLeft = AVAConfig.DeadScreenMaxDuration
+    local canAskForRespawn = false
     Citizen.CreateThread(function()
         while secondsLeft > 0 do
             Wait(1000)
             secondsLeft = secondsLeft - 1
+            if not canAskForRespawn and secondsLeft <= AVAConfig.AskRespawnDuration then
+                canAskForRespawn = true
+                instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
+                    {control = "~INPUT_PICKUP~", label = GetString("button_respawn")},
+                    {control = "~INPUT_DETONATE~", label = GetString("button_call_ems")},
+                })
+            end
         end
     end)
 
@@ -88,10 +97,6 @@ function onDeath()
     Citizen.CreateThread(function()
         -- Freemode message
         local scaleform = exports.ava_core:ShowFreemodeMessage(GetString("dead_message_title"), GetString("dead_message_subtitle"), true)
-        local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
-            {control = "~INPUT_PICKUP~", label = GetString("button_respawn")},
-            {control = "~INPUT_DETONATE~", label = GetString("button_call_ems")},
-        })
         -- INPUT_PICKUP 38
         -- INPUT_DETONATE 47
         while secondsLeft > 0 and IsDead do
@@ -103,17 +108,23 @@ function onDeath()
             SetTextFont(0)
             SetTextScale(0.34, 0.34)
             SetTextRightJustify(true)
-            SetTextWrap(0.80, 0.98)
+            SetTextWrap(0.76, 0.98)
             SetTextOutline()
             SetTextEntry("STRING")
-            AddTextComponentString(GetString("dead_time_left", math.floor(secondsLeft / 60), secondsLeft % 60))
-            DrawText(0.80, 0.92)
+            if canAskForRespawn then
+                AddTextComponentString(GetString("dead_time_left", math.floor(secondsLeft / 60), secondsLeft % 60))
+                DrawText(0.80, 0.92)
+            else
+                AddTextComponentString(GetString("dead_time_left_before_ask_for_respawn", math.floor(secondsLeft / 60), secondsLeft % 60,
+                    math.floor((secondsLeft - AVAConfig.AskRespawnDuration) / 60), (secondsLeft - AVAConfig.AskRespawnDuration) % 60))
+                DrawText(0.80, 0.90)
+            end
 
             DisableAllControlActions(0)
             EnableControlAction(0, 245, true) -- T
             EnableControlAction(0, 213, true) -- HOME
 
-            if IsDisabledControlJustPressed(0, 38)
+            if canAskForRespawn and IsDisabledControlJustPressed(0, 38)
                 and exports.ava_core:ShowConfirmationMessage(GetString("confirm_respawn_title"), GetString("confirm_respawn_firstline"),
                     GetString("confirm_respawn_secondline")) then
                 RevivePlayer(true)

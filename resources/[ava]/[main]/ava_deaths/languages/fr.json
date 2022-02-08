@@ -5,6 +5,7 @@
     "dead_message_title": "~r~Vous êtes dans le coma~s~",
     "dead_message_subtitle": "",
     "dead_time_left": "Temps restant %02d:%02d",
+    "dead_time_left_before_ask_for_respawn": "Temps restant %02d:%02d~n~Temps restant avant Unité X %02d:%02d",
     "button_respawn": "Appeler l'unité X",
     "button_call_ems": "Appeler les EMS",
     "confirm_respawn_title": "~r~Unité X~s~",
