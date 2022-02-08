@@ -1,5 +1,6 @@
 -- Original source from https://forum.cfx.re/t/help-finger-point/25652/4?u=avan0x
 -- Edited it a bit
+-- TODO redo it
 local pointingKey = 29
 local mp_pointing = false
 local keyPressed = false
