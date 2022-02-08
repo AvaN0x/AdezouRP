@@ -200,7 +200,7 @@
         "closeInv": true,
         "noIcon": true
     },
-    "prisonoutfit": {
+    "jailoutfit": {
         "label": "Tenue de prison",
         "type": "outfit",
         "weight": 1500,
