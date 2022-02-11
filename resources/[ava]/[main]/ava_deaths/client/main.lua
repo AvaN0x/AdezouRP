@@ -162,6 +162,8 @@ function RevivePlayer(atHospital)
     end
     TriggerServerEvent("ava_deaths:server:playerRevived", atHospital)
 
+    TriggerEvent("ava_tweaks:client:resetKO")
+
     StopScreenEffect("DeathFailOut")
     DoScreenFadeIn(800)
 end
