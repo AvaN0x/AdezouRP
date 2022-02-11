@@ -185,7 +185,7 @@ end, GetString("setaccount_help"), {
     {name = "balance", help = GetString("account_balance_amount")},
 })
 
-AVA.Commands.RegisterCommand("removeaccount", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removeaccount", "remaccount"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
         return
     end
@@ -224,7 +224,7 @@ AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
     end
 end, "Add a license to a player", {{name = "player", help = GetString("player_id_or_zero")}, {name = "license", help = GetString("license_name")}})
 
-AVA.Commands.RegisterCommand("removelicense", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removelicense", "remlicense"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -268,7 +268,7 @@ end, "Add points to a player license", {
     {name = "quantity", help = "Quantity of points"},
 })
 
-AVA.Commands.RegisterCommand("removelicensepoints", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removelicensepoints", "remlicensepoints"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
         return
     end
@@ -322,7 +322,7 @@ end, GetString("addjob_help"), {
     {name = "grade?", help = GetString("job_grade_name")},
 })
 
-AVA.Commands.RegisterCommand("removejob", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removejob", "remjob"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -366,7 +366,7 @@ end, GetString("addgang_help"), {
     {name = "grade?", help = GetString("gang_grade_name")},
 })
 
-AVA.Commands.RegisterCommand("removegang", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removegang", "remgang"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -447,7 +447,7 @@ AVA.Commands.RegisterCommand("giveallitems", "superadmin", function(source, args
     end
 end, GetString("give_all_items_help"), {{name = "player", help = GetString("player_id_or_empty")}})
 
-AVA.Commands.RegisterCommand("removeitem", "admin", function(source, args)
+AVA.Commands.RegisterCommand({"removeitem", "remitem"}, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
