@@ -17,6 +17,9 @@ end
 local JobsToSelect = {}
 
 function BankManagmentMenu()
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     updateJobsToSelect()
 
     RageUI.CloseAll()

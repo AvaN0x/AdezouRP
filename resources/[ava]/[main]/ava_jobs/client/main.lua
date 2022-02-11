@@ -610,6 +610,9 @@ Citizen.CreateThread(function()
                         ProcessZone(job)
 
                     elseif CurrentZoneCategory == "ProcessMenuZones" then
+                        if not exports.ava_core:canOpenMenu() then
+                            return
+                        end
                         ProcessMenuZone(job)
 
                     elseif CurrentZoneCategory == "SellZones" then
@@ -640,6 +643,9 @@ local function applyClothesAnimation()
 end
 
 function OpenCloakroomMenu()
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     local playerSkin = exports.ava_core:getPlayerSkinData()
 
     local jobName = CurrentJobName
@@ -973,6 +979,9 @@ end
 ----------------
 
 function JobCenterMenu()
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     local elements = {}
 
     for i = 1, #Config.JobCenter.JobList, 1 do

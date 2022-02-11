@@ -8,6 +8,9 @@ local playerOutfits = nil
 local outfitOptions<const> = {{Name = GetString("po_equip"), action = "equip"}, {Name = GetString("po_delete"), action = "delete"}}
 
 function SavedOutfits()
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     local store = Config.Stores[CurrentZoneName]
 
     OpenPlayerOutfitsMenu()

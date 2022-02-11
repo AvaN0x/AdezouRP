@@ -8,7 +8,9 @@
 local SelectJobMenu = RageUI.CreateMenu("", GetString("job_menu"), 0, 0, "avaui", "avaui_title_adezou")
 local JobsToSelect = {}
 RegisterCommand("keyJobMenu", function()
-    OpenJobMenu()
+    if exports.ava_core:canOpenMenu() then
+        OpenJobMenu()
+    end
 end)
 
 RegisterKeyMapping("keyJobMenu", GetString("job_menu_key"), "keyboard", Config.JobMenuKey)

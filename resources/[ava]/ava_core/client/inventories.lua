@@ -275,7 +275,9 @@ function RageUI.PoolMenus:AvaCoreInventory()
 end
 
 RegisterCommand("keyInventory", function()
-    OpenMyInventory()
+    if exports.ava_core:canOpenMenu() then
+        OpenMyInventory()
+    end
 end)
 
 RegisterKeyMapping("keyInventory", GetString("inventory"), "keyboard", AVAConfig.InventoryKey)

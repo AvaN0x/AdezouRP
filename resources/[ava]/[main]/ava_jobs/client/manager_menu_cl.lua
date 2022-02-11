@@ -13,6 +13,9 @@ local ManageEmployeeMenu = RageUI.CreateSubMenu(ManageEmployeesMenu, "", "name",
 local selectedEmployee, myGradeId
 
 function OpenManagerMenuMenu(jobName)
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     local job = playerJobs[jobName]
     if not job then
         return

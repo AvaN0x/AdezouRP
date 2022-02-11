@@ -224,6 +224,19 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
     end
 end)
 
+----------------------------------------------
+--------------- Utiity exports ---------------
+----------------------------------------------
+
+local canOpenMenu = function()
+    if AVA.Player.IsDead or AVA.Player.CreatingChar then
+        return false
+    end
+    TriggerEvent("ava_core:client:canOpenMenu")
+    return not WasEventCanceled()
+end
+exports("canOpenMenu", canOpenMenu)
+
 ------------------------------------------------
 --------------- Get data exports ---------------
 ------------------------------------------------

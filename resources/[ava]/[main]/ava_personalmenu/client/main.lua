@@ -69,11 +69,13 @@ local function startInMenuLoop()
 end
 
 RegisterCommand("personalMenu", function()
-    checkAdminPerms()
+    if exports.ava_core:canOpenMenu() then
+        checkAdminPerms()
 
-    startInMenuLoop()
-    RageUI.CloseAll()
-    RageUI.Visible(MainPersonalMenu, true)
+        startInMenuLoop()
+        RageUI.CloseAll()
+        RageUI.Visible(MainPersonalMenu, true)
+    end
 end)
 
 RegisterKeyMapping("personalMenu", GetString("personal_menu"), "keyboard", "F5")

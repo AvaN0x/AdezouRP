@@ -116,6 +116,9 @@ function CloseClothesMenu()
 end
 
 function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory)
+    if not exports.ava_core:canOpenMenu() then
+        return
+    end
     RageUI.CloseAll()
     MainClothesMenu.Sprite.Dictionary = titleTextureDirectory or "avaui"
     MainClothesMenu.Sprite.Texture = titleTexture or "avaui_title_adezou"
@@ -1189,3 +1192,9 @@ function RageUI.PoolMenus:ClothesMenu()
     end)
 
 end
+
+AddEventHandler("ava_core:client:canOpenMenu", function()
+    if RageUI.Visible(MainClothesMenu) or RageUI.Visible(TattoosMenu) then
+        CancelEvent()
+    end
+end)
