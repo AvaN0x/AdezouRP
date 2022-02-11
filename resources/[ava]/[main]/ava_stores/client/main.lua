@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local GUI = {Time = 0}
+local LastActionTimer = 0
 
 local HasAlreadyEnteredMarker = false
 local LastZone = nil
@@ -151,9 +151,9 @@ Citizen.CreateThread(function()
             end
 
             if IsControlJustReleased(0, 38) -- E
-            and (GetGameTimer() - GUI.Time) > 300 then
+            and (GetGameTimer() - LastActionTimer) > 300 then
                 CurrentActionEnabled = false
-                GUI.Time = GetGameTimer()
+                LastActionTimer = GetGameTimer()
                 local store = Config.Stores[CurrentZoneName]
 
                 if store.Items then
