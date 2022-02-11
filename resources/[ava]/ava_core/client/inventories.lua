@@ -316,6 +316,7 @@ end)
 
 if AVAConfig.NPWD then
     exports("hasPhoneItem", function()
+        -- TODO exports.npwd:setPhoneDisabled
         return exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
     end)
 end
