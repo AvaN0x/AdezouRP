@@ -20,7 +20,7 @@ AVA.KeyboardInput = function(titleText, defaultText, maxLength)
         result = tostring(GetOnscreenKeyboardResult())
     end
     Citizen.Wait(100)
-    return result or ""
+    return AVA.Utils.Trim(result) or ""
 end
 exports("KeyboardInput", AVA.KeyboardInput)
 
