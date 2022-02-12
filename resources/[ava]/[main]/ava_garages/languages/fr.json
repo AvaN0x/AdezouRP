@@ -1,6 +1,16 @@
 {
     "press_open_garage": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu",
     "garage": "Garage",
+    "garage_menu": "Garage",
+    "garage_take_out": "Sortir",
+    "garage_rename": "Renommer",
+    "garage_park_vehicle": "Ranger le véhicule",
+    "garage_park_vehicle_subtitle": "Ranger le véhicule dans le garage",
+    "garage_menu_not_parked": "Ce véhicule n'est dans aucun garage.",
+    "garage_menu_not_in_this_garage": "Ce véhicule n'est pas dans ce garage.",
+    "garage_menu_parked": "Plaque: %s~n~Essence: %s",
     "insurance": "Assurance",
-    "pound": "Fourrière"
+    "insurance_menu": "Assurance",
+    "pound": "Fourrière",
+    "pound_menu": "Fourrière"
 }

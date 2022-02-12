@@ -14,20 +14,49 @@ AVAConfig.Garages = {
         Color = {r = 255, g = 255, b = 255},
         Marker = 36,
         Blip = {Sprite = 290, Color = 0},
-        Type = 0,
+        VehicleType = 0,
         SpawnPoint = {Coord = vector3(229.700, -800.1149, 30.5722), Heading = 157.84},
         -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
     },
     {
+        -- TODO Add this with the export "addGarage" in ava_jobs
+        Name = "jobgarage_lspd",
+        Coord = vector3(447.77, -1019.28, 28.54),
+        Size = {x = 2.0, y = 2.0, z = 2.0},
+        Color = {r = 0, g = 122, b = 204},
+        Marker = 36,
+        Blip = {Sprite = 290, Color = 0},
+        VehicleType = 0,
+        IsJobGarage = "lspd",
+        JobNeeded = "lspd",
+        SpawnPoint = {Coord = vector3(447.77, -1019.28, 28.54), Heading = 5.0},
+        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+    },
+    {
+        -- TODO Add this with the export "addGarage" in ava_jobs
         Name = "garage_lspd",
         Coord = vector3(454.79, -1024.43, 28.48),
         Size = {x = 2.0, y = 2.0, z = 2.0},
         Color = {r = 255, g = 255, b = 255},
         Marker = 36,
         Blip = {Sprite = 290, Color = 0},
-        Type = 0,
+        VehicleType = 0,
         JobNeeded = "lspd",
         SpawnPoint = {Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0},
+        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+    },
+    {
+        -- TODO Add this with the export "addGarage" in ava_jobs
+        Name = "garage_lost",
+        Coord = vector3(971.55, -126.71, 74.32),
+        Size = {x = 2.0, y = 2.0, z = 2.0},
+        Color = {r = 255, g = 255, b = 255},
+        Marker = 36,
+        Blip = {Sprite = 290, Color = 0},
+        VehicleType = 0,
+        IsCommonGarage = true,
+        JobNeeded = "biker_lost",
+        SpawnPoint = {Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0},
         -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
     },
     -- #endregion garages
@@ -42,8 +71,8 @@ AVAConfig.Garages = {
         Marker = 27,
         Blip = {Coord = vector3(-116.68, -603.23, 36.28), Sprite = 620, Color = 64, Name = GetString("insurance")},
     },
-
     -- #endregion insurance
+
     -- #region pound
     {
         Pound = true,
@@ -53,7 +82,7 @@ AVAConfig.Garages = {
         Color = {r = 255, g = 255, b = 255},
         Marker = 27,
         Blip = {Sprite = 524, Color = 64, Name = GetString("pound")},
-        Type = 0,
+        VehicleType = 0,
         SpawnPoint = {Coord = vector3(375.72, -1611.87, 29.29), Heading = 240.0},
     },
     -- #endregion pound

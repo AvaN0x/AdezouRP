@@ -189,7 +189,6 @@ Citizen.CreateThread(function()
                 else
                     OpenGarageMenu(garage)
                 end
-                CurrentActionEnabled = true
             end
         else
             Wait(50)
