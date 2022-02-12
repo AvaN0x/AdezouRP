@@ -115,14 +115,19 @@ function UpdatePlayerTable(connectedPlayers)
 
 		if v.job == 'ems' or v.job2 == 'ems' then
 			ems = ems + 1
-		elseif v.job == 'lspd' or v.job2 == 'lspd' then
-			police = police + 1
-		elseif v.job == 'taxi' or v.job2 == 'taxi' then
-			taxi = taxi + 1
-		elseif v.job == 'mechanic' or v.job2 == 'mechanic' then
-			mechanic = mechanic + 1
-		elseif v.job == 'state' or v.job2 == 'state' then
+        end
+		if v.job == 'lspd' or v.job2 == 'lspd' then
+		    police = police + 1
+        end
+		if v.job == 'taxi' or v.job2 == 'taxi' then
+            taxi = taxi + 1
+        end
+		if v.job == 'mechanic' or v.job2 == 'mechanic' then
+            mechanic = mechanic + 1
+        end
+		if v.job == 'state' or v.job2 == 'state' then
 			state = state + 1
+        end
 		--[[ elseif v.job == 'slaughterer' then
 			slaughterer = slaughterer + 1
 		elseif v.job == 'fueler' then
@@ -143,7 +148,7 @@ function UpdatePlayerTable(connectedPlayers)
 		-- 	cardeal = cardeal + 1
 		-- elseif v.job == 'armeria' then
 		-- 	arma = arma + 1
-		end
+		-- end
 	end
 
 	if num == 1 then
