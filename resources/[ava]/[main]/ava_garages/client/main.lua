@@ -63,6 +63,9 @@ function setAccessibleGarages()
             for i = 1, #PlayerData.jobs do
                 if PlayerData.jobs[i].name == garage.JobNeeded then
                     add = true
+                    if garage.IsJobGarage then
+                        garage.canManage = PlayerData.jobs[i].canManage
+                    end
                     break
                 end
             end
