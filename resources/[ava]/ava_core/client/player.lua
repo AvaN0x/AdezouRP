@@ -118,11 +118,13 @@ AddEventHandler("ava_core:client:playerDeath", function()
     AVA.Player.IsDead = true
 
     if AVAConfig.NPWD then
+        -- TODO disable phone
         exports.npwd:setPhoneVisible(false)
     end
 end)
 AddEventHandler("ava_core:client:playerRevived", function()
     AVA.Player.IsDead = false
+    -- TODO enable phone if it should
 end)
 
 ------------------------------------
