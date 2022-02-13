@@ -209,9 +209,9 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
         local RightArrowHovered = Graphics.IsMouseInBounds(CurrentMenu.X + Colour.RightArrow.X + CurrentMenu.SafeZoneSize.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Colour.RightArrow.Y + CurrentMenu.SafeZoneSize.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Colour.RightArrow.Width, Colour.RightArrow.Height)
 
         ---@type boolean
-        local leftActive = RageUI.Settings.Controls.PageUp.Active
+        local leftActive = CurrentMenu.Controls.PageUp.Active
         ---@type boolean
-        local rightActive = RageUI.Settings.Controls.PageDown.Active
+        local rightActive = CurrentMenu.Controls.PageDown.Active
         
         ---@type boolean
         local Selected = false
@@ -228,7 +228,7 @@ function Panels:ColourPanel(Title, Colours, MinimumIndex, CurrentIndex, Action, 
 
         Graphics.Text((Title and Title or "") .. " (" .. CurrentIndex .. " " .. Colour.LabelOf .. " " .. #Colours .. ")", CurrentMenu.X + Grid.Text.Top.X + (CurrentMenu.WidthOffset / 2), CurrentMenu.Y + Grid.Text.Top.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Grid.Text.Top.Scale, 245, 245, 245, 255, 1)
         
-        if ((Hovered or LeftArrowHovered or RightArrowHovered) and RageUI.Settings.Controls.Click.Active)
+        if ((Hovered or LeftArrowHovered or RightArrowHovered) and CurrentMenu.Controls.Click.Active)
             or leftActive or rightActive
         then
             Selected = true
