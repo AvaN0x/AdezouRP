@@ -272,8 +272,11 @@ function RageUIMenus:KeysRegister(Controls, ControlName, Description, Action)
 end
 
 
-
-
+function RageUIMenus:ResetIndex()
+    self.Pagination.Minimum = 1
+    self.Pagination.Maximum = self.Pagination.Total
+    self.Index = 1
+end
 
 
 function RageUI.OpenTempMenu(title, ItemsFunction, OnClosed, textureName, textureDirectory, NotCloseable)
