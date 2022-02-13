@@ -71,19 +71,16 @@ RegisterNetEvent("ava_personalmenu:client:spectate", function(targetServerId, ta
     -- #region Get target ped or abort
     local targetLocalId
 
+    -- Prevent infinite loop
     local tryToGetPlayerCount = 0
     repeat
-        -- Prevent infinite loop
-        if tryToGetPlayerCount > 100 then
-            break
-        end
         tryToGetPlayerCount = tryToGetPlayerCount + 1
 
         Wait(50)
         print("Waiting ped")
         targetLocalId = GetPlayerFromServerId(targetServerId)
         print(targetLocalId, targetServerId)
-    until GetPlayerPed(targetLocalId) > 0 and targetLocalId ~= -1
+    until tryToGetPlayerCount > 100 or GetPlayerPed(targetLocalId) > 0 and targetLocalId ~= -1
 
     if tryToGetPlayerCount > 100 then
         print("Failed to get ped")
@@ -98,11 +95,8 @@ RegisterNetEvent("ava_personalmenu:client:spectate", function(targetServerId, ta
     -- #region Load collisions around target player
     local tryToLoadCollisionsCount = 0
     RequestCollisionAtCoord(targetCoords.x, targetCoords.y, targetCoords.z)
-    while not HasCollisionLoadedAroundEntity(targetPed) do
-        -- Prevent infinite loop
-        if tryToLoadCollisionsCount > 100 then
-            break
-        end
+    -- Prevent infinite loop
+    while not HasCollisionLoadedAroundEntity(targetPed) and tryToLoadCollisionsCount <= 100 do
         tryToLoadCollisionsCount = tryToLoadCollisionsCount + 1
 
         Wait(10)
