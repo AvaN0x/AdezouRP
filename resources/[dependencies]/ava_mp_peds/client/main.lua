@@ -227,7 +227,8 @@ local function reloadPedOverlaysInternal(ped)
     ClearPedDecorations(ped)
 
     if AVAConfig.HairOverlays[localSkin.gender] then
-        local overlay<const> = AVAConfig.HairOverlays[localSkin.gender][localSkin.hair]
+        -- Default to 0
+        local overlay<const> = AVAConfig.HairOverlays[localSkin.gender][localSkin.hair] or AVAConfig.HairOverlays[localSkin.gender][0]
         if overlay and overlay.collection and overlay.overlay then
             print("^3[DEBUG]^0 Set hair overlays", overlay.collection, overlay.overlay)
             AddPedDecorationFromHashes(ped, overlay.collection, overlay.overlay)
