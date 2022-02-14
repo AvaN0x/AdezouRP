@@ -36,18 +36,18 @@ exports.ava_core.TeleportPlayerToCoords = AVA.TeleportPlayerToCoords
 exports.ava_core.SpawnObject = AVA.SpawnObject
 exports.ava_core.SpawnObjectLocal = AVA.SpawnObjectLocal
 exports.ava_core.DeleteObject = AVA.DeleteObject
-exports.ava_core.SpawnVehicle = AVA.Vehicles.SpawnVehicle
-exports.ava_core.SpawnVehicleLocal = AVA.Vehicles.SpawnVehicleLocal
-exports.ava_core.DeleteVehicle = AVA.Vehicles.DeleteVehicle
-exports.ava_core.GetVehicleInFront = AVA.Vehicles.GetVehicleInFront
-exports.ava_core.GetClosestVehicle = AVA.Vehicles.GetClosestVehicle
+exports.ava_core.SpawnVehicle = AVA.SpawnVehicle
+exports.ava_core.SpawnVehicleLocal = AVA.SpawnVehicleLocal
+exports.ava_core.DeleteVehicle = AVA.DeleteVehicle
+exports.ava_core.GetVehicleInFront = AVA.GetVehicleInFront
+exports.ava_core.GetClosestVehicle = AVA.GetClosestVehicle
 exports.ava_core.GetScaleformInstructionalButtons = AVA.Utils.GetScaleformInstructionalButtons
 exports.ava_core.DrawText3D = AVA.Utils.DrawText3D
 exports.ava_core.DrawBubbleText3D = AVA.Utils.DrawBubbleText3D
 exports.ava_core.CancelableGoStraightToCoord = AVA.Utils.CancelableGoStraightToCoord
 exports.ava_core.ChooseClosestPlayer = AVA.Utils.ChooseClosestPlayer
-exports.ava_core.ChooseClosestVehicle = AVA.Vehicles.ChooseClosestVehicle
-exports.ava_core.GetVehicleInFrontOrChooseClosest = AVA.Vehicles.GetVehicleInFrontOrChooseClosest
+exports.ava_core.ChooseClosestVehicle = AVA.ChooseClosestVehicle
+exports.ava_core.GetVehicleInFrontOrChooseClosest = AVA.GetVehicleInFrontOrChooseClosest
 
 exports.ava_core.TriggerServerCallback = AVA.TriggerServerCallback
 

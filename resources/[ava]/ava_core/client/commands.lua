@@ -7,7 +7,7 @@
 ----------------------------------------
 RegisterNetEvent("ava_core:client:spawnVehicle", function(vehName)
     local playerPed = PlayerPedId()
-    local vehicle = AVA.Vehicles.SpawnVehicle(vehName, GetEntityCoords(playerPed), GetEntityHeading(playerPed))
+    local vehicle = AVA.SpawnVehicle(vehName, GetEntityCoords(playerPed), GetEntityHeading(playerPed))
 
     ClearPedTasksImmediately(playerPed)
     TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
@@ -15,16 +15,16 @@ end)
 
 RegisterNetEvent("ava_core:client:deleteVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.Vehicles.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
-        AVA.Vehicles.DeleteVehicle(vehicle)
+        AVA.DeleteVehicle(vehicle)
     end
 end)
 
 RegisterNetEvent("ava_core:client:repairVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.Vehicles.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
         SetVehicleFixed(vehicle)
@@ -34,7 +34,7 @@ end)
 
 RegisterNetEvent("ava_core:client:flipVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.Vehicles.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
         SetEntityCoords(vehicle, GetEntityCoords(vehicle, true))
@@ -44,7 +44,7 @@ end)
 RegisterNetEvent("ava_core:client:tpNearestVehicle", function()
     local playerPed = PlayerPedId()
 
-    local vehicle = AVA.Vehicles.GetClosestVehicle(nil, true)
+    local vehicle = AVA.GetClosestVehicle(nil, true)
     if vehicle ~= 0 then
         local wantedSeat = -1
         local driverPed = GetPedInVehicleSeat(vehicle, -1)
@@ -69,7 +69,7 @@ RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
     local vehicle
 
     if type(vehicleName) == "string" then
-        vehicle = AVA.Vehicles.SpawnVehicle(vehicleName, GetEntityCoords(playerPed), GetEntityHeading(playerPed))
+        vehicle = AVA.SpawnVehicle(vehicleName, GetEntityCoords(playerPed), GetEntityHeading(playerPed))
 
         ClearPedTasksImmediately(playerPed)
         TaskWarpPedIntoVehicle(playerPed, vehicle, -1)

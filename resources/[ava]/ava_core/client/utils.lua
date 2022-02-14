@@ -353,14 +353,13 @@ exports("DeleteObject", AVA.DeleteObject)
 --------------- Vehicles ---------------
 ----------------------------------------
 
-AVA.Vehicles = {}
 ---Spawn a vehicle at a given coords and heading
 ---@param vehName string|number
 ---@param coords vector3
 ---@param heading float
 ---@param isNetwork? boolean set the vehicle to be on network or only on local
 ---@return vehicle
-AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
+AVA.SpawnVehicle = function(vehName, coords, heading, isNetwork)
     local p = promise.new()
     isNetwork = (isNetwork == nil or isNetwork == true)
 
@@ -403,33 +402,33 @@ AVA.Vehicles.SpawnVehicle = function(vehName, coords, heading, isNetwork)
 
     return Citizen.Await(p)
 end
-exports("SpawnVehicle", AVA.Vehicles.SpawnVehicle)
+exports("SpawnVehicle", AVA.SpawnVehicle)
 
 ---Spawn a vehicle at a given coords and heading on local
 ---@param vehName string|number
 ---@param coords vector3
 ---@param heading float
 ---@return vehicle
-AVA.Vehicles.SpawnVehicleLocal = function(vehName, coords, heading)
-    return AVA.Vehicles.SpawnVehicle(vehName, coords, heading, false)
+AVA.SpawnVehicleLocal = function(vehName, coords, heading)
+    return AVA.SpawnVehicle(vehName, coords, heading, false)
 end
-exports("SpawnVehicleLocal", AVA.Vehicles.SpawnVehicleLocal)
+exports("SpawnVehicleLocal", AVA.SpawnVehicleLocal)
 
 ---Delete a vehicle
 ---@param vehicle entity
-AVA.Vehicles.DeleteVehicle = function(vehicle)
+AVA.DeleteVehicle = function(vehicle)
     if IsEntityAVehicle(vehicle) then
         AVA.NetworkRequestControlOfEntity(vehicle)
         SetEntityAsMissionEntity(vehicle, true, true)
         DeleteVehicle(vehicle)
     end
 end
-exports("DeleteVehicle", AVA.Vehicles.DeleteVehicle)
+exports("DeleteVehicle", AVA.DeleteVehicle)
 
 ---Get the vehicle in front of the user
 ---@param distance? number
 ---@return entity 
-AVA.Vehicles.GetVehicleInFront = function(distance)
+AVA.GetVehicleInFront = function(distance)
     local yOffset = distance
     if not distance or not tonumber(distance) or tonumber(distance) < 0 then
         yOffset = 4
@@ -448,14 +447,14 @@ AVA.Vehicles.GetVehicleInFront = function(distance)
     end
     return 0
 end
-exports("GetVehicleInFront", AVA.Vehicles.GetVehicleInFront)
+exports("GetVehicleInFront", AVA.GetVehicleInFront)
 
 ---Get the closest vehicle
 ---@param maxDistance? number
 ---@param notPlayerVehicle? bool "does't count player vehicle"
 ---@return entity closestVeh
 ---@return number closestDistance 
-AVA.Vehicles.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
+AVA.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
     if maxDistance and tonumber(maxDistance) and tonumber(maxDistance) > 0 then
         maxDistance = maxDistance + 0.0
     end
@@ -480,7 +479,7 @@ AVA.Vehicles.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
     end
     return 0
 end
-exports("GetClosestVehicle", AVA.Vehicles.GetClosestVehicle)
+exports("GetClosestVehicle", AVA.GetClosestVehicle)
 
 ---use example : 
 ---```lua
@@ -709,7 +708,7 @@ exports("ChooseClosestPlayer", AVA.Utils.ChooseClosestPlayer)
 ---@param whitelist? table table of hashes to whitelist
 ---@param blacklsit? table table of hashes to blacklist
 ---@return vehicle vehicle
-AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
+AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
 
@@ -749,23 +748,23 @@ AVA.Vehicles.ChooseClosestVehicle = function(title, distance, whitelist, blackli
         AVA.ShowNotification(GetString("no_vehicle_close_enough"))
     end
 end
-exports("ChooseClosestVehicle", AVA.Vehicles.ChooseClosestVehicle)
+exports("ChooseClosestVehicle", AVA.ChooseClosestVehicle)
 
----Get the vehicle in front of the player, if none is found, it calls AVA.Vehicles.ChooseClosestVehicle to let the player select a vehicle close
+---Get the vehicle in front of the player, if none is found, it calls AVA.ChooseClosestVehicle to let the player select a vehicle close
 ---@param distance number
 ---@param title string
 ---@return vehicle vehicle
-AVA.Vehicles.GetVehicleInFrontOrChooseClosest = function(distance, title)
+AVA.GetVehicleInFrontOrChooseClosest = function(distance, title)
     if not distance or not tonumber(distance) or tonumber(distance) < 0 then
         distance = 4.0
     else
         distance = distance + 0.0
     end
 
-    local vehicle = AVA.Vehicles.GetClosestVehicle(distance)
+    local vehicle = AVA.GetClosestVehicle(distance)
     if vehicle == 0 then
-        vehicle = AVA.Vehicles.ChooseClosestVehicle(title, distance)
+        vehicle = AVA.ChooseClosestVehicle(title, distance)
     end
     return vehicle
 end
-exports("GetVehicleInFrontOrChooseClosest", AVA.Vehicles.GetVehicleInFrontOrChooseClosest)
+exports("GetVehicleInFrontOrChooseClosest", AVA.GetVehicleInFrontOrChooseClosest)
