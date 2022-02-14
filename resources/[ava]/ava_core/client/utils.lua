@@ -425,6 +425,435 @@ AVA.DeleteVehicle = function(vehicle)
 end
 exports("DeleteVehicle", AVA.DeleteVehicle)
 
+---Get vehicle data, mod, extras, etc...
+---@param vehicle integer
+---@return table
+AVA.GetVehicleModsData = function(vehicle)
+    if not IsEntityAVehicle(vehicle) then
+        return
+    end
+
+    local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
+    local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
+
+    if GetIsVehiclePrimaryColourCustom(vehicle) then
+        colorPrimary = {GetVehicleCustomPrimaryColour(vehicle)}
+    end
+    if GetIsVehicleSecondaryColourCustom(vehicle) then
+        colorSecondary = {GetVehicleCustomSecondaryColour(vehicle)}
+    end
+
+    local extras = {}
+    for i = 0, 12 do
+        if DoesExtraExist(vehicle, i) then
+            extras[tostring(i)] = IsVehicleExtraTurnedOn(vehicle, i) == 1
+        end
+    end
+
+    return {
+        model = GetEntityModel(vehicle),
+        extras = extras,
+        livery = GetVehicleLivery(vehicle),
+
+        -- plate
+        plate = GetVehicleNumberPlateText(vehicle),
+        plateIndex = GetVehicleNumberPlateTextIndex(vehicle),
+
+        -- colors
+        colorPrimary = colorPrimary,
+        colorSecondary = colorSecondary,
+        pearlescentColor = pearlescentColor,
+        interiorColor = GetVehicleInteriorColor(vehicle),
+        dashboardColor = GetVehicleDashboardColour(vehicle),
+
+        -- wheels
+        wheelColor = wheelColor,
+        wheels = GetVehicleWheelType(vehicle),
+        tyreSmokeColor = {GetVehicleTyreSmokeColor(vehicle)},
+
+        windowTint = GetVehicleWindowTint(vehicle),
+
+        neonColor = {GetVehicleNeonLightsColour(vehicle)},
+        neonEnabled = {
+            IsVehicleNeonLightEnabled(vehicle, 0),
+            IsVehicleNeonLightEnabled(vehicle, 1),
+            IsVehicleNeonLightEnabled(vehicle, 2),
+            IsVehicleNeonLightEnabled(vehicle, 3),
+        },
+
+        modSpoilers = GetVehicleMod(vehicle, 0),
+        modFrontBumper = GetVehicleMod(vehicle, 1),
+        modRearBumper = GetVehicleMod(vehicle, 2),
+        modSideSkirt = GetVehicleMod(vehicle, 3),
+        modExhaust = GetVehicleMod(vehicle, 4),
+        modFrame = GetVehicleMod(vehicle, 5),
+        modGrille = GetVehicleMod(vehicle, 6),
+        modHood = GetVehicleMod(vehicle, 7),
+        modFender = GetVehicleMod(vehicle, 8),
+        modRightFender = GetVehicleMod(vehicle, 9),
+        modRoof = GetVehicleMod(vehicle, 10),
+
+        modHorns = GetVehicleMod(vehicle, 14),
+
+        modEngine = GetVehicleMod(vehicle, 11),
+        modBrakes = GetVehicleMod(vehicle, 12),
+        modTransmission = GetVehicleMod(vehicle, 13),
+        modSuspension = GetVehicleMod(vehicle, 15),
+        modArmor = GetVehicleMod(vehicle, 16),
+        modTurbo = IsToggleModOn(vehicle, 18),
+
+        modSmokeEnabled = IsToggleModOn(vehicle, 20),
+        modXenon = IsToggleModOn(vehicle, 22),
+        modXenonColour = GetVehicleXenonLightsColour(vehicle),
+
+        modFrontWheels = GetVehicleMod(vehicle, 23),
+        modCustomTiresF = GetVehicleModVariation(vehicle, 23),
+        modBackWheels = GetVehicleMod(vehicle, 24),
+        modCustomTiresR = GetVehicleModVariation(vehicle, 24),
+
+        modPlateHolder = GetVehicleMod(vehicle, 25),
+        modVanityPlate = GetVehicleMod(vehicle, 26),
+
+        modTrimA = GetVehicleMod(vehicle, 27),
+        modTrimB = GetVehicleMod(vehicle, 44),
+        modOrnaments = GetVehicleMod(vehicle, 28),
+        modDashboard = GetVehicleMod(vehicle, 29),
+        modDial = GetVehicleMod(vehicle, 30),
+        modDoorSpeaker = GetVehicleMod(vehicle, 31),
+        modSeats = GetVehicleMod(vehicle, 32),
+        modSteeringWheel = GetVehicleMod(vehicle, 33),
+        modShifterLeavers = GetVehicleMod(vehicle, 34),
+        modPlaques = GetVehicleMod(vehicle, 35),
+        modSpeakers = GetVehicleMod(vehicle, 36),
+        modTrunk = GetVehicleMod(vehicle, 37),
+        modHydraulics = GetVehicleMod(vehicle, 38),
+        modEngineBlock = GetVehicleMod(vehicle, 39),
+        modAirFilter = GetVehicleMod(vehicle, 40),
+        modStruts = GetVehicleMod(vehicle, 41),
+        modArchCover = GetVehicleMod(vehicle, 42),
+        modAerials = GetVehicleMod(vehicle, 43),
+        modTank = GetVehicleMod(vehicle, 45),
+        modWindows = GetVehicleMod(vehicle, 46),
+        modDoorR = GetVehicleMod(vehicle, 47),
+        modLivery = GetVehicleMod(vehicle, 48),
+        modLightbar = GetVehicleMod(vehicle, 49),
+
+        -- modDriftTyres = GetDriftTyresEnabled(vehicle), -- Disabled
+    }
+end
+exports("GetVehicleModsData", AVA.GetVehicleModsData)
+
+---Set vehicle data, mod, extras, etc...
+---@param vehicle integer
+---@param data table
+AVA.SetVehicleModsData = function(vehicle, data)
+    if not IsEntityAVehicle(vehicle) or type(data) ~= "table" then
+        return
+    end
+    SetVehicleModKit(vehicle, 0)
+
+    if data.extras then
+        for id, disable in pairs(data.extras) do
+            SetVehicleExtra(vehicle, tonumber(id), disable)
+        end
+    end
+    if data.livery then
+        SetVehicleLivery(vehicle, data.livery)
+    end
+    if data.plate then
+        SetVehicleNumberPlateText(vehicle, data.plate)
+    end
+    if data.plateIndex then
+        SetVehicleNumberPlateTextIndex(vehicle, data.plateIndex)
+    end
+    local colorPrimary<const>, colorSecondary<const> = GetVehicleColours(vehicle)
+    if data.colorPrimary then
+        if type(data.colorPrimary) == "table" then
+            SetVehicleCustomPrimaryColour(vehicle, data.colorPrimary[1], data.colorPrimary[2], data.colorPrimary[3])
+        else
+            SetVehicleColours(vehicle, data.colorPrimary, colorSecondary)
+        end
+    end
+    if data.colorSecondary then
+        if type(data.colorSecondary) == "table" then
+            SetVehicleCustomSecondaryColour(vehicle, data.colorSecondary[1], data.colorSecondary[2], data.colorSecondary[3])
+        else
+            SetVehicleColours(vehicle, data.colorPrimary or colorPrimary, data.colorSecondary)
+        end
+    end
+    local pearlescentColor<const>, wheelColor<const> = GetVehicleExtraColours(vehicle)
+    if data.pearlescentColor then
+        SetVehicleExtraColours(vehicle, data.pearlescentColor, wheelColor)
+    end
+    if data.wheelColor then
+        SetVehicleExtraColours(vehicle, data.pearlescentColor or pearlescentColor, data.wheelColor)
+    end
+    if data.interiorColor then
+        SetVehicleInteriorColor(vehicle, data.interiorColor)
+    end
+    if data.dashboardColor then
+        SetVehicleDashboardColour(vehicle, data.dashboardColor)
+    end
+    if data.wheels then
+        SetVehicleWheelType(vehicle, data.wheels)
+    end
+    if data.tyreSmokeColor then
+        SetVehicleTyreSmokeColor(vehicle, data.tyreSmokeColor[1], data.tyreSmokeColor[2], data.tyreSmokeColor[3])
+    end
+    if data.windowTint then
+        SetVehicleWindowTint(vehicle, data.windowTint)
+    end
+    if data.neonColor then
+        SetVehicleNeonLightsColour(vehicle, data.neonColor[1], data.neonColor[2], data.neonColor[3])
+    end
+    if data.neonEnabled then
+        for i = 0, #data.neonEnabled - 1 do
+            SetVehicleNeonLightEnabled(vehicle, i, data.neonEnabled[i + 1])
+        end
+    end
+    if data.modSpoilers then
+        SetVehicleMod(vehicle, 0, data.modSpoilers, false)
+    end
+    if data.modFrontBumper then
+        SetVehicleMod(vehicle, 1, data.modFrontBumper, false)
+    end
+    if data.modRearBumper then
+        SetVehicleMod(vehicle, 2, data.modRearBumper, false)
+    end
+    if data.modSideSkirt then
+        SetVehicleMod(vehicle, 3, data.modSideSkirt, false)
+    end
+    if data.modExhaust then
+        SetVehicleMod(vehicle, 4, data.modExhaust, false)
+    end
+    if data.modFrame then
+        SetVehicleMod(vehicle, 5, data.modFrame, false)
+    end
+    if data.modGrille then
+        SetVehicleMod(vehicle, 6, data.modGrille, false)
+    end
+    if data.modHood then
+        SetVehicleMod(vehicle, 7, data.modHood, false)
+    end
+    if data.modFender then
+        SetVehicleMod(vehicle, 8, data.modFender, false)
+    end
+    if data.modRightFender then
+        SetVehicleMod(vehicle, 9, data.modRightFender, false)
+    end
+    if data.modRoof then
+        SetVehicleMod(vehicle, 10, data.modRoof, false)
+    end
+    if data.modHorns then
+        SetVehicleMod(vehicle, 14, data.modHorns, false)
+    end
+    if data.modEngine then
+        SetVehicleMod(vehicle, 11, data.modEngine, false)
+    end
+    if data.modBrakes then
+        SetVehicleMod(vehicle, 12, data.modBrakes, false)
+    end
+    if data.modTransmission then
+        SetVehicleMod(vehicle, 13, data.modTransmission, false)
+    end
+    if data.modSuspension then
+        SetVehicleMod(vehicle, 15, data.modSuspension, false)
+    end
+    if data.modArmor then
+        SetVehicleMod(vehicle, 16, data.modArmor, false)
+    end
+    if data.modTurbo then
+        ToggleVehicleMod(vehicle, 18, data.modTurbo)
+    end
+    if data.modSmokeEnabled then
+        ToggleVehicleMod(vehicle, 20, data.modSmokeEnabled)
+    end
+    if data.modXenon then
+        ToggleVehicleMod(vehicle, 22, data.modXenon)
+    end
+    if data.modXenonColour then
+        SetVehicleXenonLightsColour(vehicle, data.modXenonColour)
+    end
+    if data.modFrontWheels then
+        SetVehicleMod(vehicle, 23, data.modFrontWheels, data.modCustomTiresF or false)
+    end
+    if data.modBackWheels then
+        SetVehicleMod(vehicle, 24, data.modBackWheels, data.modCustomTiresR or false)
+    end
+    if data.modPlateHolder then
+        SetVehicleMod(vehicle, 25, data.modPlateHolder, false)
+    end
+    if data.modVanityPlate then
+        SetVehicleMod(vehicle, 26, data.modVanityPlate, false)
+    end
+    if data.modTrimA then
+        SetVehicleMod(vehicle, 27, data.modTrimA, false)
+    end
+    if data.modTrimB then
+        SetVehicleMod(vehicle, 27, data.modTrimB, false)
+    end
+    if data.modOrnaments then
+        SetVehicleMod(vehicle, 28, data.modOrnaments, false)
+    end
+    if data.modDashboard then
+        SetVehicleMod(vehicle, 29, data.modDashboard, false)
+    end
+    if data.modDial then
+        SetVehicleMod(vehicle, 30, data.modDial, false)
+    end
+    if data.modDoorSpeaker then
+        SetVehicleMod(vehicle, 31, data.modDoorSpeaker, false)
+    end
+    if data.modSeats then
+        SetVehicleMod(vehicle, 32, data.modSeats, false)
+    end
+    if data.modSteeringWheel then
+        SetVehicleMod(vehicle, 33, data.modSteeringWheel, false)
+    end
+    if data.modShifterLeavers then
+        SetVehicleMod(vehicle, 34, data.modShifterLeavers, false)
+    end
+    if data.modPlaques then
+        SetVehicleMod(vehicle, 35, data.modPlaques, false)
+    end
+    if data.modSpeakers then
+        SetVehicleMod(vehicle, 36, data.modSpeakers, false)
+    end
+    if data.modTrunk then
+        SetVehicleMod(vehicle, 37, data.modTrunk, false)
+    end
+    if data.modHydraulics then
+        SetVehicleMod(vehicle, 38, data.modHydraulics, false)
+    end
+    if data.modEngineBlock then
+        SetVehicleMod(vehicle, 39, data.modEngineBlock, false)
+    end
+    if data.modAirFilter then
+        SetVehicleMod(vehicle, 40, data.modAirFilter, false)
+    end
+    if data.modStruts then
+        SetVehicleMod(vehicle, 41, data.modStruts, false)
+    end
+    if data.modArchCover then
+        SetVehicleMod(vehicle, 42, data.modArchCover, false)
+    end
+    if data.modAerials then
+        SetVehicleMod(vehicle, 43, data.modAerials, false)
+    end
+    if data.modTank then
+        SetVehicleMod(vehicle, 45, data.modTank, false)
+    end
+    if data.modWindows then
+        SetVehicleMod(vehicle, 46, data.modWindows, false)
+    end
+    if data.modDoorR then
+        SetVehicleMod(vehicle, 47, data.modDoorR, false)
+    end
+    if data.modLivery then
+        SetVehicleMod(vehicle, 48, data.modLivery, false)
+    end
+    if data.modLightbar then
+        SetVehicleMod(vehicle, 49, data.modLightbar, false)
+    end
+end
+exports("SetVehicleModsData", AVA.SetVehicleModsData)
+
+---Get vehicle health data, damaged parts...
+---@param vehicle integer
+---@return table
+AVA.GetVehicleHealthData = function(vehicle)
+    if not IsEntityAVehicle(vehicle) then
+        return
+    end
+
+    return {
+        -- health, rounded to nearest integer
+        bodyHealth = math.floor(GetVehicleBodyHealth(vehicle) + 0.5),
+        engineHealth = math.floor(GetVehicleEngineHealth(vehicle) + 0.5),
+        tankHealth = math.floor(GetVehiclePetrolTankHealth(vehicle) + 0.5),
+        fuelLevel = math.floor(GetVehicleFuelLevel(vehicle) + 0.5),
+        dirtLevel = math.floor(GetVehicleDirtLevel(vehicle) + 0.5),
+
+        -- 1 is intact, 0 is broken
+        windowsStates = {
+            IsVehicleWindowIntact(vehicle, 0) and 1 or 0, -- VEH_EXT_WINDSCREEN
+            IsVehicleWindowIntact(vehicle, 1) and 1 or 0, -- VEH_EXT_WINDSCREEN_R
+            IsVehicleWindowIntact(vehicle, 2) and 1 or 0, -- VEH_EXT_WINDOW_LF
+            IsVehicleWindowIntact(vehicle, 3) and 1 or 0, -- VEH_EXT_WINDOW_RF
+            IsVehicleWindowIntact(vehicle, 4) and 1 or 0, -- VEH_EXT_WINDOW_LR
+            IsVehicleWindowIntact(vehicle, 5) and 1 or 0, -- VEH_EXT_WINDOW_RR
+            IsVehicleWindowIntact(vehicle, 6) and 1 or 0, -- VEH_EXT_WINDOW_LM
+            IsVehicleWindowIntact(vehicle, 7) and 1 or 0, -- VEH_EXT_WINDOW_RM
+        },
+        -- 1 is burst, 0 is not
+        wheelsStates = {
+            IsVehicleTyreBurst(vehicle, 0, false) and 1 or 0, -- wheel_lf
+            IsVehicleTyreBurst(vehicle, 1, false) and 1 or 0, -- wheel_rf
+            IsVehicleTyreBurst(vehicle, 2, false) and 1 or 0, -- wheel_lm
+            IsVehicleTyreBurst(vehicle, 3, false) and 1 or 0, -- wheel_rm
+            IsVehicleTyreBurst(vehicle, 4, false) and 1 or 0, -- wheel_lr
+            IsVehicleTyreBurst(vehicle, 5, false) and 1 or 0, -- wheel_rr
+        },
+        -- 1 is broken, 0 is not
+        doorsStates = {
+            IsVehicleDoorDamaged(vehicle, 0) and 1 or 0, -- VEH_EXT_DOOR_DSIDE_F
+            IsVehicleDoorDamaged(vehicle, 1) and 1 or 0, -- VEH_EXT_DOOR_DSIDE_R
+            IsVehicleDoorDamaged(vehicle, 2) and 1 or 0, -- VEH_EXT_DOOR_PSIDE_F
+            IsVehicleDoorDamaged(vehicle, 3) and 1 or 0, -- VEH_EXT_DOOR_PSIDE_R
+            IsVehicleDoorDamaged(vehicle, 4) and 1 or 0, -- VEH_EXT_BONNET
+            IsVehicleDoorDamaged(vehicle, 5) and 1 or 0, -- VEH_EXT_BOOT
+        },
+    }
+end
+exports("GetVehicleHealthData", AVA.GetVehicleHealthData)
+
+---Set vehicle health data, damaged parts...
+---@param vehicle integer
+---@param data table
+AVA.SetVehicleHealthData = function(vehicle, data)
+    if not IsEntityAVehicle(vehicle) or type(data) ~= "table" then
+        return
+    end
+
+    if data.bodyHealth then
+        SetVehicleBodyHealth(vehicle, data.bodyHealth + 0.0)
+    end
+    if data.engineHealth then
+        SetVehicleEngineHealth(vehicle, data.engineHealth + 0.0)
+    end
+    if data.tankHealth then
+        SetVehiclePetrolTankHealth(vehicle, data.engineHealth + 0.0)
+    end
+    if data.fuelLevel then
+        SetVehicleFuelLevel(vehicle, data.fuelLevel + 0.0)
+    end
+    if data.dirtLevel then
+        SetVehicleDirtLevel(vehicle, data.dirtLevel + 0.0)
+    end
+    if data.windowsStates then
+        for i = 0, #data.windowsStates - 1 do
+            if data.windowsStates[i + 1] == 0 then
+                SmashVehicleWindow(vehicle, i)
+            end
+        end
+    end
+    if data.wheelsStates then
+        for i = 0, #data.wheelsStates - 1 do
+            if data.wheelsStates[i + 1] == 1 then
+                SetVehicleTyreBurst(vehicle, i, false, 1000.0)
+            end
+        end
+    end
+    if data.doorsStates then
+        for i = 0, #data.doorsStates - 1 do
+            if data.doorsStates[i + 1] == 1 then
+                SetVehicleDoorBroken(vehicle, i, true)
+            end
+        end
+    end
+end
+exports("SetVehicleHealthData", AVA.SetVehicleHealthData)
+
 ---Get the vehicle in front of the user
 ---@param distance? number
 ---@return entity 

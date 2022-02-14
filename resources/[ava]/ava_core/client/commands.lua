@@ -178,6 +178,17 @@ RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
     end)
 end)
 
+RegisterNetEvent("ava_core:client:getvehicledata", function()
+    if AVA.Player.isInVehicle then
+        local data<const> = {mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle)}
+        if data then
+            local jsonData<const> = json.encode(data)
+            print(jsonData)
+            TriggerEvent("ava_hud:client:copyToClipboard", jsonData)
+        end
+    end
+end)
+
 ------------------------------------
 --------------- Anim ---------------
 ------------------------------------

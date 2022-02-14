@@ -97,6 +97,12 @@ AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(
     end
 end, GetString("tune_vehicle_pink_help"), {{name = "vehicle?", help = GetString("vehicle_name")}})
 
+AVA.Commands.RegisterCommand("getvehicledata", "admin", function(source, args)
+    if source > 0 then
+        TriggerClientEvent("ava_core:client:getvehicledata", source)
+    end
+end, GetString("getvehicledata_help"))
+
 ------------------------------------
 --------------- Anim ---------------
 ------------------------------------

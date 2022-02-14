@@ -10,6 +10,7 @@
     "flip_vehicle_help": "Retourner le véhicule",
     "tpnearestvehicle_help": "Se téléporter dans le véhicule le plus proche",
     "tune_vehicle_pink_help": "Custom le véhicule en rose",
+    "getvehicledata": "Récupère les données pour pouvoir recréer ce véhicule",
     "anim_help": "Jouer une animation",
     "anim_dict": "Dictionnaire de l'animation",
     "anim_name": "Nom de l'animation",
