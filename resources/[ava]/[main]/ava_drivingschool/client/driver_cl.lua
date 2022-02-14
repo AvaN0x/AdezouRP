@@ -24,7 +24,6 @@ function spawnDrivingCar()
     TriggerServerEvent("ava_drivingschool:server:setDrivingTestVehicle", VehToNet(testVehicle))
     -- TODO set vehicle fuel
     SetVehRadioStation(testVehicle, "OFF")
-    SetEntityAsMissionEntity(testVehicle)
     TaskWarpPedIntoVehicle(playerPed, testVehicle, -1)
     isInsideTestVehicle = true
     testVehicleHealth = GetEntityHealth(testVehicle)
@@ -282,7 +281,6 @@ end)
 
 -- Utils
 function DrawMissionText(text, duration)
-    -- TODO problem, it shows behind car HUD
     ClearPrints()
     BeginTextCommandPrint("STRING")
     AddTextComponentSubstringPlayerName(text or "")
