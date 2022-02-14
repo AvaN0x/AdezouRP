@@ -67,10 +67,12 @@
                             var timeoutVal = Math.floor(maxTime / 100);
                             animateUpdate();
 
-                            $('#pbar_innertext').text(text);
+                            $('#pbar_innertext').text(text !== undefined ? text : "0%");
 
                             function updateProgress(percentage) {
                                 $('#pbar_innerdiv').css("width", percentage + "%");
+                                if (text === undefined)
+                                    $('#pbar_innertext').text(percentage + "%");
                             }
 
                             function animateUpdate() {
