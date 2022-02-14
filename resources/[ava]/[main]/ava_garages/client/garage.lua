@@ -95,7 +95,7 @@ local takeOutVehicle = function(garage, vehicleData)
     end
     local vehicle = exports.ava_core:SpawnVehicle(vehicleData.model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
     if vehicle then
-        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), vehicleData.id, CurrentGarage.IsCommonGarage)
+        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), vehicleData.id, CurrentGarage.IsCommonGarage, CurrentGarage.Name)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
 

@@ -67,7 +67,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
 end)
 -- #endregion get vehicles in garage
 
-function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCommonGarage)
+function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
     if not vehicleId or not aPlayer then
         return false
     end
@@ -75,7 +75,8 @@ function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCo
     if not vehicle then
         return false
     end
-    if (vehicle.ownertype == 0 and (vehicle.citizenid == aPlayer.citizenId or IsCommonGarage))
+    print(IsCommonGarage, vehicle.garage, garageName)
+    if (vehicle.ownertype == 0 and (vehicle.citizenid == aPlayer.citizenId or (IsCommonGarage and garageName == vehicle.garage)))
         or (vehicle.ownertype == 1 and IsPlayerAceAllowed(aPlayer.src, "ace.job." .. vehicle.job_name .. ".main")
             and (not checkCanManage or IsPlayerAceAllowed(aPlayer.src, "job." .. vehicle.job_name .. ".manage"))) then
         return true, vehicle
@@ -103,7 +104,7 @@ end)
 -- #endregion rename vehicle
 
 -- #region take out vehicle
-RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehicleId, IsCommonGarage)
+RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehicleId, IsCommonGarage, garageName)
     local src = source
     -- #region wait for entity to exist or abort
     -- Prevent infinite loop
@@ -124,7 +125,7 @@ RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehic
         DeleteEntity(vehicle)
         return
     end
-    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, true, IsCommonGarage)
+    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage, garageName)
     -- We only do actions if the player is allowed to interact with the vehicle and the vehicle is not already spawned
     if not allowed or not vehicleData.parked then
         -- We delete the entity in case of error
@@ -158,7 +159,7 @@ RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleT
         return
     end
 
-    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage)
+    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage, garageName)
     local vehicleParked = false
     if allowed then
         if vehicleData.ownertype == 0 and not IsJobGarage then
