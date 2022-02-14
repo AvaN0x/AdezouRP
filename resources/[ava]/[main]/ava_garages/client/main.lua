@@ -172,9 +172,9 @@ end)
 -----------------
 Citizen.CreateThread(function()
     while true do
-        Wait(0)
-
+        local wait = 50
         if CurrentGarageIndex ~= nil and CurrentActionEnabled then
+            wait = 0
             SetTextComponentFormat("STRING")
             AddTextComponentString(GetString("press_open_garage"))
             DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -193,8 +193,7 @@ Citizen.CreateThread(function()
                     OpenGarageMenu(garage)
                 end
             end
-        else
-            Wait(50)
         end
+        Wait(0)
     end
 end)

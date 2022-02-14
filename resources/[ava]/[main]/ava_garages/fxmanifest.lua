@@ -34,6 +34,6 @@ client_scripts {
     "client/pound.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua", "server/pound.lua"}
 
 dependencies {"ava_core", "RageUI"}
