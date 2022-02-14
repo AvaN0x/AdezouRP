@@ -135,6 +135,7 @@ RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehic
     local entityState = Entity(vehicle)
     entityState.state:set("id", vehicleId, false)
     MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked WHERE `id` = :id", {id = vehicleId, parked = false})
+    -- TODO Maybe save the entity net idea to an array, listen to entityRemoved event and remove it from the array, used to see if the vehicle should be able to be spawned again?
 end)
 -- #endregion take out vehicle
 
@@ -170,12 +171,20 @@ RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleT
     end
 
     if vehicleParked then
-        DeleteEntity(vehicle)
-
         if not vehicleData.parked then
-            MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage WHERE `id` = :id",
+            MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage WHERE `id` = :id",
                 {id = vehicleId, garage = garageName, parked = true})
         end
+
+        for i = -1, 6 do
+            local ped = GetPedInVehicleSeat(vehicle, i)
+            if ped > 0 then
+                TaskLeaveVehicle(ped, vehicle, 1)
+            end
+        end
+        Wait(1500)
+
+        DeleteEntity(vehicle)
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_vehicle_parked"))
     else
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))

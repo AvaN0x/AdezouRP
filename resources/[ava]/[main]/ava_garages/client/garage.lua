@@ -88,10 +88,13 @@ local takeOutVehicle = function(garage, vehicleData)
     if not garage or not vehicleData or exports.ava_core:IsPlayerInVehicle() then
         return
     end
-    -- TODO don't forget spam click because people are f*cking dumb and will try it if I don't
+
+    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 4.0, false, true, false, false, false, 0, false) then
+        exports.ava_core:ShowNotification(GetString("garage_area_is_occupied"))
+        return
+    end
     local vehicle = exports.ava_core:SpawnVehicle(vehicleData.model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
     if vehicle then
-        print(VehToNet(vehicle))
         TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), vehicleData.id, CurrentGarage.IsCommonGarage)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)

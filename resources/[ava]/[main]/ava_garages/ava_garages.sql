@@ -34,6 +34,9 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
 -- ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Ignus","ignus","61CIR397","garage_pillbox","{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Camtar","kamacho","61CHO397","garage_pillbox","{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"GRANGeR","granger","61CaO397","garage_pillbox","{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"ROOOOOOOSVELT","btype3","61CdO397","garage_pillbox","{}",0, 1);
 -- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"La komoda","komoda","21CIR397","garage_pillbox","{}",0, 1);
 -- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Volatus","volatus","11CIR397","garage_pillbox","{}",3, 1);
 -- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"ItaliRSX","italirsx","62CIR397","garage_lspd","{}",0, 1);

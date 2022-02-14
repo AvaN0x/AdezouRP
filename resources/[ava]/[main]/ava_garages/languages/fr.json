@@ -16,6 +16,7 @@
     "garage_menu_not_parked": "Ce véhicule n'est dans aucun garage.",
     "garage_menu_not_in_this_garage": "Ce véhicule n'est pas dans ce garage.",
     "garage_menu_parked": "%s~n~Plaque: %s~n~Essence: %s",
+    "garage_area_is_occupied": "La zone est occupée.",
     "insurance": "Assurance",
     "insurance_menu": "Assurance",
     "pound": "Fourrière",
