@@ -4,7 +4,7 @@
 -------------------------------------------
 MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"))
 
-local isHudActive, isBigMapActive, isCinematicModeActive = true, false, false
+local isHudActive, isCinematicModeActive = true, false
 
 local isDriftModeActive = GetResourceKvpInt("miscs_menu_drift_mode") ~= 0
 local isIdleCamDisabled = GetResourceKvpInt("miscs_menu_disabled_idle_cam") ~= 0
