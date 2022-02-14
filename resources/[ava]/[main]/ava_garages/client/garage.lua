@@ -89,7 +89,7 @@ local takeOutVehicle = function(garage, vehicleData)
         return
     end
 
-    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 4.0, false, true, false, false, false, 0, false) then
+    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 1.5, false, true, false, false, false, 0, false) then
         exports.ava_core:ShowNotification(GetString("garage_area_is_occupied"))
         return
     end
@@ -99,11 +99,20 @@ local takeOutVehicle = function(garage, vehicleData)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
 
-        -- Set data with vehicleData.data
+        -- Set data with vehicleData.modsdata
+        -- Set data with vehicleData.healthdata
 
         -- keys
     end
 end
+
+RegisterNetEvent("ava_garages:client:setVehicleData", function(vehicleNet, modsData, healthData)
+    local vehicle = NetToVeh(vehicleNet)
+    if vehicle > 0 then
+        exports.ava_core:SetVehicleModsData(vehicle, json.decode(modsData))
+        exports.ava_core:SetVehicleHealthData(vehicle, json.decode(healthData))
+    end
+end)
 
 function RageUI.PoolMenus:GarageMenu()
     MainGarageMenu:IsVisible(function(Items)
@@ -117,7 +126,7 @@ function RageUI.PoolMenus:GarageMenu()
                         local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
                         if isInVehicle and seat == -1 then
                             TriggerServerEvent("ava_garages:server:parkVehicle", CurrentGarage.Name, CurrentGarage.VehicleType, VehToNet(vehicle),
-                                CurrentGarage.IsJobGarage, CurrentGarage.IsCommonGarage)
+                                json.encode(exports.ava_core:GetVehicleHealthData(vehicle) or {}), CurrentGarage.IsJobGarage, CurrentGarage.IsCommonGarage)
                             RageUI.CloseAllInternal()
                         else
                             exports.ava_core:ShowNotification(GetString("garage_park_vehicle_need_in_vehicle"))
@@ -170,3 +179,11 @@ function RageUI.PoolMenus:GarageMenu()
         end
     end)
 end
+
+RegisterNetEvent("ava_core:client:savevehicledata", function()
+    local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
+    if isInVehicle and seat == -1 then
+        TriggerServerEvent("ava_core:server:savevehicledata", VehToNet(vehicle), json.encode(exports.ava_core:GetVehicleModsData(vehicle) or {}),
+            json.encode(exports.ava_core:GetVehicleHealthData(vehicle) or {}))
+    end
+end)

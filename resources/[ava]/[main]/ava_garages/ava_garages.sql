@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
     `plate` varchar(12) NOT NULL,
     `parked` BOOLEAN DEFAULT false,
     `garage` varchar(50) NOT NULL DEFAULT 'garage_pillbox',
-    `data` longtext NOT NULL,
+    `modsdata` longtext NOT NULL,
+    `healthdata` longtext NOT NULL,
     `vehicletype` tinyint NOT NULL COMMENT '0 = car\n1 = boat\n2 = plane\n3 = helicopter',
     `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
@@ -33,13 +34,13 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
 --     PRIMARY KEY (`identifier`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Ignus","ignus","61CIR397","garage_pillbox","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Camtar","kamacho","61CHO397","garage_pillbox","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"GRANGeR","granger","61CaO397","garage_pillbox","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"ROOOOOOOSVELT","btype3","61CdO397","garage_pillbox","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"La komoda","komoda","21CIR397","garage_pillbox","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Volatus","volatus","11CIR397","garage_pillbox","{}",3, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"ItaliRSX","italirsx","62CIR397","garage_lspd","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,58,"Shinobi","shinobi","69CIR397","garage_lost","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (0,59,"Bati 801","bati","69CLE397","garage_lost","{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `job_name`, `label`, `model`, `plate`, `garage`, `data`, `vehicletype`, `parked`) VALUES (1,"lspd","Police buffalo","police2","63CIR397","jobgarage_lspd","{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Ignus","ignus","61CIR397","garage_pillbox","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Camtar","kamacho","61CHO397","garage_pillbox","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"GRANGeR","granger","61CaO397","garage_pillbox","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"ROOOOOOOSVELT","btype3","61CdO397","garage_pillbox","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"La komoda","komoda","21CIR397","garage_pillbox","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Volatus","volatus","11CIR397","garage_pillbox","{}", "{}",3, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"ItaliRSX","italirsx","62CIR397","garage_lspd","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Shinobi","shinobi","69CIR397","garage_lost","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,59,"Bati 801","bati","69CLE397","garage_lost","{}", "{}",0, 1);
+-- INSERT INTO `ava_vehicles`(`ownertype`, `job_name`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (1,"lspd","Police buffalo","police2","63CIR397","jobgarage_lspd","{}", "{}",0, 1);

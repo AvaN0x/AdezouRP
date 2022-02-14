@@ -1,4 +1,5 @@
 {
+    "savevehicledata_help": "Sauvegarder les données du véhicule sur la base de données",
     "press_open_garage": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu",
     "garage": "Garage",
     "garage_menu": "Garage",
