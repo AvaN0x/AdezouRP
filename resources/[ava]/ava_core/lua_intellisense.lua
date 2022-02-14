@@ -28,6 +28,7 @@ exports.ava_core.ShowConfirmationMessage = AVA.ShowConfirmationMessage
 exports.ava_core.ForceHideConfirmationMessage = AVA.ForceHideConfirmationMessage
 exports.ava_core.ShowHelpNotification = AVA.ShowHelpNotification
 exports.ava_core.ShowFreemodeMessage = AVA.ShowFreemodeMessage
+exports.ava_core.DrawMissionText = AVA.DrawMissionText
 exports.ava_core.NetworkRequestControlOfEntity = AVA.NetworkRequestControlOfEntity
 exports.ava_core.RequestModel = AVA.RequestModel
 exports.ava_core.RequestAnimDict = AVA.RequestAnimDict

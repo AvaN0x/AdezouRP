@@ -167,6 +167,17 @@ AVA.ShowFreemodeMessage = function(title, subtitle, onTop, duration)
 end
 exports("ShowFreemodeMessage", AVA.ShowFreemodeMessage)
 
+---Show a mission text to the player
+---@param text string text to show
+---@param duration? number|nil duration, defaults to 1000
+AVA.DrawMissionText = function(text, duration)
+    ClearPrints()
+    BeginTextCommandPrint("STRING")
+    AddTextComponentSubstringPlayerName(text or "")
+    EndTextCommandPrint(duration or 1000, true)
+end
+exports("DrawMissionText", AVA.DrawMissionText)
+
 ----------------------------------------
 --------------- Requests ---------------
 ----------------------------------------
