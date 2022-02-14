@@ -3,13 +3,13 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local CurrentGarage = nil
-local MenuElements = nil
+local MenuElements = {}
 
 local vehicleListOptions<const> = {{Name = GetString("garage_take_out"), action = "take_out"}, {Name = GetString("garage_rename"), action = "rename"}}
 local MainGarageMenu = RageUI.CreateMenu("", GetString("garage_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainGarageMenu.Closed = function()
     CurrentGarage = nil
-    GarageVehicles = nil
+    MenuElements = {}
     CurrentActionEnabled = true
 end
 
@@ -46,7 +46,7 @@ function OpenGarageMenu(garage)
                 canRename = vehicle.can_rename == 1
             end
 
-            local element = {label = vehicle.label, id = vehicle.id, canRename = canRename}
+            local element = {label = vehicle.label, id = vehicle.id, data = vehicle.data, plate = vehicle.plate, model = vehicle.model, canRename = canRename}
             if not vehicle.parked then
                 element.desc = GetString("garage_menu_not_parked")
                 element.disabled = true
@@ -54,13 +54,27 @@ function OpenGarageMenu(garage)
                 element.desc = GetString("garage_menu_not_in_this_garage")
                 element.disabled = true
             else
-                element.desc = GetString("garage_menu_parked", vehicle.plate, 100.0)
+                local vehicleName = "unknown"
+                local vehicleHash = GetHashKey(vehicle.model)
+                if IsModelInCdimage(vehicleHash) then
+                    local vehicleDisplayName = GetDisplayNameFromVehicleModel(vehicleHash)
+                    vehicleName = GetLabelText(vehicleDisplayName)
+                    if vehicleName == "NULL" then
+                        vehicleName = vehicleDisplayName
+                    end
+                end
+                element.desc = GetString("garage_menu_parked", vehicleName, vehicle.plate, 100.0)
             end
             MenuElements[count] = element
         end
+
+        table.sort(MenuElements, function(a, b)
+            return a.label:lower() < b.label:lower()
+        end)
     end
 
     RageUI.CloseAll()
+    MainGarageMenu:ResetIndex()
     RageUI.Visible(MainGarageMenu, true)
 end
 
@@ -69,6 +83,24 @@ AddEventHandler("ava_core:client:canOpenMenu", function()
         CancelEvent()
     end
 end)
+
+local takeOutVehicle = function(garage, vehicleData)
+    if not garage or not vehicleData or exports.ava_core:IsPlayerInVehicle() then
+        return
+    end
+    -- TODO don't forget spam click because people are f*cking dumb and will try it if I don't
+    local vehicle = exports.ava_core:SpawnVehicle(vehicleData.model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
+    if vehicle then
+        print(VehToNet(vehicle))
+        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), vehicleData.id, CurrentGarage.IsCommonGarage)
+        SetVehRadioStation(vehicle, "OFF")
+        TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+
+        -- Set data with vehicleData.data
+
+        -- keys
+    end
+end
 
 function RageUI.PoolMenus:GarageMenu()
     MainGarageMenu:IsVisible(function(Items)
@@ -79,8 +111,14 @@ function RageUI.PoolMenus:GarageMenu()
             Items:AddButton(GetString("garage_park_vehicle"), GetString("garage_park_vehicle_subtitle"), {RightBadge = RageUI.BadgeStyle.Car},
                 function(onSelected)
                     if onSelected then
-                        print("park vehicle") -- TODO
-                        RageUI.CloseAllInternal()
+                        local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
+                        if isInVehicle and seat == -1 then
+                            TriggerServerEvent("ava_garages:server:parkVehicle", CurrentGarage.Name, CurrentGarage.VehicleType, VehToNet(vehicle),
+                                CurrentGarage.IsJobGarage, CurrentGarage.IsCommonGarage)
+                            RageUI.CloseAllInternal()
+                        else
+                            exports.ava_core:ShowNotification(GetString("garage_park_vehicle_need_in_vehicle"))
+                        end
                     end
                 end)
         end
@@ -93,7 +131,8 @@ function RageUI.PoolMenus:GarageMenu()
                     elseif not element.canRename then
                         Items:AddButton(element.label, element.desc, {RightLabel = GetString("garage_take_out")}, function(onSelected)
                             if onSelected then
-                                print("take_out") -- TODO
+                                takeOutVehicle(CurrentGarage, element)
+                                RageUI.CloseAllInternal()
                             end
                         end)
                     else
@@ -104,7 +143,8 @@ function RageUI.PoolMenus:GarageMenu()
                             if onSelected then
                                 local action = vehicleListOptions[element.indice or 1].action
                                 if action == "take_out" then
-                                    print("take_out") -- TODO
+                                    takeOutVehicle(CurrentGarage, element)
+                                    RageUI.CloseAllInternal()
 
                                 elseif action == "rename" then
                                     local label = exports.ava_core:KeyboardInput(GetString("garage_rename_input_label"), element.label, 50)
@@ -124,7 +164,6 @@ function RageUI.PoolMenus:GarageMenu()
                     end
                 end
             end
-
         end
     end)
 end

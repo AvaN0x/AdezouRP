@@ -67,15 +67,15 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
 end)
 -- #endregion get vehicles in garage
 
-function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage)
+function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCommonGarage)
     if not vehicleId or not aPlayer then
         return false
     end
-    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage` FROM `ava_vehicles` WHERE `id` = :id", {id = vehicleId})
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `parked` FROM `ava_vehicles` WHERE `id` = :id", {id = vehicleId})
     if not vehicle then
         return false
     end
-    if (vehicle.ownertype == 0 and vehicle.citizenid == aPlayer.citizenId)
+    if (vehicle.ownertype == 0 and (vehicle.citizenid == aPlayer.citizenId or IsCommonGarage))
         or (vehicle.ownertype == 1 and IsPlayerAceAllowed(aPlayer.src, "ace.job." .. vehicle.job_name .. ".main")
             and (not checkCanManage or IsPlayerAceAllowed(aPlayer.src, "job." .. vehicle.job_name .. ".manage"))) then
         return true, vehicle
@@ -101,3 +101,84 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:renameVehicle", func
     return false
 end)
 -- #endregion rename vehicle
+
+-- #region take out vehicle
+RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehicleId, IsCommonGarage)
+    local src = source
+    -- #region wait for entity to exist or abort
+    -- Prevent infinite loop
+    local waitForEntityToExistCount = 0
+    while waitForEntityToExistCount <= 100 and not DoesEntityExist(NetworkGetEntityFromNetworkId(vehicleNet)) do
+        Wait(10)
+        waitForEntityToExistCount = waitForEntityToExistCount + 1
+    end
+    if waitForEntityToExistCount > 100 then
+        return
+    end
+    -- #endregion wait for entity to exist or abort
+
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then
+        -- We delete the entity in case of error
+        DeleteEntity(vehicle)
+        return
+    end
+    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, true, IsCommonGarage)
+    -- We only do actions if the player is allowed to interact with the vehicle and the vehicle is not already spawned
+    if not allowed or not vehicleData.parked then
+        -- We delete the entity in case of error
+        DeleteEntity(vehicle)
+        return
+    end
+
+    local entityState = Entity(vehicle)
+    entityState.state:set("id", vehicleId, false)
+    MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked WHERE `id` = :id", {id = vehicleId, parked = false})
+end)
+-- #endregion take out vehicle
+
+-- #region park vehicle
+RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleType, vehicleNet, IsJobGarage, IsCommonGarage)
+    local src = source
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    if not DoesEntityExist(vehicle) then
+        return
+    end
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then
+        return false
+    end
+
+    local entityState = Entity(vehicle)
+    local vehicleId = entityState.state.id
+    if not vehicleId then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
+        return
+    end
+
+    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage)
+    local vehicleParked = false
+    if allowed then
+        if vehicleData.ownertype == 0 and not IsJobGarage then
+            -- Player vehicle
+            vehicleParked = true
+        elseif vehicleData.ownertype == 1 and IsJobGarage and not IsCommonGarage then
+            -- Job vehicle
+            vehicleParked = true
+        end
+    end
+
+    if vehicleParked then
+        DeleteEntity(vehicle)
+
+        if not vehicleData.parked then
+            MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage WHERE `id` = :id",
+                {id = vehicleId, garage = garageName, parked = true})
+        end
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_vehicle_parked"))
+    else
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
+    end
+end)
+-- #endregion park vehicle
