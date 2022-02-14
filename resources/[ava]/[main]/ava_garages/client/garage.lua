@@ -9,7 +9,7 @@ local vehicleListOptions<const> = {{Name = GetString("garage_take_out"), action 
 local MainGarageMenu = RageUI.CreateMenu("", GetString("garage_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainGarageMenu.Closed = function()
     CurrentGarage = nil
-    MenuElements = {}
+    MenuElements = nil
     CurrentActionEnabled = true
 end
 
@@ -18,9 +18,10 @@ function OpenGarageMenu(garage)
         return
     end
     CurrentGarage = garage
+    MenuElements = {}
 
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
-    if not isInVehicle then
+    if not isInVehicle and not CurrentGarage.DisableTakeOut then
         local vehicles
         local canRename = true
         if CurrentGarage.IsJobGarage then
@@ -36,7 +37,6 @@ function OpenGarageMenu(garage)
         end
 
         local count = 0
-        MenuElements = {}
         for i = 1, #vehicles do
             local vehicle = vehicles[i]
             count = count + 1
@@ -119,7 +119,7 @@ function RageUI.PoolMenus:GarageMenu()
         if not CurrentGarage then
             return
         end
-        if not CurrentGarage.OnlyTakeOut then
+        if not CurrentGarage.DisablePark then
             Items:AddButton(GetString("garage_park_vehicle"), GetString("garage_park_vehicle_subtitle"), {RightBadge = RageUI.BadgeStyle.Car},
                 function(onSelected)
                     if onSelected then

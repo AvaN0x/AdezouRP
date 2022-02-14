@@ -16,7 +16,8 @@ AVAConfig.Garages = {
         Blip = {Sprite = 290, Color = 0},
         VehicleType = 0,
         SpawnPoint = {Coord = vector3(229.700, -800.1149, 30.5722), Heading = 157.84},
-        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
+        -- DisableTakeOut = true,
     },
     {
         -- TODO Add this with the export "addGarage" in ava_jobs
@@ -30,7 +31,7 @@ AVAConfig.Garages = {
         IsJobGarage = "lspd",
         JobNeeded = "lspd",
         SpawnPoint = {Coord = vector3(447.77, -1019.28, 28.54), Heading = 5.0},
-        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
     },
     {
         -- TODO Add this with the export "addGarage" in ava_jobs
@@ -43,7 +44,7 @@ AVAConfig.Garages = {
         VehicleType = 0,
         JobNeeded = "lspd",
         SpawnPoint = {Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0},
-        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
     },
     {
         -- TODO Add this with the export "addGarage" in ava_jobs
@@ -57,7 +58,7 @@ AVAConfig.Garages = {
         IsCommonGarage = true,
         JobNeeded = "biker_lost",
         SpawnPoint = {Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0},
-        -- OnlyTakeOut = true, -- Used when the player as a vehicle in a garage that he has lost access
+        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
     },
     -- #endregion garages
 
