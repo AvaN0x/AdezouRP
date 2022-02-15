@@ -6,6 +6,7 @@ Config = {}
 Config.DrawDistance = 15.0
 
 Config.Stores = {
+    -- #region item shops
     TwentyFourSeven = {
         Title = {textureName = "shopui_title_conveniencestore", textureDirectory = "shopui_title_conveniencestore"},
         Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
@@ -37,7 +38,6 @@ Config.Stores = {
         Name = "Twenty Four Seven",
         HelpText = GetString("press_buy"),
     },
-
     RobsLiquor = {
         Title = {textureName = "shopui_title_liquorstore2", textureDirectory = "shopui_title_liquorstore2"},
         Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
@@ -66,7 +66,6 @@ Config.Stores = {
         Name = "Robs Liquor",
         HelpText = GetString("press_buy"),
     },
-
     LTDgasoline = {
         Title = {textureName = "shopui_title_gasstation", textureDirectory = "shopui_title_gasstation"},
         Blip = {Name = "Supérette", Sprite = 52, Color = 4, Scale = 0.6},
@@ -95,6 +94,23 @@ Config.Stores = {
         HelpText = GetString("press_buy"),
     },
 
+    BlackMarket = {
+        Title = {textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar"},
+        Coord = vector3(1716.30, 3295.09, 40.32),
+        Items = {
+            {name = "headbag", price = 200, isDirtyMoney = true},
+            -- {name = "tenuecasa", price = 200, isDirtyMoney = true},
+            {name = "gpsbeacon", price = 200, isDirtyMoney = true},
+            {name = "lockpick", price = 200, isDirtyMoney = true},
+            {name = "ziptie", price = 200, isDirtyMoney = true},
+        },
+        Distance = 1,
+        Name = "Black Market",
+        HelpText = GetString("press_buy"),
+    },
+    -- #endregion item shops
+
+    -- #region ammunations
     Ammunation = {
         Title = {textureName = "shopui_title_gunclub", textureDirectory = "shopui_title_gunclub"},
         Blip = {Sprite = 110, Color = 1, Scale = 0.6},
@@ -151,22 +167,9 @@ Config.Stores = {
         Name = "Ammunation",
         HelpText = GetString("press_buy"),
     },
+    -- #endregion ammunations
 
-    BlackMarket = {
-        Title = {textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar"},
-        Coord = vector3(1716.30, 3295.09, 40.32),
-        Items = {
-            {name = "headbag", price = 200, isDirtyMoney = true},
-            {name = "tenuecasa", price = 200, isDirtyMoney = true},
-            {name = "gpsbeacon", price = 200, isDirtyMoney = true},
-            {name = "lockpick", price = 200, isDirtyMoney = true},
-            {name = "ziptie", price = 200, isDirtyMoney = true},
-        },
-        Distance = 1,
-        Name = "Black Market",
-        HelpText = GetString("press_buy"),
-    },
-
+    -- #region player_outfits
     SavedOutfits = {
         Coords = {
             -- discount stores
@@ -195,8 +198,9 @@ Config.Stores = {
         Color = {r = 0, g = 2255, b = 255},
         HelpText = GetString("press_access_saved_outfits"),
     },
+    -- #endregion player_outfits
 
-    -- Clothes stores
+    -- #region clothes stores
     DiscountStore = {
         Title = {textureName = "shopui_title_lowendfashion", textureDirectory = "shopui_title_lowendfashion"}, -- CHECKOUT! DISCOUNT STORE
         Subtitle = "DiscountStore",
@@ -329,7 +333,25 @@ Config.Stores = {
         HelpText = GetString("press_open_menu"),
     },
 
-    -- Barbershops
+    MaskShop = {
+        Title = {textureName = "shopui_title_movie_masks", textureDirectory = "shopui_title_movie_masks"},
+        Subtitle = "Vespucci movie masks",
+        Blip = {Sprite = 671, Color = 31, Scale = 0.8},
+        Coords = {vector3(-1336.87, -1278.91, 3.88)},
+        ClothesStore = true,
+        SkinElements = {"mask"},
+        Price = 50,
+        MinCamVerticalOffset = 0.5,
+        Marker = 27,
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 255, g = 255, b = 255},
+        Distance = 2.0,
+        Name = "Magasin de masques",
+        HelpText = GetString("press_open_menu"),
+    },
+    -- #endregion clothes stores
+
+    -- #region barber shops
     HairOnHawickBarber = {
         Title = {textureName = "shopui_title_barber4", textureDirectory = "shopui_title_barber4"}, -- HAIR ON HAWICK TRADITIONAL BARBERS
         Subtitle = "Hair On Hawick Traditional Barbers",
@@ -410,8 +432,9 @@ Config.Stores = {
         Name = "Coiffeur",
         HelpText = GetString("press_open_menu"),
     },
+    -- #endregion barber shops
 
-    -- Tattoos
+    -- #region tattoos shops
     BlazingTattoo = {
         Title = {textureName = "shopui_title_tattoos", textureDirectory = "shopui_title_tattoos"}, -- Blazing tattoo
         Subtitle = "Blazing tattoo",
@@ -487,24 +510,9 @@ Config.Stores = {
         Name = "Tatoueur",
         HelpText = GetString("press_open_menu"),
     },
+    -- #endregion tattoos shops
 
-    MaskShop = {
-        Title = {textureName = "shopui_title_movie_masks", textureDirectory = "shopui_title_movie_masks"},
-        Subtitle = "Vespucci movie masks",
-        Blip = {Sprite = 671, Color = 31, Scale = 0.8},
-        Coords = {vector3(-1336.87, -1278.91, 3.88)},
-        ClothesStore = true,
-        SkinElements = {"mask"},
-        Price = 50,
-        MinCamVerticalOffset = 0.5,
-        Marker = 27,
-        Size = {x = 1.0, y = 1.0, z = 1.0},
-        Color = {r = 255, g = 255, b = 255},
-        Distance = 2.0,
-        Name = "Magasin de masques",
-        HelpText = GetString("press_open_menu"),
-    },
-
+    -- #region car washs
     Carwash_InnocenceBlvd = {
         Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(29.06, -1391.93, 28.38),
@@ -528,7 +536,6 @@ Config.Stores = {
         Name = "Station de lavage",
         HelpText = GetString("press_wash_car", 80),
     },
-
     Carwash_LittleSeoul = {
         Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(-699.65, -933.13, 18.03),
@@ -552,7 +559,6 @@ Config.Stores = {
         Name = "Station de lavage",
         HelpText = GetString("press_wash_car", 80),
     },
-
     Carwash_CarsonAve = {
         Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(167.90, -1715.70, 28.31),
@@ -576,7 +582,6 @@ Config.Stores = {
         Name = "Station de lavage",
         HelpText = GetString("press_wash_car", 80),
     },
-
     Carwash_Paleto = {
         Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(-75.27, 6424.31, 30.51),
@@ -588,7 +593,6 @@ Config.Stores = {
         Name = "Station de lavage",
         HelpText = GetString("press_wash_car", 80),
     },
-
     Carwash_Sandy = {
         Blip = {Sprite = 100, Color = 0, Scale = 0.6},
         Coord = vector3(1362.08, 3592.20, 33.94),
@@ -600,6 +604,8 @@ Config.Stores = {
         Name = "Station de lavage",
         HelpText = GetString("press_wash_car", 80),
     },
+    -- #endregion car washs
+
 
 }
 
