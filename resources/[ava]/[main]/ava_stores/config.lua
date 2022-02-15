@@ -606,7 +606,38 @@ Config.Stores = {
     },
     -- #endregion car washs
 
+    -- #region vehicleshops
+    Motorsport = {
+        Title = {textureName = "shopui_title_tattoos5", textureDirectory = "shopui_title_tattoos5"},
+        Name = "Premium Deluxe Motorsport",
+        Blip = {Sprite = 326, Color = 0},
+        Coord = vector3(-56.59, -1097.87, 26.84),
+        Size = {x = 1.0, y = 1.0, z = 1.0},
+        Color = {r = 255, g = 255, b = 255},
+        Distance = 2.6,
+        Marker = 36,
+        VehicleType = 0,
+        VehicleShop = {
+            Categories = {"compacts", "coupes", "motorcycles", "muscle", "offroad", "sedans", "sports", "sportsclassics", "super", "suvs", "vans"},
+            Inside = {Coord = vector3(-44.72, -1097.94, 26.42), Heading = 161.03},
+            SpawnVehicle = {Coord = vector3(-32.46, -1090.95, 25.43), Heading = 340.5},
+            SpawnLargeVehicle = {Coord = vector3(-31.19, -1080.54, 26.14), Heading = 71.5},
+        },
+        HelpText = GetString("press_open_menu"),
+    },
+    MotorsportSell = {
+        Name = "Vente de véhicules",
+        Coord = vector3(-45.56, -1081.63, 26.69),
+        Size = {x = 2.0, y = 2.0, z = 2.0},
+        Color = {r = 201, g = 24, b = 30, a = 128},
+        Marker = 29,
+        Blip = {Sprite = 810, Color = 0xffaaaaa0, Scale = 0.5},
+        VehicleType = 0,
+        SellVehicle = true,
+        HelpText = GetString("press_open_sell_vehicle"),
+    },
 
+    -- #endregion vehicleshops
 }
 
 Config.ClothesStore = {
@@ -712,4 +743,8 @@ Config.ClothesStore = {
             },
         },
     },
+}
+
+Config.VehicleShops = {
+    vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {}, --
 }

@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
 
             SetBlipSprite(blip, v.Blip.Sprite)
             SetBlipDisplay(blip, 4)
-            SetBlipScale(blip, v.Blip.Scale)
+            SetBlipScale(blip, v.Blip.Scale or 0.8)
             SetBlipColour(blip, v.Blip.Color)
             SetBlipAsShortRange(blip, true)
 
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
                     if distance < Config.DrawDistance then
                         if v.Marker ~= nil then
                             DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                                v.Color.b, 100, false, true, 2, false, false, false, false)
+                                v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         end
                         waitTimer = 0
                         if distance < (v.Distance or v.Size.x or 1.5) then
@@ -97,7 +97,7 @@ Citizen.CreateThread(function()
                 if distance < Config.DrawDistance then
                     if v.Marker ~= nil then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                     end
                     waitTimer = 0
                     if distance < (v.Distance or v.Size.x or 1.5) then
@@ -164,6 +164,10 @@ Citizen.CreateThread(function()
                     SavedOutfits()
                 elseif store.Carwash then
                     CarWash()
+                elseif store.VehicleShop then
+                    OpenVehicleShopMenu()
+                elseif store.SellVehicle then
+                    OpenSellZoneMenu()
                 end
 
             end

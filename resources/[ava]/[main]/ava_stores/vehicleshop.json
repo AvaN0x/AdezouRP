@@ -1,0 +1,97 @@
+{
+    "vehiclestypes": {
+        "0": {
+            "asbo": {
+                "category": "compacts",
+                "price": 10000
+            },
+            "cogcabrio": {
+                "category": "coupes",
+                "price": 10000
+            },
+            "akuma": {
+                "category": "motorcycles",
+                "price": 10000
+            },
+            "blade": {
+                "category": "muscles",
+                "price": 10000
+            },
+            "bfinjection": {
+                "category": "offroads",
+                "price": 10000
+            },
+            "astron": {
+                "category": "suvs",
+                "price": 10000
+            },
+            "asea": {
+                "category": "sedans",
+                "price": 10000
+            },
+            "alpha": {
+                "category": "sports",
+                "price": 10000
+            },
+            "btype": {
+                "category": "sportsclassic",
+                "price": 10000
+            },
+            "adder": {
+                "category": "super",
+                "price": 10000
+            },
+            "bison": {
+                "category": "vans",
+                "price": 10000
+            },
+            "ambulance": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "police": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "police2": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            }
+        },
+        "1": {
+            "dinghy": {
+                "category": "boats",
+                "price": 10000
+            },
+            "predator": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            }
+        },
+        "2": {
+            "alphaz1": {
+                "category": "planes",
+                "price": 10000
+            }
+        },
+        "3": {
+            "buzzard2": {
+                "category": "helis",
+                "price": 10000
+            }
+        }
+    },
+    "jobs": {
+        "lspd": [
+            "police",
+            "police2"
+        ],
+        "ems": [
+            "ambulance"
+        ]
+    }
+}

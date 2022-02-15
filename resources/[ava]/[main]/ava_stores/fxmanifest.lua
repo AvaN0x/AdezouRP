@@ -8,7 +8,7 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json", "tattooList.json"}
+files {"languages/**.json", "tattooList.json", "vehicleshop.json"}
 
 shared_scripts {"@ava_core/shared/language.lua"}
 
@@ -31,8 +31,9 @@ client_scripts {
     "client/main.lua",
     "client/clothes_stores.lua",
     "client/player_outfits.lua",
+    "client/vehicleshop.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua", "server/player_outfits.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua", "server/player_outfits.lua", "server/vehicleshop.lua"}
 
 dependencies {"ava_core", "RageUI"}
