@@ -10,5 +10,5 @@ function OpenPoundMenu(pound)
     local vehicles = exports.ava_core:TriggerServerCallback("ava_garages:server:getVehiclesInPound", CurrentPound.Name, CurrentPound.VehicleType) or {}
     print(json.encode(vehicles, {indent = true}))
     CurrentActionEnabled = true
-
+    -- TODO need license
 end

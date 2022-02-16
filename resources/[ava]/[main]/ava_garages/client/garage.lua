@@ -89,7 +89,7 @@ local takeOutVehicle = function(garage, vehicleData)
         return
     end
 
-    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 1.5, false, true, false, false, false, 0, false) then
+    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 0.7, false, true, false, false, false, 0, false) then
         exports.ava_core:ShowNotification(GetString("garage_area_is_occupied"))
         return
     end
