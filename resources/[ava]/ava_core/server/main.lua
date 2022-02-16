@@ -139,6 +139,7 @@ AVA.AddAce("group.superadmin", "command")
 AVA.SaveAll = function()
     AVA.Players.SaveAll()
     AVA.SaveAllJobsAccounts()
+    TriggerEvent("ava_core:server:saveAll")
 end
 
 if AVAConfig.SaveTimeout then
