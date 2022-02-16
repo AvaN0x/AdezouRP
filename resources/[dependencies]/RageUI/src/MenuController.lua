@@ -247,7 +247,7 @@ function RageUI.Controls()
 								Controls.Back.Pressed = true
 								Citizen.CreateThread(function()
 									Citizen.Wait(175)
-									Controls.Down.Pressed = false
+									Controls.Back.Pressed = false
 								end)
 								break
 							end
