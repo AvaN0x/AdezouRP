@@ -198,7 +198,6 @@ AddEventHandler("ava_core:client:enteredVehicle", function(vehicle, seat)
 
     -- * try to stop vehicle from despawning
     if not IsEntityAMissionEntity(vehicle) then
-        print("SetEntityAsMissionEntity(vehicle)")
         SetEntityAsMissionEntity(vehicle)
     end
 
