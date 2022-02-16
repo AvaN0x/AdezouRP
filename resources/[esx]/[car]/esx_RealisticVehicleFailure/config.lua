@@ -18,9 +18,9 @@ cfg = {
 
 	deformationMultiplier = -1,					-- How much should the vehicle visually deform from a collision. Range 0.0 to 10.0 Where 0.0 is no deformation and 10.0 is 10x deformation. -1 = Don't touch
 	deformationExponent = 1.0,					-- How much should the handling file deformation setting be compressed toward 1.0. (Make cars more similar). A value of 1=no change. Lower values will compress more, values above 1 it will expand. Dont set to zero or negative.
-	collisionDamageExponent = 1.0,				-- How much should the handling file deformation setting be compressed toward 1.0. (Make cars more similar). A value of 1=no change. Lower values will compress more, values above 1 it will expand. Dont set to zero or negative.
+	collisionDamageExponent = 0.7,				-- How much should the handling file deformation setting be compressed toward 1.0. (Make cars more similar). A value of 1=no change. Lower values will compress more, values above 1 it will expand. Dont set to zero or negative.
 
-	damageFactorEngine = 2.1,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
+	damageFactorEngine = 0.5,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
 	damageFactorBody = 2.1,						-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
 	damageFactorPetrolTank = 61.0,				-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 64
 	-- damageFactorEngine = 8.1,					-- Sane values are 1 to 100. Higher values means more damage to vehicle. A good starting point is 10
@@ -87,25 +87,25 @@ cfg = {
 	}
 	]]--
 	classDamageMultiplier = {
-		[0] = 	0.7,		--	0: Compacts
-				0.7,		--	1: Sedans
-				0.7,		--	2: SUVs
-				0.65,		--	3: Coupes
-				0.7,		--	4: Muscle
-				0.65,		--	5: Sports Classics
-				0.65,		--	6: Sports
-				0.65,		--	7: Super
-				0.27,		--	8: Motorcycles
-				0.7,		--	9: Off-road
+		[0] = 	0.5,		--	0: Compacts
+				0.5,		--	1: Sedans
+				0.5,		--	2: SUVs
+				0.45,		--	3: Coupes
+				0.5,		--	4: Muscle
+				0.45,		--	5: Sports Classics
+				0.45,		--	6: Sports
+				0.45,		--	7: Super
+				0.17,		--	8: Motorcycles
+				0.5,		--	9: Off-road
 				0.25,		--	10: Industrial
 				0.35,		--	11: Utility
 				0.5,		--	12: Vans
-				0.7,		--	13: Cycles
+				0.5,		--	13: Cycles
 				0.4,		--	14: Boats
 				0.3,		--	15: Helicopters
 				0.3,		--	16: Planes
 				0.75,		--	17: Service
-				0.5,		--	18: Emergency
+				0.4,		--	18: Emergency
 				0.67,		--	19: Military
 				0.43,		--	20: Commercial
 				1.0			--	21: Trains
