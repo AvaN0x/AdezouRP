@@ -616,9 +616,25 @@ Config.Stores = {
         Color = {r = 255, g = 255, b = 255},
         Distance = 2.6,
         Marker = 36,
-        VehicleType = 0,
         VehicleShop = {
-            Categories = {"compacts", "coupes", "motorcycles", "muscle", "offroad", "sedans", "sports", "sportsclassics", "super", "suvs", "vans"},
+            VehicleType = 0,
+            Categories = {
+                "compacts",
+                "coupes",
+                "motorcycles",
+                "muscle",
+                "offroad",
+                "sedans",
+                "sports",
+                "sportsclassics",
+                "super",
+                "suvs",
+                "vans",
+                "industrial",
+                "utility",
+                "commercials",
+                "emergency",
+            },
             Inside = {Coord = vector3(-44.72, -1097.94, 26.42), Heading = 161.03},
             SpawnVehicle = {Coord = vector3(-32.46, -1090.95, 25.43), Heading = 340.5},
             SpawnLargeVehicle = {Coord = vector3(-31.19, -1080.54, 26.14), Heading = 71.5},
@@ -632,8 +648,7 @@ Config.Stores = {
         Color = {r = 201, g = 24, b = 30, a = 128},
         Marker = 29,
         Blip = {Sprite = 810, Color = 0xffaaaaa0, Scale = 0.5},
-        VehicleType = 0,
-        SellVehicle = true,
+        SellVehicle = {VehicleType = 0},
         HelpText = GetString("press_open_sell_vehicle"),
     },
 
@@ -746,5 +761,5 @@ Config.ClothesStore = {
 }
 
 Config.VehicleShops = {
-    vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {}, --
+    Vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {}, --
 }

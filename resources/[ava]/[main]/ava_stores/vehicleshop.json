@@ -5,6 +5,10 @@
                 "category": "compacts",
                 "price": 10000
             },
+            "blista": {
+                "category": "compacts",
+                "price": 1000
+            },
             "cogcabrio": {
                 "category": "coupes",
                 "price": 10000
@@ -43,6 +47,21 @@
             },
             "bison": {
                 "category": "vans",
+                "price": 10000
+            },
+            "flatbed": {
+                "category": "industrial",
+                "hidden": true,
+                "price": 10000
+            },
+            "caddy": {
+                "category": "utility",
+                "hidden": true,
+                "price": 10000
+            },
+            "benson": {
+                "category": "commercials",
+                "hidden": true,
                 "price": 10000
             },
             "ambulance": {
@@ -86,12 +105,12 @@
         }
     },
     "jobs": {
-        "lspd": [
-            "police",
-            "police2"
-        ],
-        "ems": [
-            "ambulance"
-        ]
+        "lspd": {
+            "police": true,
+            "police2": true
+        },
+        "ems": {
+            "ambulance": true
+        }
     }
 }

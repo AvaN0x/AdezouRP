@@ -4,6 +4,8 @@
 -------------------------------------------
 local LastActionTimer = 0
 
+PlayerData = {}
+
 local HasAlreadyEnteredMarker = false
 local LastZone = nil
 CurrentZoneName = nil
@@ -13,6 +15,8 @@ CurrentActionEnabled = false
 local mainBlips = {}
 
 Citizen.CreateThread(function()
+    PlayerData = exports.ava_core:getPlayerData()
+
     Wait(1000)
 
     for _, v in pairs(Config.Stores) do
@@ -53,6 +57,16 @@ AddEventHandler("onResourceStop", function(resource)
         end
         mainBlips = {}
     end
+end)
+
+RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
+    for k, v in pairs(data) do
+        PlayerData[k] = v
+    end
+end)
+
+RegisterNetEvent("ava_core:client:playerLoaded", function(data)
+    PlayerData = data
 end)
 
 local playerCoords = nil
