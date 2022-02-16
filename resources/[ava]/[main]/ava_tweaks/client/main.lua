@@ -280,3 +280,20 @@ RegisterCommand("handsup", function()
 end)
 
 RegisterKeyMapping("handsup", GetString("handsup_help"), "keyboard", "M")
+
+if AVAConfig.ClearMissionrowPD then
+    local missionrowPDCoords = vector3(470.00, -990.00, 25.0)
+    Citizen.CreateThread(function()
+        while not AVA.Player.Data do
+            Wait(10)
+        end
+        while true do
+            Wait((#(AVA.Player.Data.position - missionrowPDCoords) < 150) and 0 or 1000)
+            ClearAreaOfPeds(missionrowPDCoords.x, missionrowPDCoords.y, missionrowPDCoords.z, 80.0, 1)
+
+            ClearAreaOfVehicles(missionrowPDCoords.x, missionrowPDCoords.y, missionrowPDCoords.z, 300, false, false, false, false, false)
+            RemoveVehiclesFromGeneratorsInArea(missionrowPDCoords.x - 90.0, missionrowPDCoords.y - 90.0, missionrowPDCoords.z - 90.0,
+                missionrowPDCoords.x + 90.0, missionrowPDCoords.y + 90.0, missionrowPDCoords.z + 90.0)
+        end
+    end)
+end

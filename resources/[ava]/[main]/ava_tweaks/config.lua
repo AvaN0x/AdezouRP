@@ -13,6 +13,8 @@ AVAConfig.DisableVehicleTransform = false -- 357
 
 AVAConfig.DisableBikeHelmet = true
 
+AVAConfig.ClearMissionrowPD = false
+
 AVAConfig.LockNPCVehicles = true
 AVAConfig.LockPercentage = 0.5
 AVAConfig.AlwaysLockedVehicles = {

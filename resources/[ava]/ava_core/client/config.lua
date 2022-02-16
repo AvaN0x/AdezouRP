@@ -14,8 +14,6 @@ AVAConfig.InventoryKey = "F2"
 
 AVAConfig.InventoryMoneyOnTop = true
 
-AVAConfig.ClearMissionrowPD = true
-
 AVAConfig.EnablePVP = true
 
 ---Prevent player from falling at loading
