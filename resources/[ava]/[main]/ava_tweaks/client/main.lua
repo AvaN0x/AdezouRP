@@ -195,7 +195,11 @@ end)
 
 AddEventHandler("ava_core:client:enteredVehicle", function(vehicle, seat)
     Loop(true, vehicle, seat)
-
+    
+    if AVAConfig.DisableVehicleKers then
+        SetVehicleKersAllowed(vehicle, false)
+    end
+    
     -- * try to stop vehicle from despawning
     if not IsEntityAMissionEntity(vehicle) then
         SetEntityAsMissionEntity(vehicle)

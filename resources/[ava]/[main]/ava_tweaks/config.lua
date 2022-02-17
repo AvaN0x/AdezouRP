@@ -5,6 +5,7 @@
 AVAConfig = {}
 
 AVAConfig.DisableVehicleWeapons = true
+AVAConfig.DisableVehicleKers = true
 -- these are controls that are disabled while in a vehicle
 AVAConfig.DisableVehicleJump = true -- 350
 AVAConfig.DisableVehicleRocketBoost = true -- 351
