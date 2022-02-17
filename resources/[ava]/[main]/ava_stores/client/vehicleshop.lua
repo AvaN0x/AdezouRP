@@ -56,8 +56,10 @@ local function DisplayVehicle(vehicleHash)
             if isPlayerInDisplayedVehicle then
                 TaskWarpPedIntoVehicle(playerPed, currentVehicleDisplayed, -1)
             else
-                SetVehicleEngineOn(currentVehicleDisplayed, true, false, false)
+                SetVehicleEngineOn(currentVehicleDisplayed, true, true, false)
             end
+            SetVehicleLights(currentVehicleDisplayed, 2)
+            SetVehicleInteriorlight(currentVehicleDisplayed, true)
 
             -- #region finished vehicle load
             CategoryMenu.Controls.Back.Enabled = true
@@ -100,7 +102,7 @@ CategoryMenu.Closed = function()
 
     -- In case the menu was closed without having the player go back to the main menu
     Citizen.SetTimeout(500, function()
-        if not RageUI.Visible(MainVehicleShopMenu) then
+        if not RageUI.Visible(MainVehicleShopMenu) and not RageUI.Visible(CategoryMenu) then
             resetVehicleShop()
         end
     end)
