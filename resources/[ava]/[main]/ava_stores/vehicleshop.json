@@ -151,19 +151,19 @@
                 "price": 10000
             },
             "policet": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             },
             "policeb": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             },
             "fbi": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             },
             "fbi2": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             },
             "polbullet": {
@@ -197,11 +197,11 @@
                 "price": 10000
             },
             "riot": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             },
             "riot2": {
-                "category": "sports",
+                "category": "emergency",
                 "price": 10000
             }
         },
