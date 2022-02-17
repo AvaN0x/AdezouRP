@@ -30,7 +30,7 @@ Citizen.CreateThread(function()
     local countMainBlips = 0
     for _, job in pairs(Config.Jobs) do
         if not job.isIllegal and not job.isGang and not job.Disabled then
-            local blip = AddBlipForCoord(job.Blip.Pos or job.Zones.ManagerMenu.Pos)
+            local blip = AddBlipForCoord(job.Blip.Coord or job.Zones.ManagerMenu.Coord)
             SetBlipSprite(blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale(blip, job.Blip.Scale or 1.0)
@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
         end
     end
 
-    local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Pos)
+    local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Coord)
     SetBlipSprite(jobCenterBlip, Config.JobCenter.Blip.Sprite)
     SetBlipDisplay(jobCenterBlip, 4)
     SetBlipScale(jobCenterBlip, Config.JobCenter.Blip.Scale or 1.0)
@@ -271,54 +271,54 @@ function createBlips()
         if job.Zones ~= nil then
             for k, v in pairs(job.Zones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
         if job.Blips ~= nil then
             for k, v in pairs(job.Blips) do
-                addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
             end
         end
         if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
         if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
         if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
         if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
         if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Pos, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
                 end
             end
         end
     end
 
     if Config.BankManagment and Config.BankManagment.Blip and playerIsAManager then
-        local bankManagmentBlip = AddBlipForCoord(Config.BankManagment.Pos)
+        local bankManagmentBlip = AddBlipForCoord(Config.BankManagment.Coord)
         SetBlipSprite(bankManagmentBlip, Config.BankManagment.Blip.Sprite)
         SetBlipDisplay(bankManagmentBlip, 5)
         SetBlipScale(bankManagmentBlip, Config.BankManagment.Blip.Scale or 1.0)
@@ -356,8 +356,8 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.Allowed then
-                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -365,8 +365,8 @@ Citizen.CreateThread(function()
             end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.Allowed then
-                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -374,8 +374,8 @@ Citizen.CreateThread(function()
             end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.Allowed then
-                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -383,8 +383,8 @@ Citizen.CreateThread(function()
             end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.Allowed then
-                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -392,8 +392,8 @@ Citizen.CreateThread(function()
             end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) and v.Allowed then
-                        DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
@@ -402,16 +402,16 @@ Citizen.CreateThread(function()
         end
         if Config.JobCenter ~= nil then
             local v = Config.JobCenter
-            if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
-                DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
+            if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) then
+                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
                     false, true, 2, false, false, false, false)
                 foundMarker = true
             end
         end
         if Config.BankManagment ~= nil and playerIsAManager then
             local v = Config.BankManagment
-            if (v.Marker ~= nil and #(playerCoords - v.Pos) < Config.DrawDistance) then
-                DrawMarker(v.Marker, v.Pos.x, v.Pos.y, v.Pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
+            if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) then
+                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
                     false, true, 2, false, false, false, false)
                 foundMarker = true
             end
@@ -439,7 +439,7 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.Zones ~= nil then
                 for k, v in pairs(job.Zones) do
-                    if (#(playerCoords - v.Pos) < (v.Distance or 1.5)) and v.Allowed then
+                    if (#(playerCoords - v.Coord) < (v.Distance or 1.5)) and v.Allowed then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "Zones"
@@ -450,7 +450,7 @@ Citizen.CreateThread(function()
             end
             if job.ProcessZones ~= nil then
                 for k, v in pairs(job.ProcessZones) do
-                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.Allowed then
+                    if (#(playerCoords - v.Coord) < (v.Distance or 2)) and v.Allowed then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessZones"
@@ -461,7 +461,7 @@ Citizen.CreateThread(function()
             end
             if job.ProcessMenuZones ~= nil then
                 for k, v in pairs(job.ProcessMenuZones) do
-                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.Allowed then
+                    if (#(playerCoords - v.Coord) < (v.Distance or 2)) and v.Allowed then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "ProcessMenuZones"
@@ -472,7 +472,7 @@ Citizen.CreateThread(function()
             end
             if job.SellZones ~= nil then
                 for k, v in pairs(job.SellZones) do
-                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.Allowed then
+                    if (#(playerCoords - v.Coord) < (v.Distance or 2)) and v.Allowed then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "SellZones"
@@ -483,7 +483,7 @@ Citizen.CreateThread(function()
             end
             if job.BuyZones ~= nil then
                 for k, v in pairs(job.BuyZones) do
-                    if (#(playerCoords - v.Pos) < (v.Distance or 2)) and v.Allowed then
+                    if (#(playerCoords - v.Coord) < (v.Distance or 2)) and v.Allowed then
                         isInMarker = true
                         zoneJob = jobName
                         zoneCategoryPlayerIsIn = "BuyZones"
@@ -510,7 +510,7 @@ Citizen.CreateThread(function()
 
         if Config.JobCenter ~= nil then
             local v<const> = Config.JobCenter
-            if (#(playerCoords - v.Pos) < (v.Distance or 2)) then
+            if (#(playerCoords - v.Coord) < (v.Distance or 2)) then
                 isInMarker = true
                 zoneJob = "JobCenter"
                 zoneCategoryPlayerIsIn = "JobCenter"
@@ -521,7 +521,7 @@ Citizen.CreateThread(function()
 
         if Config.BankManagment ~= nil and playerIsAManager then
             local v<const> = Config.BankManagment
-            if (#(playerCoords - v.Pos) < (v.Distance or 2)) then
+            if (#(playerCoords - v.Coord) < (v.Distance or 2)) then
                 isInMarker = true
                 zoneJob = "BankManagment"
                 zoneCategoryPlayerIsIn = "BankManagment"
@@ -715,7 +715,7 @@ function Process(process, pos)
             Wait(1000)
             timeLeft = timeLeft - 1
 
-            if #(playerCoords - (process.Pos or pos)) > 2 then
+            if #(playerCoords - (process.Coord or pos)) > 2 then
                 TriggerServerEvent("ava_jobs:server:cancelProcessing")
                 break
             end
@@ -753,7 +753,7 @@ function ProcessMenuZone(job)
 
                     if type(count) == "number" and math.floor(count) == count and count > 0 and count <= CurrentZoneValue.MaxProcess then
                         for i = 1, count, 1 do
-                            if not Process(element.value, CurrentZoneValue.Pos) then
+                            if not Process(element.value, CurrentZoneValue.Coord) then
                                 break
                             end
                             Wait(500)
@@ -869,7 +869,7 @@ Citizen.CreateThread(function()
         for jobName, job in pairs(playerJobs) do
             if job.FieldZones then
                 for k, v in pairs(job.FieldZones) do
-                    if #(playerCoords - v.Pos) < 20 then
+                    if #(playerCoords - v.Coord) < 20 then
                         SpawnPlants(jobName, k, v)
                     end
                 end
@@ -921,7 +921,7 @@ local function ValidateplantCoord(plantCoord, jobName, zoneName, zone)
     end
 
     -- coords should not be at a distance superior to 50 from central point
-    if #(plantCoord - zone.Pos) > 50 then
+    if #(plantCoord - zone.Coord) > 50 then
         return false
     end
     return true
@@ -929,7 +929,7 @@ end
 
 local function GetObjectCoordZ(x, y, zone)
     -- we use MinGroundHeight and MaxGroundHeight to be try and get the lowest possible ground
-    for i = zone.MinGroundHeight or (zone.Pos.z - 2.0), zone.MaxGroundHeight or (zone.Pos.z + 2.0), 1 do
+    for i = zone.MinGroundHeight or (zone.Coord.z - 2.0), zone.MaxGroundHeight or (zone.Coord.z + 2.0), 1 do
         local foundGround, z = GetGroundZFor_3dCoord(x, y, i + 0.0)
 
         if foundGround then
@@ -937,7 +937,7 @@ local function GetObjectCoordZ(x, y, zone)
         end
     end
 
-    return zone.Pos.z
+    return zone.Coord.z
 end
 local function GeneratePlantCoords(jobName, zoneName, zone)
     local coords
@@ -947,8 +947,8 @@ local function GeneratePlantCoords(jobName, zoneName, zone)
             zone.Radius = 8
         end
 
-        local x = zone.Pos.x + math.random(-zone.Radius, zone.Radius)
-        local y = zone.Pos.y + math.random(-zone.Radius, zone.Radius)
+        local x = zone.Coord.x + math.random(-zone.Radius, zone.Radius)
+        local y = zone.Coord.y + math.random(-zone.Radius, zone.Radius)
         local z = GetObjectCoordZ(x, y, zone)
 
         coords = vector3(x, y, z)

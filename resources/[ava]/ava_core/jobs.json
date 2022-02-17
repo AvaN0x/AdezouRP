@@ -81,6 +81,22 @@
             }
         ]
     },
+    "government": {
+        "label": "Gouvernement",
+        "grades": [
+            {
+                "name": "bodyguard",
+                "label": "Agent de sécurité",
+                "salary": 100
+            },
+            {
+                "name": "governor",
+                "label": "Gouverneur",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
     "winemaker": {
         "label": "Vigneron",
         "grades": [

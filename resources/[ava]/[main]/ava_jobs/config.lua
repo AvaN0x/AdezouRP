@@ -191,10 +191,10 @@ Config.JobMenuElement = {
 Config.Jobs = {
     -- #region jobs
     lspd = {
-        SocietyName = "society_lspd",
+        SocietyName = "society_lspd", -- FIXME not needed?
         LabelName = "LSPD",
         ServiceCounter = true,
-        Blip = {Name = "~b~Commissariat", Pos = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3},
+        Blip = {Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3},
         JobMenu = {
             Items = {
                 {
@@ -251,7 +251,7 @@ Config.Jobs = {
         },
         Zones = {
             ManagerMenu = {
-                Pos = vector3(465.03, -1009.06, 34.95),
+                Coord = vector3(465.03, -1009.06, 34.95),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
                 Name = "Actions patron",
@@ -259,7 +259,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(452.76, -992.84, 29.71),
+                Coord = vector3(452.76, -992.84, 29.71),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
                 Name = "Vestiaire",
@@ -335,7 +335,7 @@ Config.Jobs = {
                 },
             },
             ArmoryStock = {
-                Pos = vector3(452.28, -980.15, 29.71),
+                Coord = vector3(452.28, -980.15, 29.71),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
                 Name = "Armurerie",
@@ -344,7 +344,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             SeizureStock = {
-                Pos = vector3(472.63, -990.40, 23.93),
+                Coord = vector3(472.63, -990.40, 23.93),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 122, b = 204},
                 Name = "Coffre saisies",
@@ -355,53 +355,53 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(455.02, -1017.44, 28.44),
+                Coord = vector3(455.02, -1017.44, 28.44),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 122, b = 204},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(455.02, -1017.44, 28.44), Heading = 90.0},
+                SpawnPoint = {Coord = vector3(455.02, -1017.44, 28.44), Heading = 90.0},
             },
             HeliGarage = {
                 Name = "Héliport",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(449.57, -981.17, 43.69),
+                Coord = vector3(449.57, -981.17, 43.69),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 122, b = 204},
                 Distance = 3,
                 Marker = 34,
                 Type = "heli",
-                SpawnPoint = {Pos = vector3(449.57, -981.17, 43.69), Heading = 90.0},
+                SpawnPoint = {Coord = vector3(449.57, -981.17, 43.69), Heading = 90.0},
             },
             BoatGarage = {
                 Name = "Marina",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-784.55, -1437.14, 1.40),
+                Coord = vector3(-784.55, -1437.14, 1.40),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 122, b = 204},
                 Distance = 5,
                 Marker = 35,
                 Type = "boat",
-                SpawnPoint = {Pos = vector3(-786.55, -1437.14, 1.40), Heading = 140.0},
+                SpawnPoint = {Coord = vector3(-786.55, -1437.14, 1.40), Heading = 140.0},
                 Blip = true,
             },
             SeizedCarGarage = {
                 Name = "Garage saisies",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(832.75, -1370.28, 26.13),
+                Coord = vector3(832.75, -1370.28, 26.13),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 221, g = 79, b = 67},
                 Marker = 36,
                 Type = "car",
                 IsNonProprietaryGarage = true,
                 Identifier = "seized_LSPD",
-                SpawnPoint = {Pos = vector3(832.75, -1370.28, 26.13), Heading = 270.0},
+                SpawnPoint = {Coord = vector3(832.75, -1370.28, 26.13), Heading = 270.0},
                 Blip = true,
             },
             PoundCarGarage = {
                 Name = "Fourrière",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(381.76, -1625.40, 29.29),
+                Coord = vector3(381.76, -1625.40, 29.29),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 201, g = 113, b = 46},
                 Marker = 36,
@@ -415,7 +415,7 @@ Config.Jobs = {
         BuyZones = {
             BuyItems = {
                 Items = {{name = "bproof_vest", price = 15000}, {name = "handcuffs", price = 10000}, {name = "balisegps", price = 2000}},
-                Pos = vector3(812.26, -2153.55, 28.64),
+                Coord = vector3(812.26, -2153.55, 28.64),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 221, g = 79, b = 67},
                 Name = "Achat de protections et menottes",
@@ -427,10 +427,10 @@ Config.Jobs = {
         },
     },
     ems = {
-        SocietyName = "society_ems",
+        SocietyName = "society_ems", -- FIXME not needed?
         LabelName = "EMS",
         ServiceCounter = true,
-        Blip = {Name = "~b~Hopital", Pos = vector3(298.48, -584.48, 43.28), Sprite = 61, Colour = 26},
+        Blip = {Name = "~b~Hopital", Coord = vector3(298.48, -584.48, 43.28), Sprite = 61, Colour = 26},
         JobMenu = {
             Items = {
                 {
@@ -444,7 +444,7 @@ Config.Jobs = {
         },
         Zones = {
             ManagerMenu = {
-                Pos = vector3(339.21, -595.63, 42.30),
+                Coord = vector3(339.21, -595.63, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Actions patron",
@@ -454,7 +454,7 @@ Config.Jobs = {
                 MinimumGrade = "boss",
             },
             Cloakroom = {
-                Pos = vector3(299.03, -598.51, 42.30),
+                Coord = vector3(299.03, -598.51, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Vestiaire",
@@ -475,10 +475,17 @@ Config.Jobs = {
                         Male = json.decode(
                             "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":90,\"decals\":57,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":249,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                     },
+                    {
+                        Label = "Tenue chirurgie",
+                        Female = json.decode(
+                            "{\"decals\":0,\"torso\":109,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":141,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":6,\"bag\":0,\"tops_txd\":1,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                        Male = json.decode(
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":85,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":273,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":20}"),
+                    },
                 },
             },
             PharmacyStock = {
-                Pos = vector3(309.77, -568.66, 42.30),
+                Coord = vector3(309.77, -568.66, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Pharmacie",
@@ -489,15 +496,15 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(337.34, -579.28, 28.80),
+                Coord = vector3(337.34, -579.28, 28.80),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 139, b = 90},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(337.34, -579.28, 28.80), Heading = 340.0},
+                SpawnPoint = {Coord = vector3(337.34, -579.28, 28.80), Heading = 340.0},
             },
             KitchenStock = {
-                Pos = vector3(306.89, -601.61, 42.30),
+                Coord = vector3(306.89, -601.61, 42.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Cuisine",
@@ -508,13 +515,13 @@ Config.Jobs = {
             HeliGarage = {
                 Name = "Héliport",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(351.05, -588.07, 74.17),
+                Coord = vector3(351.05, -588.07, 74.17),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 139, b = 90},
                 Distance = 3,
                 Marker = 34,
                 Type = "heli",
-                SpawnPoint = {Pos = vector3(351.05, -588.07, 74.17), Heading = 245.0},
+                SpawnPoint = {Coord = vector3(351.05, -588.07, 74.17), Heading = 245.0},
             },
         },
         BuyZones = {
@@ -526,7 +533,7 @@ Config.Jobs = {
                     {name = "medikit", price = 400},
                     {name = "dolizou", price = 100},
                 },
-                Pos = vector3(-447.57, -341.08, 33.52),
+                Coord = vector3(-447.57, -341.08, 33.52),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Pharmacie",
@@ -537,7 +544,7 @@ Config.Jobs = {
             },
             TailorItems = {
                 Items = {{name = "bandage", price = 100}},
-                Pos = vector3(740.00, -970.21, 23.48),
+                Coord = vector3(740.00, -970.21, 23.48),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 0, g = 139, b = 90},
                 Name = "Pharmacie",
@@ -549,10 +556,10 @@ Config.Jobs = {
         },
     },
     mechanic = {
-        SocietyName = "society_mechanic",
+        SocietyName = "society_mechanic", -- FIXME not needed?
         LabelName = "Mécano",
         ServiceCounter = true,
-        Blip = {Name = "~y~Garage Mécano", Pos = vector3(-1145.49, -1990.55, 13.16), Sprite = 446, Colour = 5},
+        Blip = {Name = "~y~Garage Mécano", Coord = vector3(-1145.49, -1990.55, 13.16), Sprite = 446, Colour = 5},
         JobMenu = {
             Items = {
                 {
@@ -575,7 +582,7 @@ Config.Jobs = {
         },
         Zones = {
             ManagerMenu = {
-                Pos = vector3(-1151.45, -2032.61, 12.21),
+                Coord = vector3(-1151.45, -2032.61, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "Actions patron",
@@ -584,7 +591,7 @@ Config.Jobs = {
                 MinimumGrade = "boss",
             },
             MainStock = {
-                Pos = vector3(-1145.19, -2004.44, 12.21),
+                Coord = vector3(-1145.19, -2004.44, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "Stockage",
@@ -593,7 +600,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             FridgeStock = {
-                Pos = vector3(-1153.45, -2025.06, 12.21),
+                Coord = vector3(-1153.45, -2025.06, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "Frigo",
@@ -602,7 +609,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-1137.33, -2001.94, 12.21),
+                Coord = vector3(-1137.33, -2001.94, 12.21),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 207, g = 169, b = 47},
                 Blip = true,
@@ -629,18 +636,18 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-1144.45, -1971.70, 13.16),
+                Coord = vector3(-1144.45, -1971.70, 13.16),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 207, g = 169, b = 47},
                 Marker = 36,
                 Type = "car",
                 Blip = true,
-                SpawnPoint = {Pos = vector3(-1144.45, -1971.70, 13.16), Heading = 190.0},
+                SpawnPoint = {Coord = vector3(-1144.45, -1971.70, 13.16), Heading = 190.0},
             },
             SeizedCarGarage = {
                 Name = "Garage saisies",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(822.47, -1365.20, 26.13),
+                Coord = vector3(822.47, -1365.20, 26.13),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 221, g = 79, b = 67},
                 Marker = 36,
@@ -653,7 +660,7 @@ Config.Jobs = {
             PoundCarGarage = {
                 Name = "Fourrière",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(383.76, -1623.09, 29.29),
+                Coord = vector3(383.76, -1623.09, 29.29),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 201, g = 113, b = 46},
                 Marker = 36,
@@ -668,7 +675,7 @@ Config.Jobs = {
             BumperField = {
                 Items = {{name = "bumber_part_worn", quantity = 1}},
                 PropHash = GetHashKey("prop_mk_race_chevron_02"),
-                Pos = vector3(2364.53, 3074.66, 47.21),
+                Coord = vector3(2364.53, 3074.66, 47.21),
                 MinGroundHeight = 46,
                 MaxGroundHeight = 49,
                 Name = "1. Récupération de pare-choc",
@@ -682,7 +689,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "bumber_part_revamped", quantity = 1}},
                 Delay = 12000,
                 Scenario = "WORLD_HUMAN_HAMMERING", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-325.45, -109.06, 38.04),
+                Coord = vector3(-325.45, -109.06, 38.04),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "2. Retapage des pare-choc",
@@ -694,7 +701,7 @@ Config.Jobs = {
         SellZones = {
             BumperSell = {
                 Items = {{name = "bumber_part_revamped", price = 1600}},
-                Pos = vector3(540.16, -196.75, 53.51),
+                Coord = vector3(540.16, -196.75, 53.51),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "3. Vente des pare-choc",
@@ -706,7 +713,7 @@ Config.Jobs = {
         BuyZones = {
             DorsetDriveItems = {
                 Items = {{name = "repairkit", price = 250}, {name = "bodykit", price = 250}, {name = "cloth", price = 100}},
-                Pos = vector3(2747.39, 3472.98, 54.69),
+                Coord = vector3(2747.39, 3472.98, 54.69),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 207, g = 169, b = 47},
                 Name = "YOU TOOL",
@@ -716,13 +723,69 @@ Config.Jobs = {
             },
         },
     },
+    government = {
+        SocietyName = "society_government", -- FIXME not needed?
+        LabelName = "Gouvernement",
+        ServiceCounter = true,
+        Blip = {Name = "Gouvernement", Coord = vector3(-545.17, -204.17, 37.24), Sprite = 419, Colour = 0},
+        Zones = {
+            ManagerMenu = {
+                Coord = vector3(-536.25, -189.45, 46.76),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "Actions patron",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+                MinimumGrade = "governor",
+            },
+            MainStock = {
+                Coord = vector3(-536.75, -180.95, 37.24),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+                Name = "Stockage",
+                StockName = "society_government",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
+            Cloakroom = {
+                Coord = vector3(-527.59, -186.21, 46.76),
+                Size = {x = 1.5, y = 1.5, z = 1.0},
+                Color = {r = 207, g = 169, b = 47},
+                Blip = true,
+                Name = "Vestiaire",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+                Outfits = {
+                    {
+                        Label = "Agent de sécurité",
+                        Female = json.decode(
+                            "{\"decals\":0,\"torso\":23,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":37,\"tops\":92,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":23,\"bag\":0,\"tops_txd\":2,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                        Male = json.decode(
+                            "{\"decals\":0,\"torso\":22,\"leg\":10,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":10,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":32,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":0,\"bag\":0,\"tops_txd\":0,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                    },
+
+                },
+            },
+            CarGarage = {
+                Name = "Garage véhicule",
+                HelpText = GetString("spawn_veh"),
+                Coord = vector3(-580.32, -171.30, 37.86),
+                Size = {x = 2.0, y = 2.0, z = 2.0},
+                Color = {r = 207, g = 169, b = 47},
+                Marker = 36,
+                Type = "car",
+                Blip = true,
+                SpawnPoint = {Coord = vector3(-580.32, -171.30, 37.86), Heading = 285.0},
+            },
+        },
+    },
     winemaker = {
-        SocietyName = "society_vigneron",
+        SocietyName = "society_vigneron", -- FIXME not needed?
         LabelName = "Vigneron",
         Blip = {Sprite = 85, Colour = 19},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(-1895.18, 2063.98, 140.03),
+                Coord = vector3(-1895.18, 2063.98, 140.03),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Actions patron",
@@ -731,7 +794,7 @@ Config.Jobs = {
                 MinimumGrade = "employee",
             },
             Cloakroom = {
-                Pos = vector3(-1874.90, 2054.53, 140.09),
+                Coord = vector3(-1874.90, 2054.53, 140.09),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -742,12 +805,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-1888.97, 2045.06, 140.87),
+                Coord = vector3(-1888.97, 2045.06, 140.87),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0},
+                SpawnPoint = {Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0},
                 Blip = true,
             },
         },
@@ -755,7 +818,7 @@ Config.Jobs = {
             GrapeField = {
                 Items = {{name = "grape", quantity = 8}},
                 PropHash = GetHashKey("prop_mk_race_chevron_02"),
-                Pos = vector3(-1809.662, 2210.119, 90.681),
+                Coord = vector3(-1809.662, 2210.119, 90.681),
                 MinGroundHeight = 88,
                 MaxGroundHeight = 100,
                 Name = "1. Récolte",
@@ -769,7 +832,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "wine", quantity = 1}, {name = "grapejuice", quantity = 1}},
                 Delay = 6000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-1930.97, 2055.08, 139.83),
+                Coord = vector3(-1930.97, 2055.08, 139.83),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "2. Traitement vin",
@@ -782,7 +845,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "champagne", quantity = 1}, {name = "luxurywine", quantity = 1}},
                 Delay = 8000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-1866.50, 2058.95, 140.02),
+                Coord = vector3(-1866.50, 2058.95, 140.02),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "Traitement champagne et grand cru",
@@ -830,7 +893,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 3,
-                Pos = vector3(-1933.06, 2061.9, 139.86),
+                Coord = vector3(-1933.06, 2061.9, 139.86),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "4. Traitement en caisses",
@@ -842,7 +905,7 @@ Config.Jobs = {
         SellZones = {
             WineMerchantSell = {
                 Items = {{name = "winebox", price = 1600}, {name = "grapejuicebox", price = 650}},
-                Pos = vector3(-158.737, -54.651, 53.42),
+                Coord = vector3(-158.737, -54.651, 53.42),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "5. Vente des produits",
@@ -854,7 +917,7 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {{name = "woodenbox", price = 20}},
-                Pos = vector3(396.77, -345.88, 45.86),
+                Coord = vector3(396.77, -345.88, 45.86),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "3. Achat de caisses",
@@ -865,12 +928,12 @@ Config.Jobs = {
         },
     },
     tailor = {
-        SocietyName = "society_tailor",
+        SocietyName = "society_tailor", -- FIXME not needed?
         LabelName = "Couturier",
         Blip = {Sprite = 366, Colour = 0},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(708.48, -966.69, 29.42),
+                Coord = vector3(708.48, -966.69, 29.42),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Actions patron",
@@ -879,7 +942,7 @@ Config.Jobs = {
                 MinimumGrade = "employee",
             },
             Cloakroom = {
-                Pos = vector3(708.91, -959.63, 29.42),
+                Coord = vector3(708.91, -959.63, 29.42),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -890,12 +953,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(719.11, -989.22, 24.12),
+                Coord = vector3(719.11, -989.22, 24.12),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(719.11, -989.22, 23.12), Heading = 279.0},
+                SpawnPoint = {Coord = vector3(719.11, -989.22, 23.12), Heading = 279.0},
                 Blip = true,
             },
         },
@@ -903,7 +966,7 @@ Config.Jobs = {
             WoolField = {
                 Items = {{name = "wool", quantity = 8}},
                 PropHash = GetHashKey("prop_mk_race_chevron_02"),
-                Pos = vector3(1887.45, 4630.05, 37.12),
+                Coord = vector3(1887.45, 4630.05, 37.12),
                 MinGroundHeight = 36,
                 MaxGroundHeight = 41,
                 Name = "1. Récolte",
@@ -916,7 +979,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "fabric", quantity = 4}},
                 Delay = 4000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(712.75, -973.78, 29.42),
+                Coord = vector3(712.75, -973.78, 29.42),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "2. Traitement laine",
@@ -929,7 +992,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "clothe", quantity = 1}},
                 Delay = 4000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(716.5, -961.82, 29.42),
+                Coord = vector3(716.5, -961.82, 29.42),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "3. Traitement du tissu",
@@ -943,7 +1006,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "clothebox", quantity = 1}},
                 Delay = 3000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(718.73, -973.74, 29.42),
+                Coord = vector3(718.73, -973.74, 29.42),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "5. Mise en caisse des vetements",
@@ -956,7 +1019,7 @@ Config.Jobs = {
         SellZones = {
             ClothesSell = {
                 Items = {{name = "clothebox", price = 1420}},
-                Pos = vector3(71.67, -1390.47, 28.4),
+                Coord = vector3(71.67, -1390.47, 28.4),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "6. Vente des produits",
@@ -968,7 +1031,7 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {{name = "cardboardbox", price = 20}},
-                Pos = vector3(406.5, -350.02, 45.84),
+                Coord = vector3(406.5, -350.02, 45.84),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "4. Achat de cartons",
@@ -979,12 +1042,12 @@ Config.Jobs = {
         },
     },
     cluckin = {
-        SocietyName = "society_cluckin",
+        SocietyName = "society_cluckin", -- FIXME not needed?
         LabelName = "Cluckin Bell",
         Blip = {Sprite = 141, Colour = 46},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(-513.13, -699.59, 32.19),
+                Coord = vector3(-513.13, -699.59, 32.19),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Actions patron",
@@ -992,23 +1055,33 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-510.19, -700.42, 32.19),
+                Coord = vector3(-510.19, -700.42, 32.19),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
+                Outfits = {
+                    {
+                        Label = "Tenue de service",
+                        Female = json.decode(
+                            "{\"decals\":0,\"torso\":9,\"leg\":106,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":13,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":15,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":2,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                        Male = json.decode(
+                            "{\"decals\":0,\"torso\":6,\"leg\":105,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":12,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":281,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":5,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":5,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                    },
+                },
+
             },
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-465.3, -619.36, 31.17),
+                Coord = vector3(-465.3, -619.36, 31.17),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(-465.3, -619.36, 31.17), Heading = 86.0},
+                SpawnPoint = {Coord = vector3(-465.3, -619.36, 31.17), Heading = 86.0},
                 Blip = true,
             },
         },
@@ -1016,7 +1089,7 @@ Config.Jobs = {
             ChickenField = {
                 Items = {{name = "alive_chicken", quantity = 2}},
                 PropHash = 610857585,
-                Pos = vector3(85.95, 6331.61, 30.25),
+                Coord = vector3(85.95, 6331.61, 30.25),
                 MinGroundHeight = 29,
                 MaxGroundHeight = 32,
                 Name = "1. Récolte",
@@ -1029,7 +1102,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "plucked_chicken", quantity = 2}},
                 Delay = 8000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-91.05, 6240.41, 30.11),
+                Coord = vector3(-91.05, 6240.41, 30.11),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "2. Déplumage",
@@ -1042,7 +1115,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "raw_chicken", quantity = 8}},
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(-103.89, 6206.29, 30.05),
+                Coord = vector3(-103.89, 6206.29, 30.05),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "3. Découpe",
@@ -1106,7 +1179,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(-520.07, -701.52, 32.19),
+                Coord = vector3(-520.07, -701.52, 32.19),
                 Size = {x = 2.5, y = 2.5, z = 1.5},
                 Color = {r = 252, g = 186, b = 3},
                 Name = "Cuisine",
@@ -1118,7 +1191,7 @@ Config.Jobs = {
         SellZones = {
             ChickenSell = {
                 Items = {{name = "raw_chicken", price = 100}},
-                Pos = vector3(-138.13, -256.69, 42.61),
+                Coord = vector3(-138.13, -256.69, 42.61),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "4. Vente des produits",
@@ -1136,7 +1209,7 @@ Config.Jobs = {
                     {name = "orangina", price = 20},
                     {name = "cocacola", price = 20},
                 },
-                Pos = vector3(406.5, -350.02, 45.84),
+                Coord = vector3(406.5, -350.02, 45.84),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "Achat de boissons",
@@ -1148,12 +1221,12 @@ Config.Jobs = {
     },
     bahama = {
         Disabled = true,
-        SocietyName = "society_bahama",
+        SocietyName = "society_bahama", -- FIXME not needed?
         LabelName = "Bahama",
         Blip = {Sprite = 93, Colour = 0},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(-1390.48, -600.57, 29.34),
+                Coord = vector3(-1390.48, -600.57, 29.34),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Actions patron",
@@ -1161,7 +1234,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-1386.81, -608.41, 29.34),
+                Coord = vector3(-1386.81, -608.41, 29.34),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -1172,12 +1245,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-1419.26, -596.3, 30.45),
+                Coord = vector3(-1419.26, -596.3, 30.45),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(-1419.26, -596.3, 30.45), Heading = 299.0},
+                SpawnPoint = {Coord = vector3(-1419.26, -596.3, 30.45), Heading = 299.0},
                 Blip = true,
             },
         },
@@ -1198,7 +1271,7 @@ Config.Jobs = {
                     {name = "beer", price = 20},
                     {name = "whisky", price = 20},
                 },
-                Pos = vector3(376.81, -362.84, 45.85),
+                Coord = vector3(376.81, -362.84, 45.85),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "Achat de boissons",
@@ -1209,12 +1282,12 @@ Config.Jobs = {
         },
     },
     unicorn = {
-        SocietyName = "society_unicorn",
+        SocietyName = "society_unicorn", -- FIXME not needed?
         LabelName = "Unicorn",
         Blip = {Sprite = 121, Colour = 0},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(132.14, -1290.15, 28.29),
+                Coord = vector3(132.14, -1290.15, 28.29),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Actions patron",
@@ -1222,7 +1295,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(106.71, -1299.75, 27.79),
+                Coord = vector3(106.71, -1299.75, 27.79),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -1233,12 +1306,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(144.25, -1284.85, 29.34),
+                Coord = vector3(144.25, -1284.85, 29.34),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 0, g = 255, b = 0},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(144.25, -1284.85, 29.34), Heading = 298.0},
+                SpawnPoint = {Coord = vector3(144.25, -1284.85, 29.34), Heading = 298.0},
                 Blip = true,
             },
         },
@@ -1246,7 +1319,7 @@ Config.Jobs = {
             OrangesField = {
                 Items = {{name = "orange", quantity = 8}},
                 PropHash = GetHashKey("ex_mp_h_acc_fruitbowl_01"),
-                Pos = vector3(373.23, 6511.44, 28.31),
+                Coord = vector3(373.23, 6511.44, 28.31),
                 MinGroundHeight = 27,
                 MaxGroundHeight = 29,
                 Name = "1. Récolte d'oranges",
@@ -1256,7 +1329,7 @@ Config.Jobs = {
         SellZones = {
             OrangeSell = {
                 Items = {{name = "orange", price = 40}},
-                Pos = vector3(106.17, -1280.60, 28.27),
+                Coord = vector3(106.17, -1280.60, 28.27),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "2. Vente d'oranges",
@@ -1282,7 +1355,7 @@ Config.Jobs = {
                     {name = "beer", price = 20},
                     {name = "whisky", price = 20},
                 },
-                Pos = vector3(387.02, -343.28, 45.85),
+                Coord = vector3(387.02, -343.28, 45.85),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 136, g = 232, b = 9},
                 Name = "Achat de boissons",
@@ -1293,12 +1366,12 @@ Config.Jobs = {
         },
     },
     nightclub = {
-        SocietyName = "society_nightclub",
+        SocietyName = "society_nightclub", -- FIXME not needed?
         LabelName = "Galaxy",
-        Blip = {Pos = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7},
+        Blip = {Coord = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(-1583.19, -3014.04, -76.99),
+                Coord = vector3(-1583.19, -3014.04, -76.99),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 156, g = 110, b = 175},
                 Name = "Actions patron",
@@ -1306,7 +1379,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-1619.66, -3020.41, -76.19),
+                Coord = vector3(-1619.66, -3020.41, -76.19),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 156, g = 110, b = 175},
                 Name = "Vestiaire",
@@ -1316,12 +1389,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-685.96, -2481.24, 13.83),
+                Coord = vector3(-685.96, -2481.24, 13.83),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 156, g = 110, b = 175},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(-685.96, -2481.24, 13.83), Heading = 299.0},
+                SpawnPoint = {Coord = vector3(-685.96, -2481.24, 13.83), Heading = 299.0},
                 Blip = true,
             },
         },
@@ -1342,7 +1415,7 @@ Config.Jobs = {
                     {name = "beer", price = 20},
                     {name = "whisky", price = 20},
                 },
-                Pos = vector3(376.81, -362.84, 45.85),
+                Coord = vector3(376.81, -362.84, 45.85),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 156, g = 110, b = 175},
                 Name = "Achat de boissons",
@@ -1353,12 +1426,12 @@ Config.Jobs = {
         },
     },
     attackataco = {
-        SocietyName = "society_attackataco",
+        SocietyName = "society_attackataco", -- FIXME not needed?
         LabelName = "Attack-A-Taco",
         Blip = {Sprite = 468, Colour = 46},
         Zones = {
             ManagerMenu = {
-                Pos = vector3(17.27, -1602.66, 28.40),
+                Coord = vector3(17.27, -1602.66, 28.40),
                 Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Actions patron",
@@ -1366,7 +1439,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(20.20, -1601.98, 28.40),
+                Coord = vector3(20.20, -1601.98, 28.40),
                 Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Vestiaire",
@@ -1377,12 +1450,12 @@ Config.Jobs = {
             CarGarage = {
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(17.83, -1595.44, 29.28),
+                Coord = vector3(17.83, -1595.44, 29.28),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 255, g = 217, b = 106},
                 Marker = 36,
                 Type = "car",
-                SpawnPoint = {Pos = vector3(17.83, -1595.44, 29.28), Heading = 50.0},
+                SpawnPoint = {Coord = vector3(17.83, -1595.44, 29.28), Heading = 50.0},
                 Blip = true,
             },
         },
@@ -1390,7 +1463,7 @@ Config.Jobs = {
             CowField = {
                 Items = {{name = "cow_part", quantity = 2}},
                 PropHash = GetHashKey("prop_mk_race_chevron_02"),
-                Pos = vector3(996.82, -2123.07, 30.48),
+                Coord = vector3(996.82, -2123.07, 30.48),
                 MinGroundHeight = 29,
                 MaxGroundHeight = 30,
                 Name = "1. Récolte",
@@ -1404,7 +1477,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "minced_meat", quantity = 8}},
                 Delay = 12000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(994.46, -2162.40, 28.49),
+                Coord = vector3(994.46, -2162.40, 28.49),
                 Size = {x = 5.0, y = 5.0, z = 3.5},
                 Distance = 2.5,
                 Color = {r = 255, g = 217, b = 106},
@@ -1455,7 +1528,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(11.50, -1599.42, 28.40),
+                Coord = vector3(11.50, -1599.42, 28.40),
                 Size = {x = 1.0, y = 1.0, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Cuisine",
@@ -1467,7 +1540,7 @@ Config.Jobs = {
         SellZones = {
             ChickenSell = {
                 Items = {{name = "minced_meat", price = 80}},
-                Pos = vector3(445.93, -1241.86, 29.30),
+                Coord = vector3(445.93, -1241.86, 29.30),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "3. Vente des produits",
@@ -1485,7 +1558,7 @@ Config.Jobs = {
                     {name = "orangina", price = 20},
                     {name = "cocacola", price = 20},
                 },
-                Pos = vector3(388.90, -367.34, 45.84),
+                Coord = vector3(388.90, -367.34, 45.84),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 255, g = 217, b = 106},
                 Name = "Achat de boissons",
@@ -1505,7 +1578,7 @@ Config.Jobs = {
             CannaField = {
                 Items = {{name = "weed", quantity = 5}},
                 PropHash = GetHashKey("prop_weed_01"),
-                Pos = vector3(3824.07, 4429.46, 3.0),
+                Coord = vector3(3824.07, 4429.46, 3.0),
                 MinGroundHeight = 1,
                 MaxGroundHeight = 4,
                 Radius = 4,
@@ -1517,7 +1590,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "bagweed", quantity = 1}},
                 Delay = 8000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(859.08, 2877.4, 57.98),
+                Coord = vector3(859.08, 2877.4, 57.98),
                 NeedKey = true,
             },
         },
@@ -1529,7 +1602,7 @@ Config.Jobs = {
             CokeField = {
                 Items = {{name = "cokeleaf", quantity = 5}},
                 PropHash = GetHashKey("prop_plant_fern_02a"),
-                Pos = vector3(-294.48, 2524.97, 74.62),
+                Coord = vector3(-294.48, 2524.97, 74.62),
                 MinGroundHeight = 74,
                 MaxGroundHeight = 75,
                 Radius = 4,
@@ -1541,7 +1614,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "coke", quantity = 2}},
                 Delay = 8000,
                 Scenario = "world_human_clipboard", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(1019.13, -2511.48, 28.48),
+                Coord = vector3(1019.13, -2511.48, 28.48),
                 NeedKey = true,
             },
             BagProcess = {
@@ -1549,7 +1622,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "bagcoke", quantity = 1}},
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(1017.72, -2529.39, 28.3),
+                Coord = vector3(1017.72, -2529.39, 28.3),
                 NeedKey = true,
             },
         },
@@ -1561,7 +1634,7 @@ Config.Jobs = {
             MethyField = {
                 Items = {{name = "methylamine", quantity = 15}},
                 PropHash = GetHashKey("prop_barrel_exp_01c"),
-                Pos = vector3(1595.49, -1702.09, 88.12),
+                Coord = vector3(1595.49, -1702.09, 88.12),
                 MinGroundHeight = 88,
                 MaxGroundHeight = 89,
                 Radius = 5,
@@ -1569,7 +1642,7 @@ Config.Jobs = {
             PseudoField = {
                 Items = {{name = "methpseudophedrine", quantity = 15}},
                 PropHash = GetHashKey("prop_barrel_01a"),
-                Pos = vector3(584.86, -491.21, 24.75),
+                Coord = vector3(584.86, -491.21, 24.75),
                 MinGroundHeight = 23,
                 MaxGroundHeight = 24,
                 Radius = 5,
@@ -1577,7 +1650,7 @@ Config.Jobs = {
             MethaField = {
                 Items = {{name = "methacide", quantity = 15}},
                 PropHash = GetHashKey("prop_barrel_exp_01c"),
-                Pos = vector3(1112.49, -2299.49, 30.5),
+                Coord = vector3(1112.49, -2299.49, 30.5),
                 MinGroundHeight = 30,
                 MaxGroundHeight = 31,
                 Radius = 4,
@@ -1594,7 +1667,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "methamphetamine", quantity = 1}},
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(1390.33, 3608.5, 38.94),
+                Coord = vector3(1390.33, 3608.5, 38.94),
                 NeedKey = true,
             },
         },
@@ -1606,7 +1679,7 @@ Config.Jobs = {
             MdmaField = {
                 Items = {{name = "extamdma", quantity = 10}},
                 PropHash = GetHashKey("prop_drug_package_02"),
-                Pos = vector3(-1063.23, -1113.14, 2.16),
+                Coord = vector3(-1063.23, -1113.14, 2.16),
                 MinGroundHeight = 2,
                 MaxGroundHeight = 2,
                 Radius = 3,
@@ -1614,7 +1687,7 @@ Config.Jobs = {
             AmphetField = {
                 Items = {{name = "extaamphetamine", quantity = 10}},
                 PropHash = GetHashKey("ex_office_swag_pills2"),
-                Pos = vector3(177.98, 306.6, 105.37),
+                Coord = vector3(177.98, 306.6, 105.37),
                 MinGroundHeightght = 105,
                 MaxGroundHeight = 106,
                 Radius = 3,
@@ -1626,7 +1699,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "extazyp", quantity = 10}},
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(1983.23, 3026.61, 47.69),
+                Coord = vector3(1983.23, 3026.61, 47.69),
                 NeedKey = true,
             },
             BagProcess = {
@@ -1634,7 +1707,7 @@ Config.Jobs = {
                 ItemsGet = {{name = "bagexta", quantity = 1}},
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Pos = vector3(1984.5, 3054.88, 47.22),
+                Coord = vector3(1984.5, 3054.88, 47.22),
                 NeedKey = true,
             },
         },
@@ -1647,7 +1720,7 @@ Config.Jobs = {
         LabelName = "Vagos",
         Zones = {
             Stock = {
-                Pos = vector3(332.24, -2018.62, 21.37),
+                Coord = vector3(332.24, -2018.62, 21.37),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 250, g = 197, b = 50},
                 Name = "Coffre",
@@ -1656,7 +1729,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(335.83, -2021.79, 21.37),
+                Coord = vector3(335.83, -2021.79, 21.37),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 250, g = 197, b = 50},
                 Name = "Vestiaire",
@@ -1666,7 +1739,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(335.46, -2039.61, 21.13),
+                Coord = vector3(335.46, -2039.61, 21.13),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 250, g = 197, b = 50},
                 Marker = 36,
@@ -1674,7 +1747,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_vagos",
-                SpawnPoint = {Pos = vector3(335.46, -2039.61, 21.13), Heading = 50.0},
+                SpawnPoint = {Coord = vector3(335.46, -2039.61, 21.13), Heading = 50.0},
             },
         },
     },
@@ -1683,7 +1756,7 @@ Config.Jobs = {
         LabelName = "Ballas",
         Zones = {
             Stock = {
-                Pos = vector3(118.93, -1966.05, 20.35),
+                Coord = vector3(118.93, -1966.05, 20.35),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 152, g = 60, b = 137},
                 Name = "Coffre",
@@ -1692,7 +1765,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(117.25, -1964.02, 20.35),
+                Coord = vector3(117.25, -1964.02, 20.35),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 152, g = 60, b = 137},
                 Name = "Vestiaire",
@@ -1702,7 +1775,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(91.82, -1964.06, 20.75),
+                Coord = vector3(91.82, -1964.06, 20.75),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 152, g = 60, b = 137},
                 Marker = 36,
@@ -1710,7 +1783,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_ballas",
-                SpawnPoint = {Pos = vector3(91.82, -1964.06, 20.75), Heading = 321.59},
+                SpawnPoint = {Coord = vector3(91.82, -1964.06, 20.75), Heading = 321.59},
             },
         },
     },
@@ -1719,7 +1792,7 @@ Config.Jobs = {
         LabelName = "Families",
         Zones = {
             Stock = {
-                Pos = vector3(-140.31, -1599.21, 33.85),
+                Coord = vector3(-140.31, -1599.21, 33.85),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 72, g = 171, b = 57},
                 Name = "Coffre",
@@ -1728,7 +1801,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-147.68, -1596.57, 33.85),
+                Coord = vector3(-147.68, -1596.57, 33.85),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 72, g = 171, b = 57},
                 Name = "Vestiaire",
@@ -1738,7 +1811,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-109.22, -1599.54, 31.64),
+                Coord = vector3(-109.22, -1599.54, 31.64),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 72, g = 171, b = 57},
                 Marker = 36,
@@ -1746,7 +1819,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_families",
-                SpawnPoint = {Pos = vector3(-109.22, -1599.54, 31.64), Heading = 316.36},
+                SpawnPoint = {Coord = vector3(-109.22, -1599.54, 31.64), Heading = 316.36},
             },
         },
     },
@@ -1755,7 +1828,7 @@ Config.Jobs = {
         LabelName = "Marabunta",
         Zones = {
             Stock = {
-                Pos = vector3(1294.62, -1745.05, 53.30),
+                Coord = vector3(1294.62, -1745.05, 53.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Coffre",
@@ -1764,7 +1837,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(1301.05, -1745.58, 53.30),
+                Coord = vector3(1301.05, -1745.58, 53.30),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -1774,7 +1847,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(1329.94, -1724.45, 56.04),
+                Coord = vector3(1329.94, -1724.45, 56.04),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 136, g = 243, b = 216},
                 Marker = 36,
@@ -1782,7 +1855,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_marabunta",
-                SpawnPoint = {Pos = vector3(1329.94, -1724.45, 56.04), Heading = 10.77},
+                SpawnPoint = {Coord = vector3(1329.94, -1724.45, 56.04), Heading = 10.77},
             },
         },
     },
@@ -1790,10 +1863,10 @@ Config.Jobs = {
         isGang = true,
         LabelName = "The Lost",
         Blip = {Sprite = 556, Colour = 31},
-        Blips = {{Name = "Bunker", Pos = vector3(2109.59, 3325.00, 45.36)}},
+        Blips = {{Name = "Bunker", Coord = vector3(2109.59, 3325.00, 45.36)}},
         Zones = {
             Stock = {
-                Pos = vector3(977.11, -104.00, 73.87),
+                Coord = vector3(977.11, -104.00, 73.87),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Coffre",
@@ -1802,7 +1875,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(986.63, -92.71, 73.87),
+                Coord = vector3(986.63, -92.71, 73.87),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -1812,7 +1885,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(975.37, -140.63, 74.23),
+                Coord = vector3(975.37, -140.63, 74.23),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 136, g = 243, b = 216},
                 Marker = 36,
@@ -1820,10 +1893,10 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_lost",
-                SpawnPoint = {Pos = vector3(975.37, -140.63, 74.23), Heading = 50.0},
+                SpawnPoint = {Coord = vector3(975.37, -140.63, 74.23), Heading = 50.0},
             },
             Crate = {
-                Pos = vector3(987.05, -144.41, 73.29),
+                Coord = vector3(987.05, -144.41, 73.29),
                 Name = "Crate",
                 HelpText = GetString("press_to_talk"),
                 Action = function()
@@ -1846,7 +1919,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(898.04, -3221.57, -99.23),
+                Coord = vector3(898.04, -3221.57, -99.23),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Fabrication de chargeurs",
@@ -1882,7 +1955,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(905.98, -3230.79, -99.27),
+                Coord = vector3(905.98, -3230.79, -99.27),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Fabrication de pistolets",
@@ -1918,7 +1991,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(896.58, -3217.3, -99.24),
+                Coord = vector3(896.58, -3217.3, -99.24),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Fabrication de pistolets mitrailleurs",
@@ -1947,7 +2020,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(891.73, -3196.8, -99.18),
+                Coord = vector3(891.73, -3196.8, -99.18),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Fabrication de fusils à pompe",
@@ -1983,7 +2056,7 @@ Config.Jobs = {
                     },
                 },
                 MaxProcess = 5,
-                Pos = vector3(884.92, -3199.9, -99.18),
+                Coord = vector3(884.92, -3199.9, -99.18),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Fabrication de fusils d'assaut",
@@ -2000,7 +2073,7 @@ Config.Jobs = {
                     {name = "gunpowder", price = 100, isDirtyMoney = true},
                     {name = "grease", price = 60, isDirtyMoney = true},
                 },
-                Pos = vector3(612.6, -3074.04, 5.09),
+                Coord = vector3(612.6, -3074.04, 5.09),
                 Size = {x = 1.5, y = 1.5, z = 1.5},
                 Color = {r = 72, g = 34, b = 43},
                 Name = "Achat de matériaux",
@@ -2015,7 +2088,7 @@ Config.Jobs = {
         LabelName = "Cartel",
         Zones = {
             Stock = {
-                Pos = vector3(1402.51, 1152.79, 113.35),
+                Coord = vector3(1402.51, 1152.79, 113.35),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Coffre",
@@ -2024,7 +2097,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(1394.72, 1157.10, 113.35),
+                Coord = vector3(1394.72, 1157.10, 113.35),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Vestiaire",
@@ -2034,7 +2107,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(1404.57, 1114.41, 114.84),
+                Coord = vector3(1404.57, 1114.41, 114.84),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 136, g = 243, b = 216},
                 Marker = 36,
@@ -2042,12 +2115,12 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_cartel",
-                SpawnPoint = {Pos = vector3(1406.34, 1117.52, 114.84), Heading = 63.56},
+                SpawnPoint = {Coord = vector3(1406.34, 1117.52, 114.84), Heading = 63.56},
             },
             GangHeliGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(1458.70, 1111.70, 114.33),
+                Coord = vector3(1458.70, 1111.70, 114.33),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 136, g = 243, b = 216},
                 Marker = 34,
@@ -2055,7 +2128,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_cartel",
-                SpawnPoint = {Pos = vector3(1458.70, 1111.70, 114.33), Heading = 63.56},
+                SpawnPoint = {Coord = vector3(1458.70, 1111.70, 114.33), Heading = 63.56},
             },
         },
     },
@@ -2064,7 +2137,7 @@ Config.Jobs = {
         LabelName = "Mafia",
         Zones = {
             Stock = {
-                Pos = vector3(-854.99, 26.75, 40.56),
+                Coord = vector3(-854.99, 26.75, 40.56),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 136, g = 243, b = 216},
                 Name = "Coffre",
@@ -2075,7 +2148,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-871.18, -54.99, 38.03),
+                Coord = vector3(-871.18, -54.99, 38.03),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 136, g = 243, b = 216},
                 Marker = 36,
@@ -2083,7 +2156,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_mafia",
-                SpawnPoint = {Pos = vector3(-871.18, -54.99, 38.03), Heading = 288.73},
+                SpawnPoint = {Coord = vector3(-871.18, -54.99, 38.03), Heading = 288.73},
             },
         },
     },
@@ -2092,7 +2165,7 @@ Config.Jobs = {
         LabelName = "HAPF",
         Zones = {
             Stock = {
-                Pos = vector3(-1108.60, -1643.52, 3.66),
+                Coord = vector3(-1108.60, -1643.52, 3.66),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 212, g = 0, b = 0},
                 Name = "Coffre",
@@ -2101,7 +2174,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Pos = vector3(-1109.53, -1640.54, 3.66),
+                Coord = vector3(-1109.53, -1640.54, 3.66),
                 Size = {x = 1.5, y = 1.5, z = 1.0},
                 Color = {r = 212, g = 0, b = 0},
                 Name = "Vestiaire",
@@ -2111,7 +2184,7 @@ Config.Jobs = {
             GangCarGarage = {
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
-                Pos = vector3(-1070.73, -1670.35, 4.44),
+                Coord = vector3(-1070.73, -1670.35, 4.44),
                 Size = {x = 2.0, y = 2.0, z = 2.0},
                 Color = {r = 212, g = 0, b = 0},
                 Marker = 36,
@@ -2119,7 +2192,7 @@ Config.Jobs = {
                 IsNonProprietaryGarage = true,
                 IsGangGarage = true,
                 Identifier = "garage_hapf",
-                SpawnPoint = {Pos = vector3(-1070.73, -1670.35, 4.44), Heading = 35.32},
+                SpawnPoint = {Coord = vector3(-1070.73, -1670.35, 4.44), Heading = 35.32},
             },
         },
     },
@@ -2133,7 +2206,7 @@ Config.JobCenter = {
         {JobName = "winemaker", Label = "🍇 Intérimaire Vigneron", Desc = "Travail dans les vignes pour la fabrication de jus et de vin"},
         {JobName = "tailor", Label = "🧶 Intérimaire Couturier", Desc = "Travail dans la couture et la fabrique de vêtements"},
     },
-    Pos = vector3(-266.94, -960.04, 30.24),
+    Coord = vector3(-266.94, -960.04, 30.24),
     Size = {x = 1.5, y = 1.5, z = 1.0},
     Color = {r = 255, g = 133, b = 85},
     Name = "Pole Emploi",
@@ -2143,7 +2216,7 @@ Config.JobCenter = {
 
 Config.BankManagment = {
     Blip = {Sprite = 525, Colour = 12, Scale = 0.6},
-    Pos = vector3(248.23, 222.42, 105.31),
+    Coord = vector3(248.23, 222.42, 105.31),
     Size = {x = 1.5, y = 1.5, z = 1.0},
     Color = {r = 74, g = 159, b = 86},
     Name = "Compte entreprise",

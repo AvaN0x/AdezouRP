@@ -55,15 +55,6 @@ function RageUI.PoolMenus:ManagerMenu()
             return
         end
 
-        if not playerJobsJobName.isGang then
-            Items:AddButton(GetString("manager_menu_bills"), GetString("manager_menu_bills_subtitle"), {IsDisabled = true, RightLabel = "→→→"},
-                function(onSelected)
-                    if onSelected then
-                        -- TODO get all bills and be able to pay them
-                    end
-                end)
-        end
-
         local manage_menu_manage_string = playerJobsJobName.isGang and "manager_menu_manage_members" or "manager_menu_manage_employees"
         Items:AddButton(GetString(manage_menu_manage_string), GetString(manage_menu_manage_string .. "_subtitle"), {RightLabel = "→→→"},
             function(onSelected)
