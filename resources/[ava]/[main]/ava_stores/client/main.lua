@@ -16,10 +16,17 @@ local mainBlips = {}
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
+end)
 
-    Wait(1000)
-
+Citizen.CreateThread(function()
     for _, v in pairs(Config.Stores) do
+        if not v.Distance then
+            v.Distance = v.Size.x or 1.5
+        end
+        if not v.DrawDistance then
+            v.DrawDistance = Config.DrawDistance
+        end
+
         local function CreateBlip(coord)
             local blip = AddBlipForCoord(coord)
 
@@ -85,6 +92,8 @@ end)
 -------------
 
 Citizen.CreateThread(function()
+    -- Mandatory wait!
+    Wait(1000)
     while true do
         local waitTimer = 500
         local isInMarker = false
@@ -94,13 +103,13 @@ Citizen.CreateThread(function()
             if v.Coords then
                 for _, coord in ipairs(v.Coords) do
                     local distance = #(playerCoords - coord)
-                    if distance < Config.DrawDistance then
+                    if distance < v.DrawDistance then
                         if v.Marker ~= nil then
                             DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                                 v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         end
                         waitTimer = 0
-                        if distance < (v.Distance or v.Size.x or 1.5) then
+                        if distance < v.Distance then
                             isInMarker = true
                             currentZoneName = k
                         end
@@ -108,13 +117,13 @@ Citizen.CreateThread(function()
                 end
             elseif v.Coord then
                 local distance = #(playerCoords - v.Coord)
-                if distance < Config.DrawDistance then
+                if distance < v.DrawDistance then
                     if v.Marker ~= nil then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                     end
                     waitTimer = 0
-                    if distance < (v.Distance or v.Size.x or 1.5) then
+                    if distance < v.Distance then
                         isInMarker = true
                         currentZoneName = k
                     end
@@ -155,9 +164,10 @@ end)
 -----------------
 Citizen.CreateThread(function()
     while true do
-        Wait(0)
+        local wait = 50
 
         if CurrentZoneName ~= nil and CurrentActionEnabled then
+            wait = 0
             if CurrentHelpText ~= nil then
                 SetTextComponentFormat("STRING")
                 AddTextComponentString(CurrentHelpText)
@@ -185,9 +195,8 @@ Citizen.CreateThread(function()
                 end
 
             end
-        else
-            Wait(50)
         end
+        Wait(wait)
     end
 end)
 

@@ -21,7 +21,15 @@
                 "category": "muscles",
                 "price": 10000
             },
+            "gauntletctx": {
+                "category": "sports",
+                "price": 10000
+            },
             "bfinjection": {
+                "category": "offroads",
+                "price": 10000
+            },
+            "vigout": {
                 "category": "offroads",
                 "price": 10000
             },
@@ -37,11 +45,59 @@
                 "category": "sports",
                 "price": 10000
             },
+            "cypherct": {
+                "category": "sports",
+                "price": 10000
+            },
             "btype": {
                 "category": "sportsclassics",
                 "price": 10000
             },
             "adder": {
+                "category": "super",
+                "price": 10000
+            },
+            "autarch": {
+                "category": "super",
+                "price": 10000
+            },
+            "banshee2": {
+                "category": "super",
+                "price": 10000
+            },
+            "bullet": {
+                "category": "super",
+                "price": 10000
+            },
+            "champion": {
+                "category": "super",
+                "price": 10000
+            },
+            "cheetah": {
+                "category": "super",
+                "price": 10000
+            },
+            "cyclone": {
+                "category": "super",
+                "price": 10000
+            },
+            "entity2": {
+                "category": "super",
+                "price": 10000
+            },
+            "entityxf": {
+                "category": "super",
+                "price": 10000
+            },
+            "emerus": {
+                "category": "super",
+                "price": 10000
+            },
+            "fmj": {
+                "category": "super",
+                "price": 10000
+            },
+            "furia": {
                 "category": "super",
                 "price": 10000
             },
@@ -69,6 +125,11 @@
                 "hidden": true,
                 "price": 10000
             },
+            "emsbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
             "police": {
                 "category": "emergency",
                 "hidden": true,
@@ -77,6 +138,70 @@
             "police2": {
                 "category": "emergency",
                 "hidden": true,
+                "price": 10000
+            },
+            "police3": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "police4": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "policet": {
+                "category": "sports",
+                "price": 10000
+            },
+            "policeb": {
+                "category": "sports",
+                "price": 10000
+            },
+            "fbi": {
+                "category": "sports",
+                "price": 10000
+            },
+            "fbi2": {
+                "category": "sports",
+                "price": 10000
+            },
+            "polbullet": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "polbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "polgauntlet": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "polvacca": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "umoracle": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "bcat": {
+                "category": "emergency",
+                "hidden": true,
+                "price": 10000
+            },
+            "riot": {
+                "category": "sports",
+                "price": 10000
+            },
+            "riot2": {
+                "category": "sports",
                 "price": 10000
             }
         },
@@ -107,10 +232,25 @@
     "jobs": {
         "lspd": {
             "police": true,
-            "police2": true
+            "police2": true,
+            "police3": true,
+            "police4": true,
+            "policet": true,
+            "policeb": true,
+            "fbi": true,
+            "fbi2": true,
+            "polbullet": true,
+            "polbuffalo": true,
+            "polgauntlet": true,
+            "polvacca": true,
+            "umoracle": true,
+            "bcat": true,
+            "riot": true,
+            "riot2": true
         },
         "ems": {
-            "ambulance": true
+            "ambulance": true,
+            "emsbuffalo": true
         }
     }
 }
