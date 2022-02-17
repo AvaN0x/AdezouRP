@@ -14,16 +14,27 @@ end
 
 -- #region vehicleshop
 local Categories = {}
+local CurrentCategory = nil
+local MainVehicleShopMenu = RageUI.CreateMenu("", "Subtitle", 0, 0, "avaui", "avaui_title_adezou")
+MainVehicleShopMenu.Closed = function()
+    if not CurrentCategory then
+        Categories = {}
+        CurrentActionEnabled = true
+    end
+end
+local CategoryMenu = RageUI.CreateSubMenu(MainVehicleShopMenu, "", "Subtitle", 0, 0, "avaui", "avaui_title_adezou")
+CategoryMenu.Closed = function()
+    CurrentCategory = nil
+end
 
 function OpenVehicleShopMenu()
     local shop = Config.Stores[CurrentZoneName]
-    print("shop")
-
-    if not shop then
+    if not shop or not exports.ava_core:canOpenMenu() then
         return
     end
     -- #region prepare categories
     Categories = {}
+    local vehicleStocks = exports.ava_core:TriggerServerCallback("ava_stores:server:vehicleshop:getStock")
 
     local countCategories = 0
     local CategoriesIndices = {}
@@ -37,11 +48,12 @@ function OpenVehicleShopMenu()
             countCategories = countCategories + 1
             CategoriesIndices[job.name] = countCategories
             Categories[countCategories] = {
-                label = job.label,
-                desc = GetString("vehicle_shop_job_category_desc"),
+                label = GetString("vehicleshop_job_category", job.label),
+                desc = GetString("vehicleshop_job_category_desc"),
                 vehicleCount = 0,
                 Vehicles = {},
                 jobName = job.name,
+                rightLabel = "→→→",
             }
         end
     end
@@ -64,12 +76,16 @@ function OpenVehicleShopMenu()
             if not shop.VehicleShop.Categories or availableCategories[vehicleData.category] and IsModelInCdimage(vehicleHash) then
                 -- Element
                 local vehicleLabel<const> = GetLabelText(GetDisplayNameFromVehicleModel(vehicleHash))
+                local stock<const> = vehicleStocks[vehicleName] or Config.VehicleShops.DefaultStockValue
                 local element<const> = {
                     label = vehicleLabel ~= "NULL" and vehicleLabel or vehicleName,
                     vehicleName = vehicleName,
                     vehicleHash = vehicleHash,
+                    price = vehicleData.price,
+                    stock = stock,
                     desc = vehicleData.desc, -- TODO
-                    rightLabel = GetString("vehicle_shop_price_format", exports.ava_core:FormatNumber(vehicleData.price)),
+                    rightLabel = stock > 0 and GetString("vehicleshop_price_format", exports.ava_core:FormatNumber(vehicleData.price))
+                        or GetString("vehicleshop_price_outofstock"),
                 }
 
                 -- Vehicle shop category
@@ -79,10 +95,11 @@ function OpenVehicleShopMenu()
                         countCategories = countCategories + 1
                         CategoriesIndices[vehicleData.category] = countCategories
                         Categories[countCategories] = {
-                            label = GetString("vehicle_shop_category_" .. vehicleData.category),
-                            desc = GetString("vehicle_shop_category_" .. vehicleData.category .. "_desc"),
+                            label = GetString("vehicleshop_category_" .. vehicleData.category),
+                            desc = GetString("vehicleshop_category_" .. vehicleData.category .. "_desc"),
                             vehicleCount = 0,
                             Vehicles = {},
+                            rightLabel = "→→→",
                         }
                     end
                     local index<const> = CategoriesIndices[vehicleData.category]
@@ -118,8 +135,69 @@ function OpenVehicleShopMenu()
             return a.label < b.label
         end)
     end
-
+    CategoriesIndices = nil
+    jobsManaged = nil
     -- #endregion prepare categories
 
+    -- #region prepare menu
+    MainVehicleShopMenu.Subtitle = shop.Name
+    RageUI.CloseAll()
+    RageUI.Visible(MainVehicleShopMenu, true)
 end
+
+function RageUI.PoolMenus:VehicleShopMenu()
+    MainVehicleShopMenu:IsVisible(function(Items)
+        if Categories then
+            for i = 1, #Categories do
+                local category<const> = Categories[i]
+                Items:AddButton(category.label, category.desc, {RightLabel = category.rightLabel}, function(onSelected, onEntered)
+                    if onSelected then
+                        CategoryMenu.Subtitle = category.label
+                        CurrentCategory = i
+                    end
+                end, CategoryMenu)
+            end
+        end
+    end)
+    CategoryMenu:IsVisible(function(Items)
+        if Categories and CurrentCategory and Categories[CurrentCategory] then
+            local category = Categories[CurrentCategory]
+            for i = 1, #category.Vehicles do
+                local vehicle<const> = category.Vehicles[i]
+                Items:AddButton(vehicle.label, vehicle.desc, {RightLabel = vehicle.rightLabel}, function(onSelected, onEntered)
+                    if onEntered then
+                        print(vehicle.vehicleName)
+                    elseif onSelected then
+                        if vehicle.stock > 0 then
+                            CategoryMenu.Controls.Back.Enabled = false
+                            if category.jobName then
+                                if exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_job_purchase_title"),
+                                    GetString("vehicleshop_confirm_job_purchase_firstline"), GetString("vehicleshop_confirm_job_purchase_secondline",
+                                        vehicle.label, vehicle.rightLabel)) then
+                                    print("buy job")
+                                end
+                            else
+                                if exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_purchase_title"),
+                                    GetString("vehicleshop_confirm_purchase_firstline"), GetString("vehicleshop_confirm_purchase_secondline", vehicle.label,
+                                        vehicle.rightLabel)) then
+                                    print("buy player")
+                                end
+                            end
+                            Wait(10)
+                            CategoryMenu.Controls.Back.Enabled = true
+                        else
+                            exports.ava_core:ShowNotification(GetString("vehicleshop_outofstock"))
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+end
+
+AddEventHandler("ava_core:client:canOpenMenu", function()
+    if RageUI.Visible(MainVehicleShopMenu) or RageUI.Visible(CategoryMenu) then
+        CancelEvent()
+    end
+end)
 -- #endregion vehicleshop

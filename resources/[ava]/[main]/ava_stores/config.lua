@@ -608,7 +608,6 @@ Config.Stores = {
 
     -- #region vehicleshops
     Motorsport = {
-        Title = {textureName = "shopui_title_tattoos5", textureDirectory = "shopui_title_tattoos5"},
         Name = "Premium Deluxe Motorsport",
         Blip = {Sprite = 326, Color = 0},
         Coord = vector3(-56.59, -1097.87, 26.84),
@@ -622,7 +621,7 @@ Config.Stores = {
                 "compacts",
                 "coupes",
                 "motorcycles",
-                "muscle",
+                "muscles",
                 "offroad",
                 "sedans",
                 "sports",
@@ -762,4 +761,5 @@ Config.ClothesStore = {
 
 Config.VehicleShops = {
     Vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {}, --
+    DefaultStockValue = 5,
 }
