@@ -15,198 +15,242 @@
             },
             "akuma": {
                 "category": "motorcycles",
+                "quantity": 10,
                 "price": 10000
             },
             "blade": {
                 "category": "muscles",
+                "quantity": 10,
                 "price": 10000
             },
             "gauntletctx": {
                 "category": "sports",
+                "quantity": 10,
                 "price": 10000
             },
             "bfinjection": {
                 "category": "offroads",
+                "quantity": 10,
                 "price": 10000
             },
             "vigout": {
                 "category": "offroads",
+                "quantity": 10,
                 "price": 10000
             },
             "astron": {
                 "category": "suvs",
+                "quantity": 10,
                 "price": 10000
             },
             "asea": {
                 "category": "sedans",
+                "quantity": 10,
                 "price": 10000
             },
             "alpha": {
                 "category": "sports",
+                "quantity": 10,
                 "price": 10000
             },
             "cypherct": {
                 "category": "sports",
+                "quantity": 10,
                 "price": 10000
             },
             "btype": {
                 "category": "sportsclassics",
+                "quantity": 10,
                 "price": 10000
             },
             "adder": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "autarch": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "banshee2": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "bullet": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "champion": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "cheetah": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "cyclone": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "entity2": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "entityxf": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "emerus": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "fmj": {
                 "category": "super",
+                "quantity": 10,
                 "price": 10000
             },
             "furia": {
                 "category": "super",
+                "quantity": 100,
                 "price": 10000
             },
             "bison": {
                 "category": "vans",
+                "quantity": 10,
                 "price": 10000
             },
             "flatbed": {
                 "category": "industrial",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "caddy": {
                 "category": "utility",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "benson": {
                 "category": "commercials",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "ambulance": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "emsbuffalo": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "police": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "police2": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "police3": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "police4": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "policet": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "policeb": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "fbi": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "fbi2": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "polbullet": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "polbuffalo": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "polgauntlet": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "polvacca": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "umoracle": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "bcat": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "riot": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             },
             "riot2": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             }
@@ -214,10 +258,12 @@
         "1": {
             "dinghy": {
                 "category": "boats",
+                "quantity": 10,
                 "price": 10000
             },
             "predator": {
                 "category": "emergency",
+                "quantity": 10,
                 "hidden": true,
                 "price": 10000
             }
@@ -225,12 +271,14 @@
         "2": {
             "alphaz1": {
                 "category": "planes",
+                "quantity": 10,
                 "price": 10000
             }
         },
         "3": {
             "buzzard2": {
                 "category": "helis",
+                "quantity": 10,
                 "price": 10000
             }
         }

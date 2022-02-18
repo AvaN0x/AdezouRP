@@ -20,8 +20,18 @@ end)
 ---Get vehicle stock quantity
 ---@param model string
 ---@return quantity
-local function GetVehicleModelStock(model)
-    return VehicleStock[model] and VehicleStock[model].quantity or Config.VehicleShops.DefaultStockValue
+local function GetVehicleModelStock(model, vehicleType)
+    if VehicleStock[model] then
+        return VehicleStock[model].quantity
+    end
+    -- Get default value, the one from the vehicle if it has one
+    if vehicleType and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType]
+        and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model]
+        and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model].quantity then
+        return Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model].quantity
+    end
+    -- or the main default value
+    return Config.VehicleShops.DefaultStockValue
 end
 
 ---Set vehicle stock quantity, this assume that the model is valid !
@@ -78,7 +88,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
     if vehicleData.hidden and not jobName then return false end
 
     -- Check if the vehicle is in stock
-    local quantity = GetVehicleModelStock(vehicleModel)
+    local quantity = GetVehicleModelStock(vehicleModel, vehicleType)
     if quantity <= 0 then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicleshop_outofstock"))
         return false
