@@ -74,17 +74,17 @@ end
 -- #endregion vehicle display
 
 local function resetVehicleShop()
-    if shopSavedData then
-        Categories = {}
-        CurrentActionEnabled = true
+    Categories = {}
+    CurrentActionEnabled = true
 
-        CurrentCategory = nil
-        currentVehicleHashDisplayed = nil
+    CurrentCategory = nil
+    currentVehicleHashDisplayed = nil
 
-        Config.Stores[CurrentZoneName].Distance = shopSavedData.Distance
-        Config.Stores[CurrentZoneName].DrawDistance = shopSavedData.DrawDistance
-        Config.Stores[CurrentZoneName].Coord = shopSavedData.Coord
-        Config.Stores[CurrentZoneName].Marker = shopSavedData.Marker
+    if shopSavedData and Config.Stores[shopSavedData.ShopName] then
+        Config.Stores[shopSavedData.ShopName].Distance = shopSavedData.Distance
+        Config.Stores[shopSavedData.ShopName].DrawDistance = shopSavedData.DrawDistance
+        Config.Stores[shopSavedData.ShopName].Coord = shopSavedData.Coord
+        Config.Stores[shopSavedData.ShopName].Marker = shopSavedData.Marker
 
         shopSavedData = nil
     end
@@ -114,7 +114,7 @@ function OpenVehicleShopMenu()
         return
     end
     -- Change some data to be able to walk around the vehicle
-    shopSavedData = {Distance = shop.Distance, DrawDistance = shop.DrawDistance, Coord = shop.Coord, Marker = shop.Marker}
+    shopSavedData = {ShopName = CurrentZoneName, Distance = shop.Distance, DrawDistance = shop.DrawDistance, Coord = shop.Coord, Marker = shop.Marker}
     Config.Stores[CurrentZoneName].Distance = shop.VehicleShop.Inside.Distance or 20.0
     Config.Stores[CurrentZoneName].DrawDistance = Config.Stores[CurrentZoneName].Distance
     Config.Stores[CurrentZoneName].Coord = shop.VehicleShop.Inside.Coord
