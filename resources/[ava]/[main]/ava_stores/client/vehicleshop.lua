@@ -10,6 +10,7 @@ function OpenSellZoneMenu()
     -- exports.ava_core:ShowConfirmationMessage -- "Do you want to sell this vehicle for X$?"
     -- exports.ava_core:ShowConfirmationMessage -- "Are you sure you want to sell this vehicle for X$?"
 end
+
 -- #endregion sell vehicle
 
 -- #region vehicleshop
@@ -50,6 +51,7 @@ local function DisplayVehicle(vehicleHash)
 
             currentVehicleDisplayed = exports.ava_core:SpawnVehicleLocal(vehicleHash, shop.VehicleShop.Inside.Coord, shop.VehicleShop.Inside.Heading)
             SetVehicleColours(currentVehicleDisplayed, 111, 111)
+            SetVehicleInteriorColor(currentVehicleDisplayed, 111)
             SetVehicleDirtLevel(currentVehicleDisplayed, 0)
             FreezeEntityPosition(currentVehicleDisplayed, true)
 
@@ -71,6 +73,7 @@ local function DisplayVehicle(vehicleHash)
         end)
     end
 end
+
 -- #endregion vehicle display
 
 local function resetVehicleShop()
@@ -114,7 +117,7 @@ function OpenVehicleShopMenu()
         return
     end
     -- Change some data to be able to walk around the vehicle
-    shopSavedData = {ShopName = CurrentZoneName, Distance = shop.Distance, DrawDistance = shop.DrawDistance, Coord = shop.Coord, Marker = shop.Marker}
+    shopSavedData = { ShopName = CurrentZoneName, Distance = shop.Distance, DrawDistance = shop.DrawDistance, Coord = shop.Coord, Marker = shop.Marker }
     Config.Stores[CurrentZoneName].Distance = shop.VehicleShop.Inside.Distance or 20.0
     Config.Stores[CurrentZoneName].DrawDistance = Config.Stores[CurrentZoneName].Distance
     Config.Stores[CurrentZoneName].Coord = shop.VehicleShop.Inside.Coord
@@ -245,7 +248,7 @@ function RageUI.PoolMenus:VehicleShopMenu()
         if Categories then
             for i = 1, #Categories do
                 local category<const> = Categories[i]
-                Items:AddButton(category.label, category.desc, {RightLabel = category.rightLabel}, function(onSelected, onEntered)
+                Items:AddButton(category.label, category.desc, { RightLabel = category.rightLabel }, function(onSelected, onEntered)
                     if onSelected then
                         CategoryMenu.Subtitle = category.label
                         CurrentCategory = i
@@ -261,25 +264,42 @@ function RageUI.PoolMenus:VehicleShopMenu()
             local category = Categories[CurrentCategory]
             for i = 1, #category.Vehicles do
                 local vehicle<const> = category.Vehicles[i]
-                Items:AddButton(vehicle.label, vehicle.desc, {RightLabel = vehicle.rightLabel}, function(onSelected, onEntered)
+                Items:AddButton(vehicle.label, vehicle.desc, { RightLabel = vehicle.rightLabel }, function(onSelected, onEntered)
                     vehicleToDisplay = vehicle.vehicleHash
                     if onSelected then
                         if vehicle.stock > 0 then
                             CategoryMenu.Controls.Back.Enabled = false
-                            if category.jobName then
-                                if exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_job_purchase_title"),
-                                    GetString("vehicleshop_confirm_job_purchase_firstline"), GetString("vehicleshop_confirm_job_purchase_secondline",
-                                        vehicle.label, vehicle.rightLabel)) then
-                                    print("buy job")
+
+                            local shop = Config.Stores[CurrentZoneName]
+                            if shop then
+                                -- Display matching confirmation message (job or personal vehicle)
+                                if (
+                                    category.jobName
+                                        and exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_job_purchase_title"), GetString("vehicleshop_confirm_job_purchase_firstline"),
+                                            GetString("vehicleshop_confirm_job_purchase_secondline", vehicle.label, vehicle.rightLabel))
+                                    )
+                                    or (not category.jobName
+                                        and exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_purchase_title"), GetString("vehicleshop_confirm_purchase_firstline"),
+                                            GetString("vehicleshop_confirm_purchase_secondline", vehicle.label, vehicle.rightLabel))
+                                    ) then
+                                    -- Buy vehicle
+                                    if exports.ava_core:TriggerServerCallback("ava_stores:server:vehicleshop:purchaseVehicle",
+                                        tostring(shop.VehicleShop.VehicleType), vehicle.vehicleName, category.jobName) then
+
+                                        local vehicleEntity = exports.ava_core:SpawnVehicle(vehicle.vehicleHash, shop.VehicleShop.SpawnVehicle.Coord, shop.VehicleShop.SpawnVehicle.Heading)
+                                        if vehicleEntity then
+                                            SetVehicleColours(vehicleEntity, 111, 111)
+                                            SetVehicleInteriorColor(vehicleEntity, 111)
+                                            SetVehicleDirtLevel(vehicleEntity, 0)
+                                            TriggerServerEvent("ava_stores:server:vehicleshop:purchasedVehicle", VehToNet(vehicleEntity), vehicle.label, json.encode(exports.ava_core:GetVehicleModsData(vehicleEntity) or {}))
+                                            SetVehRadioStation(vehicleEntity, "OFF")
+                                            TaskWarpPedIntoVehicle(PlayerPedId(), vehicleEntity, -1)
+                                        end
+                                    end
                                 end
-                            else
-                                if exports.ava_core:ShowConfirmationMessage(GetString("vehicleshop_confirm_purchase_title"),
-                                    GetString("vehicleshop_confirm_purchase_firstline"), GetString("vehicleshop_confirm_purchase_secondline", vehicle.label,
-                                        vehicle.rightLabel)) then
-                                    print("buy player")
-                                end
+                                Wait(10)
                             end
-                            Wait(10)
+
                             CategoryMenu.Controls.Back.Enabled = true
                         else
                             exports.ava_core:ShowNotification(GetString("vehicleshop_outofstock"))

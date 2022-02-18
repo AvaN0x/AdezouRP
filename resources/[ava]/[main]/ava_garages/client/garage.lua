@@ -99,9 +99,6 @@ local takeOutVehicle = function(garage, vehicleData)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
 
-        -- Set data with vehicleData.modsdata
-        -- Set data with vehicleData.healthdata
-
         -- keys
     end
 end
