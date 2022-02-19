@@ -437,16 +437,16 @@ AVA.GetVehicleModsData = function(vehicle)
     local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
 
     if GetIsVehiclePrimaryColourCustom(vehicle) then
-        colorPrimary = {GetVehicleCustomPrimaryColour(vehicle)}
+        colorPrimary = { GetVehicleCustomPrimaryColour(vehicle) }
     end
     if GetIsVehicleSecondaryColourCustom(vehicle) then
-        colorSecondary = {GetVehicleCustomSecondaryColour(vehicle)}
+        colorSecondary = { GetVehicleCustomSecondaryColour(vehicle) }
     end
 
     local extras = {}
-    for i = 0, 12 do
+    for i = 0, 14 do
         if DoesExtraExist(vehicle, i) then
-            extras[tostring(i)] = IsVehicleExtraTurnedOn(vehicle, i) == 1
+            extras[tostring(i)] = IsVehicleExtraTurnedOn(vehicle, i) and 0 or 1
         end
     end
 
@@ -469,11 +469,11 @@ AVA.GetVehicleModsData = function(vehicle)
         -- wheels
         wheelColor = wheelColor,
         wheels = GetVehicleWheelType(vehicle),
-        tyreSmokeColor = {GetVehicleTyreSmokeColor(vehicle)},
+        tyreSmokeColor = { GetVehicleTyreSmokeColor(vehicle) },
 
         windowTint = GetVehicleWindowTint(vehicle),
 
-        neonColor = {GetVehicleNeonLightsColour(vehicle)},
+        neonColor = { GetVehicleNeonLightsColour(vehicle) },
         neonEnabled = {
             IsVehicleNeonLightEnabled(vehicle, 0),
             IsVehicleNeonLightEnabled(vehicle, 1),
@@ -1160,7 +1160,7 @@ AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
         if #(playerCoords - vehCoords) < distance + 0.0 and (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
             and (blacklist == nil or #blacklist == 0 or not AVA.Utils.TableHasValue(blacklist, vehModel)) then
             entityCount = entityCount + 1
-            entitiesToSelect[entityCount] = {label = GetString("vehicle_number", entityCount), entity = veh}
+            entitiesToSelect[entityCount] = { label = GetString("vehicle_number", entityCount), entity = veh }
         end
     end
 
