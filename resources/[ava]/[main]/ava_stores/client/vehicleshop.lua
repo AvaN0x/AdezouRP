@@ -285,8 +285,18 @@ function RageUI.PoolMenus:VehicleShopMenu()
                                     -- Buy vehicle
                                     if exports.ava_core:TriggerServerCallback("ava_stores:server:vehicleshop:purchaseVehicle",
                                         tostring(shop.VehicleShop.VehicleType), vehicle.vehicleName, category.jobName) then
+                                        RageUI.CloseAllInternal()
 
-                                        local vehicleEntity = exports.ava_core:SpawnVehicle(vehicle.vehicleHash, shop.VehicleShop.SpawnVehicle.Coord, shop.VehicleShop.SpawnVehicle.Heading)
+                                        local spawn = shop.VehicleShop.SpawnVehicle
+                                        -- If there is a large vehicle spawn, check the dimensions of the vehicle and spawn it at the right location
+                                        if shop.VehicleShop.SpawnLargeVehicle then
+                                            local min, max = GetModelDimensions(vehicle.vehicleHash)
+                                            if min.y < -5 or max.y > 5 or max.z > 2 then
+                                                spawn = shop.VehicleShop.SpawnLargeVehicle
+                                            end
+                                        end
+
+                                        local vehicleEntity = exports.ava_core:SpawnVehicle(vehicle.vehicleHash, spawn.Coord, spawn.Heading)
                                         if vehicleEntity then
                                             SetVehicleColours(vehicleEntity, 111, 111)
                                             SetVehicleInteriorColor(vehicleEntity, 111)
