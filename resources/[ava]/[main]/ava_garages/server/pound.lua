@@ -10,7 +10,7 @@ local floor = math.floor
 exports.ava_core:RegisterServerCallback("ava_garages:server:getVehiclesInPound", function(source, garageName, vehicleType)
     -- Player personal vehicles garage
     local src = source
-    if type(garageName) ~= "string" or type(vehicleType) ~= "number" then return end
+    if type(garageName) ~= "string" then return end
 
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return end
@@ -25,13 +25,25 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getVehiclesInPound",
     end
     local vehicles
     if #jobs > 0 then
-        vehicles = MySQL.query.await(
-        "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
-            { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId, jobs = jobs })
+        if vehicleType then
+            vehicles = MySQL.query.await(
+            "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
+                { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId, jobs = jobs })
+        else
+            vehicles = MySQL.query.await(
+            "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
+                { garage = garageName, citizenid = aPlayer.citizenId, jobs = jobs })
+        end
     else
-        vehicles = MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND `citizenid` = :citizenid",
-            { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId })
+        if vehicleType then
+            vehicles = MySQL.query.await(
+            "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND `citizenid` = :citizenid",
+                { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId })
+        else
+            vehicles = MySQL.query.await(
+            "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND `citizenid` = :citizenid",
+                { garage = garageName, citizenid = aPlayer.citizenId })
+        end
     end
 
     return vehicles
@@ -41,7 +53,7 @@ end)
 
 exports.ava_core:RegisterServerCallback("ava_garages:server:takeVehicleOutOfPound", function(source, vehicleId, garageName, vehicleType)
     local src = source
-    if not vehicleId or not garageName or not vehicleType then return end
+    if not vehicleId or not garageName then return end
 
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return end

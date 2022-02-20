@@ -234,7 +234,7 @@ end)
 -- #endregion take out vehicle
 
 -- #region park vehicle
-RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleType, vehicleNet, healthData, IsJobGarage, IsCommonGarage)
+RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleNet, healthData, IsJobGarage, IsCommonGarage)
     local src = source
     local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
     if not DoesEntityExist(vehicle) then return end

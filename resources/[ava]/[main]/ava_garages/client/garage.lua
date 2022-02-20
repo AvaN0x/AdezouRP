@@ -104,7 +104,7 @@ function RageUI.PoolMenus:GarageMenu()
                     if onSelected then
                         local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
                         if isInVehicle and seat == -1 then
-                            TriggerServerEvent("ava_garages:server:parkVehicle", CurrentGarage.Name, CurrentGarage.VehicleType, VehToNet(vehicle),
+                            TriggerServerEvent("ava_garages:server:parkVehicle", CurrentGarage.Name, VehToNet(vehicle),
                                 json.encode(exports.ava_core:GetVehicleHealthData(vehicle) or {}), CurrentGarage.IsJobGarage, CurrentGarage.IsCommonGarage)
                             RageUI.CloseAllInternal()
                         else
