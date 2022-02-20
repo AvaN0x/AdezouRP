@@ -16,12 +16,24 @@ local blips = {}
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
-    setAccessibleGarages()
+    reloadAccessibleGarages()
 end)
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         ClearBlips()
+    else
+        -- Remove garages from this resource
+        local modified = false
+        for i = #AVAConfig.Garages, 1, -1 do
+            if AVAConfig.Garages[i].InvokingResource == resource then
+                table.remove(AVAConfig.Garages, i)
+                modified = true
+            end
+        end
+        if modified then
+            reloadAccessibleGarages()
+        end
     end
 end)
 
@@ -43,21 +55,23 @@ RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         PlayerData[k] = v
         if k == "jobs" then
-            setAccessibleGarages()
+            reloadAccessibleGarages()
         end
     end
 end)
 
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     PlayerData = data
-    setAccessibleGarages()
+    reloadAccessibleGarages()
 end)
 
-function setAccessibleGarages()
+reloadAccessibleGarages = function()
+    while not PlayerData do Wait(5) end
+
     ClearBlips()
     AccessibleGarages = {}
     local count = 0
-    for _, garage in pairs(AVAConfig.Garages) do
+    for _, garage in ipairs(AVAConfig.Garages) do
         local add = false
         if garage.JobNeeded then
             for i = 1, #PlayerData.jobs do
@@ -80,7 +94,7 @@ function setAccessibleGarages()
     end
 
     -- #region blips
-    for _, v in pairs(AccessibleGarages) do
+    for _, v in ipairs(AccessibleGarages) do
         if v.Blip then
             local blip = AddBlipForCoord(v.Blip.Coord or v.Coord)
 
@@ -99,6 +113,8 @@ function setAccessibleGarages()
     end
     -- #endregion blips
 end
+exports("reloadAccessibleGarages", reloadAccessibleGarages)
+
 
 function ClearBlips()
     if blips then
@@ -113,8 +129,25 @@ end
 -- AddGarage --
 ---------------
 
-local addGarage = function(data)
-    -- TODO add garage, used for job garages, appartements and things
+local addGarage = function(data, noReloadGarageList)
+    if type(data) ~= "table"
+        or not data.Name
+        or not data.Coord
+        or not data.Size
+        or not data.Color
+        or not data.SpawnPoint
+        or not data.SpawnPoint.Coord
+        or not data.SpawnPoint.Heading then
+        print("^1[AVA]^0 Missing data for garage, check the config file to figure out what is missing")
+        return
+    end
+
+    data.InvokingResource = GetInvokingResource()
+    table.insert(AVAConfig.Garages, data)
+
+    if not noReloadGarageList then
+        reloadAccessibleGarages()
+    end
 end
 exports("addGarage", addGarage)
 
@@ -128,7 +161,7 @@ Citizen.CreateThread(function()
         local isInMarker = false
         local currentGarageIndex = nil
 
-        for k, v in pairs(AccessibleGarages) do
+        for k, v in ipairs(AccessibleGarages) do
             local distance = #(playerCoords - v.Coord)
             if distance < AVAConfig.DrawDistance then
                 if v.Marker ~= nil then

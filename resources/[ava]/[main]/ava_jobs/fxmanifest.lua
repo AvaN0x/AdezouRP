@@ -1,5 +1,5 @@
 fx_version "cerulean"
-games {"gta5"}
+games { "gta5" }
 
 version "1.0.0"
 author "github.com/AvaN0x"
@@ -8,9 +8,9 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json"}
+files { "languages/**.json" }
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts { "@ava_core/shared/language.lua" }
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -44,4 +44,4 @@ server_scripts {
     "server/manager_menu_sv.lua",
 }
 
-dependencies {"RageUI", "ava_core", "ava_mp_peds"}
+dependencies { "RageUI", "ava_core", "ava_mp_peds", "ava_garages" }

@@ -30,33 +30,33 @@ AVAConfig.Garages = {
         -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
         -- DisableTakeOut = true,
     },
-    {
-        -- TODO Add this with the export "addGarage" in ava_jobs
-        Name = "jobgarage_lspd",
-        Coord = vector3(447.77, -1019.28, 28.54),
-        Size = { x = 2.0, y = 2.0, z = 2.0 },
-        Color = { r = 0, g = 122, b = 204 },
-        Marker = 36,
-        Blip = { Sprite = 290, Color = 0 },
-        VehicleType = 0,
-        IsJobGarage = "lspd",
-        JobNeeded = "lspd",
-        SpawnPoint = { Coord = vector3(447.77, -1019.28, 28.54), Heading = 5.0 },
-        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
-    },
-    {
-        -- TODO Add this with the export "addGarage" in ava_jobs
-        Name = "garage_lspd",
-        Coord = vector3(454.79, -1024.43, 28.48),
-        Size = { x = 2.0, y = 2.0, z = 2.0 },
-        Color = { r = 255, g = 255, b = 255 },
-        Marker = 36,
-        Blip = { Sprite = 290, Color = 0 },
-        VehicleType = 0,
-        JobNeeded = "lspd",
-        SpawnPoint = { Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0 },
-        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
-    },
+    -- {
+    --     -- TODO Add this with the export "addGarage" in ava_jobs
+    --     Name = "jobgarage_lspd",
+    --     Coord = vector3(447.77, -1019.28, 28.54),
+    --     Size = { x = 2.0, y = 2.0, z = 2.0 },
+    --     Color = { r = 0, g = 122, b = 204 },
+    --     Marker = 36,
+    --     Blip = { Sprite = 290, Color = 0 },
+    --     VehicleType = 0,
+    --     IsJobGarage = "lspd",
+    --     JobNeeded = "lspd",
+    --     SpawnPoint = { Coord = vector3(447.77, -1019.28, 28.54), Heading = 5.0 },
+    --     -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
+    -- },
+    -- {
+    --     -- TODO Add this with the export "addGarage" in ava_jobs
+    --     Name = "garage_lspd",
+    --     Coord = vector3(454.79, -1024.43, 28.48),
+    --     Size = { x = 2.0, y = 2.0, z = 2.0 },
+    --     Color = { r = 255, g = 255, b = 255 },
+    --     Marker = 36,
+    --     Blip = { Sprite = 290, Color = 0 },
+    --     VehicleType = 0,
+    --     JobNeeded = "lspd",
+    --     SpawnPoint = { Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0 },
+    --     -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
+    -- },
     {
         -- TODO Add this with the export "addGarage" in ava_jobs
         Name = "garage_lost",

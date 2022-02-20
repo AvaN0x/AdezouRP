@@ -60,6 +60,18 @@ Citizen.CreateThread(function()
     countMainBlips = countMainBlips + 1
     mainBlips[countMainBlips] = jobCenterBlip
     -- #endregion Set blips
+
+    -- #region Set garages
+    while GetResourceState("ava_garages") ~= "started" do Wait(0) end
+    for _, job in pairs(Config.Jobs) do
+        if job.Garages then
+            for _, garage in pairs(job.Garages) do
+                exports.ava_garages:addGarage(garage, true)
+            end
+        end
+    end
+    exports.ava_garages:reloadAccessibleGarages()
+    -- #endregion Set garages
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
