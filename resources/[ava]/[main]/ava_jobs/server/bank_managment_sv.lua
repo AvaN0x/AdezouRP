@@ -54,6 +54,9 @@ RegisterNetEvent("ava_jobs:server:bank_managment:washMoney", function(jobName, a
         else
             inventory.removeItem("dirtycash", amount)
             accounts.addAccountBalance("bank", amount)
+            exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", "",
+                GetString("log_wash_money", aPlayer.citizenId .. " " .. aPlayer.getDiscordTag(), amount, jobName), 0x22ce93)
+
         end
     end
 end)
