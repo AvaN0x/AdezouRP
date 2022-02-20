@@ -1,5 +1,5 @@
 fx_version "cerulean"
-games {"gta5"}
+games { "gta5" }
 
 version "1.0.0"
 author "github.com/AvaN0x"
@@ -8,9 +8,16 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json", "tattooList.json", "vehicleshop.json"}
+files {
+    "languages/**.json",
+    "tattooList.json",
+    "vehicleshop.json"
+}
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts {
+    "@ava_core/shared/language.lua",
+    "shared/vehicleshop.lua"
+}
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -34,6 +41,15 @@ client_scripts {
     "client/vehicleshop.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "config.lua", "server/main.lua", "server/player_outfits.lua", "server/vehicleshop.lua"}
+server_scripts {
+    "@oxmysql/lib/MySQL.lua",
+    "config.lua",
+    "server/main.lua",
+    "server/player_outfits.lua",
+    "server/vehicleshop.lua"
+}
 
-dependencies {"ava_core", "RageUI"}
+dependencies {
+    "ava_core",
+    "RageUI"
+}

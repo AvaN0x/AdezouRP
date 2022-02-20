@@ -5,10 +5,49 @@
 -- #region sell vehicle
 function OpenSellZoneMenu()
     local sellZone = Config.Stores[CurrentZoneName]
-    print("sellZone")
-    -- TODO open confirmation message with price
-    -- exports.ava_core:ShowConfirmationMessage -- "Do you want to sell this vehicle for X$?"
-    -- exports.ava_core:ShowConfirmationMessage -- "Are you sure you want to sell this vehicle for X$?"
+    if not sellZone or not exports.ava_core:canOpenMenu() then return end
+
+    local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
+    if not isInVehicle or seat ~= -1 then
+        exports.ava_core:ShowNotification(GetString("sellvehicle_not_in_vehicle_or_driver"), nil, "CHAR_SIMEON", "Simeon Yetarian")
+        CurrentActionEnabled = true
+        return
+    end
+
+    local vehiclePrice, vehicleName = GetVehiclePriceFromModel(sellZone.SellVehicle.VehicleType, GetEntityModel(vehicle))
+    if not vehiclePrice then
+        exports.ava_core:ShowNotification(GetString("sellvehicle_cannot_sell_this_vehicle_here"), nil, "CHAR_SIMEON", "Simeon Yetarian")
+        CurrentActionEnabled = true
+        return
+    end
+    local sellPrice = exports.ava_core:FormatNumber(math.floor((vehiclePrice * Config.VehicleShops.SellMultiplier) + 0.5))
+    vehiclePrice = exports.ava_core:FormatNumber(vehiclePrice)
+    local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetHashKey(vehicleName)))
+    if vehicleLabel == "NULL" then vehicleLabel = vehicleName end
+
+    if exports.ava_core:ShowConfirmationMessage(GetString("sellvehicle_want_to_sell_title"), GetString("sellvehicle_want_to_sell_firstline"),
+        GetString("sellvehicle_want_to_sell_secondline", vehicleLabel, vehiclePrice, sellPrice))
+        and exports.ava_core:ShowConfirmationMessage(GetString("sellvehicle_confirm_sell_title"), GetString("sellvehicle_confirm_sell_firstline"),
+            GetString("sellvehicle_confirm_sell_secondline", vehicleLabel, vehiclePrice, sellPrice)) then
+
+        local res<const> = exports.ava_core:TriggerServerCallback("ava_stores:server:vehicleshop:sellVehicle", sellZone.SellVehicle.VehicleType, VehToNet(vehicle))
+        if res == 0 then
+            exports.ava_core:ShowNotification(GetString("sellvehicle_cannot_sell_this_vehicle_here"), nil, "CHAR_SIMEON", "Simeon Yetarian")
+        elseif res == 1 then
+            PlaySoundFrontend(-1, "CHALLENGE_UNLOCKED", "HUD_AWARDS", true)
+
+            -- The vehicle will be removed by the server while the screen is faded out
+            DoScreenFadeOut(500)
+            while not IsScreenFadedOut() do Wait(0) end
+
+            PlaySoundFrontend(-1, "Garage_Door_Close", "GTAO_Script_Doors_Faded_Screen_Sounds", true)
+
+            Wait(1500)
+            DoScreenFadeIn(500)
+        end
+    end
+
+    CurrentActionEnabled = true
 end
 
 -- #endregion sell vehicle
@@ -113,9 +152,8 @@ end
 
 function OpenVehicleShopMenu()
     local shop = Config.Stores[CurrentZoneName]
-    if not shop or not exports.ava_core:canOpenMenu() then
-        return
-    end
+    if not shop or not exports.ava_core:canOpenMenu() then return end
+
     -- Change some data to be able to walk around the vehicle
     shopSavedData = { ShopName = CurrentZoneName, Distance = shop.Distance, DrawDistance = shop.DrawDistance, Coord = shop.Coord, Marker = shop.Marker }
     Config.Stores[CurrentZoneName].Distance = shop.VehicleShop.Inside.Distance or 20.0
@@ -296,15 +334,24 @@ function RageUI.PoolMenus:VehicleShopMenu()
                                             end
                                         end
 
+                                        DoScreenFadeOut(500)
+                                        while not IsScreenFadedOut() do Wait(0) end
+
                                         local vehicleEntity = exports.ava_core:SpawnVehicle(vehicle.vehicleHash, spawn.Coord, spawn.Heading)
                                         if vehicleEntity then
                                             SetVehicleColours(vehicleEntity, 111, 111)
                                             SetVehicleInteriorColor(vehicleEntity, 111)
                                             SetVehicleDirtLevel(vehicleEntity, 0)
                                             TriggerServerEvent("ava_stores:server:vehicleshop:purchasedVehicle", VehToNet(vehicleEntity), vehicle.label, json.encode(exports.ava_core:GetVehicleModsData(vehicleEntity) or {}))
+
+                                            PlaySoundFrontend(soundId, "Garage_Door_Open", "GTAO_Script_Doors_Faded_Screen_Sounds", true)
                                             SetVehRadioStation(vehicleEntity, "OFF")
                                             TaskWarpPedIntoVehicle(PlayerPedId(), vehicleEntity, -1)
+
                                         end
+
+                                        Wait(1500)
+                                        DoScreenFadeIn(500)
                                     end
                                 end
                                 Wait(10)
@@ -312,7 +359,7 @@ function RageUI.PoolMenus:VehicleShopMenu()
 
                             CategoryMenu.Controls.Back.Enabled = true
                         else
-                            exports.ava_core:ShowNotification(GetString("vehicleshop_outofstock"))
+                            exports.ava_core:ShowNotification(GetString("vehicleshop_outofstock"), nil, "CHAR_SIMEON", "Simeon Yetarian")
                         end
                     end
                 end)

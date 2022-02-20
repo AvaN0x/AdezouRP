@@ -90,7 +90,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
     -- Check if the vehicle is in stock
     local quantity = GetVehicleModelStock(vehicleModel, vehicleType)
     if quantity <= 0 then
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicleshop_outofstock"))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicleshop_outofstock"), nil, "CHAR_SIMEON", "Simeon Yetarian")
         return false
     end
     -- Remove the vehicle from stock while processing the purchase to avoid multiple people buying the same vehicle
@@ -103,7 +103,8 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
     local inventory = aPlayer.getInventory()
     if not inventory.canRemoveItem("cash", vehicleData.price) then
         -- Restore the vehicle stock
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_amount", exports.ava_core:FormatNumber(vehicleData.price)))
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_amount", exports.ava_core:FormatNumber(vehicleData.price)), nil, "CHAR_SIMEON", "Simeon Yetarian")
+
         SetVehicleModelStock(vehicleModel, quantity)
         return false
     end
@@ -112,15 +113,10 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
 
     -- Prevent player from purchasing multiple vehicles at the same time
     while playerPurchasingVehicle[tostring(src)] do
-        print("waiting to be able to buy another vehicle") -- FIXME REMOVETHIS
+        print("^2[AVA_STORES]^0Player " .. GetPlayerName(src) .. " is trying to purchase a vehicle while already purchasing one, waiting for last purchase to end.")
         Wait(500)
     end
     playerPurchasingVehicle[tostring(src)] = { vehicleModel = vehicleModel, vehicleType = vehicleType, citizenId = aPlayer.citizenId, jobName = jobName }
-
-    -- print(exports.ava_garages:GenerateValidPlate())
-    -- exports.ava_garages:SetupSpawnedVehicle(src, vehicle, vehicleId)
-
-    print("user can buy vehicle", jobName or "self", vehicleType, vehicleModel)
     return true
 end)
 
@@ -165,4 +161,49 @@ RegisterNetEvent("ava_stores:server:vehicleshop:purchasedVehicle", function(vehi
 
     playerPurchasingVehicle[tostring(src)] = nil
     exports.ava_garages:SetupSpawnedVehicle(src, vehicleNet, NetworkGetEntityFromNetworkId(vehicleNet), vehicleId)
+end)
+
+---Event to sell a vehicle
+---@param source integer
+---@param vehicleType string vehicle type
+---@param vehicleNet integer network id of the vehicle
+---@return integer 0 : "failed, 1 : success, 2 : do nothing in client"
+exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehicle", function(source, vehicleType, vehicleNet)
+    local src = source
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    if not DoesEntityExist(vehicle) then return 0 end
+
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return 0 end
+
+    local entityState = Entity(vehicle)
+    local vehicleId = entityState.state.id
+    if not vehicleId then return 0 end
+
+    local vehiclePrice = GetVehiclePriceFromModel(vehicleType, GetEntityModel(vehicle))
+    if not vehiclePrice then return 0 end
+    local sellPrice = math.floor((vehiclePrice * Config.VehicleShops.SellMultiplier) + 0.5)
+
+    local allowed, vehicleData = exports.ava_garages:IsAllowedToInteractWithVehicle(vehicleId, aPlayer, true)
+    if not allowed then return 0 end
+
+    local inventory = aPlayer.getInventory()
+    if not inventory.canAddItem("cash", sellPrice) then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicleshop_cannot_obtain_money", sellPrice), nil, "CHAR_SIMEON", "Simeon Yetarian")
+        return 2
+    end
+    inventory.addItem("cash", sellPrice)
+    exports.ava_garages:RemoveVehicle(vehicleId, aPlayer)
+
+    Citizen.CreateThread(function()
+        for i = -1, 6 do
+            local ped = GetPedInVehicleSeat(vehicle, i)
+            if ped > 0 then
+                TaskLeaveVehicle(ped, vehicle, 1)
+            end
+        end
+        Wait(1000)
+        DeleteEntity(vehicle)
+    end)
+    return 1
 end)
