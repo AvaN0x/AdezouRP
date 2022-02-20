@@ -69,7 +69,7 @@ IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, Is
     if not vehicleId or not aPlayer then
         return false
     end
-    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `model`, `parked` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `model`, `parked`, `insurance_left` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
     if not vehicle then
         return false
     end

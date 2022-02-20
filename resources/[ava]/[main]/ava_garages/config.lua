@@ -7,6 +7,10 @@ AVAConfig.DrawDistance = 15.0
 
 AVAConfig.DefaultGarage = "garage_pillbox"
 
+AVAConfig.InsurancePriceMultiplier = 0.07
+AVAConfig.InsurancePriceMinimum = 300
+AVAConfig.InsurancePriceMaximum = 20000
+
 AVAConfig.PoundPriceMultiplier = 0.12
 AVAConfig.PoundPriceMinimum = 1000
 AVAConfig.PoundPriceMaximum = 30000

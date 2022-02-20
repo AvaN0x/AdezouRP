@@ -26,7 +26,7 @@ function OpenPoundMenu(pound)
     for i = 1, #vehicles do
         local vehicle<const> = vehicles[i]
 
-        local vehiclePrice = exports.ava_stores:GetVehiclePrice(CurrentPound.VehicleType, vehicle.model)
+        local vehiclePrice = exports.ava_stores:GetVehiclePrice(vehicle.model, CurrentPound.VehicleType)
         if vehiclePrice then
             -- Add separator if needed
             if vehicle.job_name and lastJob ~= vehicle.job_name then
@@ -74,13 +74,10 @@ function OpenPoundMenu(pound)
                 Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel }, function(onSelected)
                     if onSelected then
                         if not canTakeOutVehicle(CurrentPound) then return end
-                        print(element.id)
 
                         if exports.ava_core:TriggerServerCallback("ava_garages:server:takeVehicleOutOfPound", element.id, CurrentPound.Name, CurrentPound.VehicleType) then
                             takeOutVehicle(CurrentPound, element.model, element.id)
                             RageUI.CloseAllInternal()
-                        else
-                            print("error") -- FIXME
                         end
                     end
                 end)

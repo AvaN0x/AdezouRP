@@ -54,7 +54,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:takeVehicleOutOfPoun
         return
     end
 
-    local vehiclePrice = exports.ava_stores:GetVehiclePrice(vehicleType, vehicleData.model)
+    local vehiclePrice = exports.ava_stores:GetVehiclePrice(vehicleData.model, vehicleType)
     if not vehiclePrice then return end
 
     local price = min(max(floor(vehiclePrice * AVAConfig.PoundPriceMultiplier + 0.5), AVAConfig.PoundPriceMinimum), AVAConfig.PoundPriceMaximum)

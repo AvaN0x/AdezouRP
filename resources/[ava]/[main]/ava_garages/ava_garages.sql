@@ -11,17 +11,19 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
     `label` varchar(50) NOT NULL,
     `model` varchar(50) NOT NULL,
     `plate` varchar(12) NOT NULL,
-    `parked` BOOLEAN DEFAULT false,
+    `parked` BOOLEAN DEFAULT false NOT NULL,
     `garage` varchar(50) NOT NULL DEFAULT 'garage_pillbox',
     `modsdata` longtext NOT NULL,
     `healthdata` longtext NOT NULL,
     `vehicletype` tinyint NOT NULL COMMENT '0 = car\n1 = boat\n2 = plane\n3 = helicopter',
+    `insurance_left` int DEFAULT 10,
     `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     CONSTRAINT FK_vehicles_players_citizenid FOREIGN KEY(`citizenid`) REFERENCES `ava_players`(`id`) ON DELETE SET NULL,
     CONSTRAINT FK_vehicles_jobs_job_name FOREIGN KEY(`job_name`) REFERENCES `ava_jobs`(`name`) ON DELETE SET NULL,
     CONSTRAINT CHK_vehicles_ownertypes CHECK(`ownertype` >= 0 AND `ownertype` <= 1),
-    CONSTRAINT CHK_vehicles_vehicletypes CHECK(`vehicletype` >= 0 AND `vehicletype` <= 3)
+    CONSTRAINT CHK_vehicles_vehicletypes CHECK(`vehicletype` >= 0 AND `vehicletype` <= 3),
+    CONSTRAINT CHK_vehicles_insurance_left CHECK(`insurance_left` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- CREATE TABLE `user_parking` (
