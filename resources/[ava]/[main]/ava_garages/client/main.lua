@@ -91,7 +91,7 @@ function setAccessibleGarages()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(v.Blip.Name or GetString("garage"))
+            AddTextComponentSubstringPlayerName(v.Blip.Name or GetString("garage"))
             EndTextCommandSetBlipName(blip)
 
             table.insert(blips, blip)
@@ -176,7 +176,7 @@ Citizen.CreateThread(function()
         if CurrentGarageIndex ~= nil and CurrentActionEnabled then
             wait = 0
             SetTextComponentFormat("STRING")
-            AddTextComponentString(GetString("press_open_garage"))
+            AddTextComponentSubstringPlayerName(GetString("press_open_garage"))
             DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 
             if IsControlJustReleased(0, 38) -- E

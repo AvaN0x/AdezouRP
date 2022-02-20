@@ -36,7 +36,7 @@ end)
 
 function ShowNotification(text)
     SetNotificationTextEntry("STRING")
-    AddTextComponentString(text)
+    AddTextComponentSubstringPlayerName(text)
     DrawNotification(false, false)
 end
 

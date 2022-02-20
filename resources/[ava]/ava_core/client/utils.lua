@@ -965,7 +965,7 @@ AVA.Utils.DrawText3D = function(x, y, z, text, size, r, g, b, a)
         SetTextProportional(1)
         SetTextColour(r or 255, g or 255, b or 255, a or 215)
         SetTextEntry("STRING")
-        AddTextComponentString(text)
+        AddTextComponentSubstringPlayerName(text)
         SetTextCentre(1)
         SetTextOutline()
 

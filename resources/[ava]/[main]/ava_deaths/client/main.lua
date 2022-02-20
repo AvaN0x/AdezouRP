@@ -10,7 +10,7 @@ local function RespawnPlayer(coords, heading)
     NetworkResurrectLocalPlayer(coords, heading + 0.0, true, false)
     SetPlayerInvincible(playerPed, false)
     ClearPedBloodDamage(playerPed)
-    TriggerEvent("playerSpawned", {x = coords.x, y = coords.y, z = coords.z, heading = heading + 0.0})
+    TriggerEvent("playerSpawned", { x = coords.x, y = coords.y, z = coords.z, heading = heading + 0.0 })
     TriggerEvent("ava_core:client:playerRevived")
 
     SetEntityHealth(playerPed, 105)
@@ -64,7 +64,7 @@ end
 
 function onDeath()
     TriggerEvent("RageUI.CloseAll")
-    local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_DETONATE~", label = GetString("button_call_ems")}})
+    local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({ { control = "~INPUT_DETONATE~", label = GetString("button_call_ems") } })
 
     local secondsLeft = AVAConfig.DeadScreenMaxDuration
     local canAskForRespawn = false
@@ -75,8 +75,8 @@ function onDeath()
             if not canAskForRespawn and secondsLeft <= AVAConfig.AskRespawnDuration then
                 canAskForRespawn = true
                 instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
-                    {control = "~INPUT_PICKUP~", label = GetString("button_respawn")},
-                    {control = "~INPUT_DETONATE~", label = GetString("button_call_ems")},
+                    { control = "~INPUT_PICKUP~", label = GetString("button_respawn") },
+                    { control = "~INPUT_DETONATE~", label = GetString("button_call_ems") },
                 })
             end
         end
@@ -112,10 +112,10 @@ function onDeath()
             SetTextOutline()
             SetTextEntry("STRING")
             if canAskForRespawn then
-                AddTextComponentString(GetString("dead_time_left", math.floor(secondsLeft / 60), secondsLeft % 60))
+                AddTextComponentSubstringPlayerName(GetString("dead_time_left", math.floor(secondsLeft / 60), secondsLeft % 60))
                 DrawText(0.80, 0.92)
             else
-                AddTextComponentString(GetString("dead_time_left_before_ask_for_respawn", math.floor(secondsLeft / 60), secondsLeft % 60,
+                AddTextComponentSubstringPlayerName(GetString("dead_time_left_before_ask_for_respawn", math.floor(secondsLeft / 60), secondsLeft % 60,
                     math.floor((secondsLeft - AVAConfig.AskRespawnDuration) / 60), (secondsLeft - AVAConfig.AskRespawnDuration) % 60))
                 DrawText(0.80, 0.90)
             end

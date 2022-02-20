@@ -173,12 +173,12 @@ Citizen.CreateThread(function()
                                 if not playerIsInAction and distance < (stealable.Distance or stealable.Size.x or 1.0) then
                                     if stealable.HelpText ~= nil then
                                         SetTextComponentFormat("STRING")
-                                        AddTextComponentString(stealable.HelpText)
+                                        AddTextComponentSubstringPlayerName(stealable.HelpText)
                                         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
                                     end
 
                                     if IsControlJustReleased(0, 38) -- E
-                                    and (GetGameTimer() - LastActionTimer) > 300 then
+                                        and (GetGameTimer() - LastActionTimer) > 300 then
                                         LastActionTimer = GetGameTimer()
 
                                         if stealable.Type and stealable.Type == AVAConfig.StealablesType.Tray then
@@ -216,13 +216,13 @@ Citizen.CreateThread(function()
                             if not playerIsInAction and distance < (interactable.Distance or interactable.Size.x or 1.0) then
                                 if interactable.HelpText ~= nil then
                                     SetTextComponentFormat("STRING")
-                                    AddTextComponentString(interactable.HelpText)
+                                    AddTextComponentSubstringPlayerName(interactable.HelpText)
                                     DisplayHelpTextFromStringLabel(0, 0, 1, -1)
                                 end
 
                                 if interactable.Action then
                                     if IsControlJustReleased(0, 38) -- E
-                                    and (GetGameTimer() - LastActionTimer) > 300 then
+                                        and (GetGameTimer() - LastActionTimer) > 300 then
                                         LastActionTimer = GetGameTimer()
                                         interactable.Action()
 
@@ -313,4 +313,3 @@ AddEventHandler("onResourceStop", function(resource)
         end
     end
 end)
-

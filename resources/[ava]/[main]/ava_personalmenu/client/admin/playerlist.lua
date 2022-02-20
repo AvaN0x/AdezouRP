@@ -5,7 +5,7 @@
 PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("player_list"))
 PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("players_options"))
 local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, "", "player_name")
-local playersOptions = {{Name = GetString("player_manage"), task = "manage"}, {Name = GetString("player_spectate"), task = "spectate"}}
+local playersOptions = { { Name = GetString("player_manage"), task = "manage" }, { Name = GetString("player_spectate"), task = "spectate" } }
 local playerlistTaskIndex = 1
 PlayerListSubMenu.Closed = function()
     playerlistTaskIndex = 1
@@ -46,7 +46,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function()
                             end
                             local targetPed = GetPlayerPed(playerLocalId)
                             blip = AddBlipForEntity(targetPed)
-                            oldBlip = {type = "entity"}
+                            oldBlip = { type = "entity" }
 
                             ShowHeadingIndicatorOnBlip(blip, true)
                         end
@@ -56,7 +56,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function()
                         end
                         local coords = playerData.c
                         blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-                        oldBlip = {type = "coord"}
+                        oldBlip = { type = "coord" }
                     elseif oldBlip.type == "coord" and oldBlip.blip then
                         local coords = playerData.c
                         SetBlipCoords(oldBlip.blip, coords.x, coords.y, coords.z)
@@ -69,7 +69,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerBlips", function()
                         SetBlipCategory(blip, 7)
                         SetBlipScale(blip, 0.7)
                         BeginTextCommandSetBlipName("STRING")
-                        AddTextComponentString(playerId .. " - " .. playerData.n)
+                        AddTextComponentSubstringPlayerName(playerId .. " - " .. playerData.n)
                         EndTextCommandSetBlipName(blip)
                         oldBlip.blip = blip
                     end
@@ -193,7 +193,7 @@ function PoolPlayerList()
                                 ExecuteCommand("spectate " .. playerData.id)
                             end
                         end
-                    end, {PlayersManageSubMenu})
+                    end, { PlayersManageSubMenu })
             end
         end)
 
@@ -203,7 +203,7 @@ function PoolPlayerList()
             else
                 local playerData = selectedPlayerData
                 if perms.playerlist.message then
-                    Items:AddButton(GetString("player_manage_message"), GetString("player_manage_message_subtitle"), {IsDisabled = playerData.isMyself},
+                    Items:AddButton(GetString("player_manage_message"), GetString("player_manage_message_subtitle"), { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
                                 local message = exports.ava_core:KeyboardInput(GetString("player_manage_message_input"), "" or "", 100)
@@ -215,14 +215,14 @@ function PoolPlayerList()
                 end
                 if perms.playerlist.openinventory then
                     Items:AddButton(GetString("player_manage_openinventory"), GetString("player_manage_openinventory_subtitle"),
-                        {IsDisabled = playerData.isMyself}, function(onSelected)
+                        { IsDisabled = playerData.isMyself }, function(onSelected)
                             if onSelected then
                                 ExecuteCommand("openinventory " .. playerData.id)
                             end
                         end)
                 end
                 if perms.playerlist["goto"] then
-                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), {IsDisabled = playerData.isMyself},
+                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
                                 ExecuteCommand("goto " .. playerData.id)
@@ -230,7 +230,7 @@ function PoolPlayerList()
                         end)
                 end
                 if perms.playerlist.bring then
-                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), {IsDisabled = playerData.isMyself},
+                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
                                 ExecuteCommand("bring " .. playerData.id)
@@ -266,7 +266,7 @@ function PoolPlayerList()
                     end)
                 end
                 if perms.playerlist.kick then
-                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), { RightBadge = RageUI.BadgeStyle.Alert },
                         function(onSelected)
                             if onSelected then
                                 local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
@@ -279,7 +279,7 @@ function PoolPlayerList()
                         end)
                 end
                 if perms.playerlist.ban then
-                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), { RightBadge = RageUI.BadgeStyle.Alert },
                         function(onSelected)
                             if onSelected then
                                 local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)

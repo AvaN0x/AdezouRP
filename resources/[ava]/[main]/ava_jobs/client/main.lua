@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(job.Blip.Name or job.LabelName)
+            AddTextComponentSubstringPlayerName(job.Blip.Name or job.LabelName)
             EndTextCommandSetBlipName(blip)
 
             countMainBlips = countMainBlips + 1
@@ -54,7 +54,7 @@ Citizen.CreateThread(function()
     SetBlipAsShortRange(jobCenterBlip, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(Config.JobCenter.Name)
+    AddTextComponentSubstringPlayerName(Config.JobCenter.Name)
     EndTextCommandSetBlipName(jobCenterBlip)
 
     countMainBlips = countMainBlips + 1
@@ -66,7 +66,7 @@ RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         PlayerData[k] = v
         if k == "jobs" then
-            print(json.encode(PlayerData[k], {indent = true}))
+            print(json.encode(PlayerData[k], { indent = true }))
             setJobsToUse()
         end
     end
@@ -204,31 +204,31 @@ function checkAuthorizations()
         if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 job.FieldZones[k].Allowed = job.isIllegal
-                                                or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
                 job.ProcessZones[k].Allowed = job.isIllegal
-                                                  or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
                 job.ProcessMenuZones[k].Allowed = job.isIllegal
-                                                      or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
                 job.SellZones[k].Allowed = job.isIllegal
-                                               or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
                 job.BuyZones[k].Allowed = job.isIllegal
-                                              or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
             end
         end
     end
@@ -260,7 +260,7 @@ function createBlips()
         SetBlipAsShortRange(blip, true)
 
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString("~c~" .. label)
+        AddTextComponentSubstringPlayerName("~c~" .. label)
         EndTextCommandSetBlipName(blip)
 
         countJobBlips = countJobBlips + 1
@@ -326,7 +326,7 @@ function createBlips()
         SetBlipAsShortRange(bankManagmentBlip, true)
 
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString(Config.BankManagment.Name)
+        AddTextComponentSubstringPlayerName(Config.BankManagment.Name)
         EndTextCommandSetBlipName(bankManagmentBlip)
 
         countJobBlips = countJobBlips + 1
@@ -576,7 +576,7 @@ Citizen.CreateThread(function()
             end
 
             if IsControlJustReleased(0, 38) -- E
-            and (GetGameTimer() - TimeLastAction) > 300 then
+                and (GetGameTimer() - TimeLastAction) > 300 then
                 CurrentActionEnabled = false
                 TimeLastAction = GetGameTimer()
                 if CurrentZoneName == "JobCenter" then
@@ -690,7 +690,7 @@ function OpenCloakroomMenu()
             for i = 1, #outfits do
                 local outfit = outfits[i]
 
-                Items:AddButton(outfit.Label, outfit.Desc, {IsDisabled = outfit.IsDisabled}, function(onSelected)
+                Items:AddButton(outfit.Label, outfit.Desc, { IsDisabled = outfit.IsDisabled }, function(onSelected)
                     if onSelected then
                         applyClothesAnimation()
                         exports.ava_mp_peds:setPlayerClothes(outfit[playerSkin.gender == 0 and "Male" or "Female"])
@@ -739,7 +739,7 @@ end
 function ProcessMenuZone(job)
     local elements = {}
     for k, v in pairs(CurrentZoneValue.Process) do
-        table.insert(elements, {label = v.Name, desc = v.Desc, delay = v.Delay, value = v})
+        table.insert(elements, { label = v.Name, desc = v.Desc, delay = v.Delay, value = v })
     end
 
     RageUI.CloseAll()
@@ -819,7 +819,7 @@ function BuyZone(job)
             label = item.label,
             rightLabel = GetString("buy_item_right_label", item.isDirtyMoney and "~r~" or "", item.price),
             leftBadge = not item.noIcon and function()
-                return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
+                return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
             end or nil,
             price = item.price,
             name = item.name,
@@ -833,7 +833,7 @@ function BuyZone(job)
         RageUI.OpenTempMenu(GetString("seller_for", job.LabelName), function(Items)
             for i = 1, #elements do
                 local element = elements[i]
-                Items:AddButton(element.label, element.desc, {RightLabel = element.rightLabel, LeftBadge = element.leftBadge}, function(onSelected)
+                Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel, LeftBadge = element.leftBadge }, function(onSelected)
                     if onSelected then
                         local count = tonumber(exports.ava_core:KeyboardInput(GetString("buy_how_much_max", element.maxCanTake or 0), "", 10))
 
@@ -939,6 +939,7 @@ local function GetObjectCoordZ(x, y, zone)
 
     return zone.Coord.z
 end
+
 local function GeneratePlantCoords(jobName, zoneName, zone)
     local coords
     repeat
@@ -970,7 +971,7 @@ function SpawnPlants(jobName, zoneName, zone)
         PlaceObjectOnGroundProperly(obj)
         FreezeEntityPosition(obj, true)
 
-        table.insert(field, {obj = obj, jobName = jobName, zoneName = zoneName, coords = GetEntityCoords(obj), distance = zone.Distance or 1.3})
+        table.insert(field, { obj = obj, jobName = jobName, zoneName = zoneName, coords = GetEntityCoords(obj), distance = zone.Distance or 1.3 })
     end
 end
 
@@ -986,7 +987,7 @@ function JobCenterMenu()
 
     for i = 1, #Config.JobCenter.JobList, 1 do
         local element = Config.JobCenter.JobList[i]
-        table.insert(elements, {index = i, Label = element.Label, Desc = element.Desc})
+        table.insert(elements, { index = i, Label = element.Label, Desc = element.Desc })
     end
 
     RageUI.CloseAll()
@@ -1026,4 +1027,3 @@ function tableHasValue(table, val)
 
     return false
 end
-

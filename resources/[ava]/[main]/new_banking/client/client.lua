@@ -10,22 +10,22 @@ local bank = nil
 local atm = nil
 
 local banks = {
-    {name = "Banque", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
+    { name = "Banque", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286 },
     -- {name = "Pacific Standard", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
-    {name = "Banque", id = 108, colour = 4, x = -1212.980, y = -330.841, z = 37.787},
-    {name = "Banque", id = 108, colour = 4, x = -2962.582, y = 482.627, z = 15.703},
-    {name = "Banque", id = 108, colour = 4, x = -112.202, y = 6469.295, z = 31.626},
-    {name = "Banque", id = 108, colour = 4, x = 314.187, y = -278.621, z = 54.170},
-    {name = "Banque", id = 108, colour = 4, x = -351.534, y = -49.529, z = 49.042},
-    {name = "Banque", id = 108, colour = 4, x = 1175.06, y = 2706.64, z = 38.09},
-    {name = "Banque", id = 108, colour = 4, x = 149.4551, y = -1038.95, z = 29.366},
+    { name = "Banque", id = 108, colour = 4, x = -1212.980, y = -330.841, z = 37.787 },
+    { name = "Banque", id = 108, colour = 4, x = -2962.582, y = 482.627, z = 15.703 },
+    { name = "Banque", id = 108, colour = 4, x = -112.202, y = 6469.295, z = 31.626 },
+    { name = "Banque", id = 108, colour = 4, x = 314.187, y = -278.621, z = 54.170 },
+    { name = "Banque", id = 108, colour = 4, x = -351.534, y = -49.529, z = 49.042 },
+    { name = "Banque", id = 108, colour = 4, x = 1175.06, y = 2706.64, z = 38.09 },
+    { name = "Banque", id = 108, colour = 4, x = 149.4551, y = -1038.95, z = 29.366 },
 }
 
 local atmsProps = {
-    {hash = -1126237515, offX = 0.0, offY = -0.5, offZ = 0.8},
-    {hash = 506770882, offX = 0.0, offY = -0.5, offZ = 0.8},
-    {hash = -1364697528, offX = 0.0, offY = -0.5, offZ = 0.8},
-    {hash = -870868698, offX = 0.0, offY = -0.5, offZ = 0.8},
+    { hash = -1126237515, offX = 0.0, offY = -0.5, offZ = 0.8 },
+    { hash = 506770882, offX = 0.0, offY = -0.5, offZ = 0.8 },
+    { hash = -1364697528, offX = 0.0, offY = -0.5, offZ = 0.8 },
+    { hash = -870868698, offX = 0.0, offY = -0.5, offZ = 0.8 },
 }
 
 -- ===============================================
@@ -85,13 +85,13 @@ end)
 function OpenBank()
     inMenu = true
     SetNuiFocus(true, true)
-    SendNUIMessage({type = "openGeneral"})
+    SendNUIMessage({ type = "openGeneral" })
     TriggerServerEvent("bank:balance")
 end
 
 function CloseBank()
     SetNuiFocus(false, false)
-    SendNUIMessage({type = "closeAll"})
+    SendNUIMessage({ type = "closeAll" })
     Wait(500)
     if atm then
         local playerPed = PlayerPedId()
@@ -127,7 +127,7 @@ Citizen.CreateThread(function()
             SetBlipScale(blip, 0.7)
             SetBlipAsShortRange(blip, true)
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(tostring(v.name))
+            AddTextComponentSubstringPlayerName(tostring(v.name))
             EndTextCommandSetBlipName(blip)
         end
     end
@@ -140,7 +140,7 @@ RegisterNetEvent("currentbalance")
 AddEventHandler("currentbalance", function(balance)
     local character = exports.ava_core:getPlayerCharacterData()
 
-    SendNUIMessage({type = "balanceHUD", balance = balance, player = ("%s %s"):format(character.firstname, character.lastname), citizenId = character.citizenId})
+    SendNUIMessage({ type = "balanceHUD", balance = balance, player = ("%s %s"):format(character.firstname, character.lastname), citizenId = character.citizenId })
 end)
 
 -- ===============================================
@@ -168,7 +168,7 @@ end)
 
 RegisterNetEvent("balance:back")
 AddEventHandler("balance:back", function(balance)
-    SendNUIMessage({type = "balanceReturn", bal = balance})
+    SendNUIMessage({ type = "balanceReturn", bal = balance })
 end)
 
 -- ===============================================
@@ -184,7 +184,7 @@ end)
 -- ===============================================
 RegisterNetEvent("bank:result")
 AddEventHandler("bank:result", function(type, message)
-    SendNUIMessage({type = "result", m = message, t = type})
+    SendNUIMessage({ type = "result", m = message, t = type })
 end)
 
 -- ===============================================
@@ -220,7 +220,7 @@ function nearATM()
         if DoesEntityExist(closestATM) then
             local markerCoords = GetOffsetFromEntityInWorldCoords(closestATM, v.offX, v.offY, v.offZ)
 
-            return {x = markerCoords.x, y = markerCoords.y, z = markerCoords.z, heading = GetEntityHeading(closestATM)}
+            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z, heading = GetEntityHeading(closestATM) }
         end
     end
     return nil
@@ -228,6 +228,6 @@ end
 
 function DisplayHelpText(str)
     SetTextComponentFormat("STRING")
-    AddTextComponentString(str)
+    AddTextComponentSubstringPlayerName(str)
     DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end

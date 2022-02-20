@@ -3,8 +3,8 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local ConfigBlips = {
-    {Coord = vector3(783.37, -1867.88, 0.0), Sprite = 777, Colour = 0, Scale = 0.8, Name = "LS Car Meet"},
-    {Coord = vector3(5943.0, -6272.0, 0.0), Sprite = 575, Colour = 0, Scale = 0.0, Name = "Cayo Perico"},
+    { Coord = vector3(783.37, -1867.88, 0.0), Sprite = 777, Colour = 0, Scale = 0.8, Name = "LS Car Meet" },
+    { Coord = vector3(5943.0, -6272.0, 0.0), Sprite = 575, Colour = 0, Scale = 0.0, Name = "Cayo Perico" },
 }
 local placedBlips = {}
 
@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(v.Name or "")
+            AddTextComponentSubstringPlayerName(v.Name or "")
             EndTextCommandSetBlipName(blip)
 
             table.insert(placedBlips, blip)
@@ -60,7 +60,7 @@ end)
 --         SetBlipAsShortRange(blip, true)
 
 --         BeginTextCommandSetBlipName("STRING")
---         AddTextComponentString(i)
+--         AddTextComponentSubstringPlayerName(i)
 --         EndTextCommandSetBlipName(blip)
 
 --         table.insert(placedBlips, blip)

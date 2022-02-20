@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local GUI = {Time = 0}
+local TimeLastAction = 0
 
 local HasAlreadyEnteredMarker = false
 local LastZone = nil
@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
     SetBlipAsShortRange(blip, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(AVAConfig.DrivingSchool.Blip.Name or AVAConfig.DrivingSchool.Name)
+    AddTextComponentSubstringPlayerName(AVAConfig.DrivingSchool.Blip.Name or AVAConfig.DrivingSchool.Name)
     EndTextCommandSetBlipName(blip)
 
     table.insert(mainBlips, blip)
@@ -113,14 +113,14 @@ Citizen.CreateThread(function()
         if CurrentZoneName ~= nil and CurrentActionEnabled then
             if CurrentHelpText ~= nil then
                 SetTextComponentFormat("STRING")
-                AddTextComponentString(CurrentHelpText)
+                AddTextComponentSubstringPlayerName(CurrentHelpText)
                 DisplayHelpTextFromStringLabel(0, 0, 1, -1)
             end
 
             if IsControlJustReleased(0, 38) -- E
-            and (GetGameTimer() - GUI.Time) > 300 then
+                and (GetGameTimer() - TimeLastAction) > 300 then
                 CurrentActionEnabled = false
-                GUI.Time = GetGameTimer()
+                TimeLastAction = GetGameTimer()
 
                 OpenDrivingSchoolMenu()
             end
@@ -159,7 +159,7 @@ function OpenDrivingSchoolMenu()
     RageUI.CloseAll()
     RageUI.OpenTempMenu(GetString("driving_school"), function(Items)
         Items:AddButton(GetString("menu_traffic_laws"), GetString("menu_traffic_laws_subtitle"),
-            {RightLabel = GetString("right_label_price", AVAConfig.Prices["trafficLaws"]), IsDisabled = not not trafficLawsLicense}, function(onSelected)
+            { RightLabel = GetString("right_label_price", AVAConfig.Prices["trafficLaws"]), IsDisabled = not not trafficLawsLicense }, function(onSelected)
                 if onSelected then
                     if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "trafficLaws") then
                         TrafficLawsLicense()
@@ -169,7 +169,7 @@ function OpenDrivingSchoolMenu()
                 end
             end)
         Items:AddButton(GetString("menu_driver"), DriverLicenseDisabled and GetString("menu_driver_subtitle_disabled") or GetString("menu_driver_subtitle"),
-            {RightLabel = GetString("right_label_price", AVAConfig.Prices["driver"]), IsDisabled = DriverLicenseDisabled}, function(onSelected)
+            { RightLabel = GetString("right_label_price", AVAConfig.Prices["driver"]), IsDisabled = DriverLicenseDisabled }, function(onSelected)
                 if onSelected then
                     if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "driver") then
                         DriverLicense()

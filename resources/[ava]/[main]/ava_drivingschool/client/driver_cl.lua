@@ -145,7 +145,7 @@ local nextBlip = 0
 local function createNextBlip(x, y, z)
     local blip = AddBlipForCoord(x, y, z)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(GetString("driving_test"))
+    AddTextComponentSubstringPlayerName(GetString("driving_test"))
     EndTextCommandSetBlipName(blip)
     SetBlipSprite(blip, 1)
     SetBlipColour(blip, 5)
@@ -304,7 +304,7 @@ end
 --         SetBlipScale(blip, 0.6)
 
 --         BeginTextCommandSetBlipName("STRING")
---         AddTextComponentString(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType and tostring(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType)
+--         AddTextComponentSubstringPlayerName(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType and tostring(AVAConfig.DriverTest.Checkpoints[i].ChangeSpeedType)
 --                                    or AVAConfig.DriverTest.Checkpoints[i].MissionText and tostring(AVAConfig.DriverTest.Checkpoints[i].MissionText)
 --                                    or tostring(i))
 --         EndTextCommandSetBlipName(blip)

@@ -134,8 +134,8 @@ Citizen.CreateThread(function()
                 SetTextWrap(0.0, 1.0)
                 SetTextOutline()
                 SetTextEntry("STRING")
-                AddTextComponentString("X\t" .. string.format("%.2f", doorID.textCoords.x) .. "\nY\t" .. string.format("%.2f", doorID.textCoords.y) .. "\nZ\t"
-                                           .. string.format("%.2f", doorID.textCoords.z))
+                AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", doorID.textCoords.x) .. "\nY\t" .. string.format("%.2f", doorID.textCoords.y) .. "\nZ\t"
+                    .. string.format("%.2f", doorID.textCoords.z))
                 DrawText(0.8, 0.88)
 
                 if IsControlJustReleased(0, ConfigDoors.DebugKey) then
@@ -144,8 +144,8 @@ Citizen.CreateThread(function()
                         local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
                         doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x + offset, 0.0, 0.0)
                         exports.ava_hud:copyToClipboard("vector3(" .. string.format("%.2f", doorID.textCoords.x) .. ", "
-                                                            .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z)
-                                                            .. ")")
+                            .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z)
+                            .. ")")
                     end
                 end
             end
@@ -257,7 +257,7 @@ function FindClosestDoor()
         if distance < doorID.distance then
             local isAuthorized = IsAuthorized(doorID)
             if doorID.locked and not isAuthorized then
-                return {name = k, door = doorID}
+                return { name = k, door = doorID }
             end
         end
     end

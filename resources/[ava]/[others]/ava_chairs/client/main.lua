@@ -45,7 +45,7 @@ function getChair()
         if DoesEntityExist(closestProp) then
             local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
 
-            return {x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type}
+            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type }
         end
     end
     return nil
@@ -63,7 +63,7 @@ function DrawText3D(x, y, z, text)
         SetTextCentre(1)
         SetTextOutline()
 
-        AddTextComponentString(text)
+        AddTextComponentSubstringPlayerName(text)
         EndTextCommandDisplayText(_x, _y)
     end
 end

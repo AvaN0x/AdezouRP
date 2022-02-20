@@ -11,7 +11,7 @@ function DrawText3D(x, y, z, text, size, r, g, b)
         SetTextProportional(1)
         SetTextColour(r or 255, g or 255, b or 255, 215)
         SetTextEntry("STRING")
-        AddTextComponentString(text)
+        AddTextComponentSubstringPlayerName(text)
 
         SetTextCentre(1)
         SetTextOutline()

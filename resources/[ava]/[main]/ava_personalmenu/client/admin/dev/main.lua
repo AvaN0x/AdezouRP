@@ -26,7 +26,7 @@ function PoolDevMenu()
                         ExecuteCommand("showhash")
                     end
                 end)
-                local style<const> = {IsDisabled = not showhash, Style = not showhash and 2}
+                local style<const> = { IsDisabled = not showhash, Style = not showhash and 2 }
                 Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"), showhash_object, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
@@ -107,9 +107,9 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoords", function()
             SetTextWrap(0.0, 1.0)
             SetTextOutline()
             SetTextEntry("STRING")
-            AddTextComponentString("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
-                                       .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
-                                       .. string.format("%.2f", GetEntityHeading(playerPed)))
+            AddTextComponentSubstringPlayerName("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
+                .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
+                .. string.format("%.2f", GetEntityHeading(playerPed)))
             EndTextCommandDisplayText(0.9, 0.88)
         end
     end)
@@ -172,8 +172,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
             SetTextWrap(0.0, 1.0)
             SetTextOutline()
             SetTextEntry("STRING")
-            AddTextComponentString("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
-                                       .. string.format("%.2f", pointerCoords.z))
+            AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
+                .. string.format("%.2f", pointerCoords.z))
             DrawText(0.8, 0.88)
 
             DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)
@@ -202,7 +202,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
 
             if IsControlJustReleased(0, 79) then -- c
                 local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", "
-                                        .. string.format("%.2f", pointerCoords.z) .. ")"
+                    .. string.format("%.2f", pointerCoords.z) .. ")"
                 exports.ava_hud:copyToClipboard(coordString)
             elseif IsControlPressed(0, 25) then -- right mouse button
                 showcoordshelper = false
@@ -218,6 +218,7 @@ local function clearVisibleHashOutlines()
         SetEntityDrawOutline(visibleHash[i].entity, false)
     end
 end
+
 RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
     showhash = not showhash
 
@@ -243,7 +244,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local propCoords = GetEntityCoords(prop)
                     if #(playerCoords - propCoords) < 5.0 then
                         count = count + 1
-                        visibleHash[count] = {hash = GetEntityModel(prop), entity = prop}
+                        visibleHash[count] = { hash = GetEntityModel(prop), entity = prop }
                         SetEntityDrawOutline(prop, true)
                     end
                 end
@@ -254,7 +255,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local vehCoords = GetEntityCoords(veh)
                     if #(playerCoords - vehCoords) < 10.0 then
                         count = count + 1
-                        visibleHash[count] = {hash = GetEntityModel(veh), entity = veh}
+                        visibleHash[count] = { hash = GetEntityModel(veh), entity = veh }
                         SetEntityDrawOutline(veh, true)
                     end
                 end
@@ -265,7 +266,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local pedCoords = GetEntityCoords(ped)
                     if #(playerCoords - pedCoords) < 10.0 then
                         count = count + 1
-                        visibleHash[count] = {hash = GetEntityModel(ped), entity = ped, dimensions = true}
+                        visibleHash[count] = { hash = GetEntityModel(ped), entity = ped, dimensions = true }
                     end
                 end
             end

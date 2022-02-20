@@ -214,7 +214,7 @@ function DrawText3D(x, y, z, text, size)
         SetTextCentre(1)
         SetTextOutline()
 
-        AddTextComponentString(text)
+        EndTextCommandSetBlipName(text)
         DrawText(_x, _y)
     end
 end

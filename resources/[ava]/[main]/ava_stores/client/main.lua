@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(v.Blip.Name or v.Name)
+            AddTextComponentSubstringPlayerName(v.Blip.Name or v.Name)
             EndTextCommandSetBlipName(blip)
 
             table.insert(mainBlips, blip)
@@ -170,7 +170,7 @@ Citizen.CreateThread(function()
             wait = 0
             if CurrentHelpText ~= nil then
                 SetTextComponentFormat("STRING")
-                AddTextComponentString(CurrentHelpText)
+                AddTextComponentSubstringPlayerName(CurrentHelpText)
                 DisplayHelpTextFromStringLabel(0, 0, 1, -1)
             end
 
