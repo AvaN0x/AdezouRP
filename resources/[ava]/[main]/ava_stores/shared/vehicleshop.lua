@@ -20,13 +20,20 @@ function GetVehiclePriceFromModel(vehicleType, model)
 end
 
 ---Get vehicle price from name
----@param vehicleType int|string vehicle type
 ---@param name string vehicle name
+---@param vehicleType int|string vehicle type
 ---@return number|nil vehicle price 
-GetVehiclePrice = function(vehicleType, name)
-    if Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)]
+GetVehiclePrice = function(name, vehicleType)
+    if vehicleType and Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)]
         and Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)][name] then
         return Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)][name].price
+    end
+    if not vehicleType then
+        for _, vehicles in pairs(Config.VehicleShops.Vehicles.vehiclestypes) do
+            if vehicles[name] then
+                return vehicles[name].price
+            end
+        end
     end
     return nil
 end

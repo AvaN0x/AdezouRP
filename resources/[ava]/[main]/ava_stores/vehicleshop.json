@@ -123,6 +123,11 @@
                 "quantity": 100,
                 "price": 10000
             },
+            "ignus": {
+                "category": "super",
+                "quantity": 100,
+                "price": 10000
+            },
             "bison": {
                 "category": "vans",
                 "quantity": 10,
