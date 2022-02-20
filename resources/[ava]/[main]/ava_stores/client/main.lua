@@ -175,7 +175,7 @@ Citizen.CreateThread(function()
             end
 
             if IsControlJustReleased(0, 38) -- E
-            and (GetGameTimer() - LastActionTimer) > 300 then
+                and (GetGameTimer() - LastActionTimer) > 300 then
                 CurrentActionEnabled = false
                 LastActionTimer = GetGameTimer()
                 local store = Config.Stores[CurrentZoneName]
@@ -201,6 +201,7 @@ Citizen.CreateThread(function()
 end)
 
 function BuyZone()
+    if not exports.ava_core:canOpenMenu() then return end
     local store = Config.Stores[CurrentZoneName]
 
     local items = exports.ava_core:TriggerServerCallback("ava_stores:getStoreItems", CurrentZoneName)
@@ -214,7 +215,7 @@ function BuyZone()
             label = item.label,
             rightLabel = GetString("store_item_right_label", item.isDirtyMoney and "~r~" or "", item.price),
             leftBadge = not item.noIcon and function()
-                return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
+                return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
             end or nil,
             price = item.price,
             name = item.name,
@@ -228,7 +229,7 @@ function BuyZone()
         RageUI.OpenTempMenu(store.Name, function(Items)
             for i = 1, #elements do
                 local element = elements[i]
-                Items:AddButton(element.label, element.desc, {RightLabel = element.rightLabel, LeftBadge = element.leftBadge}, function(onSelected)
+                Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel, LeftBadge = element.leftBadge }, function(onSelected)
                     if onSelected then
                         local count = tonumber(exports.ava_core:KeyboardInput(GetString("how_much_max", element.maxCanTake or 0), "", 10))
 

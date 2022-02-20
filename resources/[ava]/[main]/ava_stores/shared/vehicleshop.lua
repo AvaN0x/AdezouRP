@@ -18,3 +18,16 @@ function GetVehiclePriceFromModel(vehicleType, model)
     end
     return nil
 end
+
+---Get vehicle price from name
+---@param vehicleType int|string vehicle type
+---@param name string vehicle name
+---@return number|nil vehicle price 
+GetVehiclePrice = function(vehicleType, name)
+    if Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)]
+        and Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)][name] then
+        return Config.VehicleShops.Vehicles.vehiclestypes[tostring(vehicleType)][name].price
+    end
+    return nil
+end
+exports("GetVehiclePrice", GetVehiclePrice)
