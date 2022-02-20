@@ -154,7 +154,7 @@ local RemoveVehicle = function(vehicleId, aPlayer)
     -- Log informations to discord
     local vehicleData = MySQL.single.await("SELECT COALESCE(`citizenid`, `job_name`) AS `owner`, `label`, `model`, `plate`, `modsdata`, `vehicletype` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
     if vehicleData then
-        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", GetString("log_remove_vehicle_title", aPlayer and aPlayer.getDiscordTag() or "console"),
+        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", GetString("log_remove_vehicle_title", aPlayer and (aPlayer.citizenId .. " " .. aPlayer.getDiscordTag()) or "console"),
             GetString("log_remove_vehicle_description", vehicleData.label, vehicleData.owner, vehicleData.plate, vehicleData.model, vehicleData.vehicletype, vehicleData.modsdata), 0x007acc)
     end
 
