@@ -65,7 +65,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
 end)
 -- #endregion get vehicles in garage
 
-function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
+local IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
     if not vehicleId or not aPlayer then
         return false
     end
@@ -80,6 +80,7 @@ function IsAllowedToInteractWithVehicle(vehicleId, aPlayer, checkCanManage, IsCo
     end
     return false
 end
+exports("IsAllowedToInteractWithVehicle", IsAllowedToInteractWithVehicle)
 
 ---Generate a valid plate with format 00AAA00
 ---@return string
@@ -146,6 +147,20 @@ local AddJobVehicle = function(jobName, vehicleType, vehicleModel, label, plate,
 end
 exports("AddJobVehicle", AddJobVehicle)
 
+---Remove a vehicle from the database
+---@param vehicleId number vehicle id
+---@param aPlayer aPlayer player who is removing the vehicle
+local RemoveVehicle = function(vehicleId, aPlayer)
+    -- Log informations to discord
+    local vehicleData = MySQL.single.await("SELECT COALESCE(`citizenid`, `job_name`) AS `owner`, `label`, `model`, `plate`, `modsdata`, `vehicletype` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    if vehicleData then
+        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", GetString("log_remove_vehicle_title", aPlayer and aPlayer.getDiscordTag() or "console"),
+            GetString("log_remove_vehicle_description", vehicleData.label, vehicleData.owner, vehicleData.plate, vehicleData.model, vehicleData.vehicletype, vehicleData.modsdata), 0x007acc)
+    end
+
+    MySQL.update.await("DELETE FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+end
+exports("RemoveVehicle", RemoveVehicle)
 
 
 -- #region rename vehicle

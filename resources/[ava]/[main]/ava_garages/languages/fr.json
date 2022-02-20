@@ -21,5 +21,7 @@
     "insurance": "Assurance",
     "insurance_menu": "Assurance",
     "pound": "Fourrière",
-    "pound_menu": "Fourrière"
+    "pound_menu": "Fourrière",
+    "log_remove_vehicle_title": "Véhicule vendu par **%s**",
+    "log_remove_vehicle_description": "**Label : **`%s`\n**Propriétaire : **`%s`\n**Plaque : **`%s`\n**Modèle : **`%s`\n**Type : **`%s`\n**Data : **\n```json\n%s\n```"
 }
