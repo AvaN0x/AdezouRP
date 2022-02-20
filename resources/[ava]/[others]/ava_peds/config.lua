@@ -67,7 +67,7 @@ Config.Peds = {
         heading = 183.6,
         name = "Jessica",
         bubble = "Quelle est votre urgence ?",
-        variations = {{componentId = 2, drawableId = 1}, {componentId = 9, drawableId = 1}},
+        variations = { { componentId = 2, drawableId = 1 }, { componentId = 9, drawableId = 1 } },
     },
     -- lspd armory
     {
@@ -77,8 +77,8 @@ Config.Peds = {
         heading = 90.0,
         name = "George",
         bubble = "T'as besoin de quoi ?",
-        variations = {{componentId = 0, drawableId = 0, textureId = 1}, {componentId = 9, drawableId = 2}},
-        props = {{componentId = 1, drawableId = 1}},
+        variations = { { componentId = 0, drawableId = 0, textureId = 1 }, { componentId = 9, drawableId = 2 } },
+        props = { { componentId = 1, drawableId = 1 } },
     },
 
     -- agatha gov
@@ -92,6 +92,17 @@ Config.Peds = {
         bubble = "Bonjour, je suis ~y~Agatha~s~, que puis-je faire pour vous ?",
     },
 
+    -- simeon premium deluxe motorsport
+    {
+        PedName = "ig_siemonyetarian",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(-57.01, -1098.94, 25.44),
+        heading = 20.0,
+        scenario = "WORLD_HUMAN_HANG_OUT_STREET",
+        name = "Simeon Yetarian",
+        offsetZ = 0.25
+    },
+
     -- ems
     {
         PedName = "s_m_m_doctor_01",
@@ -100,11 +111,17 @@ Config.Peds = {
         heading = 45.0,
         scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
         name = "Baker",
-        variations = {{componentId = 8, drawableId = 2}},
+        variations = { { componentId = 8, drawableId = 2 } },
     },
 
     -- mechanic
-    {PedName = "S_F_M_Autoshop_01", PedType = "PED_TYPE_CIVFEMALE", pos = vector3(-1144.08, -2001.85, 12.21), heading = 320.0, name = "Maëlys", offsetZ = 0.33},
+    {
+        PedName = "S_F_M_Autoshop_01",
+        PedType = "PED_TYPE_CIVFEMALE",
+        pos = vector3(-1144.08, -2001.85, 12.21),
+        heading = 320.0,
+        offsetZ = 0.33
+    },
 
     -- pacific bank
     {
@@ -115,7 +132,7 @@ Config.Peds = {
         scenario = "PROP_HUMAN_SEAT_BENCH",
         name = "Philippe",
         bubble = "Besoin de déposer de l'argent sur le compte de votre entreprise ?",
-        variations = {{componentId = 8, drawableId = 0, textureId = 4}},
+        variations = { { componentId = 8, drawableId = 0, textureId = 4 } },
     },
     {
         PedName = "a_m_y_business_02",
@@ -125,7 +142,7 @@ Config.Peds = {
         scenario = "PROP_HUMAN_SEAT_BENCH",
         name = "Robert",
         bubble = "Ici pour un retrait ?",
-        variations = {{componentId = 0, drawableId = 1, textureId = 1}, {componentId = 2, drawableId = 1}, {componentId = 8, drawableId = 0, textureId = 4}},
+        variations = { { componentId = 0, drawableId = 1, textureId = 1 }, { componentId = 2, drawableId = 1 }, { componentId = 8, drawableId = 0, textureId = 4 } },
     },
 
     -- insurance office
@@ -145,11 +162,17 @@ Config.Peds = {
         scenario = "PROP_HUMAN_SEAT_BENCH",
         name = "Barry",
         bubble = "Bonjour, que puis-je faire pour vous ?",
-        props = {{componentId = 1, drawableId = 0}},
+        props = { { componentId = 1, drawableId = 0 } },
     },
 
     -- tattoo
-    {PedName = "a_m_y_ktown_01", PedType = "PED_TYPE_CIVMALE", pos = vector3(319.71, 180.9, 102.61), heading = 254.42, scenario = "WORLD_HUMAN_HANG_OUT_STREET"},
+    {
+        PedName = "a_m_y_ktown_01",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(319.71, 180.9, 102.61),
+        heading = 254.42,
+        scenario = "WORLD_HUMAN_HANG_OUT_STREET"
+    },
     {
         PedName = "a_m_y_ktown_01",
         PedType = "PED_TYPE_CIVMALE",
@@ -180,11 +203,11 @@ Config.Peds = {
     },
 
     { -- ammunation
-        PedName = "s_m_y_ammucity_01",
-        PedType = "PED_TYPE_CIVMALE",
-        pos = vector3(22.07, -1104.93, 28.82),
-        heading = 158.97,
-        scenario = "WORLD_HUMAN_HANG_OUT_STREET",
+      PedName = "s_m_y_ammucity_01",
+      PedType = "PED_TYPE_CIVMALE",
+      pos = vector3(22.07, -1104.93, 28.82),
+      heading = 158.97,
+      scenario = "WORLD_HUMAN_HANG_OUT_STREET",
     },
 
     -- Lost arme
@@ -195,8 +218,8 @@ Config.Peds = {
         heading = 140.0,
         scenario = "WORLD_HUMAN_SMOKING_POT_CLUBHOUSE",
         name = "Johnny Grey",
-        bubble = "Salut, Vielle charue , Allez prend ta bécanne et trace chercher ta caisse!!! ",
-        props = {{componentId = 1, drawableId = 0}},
+        bubble = "Salut, Vielle charue, allez prend ta bécanne et trace chercher ta caisse!!! ",
+        props = { { componentId = 1, drawableId = 0 } },
     },
 
     -- old format, need update
