@@ -65,11 +65,11 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
 end)
 -- #endregion get vehicles in garage
 
-local IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
+IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
     if not vehicleId or not aPlayer then
         return false
     end
-    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `parked` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `model`, `parked` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
     if not vehicle then
         return false
     end

@@ -180,7 +180,7 @@ Citizen.CreateThread(function()
             DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 
             if IsControlJustReleased(0, 38) -- E
-            and (GetGameTimer() - LastActionTimer) > 300 then
+                and (GetGameTimer() - LastActionTimer) > 300 then
                 CurrentActionEnabled = false
                 LastActionTimer = GetGameTimer()
                 local garage<const> = AccessibleGarages[CurrentGarageIndex]
@@ -197,3 +197,24 @@ Citizen.CreateThread(function()
         Wait(0)
     end
 end)
+
+
+function canTakeOutVehicle(garage)
+    if exports.ava_core:IsPlayerInVehicle() then return false end
+    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 0.7, false, true, false, false, false, 0, false) then
+        exports.ava_core:ShowNotification(GetString("garage_area_is_occupied"))
+        return false
+    end
+    return true
+end
+
+function takeOutVehicle(garage, model, id)
+    local vehicle = exports.ava_core:SpawnVehicle(model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
+    if vehicle then
+        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.Name)
+        SetVehRadioStation(vehicle, "OFF")
+        TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+
+        -- keys
+    end
+end
