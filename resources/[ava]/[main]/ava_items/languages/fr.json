@@ -14,6 +14,8 @@
     "ethylotest_high": "Elevé",
     "ethylotest_moderate": "Modéré",
     "ethylotest_low": "Faible",
+    "gpstracker": "Traceur GPS",
+    "gpstracker_cant_inside_vehicle": "Vous ne pouvez pas faire cela dans un véhicule",
     "repairkits_cant_inside_vehicle": "Vous ne pouvez pas faire cela dans un véhicule",
     "repairkits_repairkit_using": "Réparation du moteur",
     "repairkits_repairkit_done": "Moteur réparé",

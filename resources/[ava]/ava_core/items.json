@@ -29,8 +29,7 @@
     "bread": {
         "label": "Pain",
         "type": "food",
-        "weight": 100,
-        "limit": null
+        "weight": 100
     },
     "egochaser": {
         "label": "EgoChaser",
@@ -49,8 +48,7 @@
     "waterbottle": {
         "label": "Bouteille d'eau",
         "type": "liquid",
-        "weight": 330,
-        "limit": null
+        "weight": 330
     },
     "ecola": {
         "label": "eCola",
@@ -69,7 +67,6 @@
     "lockpick": {
         "label": "Lockpick",
         "weight": 50,
-        "limit": null,
         "closeInv": true,
         "noIcon": true
     },
@@ -82,31 +79,26 @@
     "woodenbox": {
         "label": "Caisse en bois",
         "weight": 500,
-        "limit": null,
         "noIcon": true
     },
     "winebox": {
         "label": "Caisse de vin",
         "weight": 500,
-        "limit": null,
         "noIcon": true
     },
     "luxurywinebox": {
         "label": "Caisse de grand cru",
         "weight": 500,
-        "limit": null,
         "noIcon": true
     },
     "champagnebox": {
         "label": "Caisse de champagne ",
         "weight": 500,
-        "limit": null,
         "noIcon": true
     },
     "grapejuicebox": {
         "label": "Caisse de jus de raisin",
         "weight": 500,
-        "limit": null,
         "noIcon": true
     },
     "wine": {
@@ -147,7 +139,6 @@
     "blowtorch": {
         "label": "Chalumeau",
         "weight": 1500,
-        "limit": null,
         "closeInv": true,
         "noIcon": true
     },
@@ -235,14 +226,12 @@
         "label": "Dolizou",
         "type": "medicine",
         "weight": 10,
-        "limit": null,
         "description": "Sous prescription du médecin",
         "noIcon": true
     },
     "bandage": {
         "label": "Bandage",
         "weight": 150,
-        "limit": null,
         "closeInv": true,
         "noIcon": true
     },
@@ -332,7 +321,7 @@
         "label": "Méthylamine",
         "type": "drug",
         "weight": 150,
-        "limit": 1,
+        "limit": 150,
         "noIcon": true
     },
     "methpseudophedrine": {
@@ -365,15 +354,13 @@
     "dildo": {
         "label": "Gode",
         "weight": 150,
-        "limit": 5,
         "closeInv": true,
         "description": "30cm de bonheur!",
         "noIcon": true
     },
-    "gpsbeacon": {
-        "label": "Balise GPS",
+    "gpstracker": {
+        "label": "Traceur GPS",
         "weight": 500,
-        "limit": 15,
         "closeInv": true,
         "description": "Nous on te suit partout!",
         "noIcon": true
@@ -381,140 +368,120 @@
     "bracelet_diamond": {
         "label": "Bracelet en diamant",
         "weight": 150,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "bracelet_emerald": {
         "label": "Bracelet en émeraude",
         "weight": 150,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "bracelet_gold": {
         "label": "Bracelet en or",
         "weight": 150,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "bracelet_ruby": {
         "label": "Bracelet en ruby",
         "weight": 150,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "bracelet_steel": {
         "label": "Bracelet en argent",
         "weight": 150,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "necklace_diamond": {
         "label": "Collier en diamant",
         "weight": 300,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "necklace_emerald": {
         "label": "Collier en émeraude",
         "weight": 300,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "necklace_gold": {
         "label": "Collier en or",
         "weight": 300,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "necklace_ruby": {
         "label": "Collier en ruby",
         "weight": 300,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "necklace_steel": {
         "label": "Collier en argent",
         "weight": 300,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "ring_diamond": {
         "label": "Bague en diamant",
         "weight": 50,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "ring_emerald": {
         "label": "Bague en émeraude",
         "weight": 50,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "ring_gold": {
         "label": "Bague en or",
         "weight": 50,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "ring_ruby": {
         "label": "Bague en ruby",
         "weight": 50,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "ring_steel": {
         "label": "Bague en argent",
         "weight": 50,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "watch_diamond": {
         "label": "Montre en diamant",
         "weight": 200,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "watch_emerald": {
         "label": "Montre en émeraude",
         "weight": 200,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "watch_gold": {
         "label": "Montre en or",
         "weight": 200,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "watch_ruby": {
         "label": "Montre en ruby",
         "weight": 200,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
     "watch_steel": {
         "label": "Montre en argent",
         "weight": 200,
-        "limit": null,
         "description": "",
         "noIcon": true
     },
