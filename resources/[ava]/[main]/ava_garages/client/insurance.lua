@@ -75,7 +75,7 @@ function OpenInsuranceMenu(insurance)
 
 
     RageUI.CloseAll()
-    RageUI.OpenTempMenu(GetString("pound_menu"), function(Items)
+    RageUI.OpenTempMenu(GetString("insurance_menu"), function(Items)
         for i = 1, #elements do
             local element = elements[i]
             if element.separator then

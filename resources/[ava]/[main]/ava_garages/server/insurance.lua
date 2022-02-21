@@ -25,11 +25,11 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getVehiclesAtInsuran
     local vehicles
     if #jobs > 0 then
         vehicles = MySQL.query.await(
-        "SELECT `id`, `job_name`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND (`citizenid` = :citizenid OR `job_name` IN (:jobs)) AND `garage`",
+        "SELECT `id`, `job_name`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
             { citizenid = aPlayer.citizenId, jobs = jobs })
     else
         vehicles = MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND `citizenid` = :citizenid AND `garage`",
+        "SELECT `id`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND `citizenid` = :citizenid",
             { citizenid = aPlayer.citizenId })
     end
 
