@@ -617,7 +617,7 @@ Config.Stores = {
         Marker = 36,
         VehicleShop = {
             VehicleType = 0,
-            -- Categories = {"compacts", "coupes", "motorcycles", "muscles", "offroad", "sedans", "sports", "sportsclassics", "super", "suvs", "vans", "industrial", "utility", "commercials", "emergency", },
+            -- Categories = {"compacts", "coupes", "motorcycles", "muscles", "offroads", "sedans", "sports", "sportsclassics", "super", "suvs", "vans", "industrial", "utility", "commercials", "emergency", },
             Inside = { Coord = vector3(-47.56, -1096.10, 26.42), Heading = 70.0, Distance = 15 },
             SpawnVehicle = { Coord = vector3(-31.02, -1090.68, 25.43), Heading = 330.5 },
             SpawnLargeVehicle = { Coord = vector3(-31.19, -1080.54, 26.14), Heading = 71.5 },
@@ -744,7 +744,7 @@ Config.ClothesStore = {
 }
 
 Config.VehicleShops = {
-    Vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {}, --
+    Vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {},
     DefaultStockValue = 5,
     SellMultiplier = 0.8,
 }

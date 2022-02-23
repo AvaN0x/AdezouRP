@@ -211,7 +211,7 @@ function OpenVehicleShopMenu()
                 if vehicleMakeName == "NULL" then
                     vehicleMakeName = GetString("vehicleshop_makename_not_found")
                 end
-                local stock<const> = vehicleStocks[vehicleName] or Config.VehicleShops.DefaultStockValue
+                local stock<const> = vehicleStocks[vehicleName] or vehicleData.quantity or Config.VehicleShops.DefaultStockValue
                 local element<const> = {
                     label = vehicleLabel ~= "NULL" and vehicleLabel or vehicleName,
                     vehicleName = vehicleName,
@@ -253,6 +253,8 @@ function OpenVehicleShopMenu()
                         end
                     end
                 end
+            elseif not IsModelInCdimage(vehicleHash) then
+                print("^1[AVA Vehicle Shop] " .. vehicleName .. " is not a valid model^0")
             end
         end
     end
