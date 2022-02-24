@@ -44,7 +44,7 @@ $(function () {
                     break;
             }
         } else if (event.data.action == "itemNotification") {
-            let elem = $('<div>' + (event.data.add ? '+' : '-') + event.data.count + ' ' + event.data.label + '</div>');
+            let elem = $('<div>' + (event.data.add ? '+' : '-') + event.data.count.toLocaleString('fr-FR') + ' ' + event.data.label + '</div>');
             $('#inventoryNotifications').append(elem);
 
             $(elem).delay(3000).fadeOut(1000, () => {
