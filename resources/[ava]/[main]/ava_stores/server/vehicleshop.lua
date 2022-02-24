@@ -25,9 +25,7 @@ local function GetVehicleModelStock(model, vehicleType)
         return VehicleStock[model].quantity
     end
     -- Get default value, the one from the vehicle if it has one
-    if vehicleType and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType]
-        and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model]
-        and Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model].quantity then
+    if Config.VehicleShops.Vehicles.vehiclestypes[vehicleType]?[model]?.quantity then
         return Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][model].quantity
     end
     -- or the main default value
@@ -48,7 +46,7 @@ local function SetVehicleModelStock(model, quantity)
 end
 
 AddEventHandler("ava_core:server:saveAll", function()
-    print("^2[SAVE VEHICLESHOP STOCKS]^0Saving vehicle shop stock quantities.")
+    print("^2[SAVE VEHICLESHOP STOCKS]^0 Saving vehicle shop stock quantities.")
     for model, data in pairs(VehicleStock) do
         if data.new then
             MySQL.query("INSERT INTO ava_vehicleshop (`model`, `quantity`) VALUES (@model, @quantity)", { ["@model"] = model, ["@quantity"] = data.quantity })
@@ -68,18 +66,14 @@ end)
 local playerPurchasingVehicle = {}
 exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseVehicle", function(source, vehicleType, vehicleModel, jobName)
     local src = source
-    -- Check args validity    
+    -- Check args validity
     if not vehicleType or not vehicleModel
-        -- Check if vehicle type exist
-        or not Config.VehicleShops.Vehicles.vehiclestypes[vehicleType]
         -- Check if vehicle model exist in vehicle type
-        or not Config.VehicleShops.Vehicles.vehiclestypes[vehicleType][vehicleModel]
+        or not Config.VehicleShops.Vehicles.vehiclestypes[vehicleType]?[vehicleModel]
         or (-- Check if the purchase is a job purchase, and if the player is allowed to buy it
-        jobName and not (IsPlayerAceAllowed(src, "job." .. jobName .. ".manage")
-            -- Check if the job as buyable vehicles
-            and Config.VehicleShops.Vehicles.jobs[jobName]
+            jobName and not (IsPlayerAceAllowed(src, "job." .. jobName .. ".manage")
             -- Check if the vehicle model is buyable by the job
-            and Config.VehicleShops.Vehicles.jobs[jobName][vehicleModel])
+            and Config.VehicleShops.Vehicles.jobs[jobName]?[vehicleModel])
         ) then
         return false
     end
