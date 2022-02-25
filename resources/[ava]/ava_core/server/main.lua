@@ -137,6 +137,7 @@ AVA.AddAce("group.superadmin", "command")
 -----------------------------------------
 
 AVA.SaveAll = function()
+    print("^6[AVA_CORE]^0 Starting save at ^3" .. os.date("%H:%M:%S") .. "^0.")
     AVA.Players.SaveAll()
     AVA.SaveAllJobsAccounts()
     TriggerEvent("ava_core:server:saveAll")
@@ -147,6 +148,7 @@ if AVAConfig.SaveTimeout then
         AVA.SaveAll()
         SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSaveAll)
     end
+
     SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSaveAll)
 end
 -------------------------------------
