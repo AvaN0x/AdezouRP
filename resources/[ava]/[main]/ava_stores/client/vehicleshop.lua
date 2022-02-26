@@ -204,7 +204,7 @@ function OpenVehicleShopMenu()
         if not vehicleData.hidden or jobsManaged then
             local vehicleHash<const> = GetHashKey(vehicleName)
             -- Is vehicle in the right category and is the vehicle model valid
-            if not shop.VehicleShop.Categories or availableCategories[vehicleData.category] and IsModelInCdimage(vehicleHash) then
+            if (not shop.VehicleShop.Categories or availableCategories[vehicleData.category]) and IsModelInCdimage(vehicleHash) then
                 -- Element
                 local vehicleLabel<const> = GetLabelText(GetDisplayNameFromVehicleModel(vehicleHash))
                 local vehicleMakeName = GetLabelText(GetMakeNameFromVehicleModel(vehicleHash))
