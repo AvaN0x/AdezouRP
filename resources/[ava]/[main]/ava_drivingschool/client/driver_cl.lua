@@ -271,10 +271,6 @@ AddEventHandler("onResourceStop", function(resource)
         if testVehicle ~= 0 then
             exports.ava_core:DeleteVehicle(testVehicle)
             testVehicle = 0
-            print("Deleted test vehicle")
-
-            -- FIXME DELETE THIS
-            SetEntityCoords(PlayerPedId(), AVAConfig.DrivingSchool.Coord)
         end
     end
 end)
