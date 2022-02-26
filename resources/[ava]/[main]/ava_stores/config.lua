@@ -697,4 +697,5 @@ Config.VehicleShops = {
     Vehicles = json.decode(LoadResourceFile(GetCurrentResourceName(), "vehicleshop.json") or "{}") or {},
     DefaultStockValue = 5,
     SellMultiplier = 0.8,
+    MaxVehiclePerPlayer = 3,
 }

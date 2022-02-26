@@ -49,11 +49,11 @@ AddEventHandler("ava_core:server:saveAll", function()
     print("^2[SAVE VEHICLESHOP STOCKS]^0 Saving vehicle shop stock quantities.")
     for model, data in pairs(VehicleStock) do
         if data.new then
-            MySQL.query("INSERT INTO ava_vehicleshop (`model`, `quantity`) VALUES (@model, @quantity)", { ["@model"] = model, ["@quantity"] = data.quantity })
+            MySQL.query("INSERT INTO ava_vehicleshop (`model`, `quantity`) VALUES (:model, :quantity)", { model = model, quantity = data.quantity })
             VehicleStock[model].new = nil
             VehicleStock[model].modified = nil
         elseif data.modified then
-            MySQL.query("UPDATE ava_vehicleshop SET `quantity` = @quantity WHERE `model` = @model", { ["@model"] = model, ["@quantity"] = data.quantity })
+            MySQL.query("UPDATE ava_vehicleshop SET `quantity` = :quantity WHERE `model` = :model", { model = model, quantity = data.quantity })
             VehicleStock[model].modified = nil
         end
     end
@@ -90,15 +90,33 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
     -- Remove the vehicle from stock while processing the purchase to avoid multiple people buying the same vehicle
     SetVehicleModelStock(vehicleModel, quantity - 1)
 
-    -- Check if the player has enough money
     local aPlayer = exports.ava_core:GetPlayer(src)
-    if not aPlayer then return end
+    if not aPlayer then 
+        -- Restore the vehicle stock
+        SetVehicleModelStock(vehicleModel, quantity)
+        return false 
+    end
+
+    -- Check if the player do not have already enough vehicles
+    if not jobName and Config.VehicleShops.MaxVehiclePerPlayer then 
+        local vehicleCount = MySQL.scalar.await("SELECT COUNT(*) AS `count` FROM ava_vehicles WHERE `citizenid` = :citizenid", { citizenid = aPlayer.citizenId })
+        if vehicleCount >= Config.VehicleShops.MaxVehiclePerPlayer then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicleshop_cannot_have_more_vehicles", Config.VehicleShops.MaxVehiclePerPlayer), 
+                nil, "CHAR_SIMEON", "Simeon Yetarian")
+
+            -- Restore the vehicle stock
+            SetVehicleModelStock(vehicleModel, quantity)
+            return false 
+        end
+    end
+
 
     local inventory = aPlayer.getInventory()
     if not inventory.canRemoveItem("cash", vehicleData.price) then
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_amount", exports.ava_core:FormatNumber(vehicleData.price)), 
+            nil, "CHAR_SIMEON", "Simeon Yetarian")
+        
         -- Restore the vehicle stock
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_amount", exports.ava_core:FormatNumber(vehicleData.price)), nil, "CHAR_SIMEON", "Simeon Yetarian")
-
         SetVehicleModelStock(vehicleModel, quantity)
         return false
     end
