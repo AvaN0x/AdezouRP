@@ -174,7 +174,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehic
     local vehicleId = entityState.state.id
     if not vehicleId then return 0 end
 
-    local vehiclePrice = GetVehiclePriceFromModel(vehicleType, GetEntityModel(vehicle))
+    local vehiclePrice, vehicleModel = GetVehiclePriceFromModel(vehicleType, GetEntityModel(vehicle))
     if not vehiclePrice then return 0 end
     local sellPrice = math.floor((vehiclePrice * Config.VehicleShops.SellMultiplier) + 0.5)
 
@@ -187,6 +187,8 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehic
         return 2
     end
     inventory.addItem("cash", sellPrice)
+    SetVehicleModelStock(vehicleModel, GetVehicleModelStock(vehicleModel, tostring(vehicleType)) + 1)
+
     exports.ava_garages:RemoveVehicle(vehicleId, aPlayer)
 
     Citizen.CreateThread(function()

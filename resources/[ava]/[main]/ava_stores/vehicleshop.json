@@ -2193,6 +2193,150 @@
                 "hidden": true,
                 "quantity": 5,
                 "price": 43728
+            },
+            "ambulance": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 52934
+            },
+            "fbi": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 72745
+            },
+            "fbi2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48515
+            },
+            "firetruk": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 52998
+            },
+            "lguard": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48025
+            },
+            "pbus": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 33487
+            },
+            "police": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 58988
+            },
+            "police2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 68487
+            },
+            "police3": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 62799
+            },
+            "police4": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 59169
+            },
+            "policeb": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 51782
+            },
+            "policet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48882
+            },
+            "pranger": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 47862
+            },
+            "riot": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 245693
+            },
+            "riot2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 351546
+            },
+            "sheriff": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 58806
+            },
+            "sheriff2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 49005
+            },
+            "emsbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 78408
+            },
+            "polbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 70349
+            },
+            "polbullet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 64251
+            },
+            "polgauntlet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 83701
+            },
+            "polvacca": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 65340
+            },
+            "umoracle": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 61166
+            },
+            "bcat": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 258988
             }
         },
         "1": {
