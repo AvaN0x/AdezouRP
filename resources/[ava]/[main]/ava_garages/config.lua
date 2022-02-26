@@ -15,6 +15,8 @@ AVAConfig.PoundPriceMultiplier = 0.12
 AVAConfig.PoundPriceMinimum = 1000
 AVAConfig.PoundPriceMaximum = 30000
 
+AVAConfig.VehicleKey = "U"
+AVAConfig.PlayerLockedInLockedVehicle = false
 
 AVAConfig.Garages = {
     -- #region garages

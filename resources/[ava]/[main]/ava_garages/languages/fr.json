@@ -33,5 +33,9 @@
     "pound_separator": "↓ %s ↓",
     "pound_do_not_have_driver_license": "Vous devez avoir votre permis de conduire pour sortir un véhicule de la fourrière.",
     "log_remove_vehicle_title": "Véhicule vendu par **%s**",
-    "log_remove_vehicle_description": "**Label : **`%s`\n**Propriétaire : **`%s`\n**Plaque : **`%s`\n**Modèle : **`%s`\n**Type : **`%s`\n**Data : **\n```json\n%s\n```"
+    "log_remove_vehicle_description": "**Label : **`%s`\n**Propriétaire : **`%s`\n**Plaque : **`%s`\n**Modèle : **`%s`\n**Type : **`%s`\n**Data : **\n```json\n%s\n```",
+    "vehicle_key": "Clé de véhicule",
+    "vehicle_keys_dont_have_keys": "Vous n'avez pas de clé de véhicule.",
+    "vehicle_keys_vehicle_locked": "Véhicule ~r~verrouillé~s~.",
+    "vehicle_keys_vehicle_unlocked": "Véhicule ~g~déverrouillé~s~."
 }

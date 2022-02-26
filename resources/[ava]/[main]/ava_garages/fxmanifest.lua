@@ -36,6 +36,7 @@ client_scripts {
     "client/garage.lua",
     "client/insurance.lua",
     "client/pound.lua",
+    "client/keys.lua",
 }
 
 server_scripts {
@@ -44,6 +45,7 @@ server_scripts {
     "server/main.lua",
     "server/pound.lua",
     "server/insurance.lua",
+    "server/keys.lua",
 }
 
 dependencies {

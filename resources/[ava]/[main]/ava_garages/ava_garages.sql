@@ -17,13 +17,26 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
     `healthdata` longtext NOT NULL,
     `vehicletype` tinyint NOT NULL COMMENT '0 = car\n1 = boat\n2 = plane\n3 = helicopter',
     `insurance_left` int DEFAULT 10,
-    `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
+    `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `purchase` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT PK_vehicles_id PRIMARY KEY (`id`),
+    CONSTRAINT UQ_vehicles_plate UNIQUE(`plate`),
     CONSTRAINT FK_vehicles_players_citizenid FOREIGN KEY(`citizenid`) REFERENCES `ava_players`(`id`) ON DELETE SET NULL,
     CONSTRAINT FK_vehicles_jobs_job_name FOREIGN KEY(`job_name`) REFERENCES `ava_jobs`(`name`) ON DELETE SET NULL,
     CONSTRAINT CHK_vehicles_ownertypes CHECK(`ownertype` >= 0 AND `ownertype` <= 1),
     CONSTRAINT CHK_vehicles_vehicletypes CHECK(`vehicletype` >= 0 AND `vehicletype` <= 3),
     CONSTRAINT CHK_vehicles_insurance_left CHECK(`insurance_left` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS `ava_vehicleskeys` (
+    `citizenid` int NOT NULL,
+    `vehicleid` int NOT NULL,
+    `keytype` tinyint NOT NULL DEFAULT 1 COMMENT '0 = owner\n1 = double (can make duplicate)\n2 = double (cannot make duplicate)',
+    `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT PK_vehicleskeys_id PRIMARY KEY (`citizenid`, `vehicleid`),
+    CONSTRAINT FK_vehicleskeys_players_citizenid FOREIGN KEY(`citizenid`) REFERENCES `ava_players`(`id`) ON DELETE CASCADE,
+    CONSTRAINT FK_vehicleskeys_vehicles_vehicleids FOREIGN KEY(`vehicleid`) REFERENCES `ava_vehicles`(`id`) ON DELETE CASCADE,
+    CONSTRAINT CHK_vehicleskeys_keytypes CHECK(`keytype` >= 0 AND `keytype` <= 2)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- CREATE TABLE `user_parking` (
@@ -36,16 +49,3 @@ CREATE TABLE IF NOT EXISTS `ava_vehicles` (
 --     PRIMARY KEY (`identifier`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Ignus","ignus","61CIR397","garage_pillbox","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Camtar","kamacho","61CHO397","garage_pillbox","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"GRANGeR","granger","61CaO397","garage_pillbox","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"ROOOOOOOSVELT","btype3","61CdO397","garage_pillbox","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"La komoda","komoda","21CIR397","garage_pillbox","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Volatus","volatus","11CIR397","garage_pillbox","{}", "{}",3, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"ItaliRSX","italirsx","62CIR397","garage_lspd","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Reeeeevière","reever","69CIR397","pound_davis","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,58,"Shinobi","shinobi","69CIR397","garage_lost","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `citizenid`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (0,59,"Bati 801","bati","69CLE397","garage_lost","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `job_name`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (1,"lspd","Police buffalo","police2","63CIR397","jobgarage_lspd","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `job_name`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (1,"lspd","Police buffalo 28","police2","63CIR327","pound_davis","{}", "{}",0, 1);
--- INSERT INTO `ava_vehicles`(`ownertype`, `job_name`, `label`, `model`, `plate`, `garage`, `modsdata`, `healthdata`, `vehicletype`, `parked`) VALUES (1,"winemaker","f620","f620","83PIR327","pound_davis","{}", "{}",0, 1);
