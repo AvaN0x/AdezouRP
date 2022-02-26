@@ -45,6 +45,7 @@ function getCountInService(jobName)
         "ID des joueurs : " .. debugString .. "\ncount value : `" .. count .. "`", 0xF2A53F)
     return count
 end
+
 exports("getCountInService", getCountInService)
 
 ---Check if a player is in service
@@ -54,6 +55,7 @@ exports("getCountInService", getCountInService)
 function isInService(source, jobName)
     return (CoreJobs[jobName] and jobsServices[jobName]) and jobsServices[jobName][tostring(source)] == true or false
 end
+
 exports("isInService", isInService)
 -- #endregion
 
@@ -349,7 +351,7 @@ end)
 -- buying --
 ------------
 -- #region buying
-RegisterNetEvent("ava_stores:server:buyItem", function(jobName, zoneName, item, count)
+RegisterNetEvent("ava_jobs:server:buyItem", function(jobName, zoneName, item, count)
     local src = source
     local job = Config.Jobs[jobName]
     local zone = job and job.BuyZones[zoneName]

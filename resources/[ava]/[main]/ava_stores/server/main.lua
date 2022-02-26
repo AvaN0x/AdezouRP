@@ -36,6 +36,7 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
                 if inventory.canRemoveItem("dirtycash", totalprice) then
                     inventory.removeItem("dirtycash", totalprice)
                     inventory.addItem(item, count)
+                    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count, "price:" .. price, "(dirtycash)" })
                 else
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_dirty"))
                 end
@@ -46,6 +47,7 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
 
                     inventory.removeItem("cash", totalprice)
                     inventory.addItem(item, count)
+                    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count, "price:" .. price })
                 else
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))
                 end
@@ -119,6 +121,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:carwash:checkMoney", functio
             local price = store.Carwash.Price or 80
             if inventory.canRemoveItem("cash", price) then
                 inventory.removeItem("cash", price)
+                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "carwash", price })
                 return true
             end
         end
@@ -168,6 +171,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payCloth
                 if inventory.canRemoveItem("cash", price) then
                     inventory.removeItem("cash", price)
                     aPlayer.setSkin(playerSkin)
+                    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "payClothes", price })
                     return true
                 end
             end

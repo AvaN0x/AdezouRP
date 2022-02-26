@@ -110,7 +110,7 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
                         end
                     end
                     deferrals.presentCard(
-                        [==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
+                    [==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
                         function(data, rawData)
                             deferrals.done("discord.gg/KRTKC6b")
                         end)
@@ -133,8 +133,8 @@ local function retrievePlayerData(id)
         return
     end
     local players = MySQL.query.await(
-        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `phone_number`, `metadata` FROM `ava_players` WHERE `id` = :id",
-        {id = id})
+    "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `phone_number`, `metadata` FROM `ava_players` WHERE `id` = :id",
+        { id = id })
     return players[1]
 end
 
@@ -194,10 +194,10 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     if not playerData then
         DropPlayer(src, GetString("log_player_error"))
         print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
-                  .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
+            .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
             "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-                .. " n'a pas pu se connecter car son personnage n'a pas été récupéré.", 0xFF5455)
+            .. " n'a pas pu se connecter car son personnage n'a pas été récupéré.", 0xFF5455)
         return
     end
 
@@ -230,10 +230,10 @@ local function setupPlayer(src, oldSource)
         if not member then
             DropPlayer(src, GetString("log_player_discord_error"))
             print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
-                      .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
+                .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
                 "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-                    .. " n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.", 0xFF5455)
+                .. " n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.", 0xFF5455)
             return
         end
 
@@ -253,19 +253,19 @@ local function setupPlayer(src, oldSource)
 
         -- check if the player already exist on database, we get the most last played and most recent found
         local citizenId = MySQL.scalar.await(
-            "SELECT id FROM `ava_players` WHERE `license` = :license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", {license = license})
+        "SELECT id FROM `ava_players` WHERE `license` = :license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", { license = license })
         if citizenId then
             -- we found a character, so we update its discord and name
             -- we also edit the last_played value of all other characters this player have
             MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
-                {license = license, discord = discord, name = playerName, id = citizenId})
+                { license = license, discord = discord, name = playerName, id = citizenId })
             -- we edit the last_played value of all other characters this player have
             MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
-                {license = license, id = citizenId})
+                { license = license, id = citizenId })
         else
             -- we haven't found a character, so we create a new one
             citizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
-                {license = license, discord = discord, name = playerName})
+                { license = license, discord = discord, name = playerName })
         end
 
         -- add principal to the user
@@ -280,7 +280,7 @@ local function setupPlayer(src, oldSource)
         for i = 1, #AVA.Commands.SuggestionList, 1 do
             local command = AVA.Commands.SuggestionList[i]
             if IsPlayerAceAllowed(src, ("command.%s"):format(command.name)) then
-                table.insert(suggestions, {name = "/" .. command.name, help = command.help or "", params = command.params})
+                table.insert(suggestions, { name = "/" .. command.name, help = command.help or "", params = command.params })
             end
         end
         TriggerClientEvent("chat:addSuggestions", src, suggestions)
@@ -351,9 +351,9 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
             -- TODO: generate phone number
         end
 
-        dprint(json.encode(aPlayer.character, {indent = true}))
+        dprint(json.encode(aPlayer.character, { indent = true }))
         MySQL.update.await("UPDATE `ava_players` SET `character` = :character WHERE `license` = :license AND `id` = :id",
-            {character = json.encode(aPlayer.character), license = aPlayer.identifiers.license, id = aPlayer.citizenId})
+            { character = json.encode(aPlayer.character), license = aPlayer.identifiers.license, id = aPlayer.citizenId })
         print("^2[SAVE CHARACTER] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
         aPlayer.save()
 
@@ -364,7 +364,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
-                  .. aPlayer.citizenId .. ")")
+            .. aPlayer.citizenId .. ")")
         print("\tCharacter", json.encode(character))
         print("\tBirthdate valid", character and AVA.Utils.IsDateValid(character.birthdate) or "false")
         print("\tMugshot exist", character.mugshot and character.mugshot ~= "" and "true" or "false")
@@ -386,7 +386,7 @@ AddEventHandler("playerDropped", function(reason)
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
             "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. aPlayer.name .. "`)" .. " se déconnecte. (citizenId: "
-                .. aPlayer.citizenId .. ", id: " .. src .. ")\nRaison : " .. reason, 0xFF5455)
+            .. aPlayer.citizenId .. ", id: " .. src .. ")\nRaison : " .. reason, 0xFF5455)
 
         aPlayer.logout(true)
         Citizen.Await(aPlayer.save())
@@ -471,6 +471,7 @@ AVA.Players.UseItem = function(src, itemName)
             local cfgItem = AVAConfig.Items[itemName]
             if cfgItem then
                 AVA.UsableItems[itemName](aPlayer.src, aPlayer, cfgItem)
+                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "use_item", itemName })
             end
         end
     end
@@ -491,7 +492,7 @@ end)
 
 local function UpdateBanList()
     MySQL.query(
-        "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC",
+    "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC",
         {}, function(data)
             AVA.Players.BanList = (data and data[1]) and data or {}
         end)
@@ -543,7 +544,7 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
         end
 
         MySQL.insert(
-            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (:license, :discord, :steam, :ip, :xbl, :live, :name, :reason, :staff)",
+        "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (:license, :discord, :steam, :ip, :xbl, :live, :name, :reason, :staff)",
             {
                 license = license or "not_found",
                 discord = discord or "not_found",
@@ -561,7 +562,7 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 0xFF0000)
         return discordMessage
     end
-end, GetString("ban_help"), {{name = "player", help = GetString("player_id")}})
+end, GetString("ban_help"), { { name = "player", help = GetString("player_id") } })
 
 -- TODO put as a command or something
 -- AVA.Commands.RegisterCommand("unban", "superadmin", function(source, args)
@@ -641,7 +642,7 @@ AVA.Players.Save = function(aPlayer)
         TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
         MySQL.update(
-            "UPDATE `ava_players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
+        "UPDATE `ava_players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
             {
                 position = json.encode(aPlayer.position),
                 skin = json.encode(aPlayer.skin),
@@ -673,7 +674,7 @@ AVA.Players.SavePlayerJobs = function(aPlayer)
         TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
         MySQL.update("UPDATE `ava_players` SET `jobs` = :jobs WHERE `license` = :license AND `id` = :id",
-            {jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId}, function(result)
+            { jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId }, function(result)
                 print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
                 TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
                 p:resolve()
@@ -697,6 +698,7 @@ AVA.Players.SaveAll = function()
 
     Citizen.Await(promise.all(promises))
     print("^2[SAVE PLAYERS] ^0 Every player has been saved.")
+    TriggerEvent("ava_logs:server:log", "Every player has been saved.")
 end
 exports("SaveAllPlayers", AVA.Players.SaveAll)
 
@@ -722,7 +724,7 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
 
         -- we check if the citizenId is owned by the license
         local citizenExist = MySQL.scalar.await("SELECT 1 FROM `ava_players` WHERE `license` = :license AND `id` = :id LIMIT 0, 1",
-            {license = license, id = newCitizenId})
+            { license = license, id = newCitizenId })
 
         if not citizenExist then
             dprint("citizen " .. tostring(newCitizenId) .. " does not exist for " .. tostring(license))
@@ -736,22 +738,22 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         -- we update the discord id and name of the new character
         -- and we also edit the last_played value of all other characters this player have
         MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
-            {license = license, discord = discord, name = playerName, id = newCitizenId})
+            { license = license, discord = discord, name = playerName, id = newCitizenId })
         MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
-            {license = license, id = newCitizenId})
+            { license = license, id = newCitizenId })
 
         -- local playerData = retrievePlayerData(newCitizenId)
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, newCitizenId)
     end
     return
-end, GetString("change_char_help"), {{name = "char", help = GetString("char_id")}})
+end, GetString("change_char_help"), { { name = "char", help = GetString("char_id") } })
 
 AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         -- check if player can create a new char
-        local charsCount = MySQL.scalar.await("SELECT COUNT(1) FROM `ava_players` WHERE `license` = :license", {license = aPlayer.identifiers.license})
+        local charsCount = MySQL.scalar.await("SELECT COUNT(1) FROM `ava_players` WHERE `license` = :license", { license = aPlayer.identifiers.license })
         if charsCount >= AVAConfig.MaxChars then
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", GetString("chars"), nil, nil,
                 "ava_core_logo")
@@ -763,12 +765,12 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
 
         -- we edit the last_played value of the character that the player was using
         MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` = :id AND `last_played` <> 0",
-            {license = license, id = citizenId})
+            { license = license, id = citizenId })
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player
         local newCitizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
-            {license = license, discord = discord, name = playerName})
+            { license = license, discord = discord, name = playerName })
 
         if not newCitizenId then
             dprint("could not insert a new char", newCitizenId, license, discord, playerName)
@@ -786,7 +788,7 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         local chars = MySQL.query.await("SELECT `id`, `character`, `last_played` FROM `ava_players` WHERE `license` = :license ORDER BY `id` DESC",
-            {license = aPlayer.identifiers.license})
+            { license = aPlayer.identifiers.license })
         if chars[1] then
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
@@ -883,7 +885,7 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
         elseif ammoRemoved > item.quantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
-                    aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 0xEF5859)
+                aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 0xEF5859)
             TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), item.quantity)
 
         elseif ammoRemoved <= item.quantity then

@@ -66,6 +66,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:payVehicleInsurance"
     inventory.removeItem("cash", price)
     MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked, `insurance_left` = `insurance_left` - 1 WHERE `id` = :id",
         { parked = true, id = vehicleId })
+    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "pay_insurance", vehicleId, "for", price })
 
     return true
 end)

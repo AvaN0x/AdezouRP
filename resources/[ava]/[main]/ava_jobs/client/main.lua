@@ -853,7 +853,7 @@ function BuyZone(job)
                             if count > element.maxCanTake then
                                 exports.ava_core:ShowNotification(GetString("buy_cant_carry"))
                             else
-                                TriggerServerEvent("ava_stores:server:buyItem", CurrentJobName, CurrentZoneName, element.name, count)
+                                TriggerServerEvent("ava_jobs:server:buyItem", CurrentJobName, CurrentZoneName, element.name, count)
                                 RageUI.CloseAllInternal()
                             end
                         else

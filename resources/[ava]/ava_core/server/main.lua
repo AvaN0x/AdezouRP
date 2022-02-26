@@ -137,6 +137,7 @@ AVA.AddAce("group.superadmin", "command")
 -----------------------------------------
 
 AVA.SaveAll = function()
+    TriggerEvent("ava_logs:server:log", "Starting save")
     print("^6[AVA_CORE]^0 Starting save at ^3" .. os.date("%H:%M:%S") .. "^0.")
     AVA.Players.SaveAll()
     AVA.SaveAllJobsAccounts()

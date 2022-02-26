@@ -230,6 +230,7 @@ RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehic
 
     SetupSpawnedVehicle(src, vehicleNet, vehicle, vehicleId)
     MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked WHERE `id` = :id", { id = vehicleId, parked = false })
+    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "spawn_vehicle", vehicleId })
 end)
 -- #endregion take out vehicle
 
@@ -264,6 +265,7 @@ RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleN
     if vehicleParked then
         MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage, `healthdata` = :healthdata WHERE `id` = :id",
             { id = vehicleId, garage = garageName, parked = true, healthdata = healthData })
+        TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "park_vehicle", vehicleId })
 
         for i = -1, 6 do
             local ped = GetPedInVehicleSeat(vehicle, i)

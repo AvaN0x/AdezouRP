@@ -16,6 +16,7 @@ RegisterNetEvent("bank:deposit", function(amount)
     else
         inventory.removeItem("cash", amount)
         aPlayer.addAccountBalance("bank", amount)
+        TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "deposit", amount })
     end
 end)
 
@@ -35,6 +36,7 @@ RegisterNetEvent("bank:withdraw", function(amount)
     else
         aPlayer.removeAccountBalance("bank", amount)
         inventory.addItem("cash", amount)
+        TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "withdraw", amount })
     end
 end)
 
@@ -66,8 +68,8 @@ RegisterNetEvent("bank:transfer", function(target, amount)
                 TriggerClientEvent("ava_core:client:ShowNotification", aTargetPlayer.src, nil, nil, "CHAR_BANK_FLEECA", "Vous avez reçu",
                     ("$~g~%s~s~"):format(amount), nil, "CHAR_BANK_FLEECA")
                 TriggerClientEvent("bank:result", src, "success", "Transfert effectué.")
+                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "transfer to", aTargetPlayer.citizenId, amount })
             end
         end
     end
 end)
-

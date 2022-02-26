@@ -56,7 +56,7 @@ Citizen.CreateThread(function()
                 dprint(("Add missing JobsAccounts for ^5%s^0"):format(jobName))
                 AVA.JobsAccounts[jobName] = CreateJobAccounts(jobName)
                 MySQL.insert("INSERT INTO `ava_jobs` (`name`, `accounts`, `salaries`) VALUES (:name, :accounts, :salaries)",
-                    {name = jobName, accounts = "[]", salaries = "{}"}, function()
+                    { name = jobName, accounts = "[]", salaries = "{}" }, function()
                         dprint(("Missing JobsAccounts for ^5%s^0 added to database"):format(jobName))
                     end)
             end
@@ -108,13 +108,14 @@ AVA.SaveAllJobsAccounts = function()
     end
     Citizen.Await(promise.all(promises))
     print("^2[SAVE JOBS ACCOUNTS]^0 Every jobs accounts has been saved.")
+    TriggerEvent("ava_logs:server:log", "Every jobs accounts has been saved.")
 end
 
 AVA.SaveJobAccounts = function(aJobAccounts)
     if aJobAccounts then
         local p = promise.new()
         MySQL.update("UPDATE `ava_jobs` SET `accounts` = :accounts WHERE `name` = :name",
-            {name = aJobAccounts.name, accounts = json.encode(aJobAccounts.getAccounts())}, function(result)
+            { name = aJobAccounts.name, accounts = json.encode(aJobAccounts.getAccounts()) }, function(result)
                 aJobAccounts.modified = false
                 print("^2[SAVE JOB ACCOUNTS] ^0" .. aJobAccounts.name)
                 p:resolve()
@@ -172,7 +173,7 @@ AVA.GetAllJobGrades = function(jobName)
         for i = 1, #cfgJob.grades do
             local grade = cfgJob.grades[i]
             gradeCount = gradeCount + 1
-            grades[gradeCount] = {label = grade.label, name = grade.name, canManage = grade.manage, salary = grade.salary}
+            grades[gradeCount] = { label = grade.label, name = grade.name, canManage = grade.manage, salary = grade.salary }
         end
     end
     return grades
@@ -197,7 +198,7 @@ AVA.SetGradeSalary = function(jobName, gradeName, salary)
                     end
                     CustomSalaries[jobName][gradeName] = salary
                     MySQL.update.await("UPDATE `ava_jobs` SET `salaries` = :salaries WHERE `name` = :name",
-                        {name = jobName, salaries = json.encode(CustomSalaries[jobName])})
+                        { name = jobName, salaries = json.encode(CustomSalaries[jobName]) })
                     dprint(("Change salary to ^5%d^0 for ^5%s.%s^0 from SetGradeSalary"):format(salary, jobName, gradeName))
                     return true
                 end
@@ -261,5 +262,6 @@ if AVAConfig.PayCheckTimeout then
         print("^4[PAY CHECK] ^0Every paycheck has been delivered.")
         SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)
     end
+
     SetTimeout(AVAConfig.PayCheckTimeout * 60 * 1000, timeoutPayCheck)
 end
