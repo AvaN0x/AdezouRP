@@ -634,8 +634,38 @@ Config.Stores = {
         SellVehicle = { VehicleType = 0 },
         HelpText = GetString("press_open_sell_vehicle"),
     },
-
     -- #endregion vehicleshops
+
+    -- #region lscustoms
+    LSCustoms = {
+        Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
+        Name = "Los Santos Customs",
+        Coord = vector3(-1150.34, -2011.13, 12.25),
+        Size = { x = 2.0, y = 2.0, z = 2.0 },
+        Color = { r = 201, g = 24, b = 30, a = 128 },
+        Marker = 27,
+        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+        LSCustoms = {
+            DirtyCash = false,
+            -- Elements = { "engine", "colors", "mods" }
+        },
+        HelpText = GetString("press_open_lscustoms"),
+    },
+    BeekersCustom = {
+        Title = { textureName = "shopui_title_carmod2", textureDirectory = "shopui_title_carmod2" }, -- Beeker's GARAGE & PARTS
+        Name = "Beeker's GARAGE & PARTS",
+        Coord = vector3(-1150.34, -2011.13, 12.25),
+        Size = { x = 2.0, y = 2.0, z = 2.0 },
+        Color = { r = 201, g = 24, b = 30, a = 128 },
+        Marker = 27,
+        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+        LSCustoms = {
+            DirtyCash = false,
+            -- Elements = { "engine", "colors", "mods" }
+        },
+        HelpText = GetString("press_open_lscustoms"),
+    },
+    -- #endregion lscustoms
 }
 
 Config.ClothesStore = {
@@ -652,7 +682,7 @@ Config.ClothesStore = {
         },
         -- All clothes
         [2] = {
-            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61, leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0},
+            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61, leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0 },
             [1] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15, leg_txd = 0, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0 },
         },
         -- All clothes and head

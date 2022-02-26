@@ -4,6 +4,8 @@
 -------------------------------------------
 local Items = exports.ava_core:GetItemsData()
 
+-- TODO loop through each stores in config and remove useless data for server
+
 RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
     local src = source
     local store = Config.Stores[storeName]
@@ -141,11 +143,11 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:checkMon
     return false
 end)
 
-exports.ava_core:RegisterCommand({"clothesmenu", "cm"}, "admin", function(source, args)
+exports.ava_core:RegisterCommand({ "clothesmenu", "cm" }, "admin", function(source, args)
     TriggerClientEvent("ava_stores:client:OpenClothesMenu", source)
 end, GetString("clothesmenu_help"))
 
-exports.ava_core:RegisterCommand({"outfitsmenu", "om"}, "admin", function(source, args)
+exports.ava_core:RegisterCommand({ "outfitsmenu", "om" }, "admin", function(source, args)
     TriggerClientEvent("ava_stores:client:OpenPlayerOutfitsMenu", source)
 end, GetString("outfitsmenu_help"))
 
@@ -173,4 +175,3 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payCloth
     end
     return false
 end)
-

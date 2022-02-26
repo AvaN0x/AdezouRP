@@ -16,7 +16,9 @@ files {
 
 shared_scripts {
     "@ava_core/shared/language.lua",
-    "shared/vehicleshop.lua"
+    "config.lua",
+    "shared/lscustoms.lua",
+    "shared/vehicleshop.lua",
 }
 
 client_scripts {
@@ -34,19 +36,19 @@ client_scripts {
     "@RageUI/src/items/Items.lua",
     "@RageUI/src/items/Panels.lua",
 
-    "config.lua",
     "client/main.lua",
     "client/clothes_stores.lua",
     "client/player_outfits.lua",
     "client/vehicleshop.lua",
+    "client/lscustoms.lua",
 }
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
-    "config.lua",
     "server/main.lua",
     "server/player_outfits.lua",
-    "server/vehicleshop.lua"
+    "server/vehicleshop.lua",
+    "server/lscustoms.lua",
 }
 
 dependencies {

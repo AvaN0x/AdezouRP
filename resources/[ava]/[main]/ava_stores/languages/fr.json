@@ -298,5 +298,6 @@
     "vehicleshop_confirm_purchase_secondline": "%s à %s",
     "vehicleshop_confirm_job_purchase_title": "Achat de véhicule d'entreprise",
     "vehicleshop_confirm_job_purchase_firstline": "Voulez vous vraiment acheter ce véhicule d'entreprise ?",
-    "vehicleshop_confirm_job_purchase_secondline": "%s à %s"
+    "vehicleshop_confirm_job_purchase_secondline": "%s à %s",
+    "press_open_lscustoms": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu Los Santos Customs"
 }

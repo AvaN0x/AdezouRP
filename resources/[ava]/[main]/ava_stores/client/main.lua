@@ -192,6 +192,8 @@ Citizen.CreateThread(function()
                     OpenVehicleShopMenu()
                 elseif store.SellVehicle then
                     OpenSellZoneMenu()
+                elseif store.LSCustoms then
+                    OpenLSCustomsMenu()
                 end
 
             end
