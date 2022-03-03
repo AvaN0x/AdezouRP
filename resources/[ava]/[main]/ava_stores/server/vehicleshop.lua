@@ -167,9 +167,11 @@ RegisterNetEvent("ava_stores:server:vehicleshop:purchasedVehicle", function(vehi
     if purchaseData.jobName then
         -- Job purchase
         vehicleId = exports.ava_garages:AddJobVehicle(purchaseData.jobName, purchaseData.vehicleType, purchaseData.vehicleModel, label:sub(0, 50), plate, json.encode(modsData))
+        exports.ava_garages:GivePlayerVehicleKey(src, purchaseData.citizenId, vehicleId, 1)
     else
         -- Player purchase
         vehicleId = exports.ava_garages:AddPlayerVehicle(purchaseData.citizenId, purchaseData.vehicleType, purchaseData.vehicleModel, label:sub(0, 50), plate, json.encode(modsData))
+        exports.ava_garages:GivePlayerVehicleKey(src, purchaseData.citizenId, vehicleId, 0)
     end
 
     playerPurchasingVehicle[tostring(src)] = nil
@@ -209,6 +211,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehic
     SetVehicleModelStock(vehicleModel, GetVehicleModelStock(vehicleModel, tostring(vehicleType)) + 1)
     TriggerEvent("ava_logs:server:log", {aPlayer.citizenId, "sell", vehicleModel, vehicleId, "at", sellPrice})
 
+    exports.ava_garages:RemoveKeysForVehicle(vehicleId)
     exports.ava_garages:RemoveVehicle(vehicleId, aPlayer)
 
     Citizen.CreateThread(function()

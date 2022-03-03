@@ -73,7 +73,7 @@ IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, Is
     if not vehicle then
         return false
     end
-    if (vehicle.ownertype == 0 and (vehicle.citizenid == aPlayer.citizenId or (IsCommonGarage and garageName == vehicle.garage)))
+    if (vehicle.ownertype == 0 and (tonumber(vehicle.citizenid) == tonumber(aPlayer.citizenId) or (IsCommonGarage and garageName == vehicle.garage)))
         or (vehicle.ownertype == 1 and IsPlayerAceAllowed(aPlayer.src, "ace.job." .. vehicle.job_name .. ".main")
             and (not checkCanManage or IsPlayerAceAllowed(aPlayer.src, "job." .. vehicle.job_name .. ".manage"))) then
         return true, vehicle
@@ -229,6 +229,12 @@ RegisterNetEvent("ava_garages:server:spawnedVehicle", function(vehicleNet, vehic
     end
 
     SetupSpawnedVehicle(src, vehicleNet, vehicle, vehicleId)
+    if vehicleData.ownertype == 1 then
+        GivePlayerVehicleKeyIfLower(src, aPlayer.citizenId, vehicleId, 1)
+    else
+        GivePlayerVehicleKeyIfLower(src, aPlayer.citizenId, vehicleId, 2)
+    end
+
     MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked WHERE `id` = :id", { id = vehicleId, parked = false })
     TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "spawn_vehicle", vehicleId })
 end)

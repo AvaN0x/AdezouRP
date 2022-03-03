@@ -247,7 +247,5 @@ function takeOutVehicle(garage, model, id)
         TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.Name)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-
-        -- keys
     end
 end

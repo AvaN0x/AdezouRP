@@ -2,7 +2,12 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local playerKeys = {}
+local playersKeys = {}
+
+Citizen.CreateThread(function()
+    print("[AVA] Vehicle keys doubles deleted")
+    MySQL.query("DELETE FROM `ava_vehicleskeys` WHERE `keytype` > 0")
+end)
 
 ---Get player keys
 ---@param src integer
@@ -10,21 +15,21 @@ local playerKeys = {}
 ---@return table
 local function GetPlayerKeys(src, aPlayer)
     src = tostring(src)
-    if not playerKeys[src] then
+    if not playersKeys[src] then
         if not aPlayer then
             aPlayer = exports.ava_core:GetPlayer(src)
         end
 
-        playerKeys[src] = {}
+        playersKeys[src] = {}
         if aPlayer then
             local keys = MySQL.query.await("SELECT `vehicleid`, `keytype` FROM `ava_vehicleskeys` WHERE `citizenid` = :citizenid", { citizenid = aPlayer.citizenId })
             for i = 1, #keys do
-                playerKeys[src][tostring(keys[i].vehicleid)] = { type = keys[i].keytype }
+                playersKeys[src][tostring(keys[i].vehicleid)] = { type = keys[i].keytype }
             end
         end
     end
 
-    return playerKeys[src]
+    return playersKeys[src]
 end
 
 local function HasKey(src, vehicleId)
@@ -54,7 +59,46 @@ end)
 
 AddEventHandler("playerDropped", function(reason)
     local src = source
-    if playerKeys[tostring(src)] then
-        playerKeys[tostring(src)] = nil
+    if playersKeys[tostring(src)] then
+        playersKeys[tostring(src)] = nil
     end
 end)
+
+
+GivePlayerVehicleKey = function(src, citizenId, vehicleId, keyType)
+    src = tostring(src)
+    local playerKeys = GetPlayerKeys(src)
+    if playerKeys[tostring(vehicleId)] then
+        playersKeys[src][tostring(vehicleId)].type = keyType
+        MySQL.query("UPDATE `ava_vehicleskeys` SET `keytype` = :keytype WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId, keytype = keyType })
+    else
+        playersKeys[src][tostring(vehicleId)] = { type = keyType }
+        MySQL.query("INSERT INTO `ava_vehicleskeys` (`citizenid`, `vehicleid`, `keytype`) VALUES (:citizenid, :vehicleid, :keytype)", { citizenid = citizenId, vehicleid = vehicleId, keytype = keyType })
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_received_key"))
+    end
+end
+exports("GivePlayerVehicleKey", GivePlayerVehicleKey)
+
+GivePlayerVehicleKeyIfLower = function(src, citizenId, vehicleId, keyType)
+    src = tostring(src)
+    local playerKeys = GetPlayerKeys(src)
+    if not playerKeys[tostring(vehicleId)] or keyType < playerKeys[tostring(vehicleId)].type then
+        GivePlayerVehicleKey(src, citizenId, vehicleId, keyType)
+    end
+end
+exports("GivePlayerVehicleKeyIfLower", GivePlayerVehicleKeyIfLower)
+
+RemovePlayerVehicleKey = function(src, citizenId, vehicleId)
+    src = tostring(src)
+    local playerKeys = GetPlayerKeys(src)
+    if playerKeys[tostring(vehicleId)] then
+        playersKeys[src][tostring(vehicleId)] = nil
+        MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId })
+    end
+end
+exports("RemovePlayerVehicleKey", RemovePlayerVehicleKey)
+
+local RemoveKeysForVehicle = function(vehicleId)
+    MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `vehicleid` = :vehicleid", { vehicleid = vehicleId })
+end
+exports("RemoveKeysForVehicle", RemoveKeysForVehicle)

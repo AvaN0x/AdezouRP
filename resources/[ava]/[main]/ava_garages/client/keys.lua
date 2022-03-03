@@ -19,6 +19,13 @@ RegisterCommand("vehicleKey", function()
         LastActionTimer = GetGameTimer()
         exports.ava_core:NetworkRequestControlOfEntity(vehicle)
         TriggerServerEvent("ava_garages:server:tryToLockVehicle", VehToNet(vehicle))
+
+        -- Player animation
+        local animDirectory, animName = "anim@mp_player_intmenu@key_fob@", "fob_click_fp"
+        RequestAnimDict(animDirectory)
+        while not HasAnimDictLoaded(animDirectory) do Wait(0) end
+        TaskPlayAnim(PlayerPedId(), animDirectory, animName, 8.0, 8.0, -1, 48, 1, false, false, false)
+        RemoveAnimDict(animDirectory)
     end
 end)
 
