@@ -36,6 +36,9 @@
     "log_remove_vehicle_description": "**Label : **`%s`\n**Propriétaire : **`%s`\n**Plaque : **`%s`\n**Modèle : **`%s`\n**Type : **`%s`\n**Data : **\n```json\n%s\n```",
     "vehicle_key": "Clé de véhicule",
     "vehicle_keys_received_key": "Vous avez reçu les clés d'un véhicule.",
+    "vehicle_keys_lost_key": "Vous avez perdu les clés d'un véhicule.",
+    "vehicle_keys_you_gave_double": "Vous avez donné le double des clés d'un véhicule.",
+    "vehicle_keys_you_gave_ownership": "Vous avez donné les clés d'un véhicule.",
     "vehicle_keys_dont_have_keys": "Vous n'avez pas de clé de véhicule.",
     "vehicle_keys_vehicle_locked": "Véhicule ~r~verrouillé~s~.",
     "vehicle_keys_vehicle_unlocked": "Véhicule ~g~déverrouillé~s~."

@@ -36,10 +36,6 @@ local function HasKey(src, vehicleId)
     return GetPlayerKeys(src)[tostring(vehicleId)] ~= nil
 end
 
-exports.ava_core:RegisterServerCallback("ava_garages:server:getPlayerKeys", function(source)
-    return GetPlayerKeys(source)
-end)
-
 RegisterNetEvent("ava_garages:server:tryToLockVehicle", function(vehNet)
     local src = source
     local vehicle = NetworkGetEntityFromNetworkId(vehNet)
@@ -99,6 +95,69 @@ end
 exports("RemovePlayerVehicleKey", RemovePlayerVehicleKey)
 
 local RemoveKeysForVehicle = function(vehicleId)
+    for src, playerKeys in pairs(playersKeys) do
+        if playerKeys[tostring(vehicleId)] then
+            playersKeys[src][tostring(vehicleId)] = nil
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_lost_key"))
+        end
+    end
     MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `vehicleid` = :vehicleid", { vehicleid = vehicleId })
 end
 exports("RemoveKeysForVehicle", RemoveKeysForVehicle)
+
+
+-- Events
+
+exports.ava_core:RegisterServerCallback("ava_garages:server:getPlayerKeys", function(source)
+    return GetPlayerKeys(source)
+end)
+
+exports.ava_core:RegisterServerCallback("ava_garages:server:getPlayerDisplayableKeys", function(src)
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if aPlayer then
+        return MySQL.query.await("SELECT `ava_vehicleskeys`.`vehicleid`, `keytype`, `plate`, `label` FROM `ava_vehicleskeys` JOIN `ava_vehicles` ON `ava_vehicleskeys`.`vehicleid` = `ava_vehicles`.`id` WHERE `ava_vehicleskeys`.`citizenid` = :citizenid", { citizenid = aPlayer.citizenId })
+    end
+    return nil
+end)
+
+RegisterNetEvent("ava_garages:server:destroyKey", function(id)
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return end
+
+    RemovePlayerVehicleKey(src, aPlayer.citizenId, vehicleId)
+end)
+
+RegisterNetEvent("ava_garages:server:giveDouble", function(targetId, id)
+    print("ava_garages:server:giveDouble")
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return end
+
+    local playerKeys = GetPlayerKeys(src, aPlayer)
+    if not playerKeys[tostring(id)] or playerKeys[tostring(id)].type > 1 then return end
+
+    local aTarget = exports.ava_core:GetPlayer(targetId)
+    if not aTarget then return end
+
+    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_you_gave_double"))
+    GivePlayerVehicleKey(targetId, aTarget.citizenId, id, 2)
+end)
+
+RegisterNetEvent("ava_garages:server:giveOwnerShip", function(targetId, id)
+    print("ava_garages:server:giveOwnerShip")
+    local src = source
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return end
+
+    local playerKeys = GetPlayerKeys(src, aPlayer)
+    if not playerKeys[tostring(id)] or playerKeys[tostring(id)].type ~= 0 then return end
+
+    local aTarget = exports.ava_core:GetPlayer(targetId)
+    if not aTarget then return end
+
+    MySQL.update.await("UPDATE `ava_vehicles` SET `citizenid` = :citizenid WHERE `id` = :id", { id = id, citizenid = aTarget.citizenId })
+    RemoveKeysForVehicle(id)
+    GivePlayerVehicleKey(targetId, aTarget.citizenId, id, 0)
+    TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_you_gave_ownership"))
+end)
