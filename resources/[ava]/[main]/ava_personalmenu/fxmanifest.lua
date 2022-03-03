@@ -8,7 +8,7 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json"}
+files { "languages/**.json" }
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -29,6 +29,7 @@ client_scripts {
     "client/main.lua",
     "client/wallet.lua",
     "client/bills.lua",
+    "client/keys.lua",
     "client/miscs.lua",
     "client/vehicle_management.lua",
     "client/speedlimiter.lua",
@@ -42,9 +43,8 @@ client_scripts {
     "client/admin/dev/main.lua",
 }
 
-server_scripts {"server/main.lua", "server/admin/main.lua", "server/admin/commands.lua", "server/admin/spectate.lua"}
+server_scripts { "server/main.lua", "server/admin/main.lua", "server/admin/commands.lua", "server/admin/spectate.lua" }
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts { "@ava_core/shared/language.lua" }
 
-dependencies {"ava_core"}
-
+dependencies { "ava_core" }

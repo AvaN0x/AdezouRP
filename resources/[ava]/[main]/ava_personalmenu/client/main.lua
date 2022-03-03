@@ -11,7 +11,7 @@ playerVehicleData = {}
 playerLicenses = {}
 
 isInMenuLoop = false
-local DoorsToCheck<const> = {{4, "hood"}, {5, "trunk"}, {0, "front_left"}, {1, "front_right"}, {2, "back_left"}, {3, "back_right"}}
+local DoorsToCheck<const> = { { 4, "hood" }, { 5, "trunk" }, { 0, "front_left" }, { 1, "front_right" }, { 2, "back_left" }, { 3, "back_right" } }
 
 MainPersonalMenu = RageUI.CreateMenu("", GetString("personal_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainPersonalMenu.Display.Glare = true
@@ -83,40 +83,47 @@ RegisterKeyMapping("personalMenu", GetString("personal_menu"), "keyboard", "F5")
 function RageUI.PoolMenus:PersonalMenu()
     MainPersonalMenu:IsVisible(function(Items)
         -- Items:AddButton(GetString("personal_menu_emotes"), nil, {RightLabel = "→→→"}, nil)
-        Items:AddButton(GetString("personal_menu_wallet"), nil, {RightLabel = "→→→"}, function(onSelected)
+        Items:AddButton(GetString("personal_menu_wallet"), nil, { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
                 playerLicenses = exports.ava_core:TriggerServerCallback("ava_core:server:getPlayerLicenses") or {}
             end
         end, WalletSubMenu)
 
-        Items:AddButton(GetString("personal_menu_bills"), nil, {RightLabel = "→→→"}, function(onSelected)
+        Items:AddButton(GetString("personal_menu_bills"), nil, { RightLabel = "→→→" }, function(onSelected)
             if onSelected then
                 prepareBills()
             end
         end, BillsSubMenu)
 
+        Items:AddButton(GetString("personal_menu_keys"), nil, { RightLabel = "→→→" }, function(onSelected)
+            if onSelected then
+                prepareKeys()
+            end
+        end, KeysSubMenu)
+
         Items:AddButton(GetString("personal_menu_vehicle_management"), nil,
-            {RightLabel = "→→→", IsDisabled = playerVehicle == 0 or playerVehicleData.playerSeat == 2}, function(onSelected)
+            { RightLabel = "→→→", IsDisabled = playerVehicle == 0 or playerVehicleData.playerSeat == 2 }, function(onSelected)
                 if onSelected then
                     OnVehiclesManagementSubMenuOpened()
                 end
             end, VehiclesManagementSubMenu)
 
-        Items:AddButton(GetString("personal_menu_miscs"), nil, {RightLabel = "→→→"}, nil, MiscsSubMenu)
+        Items:AddButton(GetString("personal_menu_miscs"), nil, { RightLabel = "→→→" }, nil, MiscsSubMenu)
 
-        Items:AddButton(GetString("personal_menu_save_player"), nil, {LeftBadge = RageUI.BadgeStyle.Tick}, function(onSelected)
+        Items:AddButton(GetString("personal_menu_save_player"), nil, { LeftBadge = RageUI.BadgeStyle.Tick }, function(onSelected)
             if onSelected then
                 ExecuteCommand("save")
             end
         end)
 
         if isAdmin then
-            Items:AddButton(GetString("personal_menu_admin_menu"), nil, {RightLabel = "→→→", LeftBadge = RageUI.BadgeStyle.Alert}, nil, MainAdminMenu)
+            Items:AddButton(GetString("personal_menu_admin_menu"), nil, { RightLabel = "→→→", LeftBadge = RageUI.BadgeStyle.Alert }, nil, MainAdminMenu)
         end
     end)
 
     PoolWallet()
     PoolBills()
+    PoolKeys()
     PoolMiscs()
     PoolVehicleManagement()
 end
