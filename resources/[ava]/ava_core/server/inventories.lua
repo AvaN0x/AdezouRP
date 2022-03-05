@@ -93,7 +93,7 @@ RegisterNetEvent("ava_core:server:dropItem", function(coords, itemName, count)
                     local propCoords = vector4(coords.x, coords.y, coords.z, playerHeading)
                     AVA.CreatePickup(propCoords, itemName, count)
                     inventory.removeItem(itemName, count)
-                    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "create_pickup", itemName .. ":" .. count })
+                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "create_pickup", "item:" .. itemName, count })
                 end
             end
         else
@@ -117,7 +117,7 @@ RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
             if targetInventory.canAddItem(itemName, count) then
                 playerInventory.removeItem(itemName, count)
                 targetInventory.addItem(itemName, count)
-                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "give_item to", aTarget.citizenId, itemName, count })
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "give_item_to", "citizenid:" .. aTarget.citizenId, "item:" .. itemName, count })
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("target_not_enough_place"))
                 TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("not_enough_place"))
@@ -143,7 +143,7 @@ RegisterNetEvent("ava_core:server:takeItem", function(targetId, itemName, count)
             if playerInventory.canAddItem(itemName, count) then
                 targetInventory.removeItem(itemName, count)
                 playerInventory.addItem(itemName, count)
-                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "take_item from", aTarget.citizenId, itemName, count })
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "take_item_from", "citizenid:" .. aTarget.citizenId, "item:" .. itemName, count })
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("not_enough_place"))
             end

@@ -471,7 +471,7 @@ AVA.Players.UseItem = function(src, itemName)
             local cfgItem = AVAConfig.Items[itemName]
             if cfgItem then
                 AVA.UsableItems[itemName](aPlayer.src, aPlayer, cfgItem)
-                TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "use_item", itemName })
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "use_item", "item:" .. itemName })
             end
         end
     end

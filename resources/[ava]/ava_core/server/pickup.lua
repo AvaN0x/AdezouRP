@@ -59,7 +59,7 @@ AVA.RegisterServerCallback("ava_core:server:pickup", function(source, id)
                         hasPickedUp = true
                         if canTake >= pickup.quantity then
                             inventory.addItem(pickup.itemName, pickup.quantity)
-                            TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "pickup", pickup.itemName .. ":" .. pickup.quantity })
+                            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName, pickup.quantity })
 
                             -- Remove prop
                             DeleteEntity(tonumber(id))
@@ -67,7 +67,7 @@ AVA.RegisterServerCallback("ava_core:server:pickup", function(source, id)
                             pickups[id] = nil
                         else
                             inventory.addItem(pickup.itemName, canTake)
-                            TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "pickup", pickup.itemName .. ":" .. canTake })
+                            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName, canTake })
 
                             pickups[id].quantity = pickup.quantity - canTake
                             Entity(tonumber(id)).state:set("label", pickup.itemLabel .. " x" .. AVA.Utils.FormatNumber(pickups[id].quantity), true)

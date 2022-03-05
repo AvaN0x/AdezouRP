@@ -122,7 +122,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:purchaseV
     end
 
     inventory.removeItem("cash", vehicleData.price)
-    TriggerEvent("ava_logs:server:log", {aPlayer.citizenId, "purchase", vehicleModel, "for", vehicleData.price})
+    TriggerEvent("ava_logs:server:log", {"citizenid:" .. aPlayer.citizenId, "purchase", "vehiclemodel:" .. vehicleModel, "for", vehicleData.price})
 
     -- Prevent player from purchasing multiple vehicles at the same time
     while playerPurchasingVehicle[tostring(src)] do
@@ -209,7 +209,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehic
     end
     inventory.addItem("cash", sellPrice)
     SetVehicleModelStock(vehicleModel, GetVehicleModelStock(vehicleModel, tostring(vehicleType)) + 1)
-    TriggerEvent("ava_logs:server:log", {aPlayer.citizenId, "sell", vehicleModel, vehicleId, "at", sellPrice})
+    TriggerEvent("ava_logs:server:log", {"citizenid:" .. aPlayer.citizenId, "sell", "vehiclemodel:" .. vehicleModel, "vehicleid:" .. vehicleId, "at", sellPrice})
 
     exports.ava_garages:RemoveKeysForVehicle(vehicleId)
     exports.ava_garages:RemoveVehicle(vehicleId, aPlayer)

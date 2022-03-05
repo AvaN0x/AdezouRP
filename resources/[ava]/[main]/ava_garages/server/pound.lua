@@ -78,7 +78,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:takeVehicleOutOfPoun
 
     inventory.removeItem("cash", price)
     MySQL.update.await("UPDATE `ava_vehicles` SET `garage` = :garage WHERE `id` = :id", { garage = vehicleData.job_name and ("jobgarage_" .. vehicleData.job_name) or AVAConfig.DefaultGarage, id = vehicleId })
-    TriggerEvent("ava_logs:server:log", { aPlayer.citizenId, "pay_pound", vehicleId })
+    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_pound", "vehicleid:" .. vehicleId })
 
     return true
 end)
