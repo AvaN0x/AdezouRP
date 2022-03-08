@@ -309,3 +309,16 @@ RegisterNetEvent("ava_garages:server:savevehicledata", function(vehicleNet, mods
             { id = vehicleId, modsdata = modsData, healthdata = healthData })
     end
 end)
+
+RegisterNetEvent("ava_garages:server:savemodsdata", function(vehicleNet, modsData)
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    if not DoesEntityExist(vehicle) then
+        return
+    end
+    local entityState = Entity(vehicle)
+    local vehicleId = entityState.state.id
+    if vehicleId then
+        MySQL.update("UPDATE `ava_vehicles` SET `modsdata` = :modsdata WHERE `id` = :id",
+            { id = vehicleId, modsdata = modsData })
+    end
+end)
