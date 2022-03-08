@@ -300,5 +300,13 @@
     "vehicleshop_confirm_job_purchase_title": "Achat de véhicule d'entreprise",
     "vehicleshop_confirm_job_purchase_firstline": "Voulez vous vraiment acheter ce véhicule d'entreprise ?",
     "vehicleshop_confirm_job_purchase_secondline": "%s à %s",
-    "press_open_lscustoms": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu Los Santos Customs"
+    "lscustoms_menu": "Los Santos Customs",
+    "press_open_lscustoms": "Appuyez sur ~INPUT_CONTEXT~ pour ouvrir le menu Los Santos Customs",
+    "lscustom_not_in_vehicle_or_driver": "Vous devez être dans un véhicule et en être le conducteur pour pouvoir en faire sa custom.",
+    "lscustom_vehicle_damaged": "Vous ne pouvez pas faire la custom d'un véhicule endommagé.",
+    "lscustoms_brakes": "Freins",
+    "lscustoms_spoilers": "Aileron",
+    "lscustoms_wheels": "Roues",
+    "lscustoms_wheelsType": "Jantes",
+    "lscustoms_wheelColor": "Couleur de jantes"
 }

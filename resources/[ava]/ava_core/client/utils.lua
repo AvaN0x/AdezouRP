@@ -434,7 +434,7 @@ AVA.GetVehicleModsData = function(vehicle)
     end
 
     local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
-    local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
+    local pearlescentColor, wheelsColor = GetVehicleExtraColours(vehicle)
 
     if GetIsVehiclePrimaryColourCustom(vehicle) then
         colorPrimary = { GetVehicleCustomPrimaryColour(vehicle) }
@@ -467,7 +467,7 @@ AVA.GetVehicleModsData = function(vehicle)
         dashboardColor = GetVehicleDashboardColour(vehicle),
 
         -- wheels
-        wheelColor = wheelColor,
+        wheelsColor = wheelsColor,
         wheels = GetVehicleWheelType(vehicle),
         tyreSmokeColor = { GetVehicleTyreSmokeColor(vehicle) },
 
@@ -581,12 +581,12 @@ AVA.SetVehicleModsData = function(vehicle, data)
             SetVehicleColours(vehicle, data.colorPrimary or colorPrimary, data.colorSecondary)
         end
     end
-    local pearlescentColor<const>, wheelColor<const> = GetVehicleExtraColours(vehicle)
+    local pearlescentColor<const>, wheelsColor<const> = GetVehicleExtraColours(vehicle)
     if data.pearlescentColor then
-        SetVehicleExtraColours(vehicle, data.pearlescentColor, wheelColor)
+        SetVehicleExtraColours(vehicle, data.pearlescentColor, wheelsColor)
     end
-    if data.wheelColor then
-        SetVehicleExtraColours(vehicle, data.pearlescentColor or pearlescentColor, data.wheelColor)
+    if data.wheelsColor then
+        SetVehicleExtraColours(vehicle, data.pearlescentColor or pearlescentColor, data.wheelsColor)
     end
     if data.interiorColor then
         SetVehicleInteriorColor(vehicle, data.interiorColor)

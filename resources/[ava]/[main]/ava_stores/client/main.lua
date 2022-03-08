@@ -76,8 +76,8 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     PlayerData = data
 end)
 
-local playerCoords = nil
-local playerPed = nil
+playerCoords = nil
+playerPed = nil
 
 Citizen.CreateThread(function()
     while true do
@@ -193,7 +193,7 @@ Citizen.CreateThread(function()
                 elseif store.SellVehicle then
                     OpenSellZoneMenu()
                 elseif store.LSCustoms then
-                    OpenLSCustomsMenu()
+                    LSCustoms()
                 end
 
             end
