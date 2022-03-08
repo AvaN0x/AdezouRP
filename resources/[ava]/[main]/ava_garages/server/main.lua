@@ -293,11 +293,11 @@ end)
 
 exports.ava_core:RegisterCommand("savevehicledata", "admin", function(source, args)
     if source > 0 then
-        TriggerClientEvent("ava_core:client:savevehicledata", source)
+        TriggerClientEvent("ava_garages:client:savevehicledata", source)
     end
 end, GetString("savevehicledata_help"))
 
-RegisterNetEvent("ava_core:server:savevehicledata", function(vehicleNet, modsData, healthData)
+RegisterNetEvent("ava_garages:server:savevehicledata", function(vehicleNet, modsData, healthData)
     local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
     if not DoesEntityExist(vehicle) then
         return

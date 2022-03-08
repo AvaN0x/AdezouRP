@@ -161,10 +161,10 @@ function RageUI.PoolMenus:GarageMenu()
     end)
 end
 
-RegisterNetEvent("ava_core:client:savevehicledata", function()
+RegisterNetEvent("ava_garages:client:savevehicledata", function()
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
     if isInVehicle and seat == -1 then
-        TriggerServerEvent("ava_core:server:savevehicledata", VehToNet(vehicle), json.encode(exports.ava_core:GetVehicleModsData(vehicle) or {}),
+        TriggerServerEvent("ava_garages:server:savevehicledata", VehToNet(vehicle), json.encode(exports.ava_core:GetVehicleModsData(vehicle) or {}),
             json.encode(exports.ava_core:GetVehicleHealthData(vehicle) or {}))
     end
 end)
