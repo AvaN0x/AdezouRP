@@ -108,7 +108,6 @@ AVA.SaveAllJobsAccounts = function()
     end
     Citizen.Await(promise.all(promises))
     print("^2[SAVE JOBS ACCOUNTS]^0 Every jobs accounts has been saved.")
-    TriggerEvent("ava_logs:server:log", "Every jobs accounts has been saved.")
 end
 
 AVA.SaveJobAccounts = function(aJobAccounts)

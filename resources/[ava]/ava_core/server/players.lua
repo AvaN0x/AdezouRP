@@ -698,7 +698,6 @@ AVA.Players.SaveAll = function()
 
     Citizen.Await(promise.all(promises))
     print("^2[SAVE PLAYERS] ^0 Every player has been saved.")
-    TriggerEvent("ava_logs:server:log", "Every player has been saved.")
 end
 exports("SaveAllPlayers", AVA.Players.SaveAll)
 
