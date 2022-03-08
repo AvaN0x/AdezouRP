@@ -14,7 +14,7 @@ function OpenSellZoneMenu()
         return
     end
 
-    local vehiclePrice, vehicleName = GetVehiclePriceFromModel(sellZone.SellVehicle.VehicleType, GetEntityModel(vehicle))
+    local vehiclePrice, vehicleName = GetVehiclePriceFromModel(GetEntityModel(vehicle), sellZone.SellVehicle.VehicleType)
     if not vehiclePrice then
         exports.ava_core:ShowNotification(GetString("sellvehicle_cannot_sell_this_vehicle_here"), nil, "CHAR_SIMEON", "Simeon Yetarian")
         CurrentActionEnabled = true

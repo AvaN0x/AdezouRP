@@ -195,7 +195,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:vehicleshop:sellVehic
     local vehicleId = entityState.state.id
     if not vehicleId then return 0 end
 
-    local vehiclePrice, vehicleModel = GetVehiclePriceFromModel(vehicleType, GetEntityModel(vehicle))
+    local vehiclePrice, vehicleModel = GetVehiclePriceFromModel(GetEntityModel(vehicle), vehicleType)
     if not vehiclePrice then return 0 end
     local sellPrice = math.floor((vehiclePrice * Config.VehicleShops.SellMultiplier) + 0.5)
 
