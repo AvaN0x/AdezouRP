@@ -303,7 +303,7 @@ end
 function RageUI.CloseAllInternal()
     if RageUI.CurrentMenu ~= nil then
         local parent = RageUI.CurrentMenu.Parent
-        while parent ~= nil do
+        while parent ~= nil and RageUI.CurrentMenu ~= parent do
             parent.Index = 1
             parent.NewIndex = -1
             parent.Pagination.Minimum = 1
@@ -328,6 +328,7 @@ end
 function RageUI.CloseAll()
     TriggerEvent("RageUI.CloseAll")
 end
+
 AddEventHandler("RageUI.CloseAll", function()
     RageUI.CloseAllInternal()
 end)
@@ -455,7 +456,7 @@ function RageUI.Render()
         if CurrentMenu.Safezone then
             ResetScriptGfxAlign()
         end
-        
+
         if (CurrentMenu.Display.InstructionalButton) then
             if not CurrentMenu.InitScaleform then
                 CurrentMenu:UpdateInstructionalButtons(true)
@@ -472,14 +473,14 @@ function RageUI.Render()
         if CurrentMenu.Controls.Back.Enabled then
             if CurrentMenu.Controls.Back.Pressed and CurrentMenu.Closable then
                 CurrentMenu.Controls.Back.Pressed = false
-                
+
                 Audio.PlaySound(RageUI.Settings.Audio.Back.audioName, RageUI.Settings.Audio.Back.audioRef)
-                
+
                 if CurrentMenu.Closed ~= nil then
                     collectgarbage()
                     CurrentMenu.Closed()
                 end
-                
+
                 if CurrentMenu.Parent ~= nil then
                     if CurrentMenu.Parent() then
                         RageUI.NextMenu = CurrentMenu.Parent
