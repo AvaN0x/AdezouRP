@@ -219,6 +219,30 @@ AVA.RequestAnimDict = function(animDict)
 end
 exports("RequestAnimDict", AVA.RequestAnimDict)
 
+---Request additional texts
+---@param gxt string
+---@return additionalTextSlot number "The slot of the additional text"
+AVA.RequestAdditionalText = function(gxt)
+    -- Thanks to this topic for the informations !
+    -- https://forum.cfx.re/t/using-labels/53198?u=avan0x
+    local additionalTextSlot = 0
+
+    -- Search an empty slot / check that the gxt is not already in the slot
+    while HasAdditionalTextLoaded(additionalTextSlot) and not HasThisAdditionalTextLoaded(gxt, additionalTextSlot) do
+        Wait(0)
+        additionalTextSlot = additionalTextSlot + 1
+    end
+    -- Load the text if it's not already loaded
+    if not HasThisAdditionalTextLoaded(gxt, additionalTextSlot) then
+        ClearAdditionalText(additionalTextSlot, true)
+        RequestAdditionalText(gxt, additionalTextSlot)
+
+        while not HasThisAdditionalTextLoaded(gxt, additionalTextSlot) do Wait(0) end
+    end
+    return additionalTextSlot
+end
+exports("RequestAdditionalText", AVA.RequestAdditionalText)
+
 ---Teleport a player to coords with or without vehicle
 ---@param x number
 ---@param y number
@@ -493,7 +517,7 @@ AVA.GetVehicleModsData = function(vehicle)
         modRightFender = GetVehicleMod(vehicle, 9),
         modRoof = GetVehicleMod(vehicle, 10),
 
-        modHorns = GetVehicleMod(vehicle, 14),
+        modHorn = GetVehicleMod(vehicle, 14),
 
         modEngine = GetVehicleMod(vehicle, 11),
         modBrakes = GetVehicleMod(vehicle, 12),
@@ -644,8 +668,8 @@ AVA.SetVehicleModsData = function(vehicle, data)
     if data.modRoof then
         SetVehicleMod(vehicle, 10, data.modRoof, false)
     end
-    if data.modHorns then
-        SetVehicleMod(vehicle, 14, data.modHorns, false)
+    if data.modHorn then
+        SetVehicleMod(vehicle, 14, data.modHorn, false)
     end
     if data.modEngine then
         SetVehicleMod(vehicle, 11, data.modEngine, false)
