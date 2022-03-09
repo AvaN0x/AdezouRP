@@ -58,7 +58,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     -- Check if the player is in a vehicle and is the driver
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
     if not isInVehicle or seat ~= -1 then
-        exports.ava_core:ShowNotification(GetString("lscustom_not_in_vehicle_or_driver"))
+        exports.ava_core:ShowNotification(GetString("lscustoms_not_in_vehicle_or_driver"))
         CurrentActionEnabled = true
         return
     end
@@ -68,7 +68,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
 
     -- Check vehicle health
     if GetVehicleBodyHealth(vehicle) < Config.LSCustoms.MinimumBodyHealth or GetVehicleEngineHealth(vehicle) < Config.LSCustoms.MinimumEngineHealth then
-        exports.ava_core:ShowNotification(GetString("lscustom_vehicle_damaged"))
+        exports.ava_core:ShowNotification(GetString("lscustoms_vehicle_damaged"))
         CurrentActionEnabled = true
         return
     end
@@ -92,6 +92,9 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     MenuElements = {}
     PrepareMenuElements(Config.LSCustoms.Menu)
     MainLSCustomsMenu.Parent = MainLSCustomsMenu
+
+    -- Allow to get vehicle mod kit
+    SetVehicleModKit(vehicle, 0)
 
     -- Freeze vehicle and player while in menu
     FreezeEntityPosition(vehicle, true)
@@ -152,14 +155,50 @@ PrepareMenuElements = function(data)
                 }
             end
 
-        -- elseif type(data) == "string" and Config.LSCustoms.Mods[data] then
         elseif type(data) == "string" then
-            -- Submenu is a menu of mods
-            MenuElements[MenuDepth].mod = data
-            MenuElements[MenuDepth].elements[1] = {
-                label = data,
-                rightLabel = CurrentLSCustoms and "$x" -- only if store
-            }
+            if Config.LSCustoms.Mods[data] then
+                local modCfg<const> = Config.LSCustoms.Mods[data]
+                -- Submenu is a menu of mods
+                MenuElements[MenuDepth].mod = data
+
+                --#region Prepare mod menu
+                if modCfg.type == "mod" then
+                    -- Is a normal mod, iterate through all mods
+                    local currentMod<const> = GetVehicleMod(CurrentVehicleData.vehicle, modCfg.mod)
+
+                    -- Add default mod
+                    count = count + 1
+                    MenuElements[MenuDepth].elements[count] = {
+                        label = GetString("lscustoms_default"),
+                        index = -1,
+                        rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
+                    }
+
+                    for i = 0, GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) - 1 do
+                        local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
+                        if name ~= nil then
+                            count = count + 1
+                            local isCurrent<const> = i == currentMod and true or nil
+                            local price = nil
+                            -- Price only if the mod is not the current one, and we are in the context of a shop
+                            if not isCurrent and CurrentLSCustoms then
+                                price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                            end
+
+                            MenuElements[MenuDepth].elements[count] = {
+                                label = GetLabelText(name),
+                                index = i,
+                                rightBadgeName = isCurrent and "Car" ,
+                                price = price,
+                                rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
+                            }
+                        end
+                    end
+                end
+                --#endregion Prepare mod menu
+            else
+                print("^8[LSCustoms] Mod \"" .. data .. "\" is missing from Config.LSCustoms.Mods^0")
+            end
         end
 
         -- Reset menu index
@@ -195,7 +234,7 @@ function RageUI.PoolMenus:LSCustomsMenu()
                 local element<const> = elements[i]
                 if element then
                     local hasSubMenu<const> = element.menu or element.mod
-                    Items:AddButton(element.label, element.desc, { RightLabel = element.menu and "→→→" or element.rightLabel }, function(onSelected)
+                    Items:AddButton(element.label, element.desc, { RightLabel = element.menu and "→→→" or element.rightLabel, RightBadge = element.rightBadgeName and RageUI.BadgeStyle[element.rightBadgeName] }, function(onSelected)
                         if onSelected then
                             if element.menu or element.mod then
                                 PrepareMenuElements(element.menu or element.mod)
