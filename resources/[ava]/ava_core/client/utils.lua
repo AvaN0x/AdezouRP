@@ -557,7 +557,7 @@ AVA.GetVehicleModsData = function(vehicle)
         modArchCover = GetVehicleMod(vehicle, 42),
         modAerials = GetVehicleMod(vehicle, 43),
         modTank = GetVehicleMod(vehicle, 45),
-        modWindows = GetVehicleMod(vehicle, 46),
+        modDoorL = GetVehicleMod(vehicle, 46),
         modDoorR = GetVehicleMod(vehicle, 47),
         modLivery = GetVehicleMod(vehicle, 48),
         modLightbar = GetVehicleMod(vehicle, 49),
@@ -767,8 +767,8 @@ AVA.SetVehicleModsData = function(vehicle, data)
     if data.modTank then
         SetVehicleMod(vehicle, 45, data.modTank, false)
     end
-    if data.modWindows then
-        SetVehicleMod(vehicle, 46, data.modWindows, false)
+    if data.modDoorL then
+        SetVehicleMod(vehicle, 46, data.modDoorL, false)
     end
     if data.modDoorR then
         SetVehicleMod(vehicle, 47, data.modDoorR, false)
