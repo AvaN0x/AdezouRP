@@ -74,12 +74,12 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     end
 
     RageUI.CloseAll()
-    
+
     -- Set menu title and banner
     MainLSCustomsMenu.Sprite.Dictionary = titleTextureDirectory or "avaui"
     MainLSCustomsMenu.Sprite.Texture = titleTexture or "avaui_title_adezou"
     MainLSCustomsMenu.Subtitle = menuName or GetString("lscustoms_menu")
-    
+
     -- Initialize needed data for the menu
     CurrentLSCustoms = store
     CurrentVehicleData = {
@@ -122,6 +122,40 @@ MainLSCustomsMenu.Closed = function()
     end
 end
 
+---Check whether an element can be added to the menu or not
+---@param element table
+---@return boolean
+local function ShouldAddElementToMenu(element)
+    if element.mod and Config.LSCustoms.Mods[element.mod] then
+        -- Element is a mod, check if it has things that can be modified
+        local modCfg<const> = Config.LSCustoms.Mods[element.mod]
+        if modCfg.type == "mod" then
+            return GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) > 0
+        elseif modCfg.type == "livery" then
+            return GetVehicleLiveryCount(CurrentVehicleData.vehicle) > 0
+        elseif modCfg.type == "extras" then
+            -- Check if an extra exist
+            for i = 0, 14 do
+                if DoesExtraExist(CurrentVehicleData.vehicle, i) then
+                    return true
+                end
+            end
+            return false
+        end
+        return true
+
+    elseif element.menu then
+        -- Element has a submenu, check if some elements inside of it can be modified
+        for i = 1, #element.menu do
+            -- Recursive call
+            if ShouldAddElementToMenu(element.menu[i]) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 ---Will prepare the menu elements of the next sub menu
 ---@param data? table|string|nil
 PrepareMenuElements = function(data)
@@ -146,13 +180,15 @@ PrepareMenuElements = function(data)
             -- Submenu is a menu of elements
             for i = 1, #data do
                 local element<const> = data[i]
-                count = count + 1
-                MenuElements[MenuDepth].elements[count] = {
-                    label = element.label,
-                    desc = element.desc,
-                    menu = element.menu,
-                    mod = element.mod,
-                }
+                if ShouldAddElementToMenu(element) then
+                    count = count + 1
+                    MenuElements[MenuDepth].elements[count] = {
+                        label = element.label,
+                        desc = element.desc,
+                        menu = element.menu,
+                        mod = element.mod,
+                    }
+                end
             end
 
         elseif type(data) == "string" then
@@ -211,7 +247,7 @@ PrepareMenuElements = function(data)
         -- Go back from one in depth, remove all elements at that depth
         MenuElements[MenuDepth] = nil
         MenuDepth = MenuDepth - 1
-        
+
         -- Resume the menu data
         if MenuElements[MenuDepth] and MenuElements[MenuDepth].Subtitle then
             Citizen.CreateThread(function()

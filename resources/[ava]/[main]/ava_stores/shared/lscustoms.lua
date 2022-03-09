@@ -8,92 +8,99 @@ Config.LSCustoms = {
     MinimumEngineHealth = 950.0,
 
     Menu = {
-        -- { label = GetString("lscustoms_armor"), mod = "modArmor" },
-        { label = GetString("lscustoms_brakes"), mod = "modBrakes" },
         {
-            label = GetString("lscustoms_bumpers"),
+            label = GetString("lscustoms_aesthetics"),
             menu = {
-                { label = GetString("lscustoms_frontBumper"), mod = "modFrontBumper" },
-                { label = GetString("lscustoms_rearBumper"), mod = "modRearBumper" },
+                { label = GetString("lscustoms_extras"), mod = "extras" },
+                { label = GetString("lscustoms_livery"), mod = "livery" },
+                { label = GetString("lscustoms_modLivery"), mod = "modLivery" },
+                {
+                    label = GetString("lscustoms_bumpers"),
+                    menu = {
+                        { label = GetString("lscustoms_frontBumper"), mod = "modFrontBumper" },
+                        { label = GetString("lscustoms_rearBumper"), mod = "modRearBumper" },
+                    }
+                },
+                { label = GetString("lscustoms_exhaust"), mod = "modExhaust" },
+                { label = GetString("lscustoms_hood"), mod = "modHood" },
+                { label = GetString("lscustoms_hydraulics"), mod = "modHydraulics" },
+                {
+                    label = GetString("lscustoms_cockpit"),
+                    menu = {
+                        { label = GetString("lscustoms_dashboard"), mod = "modDashboard" },
+                        { label = GetString("lscustoms_seats"), mod = "modSeats" },
+                        { label = GetString("lscustoms_steeringWheel"), mod = "modSteeringWheel" },
+                        { label = GetString("lscustoms_shifterLeavers"), mod = "modShifterLeavers" },
+                        { label = GetString("lscustoms_dial"), mod = "modDial" },
+                        { label = GetString("lscustoms_ornaments"), mod = "modOrnaments" },
+                        { label = GetString("lscustoms_doorSpeaker"), mod = "modDoorSpeaker" },
+                        { label = GetString("lscustoms_plaques"), mod = "modPlaques" },
+                        { label = GetString("lscustoms_speakers"), mod = "modSpeakers" },
+                    }
+                },
+                { label = GetString("lscustoms_roof"), mod = "modRoof" },
+                { label = GetString("lscustoms_sideSkirt"), mod = "modSideSkirt" },
+                { label = GetString("lscustoms_spoilers"), mod = "modSpoilers" },
+                { label = GetString("lscustoms_trunk"), mod = "modTrunk" },
+                { label = GetString("lscustoms_trimA"), mod = "modTrimA" },
+                { label = GetString("lscustoms_trimB"), mod = "modTrimB" },
+                { label = GetString("lscustoms_engineBlock"), mod = "modEngineBlock" },
+                { label = GetString("lscustoms_airFilter"), mod = "modAirFilter" },
+                { label = GetString("lscustoms_struts"), mod = "modStruts" },
+                { label = GetString("lscustoms_archCover"), mod = "modArchCover" },
+                { label = GetString("lscustoms_aerials"), mod = "modAerials" },
+                { label = GetString("lscustoms_tank"), mod = "modTank" },
+                { label = GetString("lscustoms_doorL"), mod = "modDoorL" },
+                { label = GetString("lscustoms_doorR"), mod = "modDoorR" },
+                { label = GetString("lscustoms_lightbar"), mod = "modLightbar" },
+                { label = GetString("lscustoms_fender"), mod = "modFender" },
+                { label = GetString("lscustoms_frame"), mod = "modFrame" },
+                { label = GetString("lscustoms_grille"), mod = "modGrille" },
+                {
+                    label = GetString("lscustoms_lights"),
+                    menu = {
+                        { label = GetString("lscustoms_xenon"), mod = "modXenon" },
+                        { label = GetString("lscustoms_xenonColour"), mod = "modXenonColour" },
+                        { label = GetString("lscustoms_neonEnabled"), mod = "neonEnabled" },
+                        { label = GetString("lscustoms_neonColor"), mod = "neonColor" },
+                    }
+                },
+                {
+                    label = GetString("lscustoms_respray"),
+                    menu = {
+                        { label = GetString("lscustoms_colorPrimary"), mod = "colorPrimary" },
+                        { label = GetString("lscustoms_colorSecondary"), mod = "colorSecondary" },
+                        { label = GetString("lscustoms_pearlescentColor"), mod = "pearlescentColor" },
+                        { label = GetString("lscustoms_dashboardColor"), mod = "dashboardColor" },
+                        { label = GetString("lscustoms_interiorColor"), mod = "interiorColor" },
+                    }
+                },
+                {
+                    label = GetString("lscustoms_wheels"),
+                    menu = {
+                        { label = GetString("lscustoms_wheelsType"), mod = "wheelsType" },
+                        { label = GetString("lscustoms_wheelColor"), mod = "wheelsColor" },
+                        { label = GetString("lscustoms_tyreSmokeColor"), mod = "tyreSmokeColor" },
+                    }
+                },
+                { label = GetString("lscustoms_horn"), mod = "modHorn" },
+                { label = GetString("lscustoms_plateIndex"), mod = "plateIndex" },
+                { label = GetString("lscustoms_plateHolder"), mod = "modPlateHolder" },
+                { label = GetString("lscustoms_vanityPlate"), mod = "modVanityPlate" },
+                { label = GetString("lscustoms_windowTint"), mod = "windowTint" },
             }
         },
-        { label = GetString("lscustoms_engine"), mod = "modEngine" },
-        { label = GetString("lscustoms_exhaust"), mod = "modExhaust" },
-        { label = GetString("lscustoms_hood"), mod = "modHood" },
-        { label = GetString("lscustoms_horn"), mod = "modHorn" },
-        { label = GetString("lscustoms_hydraulics"), mod = "modHydraulics" },
         {
-            label = GetString("lscustoms_cockpit"),
+            label = GetString("lscustoms_performances"),
             menu = {
-                { label = GetString("lscustoms_dashboard"), mod = "modDashboard" },
-                { label = GetString("lscustoms_dashboardColor"), mod = "dashboardColor" },
-                { label = GetString("lscustoms_interiorColor"), mod = "interiorColor" },
-                { label = GetString("lscustoms_seats"), mod = "modSeats" },
-                { label = GetString("lscustoms_steeringWheel"), mod = "modSteeringWheel" },
-                { label = GetString("lscustoms_shifterLeavers"), mod = "modShifterLeavers" },
-                { label = GetString("lscustoms_dial"), mod = "modDial" },
-                { label = GetString("lscustoms_ornaments"), mod = "modOrnaments" },
-                { label = GetString("lscustoms_doorSpeaker"), mod = "modDoorSpeaker" },
-                { label = GetString("lscustoms_plaques"), mod = "modPlaques" },
-                { label = GetString("lscustoms_speakers"), mod = "modSpeakers" },
+                -- { label = GetString("lscustoms_armor"), mod = "modArmor" },
+                { label = GetString("lscustoms_brakes"), mod = "modBrakes" },
+                { label = GetString("lscustoms_engine"), mod = "modEngine" },
+                { label = GetString("lscustoms_suspension"), mod = "modSuspension" },
+                { label = GetString("lscustoms_transmission"), mod = "modTransmission" },
+                { label = GetString("lscustoms_turbo"), mod = "modTurbo" },
             }
         },
-        {
-            label = GetString("lscustoms_lights"),
-            menu = {
-                { label = GetString("lscustoms_xenon"), mod = "modXenon" },
-                { label = GetString("lscustoms_xenonColour"), mod = "modXenonColour" },
-                { label = GetString("lscustoms_neonEnabled"), mod = "neonEnabled" },
-                { label = GetString("lscustoms_neonColor"), mod = "neonColor" },
-            }
-        },
-        { label = GetString("lscustoms_extras"), mod = "extras" },
-        { label = GetString("lscustoms_livery"), mod = "livery" },
-        { label = GetString("lscustoms_modLivery"), mod = "modLivery" },
-        { label = GetString("lscustoms_plateIndex"), mod = "plateIndex" },
-        { label = GetString("lscustoms_plateHolder"), mod = "modPlateHolder" },
-        { label = GetString("lscustoms_vanityPlate"), mod = "modVanityPlate" },
-        { label = GetString("lscustoms_roof"), mod = "modRoof" },
-        {
-            label = GetString("lscustoms_respray"),
-            menu = {
-                { label = GetString("lscustoms_colorPrimary"), mod = "colorPrimary" },
-                { label = GetString("lscustoms_colorSecondary"), mod = "colorSecondary" },
-                { label = GetString("lscustoms_pearlescentColor"), mod = "pearlescentColor" },
-            }
-        },
-        { label = GetString("lscustoms_sideSkirt"), mod = "modSideSkirt" },
-        { label = GetString("lscustoms_spoilers"), mod = "modSpoilers" },
-        { label = GetString("lscustoms_trunk"), mod = "modTrunk" },
-        { label = GetString("lscustoms_trimA"), mod = "modTrimA" },
-        { label = GetString("lscustoms_trimB"), mod = "modTrimB" },
-        { label = GetString("lscustoms_engineBlock"), mod = "modEngineBlock" },
-        { label = GetString("lscustoms_airFilter"), mod = "modAirFilter" },
-        { label = GetString("lscustoms_struts"), mod = "modStruts" },
-        { label = GetString("lscustoms_archCover"), mod = "modArchCover" },
-        { label = GetString("lscustoms_aerials"), mod = "modAerials" },
-        { label = GetString("lscustoms_tank"), mod = "modTank" },
-        { label = GetString("lscustoms_doorL"), mod = "modDoorL" },
-        { label = GetString("lscustoms_doorR"), mod = "modDoorR" },
-        { label = GetString("lscustoms_lightbar"), mod = "modLightbar" },
-        { label = GetString("lscustoms_fender"), mod = "modFender" },
-        { label = GetString("lscustoms_frame"), mod = "modFrame" },
-        { label = GetString("lscustoms_grille"), mod = "modGrille" },
-        { label = GetString("lscustoms_suspension"), mod = "modSuspension" },
-        { label = GetString("lscustoms_transmission"), mod = "modTransmission" },
-        { label = GetString("lscustoms_turbo"), mod = "modTurbo" },
-        {
-            label = GetString("lscustoms_wheels"),
-            menu = {
-                { label = GetString("lscustoms_wheelsType"), mod = "wheelsType" },
-                { label = GetString("lscustoms_wheelColor"), mod = "wheelsColor" },
-                { label = GetString("lscustoms_tyreSmokeColor"), mod = "tyreSmokeColor" },
-            }
-        },
-        { label = GetString("lscustoms_windowTint"), mod = "windowTint" },
-
-
-
     },
     Mods = {
         modSpoilers = {

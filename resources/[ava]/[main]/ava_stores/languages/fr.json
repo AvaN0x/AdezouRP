@@ -306,6 +306,8 @@
     "lscustoms_vehicle_damaged": "Vous ne pouvez pas faire la custom d'un véhicule endommagé.",
     "lscustoms_price_format": "$%s",
     "lscustoms_default": "De série",
+    "lscustoms_performances": "Performances",
+    "lscustoms_aesthetics": "Esthétiques",
     "lscustoms_brakes": "Freins",
     "lscustoms_spoilers": "Aileron",
     "lscustoms_wheels": "Roues",
