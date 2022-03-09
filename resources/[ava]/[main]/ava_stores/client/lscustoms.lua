@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local CloseLSCustomsMenu, PrepareMenuElements
+local CloseLSCustomsMenu, PrepareMenuElements, ToggleVehicleDoors
 
 --- Menu Depth is used to keep track of how many layers/menus we're in
 local MenuDepth = nil
@@ -20,9 +20,9 @@ end
 
 CloseLSCustomsMenu = function()
     if CurrentVehicleData then
-        -- Unfreeze vehicle and player
-        FreezeEntityPosition(CurrentVehicleData.vehicle, false)
-        FreezeEntityPosition(PlayerPedId(), false)
+        if CurrentVehicleData.doorsOpened then
+            ToggleVehicleDoors()
+        end
         if CurrentVehicleData.modified and CurrentVehicleData.modsdata then
             -- If vehicle modified, save the modifications to database
             TriggerServerEvent("ava_garages:server:savemodsdata", VehToNet(CurrentVehicleData.vehicle),
@@ -41,6 +41,7 @@ CloseLSCustomsMenu = function()
 end
 
 local MainLSCustomsMenu = RageUI.CreateMenu("", "lscustoms_menu", 0, 0, "avaui", "avaui_title_adezou")
+MainLSCustomsMenu:AddInstructionButton({GetControlInstructionalButton(0, 22, true), GetString("lscustoms_toggle_vehicle_doors")}) -- INPUT_JUMP
 
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() and CurrentVehicleData then
@@ -90,6 +91,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
         price = vehiclePrice,
         name = vehicleName,
     }
+    MenuDepth = nil
     MenuElements = {}
     PrepareMenuElements(Config.LSCustoms.Menu)
     MainLSCustomsMenu.Parent = MainLSCustomsMenu
@@ -97,9 +99,6 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     -- Allow to get vehicle mod kit
     SetVehicleModKit(vehicle, 0)
 
-    -- Freeze vehicle and player while in menu
-    FreezeEntityPosition(vehicle, true)
-    FreezeEntityPosition(playerPed, true)
     -- Prevent player from leaving the vehicle
     Citizen.CreateThread(function()
         while CurrentVehicleData do
@@ -217,7 +216,7 @@ PrepareMenuElements = function(data, newSubtitle)
                     }
 
                     for i = 0, GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) - 1 do
-                        local label 
+                        local label
                         if modCfg.displayAsLevels then
                             label = GetString("lscustoms_level", i + 1)
                         else
@@ -278,7 +277,7 @@ PrepareMenuElements = function(data, newSubtitle)
 
                 elseif modCfg.type == "color" then
                     -- TODO
-                    
+
                 elseif modCfg.type == "wheels" then
                     -- TODO
 
@@ -322,15 +321,14 @@ PrepareMenuElements = function(data, newSubtitle)
 end
 
 ---Apply element to vehicle
----@param element table
-local function ApplyElement(element)
-    if not element?.modName then return end
-
+---@param name string
+---@param value table|string|boolean|number
+local function ApplyElement(name, value)
     local data = {}
-    data[element.modName] = element.value
+    data[name] = value
 
     -- Specific cases
-    if element.modName == "tyreSmokeColor" then
+    if name == "tyreSmokeColor" then
         data.modSmokeEnabled = true
     end
 
@@ -339,18 +337,23 @@ end
 
 function RageUI.PoolMenus:LSCustomsMenu()
     MainLSCustomsMenu:IsVisible(function(Items)
+        DisableControlAction(0, 22, true) -- INPUT_JUMP
+        if IsDisabledControlJustReleased(0, 22) then
+            ToggleVehicleDoors()
+        end
+
         local elements<const> = MenuElements[MenuDepth]?.elements
         if elements then
             for i = 1, #elements do
                 local element<const> = elements[i]
                 if element then
                     local hasSubMenu<const> = element.menu or element.mod
-                    Items:AddButton(element.label, element.desc,{ 
+                    Items:AddButton(element.label, element.desc,{
                         RightLabel = element.menu and "→→→" or element.rightLabel,
                         RightBadge = element.rightBadgeName and RageUI.BadgeStyle[element.rightBadgeName]
                     }, function(onSelected, onEnter)
-                        if onEnter then
-                            ApplyElement(element)
+                        if onEnter and element?.modName then
+                            ApplyElement(element.modName, element.value)
                         elseif onSelected then
                             if element.menu or element.mod then
                                 PrepareMenuElements(element.menu or element.mod, element.label)
@@ -365,4 +368,16 @@ function RageUI.PoolMenus:LSCustomsMenu()
             end
         end
     end)
+end
+
+---Toggle vehicle doors
+ToggleVehicleDoors = function()
+    CurrentVehicleData.doorsOpened = not CurrentVehicleData.doorsOpened
+    if CurrentVehicleData.doorsOpened then
+        for i = 0, 8 do
+            SetVehicleDoorOpen(CurrentVehicleData.vehicle, i, false, false)
+        end
+    else
+        SetVehicleDoorsShut(CurrentVehicleData.vehicle, false)
+    end
 end
