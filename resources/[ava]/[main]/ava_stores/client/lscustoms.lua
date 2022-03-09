@@ -184,7 +184,6 @@ PrepareMenuElements = function(data)
                     count = count + 1
                     MenuElements[MenuDepth].elements[count] = {
                         label = element.label,
-                        desc = element.desc,
                         menu = element.menu,
                         mod = element.mod,
                     }
@@ -195,7 +194,7 @@ PrepareMenuElements = function(data)
             if Config.LSCustoms.Mods[data] then
                 local modCfg<const> = Config.LSCustoms.Mods[data]
                 -- Submenu is a menu of mods
-                MenuElements[MenuDepth].mod = data
+                MenuElements[MenuDepth].modName = data
 
                 --#region Prepare mod menu
                 if modCfg.type == "mod" then
@@ -203,16 +202,28 @@ PrepareMenuElements = function(data)
                     local currentMod<const> = GetVehicleMod(CurrentVehicleData.vehicle, modCfg.mod)
 
                     -- Add default mod
-                    count = count + 1
-                    MenuElements[MenuDepth].elements[count] = {
-                        label = GetString("lscustoms_default"),
-                        index = -1,
-                        rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
-                    }
+                    if not modCfg.noDefault then
+                        count = count + 1
+                        MenuElements[MenuDepth].elements[count] = {
+                            label = GetString("lscustoms_default"),
+                            index = -1,
+                            price = CurrentLSCustoms and 0,
+                            rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
+                        }
+                    end
 
                     for i = 0, GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) - 1 do
-                        local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
-                        if name ~= nil then
+                        local label 
+                        if modCfg.displayAsLevels then
+                            label = GetString("lscustoms_level", i + 1)
+                        else
+                            local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
+                            if name then
+                                label = GetLabelText(name)
+                            end
+                        end
+
+                        if label then
                             count = count + 1
                             local isCurrent<const> = i == currentMod and true or nil
                             local price = nil
@@ -222,7 +233,7 @@ PrepareMenuElements = function(data)
                             end
 
                             MenuElements[MenuDepth].elements[count] = {
-                                label = GetLabelText(name),
+                                label = label,
                                 index = i,
                                 rightBadgeName = isCurrent and "Car" ,
                                 price = price,
@@ -230,6 +241,43 @@ PrepareMenuElements = function(data)
                             }
                         end
                     end
+
+                elseif modCfg.type == "toggle" then
+                    local IsOn<const> = IsToggleModOn(CurrentVehicleData.vehicle, modCfg.mod)
+                    -- Add the disable button
+                    count = count + 1
+                    MenuElements[MenuDepth].elements[count] = {
+                        label = GetString("lscustoms_disable"),
+                        toggle = false,
+                        rightBadgeName = not IsOn and "Car" or "Tick",
+                    }
+
+                    -- Add the enable button
+                    local price = nil
+                    -- Price only if the mod is not the current one, and we are in the context of a shop
+                    if not isCurrent and CurrentLSCustoms then
+                        price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                    end
+                    count = count + 1
+                    MenuElements[MenuDepth].elements[count] = {
+                        label = GetString("lscustoms_enable"),
+                        toggle = true,
+                        price = price,
+                        rightBadgeName = IsOn and "Car",
+                    }
+
+                elseif modCfg.type == "color" then
+                    -- TODO
+                    
+                elseif modCfg.type == "wheels" then
+                    -- TODO
+
+                elseif modCfg.type == "horn" then
+                    -- TODO
+
+                elseif modCfg.type == "neon" then
+                    -- TODO
+
                 end
                 --#endregion Prepare mod menu
             else

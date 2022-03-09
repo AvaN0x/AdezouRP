@@ -103,6 +103,46 @@ Config.LSCustoms = {
         },
     },
     Mods = {
+        modArmor = {
+            priceMultiplier = 0.01,
+            type = "mod",
+            mod = 16,
+            displayAsLevels = true,
+            noDefault = true
+        },
+        modBrakes = {
+            priceMultiplier = 0.01,
+            type = "mod",
+            mod = 12,
+            displayAsLevels = true,
+            noDefault = true
+        },
+        modEngine = {
+            priceMultiplier = 0.01,
+            type = "mod",
+            mod = 11,
+            displayAsLevels = true,
+            noDefault = true
+        },
+        modSuspension = {
+            priceMultiplier = 0.01,
+            type = "mod",
+            mod = 15,
+            displayAsLevels = true,
+            noDefault = true
+        },
+        modTransmission = {
+            priceMultiplier = 0.01,
+            type = "mod",
+            mod = 13,
+            displayAsLevels = true,
+            noDefault = true
+        },
+        modTurbo = {
+            priceMultiplier = 0.01,
+            type = "toggle",
+            mod = 18
+        },
         modSpoilers = {
             priceMultiplier = 0.01,
             -- staticPrice = 10000,
@@ -130,16 +170,6 @@ Config.LSCustoms = {
             target = "tyreSmoke"
             -- also set modSmokeEnabled
         },
-        modArmor = {
-            priceMultiplier = 0.01,
-            type = "mod",
-            mod = 16
-        },
-        modBrakes = {
-            priceMultiplier = 0.01,
-            type = "mod",
-            mod = 12
-        },
         modFrontBumper = {
             priceMultiplier = 0.01,
             type = "mod",
@@ -149,11 +179,6 @@ Config.LSCustoms = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 2
-        },
-        modEngine = {
-            priceMultiplier = 0.01,
-            type = "mod",
-            mod = 11
         },
         modExhaust = {
             priceMultiplier = 0.01,
@@ -375,21 +400,6 @@ Config.LSCustoms = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 6
-        },
-        modSuspension = {
-            priceMultiplier = 0.01,
-            type = "mod",
-            mod = 15
-        },
-        modTransmission = {
-            priceMultiplier = 0.01,
-            type = "mod",
-            mod = 13
-        },
-        modTurbo = {
-            priceMultiplier = 0.01,
-            type = "toggle",
-            mod = 18
         },
         windowTint = {
             priceMultiplier = 0.01,
