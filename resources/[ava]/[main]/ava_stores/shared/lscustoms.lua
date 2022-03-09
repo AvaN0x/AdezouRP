@@ -107,36 +107,31 @@ Config.LSCustoms = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 16,
-            displayAsLevels = true,
-            noDefault = true
+            displayAsLevels = true
         },
         modBrakes = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 12,
-            displayAsLevels = true,
-            noDefault = true
+            displayAsLevels = true
         },
         modEngine = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 11,
-            displayAsLevels = true,
-            noDefault = true
+            displayAsLevels = true
         },
         modSuspension = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 15,
-            displayAsLevels = true,
-            noDefault = true
+            displayAsLevels = true
         },
         modTransmission = {
             priceMultiplier = 0.01,
             type = "mod",
             mod = 13,
-            displayAsLevels = true,
-            noDefault = true
+            displayAsLevels = true
         },
         modTurbo = {
             priceMultiplier = 0.01,
