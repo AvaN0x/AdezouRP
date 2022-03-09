@@ -158,7 +158,8 @@ end
 
 ---Will prepare the menu elements of the next sub menu
 ---@param data? table|string|nil
-PrepareMenuElements = function(data)
+---@param newSubtitle string|nil
+PrepareMenuElements = function(data, newSubtitle)
     if data then
         -- We prepare the next sub menu
         if MenuDepth then
@@ -171,6 +172,10 @@ PrepareMenuElements = function(data)
             MenuDepth = MenuDepth + 1
         else
             MenuDepth = 1
+        end
+
+        if newSubtitle then
+            MainLSCustomsMenu.Subtitle = newSubtitle
         end
 
         local count = 0
@@ -220,6 +225,9 @@ PrepareMenuElements = function(data)
                             local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
                             if name then
                                 label = GetLabelText(name)
+                                if label == "NULL" then
+                                    label = newSubtitle and GetString("lscustoms_mod_name_number", newSubtitle, i) or GetString("lscustoms_mod_number", i)
+                                end
                             end
                         end
 
@@ -321,8 +329,7 @@ function RageUI.PoolMenus:LSCustomsMenu()
                     Items:AddButton(element.label, element.desc, { RightLabel = element.menu and "→→→" or element.rightLabel, RightBadge = element.rightBadgeName and RageUI.BadgeStyle[element.rightBadgeName] }, function(onSelected)
                         if onSelected then
                             if element.menu or element.mod then
-                                PrepareMenuElements(element.menu or element.mod)
-                                MainLSCustomsMenu.Subtitle = element.label
+                                PrepareMenuElements(element.menu or element.mod, element.label)
                             else
                                 print("should apply") -- TODO
                             end
