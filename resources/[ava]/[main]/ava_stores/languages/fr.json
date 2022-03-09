@@ -255,7 +255,7 @@
     "vehicleshop_makename_not_found": "Inconnu",
     "vehicleshop_loading_model": "Chargement du modèle...",
     "vehicleshop_outofstock": "Ce véhicule est hors stock, veuillez en choisir un autre.",
-    "vehicleshop_cannot_have_more_vehicles": "Vous ne pouvez pas avoir plus que %d véhicules à votre nom.",
+    "vehicleshop_cannot_have_more_vehicles": "Vous ne pouvez pas avoir plus de %d véhicules à votre nom.",
     "vehicleshop_category_compacts": "Compactes",
     "vehicleshop_category_compacts_desc": "Les forces de l'ordre ont la liberté de fouiller et de saisir les véhicules sans plaques.",
     "vehicleshop_category_sedans": "Berlines",
