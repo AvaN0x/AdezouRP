@@ -315,6 +315,7 @@ PrepareMenuElements = function(data, newSubtitle)
                 MainLSCustomsMenu.Pagination.Minimum = MenuElements[MenuDepth].PaginationMinimum
                 MainLSCustomsMenu.Pagination.Maximum = MenuElements[MenuDepth].PaginationMaximum
                 MainLSCustomsMenu.Index = MenuElements[MenuDepth].Index
+                MainLSCustomsMenu.NewIndex = MenuElements[MenuDepth].Index
             end)
         end
     end
