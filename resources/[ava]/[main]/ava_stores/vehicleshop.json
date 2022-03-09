@@ -2347,12 +2347,98 @@
         "1": {
             "dinghy": {
                 "category": "boats",
-                "quantity": 10,
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy3": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy4": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "jetmax": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "marquis": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark3": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "speeder": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "speeder2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "squalo": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "suntrap": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "toro": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "toro2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "tropic": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "tropic2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "longfin": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark2": {
+                "category": "emergency",
+                "quantity": 0,
+                "hidden": true,
                 "price": 10000
             },
             "predator": {
                 "category": "emergency",
-                "quantity": 10,
+                "quantity": 0,
                 "hidden": true,
                 "price": 10000
             }
@@ -2360,14 +2446,129 @@
         "2": {
             "alphaz1": {
                 "category": "planes",
-                "quantity": 10,
+                "quantity": 0,
+                "price": 10000
+            },
+            "besra": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "cuban800": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dodo": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "microlight": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "miljet": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "nimbus": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seabreeze": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "shamal": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "stunt": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "velum": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "velum2": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "vestra": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "luxor": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "luxor2": {
+                "category": "planes",
+                "quantity": 0,
                 "price": 10000
             }
         },
         "3": {
             "buzzard2": {
                 "category": "helis",
-                "quantity": 10,
+                "quantity": 0,
+                "price": 10000
+            },
+            "frogger": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "havok": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "maverick": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seasparrow": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "supervolito": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "supervolito2": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "swift": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "swift2": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "volatus": {
+                "category": "helis",
+                "quantity": 0,
                 "price": 10000
             }
         }

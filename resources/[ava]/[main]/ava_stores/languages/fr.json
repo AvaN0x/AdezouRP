@@ -240,7 +240,7 @@
     "po_add_outfit": "Ajouter une tenue",
     "po_add_outfit_subtitle": "Ajouter une tenue à vos tenues sauvegardées",
     "press_open_sell_vehicle": "Appuyez sur ~INPUT_CONTEXT~ pour négocier la vente de votre véhicule",
-    "sellvehicle_not_in_vehicle_or_driver": "Vous devez être dans un véhicule et en être le conducteur pour pouvoir négocier la vente de votre véhicule.",
+    "sellvehicle_not_in_vehicle_or_driver": "Vous devez être dans un véhicule et en être le conducteur pour pouvoir négocier la vente de celui-ci.",
     "sellvehicle_cannot_sell_this_vehicle_here": "Vous ne pouvez pas vendre ce véhicule ici.",
     "sellvehicle_want_to_sell_title": "~r~Vente de véhicule~s~",
     "sellvehicle_want_to_sell_firstline": "Est-ce que vous souhaitez ~r~vendre~s~ votre véhicule ?",
