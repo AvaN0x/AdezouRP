@@ -276,6 +276,7 @@ function RageUIMenus:ResetIndex()
     self.Pagination.Minimum = 1
     self.Pagination.Maximum = self.Pagination.Total
     self.Index = 1
+    self.NewIndex = 1
 end
 
 
