@@ -17,8 +17,8 @@ files {
 shared_scripts {
     "@ava_core/shared/language.lua",
     "config.lua",
-    "shared/lscustoms.lua",
     "shared/vehicleshop.lua",
+    "shared/lscustoms.lua",
 }
 
 client_scripts {

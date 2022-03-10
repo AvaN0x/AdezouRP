@@ -717,7 +717,7 @@ Config.Stores = {
     LSCustoms = {
         Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
         Name = "Los Santos Customs",
-        Coord = vector3(-1150.34, -2011.13, 12.25),
+        Coord = vector3(-1157.75, -2013.92, 12.21),
         Size = { x = 2.0, y = 2.0, z = 2.0 },
         Color = { r = 201, g = 24, b = 30, a = 128 },
         Marker = 27,

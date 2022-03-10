@@ -7,6 +7,8 @@ Config.LSCustoms = {
     MinimumBodyHealth = 950.0,
     MinimumEngineHealth = 950.0,
 
+    AllowedJobsToPay = { mechanic = true },
+
     Menu = {
         {
             label = GetString("lscustoms_aesthetics"),

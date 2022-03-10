@@ -9,12 +9,15 @@ local MenuDepth = nil
 local MenuElements = nil
 
 local CurrentLSCustoms = nil
+local CurrentLSCustomsName = nil
+local CurrentJobToPay = nil
 local CurrentVehicleData = nil
 
 function LSCustoms()
     local store = Config.Stores[CurrentZoneName]
     if not store or not exports.ava_core:canOpenMenu() then return end
 
+    CurrentLSCustomsName = CurrentZoneName
     OpenLSCustomsMenu(store, store.Subtitle, store.Title.textureName, store.Title.textureDirectory)
 end
 
@@ -35,6 +38,8 @@ CloseLSCustomsMenu = function()
     end
     -- Clear variables
     CurrentLSCustoms = nil
+    CurrentLSCustomsName = nil
+    CurrentJobToPay = nil
     CurrentVehicleData = nil
     MenuDepth = nil
     MenuElements = nil
@@ -56,7 +61,7 @@ AddEventHandler("ava_core:client:canOpenMenu", function()
     end
 end)
 
-OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirectory)
+OpenLSCustomsMenu = function(store, jobToPay)
     -- Check if the player is in a vehicle and is the driver
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
     if not isInVehicle or seat ~= -1 then
@@ -65,7 +70,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
         return
     end
 
-    local vehiclePrice, vehicleName = exports.ava_stores:GetVehiclePriceFromModel(GetEntityModel(vehicle))
+    local vehiclePrice, vehicleName = GetVehiclePriceFromModel(GetEntityModel(vehicle))
     print(vehiclePrice, vehicleName)
 
     -- Check vehicle health
@@ -78,12 +83,13 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     RageUI.CloseAll()
 
     -- Set menu title and banner
-    MainLSCustomsMenu.Sprite.Dictionary = titleTextureDirectory or "avaui"
-    MainLSCustomsMenu.Sprite.Texture = titleTexture or "avaui_title_adezou"
-    MainLSCustomsMenu.Subtitle = menuName or GetString("lscustoms_menu")
+    MainLSCustomsMenu.Sprite.Dictionary = store?.Title?.textureDirectory or "avaui"
+    MainLSCustomsMenu.Sprite.Texture = store?.Title?.textureName or "avaui_title_adezou"
+    MainLSCustomsMenu.Subtitle = store?.Subtitle or GetString("lscustoms_menu")
 
     -- Initialize needed data for the menu
     CurrentLSCustoms = store
+    CurrentJobToPay = jobToPay
     CurrentVehicleData = {
         vehicle = vehicle,
         modsdata = exports.ava_core:GetVehicleModsData(vehicle),
@@ -111,6 +117,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     RageUI.Visible(MainLSCustomsMenu, true)
 end
 RegisterNetEvent("ava_stores:client:OpenLSCustoms", OpenLSCustomsMenu)
+exports("OpenLSCustomsMenu", OpenLSCustomsMenu)
 
 MainLSCustomsMenu.Closed = function()
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, CurrentVehicleData.modsdata)
@@ -377,17 +384,20 @@ function RageUI.PoolMenus:LSCustomsMenu()
                             if element.menu or element.mod then
                                 -- Submenu
                                 PrepareMenuElements(element.menu or element.mod, element.label)
-                            else
-                                -- Validate element
+
+                            elseif CurrentVehicleData.modsdata[element.modName] ~= element.value then
+                                -- Validate element only if different from actual
                                 local modsdata = exports.ava_core:GetVehicleModsData(CurrentVehicleData.vehicle)
 
                                 -- Prevent player from moving in the menu while he pays
                                 MainLSCustomsMenu.Controls.Back.Enabled = false
                                 MainLSCustomsMenu.Controls.Select.Enabled = false
-                                
+
                                 -- Thread to prevent the menu from freezing
                                 Citizen.CreateThread(function ()
-                                    if exports.ava_core:TriggerServerCallback("ava_stores:server:payLSCustoms", element.modName) then
+                                    if exports.ava_core:TriggerServerCallback("ava_stores:server:payLSCustoms", VehToNet(CurrentVehicleData.vehicle),
+                                        element.modName, CurrentLSCustomsName, CurrentJobToPay)
+                                    then
                                         ReloadCurrentMenuWithValue(element.value)
                                         CurrentVehicleData.modified = true
                                         CurrentVehicleData.modsdata = modsdata
