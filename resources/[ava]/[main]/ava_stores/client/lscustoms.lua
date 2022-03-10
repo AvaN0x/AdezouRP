@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local CloseLSCustomsMenu, PrepareMenuElements, ToggleVehicleDoors
+local CloseLSCustomsMenu, PrepareMenuElements, ToggleVehicleDoors, ReloadCurrentMenuWithValue
 
 --- Menu Depth is used to keep track of how many layers/menus we're in
 local MenuDepth = nil
@@ -110,6 +110,7 @@ OpenLSCustomsMenu = function(store, menuName, titleTexture, titleTextureDirector
     -- Show menu
     RageUI.Visible(MainLSCustomsMenu, true)
 end
+RegisterNetEvent("ava_stores:client:OpenLSCustoms", OpenLSCustomsMenu)
 
 MainLSCustomsMenu.Closed = function()
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, CurrentVehicleData.modsdata)
@@ -212,6 +213,7 @@ PrepareMenuElements = function(data, newSubtitle)
                         modName = data,
                         value = -1,
                         price = CurrentLSCustoms and 0,
+                        default = true,
                         rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
                     }
 
@@ -233,8 +235,8 @@ PrepareMenuElements = function(data, newSubtitle)
                             count = count + 1
                             local isCurrent<const> = i == currentMod and true or nil
                             local price = nil
-                            -- Price only if the mod is not the current one, and we are in the context of a shop
-                            if not isCurrent and CurrentLSCustoms then
+                            -- Price only if we are in the context of a shop
+                            if CurrentLSCustoms then
                                 price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
                             end
 
@@ -257,13 +259,14 @@ PrepareMenuElements = function(data, newSubtitle)
                         label = GetString("lscustoms_disable"),
                         modName = data,
                         value = false,
+                        default = true,
                         rightBadgeName = not IsOn and "Car" or "Tick",
                     }
 
                     -- Add the enable button
                     local price = nil
-                    -- Price only if the mod is not the current one, and we are in the context of a shop
-                    if not isCurrent and CurrentLSCustoms then
+                    -- Price only if we are in the context of a shop
+                    if CurrentLSCustoms then
                         price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
                     end
                     count = count + 1
@@ -273,6 +276,7 @@ PrepareMenuElements = function(data, newSubtitle)
                         value = true,
                         price = price,
                         rightBadgeName = IsOn and "Car",
+                        rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
                     }
 
                 elseif modCfg.type == "color" then
@@ -322,7 +326,7 @@ end
 
 ---Apply element to vehicle
 ---@param name string
----@param value table|string|boolean|number
+---@param value any
 local function ApplyElement(name, value)
     local data = {}
     data[name] = value
@@ -333,6 +337,19 @@ local function ApplyElement(name, value)
     end
 
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, data)
+end
+
+---Reload the current menu elements to match the new value
+---@param value any
+ReloadCurrentMenuWithValue = function(value)
+    local elements<const> = MenuElements[MenuDepth]?.elements
+    if elements then
+        for i = 1, #elements do
+            if elements[i]?.value ~= nil then
+                elements[i].rightBadgeName = elements[i].value == value and "Car" or (elements[i].default and "Tick")
+            end
+        end
+    end
 end
 
 function RageUI.PoolMenus:LSCustomsMenu()
@@ -353,14 +370,33 @@ function RageUI.PoolMenus:LSCustomsMenu()
                         RightBadge = element.rightBadgeName and RageUI.BadgeStyle[element.rightBadgeName]
                     }, function(onSelected, onEnter)
                         if onEnter and element?.modName then
+                            -- Apply element
                             ApplyElement(element.modName, element.value)
+
                         elseif onSelected then
                             if element.menu or element.mod then
+                                -- Submenu
                                 PrepareMenuElements(element.menu or element.mod, element.label)
                             else
-                                print("should apply") -- TODO
-                                -- CurrentVehicleData.modified = true
-                                CurrentVehicleData.modsdata = exports.ava_core:GetVehicleModsData(CurrentVehicleData.vehicle)
+                                -- Validate element
+                                local modsdata = exports.ava_core:GetVehicleModsData(CurrentVehicleData.vehicle)
+
+                                -- Prevent player from moving in the menu while he pays
+                                MainLSCustomsMenu.Controls.Back.Enabled = false
+                                MainLSCustomsMenu.Controls.Select.Enabled = false
+                                
+                                -- Thread to prevent the menu from freezing
+                                Citizen.CreateThread(function ()
+                                    if exports.ava_core:TriggerServerCallback("ava_stores:server:payLSCustoms", element.modName) then
+                                        ReloadCurrentMenuWithValue(element.value)
+                                        CurrentVehicleData.modified = true
+                                        CurrentVehicleData.modsdata = modsdata
+                                        exports.ava_core:ShowNotification(GetString("lscustoms_element_applied"))
+                                    end
+                                    -- Bring back controls
+                                    MainLSCustomsMenu.Controls.Back.Enabled = true
+                                    MainLSCustomsMenu.Controls.Select.Enabled = true
+                                end)
                             end
                         end
                     end, hasSubMenu and MainLSCustomsMenu)
