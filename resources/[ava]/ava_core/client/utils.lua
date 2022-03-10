@@ -686,13 +686,13 @@ AVA.SetVehicleModsData = function(vehicle, data)
     if data.modArmor then
         SetVehicleMod(vehicle, 16, data.modArmor, false)
     end
-    if data.modTurbo then
+    if data.modTurbo ~= nil then
         ToggleVehicleMod(vehicle, 18, data.modTurbo)
     end
-    if data.modSmokeEnabled then
+    if data.modSmokeEnabled ~= nil then
         ToggleVehicleMod(vehicle, 20, data.modSmokeEnabled)
     end
-    if data.modXenon then
+    if data.modXenon ~= nil then
         ToggleVehicleMod(vehicle, 22, data.modXenon)
     end
     if data.modXenonColour then
