@@ -95,6 +95,8 @@ OpenLSCustomsMenu = function(store, jobToPay)
         modsdata = exports.ava_core:GetVehicleModsData(vehicle),
         modified = false,
         price = vehiclePrice,
+        totalSpent = 0,
+        totalSpentStr = "0",
         name = vehicleName,
     }
     MenuDepth = nil
@@ -110,6 +112,20 @@ OpenLSCustomsMenu = function(store, jobToPay)
         while CurrentVehicleData do
             Wait(0)
             DisableControlAction(0, 75, true) -- INPUT_VEH_EXIT
+
+            -- Draw total spent amount
+            if CurrentLSCustoms and CurrentVehicleData.totalSpentStr then
+                SetTextColour(255, 255, 255, 255)
+                SetTextFont(0)
+                SetTextScale(0.34, 0.34)
+                SetTextRightJustify(true)
+                SetTextWrap(0.76, 0.98)
+                SetTextOutline()
+                SetTextEntry("STRING")
+                
+                AddTextComponentSubstringPlayerName(GetString("lscustoms_total_spent", CurrentVehicleData.totalSpentStr or "0"))
+                DrawText(0.80, 0.92)
+            end
         end
     end)
 
@@ -402,6 +418,10 @@ function RageUI.PoolMenus:LSCustomsMenu()
                                         CurrentVehicleData.modified = true
                                         CurrentVehicleData.modsdata = modsdata
                                         exports.ava_core:ShowNotification(GetString("lscustoms_element_applied"))
+                                        
+                                        -- Reload informations about total spent
+                                        CurrentVehicleData.totalSpent = CurrentVehicleData.totalSpent + element.price
+                                        CurrentVehicleData.totalSpentStr = exports.ava_core:FormatNumber(CurrentVehicleData.totalSpent)
                                     end
                                     -- Bring back controls
                                     MainLSCustomsMenu.Controls.Back.Enabled = true
