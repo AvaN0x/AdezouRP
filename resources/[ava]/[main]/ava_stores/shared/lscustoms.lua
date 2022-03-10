@@ -7,6 +7,7 @@ Config.LSCustoms = {
     MinimumBodyHealth = 950.0,
     MinimumEngineHealth = 950.0,
 
+    JobPartPaid = 0.8,
     AllowedJobsToPay = { mechanic = true },
 
     Menu = {

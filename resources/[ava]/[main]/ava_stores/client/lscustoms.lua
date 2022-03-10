@@ -89,7 +89,7 @@ OpenLSCustomsMenu = function(store, jobToPay)
 
     -- Initialize needed data for the menu
     CurrentLSCustoms = store
-    CurrentJobToPay = jobToPay
+    CurrentJobToPay = Config.LSCustoms.AllowedJobsToPay[jobToPay] and jobToPay
     CurrentVehicleData = {
         vehicle = vehicle,
         modsdata = exports.ava_core:GetVehicleModsData(vehicle),
@@ -122,7 +122,7 @@ OpenLSCustomsMenu = function(store, jobToPay)
                 SetTextWrap(0.76, 0.98)
                 SetTextOutline()
                 SetTextEntry("STRING")
-                
+
                 AddTextComponentSubstringPlayerName(GetString("lscustoms_total_spent", CurrentVehicleData.totalSpentStr or "0"))
                 DrawText(0.80, 0.92)
             end
@@ -265,6 +265,8 @@ PrepareMenuElements = function(data, newSubtitle)
 
                             MenuElements[MenuDepth].elements[count] = {
                                 label = label,
+                                desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
+                                    exports.ava_core:FormatNumber(math.floor(price * Config.LSCustoms.JobPartPaid + 0.5))),
                                 modName = data,
                                 value = i,
                                 rightBadgeName = isCurrent and "Car" ,
@@ -295,6 +297,8 @@ PrepareMenuElements = function(data, newSubtitle)
                     count = count + 1
                     MenuElements[MenuDepth].elements[count] = {
                         label = GetString("lscustoms_enable"),
+                        desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
+                            exports.ava_core:FormatNumber(math.floor(price * Config.LSCustoms.JobPartPaid + 0.5))),
                         modName = data,
                         value = true,
                         price = price,
@@ -418,7 +422,7 @@ function RageUI.PoolMenus:LSCustomsMenu()
                                         CurrentVehicleData.modified = true
                                         CurrentVehicleData.modsdata = modsdata
                                         exports.ava_core:ShowNotification(GetString("lscustoms_element_applied"))
-                                        
+
                                         -- Reload informations about total spent
                                         CurrentVehicleData.totalSpent = CurrentVehicleData.totalSpent + element.price
                                         CurrentVehicleData.totalSpentStr = exports.ava_core:FormatNumber(CurrentVehicleData.totalSpent)

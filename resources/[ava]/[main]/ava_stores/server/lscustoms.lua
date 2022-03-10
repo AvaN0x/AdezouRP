@@ -33,6 +33,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
     else
         -- cash
         if jobToPay and Config.LSCustoms.AllowedJobsToPay[jobToPay] then
+            local jobPrice = math.floor(price * Config.LSCustoms.JobPartPaid + 0.5)
             -- job
             print("job cash", price, jobToPay) -- TODO
         else
