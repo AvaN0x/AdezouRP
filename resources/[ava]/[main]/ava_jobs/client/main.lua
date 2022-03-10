@@ -370,7 +370,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.Zones) do
                     if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
                 end
@@ -379,7 +379,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.ProcessZones) do
                     if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
                 end
@@ -388,7 +388,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.ProcessMenuZones) do
                     if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
                 end
@@ -397,7 +397,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.SellZones) do
                     if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
                 end
@@ -406,7 +406,7 @@ Citizen.CreateThread(function()
                 for k, v in pairs(job.BuyZones) do
                     if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) and v.Allowed then
                         DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
-                            v.Color.b, 100, false, true, 2, false, false, false, false)
+                            v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         foundMarker = true
                     end
                 end
@@ -415,16 +415,16 @@ Citizen.CreateThread(function()
         if Config.JobCenter ~= nil then
             local v = Config.JobCenter
             if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) then
-                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
-                    false, true, 2, false, false, false, false)
+                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b,
+                    v.Color.a or 100, false, true, 2, false, false, false, false)
                 foundMarker = true
             end
         end
         if Config.BankManagment ~= nil and playerIsAManager then
             local v = Config.BankManagment
             if (v.Marker ~= nil and #(playerCoords - v.Coord) < Config.DrawDistance) then
-                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b, 100,
-                    false, true, 2, false, false, false, false)
+                DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g, v.Color.b,
+                    v.Color.a or 100, false, true, 2, false, false, false, false)
                 foundMarker = true
             end
         end
@@ -614,6 +614,9 @@ Citizen.CreateThread(function()
                             --     end
                         elseif CurrentZoneValue.Action then
                             CurrentZoneValue.Action()
+
+                        elseif CurrentZoneValue.LSCustom then
+                            exports.ava_stores:OpenLSCustomsMenu(CurrentZoneValue, CurrentJobName)
                         end
                     elseif CurrentZoneCategory == "field" then
                         Harvest(fieldObjects[CurrentJobName], CurrentZoneValue)
