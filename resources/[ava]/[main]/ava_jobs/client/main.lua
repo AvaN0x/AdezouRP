@@ -569,8 +569,16 @@ AddEventHandler("ava_jobs:hasEnteredMarker", function(jobName, zoneName, zoneCat
 end)
 
 AddEventHandler("ava_jobs:hasExitedMarker", function(jobName, zoneName, zoneCategory)
-    RageUI.CloseAllInternal()
+    -- In some cases, we have to close a menu from another script
+    if not CurrentActionEnabled and CurrentZoneValue and CurrentZoneValue.LSCustom then
+        RageUI.CloseAll()
+    else
+        RageUI.CloseAllInternal()
+    end
+    CurrentJobName = nil
     CurrentZoneName = nil
+    CurrentZoneCategory = nil
+    CurrentZoneValue = nil
 end)
 
 ------------------
