@@ -2,7 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local CloseLSCustomsMenu, PrepareMenuElements, ToggleVehicleDoors, ReloadCurrentMenuWithValue
+local CloseLSCustomsMenu, PrepareMenuElements, ToggleVehicleDoors, ReloadCurrentMenuWithValue, ValuesDeepEquals
+local HardcodedLists
 
 --- Menu Depth is used to keep track of how many layers/menus we're in
 local MenuDepth = nil
@@ -232,7 +233,7 @@ PrepareMenuElements = function(data, newSubtitle)
                     -- Add default mod
                     count = count + 1
                     MenuElements[MenuDepth].elements[count] = {
-                        label = GetString("lscustoms_default"),
+                        label = GetString("lscustoms_stock"),
                         modName = data,
                         value = -1,
                         price = CurrentLSCustoms and 0,
@@ -244,6 +245,11 @@ PrepareMenuElements = function(data, newSubtitle)
                         local label
                         if modCfg.displayAsLevels then
                             label = GetString("lscustoms_level", i + 1)
+                        elseif modCfg.mod == 14 then
+                            label = HardcodedLists["horn"][i]
+                            if not label then
+                                label = GetString("lscustoms_horn_number", i + 1)
+                            end
                         else
                             local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
                             if name then
@@ -306,16 +312,40 @@ PrepareMenuElements = function(data, newSubtitle)
                         rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
                     }
 
+                elseif modCfg.type == "list" then
+                    local list<const> = HardcodedLists[modCfg.target]
+                    local currentValue<const> = CurrentVehicleData.modsdata[data]
+
+                    if list and currentValue then
+                        for i = 1, #list do
+                            local elt<const> = list[i]
+
+                            local isCurrent<const> = ValuesDeepEquals(elt.value, currentValue) and true or nil
+                            local price = nil
+                            -- Price only if we are in the context of a shop
+                            if CurrentLSCustoms and not elt.default then
+                                price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                            end
+
+                            count = count + 1
+                            MenuElements[MenuDepth].elements[count] = {
+                                label = elt.label,
+                                desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
+                                exports.ava_core:FormatNumber(math.floor(price * Config.LSCustoms.JobPartPaid + 0.5))),
+                                modName = data,
+                                value = elt.value,
+                                default = elt.default,
+                                rightBadgeName = isCurrent and "Car" or (elt.default and "Tick"),
+                                price = price,
+                                rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
+                            }
+                        end
+                    end
+
                 elseif modCfg.type == "color" then
                     -- TODO
 
                 elseif modCfg.type == "wheels" then
-                    -- TODO
-
-                elseif modCfg.type == "horn" then
-                    -- TODO
-
-                elseif modCfg.type == "neon" then
                     -- TODO
 
                 end
@@ -359,8 +389,15 @@ local function ApplyElement(name, value)
     data[name] = value
 
     -- Specific cases
-    if name == "tyreSmokeColor" then
+    if name == "neonColor" then
+        data.neonEnabled = (value[1] == 0 and value[2] == 0 and value[3] == 0)
+            and { false, false, false, false }
+            or { true, true, true, true }
+    elseif name == "tyreSmokeColor" then
+        -- data.modSmokeEnabled = (value[1] ~= 255 and value[2] ~= 255 and value[3] ~= 255)
         data.modSmokeEnabled = true
+        ToggleVehicleMod(CurrentVehicleData.vehicle, 20, data.modSmokeEnabled)
+        print(json.encode(data))
     end
 
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, data)
@@ -373,7 +410,7 @@ ReloadCurrentMenuWithValue = function(value)
     if elements then
         for i = 1, #elements do
             if elements[i]?.value ~= nil then
-                elements[i].rightBadgeName = elements[i].value == value and "Car" or (elements[i].default and "Tick")
+                elements[i].rightBadgeName = ValuesDeepEquals(elements[i].value, value) and "Car" or (elements[i].default and "Tick")
             end
         end
     end
@@ -424,7 +461,7 @@ function RageUI.PoolMenus:LSCustomsMenu()
                                         exports.ava_core:ShowNotification(GetString("lscustoms_element_applied"))
 
                                         -- Reload informations about total spent
-                                        CurrentVehicleData.totalSpent = CurrentVehicleData.totalSpent + element.price
+                                        CurrentVehicleData.totalSpent = CurrentVehicleData.totalSpent + (element.price or 0)
                                         CurrentVehicleData.totalSpentStr = exports.ava_core:FormatNumber(CurrentVehicleData.totalSpent)
                                     end
                                     -- Bring back controls
@@ -451,3 +488,154 @@ ToggleVehicleDoors = function()
         SetVehicleDoorsShut(CurrentVehicleData.vehicle, false)
     end
 end
+
+---Check if two values are equals, can compare two tabless
+---@param a any
+---@param b any
+---@return boolean
+ValuesDeepEquals = function(a, b)
+    if type(a) == "table" and type(b) == "table" then
+        for k, v in pairs(a) do
+            if not ValuesDeepEquals(v, b[k]) then
+                return false
+            end
+        end
+        return true
+    else
+        return a == b
+    end
+end
+
+--#region Hardcoded lists
+HardcodedLists = {}
+HardcodedLists["xenon"] = {
+    { value = 255, label = GetString("lscustoms_default"), default = true },
+    { value = 0, label = GetLabelText("CMOD_NEONCOL_0") },
+    { value = 1, label = GetLabelText("CMOD_NEONCOL_1") },
+    { value = 2, label = GetLabelText("CMOD_NEONCOL_2") },
+    { value = 3, label = GetLabelText("CMOD_NEONCOL_3") },
+    { value = 4, label = GetLabelText("CMOD_NEONCOL_4") },
+    { value = 5, label = GetLabelText("CMOD_NEONCOL_5") },
+    { value = 6, label = GetLabelText("CMOD_NEONCOL_6") },
+    { value = 7, label = GetLabelText("CMOD_NEONCOL_7") },
+    { value = 8, label = GetLabelText("CMOD_NEONCOL_8") },
+    { value = 9, label = GetLabelText("CMOD_NEONCOL_9") },
+    { value = 10, label = GetLabelText("CMOD_NEONCOL_10") },
+    { value = 11, label = GetLabelText("CMOD_NEONCOL_11") },
+    { value = 12, label = GetLabelText("CMOD_NEONCOL_12") }
+}
+
+HardcodedLists["neon"] = {
+    { value = {0, 0, 0}, label = GetString("lscustoms_disable"), default = true },
+    { value = { 255, 255, 255 }, label = GetLabelText("CMOD_NEONCOL_0") },
+    { value = { 2, 21, 255 }, label = GetLabelText("CMOD_NEONCOL_1") },
+    { value = { 3, 83, 255 }, label = GetLabelText("CMOD_NEONCOL_2") },
+    { value = { 0, 255, 140 }, label = GetLabelText("CMOD_NEONCOL_3") },
+    { value = { 94, 255, 1 }, label = GetLabelText("CMOD_NEONCOL_4") },
+    { value = { 255, 255, 0 }, label = GetLabelText("CMOD_NEONCOL_5") },
+    { value = { 255, 150, 5 }, label = GetLabelText("CMOD_NEONCOL_6") },
+    { value = { 255, 62, 0 }, label = GetLabelText("CMOD_NEONCOL_7") },
+    { value = { 255, 0, 0 }, label = GetLabelText("CMOD_NEONCOL_8") },
+    { value = { 255, 50, 100 }, label = GetLabelText("CMOD_NEONCOL_9") },
+    { value = { 255, 5, 190 }, label = GetLabelText("CMOD_NEONCOL_10") },
+    { value = { 35, 1, 255 }, label = GetLabelText("CMOD_NEONCOL_11") },
+    { value = { 15, 3, 255 }, label = GetLabelText("CMOD_NEONCOL_12") }
+}
+
+HardcodedLists["tyreSmokeColor"] = {
+    { value = {254, 254, 254}, label = GetString("lscustoms_disable"), default = true },
+    { value = { 244, 65, 65 }, label = GetString("lscustoms_color_red") },
+    { value = { 244, 167, 66 }, label = GetString("lscustoms_color_orange") },
+    { value = { 244, 217, 65 }, label = GetString("lscustoms_color_yellow") },
+    { value = { 181, 120, 0 }, label = GetString("lscustoms_color_gold") },
+    { value = { 158, 255, 84 }, label = GetString("lscustoms_color_light_green") },
+    { value = { 44, 94, 5 }, label = GetString("lscustoms_color_dark_green") },
+    { value = { 65, 211, 244 }, label = GetString("lscustoms_color_light_blue") },
+    { value = { 24, 54, 163 }, label = GetString("lscustoms_color_dark_blue") },
+    { value = { 108, 24, 192 }, label = GetString("lscustoms_color_purple") },
+    { value = { 192, 24, 172 }, label = GetString("lscustoms_color_pink") },
+    { value = { 1, 1, 1 }, label = GetString("lscustoms_color_black") }
+}
+
+HardcodedLists["horn"] = {
+    [-1] = GetLabelText("CMOD_HRN_0"),
+    [0] = GetLabelText("CMOD_HRN_TRK"),
+    [1] = GetLabelText("CMOD_HRN_COP"),
+    [2] = GetLabelText("CMOD_HRN_CLO"),
+    [3] = GetLabelText("CMOD_HRN_MUS1"),
+    [4] = GetLabelText("CMOD_HRN_MUS2"),
+    [5] = GetLabelText("CMOD_HRN_MUS3"),
+    [6] = GetLabelText("CMOD_HRN_MUS4"),
+    [7] = GetLabelText("CMOD_HRN_MUS5"),
+    [8] = GetLabelText("CMOD_HRN_SAD"),
+    [9] = GetLabelText("HORN_CLAS1"),
+    [10] = GetLabelText("HORN_CLAS2"),
+    [11] = GetLabelText("HORN_CLAS3"),
+    [12] = GetLabelText("HORN_CLAS4"),
+    [13] = GetLabelText("HORN_CLAS5"),
+    [14] = GetLabelText("HORN_CLAS6"),
+    [15] = GetLabelText("HORN_CLAS7"),
+    [16] = GetLabelText("HORN_CNOTE_C0"),
+    [17] = GetLabelText("HORN_CNOTE_D0"),
+    [18] = GetLabelText("HORN_CNOTE_E0"),
+    [19] = GetLabelText("HORN_CNOTE_F0"),
+    [20] = GetLabelText("HORN_CNOTE_G0"),
+    [21] = GetLabelText("HORN_CNOTE_A0"),
+    [22] = GetLabelText("HORN_CNOTE_B0"),
+    [23] = GetLabelText("HORN_CNOTE_C1"),
+    [24] = GetLabelText("HORN_HIPS1"),
+    [25] = GetLabelText("HORN_HIPS2"),
+    [26] = GetLabelText("HORN_HIPS3"),
+    [27] = GetLabelText("HORN_HIPS4"),
+    [28] = GetLabelText("HORN_INDI_1"),
+    [29] = GetLabelText("HORN_INDI_2"),
+    [30] = GetLabelText("HORN_INDI_3"),
+    [31] = GetLabelText("HORN_INDI_4"),
+    [32] = GetLabelText("HORN_LUXE2"),
+    [33] = GetLabelText("HORN_LUXE1"),
+    [34] = GetLabelText("HORN_LUXE3"),
+    [35] = GetLabelText("HORN_LUXE2") .. " (2)", -- same as 32, but this one auto stop on first loop
+    [36] = GetLabelText("HORN_LUXE1") .. " (2)", -- same as 33, but this one auto stop on first loop
+    [37] = GetLabelText("HORN_LUXE3") .. " (2)", -- same as 34, but this one auto stop on first loop
+    [38] = GetLabelText("HORN_HWEEN1"),
+    [39] = GetLabelText("HORN_HWEEN1") .. " (2)", -- same as 38, but this one auto stop on first loop
+    [40] = GetLabelText("HORN_HWEEN2"),
+    [41] = GetLabelText("HORN_HWEEN2") .. " (2)", -- same as 40, but this one auto stop on first loop
+    [42] = GetLabelText("HORN_LOWRDER1"),
+    [43] = GetLabelText("HORN_LOWRDER1") .. " (2)", -- same as 43, but this one auto stop on first loop
+    [44] = GetLabelText("HORN_LOWRDER2"),
+    [45] = GetLabelText("HORN_LOWRDER2") .. " (2)", -- same as 44, but this one auto stop on first loop
+    [46] = GetLabelText("HORN_XM15_1"),
+    [47] = GetLabelText("HORN_XM15_1") .. " (2)", -- almost the same as 46, but this one auto stop on first loop
+    [48] = GetLabelText("HORN_XM15_2"),
+    [49] = GetLabelText("HORN_XM15_2") .. " (2)", -- almost the same as 48, but this one auto stop on first loop
+    [50] = GetLabelText("HORN_XM15_3"),
+    [51] = GetLabelText("HORN_XM15_3") .. " (2)", -- almost the same as 51, but this one auto stop on first loop
+    [52] = GetLabelText("CMOD_AIRHORN_01"),
+    [53] = GetLabelText("CMOD_AIRHORN_01") .. " (2)", -- same as 52, but this one auto stop on first loop
+    [54] = GetLabelText("CMOD_AIRHORN_02"),
+    [55] = GetLabelText("CMOD_AIRHORN_02") .. " (2)", -- same as 54, but this one auto stop on first loop
+    [56] = GetLabelText("CMOD_AIRHORN_03"),
+    [57] = GetLabelText("CMOD_AIRHORN_03") .. " (2)", -- same as 56, but this one auto stop on first loop
+}
+
+HardcodedLists["windowTint"] = {
+    { value = 4, label = GetString("lscustoms_stock"), default = true },
+    -- { value = 0, label = "None" },
+    { value = 3, label = GetString("lscustoms_windowTint_lightsmoke") },
+    { value = 2, label = GetString("lscustoms_windowTint_darksmoke") },
+    { value = 1, label = GetString("lscustoms_windowTint_pureblack") },
+    -- { value = 5, label = "Limo" },
+    { value = 6, label = GetString("lscustoms_windowTint_green") }
+}
+
+HardcodedLists["plateIndex"] = {
+    { value = 0, label = GetLabelText("CMOD_PLA_0") }, -- Blue on white 1
+    { value = 3, label = GetLabelText("CMOD_PLA_1") }, -- Blue on white 2
+    { value = 4, label = GetLabelText("CMOD_PLA_2") }, -- Blue on white 3
+    { value = 1, label = GetLabelText("CMOD_PLA_4") }, -- Yellow on black
+    { value = 2, label = GetLabelText("CMOD_PLA_3") }  -- Yellow on blue
+}
+
+--#endregion Hardcoded lists
+

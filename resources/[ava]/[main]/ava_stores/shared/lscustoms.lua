@@ -64,7 +64,6 @@ Config.LSCustoms = {
                     menu = {
                         { label = GetString("lscustoms_xenon"), mod = "modXenon" },
                         { label = GetString("lscustoms_xenonColour"), mod = "modXenonColour" },
-                        { label = GetString("lscustoms_neonEnabled"), mod = "neonEnabled" },
                         { label = GetString("lscustoms_neonColor"), mod = "neonColor" },
                     }
                 },
@@ -107,55 +106,54 @@ Config.LSCustoms = {
     },
     Mods = {
         modArmor = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 1.5, -- TODO price based on level
             type = "mod",
             mod = 16,
             displayAsLevels = true
         },
         modBrakes = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.08, -- TODO price based on level
             type = "mod",
             mod = 12,
             displayAsLevels = true
         },
         modEngine = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.25, -- TODO price based on level
             type = "mod",
             mod = 11,
             displayAsLevels = true
         },
         modSuspension = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.15, -- TODO price based on level
             type = "mod",
             mod = 15,
             displayAsLevels = true
         },
         modTransmission = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.23, -- TODO price based on level
             type = "mod",
             mod = 13,
             displayAsLevels = true
         },
         modTurbo = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.35,
             type = "toggle",
             mod = 18
         },
         modSpoilers = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.025,
             -- staticPrice = 10000,
-            -- Used to apply the custom
             type = "mod",
             mod = 0
         },
         wheelsColor = {
-            priceMultiplier = 0.01,
-            type = "color",
+            priceMultiplier = 0.008,
+            type = "color", -- TODO
             target = "wheels"
         },
         wheelsType = {
-            priceMultiplier = 0.01,
-            type = "wheels",
+            priceMultiplier = 0.05,
+            type = "wheels", -- TODO
             -- Somehow get type and select the correct wheel
             -- modFrontWheels
             -- modCustomTiresF
@@ -163,245 +161,242 @@ Config.LSCustoms = {
             -- modCustomTiresR
         },
         tyreSmokeColor = {
-            priceMultiplier = 0.01,
-            type = "color",
-            target = "tyreSmoke"
-            -- also set modSmokeEnabled
+            priceMultiplier = 0.008,
+            type = "list",
+            target = "tyreSmokeColor"
         },
         modFrontBumper = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.015,
             type = "mod",
             mod = 1
         },
         modRearBumper = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.014,
             type = "mod",
             mod = 2
         },
         modExhaust = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.011,
             type = "mod",
             mod = 4
         },
         modHood = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.012,
             type = "mod",
             mod = 7
         },
         modHorn = {
-            priceMultiplier = 0.01,
-            type = "horn",
+            priceMultiplier = 0.006,
+            type = "mod",
             mod = 14
         },
         modHydraulics = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.012,
             type = "mod",
             mod = 38
         },
         modDashboard = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.0115,
             type = "mod",
             mod = 29
         },
-        dashboardColor = {
-            priceMultiplier = 0.01,
-            type = "color",
-            target = "dashboard"
-        },
-        interiorColor = {
-            priceMultiplier = 0.01,
-            type = "color",
-            target = "interior"
-        },
         modSeats = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.012,
             type = "mod",
             mod = 32
         },
         modSteeringWheel = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.009,
             type = "mod",
             mod = 33
         },
         modShifterLeavers = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.006,
             type = "mod",
             mod = 34
         },
         modDial = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 30
         },
         modOrnaments = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 28
         },
         modDoorSpeaker = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 31
         },
         modPlaques = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 35
         },
         modSpeakers = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 36
         },
         modXenon = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "toggle",
             mod = 22
         },
         modXenonColour = {
-            priceMultiplier = 0.01,
-            type = "color",
+            priceMultiplier = 0.004,
+            type = "list",
             target = "xenon"
-        },
-        neonEnabled = {
-            priceMultiplier = 0.01,
-            type = "neon"
         },
         neonColor = {
             priceMultiplier = 0.01,
-            type = "color",
+            type = "list",
             target = "neon"
         },
         extras = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.015,
             type = "extras"
         },
         livery = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "livery"
         },
         modLivery = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 48
         },
         plateIndex = {
-            priceMultiplier = 0.01,
-            type = "plateIndex"
+            staticPrice = 3000,
+            type = "list",
+            target = "plateIndex"
         },
         modPlateHolder = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 25
         },
         modVanityPlate = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 26
         },
         modRoof = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.012,
             type = "mod",
             mod = 10
         },
-        colorPrimary = {
-            priceMultiplier = 0.01,
+        colorPrimary = { -- TODO
+            priceMultiplier = 0.009,
             type = "color",
             target = "primary"
         },
-        colorSecondary = {
-            priceMultiplier = 0.01,
+        colorSecondary = { -- TODO
+            priceMultiplier = 0.009,
             type = "color",
             target = "secondary"
         },
-        pearlescentColor = {
-            priceMultiplier = 0.01,
+        pearlescentColor = { -- TODO
+            priceMultiplier = 0.008,
             type = "color",
             target = "pearlescent"
         },
+        dashboardColor = {
+            priceMultiplier = 0.009,
+            type = "color", -- TODO
+            target = "dashboard"
+        },
+        interiorColor = {
+            priceMultiplier = 0.009,
+            type = "color", -- TODO
+            target = "interior"
+        },
         modSideSkirt = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 3
         },
         modTrunk = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 37
         },
         modTrimA = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 27
         },
         modTrimB = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 44
         },
         modEngineBlock = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 39
         },
         modAirFilter = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 40
         },
         modStruts = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 41
         },
         modArchCover = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 42
         },
         modAerials = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 43
         },
         modTank = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 45
         },
         modDoorL = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 46
         },
         modDoorR = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 47
         },
         modLightbar = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 49
         },
         modFender = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 8
         },
         modFrame = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 5
         },
         modGrille = {
-            priceMultiplier = 0.01,
+            priceMultiplier = 0.008,
             type = "mod",
             mod = 6
         },
         windowTint = {
-            priceMultiplier = 0.01,
-            type = "windowtint"
+            staticPrice = 2500,
+            type = "list",
+            target = "windowTint"
         },
     }
 }
