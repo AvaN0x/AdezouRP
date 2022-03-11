@@ -34,6 +34,10 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
     local needAce = group and group ~= ""
     RegisterCommand(name, function(source, args, rawCommand)
         local aPlayer = AVA.Players.GetPlayer(source)
+        if aPlayer then
+            TriggerEvent("ava_logs:server:log", { aPlayer.getDiscordTag(), "citizenid:" .. aPlayer.citizenId, "use_command", rawCommand })
+        end
+
         local commandString = callback(source, args, rawCommand, aPlayer)
 
         if aPlayer then
@@ -46,7 +50,7 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
         AVA.AddAce("group." .. group, "command." .. name)
     end
     if help or params then
-        table.insert(AVA.Commands.SuggestionList, {name = name, help = help or "", params = params})
+        table.insert(AVA.Commands.SuggestionList, { name = name, help = help or "", params = params })
     end
 
     dprint("Command added: ^3" .. name .. (needAce and "^7, requires principal ^3group." .. group or "") .. "^0")
@@ -61,41 +65,41 @@ end)
 --------------- Vehicles ---------------
 ----------------------------------------
 
-AVA.Commands.RegisterCommand({"spawnvehicle", "vehicle", "car", "plane", "boat", "bike", "heli"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "spawnvehicle", "vehicle", "car", "plane", "boat", "bike", "heli" }, "admin", function(source, args)
     if source > 0 and type(args[1]) == "string" then
         TriggerClientEvent("ava_core:client:spawnVehicle", source, args[1])
     end
-end, GetString("spawn_vehicle_help"), {{name = "vehicle", help = GetString("vehicle_name")}})
+end, GetString("spawn_vehicle_help"), { { name = "vehicle", help = GetString("vehicle_name") } })
 
-AVA.Commands.RegisterCommand({"deletevehicle", "dv", "removevehicle", "rv"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "deletevehicle", "dv", "removevehicle", "rv" }, "admin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:deleteVehicle", source)
     end
 end, GetString("delete_vehicle_help"))
 
-AVA.Commands.RegisterCommand({"repairvehicle", "repair", "r"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "repairvehicle", "repair", "r" }, "admin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:repairVehicle", source)
     end
 end, GetString("repair_vehicle_help"))
 
-AVA.Commands.RegisterCommand({"flipvehicle", "flipv"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "flipvehicle", "flipv" }, "admin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:flipVehicle", source)
     end
 end, GetString("flip_vehicle_help"))
 
-AVA.Commands.RegisterCommand({"tpnearestvehicle", "tpv"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "tpnearestvehicle", "tpv" }, "admin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:tpNearestVehicle", source)
     end
 end, GetString("tpnearestvehicle_help"))
 
-AVA.Commands.RegisterCommand({"tunevehiclepink", "ava"}, "superadmin", function(source, args)
+AVA.Commands.RegisterCommand({ "tunevehiclepink", "ava" }, "superadmin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:tuneVehiclePink", source, args[1])
     end
-end, GetString("tune_vehicle_pink_help"), {{name = "vehicle?", help = GetString("vehicle_name")}})
+end, GetString("tune_vehicle_pink_help"), { { name = "vehicle?", help = GetString("vehicle_name") } })
 
 AVA.Commands.RegisterCommand("getvehicledata", "admin", function(source, args)
     if source > 0 then
@@ -107,11 +111,11 @@ end, GetString("getvehicledata_help"))
 --------------- Anim ---------------
 ------------------------------------
 
-AVA.Commands.RegisterCommand({"anim", "a"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "anim", "a" }, "admin", function(source, args)
     if source > 0 and type(args[1]) == "string" and type(args[2]) == "string" then
         TriggerClientEvent("ava_core:client:anim", source, args[1], args[2])
     end
-end, GetString("anim_help"), {{name = "animdict", help = GetString("anim_dict")}, {name = "animname", help = GetString("anim_name")}})
+end, GetString("anim_help"), { { name = "animdict", help = GetString("anim_dict") }, { name = "animname", help = GetString("anim_name") } })
 
 ------------------------------------
 --------------- Kick ---------------
@@ -170,9 +174,9 @@ AVA.Commands.RegisterCommand("addaccount", "admin", function(source, args)
         return accountExist and GetString("addaccount_log", aTargetPlayer.getDiscordTag(), args[3], args[2])
     end
 end, GetString("addaccount_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "account", help = GetString("account_name")},
-    {name = "balance", help = GetString("account_balance_amount")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "account", help = GetString("account_name") },
+    { name = "balance", help = GetString("account_balance_amount") },
 })
 
 AVA.Commands.RegisterCommand("setaccount", "admin", function(source, args)
@@ -186,12 +190,12 @@ AVA.Commands.RegisterCommand("setaccount", "admin", function(source, args)
         return accountExist and GetString("setaccount_log", aTargetPlayer.getDiscordTag(), args[3], args[2])
     end
 end, GetString("setaccount_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "account", help = GetString("account_name")},
-    {name = "balance", help = GetString("account_balance_amount")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "account", help = GetString("account_name") },
+    { name = "balance", help = GetString("account_balance_amount") },
 })
 
-AVA.Commands.RegisterCommand({"removeaccount", "remaccount"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removeaccount", "remaccount" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
         return
     end
@@ -202,9 +206,9 @@ AVA.Commands.RegisterCommand({"removeaccount", "remaccount"}, "admin", function(
         return accountExist and GetString("removeaccount_log", aTargetPlayer.getDiscordTag(), args[3], args[2])
     end
 end, GetString("removeaccount_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "account", help = GetString("account_name")},
-    {name = "balance", help = GetString("account_balance_amount")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "account", help = GetString("account_name") },
+    { name = "balance", help = GetString("account_balance_amount") },
 })
 
 ----------------------------------------
@@ -228,9 +232,9 @@ AVA.Commands.RegisterCommand("addlicense", "admin", function(source, args)
         local licenseAdded = aTargetPlayer.addLicense(args[2])
         return licenseAdded and ("**" .. aTargetPlayer.getDiscordTag() .. "** received license named **" .. args[2] .. "**.")
     end
-end, "Add a license to a player", {{name = "player", help = GetString("player_id_or_zero")}, {name = "license", help = GetString("license_name")}})
+end, "Add a license to a player", { { name = "player", help = GetString("player_id_or_zero") }, { name = "license", help = GetString("license_name") } })
 
-AVA.Commands.RegisterCommand({"removelicense", "remlicense"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removelicense", "remlicense" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -240,7 +244,7 @@ AVA.Commands.RegisterCommand({"removelicense", "remlicense"}, "admin", function(
         local licenseRemoved = aTargetPlayer.removeLicense(args[2])
         return licenseRemoved and ("**" .. aTargetPlayer.getDiscordTag() .. "** got the license named **" .. args[2] .. "** removed.")
     end
-end, "Remove license from a player", {{name = "player", help = GetString("player_id_or_zero")}, {name = "license", help = GetString("license_name")}})
+end, "Remove license from a player", { { name = "player", help = GetString("player_id_or_zero") }, { name = "license", help = GetString("license_name") } })
 
 AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
@@ -253,9 +257,9 @@ AVA.Commands.RegisterCommand("setlicensepoints", "admin", function(source, args)
         return success and ("**" .. aTargetPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Set quantity of points from a player license", {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = GetString("license_name")},
-    {name = "quantity", help = "Quantity of points"},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "license", help = GetString("license_name") },
+    { name = "quantity", help = "Quantity of points" },
 })
 
 AVA.Commands.RegisterCommand("addlicensepoints", "admin", function(source, args)
@@ -269,12 +273,12 @@ AVA.Commands.RegisterCommand("addlicensepoints", "admin", function(source, args)
         return success and ("**" .. aTargetPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Add points to a player license", {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = GetString("license_name")},
-    {name = "quantity", help = "Quantity of points"},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "license", help = GetString("license_name") },
+    { name = "quantity", help = "Quantity of points" },
 })
 
-AVA.Commands.RegisterCommand({"removelicensepoints", "remlicensepoints"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removelicensepoints", "remlicensepoints" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
         return
     end
@@ -285,9 +289,9 @@ AVA.Commands.RegisterCommand({"removelicensepoints", "remlicensepoints"}, "admin
         return success and ("**" .. aTargetPlayer.getDiscordTag() .. "** now has **" .. quantity .. "** points to its license named **" .. args[2] .. "**.")
     end
 end, "Remove points from a player license", {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "license", help = GetString("license_name")},
-    {name = "quantity", help = "Quantity of points"},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "license", help = GetString("license_name") },
+    { name = "quantity", help = "Quantity of points" },
 })
 
 ------------------------------------
@@ -310,7 +314,7 @@ AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
         if not cfgJob or cfgJob.isGang then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("job_do_not_exist") } })
 
         else
             if aTargetPlayer.canAddAnotherJob() or aTargetPlayer.hasJob(args[2]) then
@@ -318,17 +322,17 @@ AVA.Commands.RegisterCommand("addjob", "admin", function(source, args)
                 return jobAdded and GetString("addjob_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)
             else
                 TriggerClientEvent("chat:addMessage", source,
-                    {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_player_cannot_have_more_jobs")}})
+                    { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("job_player_cannot_have_more_jobs") } })
             end
         end
     end
 end, GetString("addjob_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "job", help = GetString("job_name")},
-    {name = "grade?", help = GetString("job_grade_name")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "job", help = GetString("job_name") },
+    { name = "grade?", help = GetString("job_grade_name") },
 })
 
-AVA.Commands.RegisterCommand({"removejob", "remjob"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removejob", "remjob" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -337,13 +341,13 @@ AVA.Commands.RegisterCommand({"removejob", "remjob"}, "admin", function(source, 
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
         if not cfgJob or cfgJob.isGang then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("job_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("job_do_not_exist") } })
         else
             local jobRemoved = aTargetPlayer.removeJob(args[2])
             return jobRemoved and GetString("removejob_log", aTargetPlayer.getDiscordTag(), args[2])
         end
     end
-end, GetString("removejob_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "job", help = GetString("job_name")}})
+end, GetString("removejob_help"), { { name = "player", help = GetString("player_id_or_zero") }, { name = "job", help = GetString("job_name") } })
 
 AVA.Commands.RegisterCommand("addgang", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
@@ -354,7 +358,7 @@ AVA.Commands.RegisterCommand("addgang", "admin", function(source, args)
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
         if not cfgJob or not cfgJob.isGang then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("gang_do_not_exist") } })
 
         else
             if aTargetPlayer.canAddAnotherGang() or aTargetPlayer.hasJob(args[2]) then
@@ -362,17 +366,17 @@ AVA.Commands.RegisterCommand("addgang", "admin", function(source, args)
                 return jobAdded and GetString("addgang_log", aTargetPlayer.getDiscordTag(), args[2], finalGrade)
             else
                 TriggerClientEvent("chat:addMessage", source,
-                    {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_player_cannot_have_more_gangs")}})
+                    { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("gang_player_cannot_have_more_gangs") } })
             end
         end
     end
 end, GetString("addgang_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "gang", help = GetString("gang_name")},
-    {name = "grade?", help = GetString("gang_grade_name")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "gang", help = GetString("gang_name") },
+    { name = "grade?", help = GetString("gang_grade_name") },
 })
 
-AVA.Commands.RegisterCommand({"removegang", "remgang"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removegang", "remgang" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -381,13 +385,13 @@ AVA.Commands.RegisterCommand({"removegang", "remgang"}, "admin", function(source
     if aTargetPlayer then
         local cfgJob = AVAConfig.Jobs[args[2]]
         if not cfgJob or not cfgJob.isGang then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("gang_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("gang_do_not_exist") } })
         else
             local jobRemoved = aTargetPlayer.removeJob(args[2])
             return jobRemoved and GetString("removegang_log", aTargetPlayer.getDiscordTag(), args[2])
         end
     end
-end, GetString("removegang_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "gang", help = GetString("gang_name")}})
+end, GetString("removegang_help"), { { name = "player", help = GetString("player_id_or_zero") }, { name = "gang", help = GetString("gang_name") } })
 
 -----------------------------------------
 --------------- Inventory ---------------
@@ -398,7 +402,7 @@ AVA.Commands.RegisterCommand("clearinventory", "admin", function(source, args)
     if aTargetPlayer then
         aTargetPlayer.getInventory().clearInventory()
     end
-end, GetString("clearinventory_help"), {{name = "player?", help = GetString("player_id_or_empty")}})
+end, GetString("clearinventory_help"), { { name = "player?", help = GetString("player_id_or_empty") } })
 
 AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" and tonumber(args[3]) then
@@ -408,13 +412,13 @@ AVA.Commands.RegisterCommand("giveitem", "admin", function(source, args)
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
         if not aTargetPlayer.getInventory().addItem(args[2], tonumber(args[3]) or 1) then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("item_do_not_exist") } })
         end
     end
 end, GetString("give_item_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "itemName", help = GetString("item_name")},
-    {name = "quantity", help = GetString("quantity")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "itemName", help = GetString("item_name") },
+    { name = "quantity", help = GetString("quantity") },
 })
 
 AVA.Commands.RegisterCommand("giveitemtype", "superadmin", function(source, args)
@@ -434,13 +438,13 @@ AVA.Commands.RegisterCommand("giveitemtype", "superadmin", function(source, args
             end
         end
         if not found then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_type_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("item_type_do_not_exist") } })
         end
     end
 end, GetString("give_item_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "itemTypeName", help = GetString("item_type_name")},
-    {name = "quantity?", help = GetString("quantity")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "itemTypeName", help = GetString("item_type_name") },
+    { name = "quantity?", help = GetString("quantity") },
 })
 
 AVA.Commands.RegisterCommand("giveallitems", "superadmin", function(source, args)
@@ -451,9 +455,9 @@ AVA.Commands.RegisterCommand("giveallitems", "superadmin", function(source, args
             inventory.addItem(k, 1)
         end
     end
-end, GetString("give_all_items_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("give_all_items_help"), { { name = "player", help = GetString("player_id_or_empty") } })
 
-AVA.Commands.RegisterCommand({"removeitem", "remitem"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "removeitem", "remitem" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
     end
@@ -461,13 +465,13 @@ AVA.Commands.RegisterCommand({"removeitem", "remitem"}, "admin", function(source
     local aTargetPlayer = AVA.Players.GetPlayer(args[1] == "0" and source or args[1])
     if aTargetPlayer then
         if not aTargetPlayer.getInventory().removeItem(args[2], type(args[3]) == "string" and tonumber(args[3]) or 1) then
-            TriggerClientEvent("chat:addMessage", source, {color = {255, 0, 0}, multiline = false, args = {"AvaCore", GetString("item_do_not_exist")}})
+            TriggerClientEvent("chat:addMessage", source, { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("item_do_not_exist") } })
         end
     end
 end, GetString("remove_item_help"), {
-    {name = "player", help = GetString("player_id_or_zero")},
-    {name = "itemName", help = GetString("item_name")},
-    {name = "quantity", help = GetString("quantity")},
+    { name = "player", help = GetString("player_id_or_zero") },
+    { name = "itemName", help = GetString("item_name") },
+    { name = "quantity", help = GetString("quantity") },
 })
 
 AVA.Commands.RegisterCommand("createpickup", "admin", function(source, args)
@@ -481,7 +485,7 @@ AVA.Commands.RegisterCommand("createpickup", "admin", function(source, args)
 
         AVA.CreatePickup(vector3(playerCoords.x, playerCoords.y, playerCoords.z - 1.0), args[1], type(args[2]) == "string" and tonumber(args[2]) or 1)
     end
-end, GetString("create_pickup_help"), {{name = "itemName", help = GetString("item_name")}, {name = "quantity", help = GetString("quantity")}})
+end, GetString("create_pickup_help"), { { name = "itemName", help = GetString("item_name") }, { name = "quantity", help = GetString("quantity") } })
 
 -----------------------------------
 --------------- Ped ---------------
@@ -498,7 +502,7 @@ exports.ava_core:RegisterCommand("setped", "admin", function(source, args, rawCo
             end
         end
     end
-end, GetString("setped_help"), {{name = "player", help = GetString("player_id_or_zero")}, {name = "pedName", help = GetString("ped_name")}})
+end, GetString("setped_help"), { { name = "player", help = GetString("player_id_or_zero") }, { name = "pedName", help = GetString("ped_name") } })
 
 exports.ava_core:RegisterCommand("resetped", "admin", function(source, args, rawCommand, aPlayer)
     if type(args[1]) == "string" and args[1] ~= "0" and args[1] ~= tostring(source) then
@@ -511,13 +515,13 @@ exports.ava_core:RegisterCommand("resetped", "admin", function(source, args, raw
         TriggerClientEvent("ava_core:client:resetped", source)
         return GetString("resetped_log", aPlayer.getDiscordTag(), aPlayer.getDiscordTag())
     end
-end, GetString("resetped_help"), {{name = "player", help = GetString("player_id_or_empty")}})
+end, GetString("resetped_help"), { { name = "player", help = GetString("player_id_or_empty") } })
 
 -----------------------------------------
 --------------- Teleports ---------------
 -----------------------------------------
 
-AVA.Commands.RegisterCommand({"tpcoords", "tp"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "tpcoords", "tp" }, "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" or type(args[3]) ~= "string" then
         return
     end
@@ -530,7 +534,7 @@ AVA.Commands.RegisterCommand({"tpcoords", "tp"}, "admin", function(source, args)
         TriggerClientEvent("ava_core:client:teleportToCoords", source, x, y, z)
         return GetString("tp_log", AVA.Utils.Vector3ToString(vector3(x, y, z)))
     end
-end, GetString("tp_help"), {{name = "x", help = "number[,]"}, {name = "y", help = "number[,]"}, {name = "z", help = "number[,] or empty"}})
+end, GetString("tp_help"), { { name = "x", help = "number[,]" }, { name = "y", help = "number[,]" }, { name = "z", help = "number[,] or empty" } })
 
 AVA.Commands.RegisterCommand("goto", "mod", function(source, args)
     if type(args[1]) ~= "string" or tostring(args[1]) == tostring(source) then
@@ -549,9 +553,9 @@ AVA.Commands.RegisterCommand("goto", "mod", function(source, args)
             end
         end
     end
-end, GetString("goto_help"), {{name = "player", help = GetString("player_id")}})
+end, GetString("goto_help"), { { name = "player", help = GetString("player_id") } })
 
-AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
+AVA.Commands.RegisterCommand({ "bring", "summon" }, "mod", function(source, args)
     if type(args[1]) ~= "string" or tostring(args[1]) == tostring(source) then
         return
     end
@@ -569,9 +573,9 @@ AVA.Commands.RegisterCommand({"bring", "summon"}, "mod", function(source, args)
             end
         end
     end
-end, GetString("summon_help"), {{name = "player", help = GetString("player_id")}})
+end, GetString("summon_help"), { { name = "player", help = GetString("player_id") } })
 
-AVA.Commands.RegisterCommand({"tpwaypoint", "tpw", "tpmarker", "tpm"}, "admin", function(source, args)
+AVA.Commands.RegisterCommand({ "tpwaypoint", "tpw", "tpmarker", "tpm" }, "admin", function(source, args)
     if source > 0 then
         TriggerClientEvent("ava_core:client:teleportToWaypoint", source)
         return GetString("tpwaypoint_log")
@@ -613,17 +617,17 @@ end)
 
 AVA.Commands.RegisterCommand("myid", "", function(source, args)
     if source > 0 then
-        TriggerClientEvent("chat:addMessage", source, {args = {GetString("myid_message", source)}})
+        TriggerClientEvent("chat:addMessage", source, { args = { GetString("myid_message", source) } })
     end
 end, GetString("myid_help"))
 
 AVA.Commands.RegisterCommand("phonenumber", "", function(source, args, rawCommand, aPlayer)
     if aPlayer then
-        TriggerClientEvent("chat:addMessage", source, {args = {GetString("phonenumber_message", aPlayer.phoneNumber)}})
+        TriggerClientEvent("chat:addMessage", source, { args = { GetString("phonenumber_message", aPlayer.phoneNumber) } })
     end
 end, GetString("myid_help"))
 
-AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args, rawCommand, aPlayer)
+AVA.Commands.RegisterCommand({ "announce", "annonce" }, "", function(source, args, rawCommand, aPlayer)
     if type(args[1]) ~= "string" then
         return
     end
@@ -631,9 +635,9 @@ AVA.Commands.RegisterCommand({"announce", "annonce"}, "", function(source, args,
     AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("announce_embed_by_staff", aPlayer and aPlayer.getDiscordTag() or "console"), message,
         0xFF0076)
     TriggerClientEvent("ava_core:client:announce", -1, message)
-end, GetString("announce_help"), {{name = "message", help = GetString("message")}})
+end, GetString("announce_help"), { { name = "message", help = GetString("message") } })
 
-AVA.Commands.RegisterCommand({"message", "msg", "pm", "dm"}, "mod", function(source, args, rawCommand, aPlayer)
+AVA.Commands.RegisterCommand({ "message", "msg", "pm", "dm" }, "mod", function(source, args, rawCommand, aPlayer)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" -- or tostring(args[1]) == tostring(source)
     then
         return
@@ -643,7 +647,7 @@ AVA.Commands.RegisterCommand({"message", "msg", "pm", "dm"}, "mod", function(sou
     local message<const> = table.concat(args, " ")
     TriggerClientEvent("ava_core:client:ShowNotification", targetId, message, nil, "ava_core_logo", GetString("message_title"),
         aPlayer and aPlayer.getDiscordTag() or "console", nil, "ava_core_logo")
-end, GetString("message_help"), {{name = "player", help = GetString("player_id")}, {name = "message", help = GetString("message")}})
+end, GetString("message_help"), { { name = "player", help = GetString("player_id") }, { name = "message", help = GetString("message") } })
 
 AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aPlayer)
     if not aPlayer or type(args[1]) ~= "string" then
@@ -655,10 +659,10 @@ AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aP
     AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName, source), message, 0xFFD767)
     -- Notify source
     TriggerClientEvent("chat:addMessage", source,
-        {color = {255, 60, 60}, multiline = false, args = {GetString("report_chat_prefix"), GetString("report_chat_message")}})
+        { color = { 255, 60, 60 }, multiline = false, args = { GetString("report_chat_prefix"), GetString("report_chat_message") } })
     -- Notify staff
     AVA.Utils.TriggerClientWithAceEvent("ava_core:client:staff_report", "ace.group.mod", playerName, source, message)
-end, GetString("report_help"), {{name = "message", help = GetString("message")}})
+end, GetString("report_help"), { { name = "message", help = GetString("message") } })
 
 AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand, aPlayer)
     if type(args[1]) == "string" and args[1] ~= "0" and args[1] ~= tostring(source) then
@@ -670,7 +674,7 @@ AVA.Commands.RegisterCommand("kill", "admin", function(source, args, rawCommand,
     else
         TriggerClientEvent("ava_core:client:kill", source)
     end
-end, GetString("kill_help"), {{name = "player?", help = GetString("player_id_or_empty")}})
+end, GetString("kill_help"), { { name = "player?", help = GetString("player_id_or_empty") } })
 
 AVA.Commands.RegisterCommand("ace", "superadmin", function(source, args, rawCommand, aPlayer)
     if aPlayer and args[1] then
