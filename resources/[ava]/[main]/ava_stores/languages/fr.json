@@ -384,6 +384,12 @@
     "lscustoms_fender": "Aile",
     "lscustoms_frame": "Cage",
     "lscustoms_grille": "Grille",
+    "lscustoms_colortype_rgb": "RGB",
+    "lscustoms_colortype_classic": "Classique",
+    "lscustoms_colortype_matte": "Matte",
+    "lscustoms_colortype_metal": "Métalisée",
+    "lscustoms_colortype_util": "Utilitaire",
+    "lscustoms_colortype_worn": "Terne",
     "lscustoms_windowTint_lightsmoke": "Fumé clair",
     "lscustoms_windowTint_darksmoke": "Fumé foncé",
     "lscustoms_windowTint_pureblack": "Limousine",
@@ -398,5 +404,8 @@
     "lscustoms_color_dark_blue": "Fumée de pneu bleu foncé",
     "lscustoms_color_purple": "Fumée de pneu violette",
     "lscustoms_color_pink": "Fumée de pneu rose",
-    "lscustoms_color_black": "Fumée de pneu noire"
+    "lscustoms_color_black": "Fumée de pneu noire",
+    "ls_customs_veh_color_off_white": "Blanc",
+    "ls_customs_veh_color_taxi_yellow": "Jaune taxi",
+    "ls_customs_veh_color_very_dark_blue": "Bleu très foncé"
 }

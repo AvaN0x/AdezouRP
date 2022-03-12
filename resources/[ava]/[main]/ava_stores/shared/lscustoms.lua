@@ -146,11 +146,6 @@ Config.LSCustoms = {
             type = "mod",
             mod = 0
         },
-        wheelsColor = {
-            priceMultiplier = 0.008,
-            type = "color", -- TODO
-            target = "wheels"
-        },
         wheelsType = {
             priceMultiplier = 0.05,
             type = "wheels", -- TODO
@@ -159,11 +154,6 @@ Config.LSCustoms = {
             -- modCustomTiresF
             -- modBackWheels
             -- modCustomTiresR
-        },
-        tyreSmokeColor = {
-            priceMultiplier = 0.008,
-            type = "list",
-            target = "tyreSmokeColor"
         },
         modFrontBumper = {
             priceMultiplier = 0.015,
@@ -245,16 +235,6 @@ Config.LSCustoms = {
             type = "toggle",
             mod = 22
         },
-        modXenonColour = {
-            priceMultiplier = 0.004,
-            type = "list",
-            target = "xenon"
-        },
-        neonColor = {
-            priceMultiplier = 0.01,
-            type = "list",
-            target = "neon"
-        },
         extras = {
             priceMultiplier = 0.015,
             type = "extras"
@@ -270,11 +250,6 @@ Config.LSCustoms = {
             type = "mod",
             mod = 48
         },
-        plateIndex = {
-            staticPrice = 3000,
-            type = "list",
-            target = "plateIndex"
-        },
         modPlateHolder = {
             priceMultiplier = 0.008,
             type = "mod",
@@ -289,31 +264,6 @@ Config.LSCustoms = {
             priceMultiplier = 0.012,
             type = "mod",
             mod = 10
-        },
-        colorPrimary = { -- TODO
-            priceMultiplier = 0.009,
-            type = "color",
-            target = "primary"
-        },
-        colorSecondary = { -- TODO
-            priceMultiplier = 0.009,
-            type = "color",
-            target = "secondary"
-        },
-        pearlescentColor = { -- TODO
-            priceMultiplier = 0.008,
-            type = "color",
-            target = "pearlescent"
-        },
-        dashboardColor = {
-            priceMultiplier = 0.009,
-            type = "color", -- TODO
-            target = "dashboard"
-        },
-        interiorColor = {
-            priceMultiplier = 0.009,
-            type = "color", -- TODO
-            target = "interior"
         },
         modSideSkirt = {
             priceMultiplier = 0.008,
@@ -395,10 +345,92 @@ Config.LSCustoms = {
             type = "mod",
             mod = 6
         },
+        tyreSmokeColor = {
+            priceMultiplier = 0.008,
+            type = "list",
+            target = "tyreSmokeColor"
+        },
+        modXenonColour = {
+            priceMultiplier = 0.004,
+            type = "list",
+            target = "xenon"
+        },
+        neonColor = {
+            priceMultiplier = 0.01,
+            type = "list",
+            target = "neon"
+        },
+        plateIndex = {
+            staticPrice = 3000,
+            type = "list",
+            target = "plateIndex"
+        },
         windowTint = {
             staticPrice = 2500,
             type = "list",
             target = "windowTint"
         },
+        colorPrimary = {
+            priceMultiplier = 0.007,
+            type = "color",
+            -- colors = { "classic", "matte", "metal", "util", "worn", "rgb" }
+            colors = { "classic", "matte", "metal", "util", "worn" }
+        },
+        colorSecondary = {
+            priceMultiplier = 0.007,
+            type = "color",
+            -- colors = { "classic", "matte", "metal", "util", "worn", "rgb" }
+            colors = { "classic", "matte", "metal", "util", "worn" }
+        },
+        pearlescentColor = {
+            priceMultiplier = 0.004,
+            type = "color",
+            colors = { "classic", "matte", "util", "worn" }
+        },
+        dashboardColor = {
+            priceMultiplier = 0.007,
+            type = "color",
+            colors = { "classic", "matte", "metal", "util", "worn" }
+        },
+        interiorColor = {
+            priceMultiplier = 0.007,
+            type = "color",
+            colors = { "classic", "matte", "metal", "util", "worn" }
+        },
+        wheelsColor = {
+            priceMultiplier = 0.008,
+            type = "color",
+            colors = { "classic", "matte", "metal", "util", "worn" }
+        },
+        rgb = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.005,
+            type = "colorType"
+        },
+        classic = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.003,
+            type = "colorType"
+        },
+        matte = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.0035,
+            type = "colorType"
+        },
+        metal = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.004,
+            type = "colorType"
+        },
+        util = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.003,
+            type = "colorType"
+        },
+        worn = {
+            -- Price will be added with the color mod price
+            priceMultiplier = 0.003,
+            type = "colorType"
+        }
     }
 }

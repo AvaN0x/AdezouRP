@@ -332,7 +332,29 @@ PrepareMenuElements = function(data, newSubtitle)
                         rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
                     }
 
-                elseif modCfg.type == "list" then
+                elseif modCfg.type == "color" then
+                    MenuElements[MenuDepth].colorMod = data
+                
+                    for i = 1, #modCfg.colors do
+                        count = count + 1
+                        MenuElements[MenuDepth].elements[count] = {
+                            label = GetString("lscustoms_colortype_" .. modCfg.colors[i]),
+                            mod = modCfg.colors[i],
+                        }
+                    end
+
+                elseif data == "rgb" and modCfg.type == "colorType" then
+                    local colorMod = MenuElements[MenuDepth - 1].colorMod
+                    -- TODO: Add support for RGB colors
+                    
+                elseif modCfg.type == "list" or modCfg.type == "colorType" then
+                    -- Special case for color types
+                    if modCfg.type == "colorType" then
+                        -- Target is current data, and data is previous color mod
+                        modCfg.target = data
+                        data = MenuElements[MenuDepth - 1].colorMod
+                    end
+
                     local list<const> = HardcodedLists[modCfg.target]
                     local currentValue<const> = CurrentVehicleData.modsdata[data]
 
@@ -345,6 +367,14 @@ PrepareMenuElements = function(data, newSubtitle)
                             -- Price only if we are in the context of a shop
                             if CurrentLSCustoms and not elt.default then
                                 price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                                if modCfg.type == "colorType" then
+                                    -- If the element is a color, we need to add the price that correspond to the mod
+                                    -- eg. classic primary color can have a different price than classic secondary color
+                                    local parentModCfg<const> = Config.LSCustoms.Mods[data]
+                                    if parentModCfg and (parentModCfg.staticPrice or parentModCfg.priceMultiplier) then
+                                        price = price + (parentModCfg.staticPrice or math.floor(CurrentVehicleData.price * parentModCfg.priceMultiplier + 0.5))
+                                    end
+                                end
                             end
 
                             count = count + 1
@@ -362,8 +392,8 @@ PrepareMenuElements = function(data, newSubtitle)
                         end
                     end
 
-                elseif modCfg.type == "color" then
-                    -- TODO
+                elseif modCfg.type == "colorType" then
+                    print(MenuElements[MenuDepth - 1].colorMod)
 
                 elseif modCfg.type == "wheels" then
                     -- TODO
@@ -658,5 +688,218 @@ HardcodedLists["plateIndex"] = {
     { value = 2, label = GetLabelText("CMOD_PLA_3") }  -- Yellow on blue
 }
 
+HardcodedLists["classic"] = {
+    { value = 0, label = GetLabelText("BLACK") },
+    { value = 1, label = GetLabelText("GRAPHITE") },
+    { value = 2, label = GetLabelText("BLACK_STEEL") },
+    { value = 3, label = GetLabelText("DARK_SILVER") },
+    { value = 4, label = GetLabelText("SILVER") },
+    { value = 5, label = GetLabelText("BLUE_SILVER") },
+    { value = 6, label = GetLabelText("ROLLED_STEEL") },
+    { value = 7, label = GetLabelText("SHADOW_SILVER") },
+    { value = 8, label = GetLabelText("STONE_SILVER") },
+    { value = 9, label = GetLabelText("MIDNIGHT_SILVER") },
+    { value = 10, label = GetLabelText("CAST_IRON_SIL") },
+    { value = 11, label = GetLabelText("ANTHR_BLACK") },
+
+    { value = 27, label = GetLabelText("RED") },
+    { value = 28, label = GetLabelText("TORINO_RED") },
+    { value = 29, label = GetLabelText("FORMULA_RED") },
+    { value = 30, label = GetLabelText("BLAZE_RED") },
+    { value = 31, label = GetLabelText("GRACE_RED") },
+    { value = 32, label = GetLabelText("GARNET_RED") },
+    { value = 33, label = GetLabelText("SUNSET_RED") },
+    { value = 34, label = GetLabelText("CABERNET_RED") },
+    { value = 35, label = GetLabelText("CANDY_RED") },
+    { value = 36, label = GetLabelText("SUNRISE_ORANGE") },
+    { value = 37, label = GetLabelText("GOLD") },
+    { value = 38, label = GetLabelText("ORANGE") },
+
+    { value = 49, label = GetLabelText("DARK_GREEN") },
+    { value = 50, label = GetLabelText("RACING_GREEN") },
+    { value = 51, label = GetLabelText("SEA_GREEN") },
+    { value = 52, label = GetLabelText("OLIVE_GREEN") },
+    { value = 53, label = GetLabelText("BRIGHT_GREEN") },
+    { value = 54, label = GetLabelText("PETROL_GREEN") },
+
+    { value = 61, label = GetLabelText("GALAXY_BLUE") },
+    { value = 62, label = GetLabelText("DARK_BLUE") },
+    { value = 63, label = GetLabelText("SAXON_BLUE") },
+    { value = 64, label = GetLabelText("BLUE") },
+    { value = 65, label = GetLabelText("MARINER_BLUE") },
+    { value = 66, label = GetLabelText("HARBOR_BLUE") },
+    { value = 67, label = GetLabelText("DIAMOND_BLUE") },
+    { value = 68, label = GetLabelText("SURF_BLUE") },
+    { value = 69, label = GetLabelText("NAUTICAL_BLUE") },
+    { value = 70, label = GetLabelText("ULTRA_BLUE") },
+    { value = 71, label = GetLabelText("PURPLE") },
+    { value = 72, label = GetLabelText("SPIN_PURPLE") },
+    { value = 73, label = GetLabelText("RACING_BLUE") },
+    { value = 74, label = GetLabelText("LIGHT_BLUE") },
+
+    { value = 88, label = GetLabelText("YELLOW") },
+    { value = 89, label = GetLabelText("RACE_YELLOW") },
+    { value = 90, label = GetLabelText("BRONZE") },
+    { value = 91, label = GetLabelText("FLUR_YELLOW") },
+    { value = 92, label = GetLabelText("LIME_GREEN") },
+
+    { value = 94, label = GetLabelText("UMBER_BROWN") },
+    { value = 95, label = GetLabelText("CREEK_BROWN") },
+    { value = 96, label = GetLabelText("CHOCOLATE_BROWN") },
+    { value = 97, label = GetLabelText("MAPLE_BROWN") },
+    { value = 98, label = GetLabelText("SADDLE_BROWN") },
+    { value = 99, label = GetLabelText("STRAW_BROWN") },
+    { value = 100, label = GetLabelText("MOSS_BROWN") },
+    { value = 101, label = GetLabelText("BISON_BROWN") },
+    { value = 102, label = GetLabelText("WOODBEECH_BROWN") },
+    { value = 103, label = GetLabelText("BEECHWOOD_BROWN") },
+    { value = 104, label = GetLabelText("SIENNA_BROWN") },
+    { value = 105, label = GetLabelText("SANDY_BROWN") },
+    { value = 106, label = GetLabelText("BLEECHED_BROWN") },
+    { value = 107, label = GetLabelText("CREAM") },
+
+    { value = 111, label = GetLabelText("WHITE") },
+    { value = 112, label = GetLabelText("FROST_WHITE") },
+
+    { value = 135, label = GetLabelText("HOT PINK") },
+    { value = 136, label = GetLabelText("SALMON_PINK") },
+    { value = 137, label = GetLabelText("PINK") },
+    { value = 138, label = GetLabelText("BRIGHT_ORANGE") },
+
+    { value = 141, label = GetLabelText("MIDNIGHT_BLUE") },
+    { value = 142, label = GetLabelText("MIGHT_PURPLE") },
+    { value = 143, label = GetLabelText("WINE_RED") },
+
+    { value = 145, label = GetLabelText("BRIGHT_PURPLE") },
+    { value = 146, label = GetString("ls_customs_veh_color_very_dark_blue") },
+    { value = 147, label = GetLabelText("BLACK_GRAPHITE") },
+
+    { value = 150, label = GetLabelText("LAVA_RED") }
+}
+
+HardcodedLists["matte"] = {
+    { value = 12, label = GetLabelText("BLACK") },
+    { value = 13, label = GetLabelText("GREY") },
+    { value = 14, label = GetLabelText("LIGHT_GREY") },
+
+    { value = 39, label = GetLabelText("RED") },
+    { value = 40, label = GetLabelText("DARK_RED") },
+    { value = 41, label = GetLabelText("ORANGE") },
+    { value = 42, label = GetLabelText("YELLOW") },
+
+    { value = 55, label = GetLabelText("LIME_GREEN") },
+
+    { value = 82, label = GetLabelText("DARK_BLUE") },
+    { value = 83, label = GetLabelText("BLUE") },
+    { value = 84, label = GetLabelText("MIDNIGHT_BLUE") },
+
+    { value = 128, label = GetLabelText("GREEN") },
+
+    { value = 148, label = GetLabelText("Purple") },
+    { value = 149, label = GetLabelText("MIGHT_PURPLE") },
+
+    { value = 151, label = GetLabelText("MATTE_FOR") },
+    { value = 152, label = GetLabelText("MATTE_OD") },
+    { value = 153, label = GetLabelText("MATTE_DIRT") },
+    { value = 154, label = GetLabelText("MATTE_DESERT") },
+    { value = 155, label = GetLabelText("MATTE_FOIL") }
+}
+
+HardcodedLists["metal"] = {
+    { value = 117, label = GetLabelText("BR_STEEL") },
+    { value = 118, label = GetLabelText("BR BLACK_STEEL")},
+    { value = 119, label = GetLabelText("BR_ALUMINIUM") },
+
+    { value = 158, label = GetLabelText("GOLD_P") },
+    { value = 159, label = GetLabelText("GOLD_S") },
+
+    { value = 120, label = GetLabelText("CHROME") }
+}
+
+HardcodedLists["util"] = {
+    { value = 15, label = GetLabelText("BLACK") },
+    { value = 16, label = GetLabelText("FMMC_COL1_1") },
+    { value = 17, label = GetLabelText("DARK_SILVER") },
+    { value = 18, label = GetLabelText("SILVER") },
+    { value = 19, label = GetLabelText("BLACK_STEEL") },
+    { value = 20, label = GetLabelText("SHADOW_SILVER") },
+
+    { value = 43, label = GetLabelText("DARK_RED") },
+    { value = 44, label = GetLabelText("RED") },
+    { value = 45, label = GetLabelText("GARNET_RED") },
+
+    { value = 56, label = GetLabelText("DARK_GREEN") },
+    { value = 57, label = GetLabelText("GREEN") },
+
+    { value = 75, label = GetLabelText("DARK_BLUE") },
+    { value = 76, label = GetLabelText("MIDNIGHT_BLUE") },
+    { value = 77, label = GetLabelText("SAXON_BLUE") },
+    { value = 78, label = GetLabelText("NAUTICAL_BLUE") },
+    { value = 79, label = GetLabelText("BLUE") },
+    { value = 80, label = GetLabelText("FMMC_COL1_13") },
+    { value = 81, label = GetLabelText("BRIGHT_PURPLE") },
+
+    { value = 93, label = GetLabelText("STRAW_BROWN") },
+
+    { value = 108, label = GetLabelText("UMBER_BROWN") },
+    { value = 109, label = GetLabelText("MOSS_BROWN") },
+    { value = 110, label = GetLabelText("SANDY_BROWN") },
+
+    { value = 122, label = GetString("ls_customs_veh_color_off_white") },
+
+    { value = 125, label = GetLabelText("BRIGHT_GREEN") },
+
+    { value = 127, label = GetLabelText("HARBOR_BLUE") },
+
+    { value = 134, label = GetLabelText("FROST_WHITE") },
+
+    { value = 139, label = GetLabelText("LIME_GREEN") },
+    { value = 140, label = GetLabelText("ULTRA_BLUE") },
+
+    { value = 144, label = GetLabelText("GREY") },
+
+    { value = 157, label = GetLabelText("LIGHT_BLUE") },
+
+    { value = 160, label = GetLabelText("YELLOW") }
+}
+
+HardcodedLists["worn"] = {
+    { value = 21, label = GetLabelText("BLACK") },
+    { value = 22, label = GetLabelText("GRAPHITE") },
+    { value = 23, label = GetLabelText("LIGHT_GREY") },
+    { value = 24, label = GetLabelText("SILVER") },
+    { value = 25, label = GetLabelText("BLUE_SILVER") },
+    { value = 26, label = GetLabelText("SHADOW_SILVER") },
+
+    { value = 46, label = GetLabelText("RED") },
+    { value = 47, label = GetLabelText("SALMON_PINK") },
+    { value = 48, label = GetLabelText("DARK_RED") },
+
+    { value = 58, label = GetLabelText("DARK_GREEN") },
+    { value = 59, label = GetLabelText("GREEN") },
+    { value = 60, label = GetLabelText("SEA_GREEN") },
+
+    { value = 85, label = GetLabelText("DARK_BLUE") },
+    { value = 86, label = GetLabelText("BLUE") },
+    { value = 87, label = GetLabelText("LIGHT_BLUE") },
+
+    { value = 113, label = GetLabelText("SANDY_BROWN") },
+    { value = 114, label = GetLabelText("BISON_BROWN") },
+    { value = 115, label = GetLabelText("CREEK_BROWN") },
+    { value = 116, label = GetLabelText("BLEECHED_BROWN") },
+
+    { value = 121, label = GetString("ls_customs_veh_color_off_white") },
+
+    { value = 123, label = GetLabelText("ORANGE") },
+    { value = 124, label = GetLabelText("SUNRISE_ORANGE") },
+
+    { value = 126, label = GetString("ls_customs_veh_color_taxi_yellow") },
+
+    { value = 129, label = GetLabelText("RACING_GREEN") },
+    { value = 130, label = GetLabelText("ORANGE") },
+    { value = 131, label = GetLabelText("WHITE") },
+    { value = 132, label = GetLabelText("FROST_WHITE") },
+    { value = 133, label = GetLabelText("OLIVE_GREEN") },
+}
 --#endregion Hardcoded lists
 
