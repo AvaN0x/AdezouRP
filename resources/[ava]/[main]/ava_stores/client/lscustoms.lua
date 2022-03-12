@@ -156,9 +156,12 @@ local function ShouldAddElementToMenu(element)
         -- Element is a mod, check if it has things that can be modified
         local modCfg<const> = Config.LSCustoms.Mods[element.mod]
         if modCfg.type == "mod" then
-            return GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) > 0
-        elseif modCfg.type == "livery" then
-            return GetVehicleLiveryCount(CurrentVehicleData.vehicle) > 0
+            if modCfg.mod == "livery" then
+                return GetVehicleLiveryCount(CurrentVehicleData.vehicle) > 0
+            else
+                return GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) > 0
+            end
+            
         elseif modCfg.type == "extras" then
             -- Check if an extra exist
             for i = 0, 14 do
@@ -228,57 +231,70 @@ PrepareMenuElements = function(data, newSubtitle)
                 --#region Prepare mod menu
                 if modCfg.type == "mod" then
                     -- Is a normal mod, iterate through all mods
-                    local currentMod<const> = GetVehicleMod(CurrentVehicleData.vehicle, modCfg.mod)
+                    local currentMod, modCount
+                    if modCfg.mod == "livery" then
+                        currentMod = GetVehicleLivery(CurrentVehicleData.vehicle)
+                        modCount = GetVehicleLiveryCount(CurrentVehicleData.vehicle)
+                    else
+                        currentMod = GetVehicleMod(CurrentVehicleData.vehicle, modCfg.mod)
+                        modCount = GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod)
+                    end
 
-                    -- Add default mod
-                    count = count + 1
-                    MenuElements[MenuDepth].elements[count] = {
-                        label = GetString("lscustoms_stock"),
-                        modName = data,
-                        value = -1,
-                        price = CurrentLSCustoms and 0,
-                        default = true,
-                        rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
-                    }
-
-                    for i = 0, GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) - 1 do
-                        local label
-                        if modCfg.displayAsLevels then
-                            label = GetString("lscustoms_level", i + 1)
-                        elseif modCfg.mod == 14 then
-                            label = HardcodedLists["horn"][i]
-                            if not label then
-                                label = GetString("lscustoms_horn_number", i + 1)
-                            end
-                        else
-                            local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
-                            if name then
-                                label = GetLabelText(name)
-                                if label == "NULL" then
-                                    label = newSubtitle and GetString("lscustoms_mod_name_number", newSubtitle, i + 1) or GetString("lscustoms_mod_number", i + 1)
-                                end
-                            end
+                    if currentMod and modCount then
+                        -- Add default mod
+                        if not modCfg.noDefault then
+                            count = count + 1
+                            MenuElements[MenuDepth].elements[count] = {
+                                label = GetString("lscustoms_stock"),
+                                modName = data,
+                                value = -1,
+                                price = CurrentLSCustoms and 0,
+                                default = true,
+                                rightBadgeName = (-1 == currentMod) and "Car" or "Tick",
+                            }
                         end
 
-                        if label then
-                            count = count + 1
-                            local isCurrent<const> = i == currentMod and true or nil
-                            local price = nil
-                            -- Price only if we are in the context of a shop
-                            if CurrentLSCustoms then
-                                price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                        for i = 0, modCount - 1 do
+                            local label
+                            if modCfg.displayAsLevels then
+                                label = GetString("lscustoms_level", i + 1)
+                            elseif modCfg.mod == "livery" then
+                                label = GetString("lscustoms_livery_number", i + 1)
+                            elseif modCfg.mod == 14 then
+                                label = HardcodedLists["horn"][i]
+                                if not label then
+                                    label = GetString("lscustoms_horn_number", i + 1)
+                                end
+                            else
+                                local name = GetModTextLabel(CurrentVehicleData.vehicle, modCfg.mod, i)
+                                if name then
+                                    label = GetLabelText(name)
+                                    if label == "NULL" then
+                                        label = newSubtitle and GetString("lscustoms_mod_name_number", newSubtitle, i + 1) or GetString("lscustoms_mod_number", i + 1)
+                                    end
+                                end
                             end
+                            
+                            if label then
+                                count = count + 1
+                                local isCurrent<const> = i == currentMod and true or nil
+                                local price = nil
+                                -- Price only if we are in the context of a shop
+                                if CurrentLSCustoms then
+                                    price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                                end
 
-                            MenuElements[MenuDepth].elements[count] = {
-                                label = label,
-                                desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
+                                MenuElements[MenuDepth].elements[count] = {
+                                    label = label,
+                                    desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
                                     exports.ava_core:FormatNumber(math.floor(price * Config.LSCustoms.JobPartPaid + 0.5))),
-                                modName = data,
-                                value = i,
-                                rightBadgeName = isCurrent and "Car" ,
-                                price = price,
-                                rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
-                            }
+                                    modName = data,
+                                    value = i,
+                                    rightBadgeName = isCurrent and "Car" ,
+                                    price = price,
+                                    rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
+                                }
+                            end
                         end
                     end
 
@@ -348,6 +364,9 @@ PrepareMenuElements = function(data, newSubtitle)
                 elseif modCfg.type == "wheels" then
                     -- TODO
 
+                elseif modCfg.type == "extras" then
+                    -- TODO
+
                 end
                 --#endregion Prepare mod menu
             else
@@ -396,8 +415,6 @@ local function ApplyElement(name, value)
     elseif name == "tyreSmokeColor" then
         -- data.modSmokeEnabled = (value[1] ~= 255 and value[2] ~= 255 and value[3] ~= 255)
         data.modSmokeEnabled = true
-        ToggleVehicleMod(CurrentVehicleData.vehicle, 20, data.modSmokeEnabled)
-        print(json.encode(data))
     end
 
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, data)

@@ -261,7 +261,9 @@ Config.LSCustoms = {
         },
         livery = {
             priceMultiplier = 0.008,
-            type = "livery"
+            type = "mod",
+            mod = "livery",
+            noDefault = true
         },
         modLivery = {
             priceMultiplier = 0.008,

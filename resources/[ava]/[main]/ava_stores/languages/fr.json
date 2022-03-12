@@ -310,6 +310,7 @@
     "lscustoms_toggle_vehicle_doors": "Ouvrir/Fermer les portes",
     "lscustoms_price_format": "$%s",
     "lscustoms_level": "Niveau %s",
+    "lscustoms_livery_number": "Motif %s",
     "lscustoms_horn_number": "Klaxon %s",
     "lscustoms_mod_name_number": "%s %s",
     "lscustoms_mod_number": "Modification %s",
