@@ -286,6 +286,9 @@ PrepareMenuElements = function(data, newSubtitle)
                                 -- Price only if we are in the context of a shop
                                 if CurrentLSCustoms then
                                     price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+                                    if modCfg.levelMultiplier then
+                                        price = price + math.floor(CurrentVehicleData.price * modCfg.levelMultiplier * (i + 1) + 0.5)
+                                    end
                                 end
 
                                 MenuElements[MenuDepth].elements[count] = {

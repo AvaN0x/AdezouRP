@@ -106,31 +106,36 @@ Config.LSCustoms = {
     },
     Mods = {
         modArmor = {
-            priceMultiplier = 1.5, -- TODO price based on level
+            priceMultiplier = 0.75,
+            levelMultiplier = 0.30,
             type = "mod",
             mod = 16,
             displayAsLevels = true
         },
         modBrakes = {
-            priceMultiplier = 0.08, -- TODO price based on level
+            priceMultiplier = 0.04,
+            levelMultiplier = 0.02,
             type = "mod",
             mod = 12,
             displayAsLevels = true
         },
         modEngine = {
-            priceMultiplier = 0.25, -- TODO price based on level
+            priceMultiplier = 0.12,
+            levelMultiplier = 0.04,
             type = "mod",
             mod = 11,
             displayAsLevels = true
         },
         modSuspension = {
-            priceMultiplier = 0.15, -- TODO price based on level
+            priceMultiplier = 0.10,
+            levelMultiplier = 0.02,
             type = "mod",
             mod = 15,
             displayAsLevels = true
         },
         modTransmission = {
-            priceMultiplier = 0.23, -- TODO price based on level
+            priceMultiplier = 0.10,
+            levelMultiplier = 0.035,
             type = "mod",
             mod = 13,
             displayAsLevels = true
