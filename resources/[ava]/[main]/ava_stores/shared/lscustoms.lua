@@ -80,7 +80,22 @@ Config.LSCustoms = {
                 {
                     label = GetString("lscustoms_wheels"),
                     menu = {
-                        { label = GetString("lscustoms_wheelsType"), mod = "wheelsType" },
+                        {
+                            label = GetString("lscustoms_frontWheels"), menu = {
+                                { label = GetString("lscustoms_wheelsSport"), mod = "modFrontWheelsSport" },
+                                { label = GetString("lscustoms_wheelsMuscle"), mod = "modFrontWheelsMuscle" },
+                                { label = GetString("lscustoms_wheelsLowrider"), mod = "modFrontWheelsLowrider" },
+                                { label = GetString("lscustoms_wheelsSUV"), mod = "modFrontWheelsSUV" },
+                                { label = GetString("lscustoms_wheelsOffRoad"), mod = "modFrontWheelsOffRoad" },
+                                { label = GetString("lscustoms_wheelsTuning"), mod = "modFrontWheelsTuning" },
+                                { label = GetString("lscustoms_wheelsBike"), mod = "modFrontWheelsBike" },
+                                { label = GetString("lscustoms_wheelsHighEnd"), mod = "modFrontWheelsHighEnd" },
+                                { label = GetString("lscustoms_wheelsBennys1"), mod = "modFrontWheelsBennys1" },
+                                { label = GetString("lscustoms_wheelsBennys2"), mod = "modFrontWheelsBennys2" },
+                                { label = GetString("lscustoms_wheelsOpenWheel"), mod = "lscustoms_wheelsOpenWheel" }
+                            }
+                        },
+                        { label = GetString("lscustoms_customTyres"), mod = "modCustomTyresF" },
                         { label = GetString("lscustoms_wheelColor"), mod = "wheelsColor" },
                         { label = GetString("lscustoms_tyreSmokeColor"), mod = "tyreSmokeColor" },
                     }
@@ -151,14 +166,86 @@ Config.LSCustoms = {
             type = "mod",
             mod = 0
         },
-        wheelsType = {
-            priceMultiplier = 0.05,
-            type = "wheels", -- TODO
-            -- Somehow get type and select the correct wheel
-            -- modFrontWheels
-            -- modCustomTiresF
-            -- modBackWheels
-            -- modCustomTiresR
+        modCustomTyresF = {
+            priceMultiplier = 0.01,
+            type = "toggle"
+        },
+        modFrontWheelsSport = {
+            priceMultiplier = 0.02,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 0
+        },
+        modFrontWheelsMuscle = {
+            priceMultiplier = 0.018,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 1
+        },
+        modFrontWheelsLowrider = {
+            priceMultiplier = 0.02,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 2
+        },
+        modFrontWheelsSUV = {
+            priceMultiplier = 0.018,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 3
+        },
+        modFrontWheelsOffRoad = {
+            priceMultiplier = 0.018,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 4
+        },
+        modFrontWheelsTuning = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 5
+        },
+        modFrontWheelsBike = {
+            priceMultiplier = 0.014,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 6
+        },
+        modFrontWheelsHighEnd = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 7
+        },
+        modFrontWheelsBennys1 = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 8
+        },
+        modFrontWheelsBennys2 = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 9
+        },
+        lscustoms_wheelsOpenWheel = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 10
         },
         modFrontBumper = {
             priceMultiplier = 0.015,

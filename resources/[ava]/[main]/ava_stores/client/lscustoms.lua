@@ -214,7 +214,6 @@ PrepareMenuElements = function(data, newSubtitle)
         local count = 0
         MenuElements[MenuDepth] = {elements = {}}
 
-        print(data)
         if type(data) == "table" then
             -- Submenu is a menu of elements
             for i = 1, #data do
@@ -236,6 +235,12 @@ PrepareMenuElements = function(data, newSubtitle)
                 --#region Prepare mod menu
                 if modCfg.type == "mod" then
                     -- Is a normal mod, iterate through all mods
+
+                    -- Special case, if mod is wheels, set the wheel type
+                    if modCfg.wheelType then
+                        exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, {wheels = modCfg.wheelType})
+                    end
+
                     local currentMod, modCount
                     if modCfg.mod == "livery" then
                         currentMod = GetVehicleLivery(CurrentVehicleData.vehicle)
@@ -307,7 +312,7 @@ PrepareMenuElements = function(data, newSubtitle)
                     end
 
                 elseif modCfg.type == "toggle" then
-                    local IsOn<const> = IsToggleModOn(CurrentVehicleData.vehicle, modCfg.mod)
+                    local IsOn<const> = modCfg.mod and IsToggleModOn(CurrentVehicleData.vehicle, modCfg.mod) or CurrentVehicleData.modsdata[data]
                     -- Add the disable button
                     count = count + 1
                     MenuElements[MenuDepth].elements[count] = {
@@ -397,8 +402,6 @@ PrepareMenuElements = function(data, newSubtitle)
                     end
 
 
-                elseif modCfg.type == "wheels" then
-                    -- TODO
 
                 elseif modCfg.type == "extras" then
                     MenuElements[MenuDepth].extraMenu = true
@@ -481,6 +484,9 @@ end
 ---@param value any
 local function ApplyElement(name, value)
     local data = {}
+    if Config.LSCustoms.Mods[name]?.modName then
+        name = Config.LSCustoms.Mods[name].modName
+    end
     data[name] = value
 
     -- Specific cases
@@ -489,8 +495,11 @@ local function ApplyElement(name, value)
             and { false, false, false, false }
             or { true, true, true, true }
     elseif name == "tyreSmokeColor" then
-        -- data.modSmokeEnabled = (value[1] ~= 255 and value[2] ~= 255 and value[3] ~= 255)
         data.modSmokeEnabled = true
+    elseif name == "modFrontWheels" then
+        data.modBackWheels = value
+    elseif name == "modCustomTyresF" then
+        data.modCustomTyresR = value
     end
 
     exports.ava_core:SetVehicleModsData(CurrentVehicleData.vehicle, data)
