@@ -2570,6 +2570,12 @@
                 "category": "helis",
                 "quantity": 0,
                 "price": 10000
+            },
+            "polmav": {
+                "category": "emergency",
+                "quantity": 0,
+                "hidden": true,
+                "price": 10000
             }
         }
     },

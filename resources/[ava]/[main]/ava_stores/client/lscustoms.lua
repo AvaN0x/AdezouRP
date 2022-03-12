@@ -72,7 +72,11 @@ OpenLSCustomsMenu = function(store, jobToPay)
     end
 
     local vehiclePrice, vehicleName = GetVehiclePriceFromModel(GetEntityModel(vehicle))
-    print(vehiclePrice, vehicleName)
+    if store and not vehiclePrice then
+        exports.ava_core:ShowNotification(GetString("lscustoms_cannot_custom_vehicle_without_price"))
+        CurrentActionEnabled = true
+        return
+    end
 
     -- Check vehicle health
     if GetVehicleBodyHealth(vehicle) < Config.LSCustoms.MinimumBodyHealth or GetVehicleEngineHealth(vehicle) < Config.LSCustoms.MinimumEngineHealth then
@@ -161,7 +165,7 @@ local function ShouldAddElementToMenu(element)
             else
                 return GetNumVehicleMods(CurrentVehicleData.vehicle, modCfg.mod) > 0
             end
-            
+
         elseif modCfg.type == "extras" then
             -- Check if an extra exist
             for i = 0, 14 do
