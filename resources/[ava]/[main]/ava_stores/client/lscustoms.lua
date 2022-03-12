@@ -214,6 +214,7 @@ PrepareMenuElements = function(data, newSubtitle)
         local count = 0
         MenuElements[MenuDepth] = {elements = {}}
 
+        print(data)
         if type(data) == "table" then
             -- Submenu is a menu of elements
             for i = 1, #data do
@@ -395,20 +396,58 @@ PrepareMenuElements = function(data, newSubtitle)
                         end
                     end
 
-                elseif modCfg.type == "colorType" then
-                    print(MenuElements[MenuDepth - 1].colorMod)
 
                 elseif modCfg.type == "wheels" then
                     -- TODO
 
                 elseif modCfg.type == "extras" then
-                    -- TODO
+                    MenuElements[MenuDepth].extraMenu = true
+                    for i = 0, 14 do
+                        if DoesExtraExist(CurrentVehicleData.vehicle, i) then
+                            count = count + 1
+                            MenuElements[MenuDepth].elements[count] = {
+                                label = GetString("lscustoms_extra_number", count),
+                                mod = i,
+                            }
+                        end
+                    end
 
                 end
                 --#endregion Prepare mod menu
             else
                 print("^8[LSCustoms] Mod \"" .. data .. "\" is missing from Config.LSCustoms.Mods^0")
             end
+        elseif MenuElements[MenuDepth - 1].extraMenu and Config.LSCustoms.Mods["extras"] then
+            -- The element is an extra that can be toggled
+            local modCfg<const> = Config.LSCustoms.Mods["extras"]
+            local IsOn<const> = IsVehicleExtraTurnedOn(CurrentVehicleData.vehicle, data)
+            -- Add the disable button
+            count = count + 1
+            MenuElements[MenuDepth].elements[count] = {
+                label = GetString("lscustoms_disable"),
+                modName = "extras",
+                value = { [tostring(data)] = 1 },
+                default = true,
+                rightBadgeName = not IsOn and "Car" or "Tick",
+            }
+
+            -- Add the enable button
+            local price = nil
+            -- Price only if we are in the context of a shop
+            if CurrentLSCustoms then
+                price = modCfg.staticPrice or math.floor(CurrentVehicleData.price * modCfg.priceMultiplier + 0.5)
+            end
+            count = count + 1
+            MenuElements[MenuDepth].elements[count] = {
+                label = GetString("lscustoms_enable"),
+                desc = (CurrentJobToPay and price) and GetString("lscustoms_job_pay_desc", exports.ava_core:FormatNumber(price),
+                    exports.ava_core:FormatNumber(math.floor(price * Config.LSCustoms.JobPartPaid + 0.5))),
+                modName = "extras",
+                value = { [tostring(data)] = 0 },
+                price = price,
+                rightBadgeName = IsOn and "Car",
+                rightLabel = price and GetString("lscustoms_price_format", exports.ava_core:FormatNumber(price))
+            }
         end
 
         -- Reset menu index

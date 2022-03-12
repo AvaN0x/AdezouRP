@@ -241,7 +241,7 @@ Config.LSCustoms = {
             mod = 22
         },
         extras = {
-            priceMultiplier = 0.015,
+            priceMultiplier = 0.005,
             type = "extras"
         },
         livery = {
