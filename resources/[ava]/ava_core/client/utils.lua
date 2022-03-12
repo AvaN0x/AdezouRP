@@ -531,9 +531,9 @@ AVA.GetVehicleModsData = function(vehicle)
         modXenonColour = GetVehicleXenonLightsColour(vehicle),
 
         modFrontWheels = GetVehicleMod(vehicle, 23),
-        modCustomTiresF = GetVehicleModVariation(vehicle, 23),
+        modCustomTyresF = GetVehicleModVariation(vehicle, 23),
         modBackWheels = GetVehicleMod(vehicle, 24),
-        modCustomTiresR = GetVehicleModVariation(vehicle, 24),
+        modCustomTyresR = GetVehicleModVariation(vehicle, 24),
 
         modPlateHolder = GetVehicleMod(vehicle, 25),
         modVanityPlate = GetVehicleMod(vehicle, 26),
@@ -698,11 +698,11 @@ AVA.SetVehicleModsData = function(vehicle, data)
     if data.modXenonColour then
         SetVehicleXenonLightsColour(vehicle, data.modXenonColour)
     end
-    if data.modFrontWheels then
-        SetVehicleMod(vehicle, 23, data.modFrontWheels, data.modCustomTiresF or false)
+    if data.modFrontWheels or data.modCustomTyresF ~= nil then
+        SetVehicleMod(vehicle, 23, data.modFrontWheels or GetVehicleMod(vehicle, 23), data.modCustomTyresF or false)
     end
-    if data.modBackWheels then
-        SetVehicleMod(vehicle, 24, data.modBackWheels, data.modCustomTiresR or false)
+    if data.modBackWheels or data.modCustomTyresR ~= nil then
+        SetVehicleMod(vehicle, 24, data.modBackWheels or GetVehicleMod(vehicle, 24), data.modCustomTyresR or false)
     end
     if data.modPlateHolder then
         SetVehicleMod(vehicle, 25, data.modPlateHolder, false)
