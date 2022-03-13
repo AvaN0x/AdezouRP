@@ -16,6 +16,7 @@ RegisterNetEvent("ava_jobs:server:bank_managment:deposit", function(jobName, amo
         else
             inventory.removeItem("cash", amount)
             accounts.addAccountBalance("bank", amount)
+            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "deposit_job", "amount:" .. amount, "job:" .. jobName })
         end
     end
 end)
@@ -36,6 +37,7 @@ RegisterNetEvent("ava_jobs:server:bank_managment:withdraw", function(jobName, am
         else
             accounts.removeAccountBalance("bank", amount)
             inventory.addItem("cash", amount)
+            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "withdraw_job", "amount:" .. amount, "job:" .. jobName })
         end
     end
 end)
@@ -54,6 +56,7 @@ RegisterNetEvent("ava_jobs:server:bank_managment:washMoney", function(jobName, a
         else
             inventory.removeItem("dirtycash", amount)
             accounts.addAccountBalance("bank", amount)
+            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "washmoney_job", "amount:" .. amount, "job:" .. jobName })
             exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", "",
                 GetString("log_wash_money", aPlayer.citizenId .. " " .. aPlayer.getDiscordTag(), amount, jobName), 0x22ce93)
 

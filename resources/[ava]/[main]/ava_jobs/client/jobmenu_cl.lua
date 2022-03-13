@@ -21,7 +21,7 @@ local function updateJobsToSelect()
     for jobName, job in pairs(playerJobs) do
         if not job.isIllegal and (job.canManage or job.JobMenu) then
             jobCount = jobCount + 1
-            JobsToSelect[jobCount] = {label = job.LabelName, name = jobName, isGang = job.isGang and 1 or 0, LeftBadge = job.isGang and RageUI.BadgeStyle.Gun}
+            JobsToSelect[jobCount] = { label = job.LabelName, name = jobName, isGang = job.isGang and 1 or 0, LeftBadge = job.isGang and RageUI.BadgeStyle.Gun }
         end
     end
 
@@ -60,12 +60,13 @@ local function JobMenu(jobName)
             if (not v.MinimumGrade or (playerJobsJobName.grade == v.MinimumGrade or tableHasValue(playerJobsJobName.underGrades, v.MinimumGrade)))
                 and (not v.Condition or v.Condition(jobName, playerPed)) then
                 elementCount = elementCount + 1
-                JobMenuElements[elementCount] = {label = v.Label, name = k, desc = v.Desc, RightLabel = v.RightLabel}
+                JobMenuElements[elementCount] = { label = v.Label, name = k, desc = v.Desc, RightLabel = v.RightLabel }
             end
         end
     end
 
     MainJobMenu.Subtitle = GetString(playerJobsJobName.isGang and "job_menu_title_gang" or "job_menu_title", playerJobsJobName.LabelName)
+    MainJobMenu:ResetIndex()
     if not RageUI.Visible(MainJobMenu) then
         RageUI.Visible(MainJobMenu, true)
     end
@@ -92,7 +93,7 @@ function RageUI.PoolMenus:JobMenu()
 
         for i = 1, #JobsToSelect do
             local element = JobsToSelect[i]
-            Items:AddButton(element.label, nil, {RightLabel = "→→→", LeftBadge = element.LeftBadge}, function(onSelected)
+            Items:AddButton(element.label, nil, { RightLabel = "→→→", LeftBadge = element.LeftBadge }, function(onSelected)
                 if onSelected then
                     JobMenu(element.name)
                 end
@@ -111,7 +112,7 @@ function RageUI.PoolMenus:JobMenu()
             local isDisabled = playerJobsJobName.ServiceCounter and not playerServices[openedMenuJobName]
             for i = 1, #JobMenuElements do
                 local element = JobMenuElements[i]
-                Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, {IsDisabled = isDisabled},
+                Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, { IsDisabled = isDisabled },
                     function(onSelected)
                         if onSelected then
                             if playerJobsJobName.JobMenu[element.name]
@@ -225,15 +226,15 @@ function RageUI.PoolMenus:JobMenu()
                         for i = 1, #grades do
                             local grade = grades[i]
                             grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
-                                             or (grade.canManage
-                                                 and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
+                                or (grade.canManage
+                                    and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
                         end
 
                         RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
                             for i = 1, #grades do
                                 local grade = grades[i]
 
-                                Items:AddButton(grade.label, grade.desc, {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual},
+                                Items:AddButton(grade.label, grade.desc, { LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual },
                                     function(onSelected)
                                         if onSelected then
                                             TriggerServerEvent("ava_jobs:server:job_menu_change_grade", targetId, openedMenuJobName, grade.name)
@@ -253,7 +254,7 @@ function RageUI.PoolMenus:JobMenu()
             for i = 1, #jobBills do
                 local bill = jobBills[i]
                 if bill then
-                    Items:AddButton(bill.label, bill.desc, {RightLabel = bill.rightLabel}, function(onSelected)
+                    Items:AddButton(bill.label, bill.desc, { RightLabel = bill.rightLabel }, function(onSelected)
                         if onSelected then
                             Citizen.CreateThread(function()
                                 if exports.ava_core:TriggerServerCallback("ava_bills:server:payBill", bill.id) then
@@ -267,4 +268,3 @@ function RageUI.PoolMenus:JobMenu()
         end
     end)
 end
-
