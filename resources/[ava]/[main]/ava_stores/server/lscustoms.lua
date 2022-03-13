@@ -8,37 +8,63 @@ exports.ava_core:RegisterCommand("lscustoms", "admin", function(source, args)
 end, GetString("lscustoms_help"))
 
 
-exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", function(source, vehNet, modName, lscustomName, jobToPay)
+exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", function(source, vehNet, modName, clientPrice, lscustomName, jobToPay)
     local src = source
-    print(vehNet, modName, lscustomName)
     -- Check if modName is valid
     local modCfg<const> = Config.LSCustoms.Mods[modName]
     if not modCfg then return false end
 
-    -- check if vehicle is valid
+    -- Check if vehicle is valid
     local vehicle = NetworkGetEntityFromNetworkId(vehNet)
     if not DoesEntityExist(vehicle) then return false end
 
-    -- get player
+    -- Get player
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return false end
 
-    -- get mod price
+    -- Get mod price
     local vehiclePrice, vehicleModel = GetVehiclePriceFromModel(GetEntityModel(vehicle))
     local price = modCfg.staticPrice or math.floor(vehiclePrice * modCfg.priceMultiplier + 0.5)
+    -- If client price is higher than mod price, then use client price
+    if clientPrice > price then
+        price = clientPrice
+    end
 
     if lscustomName and Config.Stores[lscustomName]?.LSCustoms?.DirtyCash then
-        -- dirty cash
-        print("dirty cash", price) -- TODO
-    else
-        -- cash
-        if jobToPay and Config.LSCustoms.AllowedJobsToPay[jobToPay] then
-            local jobPrice = math.floor(price * Config.LSCustoms.JobPartPaid + 0.5)
-            -- job
-            print("job cash", price, jobToPay) -- TODO
+        -- Dirty Money
+        -- Player pays
+        local inventory = aPlayer.getInventory()
+        if inventory.canRemoveItem("dirtycash", price) then
+            inventory.removeItem("dirtycash", price)
+            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_custom", "price:" .. price, "(dirtycash)" })
         else
-            -- player
-            print("player cash", price) -- TODO
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_dirty"))
+            return false
+        end
+
+    else
+        -- Clean money
+        if jobToPay and Config.LSCustoms.AllowedJobsToPay[jobToPay] then
+            -- Job pays
+            local jobPrice = math.floor(price * Config.LSCustoms.JobPartPaid + 0.5)
+            local accounts = exports.ava_core:GetJobAccounts(jobToPay)
+            if accounts and accounts.getAccountBalance("bank") >= jobPrice then
+                accounts.removeAccountBalance("bank", jobPrice)
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "job_pay_custom", "price:" .. price, "job:" .. jobToPay })
+            else
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_cant_afford"))
+                return false
+            end
+        else
+            -- Player pays
+            local inventory = aPlayer.getInventory()
+            if inventory.canRemoveItem("cash", price) then
+                inventory.removeItem("cash", price)
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_custom", "price:" .. price })
+            else
+                TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))
+                return false
+            end
         end
     end
     

@@ -6,6 +6,7 @@
     "invalid_quantity": "Quantité non valide",
     "nothing_can_buy": "Il n'y a rien que vous puissiez acheter ici.",
     "cant_carry": "Vous n'avez pas assez de place",
+    "job_cant_afford": "Votre entreprise n'a pas assez d'argent",
     "cant_afford": "Vous n'avez pas assez d'argent",
     "cant_afford_amount": "Vous n'avez pas assez d'argent ($%s)",
     "cant_afford_dirty": "Vous n'avez pas assez d'argent sale",

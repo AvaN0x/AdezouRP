@@ -555,7 +555,7 @@ function RageUI.PoolMenus:LSCustomsMenu()
                                 -- Thread to prevent the menu from freezing
                                 Citizen.CreateThread(function ()
                                     if exports.ava_core:TriggerServerCallback("ava_stores:server:payLSCustoms", VehToNet(CurrentVehicleData.vehicle),
-                                        element.modName, CurrentLSCustomsName, CurrentJobToPay)
+                                        element.modName, element.price or 0, CurrentLSCustomsName, CurrentJobToPay)
                                     then
                                         ReloadCurrentMenuWithValue(element.value)
                                         CurrentVehicleData.modified = true
