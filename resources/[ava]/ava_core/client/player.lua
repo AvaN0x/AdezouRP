@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+local SpawnPlayer
+
 AVA.Player = {}
 AVA.Player.Loaded = false
 AVA.Player.HasSpawned = false
@@ -18,6 +20,16 @@ AVA.Player.IsDead = false
 -- 		end
 -- 	end
 -- end)
+
+-- Log the player in case of restarted script
+RegisterCommand("login", function()
+    if not AVA.Player.HasSpawned and AVA.Player.FirstSpawn then
+        print("^5[AVA] Log the user manually^0")
+        SpawnPlayer()
+    else
+        print("^1[ERROR] User is already logged^0")
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -49,7 +61,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-local function SpawnPlayer()
+SpawnPlayer = function()
     AVA.Player.IsDead = false
     AVA.Player.HasSpawned = true
 
@@ -75,7 +87,7 @@ local function SpawnPlayer()
         if AVA.Player.Data.skin then
             AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, AVA.Player.Data.skin)
         else
-            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, {gender = 0})
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, { gender = 0 })
         end
     end
 
@@ -171,7 +183,7 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
     SelectCharMenu:IsVisible(function(Items)
         for i = 1, #playerChars, 1 do
             local char = playerChars[i]
-            Items:AddButton(char.label, char.subtitle, {RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled},
+            Items:AddButton(char.label, char.subtitle, { RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled },
                 function(onSelected, onEntered)
                     if onSelected then
                         if char.id == -1 then
@@ -186,6 +198,7 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
     end)
 
 end
+
 RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
     if AVA.Player.IsDead or AVA.Player.CreatingChar then
         return
@@ -203,7 +216,7 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
                 subtitle = GetString("select_char_menu_subtitle", tostring(char.id),
                     char.last_played and GetString("select_char_menu_subtitle_actual_char") or ""),
                 RightBadge = function()
-                    return {BadgeDictionary = "mpleaderboard", BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon"}
+                    return { BadgeDictionary = "mpleaderboard", BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon" }
                 end,
             })
         end
@@ -214,7 +227,7 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
                 label = "Nouveau personnage",
                 id = -1,
                 LeftBadge = function()
-                    return {BadgeDictionary = "commonmenu", BadgeTexture = "shop_new_star"}
+                    return { BadgeDictionary = "commonmenu", BadgeTexture = "shop_new_star" }
                 end,
             })
         end
@@ -279,8 +292,3 @@ AVA.Player.getCharacterData = function()
     return AVA.Player.Data.character
 end
 exports("getPlayerCharacterData", AVA.Player.getCharacterData)
-
--- DEBUG COMMAND
-RegisterCommand("respawn", function()
-    SpawnPlayer()
-end)
