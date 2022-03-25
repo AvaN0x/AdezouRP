@@ -83,7 +83,7 @@ end)
 ---@return boolean "is in a vehicle"
 ---@return entity "current vehicle"
 ---@return integer "current seat"
-AVA.Player.isInVehicle = function()
+AVA.Player.IsPlayerInVehicle = function()
     return AVA.Player.isInVehicle, AVA.Player.currentVehicle, AVA.Player.currentSeat
 end
-exports("IsPlayerInVehicle", AVA.Player.isInVehicle)
+exports("IsPlayerInVehicle", AVA.Player.IsPlayerInVehicle)
