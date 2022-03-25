@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `ava_players` (
   `phone_number` varchar(20) DEFAULT NULL,
   `metadata` longtext DEFAULT NULL,
   `last_played` boolean NOT NULL DEFAULT TRUE,
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `license` (`license`),
   KEY `last_updated` (`last_updated`)
