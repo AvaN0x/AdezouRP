@@ -4,6 +4,38 @@
 -------------------------------------------
 local Items = AVAConfig.Items
 
+---Get data from inventory to be used in client interface
+---@param inventory inventory "inventory"
+---@return table|nil "items from inventory"
+---@return integer|nil "max weight of inventory"
+---@return number|nil "actual weight of inventory"
+---@return string|nil "inventory label name"
+local function GetUsableDataFromInventory(inventory)
+    local items = {}
+    local itemsCount = 0
+    for i = 1, #inventory.items, 1 do
+        local invItem = inventory.items[i]
+        local cfgItem = Items[invItem.name]
+        if cfgItem and (invItem.quantity > 0 or cfgItem.alwaysDisplayed) then
+            itemsCount = itemsCount + 1
+            items[itemsCount] = {
+                name = invItem.name,
+                quantity = invItem.quantity,
+                label = cfgItem.label,
+                desc = cfgItem.description,
+                type = cfgItem.type,
+                weight = cfgItem.weight,
+                limit = cfgItem.limit,
+                noIcon = cfgItem.noIcon,
+                closeInv = cfgItem.closeInv,
+                usable = cfgItem.usable,
+            }
+        end
+    end
+
+    return items, inventory.max_weight, inventory.actual_weight, inventory.label
+end
+
 ---Get data from player inventory to be used in client interface
 ---@param src string "player source"
 ---@return table|nil "items from inventory"
@@ -13,31 +45,7 @@ local Items = AVAConfig.Items
 AVA.GetPlayerInventoryItems = function(src)
     local aPlayer = exports.ava_core:GetPlayer(src)
     if aPlayer then
-        local inventory = aPlayer.getInventory()
-
-        local items = {}
-        local itemsCount = 0
-        for i = 1, #inventory.items, 1 do
-            local invItem = inventory.items[i]
-            local cfgItem = Items[invItem.name]
-            if cfgItem and (invItem.quantity > 0 or cfgItem.alwaysDisplayed) then
-                itemsCount = itemsCount + 1
-                items[itemsCount] = {
-                    name = invItem.name,
-                    quantity = invItem.quantity,
-                    label = cfgItem.label,
-                    desc = cfgItem.description,
-                    type = cfgItem.type,
-                    weight = cfgItem.weight,
-                    limit = cfgItem.limit,
-                    noIcon = cfgItem.noIcon,
-                    closeInv = cfgItem.closeInv,
-                    usable = cfgItem.usable,
-                }
-            end
-        end
-
-        return items, inventory.max_weight, inventory.actual_weight, inventory.label
+        return GetUsableDataFromInventory(aPlayer.getInventory())
     end
     return nil
 end
