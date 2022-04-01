@@ -110,6 +110,7 @@ local WeaponsToDisable = {
     [749486726] = true, -- paragon2 MG
     [231629074] = true, -- scramjet MG
     [-1125578533] = true, -- scramjet ROCKET
+    [GetHashKey("VEHICLE_WEAPON_GRANGER2_MG")] = true, -- contract vehicles
 }
 
 local vehicleClassDisableAirControl = {
@@ -195,11 +196,11 @@ end)
 
 AddEventHandler("ava_core:client:enteredVehicle", function(vehicle, seat)
     Loop(true, vehicle, seat)
-    
+
     if AVAConfig.DisableVehicleKers then
         SetVehicleKersAllowed(vehicle, false)
     end
-    
+
     -- * try to stop vehicle from despawning
     if not IsEntityAMissionEntity(vehicle) then
         SetEntityAsMissionEntity(vehicle)
@@ -226,7 +227,7 @@ RegisterNetEvent("ava_tweaks:client:vehweaphash", function()
     end
 
     print(text)
-    TriggerEvent("chat:addMessage", {args = {text}})
+    TriggerEvent("chat:addMessage", { args = { text } })
 end)
 
 ---------------------------------------
