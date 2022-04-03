@@ -1,3 +1,3 @@
-[submodule "resources/\\[ava]/\\[others]/\\npwd"]
-	path = resources/\\[ava]/\\[others]/\\npwd
+[submodule "resources/[ava]/[others]/npwd"]
+	path = resources/[ava]/[others]/npwd
 	url = https://github.com/AvaN0x/npwd.git
