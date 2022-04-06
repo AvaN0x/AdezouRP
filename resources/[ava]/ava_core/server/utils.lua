@@ -10,8 +10,8 @@ AVA.Utils.DiscordRequest = function(method, endpoint, jsondata)
     local data = nil
     if formattedToken then
         PerformHttpRequest("https://discordapp.com/api/" .. endpoint, function(errorCode, resultData, resultHeaders)
-            data = {data = resultData, code = errorCode, headers = resultHeaders}
-        end, method, #jsondata > 0 and json.encode(jsondata) or "", {["Content-Type"] = "application/json", ["Authorization"] = formattedToken})
+            data = { data = resultData, code = errorCode, headers = resultHeaders }
+        end, method, #jsondata > 0 and json.encode(jsondata) or "", { ["Content-Type"] = "application/json", ["Authorization"] = formattedToken })
 
         while data == nil do
             Citizen.Wait(0)
@@ -47,7 +47,7 @@ AVA.Utils.SendWebhookMessage = function(webhookName, message)
     local webhook = GetConvar(webhookName, "none")
     if webhook ~= "none" then
         PerformHttpRequest(webhook, function(err, text, headers)
-        end, "POST", json.encode({content = message}), {["Content-Type"] = "application/json"})
+        end, "POST", json.encode({ content = message }), { ["Content-Type"] = "application/json" })
     end
 end
 exports("SendWebhookMessage", AVA.Utils.SendWebhookMessage)
@@ -62,11 +62,11 @@ AVA.Utils.SendWebhookEmbedMessage = function(webhookName, title, description, co
                     title = title,
                     description = description,
                     color = color,
-                    footer = GetConvar("DEV_SERVER", "false") ~= "false" and {text = "DEV SERVER"} or nil,
+                    footer = GetConvar("DEV_SERVER", "false") ~= "false" and { text = "DEV SERVER" } or nil,
                     timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ"),
                 },
             },
-        }), {["Content-Type"] = "application/json"})
+        }), { ["Content-Type"] = "application/json" })
     end
 end
 exports("SendWebhookEmbedMessage", AVA.Utils.SendWebhookEmbedMessage)
@@ -80,3 +80,7 @@ AVA.Utils.TriggerClientWithAceEvent = function(eventName, aceName, ...)
 end
 exports("TriggerClientWithAceEvent", AVA.Utils.TriggerClientWithAceEvent)
 AddEventHandler("ava_core:server:TriggerClientWithAceEvent", AVA.Utils.TriggerClientWithAceEvent)
+
+RegisterNetEvent("ava_core:server:ShowNotification", function(id, ...)
+    TriggerClientEvent("ava_core:client:ShowNotification", id, ...)
+end)
