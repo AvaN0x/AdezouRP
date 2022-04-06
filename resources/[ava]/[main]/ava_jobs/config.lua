@@ -125,18 +125,22 @@ Config.Jobs = {
         Blip = { Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3 },
         JobMenu = {
             Items = {
-                {
-                    Label = GetString("fine"),
-                    Desc = GetString("fine_desc"),
-                    Action = function(jobName)
-                        -- TODO
-                    end,
-                },
+                -- {
+                --     Label = GetString("fine"),
+                --     Desc = GetString("fine_desc"),
+                --     Action = function(jobName)
+                --         -- TODO
+                --     end,
+                -- },
                 {
                     Label = GetString("search"),
                     Desc = GetString("search_desc"),
                     Action = function(jobName)
-                        -- TODO
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        if targetId then
+                            TriggerServerEvent("ava_core:server:ShowNotification", targetId, GetString("being_searched"))
+                            TriggerEvent("ava_core:client:openTargetInventory", targetId)
+                        end
                     end,
                 },
                 {

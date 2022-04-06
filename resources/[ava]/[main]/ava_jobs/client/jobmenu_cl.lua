@@ -112,16 +112,18 @@ function RageUI.PoolMenus:JobMenu()
             local isDisabled = playerJobsJobName.ServiceCounter and not playerServices[openedMenuJobName]
             for i = 1, #JobMenuElements do
                 local element = JobMenuElements[i]
-                Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, { IsDisabled = isDisabled },
-                    function(onSelected)
-                        if onSelected then
-                            if playerJobsJobName.JobMenu.Items[element.index]
-                                and (not playerJobsJobName.JobMenu.Items[element.index].Condition
-                                    or playerJobsJobName.JobMenu.Items[element.index].Condition(jobName, playerPed)) then
-                                playerJobsJobName.JobMenu.Items[element.index].Action(jobName)
+                if element then
+                    Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, { IsDisabled = isDisabled },
+                        function(onSelected)
+                            if onSelected then
+                                if playerJobsJobName.JobMenu.Items[element.index]
+                                    and (not playerJobsJobName.JobMenu.Items[element.index].Condition
+                                        or playerJobsJobName.JobMenu.Items[element.index].Condition(jobName, playerPed)) then
+                                    playerJobsJobName.JobMenu.Items[element.index].Action(jobName)
+                                end
                             end
-                        end
-                    end)
+                        end)
+                end
             end
         end
         if playerJobsJobName.canManage then
