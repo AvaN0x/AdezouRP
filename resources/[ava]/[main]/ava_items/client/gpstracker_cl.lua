@@ -10,10 +10,8 @@ RegisterNetEvent("ava_items:client:useGPSTracker", function()
         return
     end
 
-    local vehicle = GetVehicleInFrontOrChooseClosestVehicle()
-    if not vehicle then
-        return
-    end
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
 
     -- Start anim
     local animDirectory, animName = "amb@code_human_police_investigate@idle_b", "idle_f"

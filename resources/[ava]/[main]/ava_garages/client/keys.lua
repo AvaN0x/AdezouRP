@@ -11,7 +11,7 @@ local LastActionTimer = 0
 RegisterCommand("vehicleKey", function()
     if GetGameTimer() - LastActionTimer < 500 then return end
     local vehicle = exports.ava_core:GetVehicleInFront()
-    if not vehicle or vehicle <= 0 then
+    if vehicle == 0 then
         vehicle = exports.ava_core:GetClosestVehicle(1.5)
     end
 

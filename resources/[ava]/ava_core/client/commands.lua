@@ -45,7 +45,7 @@ RegisterNetEvent("ava_core:client:tpNearestVehicle", function()
     local playerPed = PlayerPedId()
 
     local vehicle = AVA.GetClosestVehicle(nil, true)
-    if vehicle ~= 0 then
+    if vehicle > 0 then
         local wantedSeat = -1
         local driverPed = GetPedInVehicleSeat(vehicle, -1)
         if driverPed ~= 0 then
@@ -180,7 +180,7 @@ end)
 
 RegisterNetEvent("ava_core:client:getvehicledata", function()
     if AVA.Player.isInVehicle then
-        local data<const> = {mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle)}
+        local data<const> = { mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle) }
         if data then
             local jsonData<const> = json.encode(data)
             print(jsonData)
@@ -280,12 +280,11 @@ RegisterNetEvent("ava_core:client:kill", function()
 end)
 
 RegisterNetEvent("ava_core:client:announce", function(message)
-    TriggerEvent("chat:addMessage", {color = {255, 60, 60}, multiline = false, args = {GetString("announce_chat_prefix"), message}})
+    TriggerEvent("chat:addMessage", { color = { 255, 60, 60 }, multiline = false, args = { GetString("announce_chat_prefix"), message } })
     PlaySoundFrontend(-1, "Boss_Message_Orange", "GTAO_Biker_FM_Soundset", false)
     AVA.ShowFreemodeMessage(GetString("announce_freemode_message_title"), message, false, 10000)
 end)
 
 RegisterNetEvent("ava_core:client:staff_report", function(playerName, playerId, message)
-    TriggerEvent("chat:addMessage", {color = {255, 60, 60}, multiline = false, args = {GetString("report_staff_chat_prefix", playerName, playerId), message}})
+    TriggerEvent("chat:addMessage", { color = { 255, 60, 60 }, multiline = false, args = { GetString("report_staff_chat_prefix", playerName, playerId), message } })
 end)
-

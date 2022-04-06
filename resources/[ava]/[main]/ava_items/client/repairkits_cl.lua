@@ -4,14 +4,6 @@
 -------------------------------------------
 local isWorking = false
 
-function GetVehicleInFrontOrChooseClosestVehicle()
-    local vehicle = exports.ava_core:GetVehicleInFront()
-    if vehicle then
-        return vehicle
-    end
-    return exports.ava_core:ChooseClosestVehicle()
-end
-
 ---------------
 -- repairkit --
 ---------------
@@ -28,10 +20,9 @@ RegisterNetEvent("ava_items:client:useRepairkit", function(engineHealth)
         return
     end
 
-    local vehicle = GetVehicleInFrontOrChooseClosestVehicle()
-    if not vehicle then
-        return
-    end
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
+
     isWorking = true
     local duration = 20000
 
@@ -80,10 +71,9 @@ RegisterNetEvent("ava_items:client:useBodykit", function()
         return
     end
 
-    local vehicle = GetVehicleInFrontOrChooseClosestVehicle()
-    if not vehicle then
-        return
-    end
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
+
     isWorking = true
     local duration = 20000
 
@@ -135,10 +125,9 @@ RegisterNetEvent("ava_items:client:useRag", function()
         return
     end
 
-    local vehicle = GetVehicleInFrontOrChooseClosestVehicle()
-    if not vehicle then
-        return
-    end
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
+
     isWorking = true
     local duration = 20000
     TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_MAID_CLEAN", 0, true)
@@ -175,10 +164,9 @@ RegisterNetEvent("ava_items:client:useBlowtorch", function()
         return
     end
 
-    local vehicle = GetVehicleInFrontOrChooseClosestVehicle()
-    if not vehicle then
-        return
-    end
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
+
     isWorking = true
     local duration = 20000
     Citizen.CreateThread(function()

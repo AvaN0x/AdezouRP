@@ -1197,9 +1197,9 @@ AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
         local veh = Citizen.Await(p) or {}
         AVA.NetworkRequestControlOfEntity(veh.entity)
         return veh.entity
-    else
-        AVA.ShowNotification(GetString("no_vehicle_close_enough"))
     end
+    AVA.ShowNotification(GetString("no_vehicle_close_enough"))
+    return 0
 end
 exports("ChooseClosestVehicle", AVA.ChooseClosestVehicle)
 
