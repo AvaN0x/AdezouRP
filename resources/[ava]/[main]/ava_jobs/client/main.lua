@@ -347,7 +347,7 @@ function createBlips()
 end
 
 local playerCoords = nil
-local playerPed = nil
+playerPed = nil
 
 Citizen.CreateThread(function()
     while true do

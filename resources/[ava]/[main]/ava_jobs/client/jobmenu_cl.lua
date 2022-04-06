@@ -60,7 +60,7 @@ local function JobMenu(jobName)
             if (not v.MinimumGrade or (playerJobsJobName.grade == v.MinimumGrade or tableHasValue(playerJobsJobName.underGrades, v.MinimumGrade)))
                 and (not v.Condition or v.Condition(jobName, playerPed)) then
                 elementCount = elementCount + 1
-                JobMenuElements[elementCount] = { label = v.Label, name = k, desc = v.Desc, RightLabel = v.RightLabel }
+                JobMenuElements[elementCount] = { label = v.Label, index = k, desc = v.Desc, RightLabel = v.RightLabel }
             end
         end
     end
@@ -115,10 +115,10 @@ function RageUI.PoolMenus:JobMenu()
                 Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, { IsDisabled = isDisabled },
                     function(onSelected)
                         if onSelected then
-                            if playerJobsJobName.JobMenu[element.name]
-                                and (not playerJobsJobName.JobMenu[element.name].Condition
-                                    or playerJobsJobName.JobMenu[element.name].Condition(jobName, playerPed)) then
-                                playerJobsJobName.JobMenu[element.name].Action(data, menu, jobName)
+                            if playerJobsJobName.JobMenu.Items[element.index]
+                                and (not playerJobsJobName.JobMenu.Items[element.index].Condition
+                                    or playerJobsJobName.JobMenu.Items[element.index].Condition(jobName, playerPed)) then
+                                playerJobsJobName.JobMenu.Items[element.index].Action(jobName)
                             end
                         end
                     end)

@@ -38,15 +38,16 @@ Config.JobMenuElement = {
         Condition = function(jobName, playerPed)
             local veh = GetVehiclePedIsIn(playerPed, false)
             if veh ~= 0 and (GetPedInVehicleSeat(veh, -1) == playerPed or GetPedInVehicleSeat(veh, 0) == playerPed) then
+                local vehModel = GetEntityModel(veh)
                 for k, vehicleHash in ipairs(Config.JobMenuElement.PoliceMegaphone.AllowedVehicles) do
-                    if IsVehicleModel(veh, vehicleHash) then
+                    if vehModel == vehicleHash then
                         return true
                     end
                 end
             end
             return false
         end,
-        Action = function(parentData, parentMenu, jobName)
+        Action = function(jobName)
             local elements = {
                 {
                     label = GetString("police_megaphone_stop_vehicle"),
@@ -54,61 +55,19 @@ Config.JobMenuElement = {
                     elements = {
                         { label = "LSPD! Stop...", desc = "LSPD! Stop your vehicle now!", distance = 30.0, volume = 0.6, soundName = "stop_vehicle" },
                         { label = "Driver! Stop...", desc = "Driver! Stop your vehicle", distance = 30.0, volume = 0.6, soundName = "stop_vehicle-2" },
-                        {
-                            label = "Stop the fucking car...",
-                            desc = "This is the LSPD! Stop the fucking car immediately!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "stop_the_f_car",
-                        },
-                        {
-                            label = "Stop or executed...",
-                            desc = "LSPD! Stop your vehicle now or you'll be executed!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "stop_or_executed",
-                        },
-                        {
-                            label = "Stop or I kill ya...",
-                            desc = "Stop your vehicle right fucking now! Or I swear I am going to kill ya!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "stop_or_i_kill",
-                        },
+                        { label = "Stop the fucking car...", desc = "This is the LSPD! Stop the fucking car immediately!", distance = 30.0, volume = 0.6, soundName = "stop_the_f_car" },
+                        { label = "Stop or executed...", desc = "LSPD! Stop your vehicle now or you'll be executed!", distance = 30.0, volume = 0.6, soundName = "stop_or_executed" },
+                        { label = "Stop or I kill ya...", desc = "Stop your vehicle right fucking now! Or I swear I am going to kill ya!", distance = 30.0, volume = 0.6, soundName = "stop_or_i_kill" },
                     },
                 },
                 {
                     label = GetString("police_megaphone_stop"),
                     RightLabel = "→→→",
                     elements = {
-                        {
-                            label = "Dont make me...",
-                            desc = "Stop! Don't make me shoot ya! Give yourself up!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "dont_make_me",
-                        },
-                        {
-                            label = "Dont move a muscle...",
-                            desc = "Stop and dont move a muscle, or you'll be shot by the LSPD!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "stop_dont_move",
-                        },
-                        {
-                            label = "Give yourself up...",
-                            desc = "LSPD! If you give yourself up I'll be a lot nicer shithead!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "give_yourself_up",
-                        },
-                        {
-                            label = "Stay right there...",
-                            desc = "LSPD! Stay right there and don't move, fucker!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "stay_right_there",
-                        },
+                        { label = "Dont make me...", desc = "Stop! Don't make me shoot ya! Give yourself up!", distance = 30.0, volume = 0.6, soundName = "dont_make_me" },
+                        { label = "Dont move a muscle...", desc = "Stop and dont move a muscle, or you'll be shot by the LSPD!", distance = 30.0, volume = 0.6, soundName = "stop_dont_move" },
+                        { label = "Give yourself up...", desc = "LSPD! If you give yourself up I'll be a lot nicer shithead!", distance = 30.0, volume = 0.6, soundName = "give_yourself_up" },
+                        { label = "Stay right there...", desc = "LSPD! Stay right there and don't move, fucker!", distance = 30.0, volume = 0.6, soundName = "stay_right_there" },
                         { label = "Freeze...", desc = "Freeze! LSPD!", distance = 30.0, volume = 0.6, soundName = "freeze_lspd" },
                     },
                 },
@@ -116,34 +75,10 @@ Config.JobMenuElement = {
                     label = GetString("police_megaphone_clear"),
                     RightLabel = "→→→",
                     elements = {
-                        {
-                            label = "Clear the area...",
-                            desc = "This is the LSPD! Clear the area. Now!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "clear_the_area",
-                        },
-                        {
-                            label = "Go away now...",
-                            desc = "This is the LSPD! Go away now or there will be trouble.",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "this_is_the_lspd",
-                        },
-                        {
-                            label = "Move along people...",
-                            desc = "Move along people. We don't want trouble.",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "move_along_people",
-                        },
-                        {
-                            label = "Get out of here...",
-                            desc = "Get out of here now. This is the LSPD.",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "get_out_of_here_now",
-                        },
+                        { label = "Clear the area...", desc = "This is the LSPD! Clear the area. Now!", distance = 30.0, volume = 0.6, soundName = "clear_the_area" },
+                        { label = "Go away now...", desc = "This is the LSPD! Go away now or there will be trouble.", distance = 30.0, volume = 0.6, soundName = "this_is_the_lspd" },
+                        { label = "Move along people...", desc = "Move along people. We don't want trouble.", distance = 30.0, volume = 0.6, soundName = "move_along_people" },
+                        { label = "Get out of here...", desc = "Get out of here now. This is the LSPD.", distance = 30.0, volume = 0.6, soundName = "get_out_of_here_now" },
                         { label = "Disperse now...", desc = "This is the LSPD! Disperse, now!", distance = 30.0, volume = 0.6, soundName = "disperse_now" },
                     },
                 },
@@ -152,38 +87,31 @@ Config.JobMenuElement = {
                     RightLabel = "→→→",
                     elements = {
                         { label = "It's over...", desc = "It's over for you! This is the police!", distance = 30.0, volume = 0.6, soundName = "its_over_for_you" },
-                        {
-                            label = "You are finished...",
-                            desc = "You are finished dickhead! Stop!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "you_are_finished_dhead",
-                        },
-                        {
-                            label = "You can't hide boy...",
-                            desc = "You can't hide boy. We will track you down!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "cant_hide_boi",
-                        },
-                        {
-                            label = "Drop a missile...",
-                            desc = "Can't we just drop a missile on this moron?!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "drop_a_missile",
-                        },
-                        {
-                            label = "Shoot to kill...",
-                            desc = "This is the LSPD! I'm gonna shoot to kill!",
-                            distance = 30.0,
-                            volume = 0.6,
-                            soundName = "shoot_to_kill",
-                        },
+                        { label = "You are finished...", desc = "You are finished dickhead! Stop!", distance = 30.0, volume = 0.6, soundName = "you_are_finished_dhead" },
+                        { label = "You can't hide boy...", desc = "You can't hide boy. We will track you down!", distance = 30.0, volume = 0.6, soundName = "cant_hide_boi" },
+                        { label = "Drop a missile...", desc = "Can't we just drop a missile on this moron?!", distance = 30.0, volume = 0.6, soundName = "drop_a_missile" },
+                        { label = "Shoot to kill...", desc = "This is the LSPD! I'm gonna shoot to kill!", distance = 30.0, volume = 0.6, soundName = "shoot_to_kill" },
                     },
                 },
-
             }
+
+            RageUI.CloseAll()
+            RageUI.OpenTempMenu(GetString("police_megaphone"), function(Items)
+                for i = 1, #elements do
+                    local element = elements[i]
+                    Items:AddSeparator(element.label)
+                    for i = 1, #element.elements do
+                        local sound = element.elements[i]
+                        Items:AddButton(sound.label, sound.desc, nil, function(onSelected)
+                            if onSelected and Config.JobMenuElement.PoliceMegaphone.Condition(jobName, PlayerPedId()) then
+                                -- TODO use something else than InteractSound
+                                TriggerServerEvent("InteractSound_SV:PlayWithinDistance", sound.distance, sound.soundName, sound.volume)
+                            end
+                        end)
+                    end
+                end
+            end)
+
         end,
     },
 }
@@ -200,14 +128,14 @@ Config.Jobs = {
                 {
                     Label = GetString("fine"),
                     Desc = GetString("fine_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                 },
                 {
                     Label = GetString("search"),
                     Desc = GetString("search_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                 },
@@ -215,7 +143,7 @@ Config.Jobs = {
                     Label = GetString("check_bills"),
                     Desc = GetString("check_bills_desc"),
                     RightLabel = "→→→",
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                 },
@@ -223,7 +151,7 @@ Config.Jobs = {
                     Label = GetString("manage_licences"),
                     Desc = GetString("manage_licences_desc"),
                     RightLabel = "→→→",
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                     MinimumGrade = "officer",
@@ -231,7 +159,7 @@ Config.Jobs = {
                 {
                     Label = GetString("manage_weapon_license"),
                     Desc = GetString("manage_weapon_license_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                     MinimumGrade = "sergeant_chief",
@@ -239,14 +167,14 @@ Config.Jobs = {
                 {
                     Label = GetString("info_vehicle"),
                     Desc = GetString("info_vehicle_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                 },
                 {
                     Label = GetString("info_vehicle_search"),
                     Desc = GetString("info_vehicle_search_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                         -- TODO
                     end,
                 },
@@ -431,7 +359,7 @@ Config.Jobs = {
                 {
                     Label = GetString("ems_check_injuries"),
                     Desc = GetString("ems_check_injuries_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
 
                     end,
                 },
@@ -560,7 +488,7 @@ Config.Jobs = {
                 {
                     Label = GetString("info_vehicle"),
                     Desc = GetString("info_vehicle_desc"),
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
 
                     end,
                 },
@@ -570,7 +498,7 @@ Config.Jobs = {
                     Condition = function(jobName, playerPed)
                         return GetVehiclePedIsIn(playerPed, false) == 0
                     end,
-                    Action = function(parentData, parentMenu, jobName)
+                    Action = function(jobName)
                     end,
                 },
             },
