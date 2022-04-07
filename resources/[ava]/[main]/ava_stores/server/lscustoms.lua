@@ -50,6 +50,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
             local accounts = exports.ava_core:GetJobAccounts(jobToPay)
             if accounts and accounts.getAccountBalance("bank") >= jobPrice then
                 accounts.removeAccountBalance("bank", jobPrice)
+                exports.ava_jobs:applyTaxes(price, jobToPay)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "job_pay_custom", "price:" .. price, "job:" .. jobToPay })
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("job_cant_afford"))
@@ -60,6 +61,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
             local inventory = aPlayer.getInventory()
             if inventory.canRemoveItem("cash", price) then
                 inventory.removeItem("cash", price)
+                exports.ava_jobs:applyTaxes(price, "citizenid:" .. aPlayer.citizenId)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_custom", "price:" .. price })
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))

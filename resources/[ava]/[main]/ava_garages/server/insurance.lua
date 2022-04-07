@@ -25,11 +25,11 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getVehiclesAtInsuran
     local vehicles
     if #jobs > 0 then
         vehicles = MySQL.query.await(
-        "SELECT `id`, `job_name`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
+            "SELECT `id`, `job_name`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
             { citizenid = aPlayer.citizenId, jobs = jobs })
     else
         vehicles = MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND `citizenid` = :citizenid",
+            "SELECT `id`, `label`, `model`, `plate`, `insurance_left` FROM `ava_vehicles` WHERE `parked` = 0 AND `citizenid` = :citizenid",
             { citizenid = aPlayer.citizenId })
     end
 
@@ -64,6 +64,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:payVehicleInsurance"
     end
 
     inventory.removeItem("cash", price)
+    exports.ava_jobs:applyTaxes(price, "insurance:citizenid:" .. aPlayer.citizenId)
     MySQL.update.await("UPDATE `ava_vehicles` SET `parked` = :parked, `insurance_left` = `insurance_left` - 1 WHERE `id` = :id",
         { parked = true, id = vehicleId })
     TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_insurance", "vehicleid:" .. vehicleId, "for", price })

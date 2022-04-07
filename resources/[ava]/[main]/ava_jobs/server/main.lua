@@ -287,7 +287,7 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
         if price == nil then
             return
         end
-        local total = tonumber(count) * tonumber(price)
+        local total = exports.ava_jobs:applyTaxes(tonumber(count) * tonumber(price), jobName)
 
         local playerMoney, societyMoney
         -- TODO
@@ -385,6 +385,7 @@ RegisterNetEvent("ava_jobs:server:buyItem", function(jobName, zoneName, item, co
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("buy_cant_afford_dirty"))
                 end
             else
+                exports.ava_jobs:applyTaxes(totalPrice, jobName)
                 if inventory.canRemoveItem("cash", totalprice) then
                     inventory.removeItem("cash", totalprice)
                     inventory.addItem(item, count)

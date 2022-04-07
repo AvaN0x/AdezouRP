@@ -27,21 +27,21 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getVehiclesInPound",
     if #jobs > 0 then
         if vehicleType then
             vehicles = MySQL.query.await(
-            "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
+                "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
                 { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId, jobs = jobs })
         else
             vehicles = MySQL.query.await(
-            "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
+                "SELECT `id`, `job_name`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND (`citizenid` = :citizenid OR `job_name` IN (:jobs))",
                 { garage = garageName, citizenid = aPlayer.citizenId, jobs = jobs })
         end
     else
         if vehicleType then
             vehicles = MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND `citizenid` = :citizenid",
+                "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `vehicletype` = :vehicletype AND `garage` = :garage AND `citizenid` = :citizenid",
                 { vehicletype = vehicleType, garage = garageName, citizenid = aPlayer.citizenId })
         else
             vehicles = MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND `citizenid` = :citizenid",
+                "SELECT `id`, `label`, `model`, `plate` FROM `ava_vehicles` WHERE `garage` = :garage AND `citizenid` = :citizenid",
                 { garage = garageName, citizenid = aPlayer.citizenId })
         end
     end
@@ -77,6 +77,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:takeVehicleOutOfPoun
     end
 
     inventory.removeItem("cash", price)
+    exports.ava_jobs:applyTaxes(price, "pound:citizenid:" .. aPlayer.citizenId)
     MySQL.update.await("UPDATE `ava_vehicles` SET `garage` = :garage WHERE `id` = :id", { garage = vehicleData.job_name and ("jobgarage_" .. vehicleData.job_name) or AVAConfig.DefaultGarage, id = vehicleId })
     TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_pound", "vehicleid:" .. vehicleId })
 

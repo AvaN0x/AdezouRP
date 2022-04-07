@@ -12,6 +12,7 @@ exports.ava_core:RegisterServerCallback("ava_drivingschool:server:payForLicense"
             local inventory = aPlayer.getInventory()
             if inventory.canRemoveItem("cash", price) then
                 inventory.removeItem("cash", price)
+                exports.ava_jobs:applyTaxes(price, "drivingschool:citizenid:" .. aPlayer.citizenId)
                 return true
             end
         end

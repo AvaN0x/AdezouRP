@@ -42,11 +42,9 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
                 end
             else
                 if inventory.canRemoveItem("cash", totalprice) then
-                    -- TriggerEvent('esx_statejob:getTaxed', store.Name, totalprice, function(toSociety)
-                    -- end)
-
                     inventory.removeItem("cash", totalprice)
                     inventory.addItem(item, count)
+                    exports.ava_jobs:applyTaxes(totalPrice, storeName .. ":citizenid:" .. aPlayer.citizenId)
                     TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count, "price:" .. price })
                 else
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))
@@ -121,7 +119,8 @@ exports.ava_core:RegisterServerCallback("ava_stores:carwash:checkMoney", functio
             local price = store.Carwash.Price or 80
             if inventory.canRemoveItem("cash", price) then
                 inventory.removeItem("cash", price)
-                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "carwash", price })
+                exports.ava_jobs:applyTaxes(price, storeName .. ":citizenid:" .. aPlayer.citizenId)
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "carwash", "price:" .. price })
                 return true
             end
         end
@@ -171,7 +170,8 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payCloth
                 if inventory.canRemoveItem("cash", price) then
                     inventory.removeItem("cash", price)
                     aPlayer.setSkin(playerSkin)
-                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "payClothes", price })
+                    exports.ava_jobs:applyTaxes(price, storeName .. ":citizenid:" .. aPlayer.citizenId)
+                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "payClothes", "price:" .. price })
                     return true
                 end
             end

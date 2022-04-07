@@ -42,6 +42,8 @@ server_scripts {
     "server/jobmenu_sv.lua",
     "server/bank_managment_sv.lua",
     "server/manager_menu_sv.lua",
+
+    "server/government_sv.lua",
 }
 
 dependencies { "RageUI", "ava_core", "ava_mp_peds", "ava_garages" }
