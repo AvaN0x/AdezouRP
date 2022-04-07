@@ -143,6 +143,18 @@ AVA.GradeExistForJob = function(jobName, gradeName)
 end
 exports("GradeExistForJob", AVA.GradeExistForJob)
 
+---Get job label
+---@param jobName string
+---@return string
+AVA.GetJobLabel = function(jobName)
+    local cfgJob<const> = AVAConfig.Jobs[jobName]
+    if cfgJob then
+        return cfgJob.label
+    end
+    return ""
+end
+exports("GetJobLabel", AVA.GetJobLabel)
+
 ---Get grade label
 ---@param jobName string
 ---@param gradeName string
