@@ -137,10 +137,10 @@ Config.Jobs = {
                     Desc = GetString("search_desc"),
                     Action = function(jobName)
                         local targetId, localId = exports.ava_core:ChooseClosestPlayer()
-                        if targetId then
-                            TriggerServerEvent("ava_core:server:ShowNotification", targetId, GetString("being_searched"))
-                            TriggerEvent("ava_core:client:openTargetInventory", targetId)
-                        end
+                        if not targetId then return end
+
+                        TriggerServerEvent("ava_core:server:ShowNotification", targetId, GetString("being_searched"))
+                        TriggerEvent("ava_core:client:openTargetInventory", targetId)
                     end,
                 },
                 {
@@ -148,6 +148,9 @@ Config.Jobs = {
                     Desc = GetString("check_bills_desc"),
                     RightLabel = "→→→",
                     Action = function(jobName)
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        if not targetId then return end
+
                         -- TODO
                     end,
                 },
@@ -156,6 +159,9 @@ Config.Jobs = {
                     Desc = GetString("manage_licences_desc"),
                     RightLabel = "→→→",
                     Action = function(jobName)
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        if not targetId then return end
+
                         -- TODO
                     end,
                     MinimumGrade = "officer",
@@ -164,6 +170,9 @@ Config.Jobs = {
                     Label = GetString("manage_weapon_license"),
                     Desc = GetString("manage_weapon_license_desc"),
                     Action = function(jobName)
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        if not targetId then return end
+
                         -- TODO
                     end,
                     MinimumGrade = "sergeant_chief",
@@ -172,14 +181,48 @@ Config.Jobs = {
                     Label = GetString("info_vehicle"),
                     Desc = GetString("info_vehicle_desc"),
                     Action = function(jobName)
-                        -- TODO
+                        local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+                        if vehicle == 0 then return end
+
+                        local vehicleInfos = exports.ava_core:TriggerServerCallback("ava_jobs:server:getVehicleInfos", VehToNet(vehicle), GetVehicleNumberPlateText(vehicle)) or {}
+
+                        local elements = {
+                            vehicleInfos.plate and { label = GetString("vehicle_plate", vehicleInfos.plate) },
+                            vehicleInfos.owner and { label = GetString("vehicle_owner", vehicleInfos.owner) }
+                        }
+                        RageUI.CloseAll()
+                        RageUI.OpenTempMenu(GetString("info_vehicle"), function(Items)
+                            for i = 1, #elements do
+                                local element = elements[i]
+                                if element then
+                                    Items:AddButton(element.label, element.desc)
+                                end
+                            end
+                        end)
                     end,
                 },
                 {
                     Label = GetString("info_vehicle_search"),
                     Desc = GetString("info_vehicle_search_desc"),
                     Action = function(jobName)
-                        -- TODO
+                        local plate = exports.ava_core:KeyboardInput(GetString("info_vehicle_enter_plate"), "", 12)
+                        if not plate or plate == "" then return end
+
+                        local vehicleInfos = exports.ava_core:TriggerServerCallback("ava_jobs:server:getVehicleInfos", nil, plate) or {}
+
+                        local elements = {
+                            vehicleInfos.plate and { label = GetString("vehicle_plate", vehicleInfos.plate) },
+                            vehicleInfos.owner and { label = GetString("vehicle_owner", vehicleInfos.owner) }
+                        }
+                        RageUI.CloseAll()
+                        RageUI.OpenTempMenu(GetString("info_vehicle"), function(Items)
+                            for i = 1, #elements do
+                                local element = elements[i]
+                                if element then
+                                    Items:AddButton(element.label, element.desc)
+                                end
+                            end
+                        end)
                     end,
                 },
                 Config.JobMenuElement.PoliceMegaphone,

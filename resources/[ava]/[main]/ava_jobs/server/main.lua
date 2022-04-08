@@ -428,6 +428,39 @@ exports.ava_core:RegisterServerCallback("ava_jobs:GetBuyElements", function(sour
 end)
 -- #endregion
 
+-------------------
+-- JOBS SPECIFIC --
+-------------------
+
+exports.ava_core:RegisterServerCallback("ava_jobs:server:getVehicleInfos", function(source, vehicleNet, plate)
+    local src = source
+    local res = { plate = plate }
+
+    if vehicleNet then
+        local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+        if DoesEntityExist(vehicle) then
+            local entityState = Entity(vehicle)
+
+            if entityState.state.rentalVehicle then
+                res.owner = GetString("vehicle_owner_rental")
+            elseif entityState.state.drivingTestVehicle then
+                res.owner = GetString("vehicle_owner_drivingschool")
+            end
+        end
+    end
+
+    if not res.owner then
+        res.owner = exports.ava_garages:GetVehicleOwnerLabel(plate)
+        if res.owner == "" then
+            res.owner = GetString("vehicle_owner_unknown")
+        end
+    end
+
+    return res
+end)
+
+
+
 ----------------
 -- JOBS ITEMS --
 ----------------

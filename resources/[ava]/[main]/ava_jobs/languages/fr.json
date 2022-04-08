@@ -165,6 +165,8 @@
     "vehicle_plate": "Plaque: %s",
     "vehicle_owner": "Propriétaire: %s",
     "vehicle_owner_unknown": "Inconnu",
+    "vehicle_owner_drivingschool": "Auto-école",
+    "vehicle_owner_rental": "Location",
     "info_vehicle_search": "Recherche plaque",
     "info_vehicle_search_desc": "Informations sur un véhicule par sa plaque",
     "info_vehicle_enter_plate": "Entrez une plaque",
