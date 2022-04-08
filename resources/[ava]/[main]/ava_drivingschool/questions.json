@@ -6,7 +6,7 @@
                 "label": "Vous accélérez"
             },
             {
-                "label": "Vous lui taillé les jambes"
+                "label": "Vous lui taillez les jambes"
             },
             {
                 "label": "Vous ralentissez pour lui laisser le temps de passer",
@@ -26,11 +26,11 @@
                 "right": true
             },
             {
-                "label": "0.5 g/l",
+                "label": "0.4 g/l",
                 "right": true
             },
             {
-                "label": "0.4 g/l",
+                "label": "0.5 g/l",
                 "right": true
             },
             {
@@ -132,7 +132,7 @@
                 "right": true
             },
             {
-                "label": "Vous le klaxonner"
+                "label": "Vous le klaxonnez"
             }
         ]
     },
@@ -176,13 +176,13 @@
         ]
     },
     {
-        "question": "Un automobiliste commencer à vous dépasser, que ne devez vous <b>pas</b> faire ?",
+        "question": "Un automobiliste commence à vous dépasser, que ne devez vous <b>pas</b> faire ?",
         "answers": [
             {
                 "label": "Ralentir"
             },
             {
-                "label": "Vérifiez vos rétroviseurs"
+                "label": "Vérifier vos rétroviseurs"
             },
             {
                 "label": "Regarder les autres conducteurs"
