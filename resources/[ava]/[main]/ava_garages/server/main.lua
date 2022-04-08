@@ -16,7 +16,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
     -- TODO Only show vehicles from this garage?
     if type(vehicleType) == "number" then
         return MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid AND `vehicletype` = :vehicletype",
+            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid AND `vehicletype` = :vehicletype",
             { citizenid = aPlayer.citizenId, vehicletype = vehicleType })
     else
         return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid",
@@ -34,7 +34,7 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
     -- TODO Only show vehicles from this garage?
     if type(vehicleType) == "number" then
         return MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name AND `vehicletype` = :vehicletype",
+            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name AND `vehicletype` = :vehicletype",
             { job_name = jobName, vehicletype = vehicleType })
     else
         return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name",
@@ -55,11 +55,11 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehicle
     -- Get all vehicles in the garage
     if type(vehicleType) == "number" then
         return MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage AND `vehicletype` = :vehicletype",
+            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage AND `vehicletype` = :vehicletype",
             { citizenid = aPlayer.citizenId, garage = garageName, vehicletype = vehicleType })
     else
         return MySQL.query.await(
-        "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage",
+            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage",
             { citizenid = aPlayer.citizenId, garage = garageName })
     end
 end)
@@ -289,6 +289,23 @@ RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleN
 end)
 -- #endregion park vehicle
 
+local GetVehicleOwnerLabel = function(plate)
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name` FROM `ava_vehicles` WHERE `plate` = :plate", { plate = exports.ava_core:Trim(plate) })
+    if vehicle then
+        if vehicle.ownertype == 0 then
+            -- Player owned
+            local character = exports.ava_core:GetCitizenIdCharacter(vehicle.citizenid)
+            if character then
+                return ("%s %s"):format(character.firstname, character.lastname)
+            end
+        elseif vehicle.ownertype == 1 then
+            -- Job owned
+            return exports.ava_core:GetJobLabel(vehicle.job_name)
+        end
+    end
+    return ""
+end
+exports("GetVehicleOwnerLabel", GetVehicleOwnerLabel)
 
 
 exports.ava_core:RegisterCommand("savevehicledata", "admin", function(source, args)
