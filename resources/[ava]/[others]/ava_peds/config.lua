@@ -82,15 +82,15 @@ Config.Peds = {
     },
 
     -- agatha gov
-    {
-        PedName = "ig_agatha",
-        PedType = "PED_TYPE_CIVFEMALE",
-        pos = vector3(-550.76, -190.07, 36.72),
-        heading = 193.6,
-        scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
-        -- name = "Agatha",
-        bubble = "Bonjour, je suis ~y~Agatha~s~, que puis-je faire pour vous ?",
-    },
+    -- {
+    --     PedName = "ig_agatha",
+    --     PedType = "PED_TYPE_CIVFEMALE",
+    --     pos = vector3(-550.76, -190.07, 36.72),
+    --     heading = 193.6,
+    --     scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
+    --     -- name = "Agatha",
+    --     bubble = "Bonjour, je suis ~y~Agatha~s~, que puis-je faire pour vous ?",
+    -- },
 
     -- simeon premium deluxe motorsport
     {
@@ -203,11 +203,11 @@ Config.Peds = {
     },
 
     { -- ammunation
-      PedName = "s_m_y_ammucity_01",
-      PedType = "PED_TYPE_CIVMALE",
-      pos = vector3(22.07, -1104.93, 28.82),
-      heading = 158.97,
-      scenario = "WORLD_HUMAN_HANG_OUT_STREET",
+        PedName = "s_m_y_ammucity_01",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(22.07, -1104.93, 28.82),
+        heading = 158.97,
+        scenario = "WORLD_HUMAN_HANG_OUT_STREET",
     },
 
     -- Lost arme

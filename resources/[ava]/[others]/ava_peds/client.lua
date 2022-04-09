@@ -4,6 +4,7 @@
 -------------------------------------------
 local loopsRequired = true
 
+local peds = {}
 local pedNames = {}
 
 Citizen.CreateThread(function()
@@ -31,15 +32,24 @@ Citizen.CreateThread(function()
                 SetPedPropIndex(ped, prop.componentId, prop.drawableId or 0, prop.textureId or 0, true);
             end
         end
+        if v.mp_ped then
+            if v.mp_ped.skin then
+                exports.ava_mp_peds:setPedSkin(ped, v.mp_ped.skin)
+            end
+            if v.mp_ped.clothes then
+                exports.ava_mp_peds:setPedClothes(ped, v.mp_ped.clothes)
+            end
+        end
 
         if v.scenario then
             TaskStartScenarioInPlace(ped, v.scenario, 0, false)
         end
 
         if v.name or v.bubble then
-            table.insert(pedNames, {pos = v.pos, entity = ped, name = v.name, bubble = v.bubble, offsetZ = v.offsetZ or 0.2})
+            table.insert(pedNames, { pos = v.pos, entity = ped, name = v.name, bubble = v.bubble, offsetZ = v.offsetZ or 0.2 })
         end
 
+        table.insert(peds, ped)
     end
     loopsRequired = #pedNames > 0
 end)
@@ -73,6 +83,17 @@ Citizen.CreateThread(function()
             end
         end
         Wait(wait)
+    end
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        if peds then
+            for _, ped in ipairs(peds) do
+                DeleteEntity(ped)
+            end
+        end
+        peds = {}
     end
 end)
 
