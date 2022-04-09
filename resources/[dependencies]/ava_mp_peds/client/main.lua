@@ -117,6 +117,7 @@ function reset()
     end
     return localSkin
 end
+
 exports("reset", reset)
 reset()
 
@@ -129,6 +130,7 @@ function resetClothes()
     end
     return localSkin
 end
+
 exports("resetClothes", resetClothes)
 
 ---Depending on the ped type, it will either save the player skin from localSkin for later, either restore the player skin into localSkin
@@ -245,6 +247,7 @@ local function reloadPedOverlaysInternal(ped)
         end
     end
 end
+
 -------------
 -- EXPORTS --
 -------------
@@ -271,7 +274,8 @@ function setPedSkin(ped, skin)
     -- #region Set player model
     local model<const> = localSkin.gender == 0 and GetHashKey("mp_m_freemode_01") or GetHashKey("mp_f_freemode_01")
 
-    if model ~= GetEntityModel(ped) and IsModelValid(model) and IsModelInCdimage(model) then
+    local pedIsAPlayer<const> = IsPedAPlayer(ped)
+    if pedIsAPlayer and model ~= GetEntityModel(ped) and IsModelValid(model) and IsModelInCdimage(model) then
         RequestModel(model)
         while not HasModelLoaded(model) do
             Wait(0)
@@ -283,6 +287,11 @@ function setPedSkin(ped, skin)
         SetModelAsNoLongerNeeded(model)
         ClearPedDecorations(ped)
         shouldReloadOverlays = true
+
+    elseif not pedIsAPlayer then
+        ClearPedDecorations(ped)
+        shouldReloadOverlays = true
+
     end
     -- #endregion Set player model
 
@@ -384,6 +393,7 @@ function setPedSkin(ped, skin)
     setPedClothesInternal(ped, skin)
     return localSkin
 end
+
 exports("setPedSkin", setPedSkin)
 
 ---Set player ped components based on skin components
@@ -392,6 +402,7 @@ exports("setPedSkin", setPedSkin)
 function setPlayerSkin(skin)
     return setPedSkin(PlayerPedId(), skin)
 end
+
 exports("setPlayerSkin", setPlayerSkin)
 
 ---Set ped components based on clothes components
@@ -413,6 +424,7 @@ function setPedClothes(ped, skin)
     setPedClothesInternal(ped, skin)
     return localSkin
 end
+
 exports("setPedClothes", setPedClothes)
 
 ---Set player ped components based on clothes components
@@ -420,6 +432,7 @@ exports("setPedClothes", setPedClothes)
 function setPlayerClothes(skin)
     return setPedClothes(PlayerPedId(), skin)
 end
+
 exports("setPlayerClothes", setPlayerClothes)
 
 ---Returns player skin
@@ -427,6 +440,7 @@ exports("setPlayerClothes", setPlayerClothes)
 function getPlayerCurrentSkin()
     return localPlayerSkinSave or localSkin
 end
+
 exports("getPlayerCurrentSkin", getPlayerCurrentSkin)
 
 ---Returns player clothes
@@ -442,6 +456,7 @@ function getPlayerClothes()
 
     return clothes
 end
+
 exports("getPlayerClothes", getPlayerClothes)
 
 ---Get max values for all skins
@@ -600,6 +615,7 @@ function getMaxValues(ped)
         -- #endregion Props
     }
 end
+
 exports("getMaxValues", getMaxValues)
 
 ---Get min values for all skins
@@ -611,6 +627,7 @@ function getMinValues()
     end
     return values
 end
+
 exports("getMinValues", getMinValues)
 
 ---Reload ped overlays, hairs and tattoos
@@ -620,6 +637,7 @@ function reloadPedOverlays(ped)
 
     reloadPedOverlaysInternal(ped)
 end
+
 exports("reloadPedOverlays", reloadPedOverlays)
 
 ---Edit player skin array but do not apply it
@@ -638,4 +656,5 @@ function editPlayerSkinWithoutApplying(skin)
 
     return localSkin
 end
+
 exports("editPlayerSkinWithoutApplying", editPlayerSkinWithoutApplying)
