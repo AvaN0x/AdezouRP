@@ -40,11 +40,11 @@ em {
 .chat-window {
   position: absolute;
   top: 1.5%;
-  right: 0.8%;
+  left: 0.8%;
   width: 38%;
   height: 22%;
   max-width: 1000px;
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: rgba(52, 73, 94, 0.7);
   -webkit-animation-duration: 2s;
 }
 
@@ -52,7 +52,7 @@ em {
 .chat-messages {
   position: relative;
   height: 95%;
-  font-size: 1rem;
+  font-size: 1.8vh;
   margin: 1%;
 
   overflow-x: hidden;
@@ -61,11 +61,11 @@ em {
 
 
 .chat-input {
-  font-size: 1rem;
+  font-size: 1.65vh;
   position: absolute;
 
   top: 23.8%;
-  right: 0.8%;
+  left: 0.8%;
   width: 38%;
   max-width: 1000px;
   box-sizing: border-box;
@@ -76,19 +76,17 @@ em {
   display: flex;
   align-items: stretch;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid white;
-  border-radius: 2px;
+  background-color: rgba(44, 62, 80, 1.0);
 }
 
 .chat-hide-state {
   text-transform: uppercase;
   margin-left: 0.05vw;
-  font-size: 1rem;
+  font-size: 1.65vh;
 }
 
 .prefix {
-  font-size: 1rem;
+  font-size: 1.8vh;
   /*position: absolute;
   top: 0%;*/
   height: 100%;
@@ -101,7 +99,7 @@ em {
 }
 
 textarea {
-  font-size: 1rem;
+  font-size: 1.65vh;
   line-height: 1.85vh;
   display: block;
   box-sizing: content-box;
@@ -134,10 +132,10 @@ textarea:focus, input:focus {
   list-style-type: none;
   padding: 0.5%;
   padding-left: 1.4%;
-  font-size: 1rem;
+  font-size: 1.65vh;
   box-sizing: border-box;
   color: white;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(44, 62, 80, 1.0);
   width: 100%;
 }
 

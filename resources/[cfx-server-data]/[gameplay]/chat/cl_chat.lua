@@ -229,24 +229,16 @@ local chatHideState = kvpEntry and tonumber(kvpEntry) or CHAT_HIDE_STATES.SHOW_W
 local isFirstHide = true
 
 if not isRDR then
---* modifier to remove this feature
---   if RegisterKeyMapping then
---     RegisterKeyMapping('toggleChat', 'Toggle chat', 'keyboard', 'l')
---   end
+  if RegisterKeyMapping then
+    RegisterKeyMapping('toggleChat', 'Toggle chat', 'keyboard', 'l')
+  end
 
   RegisterCommand('toggleChat', function()
-    -- if chatHideState == CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE then
-    --   chatHideState = CHAT_HIDE_STATES.ALWAYS_SHOW
-    -- elseif chatHideState == CHAT_HIDE_STATES.ALWAYS_SHOW then
-    --   chatHideState = CHAT_HIDE_STATES.ALWAYS_HIDE
-    -- elseif chatHideState == CHAT_HIDE_STATES.ALWAYS_HIDE then
-    --   chatHideState = CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE
-    -- end
     if chatHideState == CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE then
       chatHideState = CHAT_HIDE_STATES.ALWAYS_SHOW
     elseif chatHideState == CHAT_HIDE_STATES.ALWAYS_SHOW then
-      chatHideState = CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE
-    else
+      chatHideState = CHAT_HIDE_STATES.ALWAYS_HIDE
+    elseif chatHideState == CHAT_HIDE_STATES.ALWAYS_HIDE then
       chatHideState = CHAT_HIDE_STATES.SHOW_WHEN_ACTIVE
     end
 
