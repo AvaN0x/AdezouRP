@@ -1,0 +1,38 @@
+.chat-window {
+    left: auto;
+    right: 0.8%;
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.chat-messages {
+    font-size: 1rem;
+}
+
+.chat-input {
+    font-size: 1rem;
+    right: 0.8%;
+    left: auto;
+}
+
+.chat-input>div.input {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid white;
+    border-radius: 2px;
+}
+
+.chat-hide-state {
+    font-size: 1rem;
+}
+
+.prefix {
+    font-size: 1rem;
+}
+
+textarea {
+    font-size: 1rem;
+}
+
+.suggestions {
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.3);
+}

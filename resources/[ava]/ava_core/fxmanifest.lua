@@ -8,9 +8,12 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"shared/import.lua", "languages/**.json"}
+files { "shared/import.lua", "languages/**.json" }
 
-shared_scripts {"shared/language.lua"}
+shared_scripts {
+    "shared/language.lua",
+    "chat/chat.lua"
+}
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -64,7 +67,14 @@ server_scripts {
     "server/licenses.lua",
 }
 
-dependencies {"oxmysql", "RageUI", "ava_base64toruntime", "MugShotBase64", "ava_mp_peds"}
+dependencies { "oxmysql", "RageUI", "ava_base64toruntime", "MugShotBase64", "ava_mp_peds" }
+
+file 'chat/style.css'
+chat_theme 'ava_chat' {
+    styleSheet = 'chat/style.css',
+}
+
+
 
 -- comment this line to disable debug prints
 ava_config "debug_prints" "yes"
@@ -86,9 +96,9 @@ ava_config "discord_config" {
         "743525702531547228", -- citizen
     },
     Ace = {
-        {ace = "superadmin", role = "743525702531547234"}, -- superadmin
-        {ace = "admin", role = "835276464865542195"}, -- admin
-        {ace = "mod", role = "743525702531547231"}, -- mod
+        { ace = "superadmin", role = "743525702531547234" }, -- superadmin
+        { ace = "admin", role = "835276464865542195" }, -- admin
+        { ace = "mod", role = "743525702531547231" }, -- mod
         -- { ace = "helper", role = "743525702531547230" } -- helper
     },
 }
