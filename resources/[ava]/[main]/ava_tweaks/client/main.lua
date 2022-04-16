@@ -140,7 +140,7 @@ local function Loop(value, vehicle, seat)
     -- change come values to make the actual or next loop work
     if value then
         playerVehicle = vehicle
-        disableAirControl = AVAConfig.DisableAirControl and seat == -1 and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
+        disableAirControl = AVAConfig.DisableAirControl and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
     end
 
     if value and inLoop then
