@@ -714,20 +714,20 @@ Config.Stores = {
     -- #endregion vehicleshops
 
     -- #region lscustoms
-    LSCustoms = {
-        Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
-        Name = "Los Santos Customs",
-        Coord = vector3(-1157.75, -2013.92, 12.21),
-        Size = { x = 2.0, y = 2.0, z = 2.0 },
-        Color = { r = 201, g = 24, b = 30, a = 128 },
-        Marker = 27,
-        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
-        LSCustoms = {
-            DirtyCash = false,
-            -- Elements = { "engine", "colors", "mods" }
-        },
-        HelpText = GetString("press_open_lscustoms"),
-    },
+    -- LSCustoms = {
+    --     Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
+    --     Name = "Los Santos Customs",
+    --     Coord = vector3(-1157.75, -2013.92, 12.21),
+    --     Size = { x = 2.0, y = 2.0, z = 2.0 },
+    --     Color = { r = 201, g = 24, b = 30, a = 128 },
+    --     Marker = 27,
+    --     Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+    --     LSCustoms = {
+    --         DirtyCash = false,
+    --         -- Elements = { "engine", "colors", "mods" }
+    --     },
+    --     HelpText = GetString("press_open_lscustoms"),
+    -- },
     -- BeekersCustom = {
     --     Title = { textureName = "shopui_title_carmod2", textureDirectory = "shopui_title_carmod2" }, -- Beeker's GARAGE & PARTS
     --     Name = "Beeker's GARAGE & PARTS",
@@ -743,6 +743,25 @@ Config.Stores = {
     --     HelpText = GetString("press_open_lscustoms"),
     -- },
     -- #endregion lscustoms
+
+    AirportRental = {
+        -- Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
+        Name = "Location",
+        Coord = vector3(-1038.11, -2731.25, 19.19),
+        Size = { x = 1.0, y = 1.0, z = 1.0 },
+        Color = { r = 255, g = 187, b = 51 },
+        Distance = 1.5,
+        Marker = 27,
+        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+        Rental = {
+            Vehicles = {
+                { name = "faggio2", price = 499 }
+            },
+            SpawnCoord = vector4(-1036.37, -2728.19, 19.12, 240.0)
+        },
+        HelpText = GetString("press_open_menu"),
+    },
+
 }
 
 Config.ClothesStore = {

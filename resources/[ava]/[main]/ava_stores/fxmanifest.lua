@@ -41,6 +41,7 @@ client_scripts {
     "client/player_outfits.lua",
     "client/vehicleshop.lua",
     "client/lscustoms.lua",
+    "client/vehicle_rental.lua",
 }
 
 server_scripts {
@@ -49,6 +50,7 @@ server_scripts {
     "server/player_outfits.lua",
     "server/vehicleshop.lua",
     "server/lscustoms.lua",
+    "server/vehicle_rental.lua",
 }
 
 dependencies {

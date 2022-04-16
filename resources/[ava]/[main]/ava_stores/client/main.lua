@@ -194,6 +194,8 @@ Citizen.CreateThread(function()
                     OpenSellZoneMenu()
                 elseif store.LSCustoms then
                     LSCustoms()
+                elseif store.Rental then
+                    OpenRentalMenu()
                 end
 
             end

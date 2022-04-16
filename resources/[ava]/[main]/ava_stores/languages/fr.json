@@ -422,5 +422,9 @@
     "lscustoms_wheelsHighEnd": "Jantes haut de gamme",
     "lscustoms_wheelsBennys1": "Jantes Benny's 1",
     "lscustoms_wheelsBennys2": "Jantes Benny's 2",
-    "lscustoms_wheelsOpenWheel": "Jantes de Formule 1"
+    "lscustoms_wheelsOpenWheel": "Jantes de Formule 1",
+    "rental_price_format": "$%s",
+    "rental_already_in_vehicle": "Vous êtes déjà dans un véhicule.",
+    "rental_not_enough_money": "Vous n'avez pas assez d'argent pour louer ce véhicule.",
+    "rental_area_is_occupied": "La zone est occupée."
 }
