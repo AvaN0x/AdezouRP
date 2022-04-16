@@ -29,11 +29,11 @@ local function GetPlayerKeys(src, aPlayer)
         end
     end
 
-    return playersKeys[src].Ids
+    return playersKeys[src]
 end
 
 local function HasKey(src, vehicleId)
-    return GetPlayerKeys(src)[tostring(vehicleId)] ~= nil
+    return GetPlayerKeys(src).Ids[tostring(vehicleId)] ~= nil
 end
 
 RegisterNetEvent("ava_garages:server:tryToLockVehicle", function(vehNet)
@@ -44,7 +44,7 @@ RegisterNetEvent("ava_garages:server:tryToLockVehicle", function(vehNet)
     local entityState = Entity(vehicle)
     local vehicleId = entityState.state.id
     -- Check if player has key with either the vehicle id, or the vehicle net
-    if (not vehicleId or not HasKey(src, vehicleId)) and not playersKeys[tostring(src)].VehNets[tostring(vehNet)] then
+    if (not vehicleId or not HasKey(src, vehicleId)) and not GetPlayerKeys(src).VehNets[tostring(vehNet)] then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_dont_have_keys"))
         return
     end
@@ -64,7 +64,7 @@ end)
 
 GivePlayerVehicleKey = function(src, citizenId, vehicleId, keyType)
     src = tostring(src)
-    local playerKeys = GetPlayerKeys(src)
+    local playerKeys = GetPlayerKeys(src).Ids
     if playerKeys[tostring(vehicleId)] then
         playersKeys[src].Ids[tostring(vehicleId)].type = keyType
         MySQL.query("UPDATE `ava_vehicleskeys` SET `keytype` = :keytype WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId, keytype = keyType })
@@ -78,7 +78,7 @@ exports("GivePlayerVehicleKey", GivePlayerVehicleKey)
 
 GivePlayerVehicleKeyIfLower = function(src, citizenId, vehicleId, keyType)
     src = tostring(src)
-    local playerKeys = GetPlayerKeys(src)
+    local playerKeys = GetPlayerKeys(src).Ids
     if not playerKeys[tostring(vehicleId)] or keyType < playerKeys[tostring(vehicleId)].type then
         GivePlayerVehicleKey(src, citizenId, vehicleId, keyType)
     end
@@ -87,7 +87,7 @@ exports("GivePlayerVehicleKeyIfLower", GivePlayerVehicleKeyIfLower)
 
 RemovePlayerVehicleKey = function(src, citizenId, vehicleId)
     src = tostring(src)
-    local playerKeys = GetPlayerKeys(src)
+    local playerKeys = GetPlayerKeys(src).Ids
     if playerKeys[tostring(vehicleId)] then
         playersKeys[src].Ids[tostring(vehicleId)] = nil
         MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId })
@@ -96,7 +96,7 @@ end
 exports("RemovePlayerVehicleKey", RemovePlayerVehicleKey)
 
 local RemoveKeysForVehicle = function(vehicleId)
-    for src, playerKeys in pairs(playersKeys.Ids) do
+    for src, playerKeys in pairs(playersKeys) do
         if playerKeys[tostring(vehicleId)] then
             playersKeys[src].Ids[tostring(vehicleId)] = nil
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_lost_key"))
@@ -118,7 +118,7 @@ exports("GivePlayerVehicleKeyForVehicleNet", GivePlayerVehicleKeyForVehicleNet)
 -- Events
 
 exports.ava_core:RegisterServerCallback("ava_garages:server:getPlayerKeys", function(source)
-    return GetPlayerKeys(source)
+    return GetPlayerKeys(source).Ids
 end)
 
 exports.ava_core:RegisterServerCallback("ava_garages:server:getPlayerDisplayableKeys", function(src)
@@ -138,12 +138,11 @@ RegisterNetEvent("ava_garages:server:destroyKey", function(id)
 end)
 
 RegisterNetEvent("ava_garages:server:giveDouble", function(targetId, id)
-    print("ava_garages:server:giveDouble")
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return end
 
-    local playerKeys = GetPlayerKeys(src, aPlayer)
+    local playerKeys = GetPlayerKeys(src, aPlayer).Ids
     if not playerKeys[tostring(id)] or playerKeys[tostring(id)].type > 1 then return end
 
     local aTarget = exports.ava_core:GetPlayer(targetId)
@@ -154,12 +153,11 @@ RegisterNetEvent("ava_garages:server:giveDouble", function(targetId, id)
 end)
 
 RegisterNetEvent("ava_garages:server:giveOwnerShip", function(targetId, id)
-    print("ava_garages:server:giveOwnerShip")
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return end
 
-    local playerKeys = GetPlayerKeys(src, aPlayer)
+    local playerKeys = GetPlayerKeys(src, aPlayer).Ids
     if not playerKeys[tostring(id)] or playerKeys[tostring(id)].type ~= 0 then return end
 
     local aTarget = exports.ava_core:GetPlayer(targetId)

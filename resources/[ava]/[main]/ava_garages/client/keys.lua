@@ -52,8 +52,3 @@ RegisterNetEvent("ava_garages:client:vehicleDoorsLockAnim", function(vehNet, sta
     Wait(400)
     SetVehicleLights(vehicle, 0)
 end)
-
-
--------------------
--- Open key menu --
--------------------
