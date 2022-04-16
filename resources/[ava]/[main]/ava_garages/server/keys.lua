@@ -20,16 +20,16 @@ local function GetPlayerKeys(src, aPlayer)
             aPlayer = exports.ava_core:GetPlayer(src)
         end
 
-        playersKeys[src] = {}
+        playersKeys[src] = { Ids = {}, VehNets = {} }
         if aPlayer then
             local keys = MySQL.query.await("SELECT `vehicleid`, `keytype` FROM `ava_vehicleskeys` WHERE `citizenid` = :citizenid", { citizenid = aPlayer.citizenId })
             for i = 1, #keys do
-                playersKeys[src][tostring(keys[i].vehicleid)] = { type = keys[i].keytype }
+                playersKeys[src].Ids[tostring(keys[i].vehicleid)] = { type = keys[i].keytype }
             end
         end
     end
 
-    return playersKeys[src]
+    return playersKeys[src].Ids
 end
 
 local function HasKey(src, vehicleId)
@@ -43,7 +43,8 @@ RegisterNetEvent("ava_garages:server:tryToLockVehicle", function(vehNet)
 
     local entityState = Entity(vehicle)
     local vehicleId = entityState.state.id
-    if not vehicleId or not HasKey(src, vehicleId) then
+    -- Check if player has key with either the vehicle id, or the vehicle net
+    if (not vehicleId or not HasKey(src, vehicleId)) and not playersKeys[tostring(src)].VehNets[tostring(vehNet)] then
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_dont_have_keys"))
         return
     end
@@ -65,10 +66,10 @@ GivePlayerVehicleKey = function(src, citizenId, vehicleId, keyType)
     src = tostring(src)
     local playerKeys = GetPlayerKeys(src)
     if playerKeys[tostring(vehicleId)] then
-        playersKeys[src][tostring(vehicleId)].type = keyType
+        playersKeys[src].Ids[tostring(vehicleId)].type = keyType
         MySQL.query("UPDATE `ava_vehicleskeys` SET `keytype` = :keytype WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId, keytype = keyType })
     else
-        playersKeys[src][tostring(vehicleId)] = { type = keyType }
+        playersKeys[src].Ids[tostring(vehicleId)] = { type = keyType }
         MySQL.query("INSERT INTO `ava_vehicleskeys` (`citizenid`, `vehicleid`, `keytype`) VALUES (:citizenid, :vehicleid, :keytype)", { citizenid = citizenId, vehicleid = vehicleId, keytype = keyType })
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_received_key"))
     end
@@ -88,22 +89,30 @@ RemovePlayerVehicleKey = function(src, citizenId, vehicleId)
     src = tostring(src)
     local playerKeys = GetPlayerKeys(src)
     if playerKeys[tostring(vehicleId)] then
-        playersKeys[src][tostring(vehicleId)] = nil
+        playersKeys[src].Ids[tostring(vehicleId)] = nil
         MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `citizenid` = :citizenid AND `vehicleid` = :vehicleid", { citizenid = citizenId, vehicleid = vehicleId })
     end
 end
 exports("RemovePlayerVehicleKey", RemovePlayerVehicleKey)
 
 local RemoveKeysForVehicle = function(vehicleId)
-    for src, playerKeys in pairs(playersKeys) do
+    for src, playerKeys in pairs(playersKeys.Ids) do
         if playerKeys[tostring(vehicleId)] then
-            playersKeys[src][tostring(vehicleId)] = nil
+            playersKeys[src].Ids[tostring(vehicleId)] = nil
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("vehicle_keys_lost_key"))
         end
     end
     MySQL.query.await("DELETE FROM `ava_vehicleskeys` WHERE `vehicleid` = :vehicleid", { vehicleid = vehicleId })
 end
 exports("RemoveKeysForVehicle", RemoveKeysForVehicle)
+
+GivePlayerVehicleKeyForVehicleNet = function(src, vehicleNet)
+    src = tostring(src)
+    GetPlayerKeys(src) -- Used to init the player keys if needed
+
+    playersKeys[src].VehNets[tostring(vehicleNet)] = true
+end
+exports("GivePlayerVehicleKeyForVehicleNet", GivePlayerVehicleKeyForVehicleNet)
 
 
 -- Events
