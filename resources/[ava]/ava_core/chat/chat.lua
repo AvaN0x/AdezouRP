@@ -8,6 +8,7 @@ if IsDuplicityVersion() then
 
     -- Cancel non command messages
     if GetConvar("ava_core_disable_chat", "false") ~= "false" then
+        while GetResourceState("chat") ~= "started" do Wait(0) end
         exports.chat:registerMessageHook(function(source, message, cbs)
             local src = source
             cbs.cancel()
