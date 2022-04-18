@@ -52,22 +52,21 @@ AddEventHandler("vSync:updateTime", function(base, offset, freeze)
 end)
 
 Citizen.CreateThread(function()
-    local hour = 0
-    local minute = 0
+    local mathfloor = math.floor
     while true do
         Citizen.Wait(0)
-        local newBaseTime = baseTime
         if GetGameTimer() - 500 > timer then
-            newBaseTime = newBaseTime + 0.25
+            local newBaseTime = baseTime + 0.25
+            if freezeTime then
+                timeOffset = timeOffset + baseTime - newBaseTime
+            end
+            baseTime = newBaseTime
             timer = GetGameTimer()
         end
-        if freezeTime then
-            timeOffset = timeOffset + baseTime - newBaseTime
-        end
-        baseTime = newBaseTime
-        hour = math.floor(((baseTime + timeOffset) / 60) % 24)
-        minute = math.floor((baseTime + timeOffset) % 60)
-        NetworkOverrideClockTime(hour, minute, 0)
+
+        NetworkOverrideClockTime(--[[hour]] mathfloor(((baseTime + timeOffset) / 60) % 24),
+            --[[minute]] mathfloor((baseTime + timeOffset) % 60),
+            --[[seconds]] mathfloor(((baseTime - mathfloor(baseTime)) + timeOffset) * 60))
     end
 end)
 
@@ -76,9 +75,8 @@ AddEventHandler("playerSpawned", function()
 end)
 
 Citizen.CreateThread(function()
-    TriggerEvent("chat:addSuggestion", "/weather", _U("help_weathercommand"), {{name = _("help_weathertype"), help = _U("help_availableweather")}})
-    TriggerEvent("chat:addSuggestion", "/time", _U("help_timecommand"),
-        {{name = _("help_timehname"), help = _U("help_timeh")}, {name = _("help_timemname"), help = _U("help_timem")}})
+    TriggerEvent("chat:addSuggestion", "/weather", _U("help_weathercommand"), { { name = _("help_weathertype"), help = _U("help_availableweather") } })
+    TriggerEvent("chat:addSuggestion", "/time", _U("help_timecommand"), { { name = _("help_timehname"), help = _U("help_timeh") }, { name = _("help_timemname"), help = _U("help_timem") } })
     TriggerEvent("chat:addSuggestion", "/freezetime", _U("help_freezecommand"))
     TriggerEvent("chat:addSuggestion", "/freezeweather", _U("help_freezeweathercommand"))
     TriggerEvent("chat:addSuggestion", "/morning", _U("help_morningcommand"))
