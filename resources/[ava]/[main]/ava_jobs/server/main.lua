@@ -437,12 +437,34 @@ end)
 -------------------
 
 exports.ava_core:RegisterServerCallback("ava_jobs:server:getTargetBills", function(source, targetId)
-    -- TODO: check if the player is allowed to get target bills (list of allowed jobs?)
+    -- TODO: check if the player is allowed to get target bills (list of allowed jobs? ace given to jobs?)
     local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
     if aTargetPlayer then
         return exports.ava_bills:getPlayerBills(aTargetPlayer.citizenId)
     end
     return {}
+end)
+
+exports.ava_core:RegisterServerCallback("ava_jobs:server:getPlayerData", function(source, targetId)
+    -- TODO: ace verification?
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if not aTargetPlayer then return end
+
+    return {
+        name = ("%s %s"):format(aTargetPlayer.character.firstname, aTargetPlayer.character.lastname),
+        licenses = aTargetPlayer.getLicenses()
+    }
+end)
+
+exports.ava_core:RegisterServerCallback("ava_jobs:server:revokeLicense", function(source, targetId, licenseName)
+    -- TODO: ace verification?
+    local src = source
+
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if aTargetPlayer then
+        return aTargetPlayer.removeLicense(licenseName)
+    end
+    return false
 end)
 
 exports.ava_core:RegisterServerCallback("ava_jobs:server:getVehicleInfos", function(source, vehicleNet, plate)

@@ -149,7 +149,7 @@ Config.Jobs = {
                     Desc = GetString("check_bills_desc"),
                     RightLabel = "→→→",
                     Action = function(jobName)
-                        local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
                         if not targetId then return end
 
                         local elements = {}
@@ -185,7 +185,29 @@ Config.Jobs = {
                         local targetId, localId = exports.ava_core:ChooseClosestPlayer()
                         if not targetId then return end
 
-                        -- TODO
+                        local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:getPlayerData", targetId) or {}
+
+                        if playerData.name and playerData.licenses then
+                            RageUI.CloseAll()
+                            RageUI.OpenTempMenu(playerData.name, function(Items)
+                                for i = 1, #playerData.licenses do
+                                    local license = playerData.licenses[i]
+                                    if license.name ~= "trafficLaws" then
+                                        Items:AddButton(GetString("license_details_" .. license.name), GetString("license_revoke_desc"), { RightLabel = GetString("license_revoke") }, function(onSelected)
+                                            if onSelected and exports.ava_core:ShowConfirmationMessage(GetString("license_revoke_confirm_title"),
+                                                GetString("license_revoke_confirm_firstline", GetString("license_details_" .. license.name), playerData.name),
+                                                GetString("license_revoke_confirm_secondline"))
+                                            then
+                                                if exports.ava_core:TriggerServerCallback("ava_jobs:server:revokeLicense", targetId, license.name) then
+                                                    exports.ava_core:ShowNotification(GetString("licence_you_revoked", GetString("license_details_" .. license.name), playerData.name))
+                                                    TriggerServerEvent("ava_core:server:ShowNotification", targetId, GetString("license_revoked", GetString("license_details_" .. license.name)))
+                                                end
+                                            end
+                                        end)
+                                    end
+                                end
+                            end)
+                        end
                     end,
                     MinimumGrade = "officer",
                 },
