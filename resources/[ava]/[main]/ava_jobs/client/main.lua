@@ -78,7 +78,7 @@ RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         PlayerData[k] = v
         if k == "jobs" then
-            print(json.encode(PlayerData[k], { indent = true }))
+            -- print(json.encode(PlayerData[k], { indent = true }))
             setJobsToUse()
         end
     end

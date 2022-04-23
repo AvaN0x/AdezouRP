@@ -273,10 +273,17 @@ end)
 RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, count)
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return end
+
     local inventory = aPlayer.getInventory()
     local job = Config.Jobs[jobName]
     local zone = job.SellZones[zoneName]
-    if zone and inventory.canRemoveItem(item, count) then
+    if not zone then return end
+
+    local hasJob, aJob = aPlayer.hasJob(jobName)
+    if not hasJob then return end
+
+    if inventory.canRemoveItem(item, count) then
         local price = nil
         for k, v in ipairs(zone.Items) do
             if v.name == item then
@@ -290,23 +297,22 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
         local total = exports.ava_jobs:applyTaxes(tonumber(count) * tonumber(price), jobName)
 
         local playerMoney, societyMoney
-        -- TODO
+
         -- if he is a tempworker, he must earn less than the society
-        -- if aPlayer["job" .. (jobIndex ~= 1 and jobIndex or "")].grade_name == "interim" then
-        --     playerMoney = math.floor(total * 0.2)
-        --     societyMoney = math.floor(total * 0.4)
-        --     local stateMoney = math.floor(total * 0.4)
-        --     local stateAccount = nil
-        --     TriggerEvent("esx_addonaccount:getSharedAccount", "society_state", function(account)
-        --         stateAccount = account
-        --     end)
-        --     if stateAccount ~= nil then
-        --         stateAccount.addMoney(stateMoney)
-        --     end
-        -- else
-        playerMoney = math.floor(total / 100 * 60)
-        societyMoney = math.floor(total / 100 * 40)
-        -- end
+        if aJob.grade == "tempworker" then
+            playerMoney = math.floor(total * 0.2)
+            societyMoney = math.floor(total * 0.4)
+
+            -- The rest of the money goes towards the government
+            local govAccounts = exports.ava_core:GetJobAccounts("government")
+            if govAccounts then
+                govAccounts.addAccountBalance("bank", total - (playerMoney + societyMoney))
+            end
+        else
+            playerMoney = math.floor(total * 0.6)
+            societyMoney = math.floor(total * 0.4)
+        end
+
         inventory.removeItem(item, count)
         local accounts = exports.ava_core:GetJobAccounts(jobName)
         if accounts then
@@ -315,8 +321,6 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
         inventory.addItem("cash", playerMoney)
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("have_earned", exports.ava_core:FormatNumber(playerMoney)))
         TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("comp_earned", exports.ava_core:FormatNumber(societyMoney)))
-    else
-        print(("%s attempted to exploit selling!"):format(GetPlayerIdentifiers(src)[1]))
     end
 end)
 
