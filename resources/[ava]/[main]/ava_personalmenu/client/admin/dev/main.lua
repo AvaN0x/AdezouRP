@@ -13,7 +13,7 @@ local showhash_dimensions = GetResourceKvpInt("showhash_dimensions") == 0
 
 function PoolDevMenu()
     DevAdminMenu:IsVisible(function(Items)
-        if perms.dev then
+        if perms and perms.dev then
             if perms.dev.showhash then
                 Items:CheckBox(GetString("dev_menu_showhash"), GetString("dev_menu_showhash_subtitle"), showhash, nil, function(onSelected, IsChecked)
                     if (onSelected) then
@@ -108,8 +108,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoords", function()
             SetTextOutline()
             SetTextEntry("STRING")
             AddTextComponentSubstringPlayerName("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
-                .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
-                .. string.format("%.2f", GetEntityHeading(playerPed)))
+            .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
+            .. string.format("%.2f", GetEntityHeading(playerPed)))
             EndTextCommandDisplayText(0.9, 0.88)
         end
     end)
@@ -173,7 +173,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
             SetTextOutline()
             SetTextEntry("STRING")
             AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
-                .. string.format("%.2f", pointerCoords.z))
+            .. string.format("%.2f", pointerCoords.z))
             DrawText(0.8, 0.88)
 
             DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)

@@ -174,7 +174,7 @@ RegisterNetEvent("ava_personalmenu:client:togglePlayerTags", function()
 end)
 
 function PoolPlayerList()
-    if perms.playerlist then
+    if perms and perms.playerlist then
         PlayerListSubMenu:IsVisible(function(Items)
             for i = 1, #playersData do
                 local playerData = playersData[i]

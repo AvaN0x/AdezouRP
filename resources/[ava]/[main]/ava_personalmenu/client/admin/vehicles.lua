@@ -6,7 +6,7 @@ VehiclesSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("vehicles"))
 local vehiclename_lastinput = ""
 
 function PoolVehicles()
-    if perms.vehicles then
+    if perms and perms.vehicles then
         VehiclesSubMenu:IsVisible(function(Items)
             if perms.vehicles.spawnvehicle then
                 Items:AddButton(GetString("vehicles_spawnvehicle"), GetString("vehicles_spawnvehicle_subtitle"), nil, function(onSelected)
@@ -57,4 +57,3 @@ function PoolVehicles()
         end)
     end
 end
-
