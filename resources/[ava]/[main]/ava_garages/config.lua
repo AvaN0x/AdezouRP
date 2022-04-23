@@ -181,11 +181,11 @@ AVAConfig.Garages = {
     {
         Insurance = true,
         Name = "insurance_arcadius",
-        Coord = vector3(-127.94, -641.77, 167.84),
+        Coord = vector3(-723.65, 262.10, 83.12),
         Size = { x = 1.5, y = 1.5, z = 1.0 },
         Color = { r = 255, g = 255, b = 255 },
         Marker = 27,
-        Blip = { Coord = vector3(-116.68, -603.23, 36.28), Sprite = 620, Color = 64, Name = GetString("insurance") },
+        Blip = { Sprite = 620, Color = 64, Name = GetString("insurance") },
     },
     -- #endregion insurance
 
