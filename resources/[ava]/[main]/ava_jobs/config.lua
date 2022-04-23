@@ -9,6 +9,7 @@ Config.MaxPickUp = 70
 Config.MaxPickUpIllegal = 70
 Config.JobMenuKey = "F6"
 
+-- TODO declare these in client side and not config
 Config.JobMenuElement = {
     PoliceMegaphone = {
         Label = GetString("police_megaphone"),
@@ -129,7 +130,7 @@ Config.Jobs = {
                 --     Label = GetString("fine"),
                 --     Desc = GetString("fine_desc"),
                 --     Action = function(jobName)
-                --         -- TODO
+                --         -- TODO not important
                 --     end,
                 -- },
                 {
@@ -148,10 +149,32 @@ Config.Jobs = {
                     Desc = GetString("check_bills_desc"),
                     RightLabel = "→→→",
                     Action = function(jobName)
-                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
                         if not targetId then return end
 
-                        -- TODO
+                        local elements = {}
+
+                        local count = 0
+                        local bills = exports.ava_core:TriggerServerCallback("ava_jobs:server:getTargetBills", targetId) or {}
+                        for i = 1, #bills do
+                            local bill = bills[i]
+                            count = count + 1
+                            elements[count] = {
+                                label = bill.content:len() > 36 and bill.content:sub(0, 33) .. "..." or bill.content,
+                                desc = GetString("bill_description", bill.date, bill.content),
+                                rightLabel = GetString("bill_amount", exports.ava_core:FormatNumber(bill.amount))
+                            }
+                        end
+
+                        RageUI.CloseAll()
+                        RageUI.OpenTempMenu(GetString("check_bills"), function(Items)
+                            for i = 1, #elements do
+                                local element = elements[i]
+                                if element then
+                                    Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel })
+                                end
+                            end
+                        end)
                     end,
                 },
                 {

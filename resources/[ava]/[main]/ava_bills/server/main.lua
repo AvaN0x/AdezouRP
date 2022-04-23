@@ -13,7 +13,7 @@ local sendBillToPlayer = function(sourceCitizenId, targetCitizenId, amount, cont
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 and sourceCitizenId ~= targetCitizenId then
         local id = MySQL.insert.await(
             "INSERT INTO `ava_bills`(`type`, `player_from`, `player_to`, `amount`, `content`) VALUES (0, :player_from, :player_to, :amount, :content)",
-            {player_from = sourceCitizenId, player_to = targetCitizenId, amount = amount, content = content:sub(0, 256)})
+            { player_from = sourceCitizenId, player_to = targetCitizenId, amount = amount, content = content:sub(0, 256) })
         return id
     end
     return nil
@@ -31,7 +31,7 @@ local sendJobBillToPlayer = function(sourceJobName, targetCitizenId, amount, con
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 then
         local id = MySQL.insert.await(
             "INSERT INTO `ava_bills`(`type`, `player_to`, `job_from`, `player_from`, `amount`, `content`) VALUES (2, :player_to, :job_from, :player_from, :amount, :content)",
-            {player_to = targetCitizenId, job_from = sourceJobName, amount = amount, content = content:sub(0, 256), player_from = sourceCitizenId})
+            { player_to = targetCitizenId, job_from = sourceJobName, amount = amount, content = content:sub(0, 256), player_from = sourceCitizenId })
         return id
     end
     return nil
@@ -48,7 +48,7 @@ local sendBillToJob = function(sourceCitizenId, targetJobName, amount, content)
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 then
         local id = MySQL.insert.await(
             "INSERT INTO `ava_bills`(`type`, `player_from`, `job_to`, `amount`, `content`) VALUES (1, :player_from, :job_to, :amount, :content)",
-            {player_from = sourceCitizenId, job_to = targetJobName, amount = amount, content = content:sub(0, 256)})
+            { player_from = sourceCitizenId, job_to = targetJobName, amount = amount, content = content:sub(0, 256) })
         return id
     end
     return nil
@@ -66,7 +66,7 @@ local sendJobBillToJob = function(sourceJobName, targetJobName, amount, content,
     if type(amount) == "number" and type(content) == "string" and amount > 0 and content:len() > 2 and sourceJobName ~= targetJobName then
         local id = MySQL.insert.await(
             "INSERT INTO `ava_bills`(`type`, `job_from`, `job_to`, `player_from`, `amount`, `content`) VALUES (3, :job_from, :job_to, :player_from, :amount, :content)",
-            {job_from = sourceJobName, job_to = targetJobName, player_from = sourceCitizenId, amount = amount, content = content:sub(0, 256)})
+            { job_from = sourceJobName, job_to = targetJobName, player_from = sourceCitizenId, amount = amount, content = content:sub(0, 256) })
         return id
     end
     return nil
@@ -122,26 +122,27 @@ end)
 local getPlayerBills = function(citizenId)
     return MySQL.query.await(
         "SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `player_to` = :citizenId ORDER BY `date` DESC",
-        {citizenId = citizenId}) or {}
+        { citizenId = citizenId }) or {}
 end
 exports("getPlayerBills", getPlayerBills)
+
 local getPlayerBillsSent = function(citizenId)
     return MySQL.query.await(
         "SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `player_from` = :citizenId ORDER BY `date` DESC",
-        {citizenId = citizenId}) or {}
+        { citizenId = citizenId }) or {}
 end
 exports("getPlayerBillsSent", getPlayerBillsSent)
 
 local getJobBills = function(jobName)
     return MySQL.query.await(
         "SELECT `id`, `type`, `player_from`, `job_from`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `job_to` = :jobName ORDER BY `date` DESC",
-        {jobName = jobName}) or {}
+        { jobName = jobName }) or {}
 end
 exports("getJobBills", getJobBills)
 local getJobBillsSent = function(jobName)
     return MySQL.query.await(
         "SELECT `id`, `type`, `player_to`, `job_to`, `amount`, `content`, DATE_FORMAT(`date`, '%d/%m/%Y') AS `date` FROM `ava_bills` WHERE `job_from` = :jobName ORDER BY `date` DESC",
-        {jobName = jobName}) or {}
+        { jobName = jobName }) or {}
 end
 exports("getJobBillsSent", getJobBillsSent)
 
@@ -171,7 +172,7 @@ local sourcePayBill = function(source, billId)
         return false
     end
     local bill = MySQL.single.await(
-        "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", {billId = billId})
+        "SELECT `type`, `player_from`, `player_to`, `job_from`, `job_to`, `amount`, `content` FROM `ava_bills` WHERE `id` = :billId", { billId = billId })
     if not bill then
         return false
     end
@@ -285,7 +286,7 @@ local sourcePayBill = function(source, billId)
     end
 
     if billWasPaid then
-        MySQL.update.await("DELETE FROM `ava_bills` WHERE `id` = :id", {id = billId})
+        MySQL.update.await("DELETE FROM `ava_bills` WHERE `id` = :id", { id = billId })
     end
     return billWasPaid
 end

@@ -436,6 +436,15 @@ end)
 -- JOBS SPECIFIC --
 -------------------
 
+exports.ava_core:RegisterServerCallback("ava_jobs:server:getTargetBills", function(source, targetId)
+    -- TODO: check if the player is allowed to get target bills (list of allowed jobs?)
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if aTargetPlayer then
+        return exports.ava_bills:getPlayerBills(aTargetPlayer.citizenId)
+    end
+    return {}
+end)
+
 exports.ava_core:RegisterServerCallback("ava_jobs:server:getVehicleInfos", function(source, vehicleNet, plate)
     local src = source
     local res = { plate = plate }
