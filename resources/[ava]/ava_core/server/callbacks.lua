@@ -9,10 +9,12 @@ RegisterNetEvent("ava_core:callbacks:server", function(eventName, requestId, ...
     local result
 
     if type(callbacks[eventName]) == "function" or (type(callbacks[eventName]) == "table" and callbacks[eventName]["__cfx_functionReference"] ~= nil) then
-        result = {callbacks[eventName](src, ...)}
-    end
+        result = { callbacks[eventName](src, ...) }
 
-    TriggerClientEvent(("ava_core:callbacks:client:%s:%s"):format(eventName, requestId), src, table.unpack(result))
+        TriggerClientEvent(("ava_core:callbacks:client:%s:%s"):format(eventName, requestId), src, table.unpack(result))
+    else
+        TriggerClientEvent(("ava_core:callbacks:client:%s:%s"):format(eventName, requestId), src)
+    end
 end)
 
 ---Register a server callback
