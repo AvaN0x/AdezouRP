@@ -64,9 +64,9 @@ Citizen.CreateThread(function()
             timer = GetGameTimer()
         end
 
-        NetworkOverrideClockTime(--[[hour]] mathfloor(((baseTime + timeOffset) / 60) % 24),
-            --[[minute]] mathfloor((baseTime + timeOffset) % 60),
-            --[[seconds]] mathfloor(((baseTime - mathfloor(baseTime)) + timeOffset) * 60))
+        NetworkOverrideClockTime(--[[hours]] mathfloor(((baseTime + timeOffset) / 60) % 24),
+            --[[minutes]] mathfloor((baseTime + timeOffset) % 60),
+            --[[seconds]] mathfloor((((baseTime + timeOffset) - mathfloor(baseTime + timeOffset))) * 60))
     end
 end)
 
