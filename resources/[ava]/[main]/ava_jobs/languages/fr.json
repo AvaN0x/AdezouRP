@@ -67,6 +67,7 @@
     "bank_managment_wash_money_input": "Veuillez entrer un montant à blanchir",
     "log_wash_money": "**%s** a blanchi **$%s** sur le compte bancaire de l'entreprise **%s**.",
     "manager_menu": "Menu gérant",
+    "manager_menu_name": "Menu gérant : %s",
     "job_menu_write_bills": "Rédiger une facture",
     "job_menu_write_bills_subtitle": "Rédiger une facture et la donner à un citoyen proche.",
     "job_menu_write_bills_input_amount": "Entrer un montant",

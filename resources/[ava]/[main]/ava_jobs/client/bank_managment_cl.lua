@@ -6,7 +6,7 @@
 -- Bank Managment --
 --------------------
 local updateJobsToSelect
-local SelectJobMenu = RageUI.CreateMenu("", GetString("bank_managment_menu"), 0, 0, "avaui", "avaui_title_adezou")
+local SelectJobMenu = RageUI.CreateMenu(GetString("bank_managment_menu"), GetString("bank_managment_menu"), 0, 0, "avaui", "avaui_title_adezou")
 local openedMenuJobName = nil
 SelectJobMenu.Closed = function()
     if openedMenuJobName == nil then
@@ -32,12 +32,12 @@ updateJobsToSelect = function()
     for jobName, job in pairs(playerJobs) do
         if not job.isIllegal and not job.isGang and job.canManage then
             jobCount = jobCount + 1
-            JobsToSelect[jobCount] = {label = job.LabelName, name = jobName}
+            JobsToSelect[jobCount] = { label = job.LabelName, name = jobName }
         end
     end
 end
 
-local MainBankManagmentMenu = RageUI.CreateSubMenu(SelectJobMenu, "", GetString("bank_managment_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
+local MainBankManagmentMenu = RageUI.CreateSubMenu(SelectJobMenu, GetString("bank_managment_menu"), GetString("bank_managment_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
 MainBankManagmentMenu.Closed = function()
     openedMenuJobName = nil
 
@@ -66,7 +66,7 @@ function RageUI.PoolMenus:BankManagmentMenu()
 
         for i = 1, #JobsToSelect do
             local element = JobsToSelect[i]
-            Items:AddButton(element.label, nil, {RightLabel = "→→→"}, function(onSelected)
+            Items:AddButton(element.label, nil, { RightLabel = "→→→" }, function(onSelected)
                 if onSelected then
                     ManagmentMenu(element.name)
                 end
@@ -109,7 +109,7 @@ function RageUI.PoolMenus:BankManagmentMenu()
         end)
 
         Items:AddButton(GetString("bank_managment_menu_bank_wash_money"), GetString("bank_managment_menu_bank_wash_money_subtitle"),
-            {LeftBadge = RageUI.BadgeStyle.Gun, Color = {BackgroundColor = RageUI.ItemsColour.MenuBlueExtraDark}}, function(onSelected)
+            { LeftBadge = RageUI.BadgeStyle.Gun, Color = { BackgroundColor = RageUI.ItemsColour.MenuBlueExtraDark } }, function(onSelected)
                 if onSelected then
                     local amount = tonumber(exports.ava_core:KeyboardInput(GetString("bank_managment_wash_money_input"), "", 10))
 
@@ -123,4 +123,3 @@ function RageUI.PoolMenus:BankManagmentMenu()
 
     end)
 end
-

@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-VehiclesSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("vehicles"))
+VehiclesSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("vehicles"))
 local vehiclename_lastinput = ""
 
 function PoolVehicles()

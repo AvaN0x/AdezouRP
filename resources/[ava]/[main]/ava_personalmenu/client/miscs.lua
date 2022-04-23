@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("miscs_menu"))
+MiscsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("miscs_menu"))
 
 local isHudActive, isCinematicModeActive = true, false
 
@@ -53,7 +53,7 @@ end
 
 function PoolMiscs()
     MiscsSubMenu:IsVisible(function(Items)
-        Items:CheckBox(GetString("miscs_menu_toggle_hud"), GetString("miscs_menu_toggle_hud_subtitle"), isHudActive, {IsDisabled = isCinematicModeActive},
+        Items:CheckBox(GetString("miscs_menu_toggle_hud"), GetString("miscs_menu_toggle_hud_subtitle"), isHudActive, { IsDisabled = isCinematicModeActive },
             function(onSelected, IsChecked)
                 if (onSelected) then
                     isHudActive = not isHudActive
@@ -61,7 +61,7 @@ function PoolMiscs()
                 end
             end)
         Items:CheckBox(GetString("miscs_menu_toggle_drift_mode"), GetString("miscs_menu_toggle_drift_mode_subtitle"), isDriftModeActive,
-            {LeftBadge = RageUI.BadgeStyle.Car}, function(onSelected, IsChecked)
+            { LeftBadge = RageUI.BadgeStyle.Car }, function(onSelected, IsChecked)
                 if (onSelected) then
                     if isDriftModeActive and isDriftModeEquipied and actualDriftVehicle ~= 0 then
                         SetDriftTyresEnabled(actualDriftVehicle, false)
@@ -98,7 +98,7 @@ end
 ------------------------------------
 ------------ Drift mode ------------
 ------------------------------------
-local blacklistClasses<const> = {[8] = true, [13] = true, [14] = true, [15] = true, [16] = true, [19] = true, [21] = true}
+local blacklistClasses<const> = { [8] = true, [13] = true, [14] = true, [15] = true, [16] = true, [19] = true, [21] = true }
 -- 0: Compacts
 -- 1: Sedans
 -- 2: SUVs

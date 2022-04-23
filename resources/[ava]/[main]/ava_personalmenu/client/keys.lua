@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-KeysSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("keys_menu"))
+KeysSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("keys_menu"))
 local playerKeys = {}
 
 function prepareKeys()

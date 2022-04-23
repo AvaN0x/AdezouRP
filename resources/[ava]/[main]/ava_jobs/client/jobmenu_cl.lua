@@ -5,7 +5,7 @@
 --------------
 -- Job Menu --
 --------------
-local SelectJobMenu = RageUI.CreateMenu("", GetString("job_menu"), 0, 0, "avaui", "avaui_title_adezou")
+local SelectJobMenu = RageUI.CreateMenu(GetString("job_menu"), GetString("job_menu"), 0, 0, "avaui", "avaui_title_adezou")
 local JobsToSelect = {}
 RegisterCommand("keyJobMenu", function()
     if exports.ava_core:canOpenMenu() then
@@ -32,7 +32,7 @@ local function updateJobsToSelect()
     end
 end
 
-local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, "", GetString("job_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
+local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, GetString("job_menu"), GetString("job_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
 local JobMenuElements = {}
 local openedMenuJobName = nil
 MainJobMenu.Closed = function()
@@ -41,8 +41,8 @@ MainJobMenu.Closed = function()
 
     updateJobsToSelect()
 end
-local JobMenuManage = RageUI.CreateSubMenu(MainJobMenu, "", GetString("job_menu_manage_job"))
-local JobMenuBills = RageUI.CreateSubMenu(MainJobMenu, "", GetString("job_menu_bills"))
+local JobMenuManage = RageUI.CreateSubMenu(MainJobMenu, GetString("job_menu"), GetString("job_menu_manage_job"))
+local JobMenuBills = RageUI.CreateSubMenu(MainJobMenu, GetString("job_menu"), GetString("job_menu_bills"))
 
 local function JobMenu(jobName)
     local playerJobsJobName = playerJobs[jobName]

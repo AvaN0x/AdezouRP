@@ -13,8 +13,7 @@ playerLicenses = {}
 isInMenuLoop = false
 local DoorsToCheck<const> = { { 4, "hood" }, { 5, "trunk" }, { 0, "front_left" }, { 1, "front_right" }, { 2, "back_left" }, { 3, "back_right" } }
 
-MainPersonalMenu = RageUI.CreateMenu("", GetString("personal_menu"), 0, 0, "avaui", "avaui_title_adezou")
-MainPersonalMenu.Display.Glare = true
+MainPersonalMenu = RageUI.CreateMenu(GetString("personal_menu"), GetString("personal_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainPersonalMenu.Closed = function()
     isInMenuLoop = false
 end

@@ -2,8 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-WalletSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("wallet_menu"))
-local CardList<const> = {{type = "see", Name = GetString("wallet_see_card")}, {type = "show", Name = GetString("wallet_show_card")}}
+WalletSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("wallet_menu"))
+local CardList<const> = { { type = "see", Name = GetString("wallet_see_card") }, { type = "show", Name = GetString("wallet_show_card") } }
 local CardIndex = 1
 
 local function ListCardHandler(Index, onSelected, onListChange, cardName, license)
@@ -21,6 +21,7 @@ local function ListCardHandler(Index, onSelected, onListChange, cardName, licens
         end
     end
 end
+
 function PoolWallet()
     WalletSubMenu:IsVisible(function(Items)
         Items:AddList(GetString("wallet_card_identity"), CardList, CardIndex, GetString("wallet_card_identity_subtitle"), nil,
@@ -41,4 +42,3 @@ function PoolWallet()
         end
     end)
 end
-

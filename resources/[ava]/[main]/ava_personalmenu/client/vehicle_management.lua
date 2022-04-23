@@ -2,12 +2,12 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-VehiclesManagementSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("vehicle_management"))
-local Speeds<const> = {{speed = -1, Name = GetString("disabled")}, {speed = 50, Name = 50}, {speed = 90, Name = 90}, {speed = 130, Name = 130}}
+VehiclesManagementSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("vehicle_management"))
+local Speeds<const> = { { speed = -1, Name = GetString("disabled") }, { speed = 50, Name = 50 }, { speed = 90, Name = 90 }, { speed = 130, Name = 130 } }
 local speedLimitIndex = 1
 
-local WindowsList<const> = {{0, "front_left"}, {1, "front_right"}, {2, "back_left"}, {3, "back_right"}}
-local WindowsRollList<const> = {{type = "down", Name = GetString("window_roll_down")}, {type = "up", Name = GetString("window_roll_up")}}
+local WindowsList<const> = { { 0, "front_left" }, { 1, "front_right" }, { 2, "back_left" }, { 3, "back_right" } }
+local WindowsRollList<const> = { { type = "down", Name = GetString("window_roll_down") }, { type = "up", Name = GetString("window_roll_up") } }
 local windowsRollIndex = 1
 local function ListWindowHandler(Index, onSelected, onListChange, windowIndex)
     if onListChange then
@@ -23,7 +23,7 @@ local function ListWindowHandler(Index, onSelected, onListChange, windowIndex)
     end
 end
 
-local DoorsToggleList<const> = {{type = "open", Name = GetString("door_open")}, {type = "close", Name = GetString("door_close")}}
+local DoorsToggleList<const> = { { type = "open", Name = GetString("door_open") }, { type = "close", Name = GetString("door_close") } }
 local doorsToggleIndex = 1
 local function ListDoorHandler(Index, onSelected, onListChange, doorIndex)
     if onListChange then
@@ -44,6 +44,7 @@ function OnVehiclesManagementSubMenuOpened()
     doorsToggleIndex = 1
     VehiclesManagementSubMenu.Index = 1
 end
+
 function PoolVehicleManagement()
     VehiclesManagementSubMenu:IsVisible(function(Items)
         local data = playerVehicleData

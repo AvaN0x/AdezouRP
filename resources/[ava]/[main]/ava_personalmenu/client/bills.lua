@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-BillsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, "", GetString("bills_menu"))
+BillsSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("bills_menu"))
 local playerBills = {}
 
 function prepareBills()
@@ -28,7 +28,7 @@ function PoolBills()
             for i = 1, #playerBills do
                 local bill = playerBills[i]
                 if bill then
-                    Items:AddButton(bill.label, bill.desc, {RightLabel = bill.rightLabel}, function(onSelected)
+                    Items:AddButton(bill.label, bill.desc, { RightLabel = bill.rightLabel }, function(onSelected)
                         if onSelected then
                             Citizen.CreateThread(function()
                                 if exports.ava_core:TriggerServerCallback("ava_bills:server:payBill", bill.id) then
@@ -42,4 +42,3 @@ function PoolBills()
         end
     end)
 end
-

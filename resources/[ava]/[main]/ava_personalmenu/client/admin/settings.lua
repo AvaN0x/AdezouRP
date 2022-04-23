@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-AdminSettingsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("admin_settings"))
+AdminSettingsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("admin_settings"))
 local AdminSettings = {}
 AdminSettings.Notifications = {}
 AddEventHandler("ava_personalmenu:client:playerIsAdmin", function()

@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-DevAdminMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("dev_menu"))
+DevAdminMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("dev_menu"), GetString("dev_menu"))
 DevAdminMenu.Display.Glare = true
 
 local showhash, showcoordshelper, showcoords = false, false, false

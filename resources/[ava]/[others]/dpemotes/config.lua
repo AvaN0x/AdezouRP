@@ -23,7 +23,7 @@ Config = {
     -- Use a 512 x 128 image!
     -- Note this might cause an issue of the image getting stuck on peoples screens
     CustomMenuEnabled = true,
-    MenuImage = "https://cdn.discordapp.com/attachments/756841114589331457/940607819747582012/512x128.png",
+    MenuImage = "https://cdn.discordapp.com/attachments/756841114589331457/967407798503751750/banner512x128.png",
     -- You can change the menu image by pasting a link above. It must be the same width and length
     --
     -- You can change the menu position here

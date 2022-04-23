@@ -2,14 +2,14 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local ManagerMenu = RageUI.CreateMenu("", GetString("manager_menu", ""), 0, 0, "avaui", "avaui_title_adezou")
+local ManagerMenu = RageUI.CreateMenu(GetString("manager_menu"), GetString("manager_menu"), 0, 0, "avaui", "avaui_title_adezou")
 local openedMenuJobName = nil
 ManagerMenu.Closed = function()
     CurrentActionEnabled = true
 end
 
-local ManageEmployeesMenu = RageUI.CreateSubMenu(ManagerMenu, "", GetString("manager_menu_manage_employees"), 0, 0, "avaui", "avaui_title_adezou")
-local ManageEmployeeMenu = RageUI.CreateSubMenu(ManageEmployeesMenu, "", "name", 0, 0, "avaui", "avaui_title_adezou")
+local ManageEmployeesMenu = RageUI.CreateSubMenu(ManagerMenu, GetString("manager_menu"), GetString("manager_menu_manage_employees"), 0, 0, "avaui", "avaui_title_adezou")
+local ManageEmployeeMenu = RageUI.CreateSubMenu(ManageEmployeesMenu, GetString("manager_menu"), "name", 0, 0, "avaui", "avaui_title_adezou")
 local selectedEmployee, myGradeId
 
 function OpenManagerMenuMenu(jobName)
@@ -22,7 +22,7 @@ function OpenManagerMenuMenu(jobName)
     end
     openedMenuJobName = jobName
 
-    ManagerMenu.Subtitle = GetString("manager_menu", job.LabelName)
+    ManagerMenu.Subtitle = GetString("manager_menu_name", job.LabelName)
     RageUI.CloseAll()
     RageUI.Visible(ManagerMenu, true)
 end
@@ -56,7 +56,7 @@ function RageUI.PoolMenus:ManagerMenu()
         end
 
         local manage_menu_manage_string = playerJobsJobName.isGang and "manager_menu_manage_members" or "manager_menu_manage_employees"
-        Items:AddButton(GetString(manage_menu_manage_string), GetString(manage_menu_manage_string .. "_subtitle"), {RightLabel = "→→→"},
+        Items:AddButton(GetString(manage_menu_manage_string), GetString(manage_menu_manage_string .. "_subtitle"), { RightLabel = "→→→" },
             function(onSelected)
                 if onSelected then
                     fetchEmployees()
@@ -64,7 +64,7 @@ function RageUI.PoolMenus:ManagerMenu()
             end, ManageEmployeesMenu)
 
         if not playerJobsJobName.isGang then
-            Items:AddButton(GetString("manager_menu_manage_salaries"), GetString("manager_menu_manage_salaries_subtitle"), {RightLabel = "→→→"},
+            Items:AddButton(GetString("manager_menu_manage_salaries"), GetString("manager_menu_manage_salaries_subtitle"), { RightLabel = "→→→" },
                 function(onSelected)
                     if onSelected then
                         local grades = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName)
@@ -123,7 +123,7 @@ function RageUI.PoolMenus:ManagerMenu()
         if jobEmployees then
             for i = 1, #jobEmployees do
                 local employee = jobEmployees[i]
-                Items:AddButton(employee.name, nil, {RightLabel = employee.grade}, function(onSelected)
+                Items:AddButton(employee.name, nil, { RightLabel = employee.grade }, function(onSelected)
                     if onSelected then
                         selectedEmployee = employee
                         ManageEmployeeMenu.Subtitle = employee.name
@@ -147,7 +147,7 @@ function RageUI.PoolMenus:ManagerMenu()
             end
         end)
         Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"),
-            {IsDisabled = selectedEmployee.myself or selectedEmployee.gradeId > (myGradeId or 0)}, function(onSelected)
+            { IsDisabled = selectedEmployee.myself or selectedEmployee.gradeId > (myGradeId or 0) }, function(onSelected)
                 if onSelected then
                     local jobIsGang<const> = playerJobs[openedMenuJobName].isGang
                     local grades = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName)
@@ -157,8 +157,8 @@ function RageUI.PoolMenus:ManagerMenu()
                             local grade = grades[i]
                             grade.actual = i == selectedEmployee.gradeId
                             grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
-                                             or (grade.canManage
-                                                 and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
+                                or (grade.canManage
+                                    and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
                         end
 
                         RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
@@ -166,7 +166,7 @@ function RageUI.PoolMenus:ManagerMenu()
                                 local grade = grades[i]
 
                                 Items:AddButton(grade.label, grade.desc,
-                                    {LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual or i > (myGradeId or 0)},
+                                    { LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual or i > (myGradeId or 0) },
                                     function(onSelected)
                                         if onSelected then
                                             TriggerServerEvent("ava_jobs:server:manager_menu_change_grade", selectedEmployee.id, openedMenuJobName, grade.name)
@@ -183,4 +183,3 @@ function RageUI.PoolMenus:ManagerMenu()
     end)
 
 end
-

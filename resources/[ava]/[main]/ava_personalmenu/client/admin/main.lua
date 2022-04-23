@@ -2,8 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-MainAdminMenu = RageUI.CreateMenu("", GetString("admin_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
-MainAdminMenu.Display.Glare = true
+MainAdminMenu = RageUI.CreateMenu(GetString("admin_menu_title"), GetString("admin_menu_title"), 0, 0, "avaui", "avaui_title_adezou")
 
 ---@type adminmenu_perms
 perms = {}
@@ -38,11 +37,11 @@ function RageUI.PoolMenus:AdminMenu()
     MainAdminMenu:IsVisible(function(Items)
         if perms then
             if perms.playerlist then
-                Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), {RightLabel = "→→→"}, nil,
+                Items:AddButton(GetString("admin_menu_player_list"), GetString("admin_menu_player_list_subtitle"), { RightLabel = "→→→" }, nil,
                     PlayerListSubMenu)
             end
             if perms.playersoptions then
-                Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), {RightLabel = "→→→"}, nil,
+                Items:AddButton(GetString("admin_menu_players_options"), GetString("admin_menu_players_options_subtitle"), { RightLabel = "→→→" }, nil,
                     PlayersOptionsSubMenu)
             end
             if perms.tpcoords then
@@ -64,7 +63,7 @@ function RageUI.PoolMenus:AdminMenu()
                 end)
             end
             if perms.chars then
-                Items:AddButton(GetString("admin_menu_cleararea"), GetString("admin_menu_cleararea_subtitle"), {RightBadge = RageUI.BadgeStyle.Alert},
+                Items:AddButton(GetString("admin_menu_cleararea"), GetString("admin_menu_cleararea_subtitle"), { RightBadge = RageUI.BadgeStyle.Alert },
                     function(onSelected)
                         if onSelected then
                             ExecuteCommand("cleararea")
@@ -74,7 +73,7 @@ function RageUI.PoolMenus:AdminMenu()
             if perms.chars then
                 Items:AddButton(GetString("admin_menu_chars"), GetString("admin_menu_chars_subtitle"), {
                     RightBadge = function()
-                        return {BadgeDictionary = "mpleaderboard", BadgeTexture = "leaderboard_male_icon"}
+                        return { BadgeDictionary = "mpleaderboard", BadgeTexture = "leaderboard_male_icon" }
                     end,
                 }, function(onSelected)
                     if onSelected then
@@ -83,7 +82,7 @@ function RageUI.PoolMenus:AdminMenu()
                     end
                 end)
             end
-            Items:AddButton(GetString("admin_menu_admin_settings"), GetString("admin_menu_admin_settings_subtitle"), {RightLabel = "→→→"}, nil,
+            Items:AddButton(GetString("admin_menu_admin_settings"), GetString("admin_menu_admin_settings_subtitle"), { RightLabel = "→→→" }, nil,
                 AdminSettingsSubMenu)
             if perms.noclip then
                 Items:CheckBox(GetString("admin_menu_noclip"), GetString("admin_menu_noclip_subtitle"), noclipEnabled, nil, function(onSelected, IsChecked)
@@ -93,10 +92,10 @@ function RageUI.PoolMenus:AdminMenu()
                 end)
             end
             if perms.dev then
-                Items:AddButton(GetString("admin_menu_dev_menu"), GetString("admin_menu_dev_menu_subtitle"), {RightLabel = "→→→"}, nil, DevAdminMenu)
+                Items:AddButton(GetString("admin_menu_dev_menu"), GetString("admin_menu_dev_menu_subtitle"), { RightLabel = "→→→" }, nil, DevAdminMenu)
             end
             if perms.vehicles then
-                Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), {RightLabel = "→→→"}, nil, VehiclesSubMenu)
+                Items:AddButton(GetString("admin_menu_vehicles"), GetString("admin_menu_vehicles_subtitle"), { RightLabel = "→→→" }, nil, VehiclesSubMenu)
             end
         end
     end)
@@ -144,10 +143,10 @@ RegisterNetEvent("ava_personalmenu:client:toggleNoclip", function()
     Citizen.CreateThread(function()
         local unpack = table.unpack
         local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
-            {control = "~INPUT_AIM~", label = GetString("admin_menu_noclip_leave")},
-            {control = "~INPUT_SPRINT~", label = GetString("admin_menu_noclip_accelerate")},
-            {control = GetControlGroupInstructionalButton(2, 0, 0), label = GetString("admin_menu_noclip_move")},
-            {control = GetControlGroupInstructionalButton(2, 4, 0), label = GetString("admin_menu_noclip_up_down")},
+            { control = "~INPUT_AIM~", label = GetString("admin_menu_noclip_leave") },
+            { control = "~INPUT_SPRINT~", label = GetString("admin_menu_noclip_accelerate") },
+            { control = GetControlGroupInstructionalButton(2, 0, 0), label = GetString("admin_menu_noclip_move") },
+            { control = GetControlGroupInstructionalButton(2, 4, 0), label = GetString("admin_menu_noclip_up_down") },
         })
         local playerPed = PlayerPedId()
         local vehicle = GetVehiclePedIsIn(playerPed, false)

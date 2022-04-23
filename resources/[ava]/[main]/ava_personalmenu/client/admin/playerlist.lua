@@ -2,9 +2,9 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("player_list"))
-PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, "", GetString("players_options"))
-local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, "", "player_name")
+PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("player_list"))
+PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("players_options"))
+local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, GetString("admin_menu_title"), "player_name")
 local playersOptions = { { Name = GetString("player_manage"), task = "manage" }, { Name = GetString("player_spectate"), task = "spectate" } }
 local playerlistTaskIndex = 1
 PlayerListSubMenu.Closed = function()

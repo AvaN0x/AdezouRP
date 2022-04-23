@@ -6,21 +6,20 @@ local InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
-InventoryMenu.Display.Glare = true
 InventoryMenu.Closed = function()
     InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
 end
-InventoryMenu:AddInstructionButton({GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change")})
+InventoryMenu:AddInstructionButton({ GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change") })
 local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
 ItemSelectedMenu.Closed = function()
     selectedItem = nil
 end
 
 local SortIndexes = {
-    {name = "weight", label = GetString("inventory_sort_index_weight")},
-    {name = "quantity", label = GetString("inventory_sort_index_quantity")},
-    {name = "alpha", label = GetString("inventory_sort_index_alpha")},
-    {name = "type", label = GetString("inventory_sort_index_type")},
+    { name = "weight", label = GetString("inventory_sort_index_weight") },
+    { name = "quantity", label = GetString("inventory_sort_index_quantity") },
+    { name = "alpha", label = GetString("inventory_sort_index_alpha") },
+    { name = "type", label = GetString("inventory_sort_index_type") },
 }
 local sortNotificationId = 0
 local sortIndex = GetResourceKvpInt("ava_core_inventory_sort") % #SortIndexes
@@ -111,11 +110,12 @@ local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
                 label = item.label,
                 description = GetString("inventory_weight_unit", formatWeight(item.weight), unit,
                     (item.desc and item.desc ~= "") and ("\n%s"):format(item.desc) or ""),
-                RightLabel = ("%s %s - %s %s"):format(item.limit and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
-                                                          or AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type), formatWeight(item.total_weight),
-                    unit),
+                RightLabel = ("%s %s - %s %s"):format(item.limit
+                and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
+                or AVA.Utils.FormatNumber(item.quantity)
+                    , getQuantityUnit(item.type), formatWeight(item.total_weight), unit),
                 LeftBadge = not item.noIcon and function()
-                    return {BadgeDictionary = "ava_items", BadgeTexture = item.name}
+                    return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
                 end or nil,
             }
 
@@ -136,7 +136,9 @@ local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
 
     SortInventory()
 
-    InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
+    -- InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
+    InventoryMenu.Title = title
+    InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(actualWeight), formatWeight(maxWeight, 1))
 end
 
 local function OpenMyInventory()
@@ -168,7 +170,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
         if AVAConfig.InventoryMoneyOnTop and InventoryTopElements then
             for i = 1, #InventoryTopElements, 1 do
                 local element = InventoryTopElements[i]
-                Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
+                Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
                     if onSelected then
                         SelectItem(element.item)
                     end
@@ -179,7 +181,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
         if InventoryElements then
             for i = 1, #InventoryElements, 1 do
                 local element = InventoryElements[i]
-                Items:AddButton(element.label, element.description, {LeftBadge = element.LeftBadge, RightLabel = element.RightLabel}, function(onSelected)
+                Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
                     if onSelected then
                         SelectItem(element.item)
                     end
@@ -219,7 +221,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         end)
                     end
                 end)
-                Items:AddButton(GetString("inventory_drop"), nil, {IsDisabled = AVA.Player.isInVehicle}, function(onSelected)
+                Items:AddButton(GetString("inventory_drop"), nil, { IsDisabled = AVA.Player.isInVehicle }, function(onSelected)
                     if onSelected then
                         local selectedItem = selectedItem
                         local count = tonumber(AVA.KeyboardInput(GetString("inventory_drop_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
@@ -238,7 +240,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         OpenMyInventory()
                     end
                 end)
-                Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), {IsDisabled = AVA.Player.isInVehicle},
+                Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), { IsDisabled = AVA.Player.isInVehicle },
                     function(onSelected)
                         if onSelected then
                             local selectedItem = selectedItem
@@ -320,4 +322,3 @@ if AVAConfig.NPWD then
         return exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
     end)
 end
-
