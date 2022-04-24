@@ -162,7 +162,7 @@
     "manage_weapon_license_desc": "Donner le PPA à l'individu",
     "you_gave_weapon_licence": "Vous avez donné le PPA à ~o~%s~s~",
     "already_own_weapon_licence": "~o~%s~s~ possède déjà un PPA",
-    "license_weapon_gived": "Vous avez reçu votre PPA!",
+    "license_weapon_given": "Vous avez reçu votre PPA!",
     "check_bills": "Voir les factures",
     "check_bills_desc": "Voir les factures impayées de l'individu",
     "unpaid_bills": "Factures impayées",

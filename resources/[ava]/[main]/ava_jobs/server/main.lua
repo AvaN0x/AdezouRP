@@ -467,6 +467,19 @@ exports.ava_core:RegisterServerCallback("ava_jobs:server:revokeLicense", functio
     return false
 end)
 
+exports.ava_core:RegisterServerCallback("ava_jobs:server:giveWeaponLicense", function(source, targetId)
+    -- TODO: ace verification?
+    local src = source
+
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if aTargetPlayer then
+        return aTargetPlayer.addLicense("weapon")
+    end
+    return false
+end)
+
+
+
 exports.ava_core:RegisterServerCallback("ava_jobs:server:getVehicleInfos", function(source, vehicleNet, plate)
     local src = source
     local res = { plate = plate }

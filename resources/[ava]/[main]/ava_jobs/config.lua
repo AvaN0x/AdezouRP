@@ -120,7 +120,6 @@ Config.JobMenuElement = {
 Config.Jobs = {
     -- #region jobs
     lspd = {
-        SocietyName = "society_lspd", -- FIXME not needed?
         LabelName = "LSPD",
         ServiceCounter = true,
         Blip = { Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3 },
@@ -187,7 +186,7 @@ Config.Jobs = {
 
                         local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:getPlayerData", targetId) or {}
 
-                        if playerData.name and playerData.licenses then
+                        if playerData and playerData.name and playerData.licenses then
                             RageUI.CloseAll()
                             RageUI.OpenTempMenu(playerData.name, function(Items)
                                 for i = 1, #playerData.licenses do
@@ -218,7 +217,21 @@ Config.Jobs = {
                         local targetId, localId = exports.ava_core:ChooseClosestPlayer()
                         if not targetId then return end
 
-                        -- TODO
+                        local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:getPlayerData", targetId) or {}
+                        if not playerData or not playerData.name or not playerData.licenses then return end
+
+                        for i = 1, #playerData.licenses do
+                            local license = playerData.licenses[i]
+                            if license.name == "weapon" then
+                                exports.ava_core:ShowNotification(GetString("already_own_weapon_licence", playerData.name))
+                                return
+                            end
+                        end
+
+                        if exports.ava_core:TriggerServerCallback("ava_jobs:server:giveWeaponLicense", targetId) then
+                            exports.ava_core:ShowNotification(GetString("you_gave_weapon_licence", playerData.name))
+                            TriggerServerEvent("ava_core:server:ShowNotification", targetId, GetString("license_weapon_given"))
+                        end
                     end,
                     MinimumGrade = "sergeant_chief",
                 },
@@ -442,7 +455,6 @@ Config.Jobs = {
         },
     },
     ems = {
-        SocietyName = "society_ems", -- FIXME not needed?
         LabelName = "EMS",
         ServiceCounter = true,
         Blip = { Name = "~b~Hopital", Coord = vector3(298.48, -584.48, 43.28), Sprite = 61, Colour = 26 },
@@ -571,7 +583,6 @@ Config.Jobs = {
         },
     },
     mechanic = {
-        SocietyName = "society_mechanic", -- FIXME not needed?
         LabelName = "Mécano",
         ServiceCounter = true,
         Blip = { Name = "~y~Garage Mécano", Coord = vector3(-1145.49, -1990.55, 13.16), Sprite = 446, Colour = 5 },
@@ -789,7 +800,6 @@ Config.Jobs = {
         },
     },
     government = {
-        SocietyName = "society_government", -- FIXME not needed?
         LabelName = "Gouvernement",
         ServiceCounter = true,
         Blip = { Name = "Gouvernement", Coord = vector3(-545.17, -204.17, 37.24), Sprite = 419, Colour = 0 },
@@ -845,7 +855,6 @@ Config.Jobs = {
         },
     },
     winemaker = {
-        SocietyName = "society_vigneron", -- FIXME not needed?
         LabelName = "Vigneron",
         Blip = { Sprite = 85, Colour = 19 },
         Zones = {
@@ -993,7 +1002,6 @@ Config.Jobs = {
         },
     },
     tailor = {
-        SocietyName = "society_tailor", -- FIXME not needed?
         LabelName = "Couturier",
         Blip = { Sprite = 366, Colour = 0 },
         Zones = {
@@ -1107,7 +1115,6 @@ Config.Jobs = {
         },
     },
     cluckin = {
-        SocietyName = "society_cluckin", -- FIXME not needed?
         LabelName = "Cluckin Bell",
         Blip = { Sprite = 141, Colour = 46 },
         Zones = {
@@ -1286,7 +1293,6 @@ Config.Jobs = {
     },
     bahama = {
         Disabled = true,
-        SocietyName = "society_bahama", -- FIXME not needed?
         LabelName = "Bahama",
         Blip = { Sprite = 93, Colour = 0 },
         Zones = {
@@ -1347,7 +1353,6 @@ Config.Jobs = {
         },
     },
     unicorn = {
-        SocietyName = "society_unicorn", -- FIXME not needed?
         LabelName = "Unicorn",
         Blip = { Sprite = 121, Colour = 0 },
         Zones = {
@@ -1431,7 +1436,6 @@ Config.Jobs = {
         },
     },
     nightclub = {
-        SocietyName = "society_nightclub", -- FIXME not needed?
         LabelName = "Galaxy",
         Blip = { Coord = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7 },
         Zones = {
@@ -1491,7 +1495,6 @@ Config.Jobs = {
         },
     },
     attackataco = {
-        SocietyName = "society_attackataco", -- FIXME not needed?
         LabelName = "Attack-A-Taco",
         Blip = { Sprite = 468, Colour = 46 },
         Zones = {
