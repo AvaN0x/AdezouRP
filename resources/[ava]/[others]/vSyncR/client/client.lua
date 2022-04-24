@@ -66,7 +66,7 @@ Citizen.CreateThread(function()
 
         NetworkOverrideClockTime(--[[hours]] mathfloor(((baseTime + timeOffset) / 60) % 24),
             --[[minutes]] mathfloor((baseTime + timeOffset) % 60),
-            --[[seconds]] mathfloor((((baseTime + timeOffset) - mathfloor(baseTime + timeOffset))) * 60))
+            --[[seconds]] mathfloor((((baseTime + timeOffset) % 1)) * 60))
     end
 end)
 
