@@ -7,7 +7,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     local self = {}
 
     self.src = src
-    self.identifiers = {license = license, discord = discord}
+    self.identifiers = { license = license, discord = discord }
     self.group = group
     self.name = name
     self.discordTag = discordTag
@@ -30,7 +30,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     self.status = playerData.status and json.decode(playerData.status) or {}
     self.jobs = playerData.jobs and json.decode(playerData.jobs) or {}
     ---@class inventory
-    self.inventory = CreateInventory(self.src, playerData.inventory and json.decode(playerData.inventory) or {}, AVAConfig.InventoryMaxWeight)
+    self.inventory = CreateInventory(0, self.src, playerData.inventory and json.decode(playerData.inventory) or {}, AVAConfig.InventoryMaxWeight)
     self.phoneNumber = playerData.phone_number or nil
 
     ---@class metadata
@@ -65,7 +65,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---@return string
     self.getCharacterName = function()
         return (self.character and self.character.firstname and self.character.lastname) and ("%s %s"):format(self.character.firstname, self.character.lastname)
-                   or self.name
+            or self.name
     end
 
     -----------------------------------------
@@ -89,7 +89,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Set player skin, will trigger client event to tell the client that the skin changed
     self.setSkin = function(skin)
         self.skin = skin
-        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {skin = self.skin})
+        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, { skin = self.skin })
     end
 
     ----------------------------------------
@@ -117,7 +117,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         end
 
         if AVAConfig.Accounts[accountName] then
-            account = {name = accountName, balance = 0}
+            account = { name = accountName, balance = 0 }
 
             self.accounts[#self.accounts + 1] = account
             return account
@@ -341,8 +341,8 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
         local data = {}
         local count = 0
         for i = 1, #self.jobs, 1 do
-            local job<const> = self.jobs[i]
-            local cfgJob<const> = AVAConfig.Jobs[job.name]
+            local job <const> = self.jobs[i]
+            local cfgJob <const> = AVAConfig.Jobs[job.name]
             if cfgJob then
                 local jobData = {
                     name = job.name,
@@ -355,7 +355,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                 }
                 local countUnderGrades = 0
                 for j = 1, #cfgJob.grades do
-                    local grade<const> = cfgJob.grades[j]
+                    local grade <const> = cfgJob.grades[j]
                     if grade.name == job.grade then
                         jobData.gradeLabel = grade.label
                         if grade.manage then
@@ -378,7 +378,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
     ---Trigger client event with updated jobs data
     ---and save data on database
     local function savePlayerJobs()
-        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, {jobs = self.getJobsClientData()})
+        TriggerClientEvent("ava_core:client:playerUpdatedData", self.src, { jobs = self.getJobsClientData() })
         AVA.Players.SavePlayerJobs(self)
     end
 
@@ -420,7 +420,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             end
         end
 
-        local canAdd<const> = playerJobCount < AVAConfig.MaxJobsCount
+        local canAdd <const> = playerJobCount < AVAConfig.MaxJobsCount
         if canAdd then
             return canAdd, playerJobCount - AVAConfig.MaxJobsCount
         end
@@ -439,7 +439,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             end
         end
 
-        local canAdd<const> = playerGangCount < AVAConfig.MaxGangsCount
+        local canAdd <const> = playerGangCount < AVAConfig.MaxGangsCount
         if canAdd then
             return canAdd, playerGangCount - AVAConfig.MaxGangsCount
         end
@@ -483,7 +483,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     end
 
                     AVA.AddPrincipal("player." .. self.src, "job." .. jobName .. ".grade." .. gradeName)
-                    self.jobs[#self.jobs + 1] = {name = jobName, grade = gradeName, isGang = cfgJob.isGang}
+                    self.jobs[#self.jobs + 1] = { name = jobName, grade = gradeName, isGang = cfgJob.isGang }
 
                     savePlayerJobs()
                     return true, gradeName
@@ -547,7 +547,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             return false
         end
 
-        local cfgWeapon<const> = AVAConfig.Weapons[weaponName]
+        local cfgWeapon <const> = AVAConfig.Weapons[weaponName]
         -- if we can remove one item, then the player has the weapon
         if cfgWeapon and self.getInventory().canRemoveItem(weaponName, 1) then
             local playerPed = GetPlayerPed(self.src)
@@ -562,7 +562,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
                     end
                 else
                     GiveWeaponToPed(playerPed, weaponHash, 0, false, false)
-                    self.loadout[#self.loadout + 1] = {hash = tonumber(weaponHash)}
+                    self.loadout[#self.loadout + 1] = { hash = tonumber(weaponHash) }
                 end
 
                 TriggerClientEvent("ava_core:client:weaponAdded", self.src, weaponHash)
@@ -581,7 +581,7 @@ function CreatePlayer(src, license, discord, group, name, discordTag, citizenId,
             return false
         end
 
-        local cfgWeapon<const> = AVAConfig.Weapons[weaponName]
+        local cfgWeapon <const> = AVAConfig.Weapons[weaponName]
         if cfgWeapon then
             local playerPed = GetPlayerPed(self.src)
             if playerPed then

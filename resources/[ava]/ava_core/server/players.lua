@@ -112,8 +112,8 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
                     deferrals.presentCard(
                         [==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
                         function(data, rawData)
-                            deferrals.done("discord.gg/KRTKC6b")
-                        end)
+                        deferrals.done("discord.gg/KRTKC6b")
+                    end)
                 else
                     deferrals.done()
                     return
@@ -194,7 +194,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     if not playerData then
         DropPlayer(src, GetString("log_player_error"))
         print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
-        .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
+            .. "^0) n'a pas pu se connecter car son personnage n'a pas été récupéré.")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
             "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
             .. " n'a pas pu se connecter car son personnage n'a pas été récupéré.", 0xFF5455)
@@ -230,7 +230,7 @@ local function setupPlayer(src, oldSource)
         if not member then
             DropPlayer(src, GetString("log_player_discord_error"))
             print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName
-            .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
+                .. "^0) n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.")
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
                 "<@" .. string.gsub(discord or license or "", "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
                 .. " n'a pas pu se connecter car son utilisateur Discord n'a pas été récupéré.", 0xFF5455)
@@ -290,7 +290,7 @@ local function setupPlayer(src, oldSource)
 
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. playerName .. "`)"
-        .. " se connecte. (citizenId: " .. citizenId .. ", id: " .. src .. ")", 0x4C253)
+            .. " se connecte. (citizenId: " .. citizenId .. ", id: " .. src .. ")", 0x4C253)
 
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
 
@@ -339,7 +339,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
             mugshot = character.mugshot,
         }
         aPlayer.skin = skin
-        aPlayer.inventory = CreateInventory(tostring(src), json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
+        aPlayer.inventory = CreateInventory(0, tostring(src), json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
         aPlayer.accounts = json.decode(json.encode(AVAConfig.DefaultPlayerData.accounts)) or {}
         aPlayer.status = json.decode(json.encode(AVAConfig.DefaultPlayerData.status)) or {}
         aPlayer.jobs = json.decode(json.encode(AVAConfig.DefaultPlayerData.jobs)) or {}
@@ -364,7 +364,7 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
         print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
-        .. aPlayer.citizenId .. ")")
+            .. aPlayer.citizenId .. ")")
         print("\tCharacter", json.encode(character))
         print("\tBirthdate valid", character and AVA.Utils.IsDateValid(character.birthdate) or "false")
         print("\tMugshot exist", character.mugshot and character.mugshot ~= "" and "true" or "false")
@@ -494,8 +494,8 @@ local function UpdateBanList()
     MySQL.query(
         "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC",
         {}, function(data)
-            AVA.Players.BanList = (data and data[1]) and data or {}
-        end)
+        AVA.Players.BanList = (data and data[1]) and data or {}
+    end)
 end
 
 Citizen.CreateThread(function()
@@ -556,8 +556,8 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
                 reason = reason or "",
                 staff = aPlayer and aPlayer.identifiers.discord or "console",
             }, function()
-                UpdateBanList()
-            end)
+            UpdateBanList()
+        end)
 
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", "", discordMessage, 0xFF0000)
         return discordMessage
@@ -656,11 +656,11 @@ AVA.Players.Save = function(aPlayer)
                 license = aPlayer.identifiers.license,
                 id = aPlayer.citizenId,
             }, function(result)
-                print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
-                aPlayer.lastSaveTime = os.time()
-                TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
-                p:resolve()
-            end)
+            print("^2[SAVE] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+            aPlayer.lastSaveTime = os.time()
+            TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
+            p:resolve()
+        end)
         return p
     elseif aPlayer then
         error("^1[AVA.Players.Save]^0 aPlayer is not valid for src ^3" .. aPlayer.src .. "^0.")
@@ -675,10 +675,10 @@ AVA.Players.SavePlayerJobs = function(aPlayer)
         local p = promise.new()
         MySQL.update("UPDATE `ava_players` SET `jobs` = :jobs WHERE `license` = :license AND `id` = :id",
             { jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId }, function(result)
-                print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
-                TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
-                p:resolve()
-            end)
+            print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+            TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
+            p:resolve()
+        end)
         return p
     elseif aPlayer then
         error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid for src ^3" .. aPlayer.src .. "^0.")
@@ -819,9 +819,9 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
             return
         end
         local playerItems = aPlayer.getInventory().items
-        local TabHasValue<const> = AVA.Utils.TableHasValue
-        local Items<const> = AVAConfig.Items
-        local WeaponsTypes<const> = AVAConfig.WeaponsTypes
+        local TabHasValue <const> = AVA.Utils.TableHasValue
+        local Items <const> = AVAConfig.Items
+        local WeaponsTypes <const> = AVAConfig.WeaponsTypes
 
         -- Used to set all ammo counts at the end
         local playerWeapons = {}
@@ -857,7 +857,7 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
 end)
 
 AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    local cfgWeapon<const> = AVAConfig.Weapons[itemName]
+    local cfgWeapon <const> = AVAConfig.Weapons[itemName]
     if cfgWeapon then
         local aPlayer = AVA.Players.GetPlayer(src)
         if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
@@ -869,7 +869,7 @@ AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, it
         end
         return
     end
-    local cfgItem<const> = AVAConfig.Items[itemName]
+    local cfgItem <const> = AVAConfig.Items[itemName]
     if cfgItem and cfgItem.type == "ammo" then
         TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(itemName), newQuantity)
     end

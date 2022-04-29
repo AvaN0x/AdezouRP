@@ -4,11 +4,24 @@
 -------------------------------------------
 local Items = AVAConfig.Items
 
-function CreateInventory(playerSrc, items, max_weight, identifier, label)
+function CreateInventory(invType, invIdentifier, items, max_weight, identifier, label)
     ---@class inventory
     local self = {}
 
-    self.playerSrc = playerSrc
+    invType = tonumber(invType)
+    if invType == 0 then
+        -- Player inventory
+        self.playerSrc = invIdentifier
+    elseif invType == 1 then
+        -- Named inventory
+        self.namedInventory = invIdentifier
+    elseif invType == 2 then
+        -- Vehicle inventory
+        self.vehicleIdentifier = invIdentifier
+    else
+        -- Else
+        self.identifier = invIdentifier
+    end
     self.items = items
     self.max_weight = max_weight
 
@@ -41,7 +54,7 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
                 end
             end
 
-            item = {name = name, quantity = 0}
+            item = { name = name, quantity = 0 }
 
             self.items[#self.items + 1] = item
             return item
@@ -141,7 +154,6 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         end
     end
 
-    -- TODO second arg for items to check without other items (ex for treatment)
     self.canAddItem = function(name, quantity)
         if quantity < 0 then
             return false
@@ -161,7 +173,6 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
         end
     end
 
-    -- TODO second arg for items to check without other items (ex for treatment)
     self.canAddAllItems = function(items) -- {name: string, quantity: number}
         local total_weight = 0
         for k, v in ipairs(items) do
@@ -241,10 +252,14 @@ function CreateInventory(playerSrc, items, max_weight, identifier, label)
 
     self.saveInventory = function()
         if self.modified == true then
+            if self.namedInventory then
+                -- TODO
+            elseif self.vehicleIdentifier then
+                -- TODO
+            end
             self.modified = false
         end
     end
 
     return self
 end
-
