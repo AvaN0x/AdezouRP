@@ -1022,14 +1022,23 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
+             Cloakroom = {
+                Coord = vector3(708.91, -959.63, 29.42),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 136, g = 243, b = 216 },
+                Name = "Vestiaire",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+                Blip = true,
                 Outfits = {
                     {
                         Label = "Tenue de Travail",
                         Male = json.decode(
                             "{"watches":-1,"watches_txd":0,"bag":87,"leg":0,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":1,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":163,"bag_txd":6,"shoes_txd":0,"decals":0,"torso":0,"hats_txd":0,"shoes":1}"),
                         Female = json.decode(
-                                "{"watches":-1,"watches_txd":0,"bag":87,"leg":1,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":0,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":199,"bag_txd":6,"shoes_txd":2,"decals":0,"torso":0,"hats_txd":0,"shoes":1}"),
-                                }
+                            "{"watches":-1,"watches_txd":0,"bag":87,"leg":1,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":0,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":199,"bag_txd":6,"shoes_txd":2,"decals":0,"torso":0,"hats_txd":0,"shoes":1}"),
+                    },         
+                },            
             },
             CarGarage = {
                 Name = "Garage véhicule",
