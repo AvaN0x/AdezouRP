@@ -590,7 +590,7 @@ AVA.SetVehicleModsData = function(vehicle, data)
     if data.plateIndex then
         SetVehicleNumberPlateTextIndex(vehicle, data.plateIndex)
     end
-    local colorPrimary<const>, colorSecondary<const> = GetVehicleColours(vehicle)
+    local colorPrimary <const>, colorSecondary <const> = GetVehicleColours(vehicle)
     if data.colorPrimary then
         if type(data.colorPrimary) == "table" then
             SetVehicleCustomPrimaryColour(vehicle, data.colorPrimary[1], data.colorPrimary[2], data.colorPrimary[3])
@@ -605,7 +605,7 @@ AVA.SetVehicleModsData = function(vehicle, data)
             SetVehicleColours(vehicle, data.colorPrimary or colorPrimary, data.colorSecondary)
         end
     end
-    local pearlescentColor<const>, wheelsColor<const> = GetVehicleExtraColours(vehicle)
+    local pearlescentColor <const>, wheelsColor <const> = GetVehicleExtraColours(vehicle)
     if data.pearlescentColor then
         SetVehicleExtraColours(vehicle, data.pearlescentColor, wheelsColor)
     end
@@ -880,7 +880,7 @@ exports("SetVehicleHealthData", AVA.SetVehicleHealthData)
 
 ---Get the vehicle in front of the user
 ---@param distance? number
----@return entity 
+---@return entity
 AVA.GetVehicleInFront = function(distance)
     local yOffset = distance
     if not distance or not tonumber(distance) or tonumber(distance) < 0 then
@@ -906,7 +906,7 @@ exports("GetVehicleInFront", AVA.GetVehicleInFront)
 ---@param maxDistance? number
 ---@param notPlayerVehicle? bool "does't count player vehicle"
 ---@return entity closestVeh
----@return number closestDistance 
+---@return number closestDistance
 AVA.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
     if maxDistance and tonumber(maxDistance) and tonumber(maxDistance) > 0 then
         maxDistance = maxDistance + 0.0
@@ -918,11 +918,13 @@ AVA.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
 
     for _, v in ipairs(GetGamePool("CVehicle")) do
         local veh = GetObjectIndexFromEntityIndex(v)
-        local vehCoords = GetEntityCoords(veh)
-        local distance = #(playerCoords - vehCoords)
-        if (not maxDistance or distance < maxDistance) and (not closestDistance or distance < closestDistance) and veh ~= playerVeh then
-            closestVeh = veh
-            closestDistance = distance
+        if veh ~= playerVeh then
+            local vehCoords = GetEntityCoords(veh)
+            local distance = #(playerCoords - vehCoords)
+            if (not maxDistance or distance < maxDistance) and (not closestDistance or distance < closestDistance) then
+                closestVeh = veh
+                closestDistance = distance
+            end
         end
     end
 
@@ -934,7 +936,7 @@ AVA.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
 end
 exports("GetClosestVehicle", AVA.GetClosestVehicle)
 
----use example : 
+---use example :
 ---```lua
 ---     local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({{control = "~INPUT_AIM~", label = "Aim"}})
 ---     DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)

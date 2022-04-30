@@ -67,7 +67,6 @@ RegisterNetEvent("ava_stores:server:vehicleRental:spawnedVehicle", function(vehi
     end
 
     -- Setup the vehicle
-    -- TODO keys
     Entity(NetworkGetEntityFromNetworkId(vehicleNet)).state:set("rentalVehicle", true, true)
 
     exports.ava_garages:GivePlayerVehicleKeyForVehicleNet(src, vehicleNet)

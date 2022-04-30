@@ -111,8 +111,8 @@ local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
                 description = GetString("inventory_weight_unit", formatWeight(item.weight), unit,
                     (item.desc and item.desc ~= "") and ("\n%s"):format(item.desc) or ""),
                 RightLabel = ("%s %s - %s %s"):format(item.limit
-                and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
-                or AVA.Utils.FormatNumber(item.quantity)
+                    and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
+                    or AVA.Utils.FormatNumber(item.quantity)
                     , getQuantityUnit(item.type), formatWeight(item.total_weight), unit),
                 LeftBadge = not item.noIcon and function()
                     return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
@@ -242,21 +242,21 @@ function RageUI.PoolMenus:AvaCoreInventory()
                 end)
                 Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), { IsDisabled = AVA.Player.isInVehicle },
                     function(onSelected)
-                        if onSelected then
-                            local selectedItem = selectedItem
-                            RequestAnimDict("pickup_object")
-                            while not HasAnimDictLoaded("pickup_object") do
-                                Wait(0)
-                            end
-                            TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
-                            RemoveAnimDict("pickup_object")
-
-                            Wait(500)
-                            TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
-
-                            OpenMyInventory()
+                    if onSelected then
+                        local selectedItem = selectedItem
+                        RequestAnimDict("pickup_object")
+                        while not HasAnimDictLoaded("pickup_object") do
+                            Wait(0)
                         end
-                    end)
+                        TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                        RemoveAnimDict("pickup_object")
+
+                        Wait(500)
+                        TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
+
+                        OpenMyInventory()
+                    end
+                end)
             else
                 Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
                     if onSelected then
@@ -264,7 +264,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
                             getQuantityUnit(selectedItem.type)), "", 10))
                         if type(count) == "number" and math.floor(count) == count and count > 0 then
-                            TriggerServerEvent("ava_core:server:takeItem", TargetInventoryId, selectedItem.name, count)
+                            TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventoryId, selectedItem.name, count)
                         end
                         TriggerEvent("ava_core:client:openTargetInventory", TargetInventoryId)
                     end
@@ -322,3 +322,69 @@ if AVAConfig.NPWD then
         return exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
     end)
 end
+
+
+
+--#region trunks
+---Get vehicle trunk size from vehicle entity
+---@param veh entity
+---@return integer "trunk size"
+local GetVehicleTrunkSize = function(veh)
+    return AVAConfig.TrunksSizes.ModelSpecific[GetEntityModel(veh)]
+        or AVAConfig.TrunksSizes.ClassSpecific[GetVehicleClass(veh)]
+        or 0
+end
+
+
+local LastActionTimer = 0
+RegisterCommand("vehicletrunk", function()
+    if not exports.ava_core:canOpenMenu() or GetGameTimer() - LastActionTimer < 500 then return end
+
+    local vehicle = exports.ava_core:GetVehicleInFront()
+    if vehicle == 0 then
+        vehicle = exports.ava_core:GetClosestVehicle(1.5, true)
+    end
+
+    -- TODO? check if player is next to the trunk ? use AVAConfig.EngineInBack
+
+    if vehicle > 0 then
+        LastActionTimer = GetGameTimer()
+        -- Vehicle is locked
+        if GetVehicleDoorLockStatus(vehicle) > 1 then
+            AVA.ShowNotification(GetString("vehicle_vehicle_is_locked"))
+            return
+        end
+
+        -- Get trunk size
+        local trunkSize = GetVehicleTrunkSize(vehicle)
+        if trunkSize <= 0 then
+            AVA.ShowNotification(GetString("vehicle_has_no_trunk"))
+            return
+        end
+        print(trunkSize)
+
+        -- Player animation
+        local animDirectory, animName = "anim@mp_player_intmenu@key_fob@", "fob_click_fp"
+        RequestAnimDict(animDirectory)
+        while not HasAnimDictLoaded(animDirectory) do Wait(0) end
+        TaskPlayAnim(AVA.Player.playerPed, animDirectory, animName, 8.0, 8.0, -1, 48, 1, false, false, false)
+        RemoveAnimDict(animDirectory)
+
+        -- Get trunk data
+        local invType, invName, trunkItems, maxWeight, actualWeight, title = exports.ava_core:TriggerServerCallback("ava_core:server:getVehicleTrunk", VehToNet(vehicle), trunkSize)
+        print("trunkItems", json.encode(trunkItems, { indent = true }))
+        if not trunkItems then return end
+        print(invType, invName, trunkItems, maxWeight, actualWeight, title)
+
+        -- Open trunk
+        exports.ava_core:NetworkRequestControlOfEntity(vehicle)
+        SetVehicleDoorOpen(vehicle, AVAConfig.EngineInBack[GetEntityModel(vehicle)] and 4 or 5, false, false)
+
+
+    end
+end)
+RegisterKeyMapping("vehicletrunk", GetString("vehicle_trunk"), "keyboard", AVAConfig.TrunkKey)
+
+
+
+--#endregion trunks

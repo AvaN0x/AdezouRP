@@ -3,6 +3,14 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local Items = AVAConfig.Items
+local NamedInventories = {
+    -- Name
+    ["1"] = {},
+    -- Player vehicle
+    ["2"] = {},
+    -- Vehicle entity
+    ["3"] = {}
+}
 
 ---Get data from inventory to be used in client interface
 ---@param inventory inventory "inventory"
@@ -11,6 +19,8 @@ local Items = AVAConfig.Items
 ---@return number|nil "actual weight of inventory"
 ---@return string|nil "inventory label name"
 local function GetUsableDataFromInventory(inventory)
+    if not inventory then return nil end
+
     local items = {}
     local itemsCount = 0
     for i = 1, #inventory.items, 1 do
@@ -51,6 +61,20 @@ AVA.GetPlayerInventoryItems = function(src)
 end
 exports("GetPlayerInventoryData", AVA.GetPlayerInventoryItems)
 
+--#region player inventory
+AVA.Commands.RegisterCommand("openinventory", "admin", function(source, args)
+    if type(args[1]) ~= "string" then
+        return
+    end
+    if tostring(args[1]) == tostring(source) then
+        TriggerClientEvent("chat:addMessage", source,
+            { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("cannot_open_my_inventory_with_openinventory") } })
+        return
+    end
+
+    TriggerClientEvent("ava_core:client:openTargetInventory", source, args[1])
+end, GetString("openinventory_help"), { { name = "player", help = GetString("player_id") } })
+
 AVA.RegisterServerCallback("ava_core:server:getItemQuantity", function(source, itemName)
     local aPlayer = exports.ava_core:GetPlayer(source)
     if aPlayer then
@@ -72,18 +96,6 @@ AVA.RegisterServerCallback("ava_core:server:getTargetInventoryItems", function(s
     return AVA.GetPlayerInventoryItems(target)
 end)
 
-AVA.Commands.RegisterCommand("openinventory", "admin", function(source, args)
-    if type(args[1]) ~= "string" then
-        return
-    end
-    if tostring(args[1]) == tostring(source) then
-        TriggerClientEvent("chat:addMessage", source,
-            { color = { 255, 0, 0 }, multiline = false, args = { "AvaCore", GetString("cannot_open_my_inventory_with_openinventory") } })
-        return
-    end
-
-    TriggerClientEvent("ava_core:client:openTargetInventory", source, args[1])
-end, GetString("openinventory_help"), { { name = "player", help = GetString("player_id") } })
 
 RegisterNetEvent("ava_core:server:dropItem", function(coords, itemName, count)
     local src = source
@@ -136,7 +148,7 @@ RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
     end
 end)
 
-RegisterNetEvent("ava_core:server:takeItem", function(targetId, itemName, count)
+RegisterNetEvent("ava_core:server:takePlayerItem", function(targetId, itemName, count)
     local src = source
     if src == targetId then
         return
@@ -160,3 +172,123 @@ RegisterNetEvent("ava_core:server:takeItem", function(targetId, itemName, count)
         end
     end
 end)
+--#endregion player inventory
+
+---Get data from named inventory to be used in client interface
+---@param invType integer "inventory type"
+---@param invName string "inventory name"
+---@param trunkSize? number "trunk size, only used in case of creation of trunk inventory"
+---@return table|nil "items from inventory"
+---@return integer|nil "max weight of inventory"
+---@return number|nil "actual weight of inventory"
+---@return string|nil "inventory label name"
+AVA.GetNamedInventoryItems = function(invType, invName, trunkSize)
+    -- Remove non valid inventory type
+    if not NamedInventories[invType] then return end
+
+    -- If inventory exist, return it
+    if NamedInventories[invType][invName] then
+        return GetUsableDataFromInventory(NamedInventories[invType][invName])
+    end
+    print("invType", invType, "invName", invName, "trunkSize", trunkSize)
+
+    -- Else, we have to get it from database or create it
+    if invType == "1" then
+        -- Named inventory
+        -- Named inventories can't be created by player asking for them, these have to be created explicitly by server script
+        -- TODO get named inventory from server
+
+    elseif invType == "2" then
+        -- Vehicle inventory
+
+        -- Get vehicle inventory
+        local inventory = MySQL.single.await("SELECT `max_weight`, `trunk` FROM `ava_vehiclestrunk` WHERE `vehicleid` = :vehicleidid", { vehicleid = tonumber(invName) })
+        if inventory then
+            -- If it exists, we can use it
+            NamedInventories[invType][invName] = CreateInventory(2, invName, inventory.trunk and json.decode(inventory.trunk) or {},
+                inventory.max_weight, GetString("vehicle_trunk"))
+        else
+            -- If it doesn't exist, insert it
+            dprint("[AVA] Creating vehicle inventory for vehicle", invName)
+            MySQL.insert.await("INSERT INTO `ava_vehiclestrunk` (`vehicleid`, `max_weight`, `trunk`) VALUES (:vehicleid, :max_weight, :trunk)",
+                { vehicleid = tonumber(invName), max_weight = trunkSize, trunk = "[]" })
+            NamedInventories[invType][invName] = CreateInventory(2, invName, {}, trunkSize, GetString("vehicle_trunk"))
+        end
+
+        return GetUsableDataFromInventory(NamedInventories[invType][invName])
+    elseif invType == "3" then
+        -- Vehicle entity
+        NamedInventories[invType][invName] = CreateInventory(3, invName, {}, trunkSize, GetString("vehicle_trunk"))
+        dprint("[AVA] Creating vehicle inventory for entity", invName)
+        return GetUsableDataFromInventory(NamedInventories[invType][invName])
+    end
+
+end
+exports("GetNamedInventoryItems", AVA.GetNamedInventoryItems)
+
+--#region named inventory
+
+AVA.RegisterServerCallback("ava_core:server:getNamedInventoryItems", function(source, invName)
+    return AVA.GetNamedInventoryItems("1", invName)
+end)
+
+AVA.RegisterServerCallback("ava_core:server:getVehicleTrunk", function(source, vehicleNet, trunkSize)
+    local src = source
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    if not DoesEntityExist(vehicle) then return end
+
+    -- Vehicle is locked
+    if GetVehicleDoorLockStatus(vehicle) > 1 then
+        return
+    end
+
+    local vehicleId = Entity(vehicle).state.id
+    local invType, invName
+    if vehicleId then
+        -- Owned vehicle
+        invType, invName = "2", tostring(vehicleId)
+    else
+        -- Entity is not owned
+        invType, invName = "3", ("%s-%s"):format(tostring(vehicleNet), GetVehicleNumberPlateText(vehicle))
+    end
+
+    return invType, invName, AVA.GetNamedInventoryItems(invType, invName, trunkSize)
+end)
+
+RegisterNetEvent("ava_core:server:takeInventoryItem", function(invType, invName, itemName, quantity)
+    -- TODO
+end)
+
+RegisterNetEvent("ava_core:server:putInventoryItem", function(invType, invName, itemName, quantity)
+    -- TODO
+end)
+
+AVA.SaveAllNamedInventories = function()
+    local promises = {}
+    local count = 0
+
+    -- for jobName, aJobAccounts in pairs(AVA.JobsAccounts) do
+    --     if aJobAccounts.modified then
+    --         count = count + 1
+    --         promises[count] = aJobAccounts.save()
+    --     end
+    -- end
+    Citizen.Await(promise.all(promises))
+    print("^2[SAVE NAMED INVENTORIES]^0 Every named inventories has been saved.")
+end
+
+AVA.SaveNamedInventory = function(aJobAccounts)
+    if aJobAccounts then
+        local p = promise.new()
+        -- MySQL.update("UPDATE `ava_jobs` SET `accounts` = :accounts WHERE `name` = :name",
+        --     { name = aJobAccounts.name, accounts = json.encode(aJobAccounts.getAccounts()) }, function(result)
+        --         aJobAccounts.modified = false
+        --         print("^2[SAVE NAMED INVENTORY] ^0" .. aJobAccounts.name)
+        --         p:resolve()
+        --     end)
+        return p
+    else
+        error("^1[AVA.SaveNamedInventory]^0 aInventory is not valid.")
+    end
+end
+--#endregion named inventory

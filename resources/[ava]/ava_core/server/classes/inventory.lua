@@ -4,7 +4,7 @@
 -------------------------------------------
 local Items = AVAConfig.Items
 
-function CreateInventory(invType, invIdentifier, items, max_weight, identifier, label)
+function CreateInventory(invType, invIdentifier, items, max_weight, label)
     ---@class inventory
     local self = {}
 

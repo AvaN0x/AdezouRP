@@ -97,8 +97,6 @@ end)
 AVA.SaveAllJobsAccounts = function()
     local promises = {}
     local count = 0
-    for src, aPlayer in pairs(AVA.Players.List) do
-    end
 
     for jobName, aJobAccounts in pairs(AVA.JobsAccounts) do
         if aJobAccounts.modified then

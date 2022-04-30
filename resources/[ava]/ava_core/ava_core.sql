@@ -105,3 +105,23 @@ CREATE TABLE IF NOT EXISTS `ava_jobs` (
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS `ava_named_inventories` (
+    `name` varchar(128) NOT NULL,
+    `label` varchar(50) NOT NULL,
+    `max_weight` int(11) NOT NULL DEFAULT 100000,
+    `inventory` longtext DEFAULT NULL,
+    `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT PK_named_inventories_id PRIMARY KEY (`name`),
+    CONSTRAINT CHK_named_inventories_max_weight CHECK(`max_weight` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS `ava_vehiclestrunk` (
+    `vehicleid` int NOT NULL,
+    `max_weight` int(11) NOT NULL DEFAULT 30000,
+    `trunk` longtext NOT NULL,
+    `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT PK_vehiclestrunk_id PRIMARY KEY (`vehicleid`),
+    CONSTRAINT FK_vehiclestrunk_vehicles_vehicleids FOREIGN KEY(`vehicleid`) REFERENCES `ava_vehicles`(`id`) ON DELETE CASCADE,
+    CONSTRAINT CHK_vehiclestrunk_max_weight CHECK(`max_weight` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
