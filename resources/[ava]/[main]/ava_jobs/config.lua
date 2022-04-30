@@ -875,6 +875,14 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
+                Outfits = {
+                    {
+                        Label = "Tenue de travail",
+                        Male = json.decode(
+                        '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":2,"ears_txd":0,"accessory":0,"tops":43,"decals_txd":0,"shoes":51,"bracelets":-1,"torso_txd":0,"torso":11,"bag":40,"tops_txd":0,"watches_txd":0,"undershirt_txd":0,"leg":9,"watches":-1,"hats":-1,"glasses":-1}'),
+                        Female = json.decode(
+                        '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":2,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":1,"ears_txd":0,"accessory":0,"tops":118,"decals_txd":0,"shoes":52,"bracelets":-1,"torso_txd":0,"torso":4,"bag":40,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":93,"watches":-1,"hats":-1,"glasses":-1}'),
+                    },
             },
             CarGarage = {
                 Name = "Garage véhicule",
@@ -1147,9 +1155,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue de service",
                         Female = json.decode(
-                        "{\"decals\":0,\"torso\":9,\"leg\":106,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":13,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":15,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":2,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                        '{\"decals\":0,\"torso\":9,\"leg\":106,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":13,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":15,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":2,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}'),
                         Male = json.decode(
-                        "{\"decals\":0,\"torso\":6,\"leg\":105,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":12,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":281,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":5,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":5,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                        '{\"decals\":0,\"torso\":6,\"leg\":105,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":12,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":281,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":5,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":5,\"bag\":0,\"tops_txd\":10,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}'),
                     },
                 },
 
@@ -1314,13 +1322,29 @@ Config.Jobs = {
                 Marker = 27,
             },
             Cloakroom = {
-                Coord = vector3(-1386.81, -608.41, 29.34),
+                Coord = vector3(-1386.81, -608.41, 29.34),'
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Vestiaire",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
+                Outfits = {
+                    {
+                        Label = "Tenue barman",
+                        Male = json.decode(
+                        '{"undershirt":24,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":60,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":0,"bag":0,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":4,"watches":-1,"hats":-1,"glasses":-1}'),
+                        Female = json.decode(
+                        '{"undershirt":20,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":7,"ears_txd":0,"accessory":0,"tops":6,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":4,"watches_txd":0,"undershirt_txd":0,"leg":44,"watches":-1,"hats":-1,"glasses":-1}'),
+                    },
+                    {
+                        Label = "Tenue Videur",
+                        Male = json.decode(
+                        '{"undershirt":23,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":23,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":1,"leg":35,"watches":-1,"hats":-1,"glasses":-1}'),
+                        Female = json.decode(
+                        '{"undershirt":67,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":3,"ears_txd":0,"accessory":0,"tops":90,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":3,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":3,"leg":50,"watches":-1,"hats":-1,"glasses":-1}'),    
+                    },
+                }, 
             },
             CarGarage = {
                 Name = "Garage véhicule",
@@ -1381,6 +1405,15 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
+                Outfits = {
+                    {
+                        Label = "Tenue barman",
+                        Male = json.decode(
+                        ""
+                        Female = json.decode(
+                        ""    
+                    },
+                },
             },
             CarGarage = {
                 Name = "Garage véhicule",
