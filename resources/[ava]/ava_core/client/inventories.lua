@@ -2,13 +2,13 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local InventoryElements, InventoryTopElements = nil, nil
+local InventoryElements = nil
 local TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu.Closed = function()
-    InventoryElements, InventoryTopElements = nil, nil
+    InventoryElements = nil
     TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
 end
 InventoryMenu:AddInstructionButton({ GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change") })
@@ -27,25 +27,25 @@ local sortNotificationId = 0
 local sortIndex = GetResourceKvpInt("ava_core_inventory_sort") % #SortIndexes
 
 ---Sort the inventory with the actual sorting index
-local function SortInventory()
+local function SortInventory(inventory)
     local indexName = SortIndexes[sortIndex + 1].name
     if indexName == "weight" then
-        table.sort(InventoryElements, function(a, b)
+        table.sort(inventory.Remaining, function(a, b)
             return a.item.total_weight > b.item.total_weight
         end)
 
     elseif indexName == "quantity" then
-        table.sort(InventoryElements, function(a, b)
+        table.sort(inventory.Remaining, function(a, b)
             return a.item.quantity > b.item.quantity
         end)
 
     elseif indexName == "alpha" then
-        table.sort(InventoryElements, function(a, b)
+        table.sort(inventory.Remaining, function(a, b)
             return a.item.label:lower() < b.item.label:lower()
         end)
 
     elseif indexName == "type" then
-        table.sort(InventoryElements, function(a, b)
+        table.sort(inventory.Remaining, function(a, b)
             return (a.item.type or a.item.label:lower()) < (b.item.type or b.item.label:lower())
         end)
 
@@ -53,8 +53,9 @@ local function SortInventory()
 end
 
 ---Edit the index of sorting for the inventory
+---@param inventory table
 ---@param index number
-local function SetSortingIndex(index)
+local function SetSortingIndex(inventory, index)
     sortIndex = index % #SortIndexes
     SetResourceKvpInt("ava_core_inventory_sort", sortIndex)
 
@@ -65,7 +66,7 @@ local function SetSortingIndex(index)
     sortNotificationId = AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("inventory"),
         GetString("inventory_sorted_by", SortIndexes[sortIndex + 1].label), nil, "ava_core_logo")
 
-    SortInventory()
+    SortInventory(inventory)
 end
 
 ---Format a weight (in gram) into a string
@@ -93,14 +94,11 @@ local function getQuantityUnit(itemType)
 end
 
 ---Get inventory data from server and process it
-local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
+local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
-    InventoryElements, InventoryTopElements = {}, {}
-    if not invItems then
-        return
-    end
-    local invElementsCount = 0
+    local inventory = { Top = {}, Remaining = {} }
 
+    local invElementsCount = 0
     for i = 1, #invItems, 1 do
         local item = invItems[i]
         if item then
@@ -121,22 +119,31 @@ local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
                 end or nil,
             }
 
-            if AVAConfig.InventoryMoneyOnTop and (item.type and item.type == "money") then
-                table.insert(InventoryTopElements, 1, element)
+            if AVAConfig.InventoryAlwaysDisplayedOnTop and (item.type and item.type == "money") then
+                table.insert(inventory.Top, 1, element)
             else
                 invElementsCount = invElementsCount + 1
-                InventoryElements[invElementsCount] = element
+                inventory.Remaining[invElementsCount] = element
             end
         end
     end
 
-    if AVAConfig.InventoryMoneyOnTop then
-        table.sort(InventoryTopElements, function(a, b)
+    -- Sort inventory
+    if AVAConfig.InventoryAlwaysDisplayedOnTop then
+        table.sort(inventory.Top, function(a, b)
             return a.item.name < b.item.name
         end)
     end
+    SortInventory(inventory)
 
-    SortInventory()
+    return inventory
+end
+
+---Get inventory data and displays it
+local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
+    if not invItems then return end
+
+    InventoryElements = GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
 
     -- InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
     InventoryMenu.Title = title
@@ -163,15 +170,18 @@ end
 
 function RageUI.PoolMenus:AvaCoreInventory()
     InventoryMenu:IsVisible(function(Items)
+        local inventory = InventoryElements -- TODO here, choose the right inventory, target or own
+        if not inventory then return end
+
         if IsDisabledControlJustPressed(2, 207) then -- PageDown
-            SetSortingIndex(sortIndex > 0 and (sortIndex - 1) or (#SortIndexes - 1))
+            SetSortingIndex(inventory, sortIndex > 0 and (sortIndex - 1) or (#SortIndexes - 1))
         elseif IsDisabledControlJustPressed(2, 208) then -- PageUp
-            SetSortingIndex(sortIndex < (#SortIndexes - 1) and (sortIndex + 1) or 0)
+            SetSortingIndex(inventory, sortIndex < (#SortIndexes - 1) and (sortIndex + 1) or 0)
         end
 
-        if AVAConfig.InventoryMoneyOnTop and InventoryTopElements then
-            for i = 1, #InventoryTopElements, 1 do
-                local element = InventoryTopElements[i]
+        if AVAConfig.InventoryAlwaysDisplayedOnTop and inventory.Top then
+            for i = 1, #inventory.Top, 1 do
+                local element = inventory.Top[i]
                 Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
                     if onSelected then
                         SelectItem(element.item)
@@ -180,9 +190,9 @@ function RageUI.PoolMenus:AvaCoreInventory()
             end
         end
 
-        if InventoryElements then
-            for i = 1, #InventoryElements, 1 do
-                local element = InventoryElements[i]
+        if inventory.Remaining then
+            for i = 1, #inventory.Remaining, 1 do
+                local element = inventory.Remaining[i]
                 Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
                     if onSelected then
                         SelectItem(element.item)
@@ -299,7 +309,7 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
         return
     end
 
-    if not editItem_waitingToReload and InventoryElements and InventoryTopElements and RageUI.Visible(InventoryMenu) then
+    if not editItem_waitingToReload and InventoryElements and (RageUI.Visible(InventoryMenu) or RageUI.Visible(ItemSelectedMenu)) then
         -- prevent spamming the server for data
         -- this will do it with at least 500ms between each calls
         editItem_waitingToReload = true
@@ -311,7 +321,7 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
         editItem_timelastReload = timer
         editItem_waitingToReload = false
         -- Only reload if inventory is still visible
-        if RageUI.Visible(InventoryMenu) then
+        if (RageUI.Visible(InventoryMenu) or RageUI.Visible(ItemSelectedMenu)) then
             ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
         end
     end
