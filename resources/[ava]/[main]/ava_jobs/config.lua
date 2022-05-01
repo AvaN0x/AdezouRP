@@ -1406,13 +1406,15 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
                 Blip = true,
-                -- Outfits = {
-                --     {
-                --         Label = "Tenue barman",
-                --         Male = json.decode(""),
-                --         Female = json.decode(""),
-                --     },
-                -- },
+                Outfits = {
+                    {
+                        Label = "Tenue videur",
+                        Male = json.decode(
+                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
+                        Female = json.decode(
+                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
+                    },
+                }
             },
             CarGarage = {
                 Name = "Garage véhicule",
@@ -1495,6 +1497,14 @@ Config.Jobs = {
                 Name = "Vestiaire",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
+                Outfits = {
+                    {
+                        Label = "Tenue videur",
+                        Male = json.decode(
+                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
+                        Female = json.decode(
+                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
+                    },
             },
             CarGarage = {
                 Name = "Garage véhicule",
