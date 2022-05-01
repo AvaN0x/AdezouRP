@@ -2,12 +2,14 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
+local InventoryElements, InventoryTopElements = nil, nil
+local TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu.Closed = function()
-    InventoryElements, InventoryTopElements, TargetInventoryId = nil, nil, nil
+    InventoryElements, InventoryTopElements = nil, nil
+    TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
 end
 InventoryMenu:AddInstructionButton({ GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change") })
 local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
@@ -192,7 +194,24 @@ function RageUI.PoolMenus:AvaCoreInventory()
 
     ItemSelectedMenu:IsVisible(function(Items)
         if selectedItem.quantity > 0 then
-            if not TargetInventoryId then
+            if TargetInventoryId then
+                Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
+                    if onSelected then
+                        local selectedItem = selectedItem
+                        local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
+                            getQuantityUnit(selectedItem.type)), "", 10))
+                        if type(count) == "number" and math.floor(count) == count and count > 0 then
+                            TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventoryId, selectedItem.name, count)
+                        end
+                        TriggerEvent("ava_core:client:openTargetInventory", TargetInventoryId)
+                    end
+                end)
+
+            elseif InventoryName then
+                -- TODO
+                Items:AddButton("TODO")
+
+            else
                 if selectedItem.usable then
                     Items:AddButton(GetString("inventory_use"), nil, nil, function(onSelected)
                         if onSelected then
@@ -257,18 +276,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                         OpenMyInventory()
                     end
                 end)
-            else
-                Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
-                    if onSelected then
-                        local selectedItem = selectedItem
-                        local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
-                            getQuantityUnit(selectedItem.type)), "", 10))
-                        if type(count) == "number" and math.floor(count) == count and count > 0 then
-                            TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventoryId, selectedItem.name, count)
-                        end
-                        TriggerEvent("ava_core:client:openTargetInventory", TargetInventoryId)
-                    end
-                end)
+
             end
         else
             RageUI.GoBack()
@@ -286,6 +294,11 @@ RegisterKeyMapping("keyInventory", GetString("inventory"), "keyboard", AVAConfig
 
 local editItem_timelastReload, editItem_waitingToReload = -1, false
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
+    -- Do not reload anything if not the current player inventory
+    if TargetInventoryId or InventoryName then
+        return
+    end
+
     if not editItem_waitingToReload and InventoryElements and InventoryTopElements and RageUI.Visible(InventoryMenu) then
         -- prevent spamming the server for data
         -- this will do it with at least 500ms between each calls
@@ -298,7 +311,7 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
         editItem_timelastReload = timer
         editItem_waitingToReload = false
         -- Only reload if inventory is still visible
-        if RageUI.Visible(InventoryMenu) and not TargetInventoryId then
+        if RageUI.Visible(InventoryMenu) then
             ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
         end
     end
@@ -380,7 +393,11 @@ RegisterCommand("vehicletrunk", function()
         exports.ava_core:NetworkRequestControlOfEntity(vehicle)
         SetVehicleDoorOpen(vehicle, AVAConfig.EngineInBack[GetEntityModel(vehicle)] and 4 or 5, false, false)
 
-
+        -- Open inventory
+        RageUI.CloseAll()
+        InventoryType, InventoryName = invType, invName
+        ReloadInventoryWithData(trunkItems, maxWeight, actualWeight, title)
+        RageUI.Visible(InventoryMenu, true)
     end
 end)
 RegisterKeyMapping("vehicletrunk", GetString("vehicle_trunk"), "keyboard", AVAConfig.TrunkKey)

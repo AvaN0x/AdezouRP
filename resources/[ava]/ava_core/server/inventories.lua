@@ -196,13 +196,21 @@ AVA.GetNamedInventoryItems = function(invType, invName, trunkSize)
     if invType == "1" then
         -- Named inventory
         -- Named inventories can't be created by player asking for them, these have to be created explicitly by server script
-        -- TODO get named inventory from server
+
+        local inventory = MySQL.single.await("SELECT `label`, `max_weight`, `inventory` FROM `ava_named_inventories` WHERE `name` = :name", { name = invName })
+        if inventory then
+            -- If it exists, we can use it
+            NamedInventories[invType][invName] = CreateInventory(1, invName, inventory.inventory and json.decode(inventory.inventory) or {},
+                inventory.max_weight, inventory.label)
+
+            return GetUsableDataFromInventory(NamedInventories[invType][invName])
+        end
 
     elseif invType == "2" then
         -- Vehicle inventory
 
         -- Get vehicle inventory
-        local inventory = MySQL.single.await("SELECT `max_weight`, `trunk` FROM `ava_vehiclestrunk` WHERE `vehicleid` = :vehicleidid", { vehicleid = tonumber(invName) })
+        local inventory = MySQL.single.await("SELECT `max_weight`, `trunk` FROM `ava_vehiclestrunk` WHERE `vehicleid` = :vehicleid", { vehicleid = tonumber(invName) })
         if inventory then
             -- If it exists, we can use it
             NamedInventories[invType][invName] = CreateInventory(2, invName, inventory.trunk and json.decode(inventory.trunk) or {},
@@ -216,6 +224,7 @@ AVA.GetNamedInventoryItems = function(invType, invName, trunkSize)
         end
 
         return GetUsableDataFromInventory(NamedInventories[invType][invName])
+
     elseif invType == "3" then
         -- Vehicle entity
         NamedInventories[invType][invName] = CreateInventory(3, invName, {}, trunkSize, GetString("vehicle_trunk"))
