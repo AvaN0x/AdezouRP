@@ -2,14 +2,22 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local InventoryElements = nil
-local TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
+local InventoryData = nil
+local TargetInventory = nil
+local TargetInventoryInteractions = nil
+
 local selectedItem = nil
 
 local InventoryMenu = RageUI.CreateMenu("", ".", 0, 0, "avaui", "avaui_title_adezou")
 InventoryMenu.Closed = function()
-    InventoryElements = nil
-    TargetInventoryId, InventoryType, InventoryName = nil, nil, nil
+    InventoryData = nil
+
+    if TargetInventory and TargetInventory.vehicle then
+        -- Close vehicle trunk
+        exports.ava_core:NetworkRequestControlOfEntity(TargetInventory.vehicle)
+        SetVehicleDoorShut(TargetInventory.vehicle, AVAConfig.EngineInBack[GetEntityModel(TargetInventory.vehicle)] and 4 or 5, false, false)
+    end
+    TargetInventory = nil
 end
 InventoryMenu:AddInstructionButton({ GetControlGroupInstructionalButton(2, 15, 0), GetString("inventory_sort_change") })
 local ItemSelectedMenu = RageUI.CreateSubMenu(InventoryMenu, "", ".", 0, 0, "avaui", "avaui_title_adezou")
@@ -27,35 +35,51 @@ local sortNotificationId = 0
 local sortIndex = GetResourceKvpInt("ava_core_inventory_sort") % #SortIndexes
 
 ---Sort the inventory with the actual sorting index
+---@param inventory? table|nil
 local function SortInventory(inventory)
     local indexName = SortIndexes[sortIndex + 1].name
+
+    local sortFunction = nil
     if indexName == "weight" then
-        table.sort(inventory.Remaining, function(a, b)
+        sortFunction = function(a, b)
             return a.item.total_weight > b.item.total_weight
-        end)
+        end
 
     elseif indexName == "quantity" then
-        table.sort(inventory.Remaining, function(a, b)
+        sortFunction = function(a, b)
             return a.item.quantity > b.item.quantity
-        end)
+        end
 
     elseif indexName == "alpha" then
-        table.sort(inventory.Remaining, function(a, b)
+        sortFunction = function(a, b)
             return a.item.label:lower() < b.item.label:lower()
-        end)
+        end
 
     elseif indexName == "type" then
-        table.sort(inventory.Remaining, function(a, b)
+        sortFunction = function(a, b)
             return (a.item.type or a.item.label:lower()) < (b.item.type or b.item.label:lower())
-        end)
+        end
 
+    end
+
+    if sortFunction then
+        if inventory then
+            -- If inventory arg, then sort it
+            table.sort(inventory, sortFunction)
+
+        else
+            -- Else sort global vars
+            table.sort(InventoryData.Remaining, sortFunction)
+            if TargetInventory and TargetInventory.Data then
+                table.sort(TargetInventory.Data.Remaining, sortFunction)
+            end
+        end
     end
 end
 
 ---Edit the index of sorting for the inventory
----@param inventory table
 ---@param index number
-local function SetSortingIndex(inventory, index)
+local function SetSortingIndex(index)
     sortIndex = index % #SortIndexes
     SetResourceKvpInt("ava_core_inventory_sort", sortIndex)
 
@@ -66,7 +90,7 @@ local function SetSortingIndex(inventory, index)
     sortNotificationId = AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("inventory"),
         GetString("inventory_sorted_by", SortIndexes[sortIndex + 1].label), nil, "ava_core_logo")
 
-    SortInventory(inventory)
+    SortInventory()
 end
 
 ---Format a weight (in gram) into a string
@@ -96,7 +120,12 @@ end
 ---Get inventory data from server and process it
 local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
     -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
-    local inventory = { Top = {}, Remaining = {} }
+    local inventory = {
+        Top = {},
+        Remaining = {},
+        MaxWeight = maxWeight,
+        ActualWeight = actualWeight
+    }
 
     local invElementsCount = 0
     for i = 1, #invItems, 1 do
@@ -143,7 +172,7 @@ end
 local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
     if not invItems then return end
 
-    InventoryElements = GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
+    InventoryData = GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
 
     -- InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
     InventoryMenu.Title = title
@@ -162,21 +191,108 @@ end
 ---Action when selecting an item
 ---@param item table
 local function SelectItem(item)
-    selectedItem = item
-    dprint(item.name)
-    ItemSelectedMenu.Index = 1
-    ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type))
+    if TargetInventory then
+        local interactionType = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex or 1].type
+
+        if TargetInventory.playerId then
+            -- Target inventory is a player
+            local shouldReloadInventories = false
+
+            if interactionType == "take" then
+                local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
+                    getQuantityUnit(item.type)), "", 10))
+                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                    shouldReloadInventories = true
+                    TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventory.playerId, item.name, count)
+                    -- TODO notification
+                end
+
+            elseif interactionType == "put" then
+                local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
+                    AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type)), "", 10))
+                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                    shouldReloadInventories = true
+                    TriggerServerEvent("ava_core:server:giveItem", TargetInventory.playerId, item.name, count)
+                    -- TODO notification
+                end
+            end
+
+            -- Reload inventories
+            if shouldReloadInventories then
+                TargetInventory.Data = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", TargetInventory.playerId))
+                InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+            end
+        elseif TargetInventory.invType and TargetInventory.invName then
+            -- Target inventory is a container
+            local shouldReloadInventories = false
+
+            if interactionType == "take" then
+                local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
+                    getQuantityUnit(item.type)), "", 10))
+                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                    shouldReloadInventories = true
+
+                    -- TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventory.playerId, item.name, count)
+                end
+
+            elseif interactionType == "put" then
+
+                local count = tonumber(AVA.KeyboardInput(GetString("inventory_put_enter_quantity",
+                    AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type)), "", 10))
+                if type(count) == "number" and math.floor(count) == count and count > 0 then
+                    shouldReloadInventories = true
+
+                    -- TriggerServerEvent("ava_core:server:giveItem", TargetInventory.playerId, item.name, count)
+                end
+            end
+
+            if shouldReloadInventories then
+                -- TargetInventory.Data = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", TargetInventory.playerId))
+                InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+            end
+        end
+    else
+        selectedItem = item
+        dprint(item.name)
+        ItemSelectedMenu.Index = 1
+        ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type))
+    end
 end
 
 function RageUI.PoolMenus:AvaCoreInventory()
     InventoryMenu:IsVisible(function(Items)
-        local inventory = InventoryElements -- TODO here, choose the right inventory, target or own
+        local inventory = (TargetInventory and not TargetInventory.ShowMyInventory)
+            and TargetInventory.Data
+            or InventoryData
+
         if not inventory then return end
 
         if IsDisabledControlJustPressed(2, 207) then -- PageDown
-            SetSortingIndex(inventory, sortIndex > 0 and (sortIndex - 1) or (#SortIndexes - 1))
+            SetSortingIndex(sortIndex > 0 and (sortIndex - 1) or (#SortIndexes - 1))
         elseif IsDisabledControlJustPressed(2, 208) then -- PageUp
-            SetSortingIndex(inventory, sortIndex < (#SortIndexes - 1) and (sortIndex + 1) or 0)
+            SetSortingIndex(sortIndex < (#SortIndexes - 1) and (sortIndex + 1) or 0)
+        end
+
+        if TargetInventory then
+            Items:AddList(GetString("inventory_interact"), TargetInventoryInteractions, TargetInventory.CurrentInteractionIndex or 1, nil, nil,
+                function(Index, onSelected, onListChange)
+                if onListChange then
+                    TargetInventory.CurrentInteractionIndex = Index
+                    local interactionType = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex].type
+                    print(interactionType)
+                    -- TODO reset menu index
+                    if interactionType == "take" then
+                        TargetInventory.ShowMyInventory = false
+                        InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(TargetInventory.Data.ActualWeight), formatWeight(TargetInventory.Data.MaxWeight, 1))
+
+                    elseif interactionType == "put" then
+                        TargetInventory.ShowMyInventory = true
+                        InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(InventoryData.ActualWeight), formatWeight(InventoryData.MaxWeight, 1))
+
+                    end
+                    InventoryMenu:ResetIndex()
+                end
+            end)
         end
 
         if AVAConfig.InventoryAlwaysDisplayedOnTop and inventory.Top then
@@ -186,7 +302,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
                     if onSelected then
                         SelectItem(element.item)
                     end
-                end, ItemSelectedMenu)
+                end, not TargetInventory and ItemSelectedMenu)
             end
         end
 
@@ -197,97 +313,78 @@ function RageUI.PoolMenus:AvaCoreInventory()
                     if onSelected then
                         SelectItem(element.item)
                     end
-                end, ItemSelectedMenu)
+                end, not TargetInventory and ItemSelectedMenu)
             end
         end
     end)
 
     ItemSelectedMenu:IsVisible(function(Items)
-        if selectedItem.quantity > 0 then
-            if TargetInventoryId then
-                Items:AddButton(GetString("inventory_take"), nil, nil, function(onSelected)
+        if selectedItem.quantity > 0 and not TargetInventory then
+            if selectedItem.usable then
+                Items:AddButton(GetString("inventory_use"), nil, nil, function(onSelected)
                     if onSelected then
+                        selectedItem.quantity = selectedItem.quantity - 1
                         local selectedItem = selectedItem
-                        local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
-                            getQuantityUnit(selectedItem.type)), "", 10))
-                        if type(count) == "number" and math.floor(count) == count and count > 0 then
-                            TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventoryId, selectedItem.name, count)
+                        if selectedItem.closeInv then
+                            RageUI.CloseAllInternal()
                         end
-                        TriggerEvent("ava_core:client:openTargetInventory", TargetInventoryId)
+                        TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
                     end
                 end)
-
-            elseif InventoryName then
-                -- TODO
-                Items:AddButton("TODO")
-
-            else
-                if selectedItem.usable then
-                    Items:AddButton(GetString("inventory_use"), nil, nil, function(onSelected)
-                        if onSelected then
-                            selectedItem.quantity = selectedItem.quantity - 1
-                            local selectedItem = selectedItem
-                            if selectedItem.closeInv then
-                                RageUI.CloseAllInternal()
+            end
+            Items:AddButton(GetString("inventory_give"), nil, nil, function(onSelected)
+                if onSelected then
+                    local selectedItem = selectedItem
+                    Citizen.CreateThread(function()
+                        local targetId = AVA.Utils.ChooseClosestPlayer()
+                        if targetId then
+                            local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
+                                AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type)), "", 10))
+                            if type(count) == "number" and math.floor(count) == count and count > 0 then
+                                TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
                             end
-                            TriggerServerEvent("ava_core:server:useItem", selectedItem.name)
-                        end
-                    end)
-                end
-                Items:AddButton(GetString("inventory_give"), nil, nil, function(onSelected)
-                    if onSelected then
-                        local selectedItem = selectedItem
-                        Citizen.CreateThread(function()
-                            local targetId = AVA.Utils.ChooseClosestPlayer()
-                            if targetId then
-                                local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
-                                    AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type)), "", 10))
-                                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                                    TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
-                                end
-                            end
-                            OpenMyInventory()
-                        end)
-                    end
-                end)
-                Items:AddButton(GetString("inventory_drop"), nil, { IsDisabled = AVA.Player.isInVehicle }, function(onSelected)
-                    if onSelected then
-                        local selectedItem = selectedItem
-                        local count = tonumber(AVA.KeyboardInput(GetString("inventory_drop_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
-                            getQuantityUnit(selectedItem.type)), "", 10))
-                        if type(count) == "number" and math.floor(count) == count and count > 0 then
-                            RequestAnimDict("pickup_object")
-                            while not HasAnimDictLoaded("pickup_object") do
-                                Wait(0)
-                            end
-                            TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, -8, 1200, 16, 0, 0, 0, 0)
-                            RemoveAnimDict("pickup_object")
-
-                            Wait(500)
-                            TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, count)
                         end
                         OpenMyInventory()
-                    end
-                end)
-                Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), { IsDisabled = AVA.Player.isInVehicle },
-                    function(onSelected)
-                    if onSelected then
-                        local selectedItem = selectedItem
+                    end)
+                end
+            end)
+            Items:AddButton(GetString("inventory_drop"), nil, { IsDisabled = AVA.Player.isInVehicle }, function(onSelected)
+                if onSelected then
+                    local selectedItem = selectedItem
+                    local count = tonumber(AVA.KeyboardInput(GetString("inventory_drop_enter_quantity", AVA.Utils.FormatNumber(selectedItem.quantity),
+                        getQuantityUnit(selectedItem.type)), "", 10))
+                    if type(count) == "number" and math.floor(count) == count and count > 0 then
                         RequestAnimDict("pickup_object")
                         while not HasAnimDictLoaded("pickup_object") do
                             Wait(0)
                         end
-                        TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                        TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, -8, 1200, 16, 0, 0, 0, 0)
                         RemoveAnimDict("pickup_object")
 
                         Wait(500)
-                        TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
-
-                        OpenMyInventory()
+                        TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, count)
                     end
-                end)
+                    OpenMyInventory()
+                end
+            end)
+            Items:AddButton(GetString("inventory_drop_max"), GetString("inventory_drop_max_subtitle"), { IsDisabled = AVA.Player.isInVehicle },
+                function(onSelected)
+                if onSelected then
+                    local selectedItem = selectedItem
+                    RequestAnimDict("pickup_object")
+                    while not HasAnimDictLoaded("pickup_object") do
+                        Wait(0)
+                    end
+                    TaskPlayAnim(AVA.Player.playerPed, "pickup_object", "putdown_low", 8.0, 1.0, 500, 16, 0, 0, 0, 0)
+                    RemoveAnimDict("pickup_object")
 
-            end
+                    Wait(500)
+                    TriggerServerEvent("ava_core:server:dropItem", AVA.GeneratePickupCoords(), selectedItem.name, selectedItem.quantity)
+
+                    OpenMyInventory()
+                end
+            end)
+
         else
             RageUI.GoBack()
         end
@@ -305,11 +402,9 @@ RegisterKeyMapping("keyInventory", GetString("inventory"), "keyboard", AVAConfig
 local editItem_timelastReload, editItem_waitingToReload = -1, false
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
     -- Do not reload anything if not the current player inventory
-    if TargetInventoryId or InventoryName then
-        return
-    end
+    if TargetInventory then return end
 
-    if not editItem_waitingToReload and InventoryElements and (RageUI.Visible(InventoryMenu) or RageUI.Visible(ItemSelectedMenu)) then
+    if not editItem_waitingToReload and InventoryData and (RageUI.Visible(InventoryMenu) or RageUI.Visible(ItemSelectedMenu)) then
         -- prevent spamming the server for data
         -- this will do it with at least 500ms between each calls
         editItem_waitingToReload = true
@@ -333,9 +428,16 @@ end)
 
 RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
     RageUI.CloseAll()
-    TargetInventoryId = targetId
-    ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", targetId))
+    TargetInventory = {
+        invType = 0,
+        playerId = targetId
+    }
+    TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_give") } }
 
+    ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", targetId))
+    TargetInventory.Data = InventoryData
+    InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+    InventoryMenu:ResetIndex()
     RageUI.Visible(InventoryMenu, true)
 end)
 
@@ -406,7 +508,17 @@ RegisterCommand("vehicletrunk", function()
         -- Open inventory
         RageUI.CloseAll()
         InventoryType, InventoryName = invType, invName
+        TargetInventory = {
+            vehicle = vehicle,
+            invType = tonumber(invType),
+            invName = invName,
+        }
+        TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_put") } }
+
         ReloadInventoryWithData(trunkItems, maxWeight, actualWeight, title)
+        TargetInventory.Data = InventoryData
+        InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+        InventoryMenu:ResetIndex()
         RageUI.Visible(InventoryMenu, true)
     end
 end)

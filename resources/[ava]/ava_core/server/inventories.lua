@@ -266,10 +266,12 @@ end)
 
 RegisterNetEvent("ava_core:server:takeInventoryItem", function(invType, invName, itemName, quantity)
     -- TODO
+    -- tostring invType
 end)
 
 RegisterNetEvent("ava_core:server:putInventoryItem", function(invType, invName, itemName, quantity)
     -- TODO
+    -- tostring invType
 end)
 
 AVA.SaveAllNamedInventories = function()
