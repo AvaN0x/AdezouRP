@@ -181,6 +181,14 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
     return inventory
 end
 
+---Set the inventory menu subtitle from actual weight and max weight
+---@param menu any menu
+---@param actualWeight any number
+---@param maxWeight any number
+local function SetInventoryMenuSubtitle(menu, actualWeight, maxWeight)
+    menu.Subtitle = ("%s/%skg"):format(formatWeight(actualWeight), formatWeight(maxWeight, 1))
+end
+
 ---Get inventory data and displays it
 local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
     if not invItems then return end
@@ -189,7 +197,7 @@ local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
 
     -- InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
     InventoryMenu.Title = title
-    InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(actualWeight), formatWeight(maxWeight, 1))
+    SetInventoryMenuSubtitle(InventoryMenu, actualWeight, maxWeight)
 end
 
 local function OpenMyInventory()
@@ -272,8 +280,9 @@ local function SelectItem(item)
 
         -- Interaction was successful (item taken/put)
         if interactionSucceeded then
+            -- TODO maybe refactor because these two next conditions are basically the same just inversed
             -- Update inventories with the added/removed quantity
-            -- TODO update inventory total weight
+            local weightDifference <const> = quantity * item.weight
             if interactionType == "take" then
                 -- Take, we need to add to player inventory and remove from target inventory
 
@@ -318,6 +327,8 @@ local function SelectItem(item)
                     -- Sort inventory
                     SortInventory(InventoryData[_objectName])
                 end
+                -- Update inventory weight
+                InventoryData.ActualWeight = InventoryData.ActualWeight + weightDifference
 
                 -- Update from target inventory
                 targetInvElement.item.quantity = targetInvElement.item.quantity - quantity
@@ -333,6 +344,11 @@ local function SelectItem(item)
                     -- Else remove it
                     table.remove(TargetInventory.Data[_objectName], _index)
                 end
+                -- Update inventory weight
+                TargetInventory.Data.ActualWeight = TargetInventory.Data.ActualWeight - weightDifference
+
+                -- Update menu subtitle
+                SetInventoryMenuSubtitle(InventoryMenu, TargetInventory.Data.ActualWeight, TargetInventory.Data.MaxWeight)
                 --#endregion update on take interaction
 
             elseif interactionType == "put" then
@@ -379,6 +395,9 @@ local function SelectItem(item)
                     -- Sort inventory
                     SortInventory(TargetInventory.Data[_objectName])
                 end
+                -- Update inventory weight
+                TargetInventory.Data.ActualWeight = TargetInventory.Data.ActualWeight + weightDifference
+
 
                 -- Update from player inventory
                 playerInvElement.item.quantity = playerInvElement.item.quantity - quantity
@@ -394,9 +413,13 @@ local function SelectItem(item)
                     -- Else  remove it
                     table.remove(InventoryData[_objectName], _index)
                 end
+                -- Update inventory weight
+                InventoryData.ActualWeight = InventoryData.ActualWeight - weightDifference
+
+                -- Update menu subtitle
+                SetInventoryMenuSubtitle(InventoryMenu, InventoryData.ActualWeight, InventoryData.MaxWeight)
                 --#endregion update on put interaction
             end
-
         end
     else
         selectedItem = item
@@ -427,11 +450,11 @@ function RageUI.PoolMenus:AvaCoreInventory()
                     local interactionType = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex].type
                     if interactionType == "take" then
                         TargetInventory.ShowMyInventory = false
-                        InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(TargetInventory.Data.ActualWeight), formatWeight(TargetInventory.Data.MaxWeight, 1))
+                        SetInventoryMenuSubtitle(InventoryMenu, TargetInventory.Data.ActualWeight, TargetInventory.Data.MaxWeight)
 
                     elseif interactionType == "put" then
                         TargetInventory.ShowMyInventory = true
-                        InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(InventoryData.ActualWeight), formatWeight(InventoryData.MaxWeight, 1))
+                        SetInventoryMenuSubtitle(InventoryMenu, InventoryData.ActualWeight, InventoryData.MaxWeight)
 
                     end
                     InventoryMenu:ResetIndex()
