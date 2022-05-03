@@ -117,9 +117,25 @@ local function getQuantityUnit(itemType)
     return itemType and itemType == "money" and "$" or ""
 end
 
+---Get item unit label
+---@param item table
+---@return string
+local function GetItemUnit(item)
+    return item.type and item.type == "liquid" and "L" or "kg"
+end
+
+---Get right label from an item and its unit
+---@param item table
+---@param unit string
+local function GetElementRightLabel(item, unit)
+    return ("%s %s - %s %s"):format(item.limit
+        and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
+        or AVA.Utils.FormatNumber(item.quantity),
+        getQuantityUnit(item.type), formatWeight(item.total_weight), unit)
+end
+
 ---Get inventory data from server and process it
 local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
-    -- dprint(json.encode(invItems, { indent = true }), maxWeight, actualWeight, title)
     local inventory = {
         Top = {},
         Remaining = {},
@@ -132,17 +148,14 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
         local item = invItems[i]
         if item then
             item.total_weight = item.quantity * item.weight
-            local unit = item.type and item.type == "liquid" and "L" or "kg"
+            local unit = GetItemUnit(item)
 
             local element = {
                 item = item,
                 label = item.label,
                 description = GetString("inventory_weight_unit", formatWeight(item.weight), unit,
                     (item.desc and item.desc ~= "") and ("\n%s"):format(item.desc) or ""),
-                RightLabel = ("%s %s - %s %s"):format(item.limit
-                    and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
-                    or AVA.Utils.FormatNumber(item.quantity)
-                    , getQuantityUnit(item.type), formatWeight(item.total_weight), unit),
+                RightLabel = GetElementRightLabel(item, unit),
                 LeftBadge = not item.noIcon and function()
                     return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
                 end or nil,
@@ -188,72 +201,205 @@ local function OpenMyInventory()
     end
 end
 
+---Check wether an item is in the inventory data, in case of success, return everything needed to find it back
+---@param inventoryData table
+---@param itemName string item name
+---@return boolean wether the item is in the inventory data or not
+---@return string|nil object name from inventory data
+---@return integer|nil index
+local function IsItemInInventoryData(inventoryData, itemName)
+    for i = 1, #inventoryData.Top, 1 do
+        if inventoryData.Top[i].item.name == itemName then
+            return true, "Top", i
+        end
+    end
+    for i = 1, #inventoryData.Remaining, 1 do
+        if inventoryData.Remaining[i].item.name == itemName then
+            return true, "Remaining", i
+        end
+    end
+    return false
+end
+
 ---Action when selecting an item
 ---@param item table
 local function SelectItem(item)
     if TargetInventory then
-        local interactionType = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex or 1].type
+        local interactionType <const> = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex or 1].type
+        local interactionSucceeded = false
+        local quantity = nil
 
         if TargetInventory.playerId then
             -- Target inventory is a player
-            local shouldReloadInventories = false
 
             if interactionType == "take" then
-                local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
+                quantity = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
                     getQuantityUnit(item.type)), "", 10))
-                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                    shouldReloadInventories = true
-                    TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventory.playerId, item.name, count)
-                    -- TODO notification
+                if type(quantity) == "number" and math.floor(quantity) == quantity and quantity > 0 then
+                    TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventory.playerId, item.name, quantity)
+                    interactionSucceeded = not WasEventCanceled()
                 end
 
             elseif interactionType == "put" then
-                local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
+                quantity = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
                     AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type)), "", 10))
-                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                    shouldReloadInventories = true
-                    TriggerServerEvent("ava_core:server:giveItem", TargetInventory.playerId, item.name, count)
-                    -- TODO notification
+                if type(quantity) == "number" and math.floor(quantity) == quantity and quantity > 0 then
+                    TriggerServerEvent("ava_core:server:giveItem", TargetInventory.playerId, item.name, quantity)
+                    interactionSucceeded = not WasEventCanceled()
                 end
             end
 
-            -- Reload inventories
-            if shouldReloadInventories then
-                TargetInventory.Data = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", TargetInventory.playerId))
-                InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
-            end
         elseif TargetInventory.invType and TargetInventory.invName then
-            -- Target inventory is a container
-            local shouldReloadInventories = false
+            -- Target inventory is a typed inventory
 
             if interactionType == "take" then
-                local count = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
+                quantity = tonumber(AVA.KeyboardInput(GetString("inventory_take_enter_quantity", AVA.Utils.FormatNumber(item.quantity),
                     getQuantityUnit(item.type)), "", 10))
-                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                    shouldReloadInventories = true
-
-                    -- TriggerServerEvent("ava_core:server:takePlayerItem", TargetInventory.playerId, item.name, count)
+                if type(quantity) == "number" and math.floor(quantity) == quantity and quantity > 0 then
+                    TriggerServerEvent("ava_core:server:takeInventoryItem", TargetInventory.invType, TargetInventory.invName, item.name, quantity)
+                    interactionSucceeded = not WasEventCanceled()
                 end
 
             elseif interactionType == "put" then
-
-                local count = tonumber(AVA.KeyboardInput(GetString("inventory_put_enter_quantity",
+                quantity = tonumber(AVA.KeyboardInput(GetString("inventory_put_enter_quantity",
                     AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type)), "", 10))
-                if type(count) == "number" and math.floor(count) == count and count > 0 then
-                    shouldReloadInventories = true
-
-                    -- TriggerServerEvent("ava_core:server:giveItem", TargetInventory.playerId, item.name, count)
+                if type(quantity) == "number" and math.floor(quantity) == quantity and quantity > 0 then
+                    TriggerServerEvent("ava_core:server:putInventoryItem", TargetInventory.invType, TargetInventory.invName, item.name, quantity)
+                    interactionSucceeded = not WasEventCanceled()
                 end
             end
+        end
 
-            if shouldReloadInventories then
-                -- TargetInventory.Data = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", TargetInventory.playerId))
-                InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+        -- Interaction was successful (item taken/put)
+        if interactionSucceeded then
+            -- Update inventories with the added/removed quantity
+            -- TODO update inventory total weight
+            if interactionType == "take" then
+                -- Take, we need to add to player inventory and remove from target inventory
+
+                --#region update on take interaction
+                -- Get element from target inventory
+                local _isInInventoryData, _objectName, _index = IsItemInInventoryData(TargetInventory.Data, item.name)
+                -- This should never return false
+                if not _isInInventoryData then return end
+                local targetInvElement = TargetInventory.Data[_objectName][_index]
+                -- This should never be nil, but just in case
+                if not targetInvElement or not targetInvElement.item then return end
+
+                local isInInventoryData, objectName, index = IsItemInInventoryData(InventoryData, item.name)
+                if isInInventoryData then
+                    -- Item is in player inventory
+                    local element = InventoryData[objectName][index]
+                    -- This should never be nil, but just in case
+                    if element and element.item then
+                        -- We add the quantity to the player inventory
+                        element.item.quantity = element.item.quantity + quantity
+                        element.item.total_weight = element.item.quantity * item.weight
+                        element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+                    end
+                else
+                    -- Create a copy and add it to player inventory
+                    local element = {
+                        item = json.decode(json.encode(targetInvElement.item)),
+                        label = targetInvElement.label,
+                        description = targetInvElement.description,
+                        RightLabel = targetInvElement.RightLabel,
+                        LeftBadge = targetInvElement.LeftBadge,
+                    }
+                    -- Update item data
+                    element.item.quantity = quantity
+                    element.item.total_weight = element.item.quantity * item.weight
+                    element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+
+                    -- Add to player inventory
+                    -- We use the same objectName as the target inventory
+                    table.insert(InventoryData[_objectName], element)
+
+                    -- Sort inventory
+                    SortInventory(InventoryData[_objectName])
+                end
+
+                -- Update from target inventory
+                targetInvElement.item.quantity = targetInvElement.item.quantity - quantity
+                -- If new quantity is positive (or in top category), update the element
+                if targetInvElement.item.quantity > 0 or _objectName == "Top" then
+                    -- Should not happen, but just in case, this is related to the "Top" inventory
+                    if targetInvElement.item.quantity < 0 then
+                        targetInvElement.item.quantity = 0
+                    end
+                    targetInvElement.item.total_weight = targetInvElement.item.quantity * item.weight
+                    targetInvElement.RightLabel = GetElementRightLabel(targetInvElement.item, GetItemUnit(targetInvElement.item))
+                else
+                    -- Else remove it
+                    table.remove(TargetInventory.Data[_objectName], _index)
+                end
+                --#endregion update on take interaction
+
+            elseif interactionType == "put" then
+                -- Take, we need to add to target inventory and remove from player inventory
+
+                --#region update on put interaction
+                -- Get element from player inventory
+                local _isInInventoryData, _objectName, _index = IsItemInInventoryData(InventoryData, item.name)
+                -- This should never return false
+                if not _isInInventoryData then return end
+                local playerInvElement = InventoryData[_objectName][_index]
+                -- This should never be nil, but just in case
+                if not playerInvElement or not playerInvElement.item then return end
+
+                local isInInventoryData, objectName, index = IsItemInInventoryData(TargetInventory.Data, item.name)
+                if isInInventoryData then
+                    -- Item is in target inventory
+                    local element = TargetInventory.Data[objectName][index]
+                    -- This should never be nil, but just in case
+                    if element and element.item then
+                        -- We add the quantity to the target inventory
+                        element.item.quantity = element.item.quantity + quantity
+                        element.item.total_weight = element.item.quantity * item.weight
+                        element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+                    end
+                else
+                    -- Create a copy and add it to target inventory
+                    local element = {
+                        item = json.decode(json.encode(playerInvElement.item)),
+                        label = playerInvElement.label,
+                        description = playerInvElement.description,
+                        RightLabel = playerInvElement.RightLabel,
+                        LeftBadge = playerInvElement.LeftBadge,
+                    }
+                    -- Update item data
+                    element.item.quantity = quantity
+                    element.item.total_weight = element.item.quantity * item.weight
+                    element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+
+                    -- Add to target inventory
+                    -- We use the same objectName as the target inventory
+                    table.insert(TargetInventory.Data[_objectName], element)
+
+                    -- Sort inventory
+                    SortInventory(TargetInventory.Data[_objectName])
+                end
+
+                -- Update from player inventory
+                playerInvElement.item.quantity = playerInvElement.item.quantity - quantity
+                -- If new quantity is positive (or in top category), update the element
+                if playerInvElement.item.quantity > 0 or _objectName == "Top" then
+                    -- Should not happen, but just in case, this is related to the "Top" inventory
+                    if playerInvElement.item.quantity < 0 then
+                        playerInvElement.item.quantity = 0
+                    end
+                    playerInvElement.item.total_weight = playerInvElement.item.quantity * item.weight
+                    playerInvElement.RightLabel = GetElementRightLabel(playerInvElement.item, GetItemUnit(playerInvElement.item))
+                else
+                    -- Else  remove it
+                    table.remove(InventoryData[_objectName], _index)
+                end
+                --#endregion update on put interaction
             end
+
         end
     else
         selectedItem = item
-        dprint(item.name)
         ItemSelectedMenu.Index = 1
         ItemSelectedMenu.Subtitle = ("%s - %s %s"):format(item.label, AVA.Utils.FormatNumber(item.quantity), getQuantityUnit(item.type))
     end
@@ -279,8 +425,6 @@ function RageUI.PoolMenus:AvaCoreInventory()
                 if onListChange then
                     TargetInventory.CurrentInteractionIndex = Index
                     local interactionType = TargetInventoryInteractions[TargetInventory.CurrentInteractionIndex].type
-                    print(interactionType)
-                    -- TODO reset menu index
                     if interactionType == "take" then
                         TargetInventory.ShowMyInventory = false
                         InventoryMenu.Subtitle = ("%s/%skg"):format(formatWeight(TargetInventory.Data.ActualWeight), formatWeight(TargetInventory.Data.MaxWeight, 1))
@@ -298,22 +442,26 @@ function RageUI.PoolMenus:AvaCoreInventory()
         if AVAConfig.InventoryAlwaysDisplayedOnTop and inventory.Top then
             for i = 1, #inventory.Top, 1 do
                 local element = inventory.Top[i]
-                Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
-                    if onSelected then
-                        SelectItem(element.item)
-                    end
-                end, not TargetInventory and ItemSelectedMenu)
+                if element then
+                    Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
+                        if onSelected then
+                            SelectItem(element.item)
+                        end
+                    end, not TargetInventory and ItemSelectedMenu)
+                end
             end
         end
 
         if inventory.Remaining then
             for i = 1, #inventory.Remaining, 1 do
                 local element = inventory.Remaining[i]
-                Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
-                    if onSelected then
-                        SelectItem(element.item)
-                    end
-                end, not TargetInventory and ItemSelectedMenu)
+                if element then
+                    Items:AddButton(element.label, element.description, { LeftBadge = element.LeftBadge, RightLabel = element.RightLabel }, function(onSelected)
+                        if onSelected then
+                            SelectItem(element.item)
+                        end
+                    end, not TargetInventory and ItemSelectedMenu)
+                end
             end
         end
     end)
@@ -486,7 +634,6 @@ RegisterCommand("vehicletrunk", function()
             AVA.ShowNotification(GetString("vehicle_has_no_trunk"))
             return
         end
-        print(trunkSize)
 
         -- Player animation
         local animDirectory, animName = "anim@mp_player_intmenu@key_fob@", "fob_click_fp"
@@ -497,9 +644,7 @@ RegisterCommand("vehicletrunk", function()
 
         -- Get trunk data
         local invType, invName, trunkItems, maxWeight, actualWeight, title = exports.ava_core:TriggerServerCallback("ava_core:server:getVehicleTrunk", VehToNet(vehicle), trunkSize)
-        print("trunkItems", json.encode(trunkItems, { indent = true }))
         if not trunkItems then return end
-        print(invType, invName, trunkItems, maxWeight, actualWeight, title)
 
         -- Open trunk
         exports.ava_core:NetworkRequestControlOfEntity(vehicle)
