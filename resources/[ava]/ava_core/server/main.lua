@@ -12,7 +12,7 @@ end)
 --------------- Init Config ---------------
 -------------------------------------------
 
-local resourceName<const> = GetCurrentResourceName()
+local resourceName <const> = GetCurrentResourceName()
 for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
     local dataName = GetResourceMetadata(resourceName, "ava_config", i - 1)
     if dataName == "discord_config" then
@@ -141,6 +141,7 @@ AVA.SaveAll = function()
     print("^6[AVA_CORE]^0 Starting save at ^3" .. os.date("%H:%M:%S") .. "^0.")
     AVA.Players.SaveAll()
     AVA.SaveAllJobsAccounts()
+    AVA.SaveAllNamedInventories()
     TriggerEvent("ava_core:server:saveAll")
 end
 

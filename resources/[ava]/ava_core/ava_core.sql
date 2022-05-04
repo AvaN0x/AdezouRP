@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `ava_jobs` (
 CREATE TABLE IF NOT EXISTS `ava_named_inventories` (
     `name` varchar(128) NOT NULL,
     `label` varchar(50) NOT NULL,
-    `max_weight` int(11) NOT NULL DEFAULT 100000,
+    `max_weight` int(11) NOT NULL DEFAULT 500000,
     `inventory` longtext DEFAULT NULL,
     `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT PK_named_inventories_id PRIMARY KEY (`name`),

@@ -201,7 +201,6 @@ AVA.GetNamedInventoryItems = function(invType, invName, trunkSize)
     if NamedInventories[invType][invName] then
         return GetUsableDataFromInventory(NamedInventories[invType][invName])
     end
-    print("invType", invType, "invName", invName, "trunkSize", trunkSize)
 
     -- Else, we have to get it from database or create it
     if invType == "1" then
@@ -339,26 +338,43 @@ AVA.SaveAllNamedInventories = function()
     local promises = {}
     local count = 0
 
-    -- for jobName, aJobAccounts in pairs(AVA.JobsAccounts) do
-    --     if aJobAccounts.modified then
-    --         count = count + 1
-    --         promises[count] = aJobAccounts.save()
-    --     end
-    -- end
+    for invType, inventories in pairs(NamedInventories) do
+        for invName, inventory in pairs(inventories) do
+            local p = inventory.save()
+            if p then
+                count = count + 1
+                promises[count] = p
+            end
+        end
+    end
     Citizen.Await(promise.all(promises))
     print("^2[SAVE NAMED INVENTORIES]^0 Every named inventories has been saved.")
 end
 
-AVA.SaveNamedInventory = function(aJobAccounts)
-    if aJobAccounts then
-        local p = promise.new()
-        -- MySQL.update("UPDATE `ava_jobs` SET `accounts` = :accounts WHERE `name` = :name",
-        --     { name = aJobAccounts.name, accounts = json.encode(aJobAccounts.getAccounts()) }, function(result)
-        --         aJobAccounts.modified = false
-        --         print("^2[SAVE NAMED INVENTORY] ^0" .. aJobAccounts.name)
-        --         p:resolve()
-        --     end)
-        return p
+AVA.SaveNamedInventory = function(inventory)
+    if inventory then
+        if inventory.modified then
+            if inventory.namedInventory then
+                local p = promise.new()
+                MySQL.update("UPDATE `ava_named_inventories` SET `inventory` = :inventory WHERE `name` = :name",
+                    { name = inventory.namedInventory, inventory = json.encode(inventory.items) }, function(result)
+                    inventory.modified = false
+                    print("^2[SAVE NAMED INVENTORY] ^0" .. inventory.namedInventory)
+                    p:resolve()
+                end)
+                return p
+
+            elseif inventory.vehicleIdentifier then
+                local p = promise.new()
+                MySQL.update("UPDATE `ava_vehiclestrunk` SET `trunk` = :trunk WHERE `vehicleid` = :vehicleid",
+                    { vehicleid = tonumber(inventory.vehicleIdentifier), trunk = json.encode(inventory.items) }, function(result)
+                    inventory.modified = false
+                    print("^2[SAVE VEHICLE INVENTORY] ^0" .. inventory.vehicleIdentifier)
+                    p:resolve()
+                end)
+                return p
+            end
+        end
     else
         error("^1[AVA.SaveNamedInventory]^0 aInventory is not valid.")
     end

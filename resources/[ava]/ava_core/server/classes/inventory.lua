@@ -250,15 +250,8 @@ function CreateInventory(invType, invIdentifier, items, max_weight, label)
     -- SAVE --
     ----------
 
-    self.saveInventory = function()
-        if self.modified == true then
-            if self.namedInventory then
-                -- TODO
-            elseif self.vehicleIdentifier then
-                -- TODO
-            end
-            self.modified = false
-        end
+    self.save = function()
+        return AVA.SaveNamedInventory(self)
     end
 
     return self

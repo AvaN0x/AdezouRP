@@ -598,6 +598,8 @@ RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, it
 end)
 
 RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
+    if not exports.ava_core:canOpenMenu() then return end
+
     RageUI.CloseAll()
     TargetInventory = {
         invType = 0,
@@ -692,6 +694,25 @@ RegisterCommand("vehicletrunk", function()
 end)
 RegisterKeyMapping("vehicletrunk", GetString("vehicle_trunk"), "keyboard", AVAConfig.TrunkKey)
 
+RegisterNetEvent("ava_core:client:openNamedInventory", function(invName)
+    if not exports.ava_core:canOpenMenu() then return end
+    local inventoryItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getNamedInventoryItems", invName)
+    if not inventoryItems then
+        AVA.ShowNotification(GetString("named_inventory_is_invalid"))
+        return
+    end
 
+    RageUI.CloseAll()
+    TargetInventory = {
+        invType = 1,
+        invName = invName,
+    }
+    TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_put") } }
 
+    ReloadInventoryWithData(inventoryItems, maxWeight, actualWeight, title)
+    TargetInventory.Data = InventoryData
+    InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
+    InventoryMenu:ResetIndex()
+    RageUI.Visible(InventoryMenu, true)
+end)
 --#endregion trunks
