@@ -371,21 +371,30 @@ Config.Jobs = {
                     },
                 },
             },
-            ArmoryStock = {
+            FridgeInventory = {
+                Coord = vector3(464.71, -990.09, 29.71),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Name = "Réfrigérateur",
+                InventoryName = "job_lspd_fridge",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
+            ArmoryInventory = {
                 Coord = vector3(452.28, -980.15, 29.71),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 122, b = 204 },
                 Name = "Armurerie",
-                StockName = "society_lspd_armory",
+                InventoryName = "job_lspd_armory",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            SeizureStock = {
+            SeizureInventory = {
                 Coord = vector3(472.63, -990.40, 23.93),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 122, b = 204 },
                 Name = "Coffre saisies",
-                StockName = "society_lspd_seizure",
+                InventoryName = "job_lspd_seizure",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -464,7 +473,7 @@ Config.Jobs = {
                     Label = GetString("ems_check_injuries"),
                     Desc = GetString("ems_check_injuries_desc"),
                     Action = function(jobName)
-
+                        -- TODO
                     end,
                 },
             },
@@ -516,7 +525,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 139, b = 90 },
                 Name = "Pharmacie",
-                StockName = "society_ems_pharmacy",
+                InventoryName = "job_ems_pharmacy",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -535,7 +544,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 139, b = 90 },
                 Name = "Cuisine",
-                StockName = "society_ems",
+                InventoryName = "job_ems",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -592,7 +601,7 @@ Config.Jobs = {
                     Label = GetString("info_vehicle"),
                     Desc = GetString("info_vehicle_desc"),
                     Action = function(jobName)
-
+                        -- TODO
                     end,
                 },
                 {
@@ -602,6 +611,7 @@ Config.Jobs = {
                         return GetVehiclePedIsIn(playerPed, false) == 0
                     end,
                     Action = function(jobName)
+                        -- TODO
                     end,
                 },
             },
@@ -621,7 +631,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
-                StockName = "society_mechanic",
+                InventoryName = "job_mechanic",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -630,7 +640,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Frigo",
-                StockName = "society_mechanic_fridge",
+                InventoryName = "job_mechanic_fridge",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -818,7 +828,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
-                StockName = "society_government",
+                InventoryName = "job_government",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1844,7 +1854,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 250, g = 197, b = 50 },
                 Name = "Coffre",
-                StockName = "gang_vagos",
+                InventoryName = "gang_vagos",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1880,7 +1890,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 152, g = 60, b = 137 },
                 Name = "Coffre",
-                StockName = "gang_ballas",
+                InventoryName = "gang_ballas",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1916,7 +1926,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 72, g = 171, b = 57 },
                 Name = "Coffre",
-                StockName = "gang_families",
+                InventoryName = "gang_families",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1952,7 +1962,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                StockName = "gang_marabunta",
+                InventoryName = "gang_marabunta",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1990,7 +2000,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                StockName = "biker_lost",
+                InventoryName = "biker_lost",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -2020,8 +2030,8 @@ Config.Jobs = {
                 Name = "Crate",
                 HelpText = GetString("press_to_talk"),
                 Action = function()
-                    TriggerEvent("ava_lock:dooranim")
-                    TriggerEvent("esx_ava_crate_lost:startMission")
+                    -- TriggerEvent("ava_lock:dooranim")
+                    -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
                 end,
             },
         },
@@ -2212,7 +2222,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                StockName = "orga_cartel",
+                InventoryName = "orga_cartel",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -2261,7 +2271,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                StockName = "orga_mafia",
+                InventoryName = "orga_mafia",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -2289,7 +2299,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 212, g = 0, b = 0 },
                 Name = "Coffre",
-                StockName = "orga_hapf",
+                InventoryName = "orga_hapf",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },

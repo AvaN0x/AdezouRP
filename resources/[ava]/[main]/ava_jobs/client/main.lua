@@ -155,7 +155,7 @@ function setJobsToUse()
     playerJobs = {}
     playerIsAManager = false
     for i = 1, #PlayerData.jobs do
-        local job<const> = PlayerData.jobs[i]
+        local job <const> = PlayerData.jobs[i]
         if Config.Jobs[job.name] ~= nil and not Config.Jobs[job.name].Disabled then
             playerJobs[job.name] = Config.Jobs[job.name]
             playerJobs[job.name].grade = job.grade
@@ -521,7 +521,7 @@ Citizen.CreateThread(function()
         end
 
         if Config.JobCenter ~= nil then
-            local v<const> = Config.JobCenter
+            local v <const> = Config.JobCenter
             if (#(playerCoords - v.Coord) < (v.Distance or 2)) then
                 isInMarker = true
                 zoneJob = "JobCenter"
@@ -532,7 +532,7 @@ Citizen.CreateThread(function()
         end
 
         if Config.BankManagment ~= nil and playerIsAManager then
-            local v<const> = Config.BankManagment
+            local v <const> = Config.BankManagment
             if (#(playerCoords - v.Coord) < (v.Distance or 2)) then
                 isInMarker = true
                 zoneJob = "BankManagment"
@@ -611,15 +611,8 @@ Citizen.CreateThread(function()
                             OpenManagerMenuMenu(CurrentJobName)
                         elseif CurrentZoneName == "Cloakroom" then
                             OpenCloakroomMenu()
-                            -- elseif string.match(CurrentZoneName, "Stock$") then
-                            --     TriggerEvent("esx_ava_inventories:OpenSharedInventory", CurrentZoneValue.StockName)
-                            -- elseif string.match(CurrentZoneName, "Garage$") then
-                            --     if CurrentZoneValue.IsNonProprietaryGarage then
-                            --         TriggerEvent("esx_ava_garage:openSpecialVehicleMenu", CurrentZoneValue, CurrentJobName)
-
-                            --     else
-                            --         TriggerEvent("esx_ava_garage:OpenSocietyVehiclesMenu", job.SocietyName, CurrentZoneValue)
-                            --     end
+                        elseif CurrentZoneValue.InventoryName then
+                            TriggerEvent("ava_core:client:openNamedInventory", CurrentZoneValue.InventoryName)
                         elseif CurrentZoneValue.Action then
                             CurrentZoneValue.Action()
 
