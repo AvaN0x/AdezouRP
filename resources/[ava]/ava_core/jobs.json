@@ -171,6 +171,94 @@
             }
         ]
     },
+    "cluckin": {
+        "label": "Cluckin Bell",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "bahama": {
+        "label": "Bahama Mamas",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "unicorn": {
+        "label": "Vanilla Unicorn",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "nightclub": {
+        "label": "Galaxy",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
     "gang_vagos": {
         "isGang": true,
         "label": "Vagos",
@@ -212,6 +300,25 @@
     "gang_ballas": {
         "isGang": true,
         "label": "Ballas",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG",
+                "manage": true
+            }
+        ]
+    },
+    "gang_marabunta": {
+        "isGang": true,
+        "label": "Marabunta",
         "grades": [
             {
                 "name": "new_member",
