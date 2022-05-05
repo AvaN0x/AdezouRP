@@ -520,16 +520,25 @@ Config.Jobs = {
                     },
                 },
             },
+            FridgeInventory = {
+                Coord = vector3(306.89, -601.61, 42.30),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 0, g = 139, b = 90 },
+                Name = "Cuisine",
+                InventoryName = "job_ems_fridge", -- TODO add
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
             PharmacyStock = {
                 Coord = vector3(309.77, -568.66, 42.30),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 139, b = 90 },
                 Name = "Pharmacie",
-                InventoryName = "job_ems_pharmacy",
+                InventoryName = "job_ems_pharmacy", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(337.34, -579.28, 28.80),
@@ -539,16 +548,7 @@ Config.Jobs = {
                 Type = "car",
                 SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340.0 },
             },
-            KitchenStock = {
-                Coord = vector3(306.89, -601.61, 42.30),
-                Size = { x = 1.5, y = 1.5, z = 1.0 },
-                Color = { r = 0, g = 139, b = 90 },
-                Name = "Cuisine",
-                InventoryName = "job_ems",
-                HelpText = GetString("press_to_open"),
-                Marker = 27,
-            },
-            HeliGarage = {
+            HeliGarage = { -- TODO properly add, this do not work
                 Name = "Héliport",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(351.05, -588.07, 74.17),
@@ -626,21 +626,21 @@ Config.Jobs = {
                 Marker = 27,
                 MinimumGrade = "boss",
             },
-            MainStock = {
+            StockInventory = {
                 Coord = vector3(-1145.19, -2004.44, 12.21),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
-                InventoryName = "job_mechanic",
+                InventoryName = "job_mechanic_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            FridgeStock = {
+            FridgeInventory = {
                 Coord = vector3(-1153.45, -2025.06, 12.21),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Frigo",
-                InventoryName = "job_mechanic_fridge",
+                InventoryName = "job_mechanic_fridge", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -719,7 +719,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open_lscustom"),
                 Marker = 27,
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-1144.45, -1971.70, 13.16),
@@ -730,7 +730,7 @@ Config.Jobs = {
                 Blip = true,
                 SpawnPoint = { Coord = vector3(-1144.45, -1971.70, 13.16), Heading = 190.0 },
             },
-            SeizedCarGarage = {
+            SeizedCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage saisies",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(822.47, -1365.20, 26.13),
@@ -743,7 +743,7 @@ Config.Jobs = {
                 OnlyParkCars = true,
                 Blip = true,
             },
-            PoundCarGarage = {
+            PoundCarGarage = { -- TODO properly add, this do not work
                 Name = "Fourrière",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(383.76, -1623.09, 29.29),
@@ -828,7 +828,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
-                InventoryName = "job_government",
+                InventoryName = "job_government_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -851,7 +851,7 @@ Config.Jobs = {
 
                 },
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-580.32, -171.30, 37.86),
@@ -877,6 +877,7 @@ Config.Jobs = {
                 Marker = 27,
                 MinimumGrade = "employee",
             },
+            -- TODO Stock
             Cloakroom = {
                 Coord = vector3(-1874.90, 2054.53, 140.09),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -895,7 +896,7 @@ Config.Jobs = {
                     },
                 },
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-1888.97, 2045.06, 140.87),
@@ -1033,6 +1034,7 @@ Config.Jobs = {
                 Marker = 27,
                 MinimumGrade = "employee",
             },
+            -- TODO stock
             Cloakroom = {
                 Coord = vector3(708.91, -959.63, 29.42),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1051,7 +1053,7 @@ Config.Jobs = {
                     },
                 },
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(719.11, -989.22, 24.12),
@@ -1154,6 +1156,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
+            -- TODO stock
             Cloakroom = {
                 Coord = vector3(-510.19, -700.42, 32.19),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1173,7 +1176,7 @@ Config.Jobs = {
                 },
 
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-465.3, -619.36, 31.17),
@@ -1332,6 +1335,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
+            -- TODO stock
             Cloakroom = {
                 Coord = vector3(-1386.81, -608.41, 29.34),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1357,7 +1361,7 @@ Config.Jobs = {
                     },
                 },
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-1419.26, -596.3, 30.45),
@@ -1408,6 +1412,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
+            -- TODO stock
             Cloakroom = {
                 Coord = vector3(106.71, -1299.75, 27.79),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1426,7 +1431,7 @@ Config.Jobs = {
                     },
                 }
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(144.25, -1284.85, 29.34),
@@ -1500,6 +1505,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
+            -- TODO stock
             Cloakroom = {
                 Coord = vector3(-1619.66, -3020.41, -76.19),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1517,7 +1523,7 @@ Config.Jobs = {
                     },
                 },
             },
-            CarGarage = {
+            CarGarage = { -- TODO properly add, this do not work
                 Name = "Garage véhicule",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-685.96, -2481.24, 13.83),
@@ -1712,7 +1718,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 250, g = 197, b = 50 },
                 Name = "Coffre",
-                InventoryName = "gang_vagos",
+                InventoryName = "gang_vagos_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1724,7 +1730,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            GangCarGarage = {
+            GangCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(335.46, -2039.61, 21.13),
@@ -1748,7 +1754,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 152, g = 60, b = 137 },
                 Name = "Coffre",
-                InventoryName = "gang_ballas",
+                InventoryName = "gang_ballas_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1760,7 +1766,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            GangCarGarage = {
+            GangCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(91.82, -1964.06, 20.75),
@@ -1784,7 +1790,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 72, g = 171, b = 57 },
                 Name = "Coffre",
-                InventoryName = "gang_families",
+                InventoryName = "gang_families_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1796,7 +1802,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            GangCarGarage = {
+            GangCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(-109.22, -1599.54, 31.64),
@@ -1820,7 +1826,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                InventoryName = "gang_marabunta",
+                InventoryName = "gang_marabunta_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1832,7 +1838,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            GangCarGarage = {
+            GangCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(1329.94, -1724.45, 56.04),
@@ -1858,7 +1864,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                InventoryName = "biker_lost",
+                InventoryName = "biker_lost_stock", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -1870,7 +1876,7 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            GangCarGarage = {
+            GangCarGarage = { -- TODO properly add, this do not work
                 Name = "Garage gang",
                 HelpText = GetString("spawn_veh"),
                 Coord = vector3(975.37, -140.63, 74.23),
