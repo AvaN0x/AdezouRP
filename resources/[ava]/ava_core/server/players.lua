@@ -177,6 +177,23 @@ local function loadPlayer(src)
     end
 end
 
+AddEventHandler('onServerResourceStart', function(resource)
+    if AVAConfig.NPWD and resource == 'npwd' then
+        -- Reload every players on npwd resource start
+        for src, aPlayer in pairs(AVA.Players.List) do
+            -- mandatory wait!
+            Wait(100)
+            exports.npwd:newPlayer({
+                source = tonumber(src),
+                identifier = aPlayer.citizenId,
+                phoneNumber = aPlayer.phoneNumber,
+                firstname = aPlayer.character.firstname,
+                lastname = aPlayer.character.lastname,
+            })
+        end
+    end
+end)
+
 local function logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
     local oldPlayer = AVA.Players.GetPlayer(src)
     if oldPlayer then
