@@ -18,19 +18,26 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
     local vehicle = NetworkGetEntityFromNetworkId(vehNet)
     if not DoesEntityExist(vehicle) then return false end
 
+    -- If there is no lscustomName, then only a player that could have executed lscustoms is allowed to apply the custom
+    if not lscustomName then
+        return IsPlayerAceAllowed(src, "command.lscustoms")
+    end
+
     -- Get player
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return false end
 
     -- Get mod price
     local vehiclePrice, vehicleModel = GetVehiclePriceFromModel(GetEntityModel(vehicle))
+    if not vehiclePrice then return false end
+
     local price = modCfg.staticPrice or math.floor(vehiclePrice * modCfg.priceMultiplier + 0.5)
     -- If client price is higher than mod price, then use client price
     if clientPrice > price then
         price = clientPrice
     end
 
-    if lscustomName and Config.Stores[lscustomName]?.LSCustoms?.DirtyCash then
+    if Config.Stores[lscustomName]?.LSCustoms?.DirtyCash then
         -- Dirty Money
         -- Player pays
         local inventory = aPlayer.getInventory()
@@ -69,8 +76,6 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
             end
         end
     end
-    
 
-    -- TODO
     return true
 end)
