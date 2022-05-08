@@ -349,6 +349,34 @@ AVA.Commands.RegisterCommand({ "removejob", "remjob" }, "admin", function(source
     end
 end, GetString("removejob_help"), { { name = "player", help = GetString("player_id_or_zero") }, { name = "job", help = GetString("job_name") } })
 
+
+AVA.Commands.RegisterCommand("addalljobs", "superadmin", function(source, args, rawCommand, aPlayer)
+    local aTargetPlayer = AVA.Players.GetPlayer(type(args[1]) == "string" and args[1] or source)
+    if aTargetPlayer then
+        for jobName, cfgJob in pairs(AVAConfig.Jobs) do
+            local gradeName <const> = cfgJob.grades[#cfgJob.grades].name
+            aTargetPlayer.addJob(jobName, gradeName)
+        end
+        return GetString("addalljobs_log", aPlayer and aPlayer.getDiscordTag() or "console", aTargetPlayer.getDiscordTag())
+    end
+end, GetString("addalljobs_help"), {
+    { name = "player", help = GetString("player_id_or_empty") },
+})
+
+AVA.Commands.RegisterCommand({ "removealljobs", "remalljobs" }, "superadmin", function(source, args, rawCommand, aPlayer)
+    local aTargetPlayer = AVA.Players.GetPlayer(type(args[1]) == "string" and args[1] or source)
+    if aTargetPlayer then
+        local playerJobs = aTargetPlayer.getJobs()
+        for i = #playerJobs, 1, -1 do
+            aTargetPlayer.removeJob(playerJobs[i].name)
+        end
+
+        return GetString("removealljobs_log", aPlayer and aPlayer.getDiscordTag() or "console", aTargetPlayer.getDiscordTag())
+    end
+end, GetString("removealljobs_help"), {
+    { name = "player", help = GetString("player_id_or_empty") },
+})
+
 AVA.Commands.RegisterCommand("addgang", "admin", function(source, args)
     if type(args[1]) ~= "string" or type(args[2]) ~= "string" then
         return
@@ -631,7 +659,7 @@ AVA.Commands.RegisterCommand({ "announce", "annonce" }, "", function(source, arg
     if type(args[1]) ~= "string" then
         return
     end
-    local message<const> = table.concat(args, " ")
+    local message <const> = table.concat(args, " ")
     AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("announce_embed_by_staff", aPlayer and aPlayer.getDiscordTag() or "console"), message,
         0xFF0076)
     TriggerClientEvent("ava_core:client:announce", -1, message)
@@ -644,7 +672,7 @@ AVA.Commands.RegisterCommand({ "message", "msg", "pm", "dm" }, "mod", function(s
     end
     local targetId = args[1]
     table.remove(args, 1)
-    local message<const> = table.concat(args, " ")
+    local message <const> = table.concat(args, " ")
     TriggerClientEvent("ava_core:client:ShowNotification", targetId, message, nil, "ava_core_logo", GetString("message_title"),
         aPlayer and aPlayer.getDiscordTag() or "console", nil, "ava_core_logo")
 end, GetString("message_help"), { { name = "player", help = GetString("player_id") }, { name = "message", help = GetString("message") } })
@@ -653,8 +681,8 @@ AVA.Commands.RegisterCommand("report", "", function(source, args, rawCommand, aP
     if not aPlayer or type(args[1]) ~= "string" then
         return
     end
-    local message<const> = table.concat(args, " ")
-    local playerName<const> = aPlayer.getDiscordTag()
+    local message <const> = table.concat(args, " ")
+    local playerName <const> = aPlayer.getDiscordTag()
 
     AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff", GetString("report_embed_by_player", playerName, source), message, 0xFFD767)
     -- Notify source
