@@ -12,7 +12,9 @@ server.cfg
 /resources/\[esx\]/\[non-esx\]/es_mapper/data/mapsradar.xml
 /resources/\[esx\]/\[non-esx\]/3dme/log.txt
 
-.vscode/
+.vscode/**/*
+!.vscode/settings.json
+
 imgui.ini
 
 /resources/\[system\]/
