@@ -2336,12 +2336,6 @@
                 "hidden": true,
                 "quantity": 20,
                 "price": 61166
-            },
-            "bcat": {
-                "category": "emergency",
-                "hidden": true,
-                "quantity": 20,
-                "price": 258988
             }
         },
         "1": {
@@ -2594,7 +2588,6 @@
             "polgauntlet": true,
             "polvacca": true,
             "umoracle": true,
-            "bcat": true,
             "riot": true,
             "riot2": true
         },
