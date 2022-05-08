@@ -306,12 +306,16 @@ Config.Jobs = {
                     {
                         Label = "Cadet manches courtes",
                         Male = json.decode(
-                        "{\"bag_txd\":0,\"leg\":59,\"leg_txd\":0,\"accessory_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"hats_txd\":0,\"tops\":102,\"shoes_txd\":0,\"hats\":-1,\"accessory\":0,\"bodyarmor_txd\":0,\"tops_txd\":0,\"torso\":19,\"bodyarmor\":0,\"undershirt\":59,\"shoes\":25}"),
+                        '{"leg_txd":0,"watches_txd":0,"bracelets":-1,"undershirt":15,"accessory":0,"tops":102,"hats_txd":0,"accessory_txd":0,"leg":59,"glasses_txd":0,"shoes_txd":0,"shoes":25,"hats":-1,"mask":0,"mask_txd":0,"tops_txd":0,"torso":19,"bag_txd":0,"bracelets_txd":0,"bodyarmor":10,"undershirt_txd":0,"torso_txd":0,"decals_txd":0,"ears_txd":0,"bodyarmor_txd":0,"watches":-1,"glasses":-1,"ears":-1,"decals":0,"bag":0}'),
+                        Female = json.decode(
+                        '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":0,"undershirt":15,"torso":31,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":93,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),
                     },
                     {
                         Label = "Cadet manches longues",
                         Male = json.decode(
-                        "{\"bag_txd\":0,\"leg\":59,\"leg_txd\":0,\"accessory_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"hats_txd\":0,\"tops\":101,\"shoes_txd\":0,\"hats\":-1,\"accessory\":0,\"bodyarmor_txd\":0,\"tops_txd\":0,\"torso\":20,\"bodyarmor\":0,\"undershirt\":59,\"shoes\":25}"),
+                        '{"mask_txd":0,"leg":59,"accessory":0,"hats":-1,"bag":0,"undershirt":15,"torso_txd":0,"ears":-1,"tops_txd":0,"shoes_txd":0,"shoes":25,"torso":1,"hats_txd":0,"accessory_txd":0,"glasses_txd":0,"bracelets_txd":0,"watches":-1,"decals_txd":0,"bodyarmor":10,"ears_txd":0,"leg_txd":0,"bag_txd":0,"undershirt_txd":0,"bodyarmor_txd":0,"decals":0,"watches_txd":0,"tops":101,"mask":0,"bracelets":-1,"glasses":-1}'),
+                        Female = json.decode(
+                        '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":3,"undershirt":15,"torso":3,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":92,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),                       
                     },
                     {
                         Label = "Tenue manches courtes",
