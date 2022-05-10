@@ -482,9 +482,9 @@ AVA.Players.UseItem = function(src, itemName)
         return
     end
     if type(AVA.UsableItems[itemName]) ~= "nil" then
-        local item = aPlayer.getInventory().getItem(itemName)
+        local itemQuantity = aPlayer.getInventory().getItemQuantity(itemName)
 
-        if item and item.quantity > 0 then
+        if itemQuantity and itemQuantity > 0 then
             local cfgItem = AVAConfig.Items[itemName]
             if cfgItem then
                 AVA.UsableItems[itemName](aPlayer.src, aPlayer, cfgItem)
@@ -897,9 +897,9 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         local inventory = aPlayer.getInventory()
-        local item = inventory.getItem(ammoType)
+        local itemQuantity = inventory.getItemQuantity(ammoType)
 
-        if not item then
+        if not itemQuantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
                 0xEF5859)
 
@@ -907,14 +907,14 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** removed a negative number of ammo `%s` : `%d`"):format(aPlayer.getDiscordTag(), ammoType, ammoRemoved), 0xEF5859)
 
-        elseif ammoRemoved > item.quantity then
+        elseif ammoRemoved > itemQuantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
                 ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
-                    aPlayer.getDiscordTag(), ammoType, item.quantity, ammoRemoved), 0xEF5859)
-            TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), item.quantity)
+                    aPlayer.getDiscordTag(), ammoType, itemQuantity, ammoRemoved), 0xEF5859)
+            TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), itemQuantity)
 
-        elseif ammoRemoved <= item.quantity then
-            inventory.removeItem(item.name, ammoRemoved)
+        elseif ammoRemoved <= itemQuantity then
+            inventory.removeItem(ammoType, ammoRemoved)
 
         end
     end

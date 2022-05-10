@@ -195,10 +195,10 @@ local function hasEnoughItems(source, items)
     local result = {}
     for i = 1, #items, 1 do
         local item = items[i]
-        local invItem = inventory.getItem(item.name)
-        if invItem.quantity < item.quantity then
+        local invItemQuantity = inventory.getItemQuantity(item.name)
+        if invItemQuantity and invItemQuantity < item.quantity then
             local cfgItem = CoreItems[item.name]
-            table.insert(result, (item.quantity - invItem.quantity) .. " " .. (cfgItem and cfgItem.label or item.name))
+            table.insert(result, (item.quantity - invItemQuantity) .. " " .. (cfgItem and cfgItem.label or item.name))
         end
     end
     if result[1] then
@@ -332,16 +332,16 @@ exports.ava_core:RegisterServerCallback("ava_jobs:getSellElements", function(sou
     if zone then
         local elements = {}
         for k, item in pairs(zone.Items) do
-            local invItem = inventory.getItem(item.name)
+            local invItemQuantity = inventory.getItemQuantity(item.name)
             local cfgItem = CoreItems[item.name]
-            if cfgItem then
+            if cfgItem and invItemQuantity then
                 table.insert(elements, {
                     itemLabel = cfgItem.label,
-                    label = GetString("sell_label", cfgItem.label, invItem.quantity),
+                    label = GetString("sell_label", cfgItem.label, invItemQuantity),
                     desc = item.desc,
                     price = item.price,
                     name = item.name,
-                    owned = invItem.quantity,
+                    owned = invItemQuantity,
                 })
             end
         end

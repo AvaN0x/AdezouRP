@@ -46,21 +46,37 @@ function CreateInventory(invType, invIdentifier, items, max_weight, label)
 
     self.updateWeight() -- * init weight value
 
+    ---Get an item from the inventory, warning: it'll add the item when not found
+    ---@param name string item name
+    ---@return any item
+    ---@return integer index
     self.getItem = function(name)
         if Items[name] then
             for i = 1, #self.items, 1 do
                 if self.items[i].name == name then
-                    return self.items[i]
+                    return self.items[i], i
                 end
             end
 
-            item = { name = name, quantity = 0 }
+            local index = #self.items + 1
+            self.items[index] = { name = name, quantity = 0 }
 
-            self.items[#self.items + 1] = item
-            return item
+            return self.items[index], index
         else
             return nil
         end
+    end
+
+    self.getItemQuantity = function(name)
+        if Items[name] then
+            for i = 1, #self.items, 1 do
+                if self.items[i].name == name then
+                    return self.items[i].quantity
+                end
+            end
+            return 0
+        end
+        return nil
     end
 
     ---@return boolean success
@@ -120,12 +136,16 @@ function CreateInventory(invType, invIdentifier, items, max_weight, label)
             return false
         end
 
-        local item = self.getItem(name)
+        local item, index = self.getItem(name)
         if item then
             quantity = math.floor(quantity)
             local new_quantity = item.quantity - quantity
             -- TODO remove totally element from inventory if 0?
-            item.quantity = new_quantity >= 0 and new_quantity or 0
+            item.quantity = new_quantity
+
+            if item.quantity <= 0 then
+                table.remove(self.items, index)
+            end
 
             self.updateWeight()
             self.modified = true
@@ -148,6 +168,8 @@ function CreateInventory(invType, invIdentifier, items, max_weight, label)
         if item then
             quantity = math.floor(quantity)
             item.quantity = quantity
+
+            -- TODO: remove if 0, trigger events
 
             self.updateWeight()
             self.modified = true
@@ -232,15 +254,20 @@ function CreateInventory(invType, invIdentifier, items, max_weight, label)
     end
 
     self.clearInventory = function()
-        for k, item in ipairs(self.items) do
-            -- TODO remove totally element from inventory ?
-            local oldQuantity = item.quantity
-            item.quantity = 0
+        for i = #self.items, 1, -1 do
+            local item = self.items[i]
+            if item then
+                local oldQuantity = item.quantity
+                item.quantity = 0
 
-            if self.playerSrc and oldQuantity > 0 and Items[item.name] then
-                TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
-                TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
+                if self.playerSrc and oldQuantity > 0 and Items[item.name] then
+                    TriggerClientEvent("ava_core:client:editItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
+                    TriggerEvent("ava_core:server:editPlayerItemInventoryCount", self.playerSrc, item.name, Items[item.name].label, false, oldQuantity, 0)
+                end
             end
+
+            -- Remove from inventory
+            self.items[i] = nil
         end
         self.actual_weight = 0
         self.modified = true

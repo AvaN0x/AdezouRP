@@ -79,11 +79,7 @@ end, GetString("openinventory_help"), { { name = "player", help = GetString("pla
 AVA.RegisterServerCallback("ava_core:server:getItemQuantity", function(source, itemName)
     local aPlayer = exports.ava_core:GetPlayer(source)
     if aPlayer then
-        local item = aPlayer.getInventory().getItem(itemName)
-
-        if item then
-            return item.quantity
-        end
+        return aPlayer.getInventory().getItemQuantity(itemName) or 0
     end
     return 0
 end)

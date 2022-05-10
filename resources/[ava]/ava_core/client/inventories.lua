@@ -459,6 +459,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
 
                     end
                     InventoryMenu:ResetIndex()
+                    InventoryMenu.Description = nil
                 end
             end)
         end
