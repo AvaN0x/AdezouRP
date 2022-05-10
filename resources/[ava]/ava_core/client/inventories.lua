@@ -161,7 +161,8 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
                 end or nil,
             }
 
-            if AVAConfig.InventoryAlwaysDisplayedOnTop and (item.type and item.type == "money") then
+            -- If pinned on top and item is pinned, at to top
+            if AVAConfig.InventoryPinnedOnTop and item.pinned then
                 table.insert(inventory.Top, 1, element)
             else
                 invElementsCount = invElementsCount + 1
@@ -171,7 +172,7 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
     end
 
     -- Sort inventory
-    if AVAConfig.InventoryAlwaysDisplayedOnTop then
+    if AVAConfig.InventoryPinnedOnTop then
         table.sort(inventory.Top, function(a, b)
             return a.item.name < b.item.name
         end)
@@ -462,7 +463,7 @@ function RageUI.PoolMenus:AvaCoreInventory()
             end)
         end
 
-        if AVAConfig.InventoryAlwaysDisplayedOnTop and inventory.Top then
+        if AVAConfig.InventoryPinnedOnTop and inventory.Top then
             for i = 1, #inventory.Top, 1 do
                 local element = inventory.Top[i]
                 if element then

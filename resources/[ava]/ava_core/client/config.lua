@@ -12,7 +12,7 @@ AVAConfig.NPWD = false
 
 AVAConfig.InventoryKey = "F2"
 
-AVAConfig.InventoryAlwaysDisplayedOnTop = true
+AVAConfig.InventoryPinnedOnTop = true
 
 AVAConfig.EnablePVP = true
 
