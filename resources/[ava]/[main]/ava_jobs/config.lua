@@ -603,9 +603,20 @@ Config.Jobs = {
                 Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
                 VehicleType = 0,
-                IsJobGarage = "lspd",
-                JobNeeded = "lspd",
+                IsJobGarage = "ems",
+                JobNeeded = "ems",
                 SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340 },
+            },
+            {
+                Name = "jobgarage_ems",
+                Coord = vector3(351.05, -588.07, 74.17),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 2,
+                IsJobGarage = "ems",
+                JobNeeded = "ems",
+                SpawnPoint = { Coord = vector3(351.05, -588.07, 74.17), Heading = 245.0 },
             },
             -- Player garages
             {
@@ -747,43 +758,6 @@ Config.Jobs = {
                 LSCustom = true,
                 HelpText = GetString("press_to_open_lscustom"),
                 Marker = 27,
-            },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(-1144.45, -1971.70, 13.16),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 207, g = 169, b = 47 },
-                Marker = 36,
-                Type = "car",
-                Blip = true,
-                SpawnPoint = { Coord = vector3(-1144.45, -1971.70, 13.16), Heading = 190.0 },
-            },
-            SeizedCarGarage = { -- TODO properly add, this do not work
-                Name = "Garage saisies",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(822.47, -1365.20, 26.13),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 221, g = 79, b = 67 },
-                Marker = 36,
-                Type = "car",
-                IsNonProprietaryGarage = true,
-                Identifier = "seized_LSPD",
-                OnlyParkCars = true,
-                Blip = true,
-            },
-            PoundCarGarage = { -- TODO properly add, this do not work
-                Name = "Fourrière",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(383.76, -1623.09, 29.29),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 201, g = 113, b = 46 },
-                Marker = 36,
-                Type = "car",
-                IsNonProprietaryGarage = true,
-                Identifier = "garage_POUND",
-                OnlyParkCars = true,
-                Blip = true,
             },
         },
         FieldZones = {
@@ -970,7 +944,15 @@ Config.Jobs = {
                 Marker = 27,
                 MinimumGrade = "employee",
             },
-            -- TODO Stock
+            MainStock = {
+                Coord = vector3(-1881.15, 2070.18, 140.03),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 207, g = 169, b = 47 },
+                Name = "Stockage",
+                InventoryName = "job_winemaker_stock", -- TODO add
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
             Cloakroom = {
                 Coord = vector3(-1874.90, 2054.53, 140.09),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -988,17 +970,6 @@ Config.Jobs = {
                         '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":2,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":1,"ears_txd":0,"accessory":0,"tops":118,"decals_txd":0,"shoes":52,"bracelets":-1,"torso_txd":0,"torso":4,"bag":40,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":93,"watches":-1,"hats":-1,"glasses":-1}'),
                     },
                 },
-            },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(-1888.97, 2045.06, 140.87),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 0, g = 255, b = 0 },
-                Marker = 36,
-                Type = "car",
-                SpawnPoint = { Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0 },
-                Blip = true,
             },
         },
         FieldZones = {
@@ -1117,14 +1088,15 @@ Config.Jobs = {
             -- Job garages
             {
                 Name = "jobgarage_winemaker",
-                Coord = vector3(-1905.67, 2058.48, 140.74),
+                Coord = vector3(-1888.97, 2045.06, 140.87),
                 Size = { x = 2.0, y = 2.0, z = 2.0 },
                 Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
                 VehicleType = 0,
                 IsJobGarage = "winemaker",
                 JobNeeded = "winemaker",
-                SpawnPoint = { Coord = vector3(-1905.67, 2058.48, 140.74), Heading = 47.86 },
+                SpawnPoint = { Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0 },
+                Blip = { Name = "Garage", Sprite = 85, Colour = 19 },
             },
             --Player garages
             {
@@ -1134,12 +1106,12 @@ Config.Jobs = {
                 Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
                 VehicleType = 0,
-                IsJobGarage = "winemaker",
                 JobNeeded = "winemaker",
                 SpawnPoint = { Coord = vector3(-1911.01, 2031.90, 140.74), Heading = 344.98 },
+                Blip = { Name = "Garage", Sprite = 85, Colour = 19 },
             },
         }
-    },
+    },    
     tailor = {
         LabelName = "Couturier",
         Blip = { Sprite = 366, Colour = 0 },
@@ -1153,7 +1125,15 @@ Config.Jobs = {
                 Marker = 27,
                 MinimumGrade = "employee",
             },
-            -- TODO stock
+            MainStock = {
+                Coord = vector3(708.73, -963.44, 29.42),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 207, g = 169, b = 47 },
+                Name = "Stockage",
+                InventoryName = "job_tailor_stock", -- TODO add
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
             Cloakroom = {
                 Coord = vector3(708.91, -959.63, 29.42),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1260,8 +1240,34 @@ Config.Jobs = {
                 HelpText = GetString("press_buy"),
                 Marker = 27,
                 Blip = true,
-            },
+            },       
         },
+        Garages = {
+            -- Job garage
+            {
+                Name = "jobgarage_tailor",
+                Coord = vector3(719.12, -989.25, 24.10),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 0,
+                IsJobGarage = "tailor",
+                JobNeeded = "tailor",
+                SpawnPoint = { Coord = vector3(719.12, -989.25, 24.10), Heading = 272.05 },
+            },
+            --Players Garage
+            {
+                Name = "garage_tailor",
+                Coord = vector3(691.05, -965.24, 23.61),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 0,
+                IsJobGarage = "tailor",
+                JobNeeded = "tailor",
+                SpawnPoint = { Coord = vector3(691.05, -965.24, 23.61), Heading = 166.25 },
+            },
+        },    
     },
     cluckin = {
         LabelName = "Cluckin Bell",
@@ -1275,7 +1281,15 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            -- TODO stock
+            MainStock = {
+                Coord = vector3(-513.36, -699.53, 33.17),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 207, g = 169, b = 47 },
+                Name = "Stockage",
+                InventoryName = "job_cluckin_stock", -- TODO add
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
             Cloakroom = {
                 Coord = vector3(-510.19, -700.42, 32.19),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1438,6 +1452,32 @@ Config.Jobs = {
                 HelpText = GetString("press_buy"),
                 Marker = 27,
                 Blip = true,
+            },
+        },
+        Garages = {
+            -- Job garage
+            {
+                Name = "jobgarage_cluckin",
+                Coord = vector3(-465.09, -619.23, 31.17),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 0,
+                IsJobGarage = "tailor",
+                JobNeeded = "tailor",
+                SpawnPoint = { Coord = vector3(-465.09, -619.23, 31.17), Heading = 88.32 },
+            },
+            --Players Garage
+            {
+                Name = "garage_cluckin",
+                Coord = vector3(-480.36, -600.63, 31.17),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 0,
+                IsJobGarage = "tailor",
+                JobNeeded = "tailor",
+                SpawnPoint = { Coord = vector3(-480.36, -600.63, 31.17), Heading = 182.24 },
             },
         },
     },
