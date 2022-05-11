@@ -439,7 +439,7 @@ Config.Jobs = {
                 IsJobGarage = "lspd",
                 JobNeeded = "lspd",
                 SpawnPoint = { Coord = vector3(-786.55, -1437.14, 1.40), Heading = 140.0 },
-                Blip = { Name = "Marina", Sprite = 60, Colour = 3 }
+                Blip = { Name = "Marina", Sprite = 60, Color = 3 }
             },
             -- Player garages
             {
@@ -541,16 +541,6 @@ Config.Jobs = {
                 InventoryName = "job_ems_pharmacy", -- TODO add
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
-            },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(337.34, -579.28, 28.80),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 0, g = 139, b = 90 },
-                Marker = 36,
-                Type = "car",
-                SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340.0 },
             },
             HeliGarage = { -- TODO properly add, this do not work
                 Name = "Héliport",
@@ -1096,7 +1086,7 @@ Config.Jobs = {
                 IsJobGarage = "winemaker",
                 JobNeeded = "winemaker",
                 SpawnPoint = { Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0 },
-                Blip = { Name = "Garage", Sprite = 85, Colour = 19 },
+                Blip = { Name = "Garage", Sprite = 85, Color = 19 },
             },
             --Player garages
             {
@@ -1108,10 +1098,10 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "winemaker",
                 SpawnPoint = { Coord = vector3(-1911.01, 2031.90, 140.74), Heading = 344.98 },
-                Blip = { Name = "Garage", Sprite = 85, Colour = 19 },
+                Blip = { Name = "Garage", Sprite = 85, Color = 19 },
             },
         }
-    },    
+    },
     tailor = {
         LabelName = "Couturier",
         Blip = { Sprite = 366, Colour = 0 },
@@ -1151,17 +1141,6 @@ Config.Jobs = {
                         '{"watches":-1,"watches_txd":0,"bag":87,"leg":1,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":0,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":199,"bag_txd":6,"shoes_txd":2,"decals":0,"torso":0,"hats_txd":0,"shoes":1}'),
                     },
                 },
-            },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(719.11, -989.22, 24.12),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 0, g = 255, b = 0 },
-                Marker = 36,
-                Type = "car",
-                SpawnPoint = { Coord = vector3(719.11, -989.22, 23.12), Heading = 279.0 },
-                Blip = true,
             },
         },
         FieldZones = {
@@ -1240,7 +1219,7 @@ Config.Jobs = {
                 HelpText = GetString("press_buy"),
                 Marker = 27,
                 Blip = true,
-            },       
+            },
         },
         Garages = {
             -- Job garage
@@ -1267,7 +1246,7 @@ Config.Jobs = {
                 JobNeeded = "tailor",
                 SpawnPoint = { Coord = vector3(691.05, -965.24, 23.61), Heading = 166.25 },
             },
-        },    
+        },
     },
     cluckin = {
         LabelName = "Cluckin Bell",
@@ -1308,17 +1287,6 @@ Config.Jobs = {
                     },
                 },
 
-            },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(-465.3, -619.36, 31.17),
-                Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 0, g = 255, b = 0 },
-                Marker = 36,
-                Type = "car",
-                SpawnPoint = { Coord = vector3(-465.3, -619.36, 31.17), Heading = 86.0 },
-                Blip = true,
             },
         },
         FieldZones = {
@@ -2048,15 +2016,15 @@ Config.Jobs = {
                 Identifier = "garage_lost",
                 SpawnPoint = { Coord = vector3(975.37, -140.63, 74.23), Heading = 50.0 },
             },
-            Crate = {
-                Coord = vector3(987.05, -144.41, 73.29),
-                Name = "Crate",
-                HelpText = GetString("press_to_talk"),
-                Action = function()
-                    -- TriggerEvent("ava_lock:dooranim")
-                    -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
-                end,
-            },
+            -- Crate = {
+            --     Coord = vector3(987.05, -144.41, 73.29),
+            --     Name = "Crate",
+            --     HelpText = GetString("press_to_talk"),
+            --     Action = function()
+            --         -- TriggerEvent("ava_lock:dooranim")
+            --         -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
+            --     end,
+            -- },
         },
         ProcessMenuZones = {
             -- clips
