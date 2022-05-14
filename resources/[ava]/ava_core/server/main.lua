@@ -136,7 +136,7 @@ AVA.AddAce("group.superadmin", "command")
 --------------- Auto save ---------------
 -----------------------------------------
 
-AVA.SaveAll = function()
+AVA.SaveEverything = function()
     TriggerEvent("ava_logs:server:log", "Starting save")
     print("^6[AVA_CORE]^0 Starting save at ^3" .. os.date("%H:%M:%S") .. "^0.")
     AVA.Players.SaveAll()
@@ -144,10 +144,11 @@ AVA.SaveAll = function()
     AVA.SaveAllNamedInventories()
     TriggerEvent("ava_core:server:saveAll")
 end
+exports("SaveEverything", AVA.SaveEverything)
 
 if AVAConfig.SaveTimeout then
     local function timeoutSaveAll()
-        AVA.SaveAll()
+        AVA.SaveEverything()
         SetTimeout(AVAConfig.SaveTimeout * 60 * 1000, timeoutSaveAll)
     end
 

@@ -58,7 +58,7 @@ end
 exports("RegisterCommand", AVA.Commands.RegisterCommand)
 
 AVA.Commands.RegisterCommand("saveall", "superadmin", function(source, args, rawCommand)
-    AVA.SaveAll()
+    AVA.SaveEverything()
 end)
 
 ----------------------------------------
