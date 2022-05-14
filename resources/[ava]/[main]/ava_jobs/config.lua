@@ -10,6 +10,7 @@ Config.MaxPickUpIllegal = 70
 Config.JobMenuKey = "F6"
 
 -- TODO declare these in client side and not config
+-- TODO make all JobMenuItem be a command?
 Config.JobMenuElement = {
     PoliceMegaphone = {
         Label = GetString("police_megaphone"),
@@ -477,7 +478,57 @@ Config.Jobs = {
                     Label = GetString("ems_check_injuries"),
                     Desc = GetString("ems_check_injuries_desc"),
                     Action = function(jobName)
-                        -- TODO
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        if not targetId then return end
+
+                        local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:ems:getPlayerData", targetId)
+                        if not playerData then return end
+
+                        local targetPed = GetPlayerPed(localId)
+                        local elements = {
+                            playerData.injured and {
+                                label = GetString('ems_injuries_label',
+                                    playerData.injured > 0 and "#c92e2e" or "#329171",
+                                    playerData.injured > 50
+                                    and GetString('ems_injuries_injured_high')
+                                    or playerData.injured > 30
+                                    and GetString('ems_injuries_injured')
+                                    or playerData.injured > 0
+                                    and GetString('ems_injuries_injured_low')
+                                    or GetString('ems_injuries_healthy')
+                                )
+                            }
+                        }
+
+                        if DoesEntityExist(targetPed) then
+                            local health = GetEntityHealth(targetPed)
+                            local maxHealth = GetEntityMaxHealth(targetPed)
+                            local percentHealth = math.floor((health / maxHealth) * 100)
+                            print(health, maxHealth, percentHealth)
+                            table.insert(elements, {
+                                label = GetString('ems_health_label',
+                                    percentHealth == 100 and "#329171" or "#c92e2e",
+                                    -- percentHealth == 100
+                                    --     and GetString('ems_health_full')
+                                    --     or percentHealth > 50
+                                    --         and GetString('ems_health_high')
+                                    --         or percentHealth > 30
+                                    --             and GetString('ems_health_middle')
+                                    --             or GetString('ems_health_low')
+                                    health .. "/" .. maxHealth
+                                )
+                            })
+                        end
+
+                        RageUI.CloseAll()
+                        RageUI.OpenTempMenu(GetString("info_vehicle"), function(Items)
+                            for i = 1, #elements do
+                                local element = elements[i]
+                                if element then
+                                    Items:AddButton(element.label, element.desc)
+                                end
+                            end
+                        end)
                     end,
                 },
             },

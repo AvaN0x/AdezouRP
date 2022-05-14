@@ -479,6 +479,16 @@ exports.ava_core:RegisterServerCallback("ava_jobs:server:giveWeaponLicense", fun
 end)
 
 
+exports.ava_core:RegisterServerCallback("ava_jobs:server:ems:getPlayerData", function(source, targetId)
+    -- TODO: ace verification?
+    local aTargetPlayer = exports.ava_core:GetPlayer(targetId)
+    if not aTargetPlayer then return end
+
+    return {
+        injured = exports.ava_status:getPlayerStatusPercent(aTargetPlayer, "injured")
+    }
+end)
+
 
 exports.ava_core:RegisterServerCallback("ava_jobs:server:getVehicleInfos", function(source, vehicleNet, plate)
     local src = source
