@@ -14,7 +14,7 @@ AVAConfig.DisableVehicleTransform = false -- 357
 
 AVAConfig.DisableBikeHelmet = true
 
-AVAConfig.ClearMissionrowPD = false
+AVAConfig.ClearMissionrowPD = true
 
 AVAConfig.LockNPCVehicles = true
 AVAConfig.LockPercentage = 0.5
@@ -64,6 +64,6 @@ AVAConfig.AlwaysLockedVehicles = {
     "massacro",
     "seashark",
 }
-AVAConfig.AlwaysUnlockedVehicles = {"bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3"}
+AVAConfig.AlwaysUnlockedVehicles = { "bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3" }
 
 AVAConfig.DisableAirControl = true
