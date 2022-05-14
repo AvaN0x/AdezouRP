@@ -48,7 +48,7 @@ function initStatus(statusArray)
             if aPlayerStatus[status.name] then
                 aPlayerStatus[status.name].value = status.value
             else
-                local cfgStatus<const> = AVAConfig.Status[status.name]
+                local cfgStatus <const> = AVAConfig.Status[status.name]
                 if cfgStatus and cfgStatus.update then
                     aPlayerStatus[status.name] = CreateStatus(status.name, status.value)
                 end
@@ -59,7 +59,7 @@ function initStatus(statusArray)
     for name, cfgStatus in pairs(AVAConfig.Status) do
         if type(aPlayerStatus[name]) ~= "table" then
             local value = cfgStatus.default or 10000
-            table.insert(statusArray, {name = name, value = value})
+            table.insert(statusArray, { name = name, value = value })
             aPlayerStatus[name] = CreateStatus(name, value)
         end
     end
@@ -110,10 +110,12 @@ local function saveStatusWithMaxCooldown()
         Citizen.CreateThread(function()
             Wait(AVAConfig.SaveMinInterval)
             waitingToSave = false
+            -- TODO only send updated data to server, maybe set things as state bags?
             TriggerServerEvent("ava_status:server:update", PlayerStatus)
         end)
     end
 end
+
 Citizen.CreateThread(function()
     while true do
         Wait(AVAConfig.SaveTimeout)
@@ -131,6 +133,7 @@ local function getStatusIndex(name)
         end
     end
 end
+
 RegisterNetEvent("ava_status:client:set", function(name, value)
     local index = getStatusIndex(name)
     if index ~= nil and type(value) == "number" and value >= 0 then
@@ -190,4 +193,3 @@ RegisterNetEvent("ava_status:client:heal", function()
     StopLongAnimatedIfNeeded()
     exports.ava_core:ShowNotification(nil, nil, "ava_core_logo", GetString("healed_by_staff"), nil, nil, "ava_core_logo")
 end)
-
