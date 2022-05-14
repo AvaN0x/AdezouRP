@@ -118,6 +118,7 @@ Config.JobMenuElement = {
     },
 }
 
+-- TODO one file for a job config
 Config.Jobs = {
     -- #region jobs
     lspd = {
@@ -682,7 +683,56 @@ Config.Jobs = {
                     Label = GetString("info_vehicle"),
                     Desc = GetString("info_vehicle_desc"),
                     Action = function(jobName)
-                        -- TODO
+                        local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+                        if vehicle == 0 then return end
+
+                        local plate = GetVehicleNumberPlateText(vehicle)
+                        local engineHealth = math.floor(GetVehicleEngineHealth(vehicle))
+                        local bodyHealth = math.floor(GetVehicleBodyHealth(vehicle))
+                        local dirtLevel = GetVehicleDirtLevel(vehicle)
+
+                        local elements = {
+                            { label = GetString('vehicle_plate', plate or GetString("info_vehicle_not_found")) },
+                            {
+                                label = GetString('info_vehicle_engine_health',
+                                    engineHealth > 950
+                                    and "#329171"
+                                    or engineHealth > 500
+                                    and "#c9712e"
+                                    or "#c92e2e",
+                                    math.floor(engineHealth / 10)
+                                )
+                            },
+                            {
+                                label = GetString('info_vehicle_body_health',
+                                    bodyHealth > 950
+                                    and "#329171"
+                                    or bodyHealth > 500
+                                    and "#c9712e"
+                                    or "#c92e2e",
+                                    math.floor(bodyHealth / 10)
+                                )
+                            },
+                            {
+                                label = GetString('info_vehicle_dirt_level',
+                                    dirtLevel > 10
+                                    and GetString("info_vehicle_dirt_level_above_10")
+                                    or dirtLevel > 5
+                                    and GetString("info_vehicle_dirt_level_above_5")
+                                    or GetString("info_vehicle_dirt_level_above_0")
+                                )
+                            },
+                        }
+
+                        RageUI.CloseAll()
+                        RageUI.OpenTempMenu(GetString("info_vehicle"), function(Items)
+                            for i = 1, #elements do
+                                local element = elements[i]
+                                if element then
+                                    Items:AddButton(element.label, element.desc)
+                                end
+                            end
+                        end)
                     end,
                 },
                 {
@@ -692,7 +742,63 @@ Config.Jobs = {
                         return GetVehiclePedIsIn(playerPed, false) == 0
                     end,
                     Action = function(jobName)
-                        -- TODO
+                        local vehicle = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_vehicle"), 6, {}, { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                        if vehicle == 0 then return end
+
+                        -- Vehicle is already towed
+                        if IsEntityAttachedToAnyVehicle(vehicle) then
+                            local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
+                            local flatbed = GetEntityAttachedTo(vehicle)
+
+                            local offsetLocation = vector3(0.0, -6.5 + vehicleDimMin.y, 0.0)
+                            AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+                            DetachEntity(vehicle)
+                            SetVehicleOnGroundProperly(vehicle)
+
+                            exports.ava_core:ShowNotification(GetString("tow_vehicle_detached_with_success"))
+                        else
+                            local flatbed = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_flatbed"), 10, { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                            if flatbed == 0 then return end
+
+                            -- should never happen
+                            if vehicle == flatbed then return end
+
+                            -- flatbed can be a flatbed or slamtruck
+                            local isSlamTruck = GetEntityModel(flatbed) == GetHashKey('slamtruck')
+                            local towOffset = GetOffsetFromEntityInWorldCoords(flatbed, 0.0, -2.2, 0.4)
+                            local closestVehicleOnTopOfFlatbed = GetClosestVehicle(towOffset.x, towOffset.y, towOffset.z + 1.0, 4.0, 0, 71)
+                            local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
+
+                            if GetEntityModel(closestVehicleOnTopOfFlatbed) ~= GetEntityModel(flatbed) then
+                                exports.ava_core:ShowNotification(GetString("tow_vehicle_flatbed_already_towed"))
+                                return
+                            end
+                            if (isSlamTruck and (vehicleDimMin.y < -3.5 or vehicleDimMax.y > 3.5))
+                                or (vehicleDimMin.y < -5 or vehicleDimMax.y > 5)
+                            then
+                                -- we prevent big vehicles that does not fit on slamtruck
+                                exports.ava_core:ShowNotification(GetString("tow_vehicle_too_long"))
+                                return
+                            end
+
+                            local boneIndex = GetEntityBoneIndexByName(flatbed, "bodyshell")
+                            -- we attach the vehicle on the flatbed
+                            local offsetLocation = vector3(0, -2.2, 0.4 - vehicleDimMin.z)
+                            AttachEntityToEntity(vehicle, flatbed, boneIndex, offsetLocation, 0, 0, 0, false, false, false, false, 20, true)
+
+                            -- We drop the vehicle for 500ms to get a valid rotation
+                            DetachEntity(vehicle)
+                            Citizen.Wait(500)
+                            local newPos = GetEntityCoords(vehicle, true)
+                            local vehRotation = GetEntityRotation(vehicle)
+                            local flatbedRotation = GetEntityRotation(flatbed)
+
+                            -- we attach the vehicle on the flatbed
+                            local attachPos = GetOffsetFromEntityGivenWorldCoords(flatbed, newPos.x, newPos.y, newPos.z)
+                            AttachEntityToEntity(vehicle, flatbed, boneIndex, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 20, true)
+
+                            exports.ava_core:ShowNotification(GetString("tow_vehicle_attached_with_success"))
+                        end
                     end,
                 },
             },
