@@ -27,7 +27,7 @@ AVAConfig.Heists.vangelico = {
     -- end,
     Stages = {
         [0] = {
-            function = function(playerPed)
+            Function = function(playerPed)
                 if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
                     if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
                         TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", { TriggerHeist = true, TriggerAlarm = true, Stage = 1 })
