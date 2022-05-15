@@ -459,6 +459,13 @@ AVA.Players.GetPlayer = function(src)
 end
 exports("GetPlayer", AVA.Players.GetPlayer)
 
+---Get players
+---@return table<string, aPlayer>
+AVA.Players.GetPlayers = function(src)
+    return AVA.Players.List
+end
+exports("GetPlayers", AVA.Players.GetPlayers)
+
 ---Get player from its citizen id
 ---@param src string
 ---@return aPlayer
