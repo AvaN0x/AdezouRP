@@ -79,7 +79,7 @@
         ]
     },
     {
-        "question": "Vous vous rendez dans les quartiers luxueux, quelle est la vitesse maximum autorisée ?",
+        "question": "Vous vous rendez dans les quartiers résidentiels, quelle est la vitesse maximum autorisée ?",
         "answers": [
             {
                 "label": "30",
@@ -137,7 +137,7 @@
         ]
     },
     {
-        "question": "Que pouvez-vous faire lors du dépassement d'un autre automobiliste ?",
+        "question": "Que pouvez-vous faire lorsque vous effectuez un dépassement ?",
         "answers": [
             {
                 "label": "Le suivre de près pour le doubler plus vite"

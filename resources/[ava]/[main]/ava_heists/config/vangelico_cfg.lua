@@ -27,10 +27,10 @@ AVAConfig.Heists.vangelico = {
     -- end,
     Stages = {
         [0] = {
-            Function = function(playerPed)
+            function = function(playerPed)
                 if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
                     if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
-                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", {TriggerHeist = true, TriggerAlarm = true, Stage = 1})
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", { TriggerHeist = true, TriggerAlarm = true, Stage = 1 })
                     else
                         LastActionTimer = GetGameTimer()
                         exports.ava_core:ShowNotification(GetString("not_enough_cops"))
@@ -218,11 +218,11 @@ AVAConfig.Heists.vangelico = {
                             "bracelet_emerald",
                             "bracelet_ruby",
                         },
-                        ItemCount = {Min = 3, Max = 6},
+                        ItemCount = { Min = 3, Max = 6 },
                         -- ItemCount = 1,
                     },
-                    Size = {x = 0.1, y = 0.1, z = 0.1},
-                    Color = {r = 255, g = 255, b = 255},
+                    Size = { x = 0.1, y = 0.1, z = 0.1 },
+                    Color = { r = 255, g = 255, b = 255 },
                     MarkerRotation = vector3(180.0, 0.0, 0.0),
                     BobUpAndDown = true,
                     Distance = 1.2,
@@ -236,16 +236,16 @@ AVAConfig.Heists.vangelico = {
     Interactables = {
         {
             Coord = vector3(-631.59, -230.01, 37.08),
-            Size = {x = 1.0, y = 1.0, z = 1.0},
-            Color = {r = 255, g = 255, b = 255},
+            Size = { x = 1.0, y = 1.0, z = 1.0 },
+            Color = { r = 255, g = 255, b = 255 },
             Distance = 1.2,
             Name = GetString("alarm"),
             HelpText = GetString("press_stop_alarm"),
             Marker = 27,
             Action = function(playerPed)
-                TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", {StopAlarm = true})
+                TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", { StopAlarm = true })
             end,
-            JobNeeded = {"lspd"},
+            JobNeeded = { "lspd" },
         },
     },
     -- Reset = function()
