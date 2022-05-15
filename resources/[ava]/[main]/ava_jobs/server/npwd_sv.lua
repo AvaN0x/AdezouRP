@@ -65,3 +65,16 @@ sendSourceMessageToJob = function(source, jobName, message, sourcePhoneNumber)
     end
 end
 exports("sendSourceMessageToJob", sendSourceMessageToJob)
+
+---Get job phone number
+---@param jobName string
+---@return string|nil
+local function getJobPhoneNumber(jobName)
+    local job = Config.Jobs[jobName]
+    if job and job.PhoneNumber then
+        return job.PhoneNumber
+    end
+    return nil
+end
+
+exports("getJobPhoneNumber", getJobPhoneNumber)
