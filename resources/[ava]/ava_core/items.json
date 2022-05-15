@@ -177,12 +177,12 @@
         "description": "Allez frotte!",
         "noIcon": true
     },
-    "handcuff": {
-        "label": "Paire de menotte",
+    "handcuffs": {
+        "label": "Paire de menottes",
         "weight": 500,
         "limit": 4,
         "closeInv": true,
-        "description": "Elles n'ont pas de fourure rose!",
+        "description": "Elles n'ont pas de fourrure rose!",
         "noIcon": true
     },
     "ethylotest": {
