@@ -19,7 +19,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
     if not DoesEntityExist(vehicle) then return false end
 
     -- If there is no lscustomName, then only a player that could have executed lscustoms is allowed to apply the custom
-    if not lscustomName then
+    if not lscustomName and not jobToPay then
         return IsPlayerAceAllowed(src, "command.lscustoms")
     end
 
