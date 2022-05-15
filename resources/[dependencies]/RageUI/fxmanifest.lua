@@ -17,6 +17,5 @@ client_scripts {
     "src/elements/*.lua",
     "src/items/*.lua",
     "src/windows/*.lua",
-    "example.lua",
+    -- "example.lua",
 }
-
