@@ -1693,7 +1693,7 @@ Config.Jobs = {
         Blip = { Sprite = 121, Colour = 0 },
         Zones = {
             ManagerMenu = {
-                Coord = vector3(132.14, -1290.15, 28.29),
+                Coord = vector3(95.80, -1294.25, 28.28),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Actions patron",

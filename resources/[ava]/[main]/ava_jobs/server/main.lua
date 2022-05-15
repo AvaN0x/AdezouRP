@@ -524,8 +524,7 @@ end)
 ----------------
 
 -- #region WINEMAKER
-RegisterNetEvent("ava_jobs:UseBox")
-AddEventHandler("ava_jobs:UseBox", function(source, itembox, item)
+RegisterNetEvent("ava_jobs:UseBox", function(source, itembox, item)
     local aPlayer = exports.ava_core:GetPlayer(source)
     local inventory = aPlayer.getInventory()
     if not inventory.canAddItem(item, 6) or not inventory.canAddItem("woodenbox", 1) then
