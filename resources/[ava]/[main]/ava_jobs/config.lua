@@ -217,7 +217,7 @@ Config.Jobs = {
                     Label = GetString("manage_weapon_license"),
                     Desc = GetString("manage_weapon_license_desc"),
                     Action = function(jobName)
-                        local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                        local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
                         if not targetId then return end
 
                         local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:getPlayerData", targetId) or {}
