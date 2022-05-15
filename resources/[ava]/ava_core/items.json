@@ -46,6 +46,13 @@
         "weight": 50,
         "noIcon": true
     },
+    "orange": {
+        "label": "Orange",
+        "type": "food",
+        "description": "C'est un fruit.",
+        "weight": 50,
+        "noIcon": true
+    },
     "waterbottle": {
         "label": "Bouteille d'eau",
         "type": "liquid",
@@ -207,6 +214,12 @@
         "closeInv": true,
         "noIcon": true
     },
+    "bandage": {
+        "label": "Bandage",
+        "weight": 150,
+        "closeInv": true,
+        "noIcon": true
+    },
     "medikit": {
         "label": "Trousse médicale",
         "weight": 150,
@@ -215,7 +228,7 @@
         "description": "Pour les gros bobos.",
         "noIcon": true
     },
-    "defibrilator": {
+    "defibrillator": {
         "label": "Défibrilateur",
         "weight": 1000,
         "limit": 0,
@@ -228,12 +241,6 @@
         "type": "medicine",
         "weight": 10,
         "description": "Sous prescription du médecin",
-        "noIcon": true
-    },
-    "bandage": {
-        "label": "Bandage",
-        "weight": 150,
-        "closeInv": true,
         "noIcon": true
     },
     "weed": {
