@@ -23,11 +23,10 @@ Config.Stores = {
         },
         Items = {
             { name = "bread", price = 13 },
-            { name = "water", price = 12 },
+            { name = "waterbottle", price = 12 },
             { name = "donut", price = 4 },
             { name = "dopebag", price = 5 },
             { name = "phone", price = 500 },
-            { name = "sim", price = 50 },
             { name = "radio", price = 200 },
             { name = "weapon_flashlight", price = 700 },
         },
@@ -51,11 +50,10 @@ Config.Stores = {
         },
         Items = {
             { name = "bread", price = 13 },
-            { name = "water", price = 12 },
+            { name = "waterbottle", price = 12 },
             { name = "donut", price = 4 },
             { name = "dopebag", price = 5 },
             { name = "phone", price = 500 },
-            { name = "sim", price = 50 },
             { name = "radio", price = 200 },
             { name = "weapon_flashlight", price = 700 },
         },
@@ -78,11 +76,10 @@ Config.Stores = {
         },
         Items = {
             { name = "bread", price = 13 },
-            { name = "water", price = 12 },
+            { name = "waterbottle", price = 12 },
             { name = "donut", price = 4 },
             { name = "dopebag", price = 5 },
             { name = "phone", price = 500 },
-            { name = "sim", price = 50 },
             { name = "radio", price = 200 },
             { name = "weapon_flashlight", price = 700 },
         },
@@ -752,7 +749,7 @@ Config.Stores = {
         Color = { r = 255, g = 187, b = 51 },
         Distance = 1.5,
         Marker = 27,
-        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+        Blip = { Sprite = 225, Color = 66, Scale = 0.6 },
         Rental = {
             Vehicles = {
                 { name = "faggio2", price = 499 }
