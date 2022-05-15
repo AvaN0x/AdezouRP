@@ -124,6 +124,7 @@ Config.Jobs = {
     lspd = {
         LabelName = "LSPD",
         ServiceCounter = true,
+        PhoneNumber = "911",
         Blip = { Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3 },
         JobMenu = {
             Items = {
@@ -472,6 +473,7 @@ Config.Jobs = {
     ems = {
         LabelName = "EMS",
         ServiceCounter = true,
+        PhoneNumber = "912",
         Blip = { Name = "~b~Hopital", Coord = vector3(298.48, -584.48, 43.28), Sprite = 61, Colour = 26 },
         JobMenu = {
             Items = {
@@ -676,6 +678,7 @@ Config.Jobs = {
     mechanic = {
         LabelName = "Mécano",
         ServiceCounter = true,
+        PhoneNumber = "555-0153",
         Blip = { Name = "~y~Garage Mécano", Coord = vector3(-1145.49, -1990.55, 13.16), Sprite = 446, Colour = 5 },
         JobMenu = {
             Items = {
@@ -1010,6 +1013,7 @@ Config.Jobs = {
     government = {
         LabelName = "Gouvernement",
         ServiceCounter = true,
+        PhoneNumber = "555-1508",
         Blip = { Name = "Gouvernement", Coord = vector3(-545.17, -204.17, 37.24), Sprite = 419, Colour = 0 },
         Zones = {
             ManagerMenu = {

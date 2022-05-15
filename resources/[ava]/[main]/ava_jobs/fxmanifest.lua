@@ -44,6 +44,7 @@ server_scripts {
     "server/manager_menu_sv.lua",
 
     "server/government_sv.lua",
+    "server/npwd_sv.lua",
 }
 
 dependencies { "RageUI", "ava_core", "ava_mp_peds", "ava_garages" }
