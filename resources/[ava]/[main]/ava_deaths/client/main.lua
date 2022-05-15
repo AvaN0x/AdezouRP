@@ -42,8 +42,8 @@ local function getClosestHospital()
     local closest, closestDistance = nil, nil
 
     for i = 1, #AVAConfig.RespawnPoints do
-        local hospital<const> = AVAConfig.RespawnPoints[i]
-        local distance<const> = #(coords - hospital.Coord)
+        local hospital <const> = AVAConfig.RespawnPoints[i]
+        local distance <const> = #(coords - hospital.Coord)
         if not closestDistance or distance < closestDistance then
             closestDistance = distance
             closest = hospital
@@ -68,16 +68,24 @@ function onDeath()
 
     local secondsLeft = AVAConfig.DeadScreenMaxDuration
     local canAskForRespawn = false
+    local hasCalledEMS = false
+
     Citizen.CreateThread(function()
         while secondsLeft > 0 do
             Wait(1000)
             secondsLeft = secondsLeft - 1
             if not canAskForRespawn and secondsLeft <= AVAConfig.AskRespawnDuration then
                 canAskForRespawn = true
-                instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
-                    { control = "~INPUT_PICKUP~", label = GetString("button_respawn") },
-                    { control = "~INPUT_DETONATE~", label = GetString("button_call_ems") },
-                })
+                if hasCalledEMS then
+                    instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
+                        { control = "~INPUT_PICKUP~", label = GetString("button_respawn") }
+                    })
+                else
+                    instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
+                        { control = "~INPUT_PICKUP~", label = GetString("button_respawn") },
+                        { control = "~INPUT_DETONATE~", label = GetString("button_call_ems") },
+                    })
+                end
             end
         end
     end)
@@ -102,7 +110,9 @@ function onDeath()
         while secondsLeft > 0 and IsDead do
             Wait(0)
             DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
-            DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+            if instructionalButtons then
+                DrawScaleformMovieFullscreen(instructionalButtons, 255, 255, 255, 255)
+            end
 
             SetTextColour(255, 255, 255, 255)
             SetTextFont(0)
@@ -129,8 +139,17 @@ function onDeath()
                     GetString("confirm_respawn_secondline")) then
                 RevivePlayer(true)
                 break
-            elseif IsDisabledControlJustPressed(0, 47) then
-                -- TODO call and set a timer for next call
+            elseif IsDisabledControlJustPressed(0, 47) and not hasCalledEMS then
+                hasCalledEMS = true
+
+                if canAskForRespawn then
+                    instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
+                        { control = "~INPUT_PICKUP~", label = GetString("button_respawn") }
+                    })
+                else
+                    instructionalButtons = nil
+                end
+                TriggerServerEvent("ava_deaths:server:callEMS")
             end
         end
         SetScaleformMovieAsNoLongerNeeded(scaleform)

@@ -8,6 +8,7 @@
     "dead_time_left_before_ask_for_respawn": "Temps restant %02d:%02d~n~Temps restant avant Unité X %02d:%02d",
     "button_respawn": "Appeler l'unité X",
     "button_call_ems": "Appeler les EMS",
+    "call_ems_message": "Besoin d'une réanimation au plus vite!",
     "confirm_respawn_title": "~r~Unité X~s~",
     "confirm_respawn_firstline": "Voulez-vous vraiment appeler l'unité X ?",
     "confirm_respawn_secondline": "Vous serez transféré dans l'hopital le plus proche.",
