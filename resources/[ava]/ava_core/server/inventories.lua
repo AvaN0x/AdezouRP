@@ -95,40 +95,32 @@ end)
 
 
 RegisterNetEvent("ava_core:server:dropItem", function(coords, itemName, count)
-    -- Event is canceled in case of failure
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
+    if not aPlayer then return end
 
-    if aPlayer then
-        local inventory = aPlayer.getInventory()
-        if count and count > 0 and inventory.canRemoveItem(itemName, count) then
-            local playerPed = GetPlayerPed(src)
-            if playerPed then
-                local playerCoords = GetEntityCoords(playerPed)
-                -- Player should not send coords that are too far away
-                if type(coords) == "vector3" and #(coords - playerCoords) < 3.0 then
-                    local playerHeading = GetEntityHeading(playerPed)
-                    local propCoords = vector4(coords.x, coords.y, coords.z, playerHeading)
-                    AVA.CreatePickup(propCoords, itemName, count)
-                    inventory.removeItem(itemName, count)
-                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "create_pickup", "item:" .. itemName, "count:" .. count })
-                    return -- Return so the event is not canceled
-                end
+    local inventory = aPlayer.getInventory()
+    if count and count > 0 and inventory.canRemoveItem(itemName, count) then
+        local playerPed = GetPlayerPed(src)
+        if playerPed then
+            local playerCoords = GetEntityCoords(playerPed)
+            -- Player should not send coords that are too far away
+            if type(coords) == "vector3" and #(coords - playerCoords) < 3.0 then
+                local playerHeading = GetEntityHeading(playerPed)
+                local propCoords = vector4(coords.x, coords.y, coords.z, playerHeading)
+                AVA.CreatePickup(propCoords, itemName, count)
+                inventory.removeItem(itemName, count)
+                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "create_pickup", "item:" .. itemName, "count:" .. count })
             end
-        else
-            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("inventory_drop_not_enough_items"))
         end
+    else
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("inventory_drop_not_enough_items"))
     end
-    CancelEvent()
 end)
 
-RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
-    -- Event is canceled in case of failure
+AVA.RegisterServerCallback("ava_core:server:giveItem", function(source, targetId, itemName, count)
     local src = source
-    if src == targetId then
-        CancelEvent()
-        return
-    end
+    if src == targetId then return end
     local aPlayer = AVA.Players.GetPlayer(src)
     local aTarget = AVA.Players.GetPlayer(targetId)
 
@@ -140,7 +132,7 @@ RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
                 playerInventory.removeItem(itemName, count)
                 targetInventory.addItem(itemName, count)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "give_item_to", "citizenid:" .. aTarget.citizenId, "item:" .. itemName, "count:" .. count })
-                return -- Return so the event is not canceled
+                return true
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("target_not_enough_place"))
                 TriggerClientEvent("ava_core:client:ShowNotification", targetId, GetString("not_enough_place"))
@@ -149,16 +141,11 @@ RegisterNetEvent("ava_core:server:giveItem", function(targetId, itemName, count)
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("invalid_quantity"))
         end
     end
-    CancelEvent()
 end)
 
-RegisterNetEvent("ava_core:server:takePlayerItem", function(targetId, itemName, count)
-    -- Event is canceled in case of failure
+AVA.RegisterServerCallback("ava_core:server:takePlayerItem", function(source, targetId, itemName, count)
     local src = source
-    if src == targetId then
-        CancelEvent()
-        return
-    end
+    if src == targetId then return end
     local aPlayer = AVA.Players.GetPlayer(src)
     local aTarget = AVA.Players.GetPlayer(targetId)
 
@@ -170,7 +157,7 @@ RegisterNetEvent("ava_core:server:takePlayerItem", function(targetId, itemName, 
                 targetInventory.removeItem(itemName, count)
                 playerInventory.addItem(itemName, count)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "take_item_from", "citizenid:" .. aTarget.citizenId, "item:" .. itemName, "count:" .. count })
-                return -- Return so the event is not canceled
+                return true
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("not_enough_place"))
             end
@@ -178,7 +165,6 @@ RegisterNetEvent("ava_core:server:takePlayerItem", function(targetId, itemName, 
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("invalid_quantity"))
         end
     end
-    CancelEvent()
 end)
 --#endregion player inventory
 
@@ -271,17 +257,14 @@ AVA.RegisterServerCallback("ava_core:server:getVehicleTrunk", function(source, v
     return invType, invName, AVA.GetNamedInventoryItems(invType, invName, trunkSize)
 end)
 
-RegisterNetEvent("ava_core:server:takeInventoryItem", function(invType, invName, itemName, quantity)
-    -- Event is canceled in case of failure
+AVA.RegisterServerCallback("ava_core:server:takeInventoryItem", function(source, invType, invName, itemName, quantity)
     local src = source
 
     invType = tostring(invType)
-    if not NamedInventories[invType] then CancelEvent() return
-    end
+    if not NamedInventories[invType] then return end
 
     local namedInventory = NamedInventories[invType][invName]
-    if not namedInventory then CancelEvent() return
-    end
+    if not namedInventory then return end
 
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
@@ -291,7 +274,7 @@ RegisterNetEvent("ava_core:server:takeInventoryItem", function(invType, invName,
                 namedInventory.removeItem(itemName, quantity)
                 playerInventory.addItem(itemName, quantity)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "take_item_from", "invType:" .. invType, "invName:" .. invName, "item:" .. itemName, "quantity:" .. quantity })
-                return -- Return so the event is not canceled
+                return true
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("not_enough_place"))
             end
@@ -299,18 +282,16 @@ RegisterNetEvent("ava_core:server:takeInventoryItem", function(invType, invName,
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("invalid_quantity"))
         end
     end
-    CancelEvent()
 end)
 
-RegisterNetEvent("ava_core:server:putInventoryItem", function(invType, invName, itemName, quantity)
-    -- Event is canceled in case of failure
+AVA.RegisterServerCallback("ava_core:server:putInventoryItem", function(source, invType, invName, itemName, quantity)
     local src = source
 
     invType = tostring(invType)
-    if not NamedInventories[invType] then CancelEvent() return end
+    if not NamedInventories[invType] then return end
 
     local namedInventory = NamedInventories[invType][invName]
-    if not namedInventory then CancelEvent() return end
+    if not namedInventory then return end
 
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
@@ -320,7 +301,7 @@ RegisterNetEvent("ava_core:server:putInventoryItem", function(invType, invName, 
                 playerInventory.removeItem(itemName, quantity)
                 namedInventory.addItem(itemName, quantity)
                 TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "put_item_into", "invType:" .. invType, "invName:" .. invName, "item:" .. itemName, "quantity:" .. quantity })
-                return -- Return so the event is not canceled
+                return true
             else
                 TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("named_inventory_not_enough_place", namedInventory.label))
             end
@@ -328,7 +309,6 @@ RegisterNetEvent("ava_core:server:putInventoryItem", function(invType, invName, 
             TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("invalid_quantity"))
         end
     end
-    CancelEvent()
 end)
 
 AVA.SaveAllNamedInventories = function()
