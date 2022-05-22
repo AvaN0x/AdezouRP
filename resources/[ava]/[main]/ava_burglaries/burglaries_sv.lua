@@ -2,24 +2,22 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local houseInfos = {}
+local housesInfos = {}
 
 RegisterNetEvent("ava_burglaries:server:updateState", function(houseID, state)
-    if not AVAConfig.Houses[houseID] then
-        return
-    end
-    houseInfos[houseID] = state
+    if not AVAConfig.Houses[houseID] then return end
+
+    housesInfos[houseID] = state
     TriggerClientEvent("ava_burglaries:client:setState", -1, houseID, state)
 end)
 
 exports.ava_core:RegisterServerCallback("ava_burglaries:server:getHousesInfo", function(source)
-    return houseInfos
+    return housesInfos
 end)
 
 exports.ava_core:RegisterServerCallback("ava_burglaries:server:searchFurniture", function(source, houseID)
-    if not AVAConfig.Houses[houseID] then
-        return false
-    end
+    if not AVAConfig.Houses[houseID] then return false end
+
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     local inventory = aPlayer.getInventory()
@@ -35,21 +33,30 @@ exports.ava_core:RegisterServerCallback("ava_burglaries:server:searchFurniture",
 end)
 
 RegisterNetEvent("ava_burglaries:server:enterHouse", function(houseID)
-    if not AVAConfig.Houses[houseID] then
-        return
-    end
+    if not AVAConfig.Houses[houseID] then return end
+
     exports.ava_core:MovePlayerToNamedRB(source, "burglary_" .. houseID)
-    houseInfos[houseID] = 1
+    housesInfos[houseID] = 1
     TriggerClientEvent("ava_burglaries:client:setState", -1, houseID, 1)
 
     Wait(30 * 60 * 1000)
-    houseInfos[houseID] = 0
+    housesInfos[houseID] = 0
     TriggerClientEvent("ava_burglaries:client:setState", -1, houseID, 0)
 end)
 
 RegisterNetEvent("ava_burglaries:server:leaveHouse", function(houseID)
-    if not AVAConfig.Houses[houseID] then
-        return
-    end
+    if not AVAConfig.Houses[houseID] then return end
     exports.ava_core:MovePlayerToRB(source, 0)
+end)
+
+RegisterNetEvent("ava_burglaries:server:callCops", function(houseID)
+    -- Check if house is valid
+    if not AVAConfig.Houses[houseID] then return end
+    -- Check if house is getting robbed
+    if housesInfos[houseID] ~= 1 then return end
+
+    exports.ava_jobs:sendMessageToJob("lspd", {
+        message = GetString("burglary_in_this_house"),
+        location = AVAConfig.Houses[houseID].coord.xyz
+    })
 end)

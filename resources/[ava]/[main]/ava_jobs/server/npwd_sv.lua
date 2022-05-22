@@ -25,20 +25,22 @@ Citizen.CreateThread(function()
 end)
 
 
+---@class sendMessageToJobData
+---@field message string
+---@field sourcePhoneNumber string
+---@field location? vector3
+
 ---Send a message to every players concerned by a job
----@param source string
 ---@param jobName string
----@param message string
----@param sourcePhoneNumber? string|nil
-sendSourceMessageToJob = function(source, jobName, message, sourcePhoneNumber)
+---@param data sendMessageToJobData
+sendMessageToJob = function(jobName, data)
     local job = Config.Jobs[jobName]
-    if job and job.PhoneNumber then
-        local playerCoords = GetEntityCoords(GetPlayerPed(source))
+    if data and job and job.PhoneNumber then
         local msg = nil
-        if sourcePhoneNumber then
-            msg = ("%s - %s:\n\n%s"):format(job.LabelName, sourcePhoneNumber, message)
+        if data.sourcePhoneNumber then
+            msg = ("%s - %s:\n\n%s"):format(job.LabelName, data.sourcePhoneNumber, data.message)
         else
-            msg = ("%s:\n%s"):format(job.LabelName, message)
+            msg = ("%s:\n%s"):format(job.LabelName, data.message)
         end
 
         for k, src in pairs(GetPlayers()) do
@@ -53,9 +55,9 @@ sendSourceMessageToJob = function(source, jobName, message, sourcePhoneNumber)
                         senderNumber = job.PhoneNumber,
                         targetNumber = aPlayer.phoneNumber,
                         message = msg,
-                        embed = {
+                        embed = data.location and {
                             type = "location",
-                            coords = { playerCoords.x, playerCoords.y, playerCoords.z },
+                            coords = { data.location.x, data.location.y, data.location.z },
                             phoneNumber = job.PhoneNumber,
                         }
                     })
@@ -63,6 +65,20 @@ sendSourceMessageToJob = function(source, jobName, message, sourcePhoneNumber)
             end
         end
     end
+end
+exports("sendMessageToJob", sendMessageToJob)
+
+---Send a message to every players concerned by a job
+---@param source string
+---@param jobName string
+---@param message string
+---@param sourcePhoneNumber? string|nil
+sendSourceMessageToJob = function(source, jobName, message, sourcePhoneNumber)
+    sendMessageToJob(jobName, {
+        message = message,
+        sourcePhoneNumber = sourcePhoneNumber,
+        location = GetEntityCoords(GetPlayerPed(source))
+    })
 end
 exports("sendSourceMessageToJob", sendSourceMessageToJob)
 

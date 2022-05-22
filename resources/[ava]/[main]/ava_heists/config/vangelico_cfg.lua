@@ -17,8 +17,10 @@ AVAConfig.Heists.vangelico = {
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", true)
     end,
     ServerTriggerAlarm = function()
-        -- TODO phonealert
-        -- TriggerEvent("esx_phone:sendEmergency", "lspd", GetString("vangelico_alarm_notif"), true, vector3(-631.88, -237.82, 38.06))
+        exports.ava_jobs:sendMessageToJob("lspd", {
+            message = GetString("vangelico_alarm_notif"),
+            location = vector3(-631.88, -237.82, 38.06)
+        })
     end,
     StopAlarm = function()
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)

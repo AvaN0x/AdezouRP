@@ -9,5 +9,6 @@
     "searching": "Rercherche en cours",
     "found_in_furniture": "Tu as trouvé un objet dans ce meuble",
     "found_nothing_in_furniture": "Tu n'as rien trouvé dans ce meuble",
-    "cant_carry": "Vous n'avez pas assez de place dans vos poches"
+    "cant_carry": "Vous n'avez pas assez de place dans vos poches",
+    "burglary_in_this_house": "Un cambriolage est suspecté dans cette maison."
 }

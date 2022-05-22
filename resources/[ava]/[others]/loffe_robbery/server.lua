@@ -50,6 +50,14 @@ exports.ava_core:RegisterServerCallback("loffe_robbery:canRob", function(source,
         elseif not Config.Shops[store].robbed and not deadPeds[store] then
             Config.Shops[store].robbed = true
             exports.ava_core:SendWebhookMessage("avan0x_wh_dev", "Le braquage de superettes peut se lancer")
+            Citizen.CreateThread(function()
+                -- Phone alert
+                Wait(2000)
+                exports.ava_jobs:sendMessageToJob("lspd", {
+                    message = "Braquage de superette en cours !",
+                    location = Config.Shops[store].coords.xyz
+                })
+            end)
 
             return true
         end

@@ -118,20 +118,20 @@ AVAConfig.Garages = {
     --     SpawnPoint = { Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0 },
     --     -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
     -- },
-    {
-        -- TODO Add this with the export "addGarage" in ava_jobs
-        Name = "garage_lost",
-        Coord = vector3(971.55, -126.71, 74.32),
-        Size = { x = 2.0, y = 2.0, z = 2.0 },
-        Color = { r = 255, g = 255, b = 255 },
-        Marker = 36,
-        Blip = { Sprite = 357, Color = 0 },
-        VehicleType = 0,
-        IsCommonGarage = true,
-        JobNeeded = "biker_lost",
-        SpawnPoint = { Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0 },
-        -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
-    },
+    -- {
+    --     -- TODO Add this with the export "addGarage" in ava_jobs
+    --     Name = "garage_lost",
+    --     Coord = vector3(971.55, -126.71, 74.32),
+    --     Size = { x = 2.0, y = 2.0, z = 2.0 },
+    --     Color = { r = 255, g = 255, b = 255 },
+    --     Marker = 36,
+    --     Blip = { Sprite = 357, Color = 0 },
+    --     VehicleType = 0,
+    --     IsCommonGarage = true,
+    --     JobNeeded = "biker_lost",
+    --     SpawnPoint = { Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0 },
+    --     -- DisablePark = true, -- Used when the player as a vehicle in a garage that he has lost access
+    -- },
 
     -- boats
     {

@@ -109,7 +109,7 @@ AddEventHandler("loffe_robbery:rob", function(i)
                 end
                 SetEntityHeading(bag, Config.Shops[i].heading)
                 ApplyForceToEntity(bag, 3, vector3(0.0, 50.0, 0.0), 0.0, 0.0, 0.0, 0, true, true, false, false, true)
-                table.insert(objects, {bank = i, object = bag})
+                table.insert(objects, { bank = i, object = bag })
                 Citizen.CreateThread(function()
                     while true do
                         Wait(5)
@@ -217,13 +217,6 @@ Citizen.CreateThread(function()
                         elseif not robbing then
                             local canRob = exports.ava_core:TriggerServerCallback("loffe_robbery:canRob", i)
                             if canRob == true then
-                                Citizen.CreateThread(function()
-                                    Wait(2000)
-                                    -- TODO phone alert
-                                    -- TriggerServerEvent("esx_phone:sendEmergency", "lspd", "Braquage de superette en cours !", true,
-                                    --     {["x"] = Config.Shops[i].coords.x, ["y"] = Config.Shops[i].coords.y, ["z"] = Config.Shops[i].coords.z})
-                                end)
-
                                 robbing = true
                                 Citizen.CreateThread(function()
                                     while robbing do

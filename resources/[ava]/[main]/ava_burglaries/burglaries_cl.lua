@@ -65,13 +65,17 @@ Citizen.CreateThread(function()
         local wait = 500
         if thisHouse and not isInside then
             wait = 0
+
+            local text = nil
             if thisHouse.state == 0 then
-                DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, GetString("house_weak_door"), 0.3)
+                text = GetString("house_weak_door")
             elseif thisHouse.state == 1 then
-                DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, GetString("house_user_inside_door"), 0.3)
+                text = GetString("house_user_inside_door")
             else
-                DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, GetString("house_burglarized_door"), 0.3)
+                text = GetString("house_burglarized_door")
             end
+
+            DrawText3D(thisHouse.coord.x, thisHouse.coord.y, thisHouse.coord.z, text, 0.3)
         end
         Wait(wait)
     end
@@ -84,7 +88,7 @@ RegisterNetEvent("ava_items:client:useLockpick", function()
 
     local playerPed = PlayerPedId()
     TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
-    local minigameSuccess<const> = exports.ava_lockpicking:StartMinigame()
+    local minigameSuccess <const> = exports.ava_lockpicking:StartMinigame()
     ClearPedTasksImmediately(playerPed)
     TriggerServerEvent("ava_items:server:usedLockpick", minigameSuccess)
 
@@ -175,10 +179,9 @@ function TryCallCops()
     if random <= 65 then
         Citizen.CreateThread(function()
             Wait(math.random(18000, 23000))
-            if isInside then -- only call the cops, if the user is still in the house
-                -- TODO phone call
-                -- TriggerServerEvent("esx_phone:sendEmergency", "lspd", "Un cambriolage est suspecté dans cette maison.", true,
-                --     {["x"] = thisHouse.coord.x, ["y"] = thisHouse.coord.y, ["z"] = thisHouse.coord.z})
+            -- only call the cops, if the user is still in the house
+            if isInside then
+                TriggerServerEvent("ava_burglaries:server:callCops", thisHouseID)
             end
         end)
     end
@@ -214,8 +217,8 @@ function DrawText3D(x, y, z, text, size)
         SetTextCentre(1)
         SetTextOutline()
 
-        EndTextCommandSetBlipName(text)
-        DrawText(_x, _y)
+        AddTextComponentSubstringPlayerName(text)
+        EndTextCommandDisplayText(_x, _y)
     end
 end
 
