@@ -309,72 +309,72 @@ Config.Jobs = {
                     {
                         Label = "Cadet manches courtes",
                         Male = json.decode(
-                        '{"leg_txd":0,"watches_txd":0,"bracelets":-1,"undershirt":15,"accessory":0,"tops":102,"hats_txd":0,"accessory_txd":0,"leg":59,"glasses_txd":0,"shoes_txd":0,"shoes":25,"hats":-1,"mask":0,"mask_txd":0,"tops_txd":0,"torso":19,"bag_txd":0,"bracelets_txd":0,"bodyarmor":10,"undershirt_txd":0,"torso_txd":0,"decals_txd":0,"ears_txd":0,"bodyarmor_txd":0,"watches":-1,"glasses":-1,"ears":-1,"decals":0,"bag":0}'),
+                            '{"leg_txd":0,"watches_txd":0,"bracelets":-1,"undershirt":15,"accessory":0,"tops":102,"hats_txd":0,"accessory_txd":0,"leg":59,"glasses_txd":0,"shoes_txd":0,"shoes":25,"hats":-1,"mask":0,"mask_txd":0,"tops_txd":0,"torso":19,"bag_txd":0,"bracelets_txd":0,"bodyarmor":10,"undershirt_txd":0,"torso_txd":0,"decals_txd":0,"ears_txd":0,"bodyarmor_txd":0,"watches":-1,"glasses":-1,"ears":-1,"decals":0,"bag":0}'),
                         Female = json.decode(
-                        '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":0,"undershirt":15,"torso":31,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":93,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),
+                            '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":0,"undershirt":15,"torso":31,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":93,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),
                     },
                     {
                         Label = "Cadet manches longues",
                         Male = json.decode(
-                        '{"mask_txd":0,"leg":59,"accessory":0,"hats":-1,"bag":0,"undershirt":15,"torso_txd":0,"ears":-1,"tops_txd":0,"shoes_txd":0,"shoes":25,"torso":1,"hats_txd":0,"accessory_txd":0,"glasses_txd":0,"bracelets_txd":0,"watches":-1,"decals_txd":0,"bodyarmor":10,"ears_txd":0,"leg_txd":0,"bag_txd":0,"undershirt_txd":0,"bodyarmor_txd":0,"decals":0,"watches_txd":0,"tops":101,"mask":0,"bracelets":-1,"glasses":-1}'),
+                            '{"mask_txd":0,"leg":59,"accessory":0,"hats":-1,"bag":0,"undershirt":15,"torso_txd":0,"ears":-1,"tops_txd":0,"shoes_txd":0,"shoes":25,"torso":1,"hats_txd":0,"accessory_txd":0,"glasses_txd":0,"bracelets_txd":0,"watches":-1,"decals_txd":0,"bodyarmor":10,"ears_txd":0,"leg_txd":0,"bag_txd":0,"undershirt_txd":0,"bodyarmor_txd":0,"decals":0,"watches_txd":0,"tops":101,"mask":0,"bracelets":-1,"glasses":-1}'),
                         Female = json.decode(
-                        '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":3,"undershirt":15,"torso":3,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":92,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),
+                            '{"watches_txd":0,"bag_txd":0,"accessory_txd":0,"bag":0,"ears_txd":0,"watches":-1,"glasses_txd":0,"shoes":25,"leg":61,"mask":0,"tops_txd":3,"undershirt":15,"torso":3,"accessory":0,"bodyarmor_txd":0,"decals":0,"shoes_txd":0,"hats_txd":0,"hats":-1,"bracelets":-1,"decals_txd":0,"leg_txd":0,"tops":92,"ears":-1,"undershirt_txd":0,"mask_txd":0,"bracelets_txd":0,"torso_txd":0,"bodyarmor":19,"glasses":-1}'),
                     },
                     {
                         Label = "Tenue manches courtes",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":102,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":102,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
+                            "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue manches longues",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":101,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":20,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":101,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":20,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":92,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":3,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
+                            "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":92,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":3,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue hiver",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":103,\"undershirt\":65,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":27,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":103,\"undershirt\":65,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":27,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":119,\"undershirt\":45,\"tops_txd\":1,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":7,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
+                            "{\"leg\":61,\"bag_txd\":0,\"bag\":84,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":119,\"undershirt\":45,\"tops_txd\":1,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":7,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue SWAT",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":53,\"tops_txd\":1,\"bodyarmor\":0,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":53,\"tops_txd\":1,\"bodyarmor\":0,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":61,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":84,\"undershirt\":33,\"tops_txd\":1,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
+                            "{\"leg\":61,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":84,\"undershirt\":33,\"tops_txd\":1,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue SWAT Lourd",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":1,\"tops\":219,\"undershirt\":44,\"tops_txd\":2,\"bodyarmor\":7,\"torso\":17,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":75,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":1,\"tops\":219,\"undershirt\":44,\"tops_txd\":2,\"bodyarmor\":7,\"torso\":17,\"shoes\":25,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":75,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":90,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":2,\"accessory_txd\":0,\"tops\":43,\"undershirt\":33,\"tops_txd\":0,\"bodyarmor\":11,\"hats_txd\":0,\"torso\":49,\"shoes\":25,\"bodyarmor_txd\":3,\"shoes_txd\":0,\"hats\":74,\"accessory\":1}"),
+                            "{\"leg\":90,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":2,\"accessory_txd\":0,\"tops\":43,\"undershirt\":33,\"tops_txd\":0,\"bodyarmor\":11,\"hats_txd\":0,\"torso\":49,\"shoes\":25,\"bodyarmor_txd\":3,\"shoes_txd\":0,\"hats\":74,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue DOA",
                         Male = json.decode(
-                        "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":102,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":7,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":4,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
+                            "{\"leg\":59,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":102,\"undershirt\":53,\"tops_txd\":0,\"bodyarmor\":7,\"torso\":19,\"shoes\":25,\"bodyarmor_txd\":4,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":-1,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":61,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":7,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":3,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
+                            "{\"leg\":61,\"bag_txd\":0,\"bag\":74,\"undershirt_txd\":0,\"leg_txd\":0,\"accessory_txd\":0,\"tops\":93,\"undershirt\":27,\"tops_txd\":0,\"bodyarmor\":7,\"hats_txd\":0,\"torso\":31,\"shoes\":25,\"bodyarmor_txd\":3,\"shoes_txd\":0,\"hats\":-1,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue vélo",
                         Male = json.decode(
-                        "{\"leg\":32,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":93,\"undershirt\":15,\"tops_txd\":0,\"bodyarmor\":1,\"torso\":30,\"shoes\":13,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":49,\"accessory\":0}"),
+                            "{\"leg\":32,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":93,\"undershirt\":15,\"tops_txd\":0,\"bodyarmor\":1,\"torso\":30,\"shoes\":13,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":0,\"hats\":49,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":31,\"bag_txd\":0,\"bag\":42,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":84,\"undershirt\":51,\"tops_txd\":2,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":10,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":47,\"accessory\":1}"),
+                            "{\"leg\":31,\"bag_txd\":0,\"bag\":42,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":84,\"undershirt\":51,\"tops_txd\":2,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":31,\"shoes\":10,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":47,\"accessory\":1}"),
                     },
                     {
                         Label = "Tenue moto",
                         Male = json.decode(
-                        "{\"leg\":32,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":154,\"undershirt\":13,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":22,\"shoes\":13,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":1,\"hats\":79,\"accessory\":0}"),
+                            "{\"leg\":32,\"bag_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":154,\"undershirt\":13,\"tops_txd\":0,\"bodyarmor\":0,\"torso\":22,\"shoes\":13,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats_txd\":1,\"hats\":79,\"accessory\":0}"),
                         Female = json.decode(
-                        "{\"leg\":31,\"bag_txd\":0,\"bag\":42,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":21,\"undershirt\":27,\"tops_txd\":3,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":32,\"shoes\":40,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":78,\"accessory\":0}"),
+                            "{\"leg\":31,\"bag_txd\":0,\"bag\":42,\"undershirt_txd\":0,\"leg_txd\":1,\"accessory_txd\":0,\"tops\":21,\"undershirt\":27,\"tops_txd\":3,\"bodyarmor\":0,\"hats_txd\":0,\"torso\":32,\"shoes\":40,\"bodyarmor_txd\":0,\"shoes_txd\":0,\"hats\":78,\"accessory\":0}"),
                     },
                 },
             },
@@ -558,23 +558,23 @@ Config.Jobs = {
                     {
                         Label = "Tenue manches courtes",
                         Female = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":109,\"decals\":66,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":96,\"shoes\":25,\"accessory_txd\":0,\"tops\":258,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":99,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":121,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":109,\"decals\":66,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":96,\"shoes\":25,\"accessory_txd\":0,\"tops\":258,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":99,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":121,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                         Male = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":85,\"decals\":58,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":250,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":85,\"decals\":58,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":250,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                     },
                     {
                         Label = "Tenue manches longues",
                         Female = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":105,\"decals\":65,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":96,\"shoes\":25,\"accessory_txd\":0,\"tops\":257,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":99,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":121,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":105,\"decals\":65,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":96,\"shoes\":25,\"accessory_txd\":0,\"tops\":257,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":99,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":121,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                         Male = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":90,\"decals\":57,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":249,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":90,\"decals\":57,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":249,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                     },
                     {
                         Label = "Tenue chirurgie",
                         Female = json.decode(
-                        "{\"decals\":0,\"torso\":109,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":141,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":6,\"bag\":0,\"tops_txd\":1,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                            "{\"decals\":0,\"torso\":109,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":141,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":6,\"bag\":0,\"tops_txd\":1,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
                         Male = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":85,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":273,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":20}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":85,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":273,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":20}"),
                     },
                 },
             },
@@ -846,16 +846,16 @@ Config.Jobs = {
                     {
                         Label = "Tenue manches courtes",
                         Female = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":11,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":117,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":49,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":14,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":1}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":11,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":117,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":49,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":14,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":1}"),
                         Male = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":0,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":22,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":122,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":0,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":22,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":122,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                     },
                     {
                         Label = "Tenue manches longues",
                         Female = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":7,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":103,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":49,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":14,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":3}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":7,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":103,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":49,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":14,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":3}"),
                         Male = json.decode(
-                        "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":0,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":86,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":122,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
+                            "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":0,\"decals\":0,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":0,\"shoes\":25,\"accessory_txd\":0,\"tops\":86,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":122,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":-1,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                     },
                 },
             },
@@ -1047,9 +1047,9 @@ Config.Jobs = {
                         Label = "Agent de sécurité",
                         -- TODO remake Female outfit
                         Female = json.decode(
-                        "{\"decals\":0,\"torso\":23,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":37,\"tops\":92,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":23,\"bag\":0,\"tops_txd\":2,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                            "{\"decals\":0,\"torso\":23,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":37,\"tops\":92,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":23,\"bag\":0,\"tops_txd\":2,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
                         Male = json.decode(
-                        "{\"decals\":0,\"torso\":22,\"leg\":10,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":10,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":32,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":0,\"bag\":0,\"tops_txd\":0,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
+                            "{\"decals\":0,\"torso\":22,\"leg\":10,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":10,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":32,\"tops\":294,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":0,\"bag\":0,\"tops_txd\":0,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
                     },
 
                 },
@@ -1116,9 +1116,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue de travail",
                         Male = json.decode(
-                        '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":2,"ears_txd":0,"accessory":0,"tops":43,"decals_txd":0,"shoes":51,"bracelets":-1,"torso_txd":0,"torso":11,"bag":40,"tops_txd":0,"watches_txd":0,"undershirt_txd":0,"leg":9,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":2,"ears_txd":0,"accessory":0,"tops":43,"decals_txd":0,"shoes":51,"bracelets":-1,"torso_txd":0,"torso":11,"bag":40,"tops_txd":0,"watches_txd":0,"undershirt_txd":0,"leg":9,"watches":-1,"hats":-1,"glasses":-1}'),
                         Female = json.decode(
-                        '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":2,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":1,"ears_txd":0,"accessory":0,"tops":118,"decals_txd":0,"shoes":52,"bracelets":-1,"torso_txd":0,"torso":4,"bag":40,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":93,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":15,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":2,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":1,"ears_txd":0,"accessory":0,"tops":118,"decals_txd":0,"shoes":52,"bracelets":-1,"torso_txd":0,"torso":4,"bag":40,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":93,"watches":-1,"hats":-1,"glasses":-1}'),
                     },
                 },
             },
@@ -1297,9 +1297,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue de Travail",
                         Male = json.decode(
-                        '{"watches":-1,"watches_txd":0,"bag":87,"leg":0,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":1,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":163,"bag_txd":6,"shoes_txd":0,"decals":0,"torso":0,"hats_txd":0,"shoes":1}'),
+                            '{"watches":-1,"watches_txd":0,"bag":87,"leg":0,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":1,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":163,"bag_txd":6,"shoes_txd":0,"decals":0,"torso":0,"hats_txd":0,"shoes":1}'),
                         Female = json.decode(
-                        '{"watches":-1,"watches_txd":0,"bag":87,"leg":1,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":0,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":199,"bag_txd":6,"shoes_txd":2,"decals":0,"torso":0,"hats_txd":0,"shoes":1}'),
+                            '{"watches":-1,"watches_txd":0,"bag":87,"leg":1,"accessory_txd":0,"bodyarmor_txd":0,"undershirt_txd":0,"bracelets_txd":0,"bracelets":-1,"decals_txd":0,"accessory":0,"torso_txd":0,"tops":0,"ears_txd":0,"ears":-1,"tops_txd":0,"mask":0,"bodyarmor":0,"mask_txd":0,"hats":-1,"leg_txd":2,"glasses":-1,"glasses_txd":0,"undershirt":199,"bag_txd":6,"shoes_txd":2,"decals":0,"torso":0,"hats_txd":0,"shoes":1}'),
                     },
                 },
             },
@@ -1442,9 +1442,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue de service",
                         Female = json.decode(
-                        '{"decals":0,"torso":9,"leg":106,"hats":-1,"mask":0,"glasses":-1,"accessory":0,"shoes":13,"bracelets_txd":0,"watches_txd":0,"undershirt":15,"tops":294,"accessory_txd":0,"bag_txd":0,"shoes_txd":15,"ears_txd":0,"bodyarmor_txd":0,"ears":-1,"glasses_txd":0,"decals_txd":0,"undershirt_txd":0,"bodyarmor":0,"leg_txd":2,"bag":0,"tops_txd":10,"mask_txd":0,"hats_txd":0,"torso_txd":0,"bracelets":-1,"watches":-1}'),
+                            '{"decals":0,"torso":9,"leg":106,"hats":-1,"mask":0,"glasses":-1,"accessory":0,"shoes":13,"bracelets_txd":0,"watches_txd":0,"undershirt":15,"tops":294,"accessory_txd":0,"bag_txd":0,"shoes_txd":15,"ears_txd":0,"bodyarmor_txd":0,"ears":-1,"glasses_txd":0,"decals_txd":0,"undershirt_txd":0,"bodyarmor":0,"leg_txd":2,"bag":0,"tops_txd":10,"mask_txd":0,"hats_txd":0,"torso_txd":0,"bracelets":-1,"watches":-1}'),
                         Male = json.decode(
-                        '{"decals":0,"torso":6,"leg":105,"hats":-1,"mask":0,"glasses":-1,"accessory":0,"shoes":12,"bracelets_txd":0,"watches_txd":0,"undershirt":15,"tops":281,"accessory_txd":0,"bag_txd":0,"shoes_txd":5,"ears_txd":0,"bodyarmor_txd":0,"ears":-1,"glasses_txd":0,"decals_txd":0,"undershirt_txd":0,"bodyarmor":0,"leg_txd":5,"bag":0,"tops_txd":10,"mask_txd":0,"hats_txd":0,"torso_txd":0,"bracelets":-1,"watches":-1}'),
+                            '{"decals":0,"torso":6,"leg":105,"hats":-1,"mask":0,"glasses":-1,"accessory":0,"shoes":12,"bracelets_txd":0,"watches_txd":0,"undershirt":15,"tops":281,"accessory_txd":0,"bag_txd":0,"shoes_txd":5,"ears_txd":0,"bodyarmor_txd":0,"ears":-1,"glasses_txd":0,"decals_txd":0,"undershirt_txd":0,"bodyarmor":0,"leg_txd":5,"bag":0,"tops_txd":10,"mask_txd":0,"hats_txd":0,"torso_txd":0,"bracelets":-1,"watches":-1}'),
                     },
                 },
 
@@ -1636,16 +1636,16 @@ Config.Jobs = {
                     {
                         Label = "Tenue barman",
                         Male = json.decode(
-                        '{"undershirt":24,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":60,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":0,"bag":0,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":4,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":24,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":60,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":0,"bag":0,"tops_txd":2,"watches_txd":0,"undershirt_txd":0,"leg":4,"watches":-1,"hats":-1,"glasses":-1}'),
                         Female = json.decode(
-                        '{"undershirt":20,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":7,"ears_txd":0,"accessory":0,"tops":6,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":4,"watches_txd":0,"undershirt_txd":0,"leg":44,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":20,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":0,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":7,"ears_txd":0,"accessory":0,"tops":6,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":4,"watches_txd":0,"undershirt_txd":0,"leg":44,"watches":-1,"hats":-1,"glasses":-1}'),
                     },
                     {
                         Label = "Tenue Videur",
                         Male = json.decode(
-                        '{"undershirt":23,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":23,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":1,"leg":35,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":23,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":6,"ears_txd":0,"accessory":0,"tops":23,"decals_txd":0,"shoes":77,"bracelets":-1,"torso_txd":0,"torso":1,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":1,"leg":35,"watches":-1,"hats":-1,"glasses":-1}'),
                         Female = json.decode(
-                        '{"undershirt":67,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":3,"ears_txd":0,"accessory":0,"tops":90,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":3,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":3,"leg":50,"watches":-1,"hats":-1,"glasses":-1}'),
+                            '{"undershirt":67,"bodyarmor":0,"decals":0,"ears":-1,"leg_txd":0,"bracelets_txd":0,"mask_txd":0,"bag_txd":0,"bodyarmor_txd":0,"mask":121,"glasses_txd":0,"hats_txd":0,"accessory_txd":0,"shoes_txd":3,"ears_txd":0,"accessory":0,"tops":90,"decals_txd":0,"shoes":81,"bracelets":-1,"torso_txd":0,"torso":3,"bag":0,"tops_txd":0,"watches_txd":0,"undershirt_txd":3,"leg":50,"watches":-1,"hats":-1,"glasses":-1}'),
                     },
                 },
             },
@@ -1713,9 +1713,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue videur",
                         Male = json.decode(
-                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
+                            '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
                         Female = json.decode(
-                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
+                            '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
                     },
                 }
             },
@@ -1805,9 +1805,9 @@ Config.Jobs = {
                     {
                         Label = "Tenue videur",
                         Male = json.decode(
-                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
+                            '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":75,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":10,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":0,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":29,"tops_txd":1,"torso":4,"mask":121,"bodyarmor":0,"glasses":13,"ears":-1,"shoes_txd":4,"mask_txd":0,"ears_txd":0}'),
                         Female = json.decode(
-                        '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
+                            '{"hats":-1,"glasses_txd":0,"bodyarmor_txd":0,"hats_txd":0,"undershirt":67,"bracelets":-1,"watches_txd":0,"watches":-1,"bag_txd":0,"bracelets_txd":0,"leg":6,"undershirt_txd":3,"accessory_txd":0,"accessory":0,"bag":0,"leg_txd":1,"shoes":3,"decals":0,"torso_txd":0,"decals_txd":0,"tops":340,"tops_txd":0,"torso":3,"mask":121,"bodyarmor":0,"glasses":-1,"ears":-1,"shoes_txd":0,"mask_txd":0,"ears_txd":0}'),
                     },
                 },
             },
@@ -2188,14 +2188,42 @@ Config.Jobs = {
             -- },
         },
         ProcessMenuZones = {
-            -- clips
+            -- ammos
             {
-                Title = "Fabrication de chargeurs",
+                Title = "Fabrication de munitions",
                 Process = {
-                    ClipProcess = {
-                        Name = "Chargeurs",
+                    AsseultProcess = {
+                        Name = "Munitions assaut x125",
                         ItemsGive = { { name = "steel", quantity = 1 }, { name = "gunpowder", quantity = 4 } },
-                        ItemsGet = { { name = "clip", quantity = 5 } },
+                        ItemsGet = { { name = "ammo_rifle", quantity = 125 } },
+                        Delay = 2000,
+                        Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
+                    },
+                    ShotgunProcess = {
+                        Name = "Munitions pompe x125",
+                        ItemsGive = { { name = "steel", quantity = 1 }, { name = "gunpowder", quantity = 4 } },
+                        ItemsGet = { { name = "ammo_shotgun", quantity = 125 } },
+                        Delay = 2000,
+                        Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
+                    },
+                    SMGProcess = {
+                        Name = "Munitions SMG x125",
+                        ItemsGive = { { name = "steel", quantity = 1 }, { name = "gunpowder", quantity = 4 } },
+                        ItemsGet = { { name = "ammo_smg", quantity = 125 } },
+                        Delay = 2000,
+                        Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
+                    },
+                    MGProcess = {
+                        Name = "Munitions MG x125",
+                        ItemsGive = { { name = "steel", quantity = 1 }, { name = "gunpowder", quantity = 4 } },
+                        ItemsGet = { { name = "ammo_mg", quantity = 125 } },
+                        Delay = 2000,
+                        Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
+                    },
+                    PistolProcess = {
+                        Name = "Munitions pistolet x125",
+                        ItemsGive = { { name = "steel", quantity = 1 }, { name = "gunpowder", quantity = 4 } },
+                        ItemsGet = { { name = "ammo_pistol", quantity = 125 } },
                         Delay = 2000,
                         Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
                     },
@@ -2204,7 +2232,7 @@ Config.Jobs = {
                 Coord = vector3(898.04, -3221.57, -99.23),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
                 Color = { r = 72, g = 34, b = 43 },
-                Name = "Fabrication de chargeurs",
+                Name = "Fabrication de munitions",
                 HelpText = GetString("press_traitement"),
                 Marker = 27,
                 Blip = false,

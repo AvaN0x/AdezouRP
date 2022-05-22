@@ -95,11 +95,11 @@ Config.Stores = {
         Title = { textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar" },
         Coord = vector3(1716.30, 3295.09, 40.32),
         Items = {
-            { name = "headbag", price = 200, isDirtyMoney = true },
-            -- {name = "tenuecasa", price = 200, isDirtyMoney = true},
+            -- { name = "headbag", price = 200, isDirtyMoney = true }, -- TODO disabled atm
+            -- {name = "tenuecasa", price = 200, isDirtyMoney = true}, -- TODO disabled atm
             { name = "gpsbeacon", price = 200, isDirtyMoney = true },
             { name = "lockpick", price = 200, isDirtyMoney = true },
-            { name = "ziptie", price = 200, isDirtyMoney = true },
+            -- { name = "ziptie", price = 200, isDirtyMoney = true }, -- TODO disabled atm
         },
         Distance = 1,
         Name = "Black Market",
@@ -123,7 +123,7 @@ Config.Stores = {
             vector3(842.40, -1033.40, 27.21), -- Vespucci Blvd
         },
         Items = {
-            { name = "clip", price = 200, license = "weapon" },
+            { name = "ammo_pistol", price = 8, license = "weapon" },
             { name = "weapon_doubleaction", price = 100000, license = "weapon" },
             { name = "weapon_pistol", price = 40000, license = "weapon" },
             { name = "weapon_flare", price = 50000, license = "weapon" },
@@ -148,7 +148,7 @@ Config.Stores = {
             vector3(810.37, -2157.41, 28.64), -- Dry Dock Street
         },
         Items = {
-            { name = "clip", price = 200, license = "weapon" },
+            { name = "ammo_pistol", price = 8, license = "weapon" },
             { name = "weapon_doubleaction", price = 100000, license = "weapon" },
             { name = "weapon_pistol", price = 40000, license = "weapon" },
             { name = "weapon_flare", price = 50000, license = "weapon" },

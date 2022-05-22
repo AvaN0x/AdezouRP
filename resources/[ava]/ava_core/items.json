@@ -216,12 +216,14 @@
     },
     "bandage": {
         "label": "Bandage",
+        "type": "medical",
         "weight": 150,
         "closeInv": true,
         "noIcon": true
     },
     "medikit": {
         "label": "Trousse médicale",
+        "type": "medical",
         "weight": 150,
         "limit": 15,
         "closeInv": true,
@@ -230,6 +232,7 @@
     },
     "defibrillator": {
         "label": "Défibrilateur",
+        "type": "medical",
         "weight": 1000,
         "limit": 0,
         "closeInv": true,
@@ -493,6 +496,34 @@
         "description": "",
         "noIcon": true
     },
+    "gunpowder": {
+        "label": "Poudre a canon",
+        "type": "gunmaking",
+        "description": "",
+        "weight": 50,
+        "noIcon": true
+    },
+    "steel": {
+        "label": "Acier",
+        "type": "gunmaking",
+        "description": "",
+        "weight": 350,
+        "noIcon": true
+    },
+    "plastic": {
+        "label": "Plastique",
+        "type": "gunmaking",
+        "description": "",
+        "weight": 50,
+        "noIcon": true
+    },
+    "grease": {
+        "label": "Graisse",
+        "type": "gunmaking",
+        "description": "",
+        "weight": 5,
+        "noIcon": true
+    },
     "ammo_grenadelauncher": {
         "label": "Munitions lance grenade",
         "type": "ammo",
@@ -539,7 +570,7 @@
         "label": "Munitions assaut",
         "type": "ammo",
         "description": "",
-        "weight": 95,
+        "weight": 42,
         "noIcon": true
     },
     "ammo_rifle_tracer": {

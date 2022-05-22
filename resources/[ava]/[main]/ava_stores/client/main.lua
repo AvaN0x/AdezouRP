@@ -217,7 +217,7 @@ function BuyZone()
         count = count + 1
         elements[count] = {
             label = item.label,
-            rightLabel = GetString("store_item_right_label", item.isDirtyMoney and "~r~" or "", item.price),
+            rightLabel = GetString("store_item_right_label", item.isDirtyMoney and "~r~" or "", exports.ava_core:FormatNumber(item.price)),
             leftBadge = not item.noIcon and function()
                 return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
             end or nil,
