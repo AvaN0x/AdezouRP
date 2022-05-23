@@ -96,6 +96,12 @@
         "limit": 180,
         "noIcon": true
     },
+    "clothebox": {
+        "label": "Boite de Vêtements",
+        "weight": 300,
+        "limit": 180,
+        "noIcon": true
+    },
     "grape": {
         "label": "Raisin",
         "weight": 300,
