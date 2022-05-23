@@ -2454,7 +2454,7 @@ Config.Jobs = {
         },
     },
     -- #endregion gangs / organizations
-    },
+}
 
 Config.JobCenter = {
     Blip = { Sprite = 682, Colour = 27 },
