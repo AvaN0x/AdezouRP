@@ -102,6 +102,12 @@
         "limit": 180,
         "noIcon": true
     },
+    "cardboardbox": {
+        "label": "Boite en carton",
+        "weight": 300,
+        "limit": 180,
+        "noIcon": true
+    },
     "grape": {
         "label": "Raisin",
         "weight": 300,
