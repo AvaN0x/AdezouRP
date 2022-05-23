@@ -78,6 +78,24 @@
         "closeInv": true,
         "noIcon": true
     },
+    "wool": {
+        "label": "Coton",
+        "weight": 300,
+        "limit": 180,
+        "noIcon": true
+    },
+    "fabric": {
+        "label": "Tissu",
+        "weight": 300,
+        "limit": 180,
+        "noIcon": true
+    },
+    "clothe": {
+        "label": "Vêtements",
+        "weight": 300,
+        "limit": 180,
+        "noIcon": true
+    },
     "grape": {
         "label": "Raisin",
         "weight": 300,
