@@ -1608,7 +1608,7 @@ Config.Jobs = {
             },
         },
     },
-    bahama = {
+    bahama = { --todo when anyone want 
         Disabled = true,
         LabelName = "Bahama",
         Blip = { Sprite = 93, Colour = 0 },
@@ -1686,7 +1686,7 @@ Config.Jobs = {
             },
         },
     },
-    unicorn = {
+    unicorn = { --todo when anyone want 
         LabelName = "Unicorn",
         Blip = { Sprite = 121, Colour = 0 },
         Zones = {
@@ -1779,7 +1779,7 @@ Config.Jobs = {
             },
         },
     },
-    nightclub = {
+    nightclub = { --todo when anyone want
         LabelName = "Galaxy",
         Blip = { Coord = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7 },
         Zones = {
