@@ -1033,6 +1033,7 @@
             },
             "cog55": {
                 "category": "sedans",
+                "hidden":true,
                 "quantity": 5,
                 "price": 52957
             },
@@ -2199,6 +2200,12 @@
                 "quantity": 5,
                 "price": 43728
             },
+            "flatbed": {
+                "category": "industrial",
+                "hidden": true,
+                "quantity": 20,
+                "price": 43513
+            },
             "ambulance": {
                 "category": "emergency",
                 "hidden": true,
@@ -2594,6 +2601,32 @@
         "ems": {
             "ambulance": true,
             "emsbuffalo": true
-        }
+        },
+        "mechanic": {
+            "flatbed" : true,
+            "slamtruck" : true
+        },
+        "government": {
+            "cog552" : true
+        },
+        "winemaker": {
+            "speedo": true
+        },
+        "tailor": {
+            "speedo": true
+        },
+        "cluckin": {
+            "benson" : true,
+            "taco" : true
+        },
+        "bahama": {
+        
+        },
+        "unicorn": {
+        
+        },
+        "nightclub": {
+        
+        },
     }
 }
