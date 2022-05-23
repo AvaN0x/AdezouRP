@@ -2030,7 +2030,7 @@ Config.Jobs = {
             --    SpawnPoint = { Coord = vector3(335.46, -2039.61, 21.13), Heading = 50.0 },
             --},
         },
-        Garage = {
+        Garages = {
             Name = "garage_vagos",
             Coord = vector3(335.46, -2039.61, 21.13),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
@@ -2078,7 +2078,7 @@ Config.Jobs = {
             --    SpawnPoint = { Coord = vector3(91.82, -1964.06, 20.75), Heading = 321.59 },
             --},
         },
-        Garage = {
+        Garages = {
             Name = "garage_ballas",
             Coord = vector3(91.82, -1964.06, 20.75),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
@@ -2126,7 +2126,7 @@ Config.Jobs = {
             --    SpawnPoint = { Coord = vector3(-109.22, -1599.54, 31.64), Heading = 316.36 },
             --},
         },
-        Garage = {
+        Garages = {
             Name = "garage_families",
             Coord = vector3(-109.22, -1599.54, 31.64),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
@@ -2174,7 +2174,7 @@ Config.Jobs = {
             --    SpawnPoint = { Coord = vector3(1329.94, -1724.45, 56.04), Heading = 10.77 },
             --},
         },
-        Garage = {
+        Garages = {
             Name = "garage_marabunta",
             Coord = vector3(1329.94, -1724.45, 56.04),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
@@ -2224,7 +2224,7 @@ Config.Jobs = {
             --    SpawnPoint = { Coord = vector3(975.37, -140.63, 74.23), Heading = 50.0 },
             --},
         },
-        Garage = {
+        Garages = {
             Name = "garage_lost",
             Coord = vector3(971.55, -126.71, 74.32),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
