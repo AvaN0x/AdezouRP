@@ -2000,7 +2000,7 @@ Config.Jobs = {
         LabelName = "Vagos",
         Zones = {
             Stock = {
-                Coord = vector3(332.24, -2018.62, 21.37),
+                Coord = vector3(364.99, -2064.68, 20.76),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 250, g = 197, b = 50 },
                 Name = "Coffre",
@@ -2016,19 +2016,6 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            --GangCarGarage = { -- TODO properly add, this do not work
-            --    Name = "Garage gang",
-            --    HelpText = GetString("spawn_veh"),
-            --    Coord = vector3(335.46, -2039.61, 21.13),
-            --    Size = { x = 2.0, y = 2.0, z = 2.0 },
-            --    Color = { r = 250, g = 197, b = 50 },
-            --    Marker = 36,
-            --    Type = "car",
-            --    IsNonProprietaryGarage = true,
-            --    IsGangGarage = true,
-            --    Identifier = "garage_vagos",
-            --    SpawnPoint = { Coord = vector3(335.46, -2039.61, 21.13), Heading = 50.0 },
-            --},
         },
         Garages = {
 
@@ -2051,7 +2038,7 @@ Config.Jobs = {
         LabelName = "Ballas",
         Zones = {
             Stock = {
-                Coord = vector3(118.93, -1966.05, 20.35),
+                Coord = vector3(111.76, -1978.58, 20.00),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 152, g = 60, b = 137 },
                 Name = "Coffre",
@@ -2067,19 +2054,6 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            --GangCarGarage = { -- TODO properly add, this do not work
-            --    Name = "Garage gang",
-            --    HelpText = GetString("spawn_veh"),
-            --    Coord = vector3(91.82, -1964.06, 20.75),
-            --    Size = { x = 2.0, y = 2.0, z = 2.0 },
-            --    Color = { r = 152, g = 60, b = 137 },
-            --    Marker = 36,
-            --    Type = "car",
-            --    IsNonProprietaryGarage = true,
-            --    IsGangGarage = true,
-            --    Identifier = "garage_ballas",
-            --    SpawnPoint = { Coord = vector3(91.82, -1964.06, 20.75), Heading = 321.59 },
-            --},
         },
         Garages = {
 
@@ -2102,7 +2076,7 @@ Config.Jobs = {
         LabelName = "Families",
         Zones = {
             Stock = {
-                Coord = vector3(-140.31, -1599.21, 33.85),
+                Coord = vector3(-134.14, -1580.55, 33.23),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 72, g = 171, b = 57 },
                 Name = "Coffre",
@@ -2157,7 +2131,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
                 Name = "Coffre",
-                InventoryName = "gang_marabunta_stock", -- TODO add
+                InventoryName = "gang_marabunta_stock",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -2169,19 +2143,6 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            --GangCarGarage = { -- TODO properly add, this do not work
-            --    Name = "Garage gang",
-            --    HelpText = GetString("spawn_veh"),
-            --    Coord = vector3(1329.94, -1724.45, 56.04),
-            --    Size = { x = 2.0, y = 2.0, z = 2.0 },
-            --    Color = { r = 136, g = 243, b = 216 },
-            --    Marker = 36,
-            --    Type = "car",
-            --    IsNonProprietaryGarage = true,
-            --    IsGangGarage = true,
-            --    Identifier = "garage_marabunta",
-            --    SpawnPoint = { Coord = vector3(1329.94, -1724.45, 56.04), Heading = 10.77 },
-            --},
         },
         Garages = {
 
@@ -2209,7 +2170,16 @@ Config.Jobs = {
                 Coord = vector3(977.11, -104.00, 73.87),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 136, g = 243, b = 216 },
-                Name = "Coffre",
+                Name = "Coffre fort",
+                InventoryName = "biker_lost_safe",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
+            Stock = {
+                Coord = vector3(1010.16, -116.98, 72.95),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 136, g = 243, b = 216 },
+                Name = "Stock",
                 InventoryName = "biker_lost_stock",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
@@ -2222,19 +2192,6 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            --GangCarGarage = { -- TODO properly add, this do not work
-            --    Name = "Garage gang",
-            --    HelpText = GetString("spawn_veh"),
-            --    Coord = vector3(975.37, -140.63, 74.23),
-            --    Size = { x = 2.0, y = 2.0, z = 2.0 },
-            --    Color = { r = 136, g = 243, b = 216 },
-            --    Marker = 36,
-            --    Type = "car",
-            --    IsNonProprietaryGarage = true,
-            --    IsGangGarage = true,
-            --    Identifier = "garage_lost",
-            --    SpawnPoint = { Coord = vector3(975.37, -140.63, 74.23), Heading = 50.0 },
-            --},
         },
         Garages = {
 
