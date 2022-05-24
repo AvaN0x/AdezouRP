@@ -174,6 +174,25 @@ ConfigTeleports = {
             locked = false,
         },
 
+        { -- Weed Field
+            tpEnter = {pos = vector3(717.16, -657.72, 26.76), heading = 90.29, size = {x = 2.5, y = 2.5, z = 1.0}, label = "Entrer"},
+            tpExit = {pos = vector3(172.80, -1008.20, -99.98), heading = 181.09, size = {x = 2.5, y = 2.5, z = 1.0}, label = "Sortir"},
+        },
+
+        { -- Go fast 
+        tpEnter = {pos = vector3(-1408.52, 538.33, 121.94), heading = 269.67, size = {x = 2.5, y = 2.5, z = 1.0}, label = "Entrer"},
+        tpExit = {pos = vector3(202.08, -1002.99, -99.98), heading = 177.86, size = {x = 2.5, y = 2.5, z = 1.0}, label = "Sortir"},
+        allowvehicles = true,
+        },
+
+        vector3(-1137.70, -1435.72, 4.06)
+    
+    
+    
+    
+    
+        
+
         -- { -- maze bank arena
         -- 	tpEnter = {
         -- 		pos = vector3(-366.0, -1867.94, 19.55),
