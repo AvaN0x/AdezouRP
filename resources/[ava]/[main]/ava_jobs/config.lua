@@ -1421,7 +1421,7 @@ Config.Jobs = {
                 Marker = 27,
             },
             MainStock = {
-                Coord = vector3(-513.36, -699.53, 33.17),
+                Coord = vector3(-514.78, -702.17, 32.19),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
