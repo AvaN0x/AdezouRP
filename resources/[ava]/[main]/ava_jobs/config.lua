@@ -1857,11 +1857,11 @@ Config.Jobs = {
         FieldZones = {
             CannaField = {
                 Items = { { name = "weed", quantity = 5 } },
-                PropHash = GetHashKey("prop_weed_01"),
-                Coord = vector3(3824.07, 4429.46, 3.0),
+                PropHash = GetHashKey("bkr_prop_weed_lrg_01b"),
+                Coord = vector3(173.44, -1004.21, -99.98),
                 MinGroundHeight = 1,
                 MaxGroundHeight = 4,
-                Radius = 4,
+                Radius = 3,
             },
         },
         ProcessZones = {
