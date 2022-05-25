@@ -26,7 +26,7 @@ function PoolDevMenu()
                         ExecuteCommand("showhash")
                     end
                 end)
-                local style<const> = { IsDisabled = not showhash, Style = not showhash and 2 }
+                local style <const> = { IsDisabled = not showhash, Style = not showhash and 2 }
                 Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"), showhash_object, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
@@ -108,8 +108,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoords", function()
             SetTextOutline()
             SetTextEntry("STRING")
             AddTextComponentSubstringPlayerName("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
-            .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
-            .. string.format("%.2f", GetEntityHeading(playerPed)))
+                .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
+                .. string.format("%.2f", GetEntityHeading(playerPed)))
             EndTextCommandDisplayText(0.9, 0.88)
         end
     end)
@@ -131,7 +131,9 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
             BeginTextCommandDisplayHelp("show_coord_helper")
             EndTextCommandDisplayHelp(false, false, false, -1)
 
-            DisableControlAction(0, 45, true) -- r
+            -- INPUT_RELOAD
+            DisableControlAction(0, 45, true) -- R
+            DisableControlAction(0, 140, true) -- R
 
             -- SCROLLWHEEL PRESS
             DisableControlAction(0, 348, true)
@@ -173,7 +175,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
             SetTextOutline()
             SetTextEntry("STRING")
             AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
-            .. string.format("%.2f", pointerCoords.z))
+                .. string.format("%.2f", pointerCoords.z))
             DrawText(0.8, 0.88)
 
             DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z, "?", 0.3, 255, 99, 219)
@@ -275,9 +277,9 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
     end)
 
     Citizen.CreateThread(function()
-        local r<const>, g<const>, b<const> = 255, 0, 255
-        local lineAlpha<const> = 255
-        local polyAlpha<const> = 32
+        local r <const>, g <const>, b <const> = 255, 0, 255
+        local lineAlpha <const> = 255
+        local polyAlpha <const> = 32
         while showhash do
             Wait(0)
             for _, entity in ipairs(visibleHash) do
