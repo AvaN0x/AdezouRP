@@ -256,11 +256,12 @@ ConfigTeleports = {
             tpEnter = {
                 pos = vector3(717.16, -657.72, 26.76),
                 heading = 90.29, size = { x = 2.5, y = 2.5, z = 1.0 },
-                label = "Entrer"
+                label = "Entrer",
+                noMarker = true
             },
             tpExit = {
                 pos = vector3(172.80, -1008.20, -99.98),
-                heading = 181.09, size = { x = 2.5, y = 2.5, z = 1.0 },
+                heading = 181.09, size = { x = 1.2, y = 1.2, z = 1.0 },
                 label = "Sortir"
             },
         },
@@ -279,10 +280,6 @@ ConfigTeleports = {
             },
             allowvehicles = true,
         },
-
-
-
-
 
 
 

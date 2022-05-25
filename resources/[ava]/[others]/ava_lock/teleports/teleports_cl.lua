@@ -16,7 +16,7 @@ end)
 
 Citizen.CreateThread(function()
     for k, tpID in ipairs(ConfigTeleports.TeleportersList) do
-        for k2, tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+        for k2, tpID2 in ipairs({ tpID.tpEnter, tpID.tpExit }) do
             if not tpID2.distance then
                 tpID2.distance = ConfigTeleports.DrawDistance
             end
@@ -36,13 +36,15 @@ Citizen.CreateThread(function()
         local waitTime = 500
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, tpID in ipairs(ConfigTeleports.TeleportersList) do
-            for k2, tpID2 in ipairs({{from = tpID.tpEnter, to = tpID.tpExit}, {from = tpID.tpExit, to = tpID.tpEnter}}) do
+            for k2, tpID2 in ipairs({ { from = tpID.tpEnter, to = tpID.tpExit }, { from = tpID.tpExit, to = tpID.tpEnter } }) do
                 local distance = #(playerCoords - tpID2.from.pos)
 
                 if distance < tpID2.from.distance then
                     waitTime = 0
-                    DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y,
-                        tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
+                    if not tpID2.from.noMarker then
+                        DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y,
+                            tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
+                    end
 
                     if distance < tpID2.from.size.x then
                         local helpText = GetString("teleports_unlocked")
@@ -138,11 +140,11 @@ end
 function FindClosestTeleport()
     local playerCoords = GetEntityCoords(PlayerPedId())
     for k, tpID in ipairs(ConfigTeleports.TeleportersList) do
-        for k2, tpID2 in ipairs({tpID.tpEnter, tpID.tpExit}) do
+        for k2, tpID2 in ipairs({ tpID.tpEnter, tpID.tpExit }) do
             local distance = #(playerCoords - tpID2.pos)
             if distance < tpID2.size.x then
                 if tpID.locked and not tpID.authorized then
-                    return {name = k, teleport = tpID}
+                    return { name = k, teleport = tpID }
                 end
             end
         end
@@ -158,7 +160,7 @@ RegisterNetEvent("ava_items:client:useLockpick", function()
 
     local playerPed = PlayerPedId()
     TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
-    local minigameSuccess<const> = exports.ava_lockpicking:StartMinigame()
+    local minigameSuccess <const> = exports.ava_lockpicking:StartMinigame()
     ClearPedTasksImmediately(playerPed)
 
     if minigameSuccess then
@@ -166,4 +168,3 @@ RegisterNetEvent("ava_items:client:useLockpick", function()
         TriggerServerEvent("ava_teleports:updateState", closestTeleport.name, closestTeleport.teleport.locked)
     end
 end)
-
