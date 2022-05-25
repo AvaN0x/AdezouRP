@@ -1608,7 +1608,7 @@ Config.Jobs = {
             },
         },
     },
-    bahama = { --todo when anyone want 
+    bahama = { --todo when anyone want
         Disabled = true,
         LabelName = "Bahama",
         Blip = { Sprite = 93, Colour = 0 },
@@ -1686,7 +1686,7 @@ Config.Jobs = {
             },
         },
     },
-    unicorn = { 
+    unicorn = {
         LabelName = "Unicorn",
         Blip = { Sprite = 121, Colour = 0 },
         Zones = {
@@ -1748,7 +1748,7 @@ Config.Jobs = {
                 JobNeeded = "unicorn",
                 SpawnPoint = { Coord = vector3(144.09, -1284.85, 28.34), Heading = 301.13 },
             },
-             -- Player garage
+            -- Player garage
             {
                 Name = "garage_unicorn",
                 Coord = vector3(142.12, -1269.67, 28.03),
@@ -1890,8 +1890,8 @@ Config.Jobs = {
                 Items = { { name = "weed", quantity = 5 } },
                 PropHash = GetHashKey("bkr_prop_weed_lrg_01b"),
                 Coord = vector3(173.44, -1004.21, -99.98),
-                MinGroundHeight = 1,
-                MaxGroundHeight = 4,
+                MinGroundHeight = -100,
+                MaxGroundHeight = 98,
                 Radius = 3,
             },
         },
@@ -2061,7 +2061,7 @@ Config.Jobs = {
                 IsCommonGarage = true,
                 JobNeeded = "gang_vagos",
                 SpawnPoint = { Coord = vector3(335.46, -2039.61, 21.13), Heading = 50.0 },
-            },   
+            },
         },
     },
     gang_ballas = {
@@ -2239,17 +2239,17 @@ Config.Jobs = {
                 SpawnPoint = { Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0 },
             },
         },
-    
-            -- Crate = {
-            --     Coord = vector3(987.05, -144.41, 73.29),
-            --     Name = "Crate",
-            --     HelpText = GetString("press_to_talk"),
-            --     Action = function()
-            --         -- TriggerEvent("ava_lock:dooranim")
-            --         -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
-            --     end,
-            -- },
-        
+
+        -- Crate = {
+        --     Coord = vector3(987.05, -144.41, 73.29),
+        --     Name = "Crate",
+        --     HelpText = GetString("press_to_talk"),
+        --     Action = function()
+        --         -- TriggerEvent("ava_lock:dooranim")
+        --         -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
+        --     end,
+        -- },
+
         ProcessMenuZones = {
             -- ammos
             {
