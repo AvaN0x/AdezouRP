@@ -1686,7 +1686,7 @@ Config.Jobs = {
             },
         },
     },
-    unicorn = { --todo when anyone want 
+    unicorn = { 
         LabelName = "Unicorn",
         Blip = { Sprite = 121, Colour = 0 },
         Zones = {
@@ -1698,7 +1698,24 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            -- TODO stock
+            Fridge1 = {
+                Coord = vector3(129.40, -1281.06, 28.29),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 207, g = 169, b = 47 },
+                Name = "Stockage",
+                InventoryName = "job_unicorn_stock",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
+            Fridge2 = {
+                Coord = vector3(132.04, -1285.84, 28.29),
+                Size = { x = 1.5, y = 1.5, z = 1.0 },
+                Color = { r = 207, g = 169, b = 47 },
+                Name = "Stockage",
+                InventoryName = "job_unicorn_stock2",
+                HelpText = GetString("press_to_open"),
+                Marker = 27,
+            },
             Cloakroom = {
                 Coord = vector3(106.71, -1299.75, 27.79),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
@@ -1717,16 +1734,30 @@ Config.Jobs = {
                     },
                 }
             },
-            CarGarage = { -- TODO properly add, this do not work
-                Name = "Garage véhicule",
-                HelpText = GetString("spawn_veh"),
-                Coord = vector3(144.25, -1284.85, 29.34),
+        },
+        Garages = {
+            -- Job garage
+            {
+                Name = "jobgarage_unicorn",
+                Coord = vector3(144.09, -1284.85, 28.34),
                 Size = { x = 2.0, y = 2.0, z = 2.0 },
-                Color = { r = 0, g = 255, b = 0 },
+                Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
-                Type = "car",
-                SpawnPoint = { Coord = vector3(144.25, -1284.85, 29.34), Heading = 298.0 },
-                Blip = true,
+                VehicleType = 0,
+                IsJobGarage = "unicorn",
+                JobNeeded = "unicorn",
+                SpawnPoint = { Coord = vector3(144.09, -1284.85, 28.34), Heading = 301.13 },
+            },
+             -- Player garage
+            {
+                Name = "garage_unicorn",
+                Coord = vector3(142.12, -1269.67, 28.03),
+                Size = { x = 2.0, y = 2.0, z = 2.0 },
+                Color = { r = 0, g = 122, b = 204 },
+                Marker = 36,
+                VehicleType = 0,
+                JobNeeded = "unicorn",
+                SpawnPoint = { Coord = vector3(142.12, -1269.67, 28.03), Heading = 161.57 },
             },
         },
         FieldZones = {
