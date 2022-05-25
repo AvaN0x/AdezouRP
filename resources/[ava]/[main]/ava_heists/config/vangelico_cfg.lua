@@ -99,7 +99,7 @@ AVAConfig.Heists.vangelico = {
                             RayFireName = "DES_Jewel_Cab4",
                         },
                         {
-                            PropCoord = vector3(-622.7541, -232.614, 37.8638),
+                            PropCoord = vector3(-622.7541, -232.614, 37.86),
                             MarkerCoord = vector3(-622.63, -232.59, 38.42),
                             Coord = vector3(-623.3596, -233.2296, 38.06),
                             Heading = 303.0,
@@ -256,6 +256,284 @@ AVAConfig.Heists.vangelico = {
         ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
 
         for _, tray in ipairs(AVAConfig.Heists.vangelico.Stages[1].Stealables.Trays.Zones) do
+            local object = GetRayfireMapObject(tray.PropCoord, 0.5, tray.RayFireName)
+            SetStateOfRayfireMapObject(object, 2)
+        end
+    end,
+}
+
+AVAConfig.Heists.vangelico_paleto = {
+    Started = false,
+    InteriorId = 122626,
+    CopsCount = 6,
+    CurrentStage = 0,
+    ServerTriggerAlarm = function()
+        exports.ava_jobs:sendMessageToJob("lspd", {
+            message = GetString("vangelico_alarm_notif"),
+            location = vector3(-380.74, 6044.95, 31.51)
+        })
+    end,
+    Stages = {
+        [0] = {
+            Function = function(playerPed)
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_paleto", { TriggerHeist = true, Stage = 1 })
+                    else
+                        LastActionTimer = GetGameTimer()
+                        exports.ava_core:ShowNotification(GetString("not_enough_cops"))
+                    end
+                end
+            end,
+        },
+        [1] = {
+            Stealables = {
+                Trays = {
+                    Zones = {
+                        -- two on the right
+                        {
+                            PropCoord = vector3(-377.91, 6042.32, 30.95),
+                            MarkerCoord = vector3(-377.91, 6042.32, 31.95),
+                            Coord = vector3(-378.45, 6042.90, 31.51),
+                            Heading = 225.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        {
+                            PropCoord = vector3(-376.93, 6043.26, 31.51),
+                            MarkerCoord = vector3(-376.94, 6043.14, 31.95),
+                            Coord = vector3(-377.52, 6043.53, 31.51),
+                            Heading = 225.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        -- middle front
+                        {
+                            PropCoord = vector3(-379.29, 6046.21, 30.95),
+                            MarkerCoord = vector3(-379.39, 6046.21, 31.95),
+                            Coord = vector3(-378.67, 6045.61, 30.53),
+                            Heading = 45.0,
+                            RayFireName = "DES_Jewel_Cab",
+                        },
+                        {
+                            PropCoord = vector3(-378.39, 6047.04, 30.99),
+                            MarkerCoord = vector3(-378.43, 6047.00, 31.95),
+                            Coord = vector3(-377.90, 6046.57, 31.51),
+                            Heading = 45.0,
+                            RayFireName = "DES_Jewel_Cab2",
+                        },
+                        {
+                            PropCoord = vector3(-379.11, 6047.62, 30.99),
+                            MarkerCoord = vector3(-379.11, 6047.62, 31.95),
+                            Coord = vector3(-379.38, 6048.07, 31.51),
+                            Heading = 225.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        -- back left
+                        {
+                            PropCoord = vector3(-379.15, 6049.89, 31.21),
+                            MarkerCoord = vector3(-379.15, 6049.89, 31.95),
+                            Coord = vector3(-379.71, 6049.33, 31.51),
+                            Heading = 315.0,
+                            RayFireName = "DES_Jewel_Cab4",
+                        },
+                    },
+                    Loot = {
+                        Items = {
+                            "diamond",
+                            "watch_gold",
+                            "watch_diamond",
+                            "watch_steel",
+                            "watch_emerald",
+                            "watch_ruby",
+                            "necklace_gold",
+                            "necklace_diamond",
+                            "necklace_steel",
+                            "necklace_emerald",
+                            "necklace_ruby",
+                            "ring_gold",
+                            "ring_diamond",
+                            "ring_steel",
+                            "ring_emerald",
+                            "ring_ruby",
+                            "bracelet_gold",
+                            "bracelet_diamond",
+                            "bracelet_steel",
+                            "bracelet_emerald",
+                            "bracelet_ruby",
+                        },
+                        ItemCount = { Min = 5, Max = 8 },
+                    },
+                    Size = { x = 0.1, y = 0.1, z = 0.1 },
+                    Color = { r = 255, g = 255, b = 255 },
+                    MarkerRotation = vector3(180.0, 0.0, 0.0),
+                    BobUpAndDown = true,
+                    Distance = 1.2,
+                    HelpText = GetString("vangelico_press_break_tray"),
+                    Marker = 20,
+                    Type = AVAConfig.StealablesType.Tray,
+                },
+            },
+        },
+    },
+    Interactables = {
+        {
+            Coord = vector3(-631.59, -230.01, 37.08),
+            Size = { x = 1.0, y = 1.0, z = 1.0 },
+            Color = { r = 255, g = 255, b = 255 },
+            Distance = 1.2,
+            Name = GetString("alarm"),
+            HelpText = GetString("press_stop_alarm"),
+            Marker = 27,
+            Action = function(playerPed)
+                TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_paleto", { StopAlarm = true })
+            end,
+            JobNeeded = { "lspd" },
+        },
+    },
+    -- Reset = function()
+    -- end,
+    ClientReset = function()
+        ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
+
+        for _, tray in ipairs(AVAConfig.Heists.vangelico_paleto.Stages[1].Stealables.Trays.Zones) do
+            local object = GetRayfireMapObject(tray.PropCoord, 0.5, tray.RayFireName)
+            SetStateOfRayfireMapObject(object, 2)
+        end
+    end,
+}
+
+AVAConfig.Heists.vangelico_grapeseed = {
+    Started = false,
+    InteriorId = 122882,
+    CopsCount = 6,
+    CurrentStage = 0,
+    ServerTriggerAlarm = function()
+        -- exports.ava_jobs:sendMessageToJob("lspd", {
+        --     message = GetString("vangelico_alarm_notif"),
+        --     location = vector3(-380.74, 6044.95, 31.51)
+        -- })
+    end,
+    Stages = {
+        [0] = {
+            Function = function(playerPed)
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_grapeseed", { TriggerHeist = true, Stage = 1 })
+                    else
+                        LastActionTimer = GetGameTimer()
+                        exports.ava_core:ShowNotification(GetString("not_enough_cops"))
+                    end
+                end
+            end,
+        },
+        [1] = {
+            Stealables = {
+                Trays = {
+                    Zones = {
+                        -- two on the right
+                        {
+                            PropCoord = vector3(1649.94, 4886.56, 42.16),
+                            MarkerCoord = vector3(1649.94, 4886.56, 42.50),
+                            Coord = vector3(1650.03, 4885.55, 42.16),
+                            Heading = 5.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        {
+                            PropCoord = vector3(1648.67, 4886.42, 42.16),
+                            MarkerCoord = vector3(1648.67, 4886.42, 42.50),
+                            Coord = vector3(1648.80, 4885.49, 42.16),
+                            Heading = 5.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        -- middle front
+                        {
+                            PropCoord = vector3(1648.76, 4882.67, 41.82),
+                            MarkerCoord = vector3(1648.76, 4882.67, 42.50),
+                            Coord = vector3(1648.65, 4883.45, 42.16),
+                            Heading = 185.0,
+                            RayFireName = "DES_Jewel_Cab",
+                        },
+                        {
+                            PropCoord = vector3(1647.49, 4882.38, 42.16),
+                            MarkerCoord = vector3(1647.49, 4882.38, 42.50),
+                            Coord = vector3(1647.44, 4883.30, 42.16),
+                            Heading = 185.0,
+                            RayFireName = "DES_Jewel_Cab2",
+                        },
+                        {
+                            PropCoord = vector3(1647.59, 4881.70, 42.16),
+                            MarkerCoord = vector3(1647.59, 4881.70, 42.50),
+                            Coord = vector3(1647.72, 4880.88, 42.16),
+                            Heading = 5.0,
+                            RayFireName = "DES_Jewel_Cab3",
+                        },
+                        -- back left
+                        {
+                            PropCoord = vector3(1646.36, 4879.63, 42.16),
+                            MarkerCoord = vector3(1646.36, 4879.63, 42.50),
+                            Coord = vector3(1647.18, 4879.71, 42.16),
+                            Heading = 95.0,
+                            RayFireName = "DES_Jewel_Cab4",
+                        },
+                    },
+                    Loot = {
+                        Items = {
+                            "diamond",
+                            "watch_gold",
+                            "watch_diamond",
+                            "watch_steel",
+                            "watch_emerald",
+                            "watch_ruby",
+                            "necklace_gold",
+                            "necklace_diamond",
+                            "necklace_steel",
+                            "necklace_emerald",
+                            "necklace_ruby",
+                            "ring_gold",
+                            "ring_diamond",
+                            "ring_steel",
+                            "ring_emerald",
+                            "ring_ruby",
+                            "bracelet_gold",
+                            "bracelet_diamond",
+                            "bracelet_steel",
+                            "bracelet_emerald",
+                            "bracelet_ruby",
+                        },
+                        ItemCount = { Min = 5, Max = 8 },
+                    },
+                    Size = { x = 0.1, y = 0.1, z = 0.1 },
+                    Color = { r = 255, g = 255, b = 255 },
+                    MarkerRotation = vector3(180.0, 0.0, 0.0),
+                    BobUpAndDown = true,
+                    Distance = 1.2,
+                    HelpText = GetString("vangelico_press_break_tray"),
+                    Marker = 20,
+                    Type = AVAConfig.StealablesType.Tray,
+                },
+            },
+        },
+    },
+    Interactables = {
+        {
+            Coord = vector3(-631.59, -230.01, 37.08),
+            Size = { x = 1.0, y = 1.0, z = 1.0 },
+            Color = { r = 255, g = 255, b = 255 },
+            Distance = 1.2,
+            Name = GetString("alarm"),
+            HelpText = GetString("press_stop_alarm"),
+            Marker = 27,
+            Action = function(playerPed)
+                TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_grapeseed", { StopAlarm = true })
+            end,
+            JobNeeded = { "lspd" },
+        },
+    },
+    -- Reset = function()
+    -- end,
+    ClientReset = function()
+        ToggleAlarm("JEWEL_STORE_HEIST_ALARMS", false)
+
+        for _, tray in ipairs(AVAConfig.Heists.vangelico_grapeseed.Stages[1].Stealables.Trays.Zones) do
             local object = GetRayfireMapObject(tray.PropCoord, 0.5, tray.RayFireName)
             SetStateOfRayfireMapObject(object, 2)
         end

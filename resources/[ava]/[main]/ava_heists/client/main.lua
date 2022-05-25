@@ -88,17 +88,17 @@ end)
 --     end
 -- end)
 
--- Citizen.CreateThread(function()
---     local lastInterior = nil
---     while AVAConfig.Debug do
---         Wait(100)
---         local interior = GetInteriorFromEntity(PlayerPedId())
---         if lastInterior ~= interior then
---             print(interior)
---             lastInterior = interior
---         end
---     end
--- end)
+Citizen.CreateThread(function()
+    local lastInterior = nil
+    while AVAConfig.Debug do
+        Wait(100)
+        local interior = GetInteriorFromEntity(PlayerPedId())
+        if lastInterior ~= interior then
+            print(interior)
+            lastInterior = interior
+        end
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -111,7 +111,7 @@ end)
 local function HasRequiredJob(jobs)
     if PlayerData.jobs then
         for i = 1, #PlayerData.jobs do
-            local jobName<const> = PlayerData.jobs[i].name
+            local jobName <const> = PlayerData.jobs[i].name
             for j = 1, #jobs do
                 if jobName == jobs[j] then
                     -- TODO be in service

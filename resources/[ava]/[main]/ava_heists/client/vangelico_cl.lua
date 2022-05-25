@@ -3,38 +3,26 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 local TrayAnimationConfig = {
-    DES_Jewel_Cab = {Speed = 0.2, AnimationName = "smash_case_necklace"},
-    DES_Jewel_Cab2 = {Speed = 0.143, AnimationName = "smash_case_e"},
-    DES_Jewel_Cab3 = {Speed = 0.168, AnimationName = "smash_case_tray_a"},
-    DES_Jewel_Cab4 = {Speed = 0.041, AnimationName = "smash_case_tray_b"},
+    DES_Jewel_Cab = { Speed = 0.2, AnimationName = "smash_case_necklace" },
+    DES_Jewel_Cab2 = { Speed = 0.143, AnimationName = "smash_case_e" },
+    DES_Jewel_Cab3 = { Speed = 0.168, AnimationName = "smash_case_tray_a" },
+    DES_Jewel_Cab4 = { Speed = 0.041, AnimationName = "smash_case_tray_b" },
 }
 
 function SmashTray(heistName, stageIndex, stealableName, trayIndex)
-    if playerIsInAction then
-        return
-    end
+    if playerIsInAction then return end
 
     local heist = AVAConfig.Heists[heistName]
-    if heist == nil then
-        return
-    end
+    if heist == nil then return end
     local stage = heist.Stages[stageIndex]
-    if stage == nil then
-        return
-    end
+    if stage == nil then return end
     local stealable = stage.Stealables[stealableName]
-    if stealable == nil then
-        return
-    end
+    if stealable == nil then return end
     local tray = stealable.Zones[trayIndex]
-    if tray == nil then
-        return
-    end
+    if tray == nil then return end
 
     local animConfig = TrayAnimationConfig[tray.RayFireName]
-    if animConfig == nil then
-        return
-    end
+    if animConfig == nil then return end
 
     if not IsPedArmed(playerPed, 4) then
         exports.ava_core:ShowNotification(GetString("vangelico_need_weapon"))
@@ -80,7 +68,7 @@ function SmashTray(heistName, stageIndex, stealableName, trayIndex)
                 ClearPedTasks(playerPed)
                 if hasFinishedAnimation then
                     TriggerServerEvent("ava_heists:server:triggerAction", heistName,
-                        {Steal = true, StageIndex = stageIndex, StealableName = stealableName, TrayIndex = trayIndex})
+                        { Steal = true, StageIndex = stageIndex, StealableName = stealableName, TrayIndex = trayIndex })
                 else
                     tray.Stolen = false
                     exports.ava_core:ShowNotification(GetString("canceled_animation"))
@@ -101,9 +89,7 @@ function SmashTrayEvent(heistName, options)
     local tray = stealable.Zones[options.TrayIndex]
 
     local animConfig = TrayAnimationConfig[tray.RayFireName]
-    if animConfig == nil then
-        return
-    end
+    if not animConfig then return end
 
     RequestNamedPtfxAsset("scr_jewelheist")
     while not HasNamedPtfxAssetLoaded("scr_jewelheist") do
