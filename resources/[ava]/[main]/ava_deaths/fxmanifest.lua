@@ -8,13 +8,12 @@ repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
 
-files {"languages/**.json"}
+files { "languages/**.json" }
 
-client_scripts {"config.lua", "client/main.lua"}
+client_scripts { "config.lua", "client/main.lua", "client/items.lua" }
 
-server_scripts {"config.lua", "server/main.lua"}
+server_scripts { "config.lua", "server/main.lua", "server/items.lua" }
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts { "@ava_core/shared/language.lua" }
 
-dependencies {"ava_core"}
-
+dependencies { "ava_core" }

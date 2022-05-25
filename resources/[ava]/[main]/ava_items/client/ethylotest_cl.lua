@@ -18,16 +18,12 @@ end
 
 RegisterNetEvent("ava_items:ethylotest", function()
     local targetId, localId = exports.ava_core:ChooseClosestPlayer("", nil, true)
-    if not targetId then
-        return
-    end
+    if not targetId then return end
+
     TriggerServerEvent("ava_items:server:ethylotest:remove")
     local playerData = exports.ava_core:TriggerServerCallback("ava_items:server:ethylotest:getTargetData", targetId)
-    if not playerData then
-        return
-    end
+    if not playerData then return end
 
-    print(json.encode(playerData, {indent = true}))
     local elements = {}
     if playerData.drunk ~= nil then
         table.insert(elements, {
@@ -44,7 +40,6 @@ RegisterNetEvent("ava_items:ethylotest", function()
         })
     end
 
-    print(json.encode(elements, {indent = true}))
     RageUI.CloseAll()
     RageUI.OpenTempMenu(GetString("ethylotest_menu"), function(Items)
         for i = 1, #elements do
@@ -53,4 +48,3 @@ RegisterNetEvent("ava_items:ethylotest", function()
         end
     end)
 end)
-

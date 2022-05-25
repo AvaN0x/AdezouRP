@@ -4,6 +4,8 @@
 -------------------------------------------
 AVAConfig = {}
 
+AVAConfig.EMSJobName = "ems"
+
 -- In seconds
 AVAConfig.DeadScreenMaxDuration = 15 * 60
 AVAConfig.AskRespawnDuration = 10 * 60

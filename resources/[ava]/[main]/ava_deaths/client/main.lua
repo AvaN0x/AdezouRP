@@ -187,6 +187,10 @@ function RevivePlayer(atHospital)
     DoScreenFadeIn(800)
 end
 
+RegisterNetEvent("ava_deaths:client:revive", function()
+    RevivePlayer(false)
+end)
+
 RegisterNetEvent("ava_deaths:client:staff_revive", function()
     RevivePlayer(false)
     local playerPed = PlayerPedId()

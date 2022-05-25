@@ -53,7 +53,9 @@ Citizen.CreateThread(function()
             TriggerServerEvent("ava_core:server:updatePosition", AVA.Player.Data.position)
         end
 
-        local playerHealth = AVA.Player.IsDead == true and 0 or GetEntityHealth(AVA.Player.playerPed)
+        local playerHealth = AVA.Player.IsDead == true
+            and 0
+            or GetEntityHealth(AVA.Player.playerPed)
         if AVA.Player.Data.health ~= playerHealth then
             TriggerServerEvent("ava_core:server:updateHealth", playerHealth)
             AVA.Player.Data.health = playerHealth

@@ -264,7 +264,6 @@
         "label": "Défibrilateur",
         "type": "medical",
         "weight": 1000,
-        "limit": 0,
         "closeInv": true,
         "description": "Chef on est en train de le perdre!",
         "noIcon": true
