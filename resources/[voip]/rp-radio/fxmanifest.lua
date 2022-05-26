@@ -9,20 +9,21 @@ version "2.2.1"
 ui_page "index.html"
 
 dependencies {
-	"pma-voice"
+    "pma-voice",
+    "ava_core"
 }
 
 files {
-	"index.html",
-	"on.ogg",
-	"off.ogg",
+    "index.html",
+    "on.ogg",
+    "off.ogg",
 }
 
 client_scripts {
-	"config.lua",
-	"client.lua",
+    "config.lua",
+    "client.lua",
 }
 
 server_scripts {
-	"server.lua",
+    "server.lua",
 }

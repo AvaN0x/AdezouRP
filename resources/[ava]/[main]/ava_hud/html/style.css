@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+
+
+:root {
+    font-size: 1.65vh;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+#playerStats {
+    position: absolute;
+
+    left: 18.2%;
+    /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
+    /*left: 82.0%; /* (18.2% Right Side of Map) | (82.0% Right Side of Screen) | (2.7% Above Map)  */
+    bottom: 1.85%;
+    /* (1.85% Default-Fix for all 16:9 resolutions) | (21.0% Above Map) */
+    /* 6.5% with esx_ladderui */
+}
+
+#playerStats.bigMap {
+    /* right of the big map */
+    left: 26.2%;
+}
+
+.status {
+    display: flex;
+    width: 20vw;
+    position: relative;
+    left: -1rem;
+    justify-content: left;
+    margin: 0.5rem 0;
+    flex-wrap: wrap;
+}
+
+.status .stat {
+    border-radius: 40%;
+    width: 1.6rem;
+    height: 1.6rem;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+    float: right;
+    margin-top: .3rem;
+    margin-right: .3rem;
+}
+
+.status .stat .bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    opacity: .7;
+}
+
+.status .stat img {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .8;
+}
+
+.mainStats {
+    color: #fff;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    position: relative;
+    min-width: 280px;
+    left: -1rem;
+    border-radius: 5px 0 0 5px;
+}
+
+.mainStats#jobs {
+    min-height: 2rem;
+}
+
+.mainStats:not(:last-child) {
+    margin-bottom: 0.2rem;
+}
+
+.stat {
+    height: 1.6rem;
+    position: relative;
+}
+
+.stat img {
+    position: absolute;
+    top: 50%;
+    left: .4rem;
+    transform: translateY(-50%);
+    height: 1.2rem;
+    width: 1.2rem;
+}
+
+
+.stat span {
+    position: absolute;
+    top: 50%;
+    min-width: 220px;
+    transform: translateY(-50%);
+    margin-left: 1.8rem;
+}
+
+
+
+
+
+
+
+.background,
+.outer {
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.progress {
+    -webkit-transition: 0.35s stroke-dashoffset;
+    -o-transition: 0.35s stroke-dashoffset;
+    transition: 0.35s stroke-dashoffset;
+    -webkit-transform: rotate(140deg);
+    -ms-transform: rotate(140deg);
+    transform: rotate(140deg);
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.huds {
+    height: 100%;
+    width: 100%;
+}
+
+.huds .hud.dashboard {
+    position: absolute;
+    height: 85px;
+    bottom: 20px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.huds .hud.dashboard div {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.huds .hud.dashboard div svg {
+    opacity: .2;
+}
+
+.huds .hud.dashboard .active svg {
+    opacity: .8;
+}
+
+.huds .hud.dashboard .speedometer {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    -webkit-clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
+    clip-path: polygon(100% 45%, 80% 45%, 60% 100%, 0% 100%, 0% 0%, 100% 0%);
+}
+
+.huds .hud.dashboard .speedometer svg {
+    opacity: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: scale(2) translate(-25%, -25%);
+    -ms-transform: scale(2) translate(-25%, -25%);
+    transform: scale(2) translate(-25%, -25%);
+}
+
+.huds .hud.dashboard .speedometer .outer {
+    opacity: .3;
+    -webkit-transform: rotate(180deg) scale(1.2);
+    -ms-transform: rotate(180deg) scale(1.2);
+    transform: rotate(180deg) scale(1.2);
+}
+
+.huds .hud.dashboard .speedometer .text {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.huds .hud.dashboard .speedometer .text .speed {
+    color: white;
+    font-size: 26px;
+    display: block;
+}
+
+.huds .hud.dashboard .speedometer .text .kmh {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    display: block;
+    text-transform: uppercase;
+}
+
+.huds .hud.fuel {
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    position: absolute;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.huds .hud.fuel span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    display: block;
+    margin-top: 0px;
+}
+
+.huds .hud.fuel svg {
+    opacity: 1 !important;
+}
+
+.hud.fuel span {
+    opacity: 0;
+    margin-top: -4px;
+}
+
+.hud.fuel span:after {
+    position: absolute;
+    content: '%';
+    top: 1px;
+    right: 4px;
+    font-size: 7px;
+}
+
+.hud.fuel g {
+    -webkit-transform: translate(16px, 13px);
+    -ms-transform: translate(16px, 13px);
+    transform: translate(16px, 13px);
+}
+
+
+
+
+.belt {
+    display: block;
+    position: absolute;
+    padding: 10px 8px;
+    margin: 10px 5px 0 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    overflow: hidden;
+    left: 40px;
+    top: 1px;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.belt i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFF;
+    z-index: 11;
+    font-size: 15px;
+}
+
+.belt img {
+    width: 22px;
+    margin: 3px 0 0 0;
+}
+
+
+#inventoryNotifications {
+    position: absolute;
+    right: 20px;
+    text-align: right;
+    bottom: 44px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFF;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}

@@ -1,0 +1,2632 @@
+{
+    "vehiclestypes": {
+        "0": {
+            "asbo": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 3199
+            },
+            "blista": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 3890
+            },
+            "brioso": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 5851
+            },
+            "club": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 3732
+            },
+            "dilettante": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 2078
+            },
+            "kanjo": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 4452
+            },
+            "issi2": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 3778
+            },
+            "issi3": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 3443
+            },
+            "panto": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 4747
+            },
+            "prairie": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 2866
+            },
+            "rhapsody": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 2573
+            },
+            "brioso2": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 5613
+            },
+            "weevil": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 4557
+            },
+            "cogcabrio": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 25532
+            },
+            "exemplar": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 23735
+            },
+            "f620": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 25891
+            },
+            "felon": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 19321
+            },
+            "felon2": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 18805
+            },
+            "jackal": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 22208
+            },
+            "oracle": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 19183
+            },
+            "oracle2": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 21390
+            },
+            "sentinel": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 22688
+            },
+            "sentinel2": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 24188
+            },
+            "windsor": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 29430
+            },
+            "windsor2": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 33181
+            },
+            "zion": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 18564
+            },
+            "zion2": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 18564
+            },
+            "previon": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 20601
+            },
+            "akuma": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 34055
+            },
+            "avarus": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 30834
+            },
+            "bagger": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 21995
+            },
+            "bati": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 31870
+            },
+            "bati2": {
+                "category": "motorcycles",
+                "quantity": 0,
+                "price": 31870
+            },
+            "bf400": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 33529
+            },
+            "carbonrs": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 22187
+            },
+            "chimera": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 19930
+            },
+            "cliffhanger": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 26441
+            },
+            "daemon": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 20584
+            },
+            "daemon2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 24015
+            },
+            "defiler": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 25040
+            },
+            "diablous": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 24406
+            },
+            "diablous2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 28309
+            },
+            "double": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 31629
+            },
+            "enduro": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 25935
+            },
+            "esskey": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 32050
+            },
+            "faggio": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 12732
+            },
+            "faggio2": {
+                "category": "motorcycles",
+                "quantity": 2,
+                "price": 12603
+            },
+            "faggio3": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 16418
+            },
+            "fcr": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 27651
+            },
+            "fcr2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 29054
+            },
+            "gargoyle": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 35097
+            },
+            "hakuchou": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 28130
+            },
+            "hakuchou2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 24752
+            },
+            "hexer": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 27416
+            },
+            "innovation": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 22030
+            },
+            "lectro": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 28166
+            },
+            "manchez": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 40581
+            },
+            "nemesis": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 30091
+            },
+            "nightblade": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 36581
+            },
+            "pcj": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 24406
+            },
+            "ratbike": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 24034
+            },
+            "reever": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 39731
+            },
+            "ruffian": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 29140
+            },
+            "rrocket": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 18465
+            },
+            "sanchez": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 39528
+            },
+            "sanchez2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 35934
+            },
+            "sanctus": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 46673
+            },
+            "shinobi": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 47965
+            },
+            "shotaro": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 34918
+            },
+            "sovereign": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 26454
+            },
+            "stryder": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 21369
+            },
+            "thrust": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 35873
+            },
+            "vader": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 26372
+            },
+            "vindicator": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 33893
+            },
+            "vortex": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 32226
+            },
+            "wolfsbane": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 28135
+            },
+            "zombiea": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 29857
+            },
+            "zombieb": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 32842
+            },
+            "manchez2": {
+                "category": "motorcycles",
+                "quantity": 5,
+                "price": 39432
+            },
+            "blade": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 31242
+            },
+            "buccaneer": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 42689
+            },
+            "buccaneer2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 47237
+            },
+            "buffalo4": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 59245
+            },
+            "chino": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 34685
+            },
+            "chino2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 39500
+            },
+            "clique": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 42962
+            },
+            "coquette3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 42196
+            },
+            "deviant": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 41355
+            },
+            "dominator": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 53475
+            },
+            "dominator2": {
+                "category": "muscles",
+                "quantity": 0,
+                "price": 49114
+            },
+            "dominator3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 47193
+            },
+            "dukes": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 47193
+            },
+            "dukes3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 44610
+            },
+            "faction": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 38163
+            },
+            "faction2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 40172
+            },
+            "faction3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 34243
+            },
+            "ellie": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 42060
+            },
+            "gauntlet": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 44686
+            },
+            "gauntlet2": {
+                "category": "muscles",
+                "quantity": 0,
+                "price": 44948
+            },
+            "gauntlet3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 52576
+            },
+            "gauntlet4": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 67518
+            },
+            "gauntlet5": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 61548
+            },
+            "gauntletctx": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 70324
+            },
+            "hermes": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 43174
+            },
+            "hotknife": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 39106
+            },
+            "hustler": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 44578
+            },
+            "impaler": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 34968
+            },
+            "lurcher": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 42698
+            },
+            "moonbeam": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 31578
+            },
+            "moonbeam2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 38740
+            },
+            "nightshade": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 48685
+            },
+            "peyote2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 37477
+            },
+            "phoenix": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 40916
+            },
+            "picador": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 33082
+            },
+            "ratloader": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 38194
+            },
+            "ratloader2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 46840
+            },
+            "ruiner": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 40922
+            },
+            "sabregt": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 37782
+            },
+            "sabregt2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 45299
+            },
+            "slamvan": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 39414
+            },
+            "slamvan2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 39794
+            },
+            "slamvan3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 50116
+            },
+            "stalion": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 35630
+            },
+            "stalion2": {
+                "category": "muscles",
+                "quantity": 0,
+                "price": 36716
+            },
+            "tampa": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 35620
+            },
+            "tulip": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 45418
+            },
+            "vamos": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 35630
+            },
+            "vigero": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 34554
+            },
+            "virgo": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 27891
+            },
+            "virgo2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 35364
+            },
+            "virgo3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 30904
+            },
+            "voodoo": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 30811
+            },
+            "voodoo2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 26166
+            },
+            "yosemite": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 36871
+            },
+            "yosemite2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 32570
+            },
+            "yosemite3": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 45419
+            },
+            "dominator7": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 43210
+            },
+            "dominator8": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 49677
+            },
+            "bfinjection": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 44052
+            },
+            "bifta": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 38559
+            },
+            "blazer": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 27003
+            },
+            "blazer2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 27003
+            },
+            "blazer3": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 50926
+            },
+            "blazer4": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 57757
+            },
+            "bodhi2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 45347
+            },
+            "brawler": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 46424
+            },
+            "caracara2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 52374
+            },
+            "dloader": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 24100
+            },
+            "dubsta3": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 68465
+            },
+            "dune": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 46536
+            },
+            "everon": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 43550
+            },
+            "freecrawler": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 45189
+            },
+            "hellion": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 46958
+            },
+            "kalahari": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 37422
+            },
+            "kamacho": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 106036
+            },
+            "mesa3": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 48085
+            },
+            "outlaw": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 31266
+            },
+            "patriot3": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 47589
+            },
+            "rancherxl": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 24590
+            },
+            "rebel": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 32025
+            },
+            "rebel2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 33795
+            },
+            "riata": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 67277
+            },
+            "sandking": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 34667
+            },
+            "sandking2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 31996
+            },
+            "trophytruck": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 52108
+            },
+            "trophytruck2": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 47221
+            },
+            "vagrant": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 56016
+            },
+            "verus": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 29150
+            },
+            "winky": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 26826
+            },
+            "vigout": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 46197
+            },
+            "astron": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 73427
+            },
+            "baller": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 45708
+            },
+            "baller2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 50465
+            },
+            "baller3": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 55265
+            },
+            "baller4": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 58174
+            },
+            "baller7": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 62124
+            },
+            "bjxl": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 45811
+            },
+            "cavalcade": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 39394
+            },
+            "cavalcade2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 39285
+            },
+            "contender": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 66749
+            },
+            "dubsta": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 65579
+            },
+            "dubsta2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 68796
+            },
+            "fq2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 50615
+            },
+            "granger": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 48562
+            },
+            "granger2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 51597
+            },
+            "gresley": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 61611
+            },
+            "habanero": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 41547
+            },
+            "huntley": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 77087
+            },
+            "iwagen": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 69491
+            },
+            "jubilee": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 81396
+            },
+            "landstalker": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 46669
+            },
+            "landstalker2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 59280
+            },
+            "mesa": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 46555
+            },
+            "novak": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 71518
+            },
+            "patriot": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 49807
+            },
+            "radi": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 44154
+            },
+            "rebla": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 68465
+            },
+            "rocoto": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 44721
+            },
+            "seminole": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 45674
+            },
+            "seminole2": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 58659
+            },
+            "serrano": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 50324
+            },
+            "toros": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 75468
+            },
+            "xls": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 66734
+            },
+            "squaddie": {
+                "category": "suvs",
+                "quantity": 5,
+                "price": 59296
+            },
+            "asea": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 22439
+            },
+            "asterope": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 29069
+            },
+            "cog55": {
+                "category": "sedans",
+                "hidden":true,
+                "quantity": 5,
+                "price": 52957
+            },
+            "cog552": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 54983
+            },
+            "cognoscenti": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 52011
+            },
+            "deity": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 59825
+            },
+            "emperor": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 26890
+            },
+            "emperor2": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 25668
+            },
+            "fugitive": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 42704
+            },
+            "glendale": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 45189
+            },
+            "glendale2": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 53671
+            },
+            "ingot": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 20707
+            },
+            "intruder": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 36499
+            },
+            "premier": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 27039
+            },
+            "primo": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 30251
+            },
+            "primo2": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 43609
+            },
+            "regina": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 22123
+            },
+            "stafford": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 44391
+            },
+            "stanier": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 33001
+            },
+            "stratum": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 34779
+            },
+            "superd": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 48370
+            },
+            "surge": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 24577
+            },
+            "tailgater": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 34111
+            },
+            "warrener": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 36499
+            },
+            "washington": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 32594
+            },
+            "tailgater2": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 61826
+            },
+            "alpha": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 143328
+            },
+            "banshee": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 203751
+            },
+            "bestiagts": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 257991
+            },
+            "blista2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 130291
+            },
+            "blista3": {
+                "category": "sports",
+                "quantity": 0,
+                "price": 137148
+            },
+            "buffalo": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 216767
+            },
+            "buffalo2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 218732
+            },
+            "buffalo3": {
+                "category": "sports",
+                "quantity": 0,
+                "price": 218732
+            },
+            "carbonizzare": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 265120
+            },
+            "cinquemila": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 265784
+            },
+            "comet2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 153629
+            },
+            "comet3": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 169663
+            },
+            "comet4": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 206043
+            },
+            "comet5": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 214169
+            },
+            "comet7": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 218513
+            },
+            "coquette": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 173380
+            },
+            "coquette4": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 189193
+            },
+            "drafter": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 202574
+            },
+            "elegy": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 272262
+            },
+            "elegy2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 214212
+            },
+            "feltzer2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 224759
+            },
+            "flashgt": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 237036
+            },
+            "furoregt": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 163394
+            },
+            "fusilade": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 142919
+            },
+            "futo": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 163485
+            },
+            "gb200": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 177823
+            },
+            "hotring": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 137767
+            },
+            "komoda": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 204613
+            },
+            "imorgon": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 148254
+            },
+            "issi7": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 197228
+            },
+            "italigto": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 407658
+            },
+            "jugular": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 187852
+            },
+            "jester": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 234991
+            },
+            "jester2": {
+                "category": "sports",
+                "quantity": 0,
+                "price": 239055
+            },
+            "jester3": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 238734
+            },
+            "khamelion": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 121890
+            },
+            "kuruma": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 179755
+            },
+            "locust": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 130838
+            },
+            "lynx": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 174845
+            },
+            "massacro": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 210995
+            },
+            "massacro2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 190379
+            },
+            "neo": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 167049
+            },
+            "neon": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 188076
+            },
+            "ninef": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 154365
+            },
+            "ninef2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 154795
+            },
+            "omnis": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 198024
+            },
+            "paragon": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 268626
+            },
+            "pariah": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 244526
+            },
+            "penumbra": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 134155
+            },
+            "penumbra2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 181951
+            },
+            "raiden": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 177154
+            },
+            "rapidgt": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 196452
+            },
+            "rapidgt2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 197654
+            },
+            "raptor": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 131070
+            },
+            "revolter": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 201228
+            },
+            "ruston": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 138414
+            },
+            "schafter2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 215675
+            },
+            "schafter3": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 256371
+            },
+            "schlagen": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 318914
+            },
+            "schwarzer": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 259365
+            },
+            "sentinel3": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 218488
+            },
+            "seven70": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 200426
+            },
+            "specter": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 172946
+            },
+            "specter2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 209238
+            },
+            "streiter": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 226179
+            },
+            "sugoi": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 179970
+            },
+            "sultan": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 260019
+            },
+            "sultan2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 179763
+            },
+            "surano": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 209644
+            },
+            "tampa2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 140306
+            },
+            "tropos": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 151024
+            },
+            "verlierer2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 187771
+            },
+            "vstr": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 158157
+            },
+            "zr350": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 214454
+            },
+            "calico": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 249502
+            },
+            "futo2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 168087
+            },
+            "euros": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 209509
+            },
+            "jester4": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 222001
+            },
+            "remus": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 183038
+            },
+            "comet6": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 235956
+            },
+            "growler": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 242445
+            },
+            "vectre": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 138502
+            },
+            "cypher": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 178976
+            },
+            "cypherct": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 168324
+            },
+            "sultan3": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 224859
+            },
+            "rt3000": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 211380
+            },
+            "btype": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 112048
+            },
+            "btype2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 112267
+            },
+            "btype3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 113230
+            },
+            "casco": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 140153
+            },
+            "cheetah2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 231065
+            },
+            "coquette2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 125637
+            },
+            "dynasty": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 117386
+            },
+            "fagaloa": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 77661
+            },
+            "feltzer3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 152717
+            },
+            "gt500": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 174709
+            },
+            "infernus2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 138515
+            },
+            "jb7002": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 139372
+            },
+            "mamba": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 111835
+            },
+            "manana": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 106371
+            },
+            "manana2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 123628
+            },
+            "michelli": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 123564
+            },
+            "monroe": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 123732
+            },
+            "nebula": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 99960
+            },
+            "peyote": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 122176
+            },
+            "peyote3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 134154
+            },
+            "pigalle": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 103204
+            },
+            "rapidgt3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 173435
+            },
+            "retinue": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 131017
+            },
+            "retinue2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 129261
+            },
+            "savestra": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 136753
+            },
+            "stinger": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 134811
+            },
+            "stingergt": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 143163
+            },
+            "swinger": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 115694
+            },
+            "torero": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 130429
+            },
+            "tornado": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 83368
+            },
+            "tornado2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 82793
+            },
+            "tornado3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 78708
+            },
+            "tornado4": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 83368
+            },
+            "tornado5": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 82793
+            },
+            "tornado6": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 80070
+            },
+            "turismo2": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 190261
+            },
+            "viseris": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 132292
+            },
+            "z190": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 119994
+            },
+            "ztype": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 126773
+            },
+            "zion3": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 131409
+            },
+            "cheburek": {
+                "category": "sportsclassics",
+                "quantity": 5,
+                "price": 116829
+            },
+            "adder": {
+                "category": "super",
+                "quantity": 5,
+                "price": 565793
+            },
+            "autarch": {
+                "category": "super",
+                "quantity": 5,
+                "price": 528881
+            },
+            "banshee2": {
+                "category": "super",
+                "quantity": 5,
+                "price": 871652
+            },
+            "bullet": {
+                "category": "super",
+                "quantity": 5,
+                "price": 556263
+            },
+            "champion": {
+                "category": "super",
+                "quantity": 5,
+                "price": 623657
+            },
+            "cheetah": {
+                "category": "super",
+                "quantity": 5,
+                "price": 844275
+            },
+            "cyclone": {
+                "category": "super",
+                "quantity": 5,
+                "price": 741818
+            },
+            "entity2": {
+                "category": "super",
+                "quantity": 5,
+                "price": 603842
+            },
+            "entityxf": {
+                "category": "super",
+                "quantity": 5,
+                "price": 572310
+            },
+            "emerus": {
+                "category": "super",
+                "quantity": 5,
+                "price": 699186
+            },
+            "fmj": {
+                "category": "super",
+                "quantity": 5,
+                "price": 617368
+            },
+            "furia": {
+                "category": "super",
+                "quantity": 5,
+                "price": 991013
+            },
+            "gp1": {
+                "category": "super",
+                "quantity": 5,
+                "price": 550811
+            },
+            "ignus": {
+                "category": "super",
+                "quantity": 5,
+                "price": 727150
+            },
+            "infernus": {
+                "category": "super",
+                "quantity": 5,
+                "price": 554967
+            },
+            "italigtb": {
+                "category": "super",
+                "quantity": 5,
+                "price": 590890
+            },
+            "italigtb2": {
+                "category": "super",
+                "quantity": 5,
+                "price": 620322
+            },
+            "italirsx": {
+                "category": "super",
+                "quantity": 5,
+                "price": 1199250
+            },
+            "krieger": {
+                "category": "super",
+                "quantity": 5,
+                "price": 946788
+            },
+            "le7b": {
+                "category": "super",
+                "quantity": 5,
+                "price": 539570
+            },
+            "nero": {
+                "category": "super",
+                "quantity": 5,
+                "price": 792221
+            },
+            "nero2": {
+                "category": "super",
+                "quantity": 5,
+                "price": 833917
+            },
+            "osiris": {
+                "category": "super",
+                "quantity": 5,
+                "price": 569157
+            },
+            "penetrator": {
+                "category": "super",
+                "quantity": 5,
+                "price": 496991
+            },
+            "pfister811": {
+                "category": "super",
+                "quantity": 5,
+                "price": 602265
+            },
+            "prototipo": {
+                "category": "super",
+                "quantity": 5,
+                "price": 973895
+            },
+            "reaper": {
+                "category": "super",
+                "quantity": 5,
+                "price": 572310
+            },
+            "s80": {
+                "category": "super",
+                "quantity": 5,
+                "price": 537716
+            },
+            "sc1": {
+                "category": "super",
+                "quantity": 5,
+                "price": 558120
+            },
+            "sheava": {
+                "category": "super",
+                "quantity": 5,
+                "price": 625404
+            },
+            "sultanrs": {
+                "category": "super",
+                "quantity": 5,
+                "price": 740835
+            },
+            "t20": {
+                "category": "super",
+                "quantity": 5,
+                "price": 775549
+            },
+            "taipan": {
+                "category": "super",
+                "quantity": 5,
+                "price": 624006
+            },
+            "tempesta": {
+                "category": "super",
+                "quantity": 5,
+                "price": 644525
+            },
+            "tezeract": {
+                "category": "super",
+                "quantity": 5,
+                "price": 547309
+            },
+            "thrax": {
+                "category": "super",
+                "quantity": 5,
+                "price": 805618
+            },
+            "tigon": {
+                "category": "super",
+                "quantity": 5,
+                "price": 505211
+            },
+            "turismor": {
+                "category": "super",
+                "quantity": 5,
+                "price": 908626
+            },
+            "tyrant": {
+                "category": "super",
+                "quantity": 5,
+                "price": 541975
+            },
+            "tyrus": {
+                "category": "super",
+                "quantity": 5,
+                "price": 492898
+            },
+            "vacca": {
+                "category": "super",
+                "quantity": 5,
+                "price": 537266
+            },
+            "vagner": {
+                "category": "super",
+                "quantity": 5,
+                "price": 648505
+            },
+            "visione": {
+                "category": "super",
+                "quantity": 5,
+                "price": 1053508
+            },
+            "voltic": {
+                "category": "super",
+                "quantity": 5,
+                "price": 471091
+            },
+            "xa21": {
+                "category": "super",
+                "quantity": 5,
+                "price": 785223
+            },
+            "zeno": {
+                "category": "super",
+                "quantity": 5,
+                "price": 704662
+            },
+            "zentorno": {
+                "category": "super",
+                "quantity": 5,
+                "price": 657672
+            },
+            "zorrusso": {
+                "category": "super",
+                "quantity": 5,
+                "price": 638073
+            },
+            "bison": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 74409
+            },
+            "bison2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 61586
+            },
+            "bison3": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 61586
+            },
+            "bobcatxl": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 49969
+            },
+            "burrito": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 56069
+            },
+            "burrito2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 48417
+            },
+            "burrito3": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 48417
+            },
+            "burrito4": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 31983
+            },
+            "camper": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 58463
+            },
+            "gburrito": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 63369
+            },
+            "gburrito2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 34613
+            },
+            "journey": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 18891
+            },
+            "minivan": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 60614
+            },
+            "minivan2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 69680
+            },
+            "paradise": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 56684
+            },
+            "pony": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 56289
+            },
+            "pony2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 56289
+            },
+            "rumpo": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 67322
+            },
+            "rumpo2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 70391
+            },
+            "rumpo3": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 96541
+            },
+            "speedo": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 52000
+            },
+            "speedo4": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 54323
+            },
+            "surfer": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 42148
+            },
+            "surfer2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 36040
+            },
+            "youga": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 56282
+            },
+            "youga2": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 60267
+            },
+            "youga3": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 95549
+            },
+            "youga4": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 58710
+            },
+            "slamtruck": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 65234
+            },
+            "sadler": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 52358
+            },
+            "boxville": {
+                "category": "vans",
+                "quantity": 5,
+                "price": 37076
+            },
+            "aboxville": {
+                "category": "vans",
+                "hidden": true,
+                "quantity": 5,
+                "price": 35124
+            },
+            "astockade": {
+                "category": "vans",
+                "hidden": true,
+                "quantity": 5,
+                "price": 48650
+            },
+            "aburrito": {
+                "category": "vans",
+                "hidden": true,
+                "quantity": 5,
+                "price": 43728
+            },
+            "flatbed": {
+                "category": "industrial",
+                "hidden": true,
+                "quantity": 20,
+                "price": 43513
+            },
+            "ambulance": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 52934
+            },
+            "fbi": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 72745
+            },
+            "fbi2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48515
+            },
+            "firetruk": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 52998
+            },
+            "lguard": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48025
+            },
+            "pbus": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 33487
+            },
+            "police": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 58988
+            },
+            "police2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 68487
+            },
+            "police3": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 62799
+            },
+            "police4": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 59169
+            },
+            "policeb": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 51782
+            },
+            "policet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 48882
+            },
+            "pranger": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 47862
+            },
+            "riot": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 245693
+            },
+            "riot2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 351546
+            },
+            "sheriff": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 58806
+            },
+            "sheriff2": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 49005
+            },
+            "emsbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 78408
+            },
+            "polbuffalo": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 70349
+            },
+            "polbullet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 64251
+            },
+            "polgauntlet": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 83701
+            },
+            "polvacca": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 65340
+            },
+            "umoracle": {
+                "category": "emergency",
+                "hidden": true,
+                "quantity": 20,
+                "price": 61166
+            }
+        },
+        "1": {
+            "dinghy": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy3": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dinghy4": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "jetmax": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "marquis": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark3": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "speeder": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "speeder2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "squalo": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "suntrap": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "toro": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "toro2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "tropic": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "tropic2": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "longfin": {
+                "category": "boats",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seashark2": {
+                "category": "emergency",
+                "quantity": 0,
+                "hidden": true,
+                "price": 10000
+            },
+            "predator": {
+                "category": "emergency",
+                "quantity": 0,
+                "hidden": true,
+                "price": 10000
+            }
+        },
+        "2": {
+            "alphaz1": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "besra": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "cuban800": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "dodo": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "microlight": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "miljet": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "nimbus": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seabreeze": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "shamal": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "stunt": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "velum": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "velum2": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "vestra": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "luxor": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            },
+            "luxor2": {
+                "category": "planes",
+                "quantity": 0,
+                "price": 10000
+            }
+        },
+        "3": {
+            "buzzard2": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "frogger": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "havok": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "maverick": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "seasparrow": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "supervolito": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "supervolito2": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "swift": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "swift2": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "volatus": {
+                "category": "helis",
+                "quantity": 0,
+                "price": 10000
+            },
+            "polmav": {
+                "category": "emergency",
+                "quantity": 0,
+                "hidden": true,
+                "price": 10000
+            }
+        }
+    },
+    "jobs": {
+        "lspd": {
+            "police": true,
+            "police2": true,
+            "police3": true,
+            "police4": true,
+            "policet": true,
+            "policeb": true,
+            "fbi": true,
+            "fbi2": true,
+            "polbullet": true,
+            "polbuffalo": true,
+            "polgauntlet": true,
+            "polvacca": true,
+            "umoracle": true,
+            "riot": true,
+            "riot2": true
+        },
+        "ems": {
+            "ambulance": true,
+            "emsbuffalo": true
+        },
+        "mechanic": {
+            "flatbed" : true,
+            "slamtruck" : true
+        },
+        "government": {
+            "cog552" : true
+        },
+        "winemaker": {
+            "speedo": true
+        },
+        "tailor": {
+            "speedo": true
+        },
+        "cluckin": {
+            "benson" : true,
+            "taco" : true
+        },
+        "bahama": {
+        
+        },
+        "unicorn": {
+        
+        },
+        "nightclub": {
+        
+        },
+    }
+}

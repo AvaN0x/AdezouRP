@@ -1,0 +1,23 @@
+{
+    "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
+    "revived_by_staff": "Revive par un staff",
+    "revive_help": "Réanimer un joueur",
+    "dead_message_title": "~r~Vous êtes dans le coma~s~",
+    "dead_message_subtitle": "",
+    "dead_time_left": "Temps restant %02d:%02d",
+    "dead_time_left_before_ask_for_respawn": "Temps restant %02d:%02d~n~Temps restant avant Unité X %02d:%02d",
+    "button_respawn": "Appeler l'unité X",
+    "button_call_ems": "Appeler les EMS",
+    "call_ems_message": "Besoin d'une réanimation au plus vite!",
+    "confirm_respawn_title": "~r~Unité X~s~",
+    "confirm_respawn_firstline": "Voulez-vous vraiment appeler l'unité X ?",
+    "confirm_respawn_secondline": "Vous serez transféré dans l'hopital le plus proche.",
+    "revive_bill_desc": "Facture Unité X",
+    "cant_use_now": "Vous ne pouvez pas utiliser cela actuellement.",
+    "player_not_unconscious": "Cette personne n'est pas inconsciente",
+    "player_not_conscious": "Cette personne est inconsciente",
+    "you_re_not_conscious": "Vous êtes inconscient",
+    "player_is_fine": "Cette personne va très bien",
+    "you_re_fine": "Vous allez déjà très bien",
+    "got_healed": "Vous avez été soigné"
+}

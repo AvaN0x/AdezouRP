@@ -24,12 +24,19 @@ AddEventHandler('onClientResourceStart', function(resource)
 		SetResourceKvp('pma-voice_enableMicClicks', tostring(true))
 		micClicks = 'true'
 	end
-	Wait(1000)
-	if GetConvarInt('voice_enableUi', 1) == 1 then
-		SendNUIMessage({
-			voiceModes = json.encode(Cfg.voiceModes),
-			voiceMode = mode - 1
-		})
+	sendUIMessage({
+		uiEnabled = GetConvarInt("voice_enableUi", 1) == 1,
+		voiceModes = json.encode(Cfg.voiceModes),
+		voiceMode = mode - 1
+	})
+
+	-- Reinitialize channels if they're set.
+	if LocalPlayer.state.radioChannel ~= 0 then
+		setRadioChannel(LocalPlayer.state.radioChannel)
+	end
+
+	if LocalPlayer.state.callChannel ~= 0 then
+		setCallChannel(LocalPlayer.state.callChannel)
 	end
 	print('Script initialization finished.')
 end)

@@ -1,0 +1,10 @@
+{
+    "used_command": "**%s** used command `/%s`",
+    "addaccount_help": "Add money to a player account balance",
+    "addaccount_log": "**%s** received **%s $** on account named **%s**.",
+    "setaccount_help": "Set balance of a player account",
+    "setaccount_log": "**%s** has its balance set to **%s $** on account named **%s**.",
+    "removeaccount_help": "Remove money from a player account balance",
+    "removeaccount_log": "**%s** deducted **%s $** on account named **%s**.",
+    "player_id": "Player id, 0 is yourself"
+}
