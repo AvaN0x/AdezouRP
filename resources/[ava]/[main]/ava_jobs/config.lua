@@ -1085,7 +1085,6 @@ Config.Jobs = {
                 Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
                 VehicleType = 0,
-                IsJobGarage = "government",
                 JobNeeded = "government",
                 SpawnPoint = { Coord = vector3(-561.64, -172.14, 38.18), Heading = 31.07 },
             },
