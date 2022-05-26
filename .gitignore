@@ -16,10 +16,3 @@ server.cfg
 !.vscode/settings.json
 
 imgui.ini
-
-/resources/\[cfx-server-data\]/
-
-# TODO remove those
-/resources/\[system\]/
-/resources/\[essential\]/
-/resources/\[esx\]/\[non-esx\]/\[gcphone\]/
