@@ -632,7 +632,7 @@ Config.Stores = {
         HelpText = GetString("press_open_sell_vehicle"),
     },
     FlyUsP = {
-        Name = "FlyUs Plane",
+        Name = "FlyUs Avions",
         Blip = { Sprite = 307, Color = 0 },
         Coord = vector3(-923.93, -2965.77, 19.85),
         Size = { x = 1.0, y = 1.0, z = 1.0 },
