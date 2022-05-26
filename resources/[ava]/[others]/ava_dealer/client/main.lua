@@ -109,9 +109,6 @@ function MissionStart()
                 SetModelAsNoLongerNeeded(hash)
                 exports.ava_core:ShowNotification("Vous êtes proche de l'acheteur")
 
-                if math.random(1, 3) == 1 then
-                    TriggerServerEvent("ava_dealer:servercallCops")
-                end
             end
 
             if #(playerCoords - tPos.xyz) < Config.DrawTextDist then
@@ -119,6 +116,10 @@ function MissionStart()
                     startTime = 0
                     MissionCompleted = true
                     RemoveBlip(zoneBlip)
+
+                    if math.random(0, 100) < 40 then
+                        TriggerServerEvent("ava_dealer:servercallCops")
+                    end
                 end
                 SetTextComponentFormat("STRING")
                 AddTextComponentSubstringPlayerName("Appuyez sur ~INPUT_CONTEXT~ pour parler au dealer")

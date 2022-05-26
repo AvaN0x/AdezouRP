@@ -458,7 +458,11 @@ Config.Jobs = {
         },
         BuyZones = {
             BuyItems = {
-                Items = { { name = "bproof_vest", price = 15000 }, { name = "handcuffs", price = 10000 }, { name = "balisegps", price = 2000 } },
+                Items = {
+                    { name = "bproof_vest", price = 1500 },
+                    { name = "handcuffs", price = 1000 },
+                    { name = "balisegps", price = 2000 }
+                },
                 Coord = vector3(812.26, -2153.55, 28.64),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
                 Color = { r = 221, g = 79, b = 67 },
@@ -1527,10 +1531,10 @@ Config.Jobs = {
                         Delay = 2000,
                         Scenario = "PROP_HUMAN_BBQ", -- https://pastebin.com/6mrYTdQv
                     },
-                    FritesProcess = {
+                    FriesProcess = {
                         Name = "Frites",
                         ItemsGive = { { name = "potato", quantity = 2 } },
-                        ItemsGet = { { name = "frites", quantity = 1 } },
+                        ItemsGet = { { name = "fries", quantity = 1 } },
                         Delay = 2000,
                         Scenario = "PROP_HUMAN_BBQ", -- https://pastebin.com/6mrYTdQv
                     },
@@ -1554,7 +1558,7 @@ Config.Jobs = {
         },
         SellZones = {
             ChickenSell = {
-                Items = { { name = "raw_chicken", price = 100 } },
+                Items = { { name = "raw_chicken", price = 50 } },
                 Coord = vector3(-138.13, -256.69, 42.61),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
                 Color = { r = 136, g = 232, b = 9 },
@@ -1567,11 +1571,8 @@ Config.Jobs = {
         BuyZones = {
             BuyDrinks = {
                 Items = {
-                    { name = "potato", price = 20 },
-                    { name = "icetea", price = 20 },
-                    { name = "sprite", price = 20 },
-                    { name = "orangina", price = 20 },
-                    { name = "cocacola", price = 20 },
+                    { name = "potato", price = 10 },
+                    { name = "ecola", price = 15 },
                 },
                 Coord = vector3(406.5, -350.02, 45.84),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
@@ -1662,19 +1663,9 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {
-                    { name = "icetea", price = 15 },
-                    { name = "sprite", price = 15 },
-                    { name = "orangina", price = 15 },
+                    { name = "ecola", price = 15 },
                     { name = "coffee", price = 13 },
-                    { name = "cocacola", price = 15 },
-                    { name = "ice", price = 2 },
-                    { name = "martini", price = 20 },
-                    { name = "martini2", price = 20 },
-                    { name = "rhum", price = 20 },
-                    { name = "tequila", price = 20 },
-                    { name = "vodka", price = 20 },
-                    { name = "beer", price = 20 },
-                    { name = "whisky", price = 20 },
+                    { name = "pisswasser", price = 20 },
                 },
                 Coord = vector3(376.81, -362.84, 45.85),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
@@ -1786,19 +1777,9 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {
-                    { name = "icetea", price = 15 },
-                    { name = "sprite", price = 15 },
-                    { name = "orangina", price = 15 },
+                    { name = "ecola", price = 15 },
                     { name = "coffee", price = 13 },
-                    { name = "cocacola", price = 15 },
-                    { name = "ice", price = 2 },
-                    { name = "martini", price = 20 },
-                    { name = "martini2", price = 20 },
-                    { name = "rhum", price = 20 },
-                    { name = "tequila", price = 20 },
-                    { name = "vodka", price = 20 },
-                    { name = "beer", price = 20 },
-                    { name = "whisky", price = 20 },
+                    { name = "pisswasser", price = 20 },
                 },
                 Coord = vector3(387.02, -343.28, 45.85),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
@@ -1855,19 +1836,9 @@ Config.Jobs = {
         BuyZones = {
             BuyBox = {
                 Items = {
-                    { name = "icetea", price = 15 },
-                    { name = "sprite", price = 15 },
-                    { name = "orangina", price = 15 },
+                    { name = "ecola", price = 15 },
                     { name = "coffee", price = 13 },
-                    { name = "cocacola", price = 15 },
-                    { name = "ice", price = 2 },
-                    { name = "martini", price = 20 },
-                    { name = "martini2", price = 20 },
-                    { name = "rhum", price = 20 },
-                    { name = "tequila", price = 20 },
-                    { name = "vodka", price = 20 },
-                    { name = "beer", price = 20 },
-                    { name = "whisky", price = 20 },
+                    { name = "pisswasser", price = 20 },
                 },
                 Coord = vector3(376.81, -362.84, 45.85),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },

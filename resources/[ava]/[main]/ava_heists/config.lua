@@ -4,7 +4,7 @@
 -------------------------------------------
 AVAConfig = {}
 AVAConfig.DrawDistance = 15.0
-AVAConfig.Debug = false -- wil not check the amount of cops and enable prints of interiors id
+AVAConfig.Debug = false -- will not check the amount of cops and enable prints of interiors id
 
 AVAConfig.Heists = {}
 

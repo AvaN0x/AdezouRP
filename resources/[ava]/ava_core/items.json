@@ -32,6 +32,24 @@
         "type": "food",
         "weight": 100
     },
+    "potato": {
+        "label": "Patate",
+        "type": "food",
+        "weight": 100,
+        "noIcon": true
+    },
+    "potatoes": {
+        "label": "Potatoes",
+        "type": "food",
+        "weight": 200,
+        "noIcon": true
+    },
+    "fries": {
+        "label": "Frites",
+        "type": "food",
+        "weight": 200,
+        "noIcon": true
+    },
     "egochaser": {
         "label": "EgoChaser",
         "type": "food",
@@ -62,6 +80,12 @@
         "label": "eCola",
         "type": "liquid",
         "description": "Un soda délicieusement infect.",
+        "weight": 330,
+        "noIcon": true
+    },
+    "coffee": {
+        "label": "Café",
+        "type": "liquid",
         "weight": 330,
         "noIcon": true
     },
