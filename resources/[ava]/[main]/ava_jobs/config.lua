@@ -468,7 +468,7 @@ Config.Jobs = {
                 Color = { r = 221, g = 79, b = 67 },
                 Name = "Achat de protections et menottes",
                 HelpText = GetString("press_buy"),
-                MinimumGrade = "chief",
+                MinimumGrade = "lieutenant",
                 Marker = 27,
                 Blip = true,
             },
