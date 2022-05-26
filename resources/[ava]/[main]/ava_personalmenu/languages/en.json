@@ -1,0 +1,3 @@
+{
+    "dev_show_coord_helper_display_text": "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ or ~INPUT_WEAPON_WHEEL_NEXT~ to control the pointer position~n~~INPUT_MAP_POI~ to put the pointer on the floor~n~~INPUT_RELOAD~ to reset position~n~~INPUT_SPRINT~ to see different axis~n~~INPUT_VEH_LOOK_BEHIND~ to copy coords to clipboard~n~~n~~INPUT_AIM~ to leave the coordinates helper"
+}

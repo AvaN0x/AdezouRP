@@ -1,0 +1,357 @@
+{
+    "unemployed": {
+        "label": "Chômage",
+        "noBoss": true,
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Chômeur",
+                "salary": 20
+            }
+        ]
+    },
+    "mechanic": {
+        "label": "Mécanicien",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "lspd": {
+        "label": "LSPD",
+        "grades": [
+            {
+                "name": "recruit",
+                "label": "Cadet",
+                "salary": 100
+            },
+            {
+                "name": "officer",
+                "label": "Officier",
+                "salary": 100
+            },
+            {
+                "name": "sergeant",
+                "label": "Sergent",
+                "salary": 100
+            },
+            {
+                "name": "sergeant_chief",
+                "label": "Sergent chef",
+                "salary": 100
+            },
+            {
+                "name": "lieutenant",
+                "label": "Lieutenant",
+                "salary": 100
+            },
+            {
+                "name": "lieutenant_chief",
+                "label": "Lieutenant chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "captain",
+                "label": "Capitaine",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "ems": {
+        "label": "EMS",
+        "grades": [
+            {
+                "name": "paramedic",
+                "label": "Ambulancier",
+                "salary": 100
+            },
+            {
+                "name": "medic",
+                "label": "Médecin",
+                "salary": 150
+            },
+            {
+                "name": "chief",
+                "label": "Gérant",
+                "manage": true,
+                "salary": 175
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "government": {
+        "label": "Gouvernement",
+        "grades": [
+            {
+                "name": "bodyguard",
+                "label": "Agent de sécurité",
+                "salary": 100
+            },
+            {
+                "name": "governor",
+                "label": "Gouverneur",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "winemaker": {
+        "label": "Vigneron",
+        "grades": [
+            {
+                "name": "tempworker",
+                "label": "Intérimaire",
+                "salary": 50
+            },
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "tailor": {
+        "label": "Couturier",
+        "grades": [
+            {
+                "name": "tempworker",
+                "label": "Intérimaire",
+                "salary": 50
+            },
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "cluckin": {
+        "label": "Cluckin Bell",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "bahama": {
+        "label": "Bahama Mamas",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "unicorn": {
+        "label": "Vanilla Unicorn",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "nightclub": {
+        "label": "Galaxy",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
+    "gang_vagos": {
+        "isGang": true,
+        "label": "Vagos",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG",
+                "manage": true
+            }
+        ]
+    },
+    "gang_families": {
+        "isGang": true,
+        "label": "Families",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG",
+                "manage": true
+            }
+        ]
+    },
+    "gang_ballas": {
+        "isGang": true,
+        "label": "Ballas",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG",
+                "manage": true
+            }
+        ]
+    },
+    "gang_marabunta": {
+        "isGang": true,
+        "label": "Marabunta",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "og",
+                "label": "OG",
+                "manage": true
+            }
+        ]
+    },
+    "biker_lost": {
+        "isGang": true,
+        "label": "Lost",
+        "grades": [
+            {
+                "name": "new_member",
+                "label": "Nouveau membre"
+            },
+            {
+                "name": "member",
+                "label": "Membre"
+            },
+            {
+                "name": "president",
+                "label": "Président",
+                "manage": true
+            }
+        ]
+    }
+}

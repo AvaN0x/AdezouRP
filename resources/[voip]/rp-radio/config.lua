@@ -2,7 +2,7 @@ radioConfig = {
     Controls = {
         Activator = { -- Open/Close Radio
             Name = "INPUT_REPLAY_START_STOP_RECORDING", -- Control name
-            Key = 288, -- F2
+            Key = 288, -- F1
         },
         Secondary = {
             Name = "INPUT_SPRINT",
@@ -39,12 +39,13 @@ radioConfig = {
     },
     Frequency = {
         Private = { -- List of private frequencies
-            -- [911] = true, -- Make 911 a private frequency
+            [1] = true, -- Make 1 a private frequency
+            [911] = true,
         }, -- List of private frequencies
         Current = 1, -- Don't touch
         CurrentIndex = 1, -- Don't touch
         Min = 1, -- Minimum frequency
-        Max = 99999, -- Max number of frequencies
+        Max = 1000, -- Max number of frequencies
         List = {}, -- Frequency list, Don't touch
         Access = {}, -- List of freqencies a player has access to
     },

@@ -1,8 +1,9 @@
-ESX = nil
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-ESX.RegisterUsableItem('radio', function(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
-    TriggerClientEvent('Radio.Set', source, true)
-	TriggerClientEvent('Radio.Toggle', source)
+-------------------------------------------
+-------- MADE BY GITHUB.COM/AVAN0X --------
+--------------- AvaN0x#6348 ---------------
+-------------------------------------------
+exports.ava_core:RegisterUsableItem("radio", function(src)
+    print(src, "use radio")
+    TriggerClientEvent("Radio.Set", src, true)
+    TriggerClientEvent("Radio.Toggle", src)
 end)

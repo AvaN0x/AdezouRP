@@ -1,0 +1,7 @@
+{
+    "healed_by_staff": "Heal par un staff",
+    "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
+    "heal_help": "Remettre à 100%% de vie, et change certains statuts",
+    "cancel_animation": "Annuler l'animation en cours",
+    "you_consumed": "Tu as consommé 1 ~b~%s~s~"
+}

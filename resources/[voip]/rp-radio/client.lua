@@ -4,7 +4,7 @@ local Radio = {
 	On = false,
 	Enabled = true,
 	Handle = nil,
-	Prop = `prop_cs_hand_radio`,
+	Prop = GetHashKey('prop_cs_hand_radio'), -- only ran once and doesn't break my syntax viewer
 	Bone = 28422,
 	Offset = vector3(0.0, 0.0, 0.0),
 	Rotation = vector3(0.0, 0.0, 0.0),
@@ -23,14 +23,14 @@ local Radio = {
 	Clicks = true, -- Radio clicks
 }
 Radio.Labels = {        
-	-- { "FRZL_RADIO_HELP", "~s~" .. (radioConfig.Controls.Secondary.Enabled and "~" .. radioConfig.Controls.Secondary.Name .. "~ + ~" .. radioConfig.Controls.Activator.Name .. "~" or "~" .. radioConfig.Controls.Activator.Name .. "~") .. " pour ranger.~n~~" .. radioConfig.Controls.Toggle.Name .. "~ pour ~g~allumer~s~ la radio.~n~~" .. radioConfig.Controls.Decrease.Name .. "~ or ~" .. radioConfig.Controls.Increase.Name .. "~ pour changer de fréquence~n~~" .. radioConfig.Controls.Input.Name .. "~ pour choisir la fréquence~n~~" .. radioConfig.Controls.ToggleClicks.Name .. "~ to ~a~ mic clicks~n~Frequency: ~1~ MHz" },
-	{ "FRZL_RADIO_HELP", "~s~" .. (radioConfig.Controls.Secondary.Enabled and "~" .. radioConfig.Controls.Secondary.Name .. "~ + ~" .. radioConfig.Controls.Activator.Name .. "~" or "~" .. radioConfig.Controls.Activator.Name .. "~") .. " pour ranger.~n~~" .. radioConfig.Controls.Toggle.Name .. "~ pour ~g~allumer~s~ la radio.~n~~" .. radioConfig.Controls.Decrease.Name .. "~ or ~" .. radioConfig.Controls.Increase.Name .. "~ pour changer de fréquence~n~~" .. radioConfig.Controls.Input.Name .. "~ pour choisir la fréquence~n~Fréquence: ~1~ MHz" },
-	{ "FRZL_RADIO_HELP2", "~s~" .. (radioConfig.Controls.Secondary.Enabled and "~" .. radioConfig.Controls.Secondary.Name .. "~ + ~" .. radioConfig.Controls.Activator.Name .. "~" or "~" .. radioConfig.Controls.Activator.Name .. "~") .. " pour ranger.~n~~" .. radioConfig.Controls.Toggle.Name .. "~ pour ~r~éteindre~s~ la radio.~n~~" .. radioConfig.Controls.Broadcast.Name .. "~ (modifiable) pour parler.~n~Fréquence: ~1~ MHz" },
-	{ "FRZL_RADIO_INPUT", "Entrer une fréquence" },
+	{ "FRZL_RADIO_HELP", "~s~" .. (radioConfig.Controls.Secondary.Enabled and "~" .. radioConfig.Controls.Secondary.Name .. "~ + ~" .. radioConfig.Controls.Activator.Name .. "~" or "~" .. radioConfig.Controls.Activator.Name .. "~") .. " to hide.~n~~" .. radioConfig.Controls.Toggle.Name .. "~ to turn radio ~g~on~s~.~n~~" .. radioConfig.Controls.Decrease.Name .. "~ or ~" .. radioConfig.Controls.Increase.Name .. "~ to switch frequency~n~~" .. radioConfig.Controls.Input.Name .. "~ to choose frequency~n~~" .. radioConfig.Controls.ToggleClicks.Name .. "~ to ~a~ mic clicks~n~Frequency: ~1~ MHz" },
+	{ "FRZL_RADIO_HELP2", "~s~" .. (radioConfig.Controls.Secondary.Enabled and "~" .. radioConfig.Controls.Secondary.Name .. "~ + ~" .. radioConfig.Controls.Activator.Name .. "~" or "~" .. radioConfig.Controls.Activator.Name .. "~") .. " to hide.~n~~" .. radioConfig.Controls.Toggle.Name .. "~ to turn radio ~r~off~s~.~n~~" .. radioConfig.Controls.Broadcast.Name .. "~ to broadcast.~n~Frequency: ~1~ MHz" },
+	{ "FRZL_RADIO_INPUT", "Enter Frequency" },
 }
+local unarmed = GetHashKey('weapon_unarmed')
 Radio.Commands = {
 	{
-		Enabled = true, -- Add a command to be able to open/close the radio
+		Enabled = false, -- Add a command to be able to open/close the radio
 		Name = "radio", -- Command name
 		Help = "Toggle hand radio", -- Command help shown in chatbox when typing the command
 		Params = {},
@@ -45,14 +45,14 @@ Radio.Commands = {
 				Radio:Toggle(false)
 				Radio.On = false
 				Radio:Remove()
-				exports["mumble-voip"]:SetMumbleProperty("radioEnabled", false)
+				exports["pma-voice"]:setVoiceProperty("radioEnabled", false)
 			elseif Radio.Open and isFalling then
 				Radio:Toggle(false)
 			end            
 		end,
 	},
 	{
-		Enabled = true, -- Add a command to choose radio frequency
+		Enabled = false, -- Add a command to choose radio frequency
 		Name = "frequency", -- Command name
 		Help = "Change radio frequency", -- Command help shown in chatbox when typing the command
 		Params = {
@@ -125,7 +125,7 @@ function Radio:Toggle(toggle)
 	self.Open = toggle
 
 	if self.On and not radioConfig.AllowRadioWhenClosed then
-		exports["mumble-voip"]:SetMumbleProperty("radioEnabled", toggle)
+		exports["pma-voice"]:setVoiceProperty("radioEnabled", toggle)
 	end
 
 	local dictionaryType = 1 + (IsPedInAnyVehicle(playerPed, false) and 1 or 0)
@@ -150,7 +150,7 @@ function Radio:Toggle(toggle)
 
 		local bone = GetPedBoneIndex(playerPed, self.Bone)
 
-		SetCurrentPedWeapon(playerPed, `weapon_unarmed`, true)
+		SetCurrentPedWeapon(playerPed, unarmed, true)
 		AttachEntityToEntity(self.Handle, playerPed, bone, self.Offset.x, self.Offset.y, self.Offset.z, self.Rotation.x, self.Rotation.y, self.Rotation.z, true, false, false, false, 2, true)
 
 		SetModelAsNoLongerNeeded(self.Handle)
@@ -177,12 +177,12 @@ end
 
 -- Add player to radio channel
 function Radio:Add(id)
-	exports["mumble-voip"]:SetRadioChannel(id)
+	exports["pma-voice"]:setRadioChannel(id)
 end
 
 -- Remove player from radio channel
 function Radio:Remove()
-	exports["mumble-voip"]:SetRadioChannel(0)
+	exports["pma-voice"]:setRadioChannel(0)
 end
 
 -- Increase radio frequency
@@ -312,10 +312,10 @@ end
 
 -- Set if player has access to use the radio when closed
 function SetAllowRadioWhenClosed(value)
-	radioConfig.Frequency.AllowRadioWhenClosed = value
+	radioConfig.AllowRadioWhenClosed = value
 
 	if Radio.On and not Radio.Open and radioConfig.AllowRadioWhenClosed then
-		exports["mumble-voip"]:SetMumbleProperty("radioEnabled", true)
+		exports["pma-voice"]:setVoiceProperty("radioEnabled", true)
 	end
 end
 
@@ -441,6 +441,10 @@ exports("RemovePlayerAccessToFrequencies", RemovePlayerAccessToFrequencies)
 
 local isBroadcasting = false
 
+AddEventHandler('pma-voice:radioActive', function(broadCasting)
+	isBroadcasting = broadCasting
+end)
+
 Citizen.CreateThread(function()
 	-- Add Labels
 	for i = 1, #Radio.Labels do
@@ -461,7 +465,6 @@ Citizen.CreateThread(function()
 		local broadcastType = 3 + (radioConfig.AllowRadioWhenClosed and 1 or 0) + ((Radio.Open and radioConfig.AllowRadioWhenClosed) and -1 or 0)
 		local broadcastDictionary = Radio.Dictionary[broadcastType]
 		local broadcastAnimation = Radio.Animation[broadcastType]
-		-- local isBroadcasting = IsControlPressed(0, radioConfig.Controls.Broadcast.Key)
 		local isPlayingBroadcastAnim = IsEntityPlayingAnim(playerPed, broadcastDictionary, broadcastAnimation, 3)
 
 		-- Open radio settings
@@ -469,7 +472,7 @@ Citizen.CreateThread(function()
 			Radio:Toggle(not Radio.Open)
 		elseif (Radio.Open or Radio.On) and ((not Radio.Enabled) or (not Radio.Has) or isDead) then
 			Radio:Remove()
-			exports["mumble-voip"]:SetMumbleProperty("radioEnabled", false)
+			exports["pma-voice"]:setVoiceProperty("radioEnabled", false)
 			Radio:Toggle(false)
 			Radio.On = false
 		elseif Radio.Open and isFalling then
@@ -477,11 +480,17 @@ Citizen.CreateThread(function()
 		end
 		
 		-- Remove player from private frequency that they don't have access to
-		if not radioConfig.Frequency.Access[radioConfig.Frequency.Current] and radioConfig.Frequency.Private[radioConfig.Frequency.Current] and Radio.On then
-			Radio:Remove()
+		if not radioConfig.Frequency.Access[radioConfig.Frequency.Current] and radioConfig.Frequency.Private[radioConfig.Frequency.Current] then
+			if Radio.On then
+				Radio:Remove()
+			end
+
 			radioConfig.Frequency.CurrentIndex = 1
 			radioConfig.Frequency.Current = minFrequency
-			Radio:Add(radioConfig.Frequency.Current)
+
+			if Radio.On then
+				Radio:Add(radioConfig.Frequency.Current)
+			end
 		end
 
 		-- Check if player is holding radio
@@ -493,8 +502,8 @@ Citizen.CreateThread(function()
 			local hasWeapon, currentWeapon = GetCurrentPedWeapon(playerPed, 1)
 
 			-- Remove weapon in hand as we are using the radio
-			if currentWeapon ~= `weapon_unarmed` then
-				SetCurrentPedWeapon(playerPed, `weapon_unarmed`, true)
+			if currentWeapon ~= unarmed then
+				SetCurrentPedWeapon(playerPed, unarmed, true)
 			end
 
 			-- Display help text
@@ -537,7 +546,7 @@ Citizen.CreateThread(function()
 			if IsControlJustPressed(0, radioConfig.Controls.Toggle.Key) then
 				Radio.On = not Radio.On
 
-				exports["mumble-voip"]:SetMumbleProperty("radioEnabled", Radio.On)
+				exports["pma-voice"]:setVoiceProperty("radioEnabled", Radio.On)
 
 				if Radio.On then
 					SendNUIMessage({ sound = "audio_on", volume = 0.3})
@@ -584,7 +593,7 @@ Citizen.CreateThread(function()
 					if IsControlJustPressed(0, radioConfig.Controls.Input.Key) then
 						radioConfig.Controls.Input.Pressed = true
 						Citizen.CreateThread(function()
-							DisplayOnscreenKeyboard(1, Radio.Labels[3][1], "", radioConfig.Frequency.Current, "", "", "", 5)
+							DisplayOnscreenKeyboard(1, Radio.Labels[3][1], "", radioConfig.Frequency.Current, "", "", "", 3)
 
 							while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
 								Citizen.Wait(150)
@@ -626,13 +635,13 @@ Citizen.CreateThread(function()
 				end
 				
 				-- Turn radio mic clicks on/off
-				-- if IsDisabledControlJustPressed(0, radioConfig.Controls.ToggleClicks.Key) then
-				-- 	Radio.Clicks = not Radio.Clicks
+				if IsDisabledControlJustPressed(0, radioConfig.Controls.ToggleClicks.Key) then
+					Radio.Clicks = not Radio.Clicks
 
-				-- 	SendNUIMessage({ sound = "audio_off", volume = 0.5})
+					SendNUIMessage({ sound = "audio_off", volume = 0.5})
 					
-				-- 	exports["mumble-voip"]:SetMumbleProperty("micClicks", Radio.Clicks)
-				-- end
+					exports["pma-voice"]:setVoiceProperty("micClicks", Radio.Clicks)
+				end
 			end
 		else
 			-- Play emergency services radio animation
@@ -654,12 +663,11 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler("onClientResourceStart", function(resName)
-	if GetCurrentResourceName() ~= resName and "mumble-voip" ~= resName then
+	if GetCurrentResourceName() ~= resName and "pma-voice" ~= resName then
 		return
 	end
 	
-	exports["mumble-voip"]:SetMumbleProperty("radioClickMaxChannel", radioConfig.Frequency.Max) -- Set radio clicks enabled for all radio frequencies
-	exports["mumble-voip"]:SetMumbleProperty("radioEnabled", false) -- Disable radio control
+	exports["pma-voice"]:setVoiceProperty("radioEnabled", false) -- Disable radio control
 
 	if Radio.Open then
 		Radio:Toggle(false)
@@ -689,17 +697,3 @@ AddEventHandler("Radio.Set", function(value)
 
 	Radio.Has = value and true or false
 end)
-
-
--- configurable key
-
-
-RegisterCommand('+keyBroadcast', function()
-	isBroadcasting = true
-	TriggerEvent('mumble-voip:radioSpeak')
-end, false)
-RegisterCommand('-keyBroadcast', function()
-	isBroadcasting = false
-	TriggerEvent('mumble-voip:radioStopSpeak')
-end, false)
-RegisterKeyMapping('+keyBroadcast', 'Radio', 'keyboard', 'CAPITAL')

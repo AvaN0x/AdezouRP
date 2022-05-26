@@ -1,0 +1,14 @@
+{
+    "player_not_enough_money": "Vous n'avez pas assez d'argent sur votre compte en banque.",
+    "job_not_enough_money": "L'entreprise n'a pas assez d'argent sur son compte en banque.",
+    "bank": "Banque",
+    "bill_sent": "Vous avez envoyé une facture.",
+    "bill_received": "Vous avez reçu une facture.",
+    "you_paid_bill": "Vous avez payé une facture de ~r~$%s~s~.",
+    "bill_paid_by_player": "Un citoyen vous a payé une facture de ~g~$%s~s~.",
+    "job_bill_paid_by_player": "Un citoyen a payé une facture de ~g~$%s~s~ à votre l'entreprise.",
+    "target_is_not_in_city": "Le citoyen n'est pas en ville actuellement.",
+    "your_job_paid_bill": "Vous avez payé une facture de ~r~$%s~s~ avec l'argent de l'entreprise.",
+    "bill_paid_by_job": "Une entreprise vous a payé une facture de ~g~$%s~s~.",
+    "job_bill_paid_by_job": "Une entreprise a payé une facture de ~g~$%s~s~ à votre l'entreprise."
+}
