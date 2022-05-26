@@ -955,7 +955,12 @@ Config.Jobs = {
         },
         BuyZones = {
             DorsetDriveItems = {
-                Items = { { name = "repairkit", price = 250 }, { name = "bodykit", price = 250 }, { name = "cloth", price = 100 } },
+                Items = {
+                    { name = "repairkit", price = 250 },
+                    { name = "bodykit", price = 250 },
+                    { name = "rag", price = 100 },
+                    { name = 'blowtorch', price = 752 },
+                },
                 Coord = vector3(2747.39, 3472.98, 54.69),
                 Size = { x = 1.5, y = 1.5, z = 1.5 },
                 Color = { r = 207, g = 169, b = 47 },
