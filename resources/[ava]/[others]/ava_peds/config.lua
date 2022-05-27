@@ -223,6 +223,15 @@ Config.Peds = {
         bubble = "Salut, Vielle charue, allez prend ta bécanne et trace chercher ta caisse!!! ",
         props = { { componentId = 1, drawableId = 0 } },
     },
+    -- Meth market
+    {
+        PedName = "s_m_y_construct_01",
+        PedType = "PED_TYPE_CIVMALE",
+        pos = vector3(-312.03, -2711.92, 5.17),
+        heading = 222.68,
+        scenario = "WORLD_HUMAN_AA_SMOKE",
+        name = "Billy Pit",
+    },
 
     -- old format, need update
     -- Superettes = {

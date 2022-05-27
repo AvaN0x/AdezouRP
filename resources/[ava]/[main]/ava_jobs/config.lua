@@ -1900,7 +1900,7 @@ Config.Jobs = {
                 ItemsGet = { { name = "coke", quantity = 2 } },
                 Delay = 8000,
                 Scenario = "world_human_clipboard", -- https://pastebin.com/6mrYTdQv
-                Coord = vector3(1019.13, -2511.48, 28.48),
+                Coord = vector3(1092.83, -3196.70, -39.97),
                 NeedKey = true,
             },
             BagProcess = {
@@ -1908,7 +1908,7 @@ Config.Jobs = {
                 ItemsGet = { { name = "bagcoke", quantity = 1 } },
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Coord = vector3(1017.72, -2529.39, 28.3),
+                Coord = vector3(1101.83, -3193.73, -39.97),
                 NeedKey = true,
             },
         },
