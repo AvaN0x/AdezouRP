@@ -1953,7 +1953,7 @@ Config.Jobs = {
                 ItemsGet = { { name = "methamphetamine", quantity = 1 } },
                 Delay = 10000,
                 Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
-                Coord = vector3(1390.33, 3608.5, 38.94),
+                Coord = vector3(1010.84, -3196.70, -38.99),
                 NeedKey = true,
             },
         },

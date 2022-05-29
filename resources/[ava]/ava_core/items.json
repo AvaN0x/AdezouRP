@@ -306,6 +306,11 @@
         "limit": 150,
         "noIcon": true
     },
+    "dopebag": {
+        "label": "Sachet en plastique",
+        "weight": 1,
+        "noIcon": true
+    },
     "weedbag": {
         "label": "Pochon de cannabis",
         "type": "drug",

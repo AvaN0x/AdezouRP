@@ -103,7 +103,7 @@ Config.DrugPrices = {
     ["bagweed"] = 70,
     ["bagcoke"] = 165,
     ["bagexta"] = 90,
-    ["methamphetamine"] = 220,
+    ["methamphetamine"] = 950,
 
     ["watch_gold"] = 328,
     ["watch_diamond"] = 532,
