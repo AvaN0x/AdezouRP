@@ -97,7 +97,7 @@ Config.Stores = {
         Items = {
             -- { name = "headbag", price = 200, isDirtyMoney = true }, -- TODO disabled atm
             -- {name = "tenuecasa", price = 200, isDirtyMoney = true}, -- TODO disabled atm
-            { name = "gpsbeacon", price = 200, isDirtyMoney = true },
+            { name = "gpstracker", price = 200, isDirtyMoney = true },
             { name = "lockpick", price = 200, isDirtyMoney = true },
             -- { name = "ziptie", price = 200, isDirtyMoney = true }, -- TODO disabled atm
         },
