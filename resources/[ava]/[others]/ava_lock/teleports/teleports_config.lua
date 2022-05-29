@@ -283,7 +283,7 @@ ConfigTeleports = {
         -- Meth Treatment
         {
             tpEnter = {
-                pos = vector3(1017.72, -2529.38, 27.32),
+                pos = vector3(201.56, 2462.38, 54.71),
                 heading = 183.10, size = { x = 2.5, y = 2.5, z = 1.0 },
                 label = "Entrer",
                 noMarker = true
@@ -293,7 +293,7 @@ ConfigTeleports = {
                 heading = 0.0, size = { x = 1.2, y = 1.2, z = 1.0 },
                 label = "Sortir"
             },
-        }         
+        },         
         -- Go fast
         {
             tpEnter = {

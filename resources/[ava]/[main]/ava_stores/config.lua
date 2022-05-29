@@ -109,9 +109,9 @@ Config.Stores = {
         Title = { textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar" },
         Coord = vector3(-312.04, -2711.91, 5.17),
         Items = {
-            { name = "methylamine", price = 200, isDirtyMoney = true },
-            { name = "methpseudophedrine", price = 200, isDirtyMoney = true },
-            { name = "methacide", price = 200, isDirtyMoney = true },
+            { name = "methylamine", price = 20, isDirtyMoney = true },
+            { name = "methpseudophedrine", price = 20, isDirtyMoney = true },
+            { name = "methacide", price = 20, isDirtyMoney = true },
         },
         Distance = 1,
         Name = "Black Market",
