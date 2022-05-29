@@ -279,7 +279,7 @@ ConfigTeleports = {
                 heading = 0.0, size = { x = 1.2, y = 1.2, z = 1.0 },
                 label = "Sortir"
             },
-        }
+        },
         -- Meth Treatment
         {
             tpEnter = {
