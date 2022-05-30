@@ -418,6 +418,7 @@ Config.Jobs = {
                 IsJobGarage = "lspd",
                 JobNeeded = "lspd",
                 SpawnPoint = { Coord = vector3(455.02, -1017.44, 28.44), Heading = 90.0 },
+                Blip = { Name = "Garage entreprise", Sprite = 60, Color = 3 },
             },
             {
                 Name = "jobgarage_lspd",
@@ -430,6 +431,7 @@ Config.Jobs = {
                 IsJobGarage = "lspd",
                 JobNeeded = "lspd",
                 SpawnPoint = { Coord = vector3(449.57, -981.17, 43.69), Heading = 90.0 },
+                Blip = { Name = "Heliport", Sprite = 60, Color = 3 },
             },
             {
                 Name = "jobgarage_lspd",
@@ -454,6 +456,7 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "lspd",
                 SpawnPoint = { Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0 },
+                Blip = { Name = "Garage", Sprite = 60, Color = 3 },
             },
         },
         BuyZones = {
@@ -665,6 +668,7 @@ Config.Jobs = {
                 IsJobGarage = "ems",
                 JobNeeded = "ems",
                 SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340 },
+                Blip = { Name = "Garage entreprise", Sprite = 61, Color = 26 },
             },
             {
                 Name = "jobgarage_ems",
@@ -676,6 +680,7 @@ Config.Jobs = {
                 IsJobGarage = "ems",
                 JobNeeded = "ems",
                 SpawnPoint = { Coord = vector3(351.05, -588.07, 74.17), Heading = 245.0 },
+                Blip = { Name = "Heliport", Sprite = 61, Color = 26 },
             },
             -- Player garages
             {
@@ -687,6 +692,7 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "ems",
                 SpawnPoint = { Coord = vector3(323.62, -545.24, 28.74), Heading = 268.32 },
+                Blip = { Name = "Garage", Sprite = 61, Color = 26 },
             },
         }
     },
@@ -993,6 +999,7 @@ Config.Jobs = {
                 IsJobGarage = "mechanic",
                 JobNeeded = "mechanic",
                 SpawnPoint = { Coord = vector3(-1144.50, -1971.83, 13.16), Heading = 190.18 },
+                Blip = { Name = "Garage entreprise", Sprite = 446, Color = 5 },
             },
             {
                 Name = "jobgarage_seized",
@@ -1004,6 +1011,7 @@ Config.Jobs = {
                 IsJobGarage = "mechanic",
                 JobNeeded = "mechanic",
                 SpawnPoint = { Coord = vector3(822.38, -1365.17, 26.13), Heading = 281.21 },
+                Blip = { Name = "Garage saisies", Sprite = 446, Color = 5 },
             },
             {
                 Name = "jobgarage_pound",
@@ -1015,6 +1023,7 @@ Config.Jobs = {
                 IsJobGarage = "mechanic",
                 JobNeeded = "mechanic",
                 SpawnPoint = { Coord = vector3(383.83, -1623.05, 29.29), Heading = 319.31 },
+                Blip = { Name = "Fourrière", Sprite = 446, Color = 5 },
             },
             --Player garages
             {
@@ -1024,9 +1033,9 @@ Config.Jobs = {
                 Color = { r = 0, g = 122, b = 204 },
                 Marker = 36,
                 VehicleType = 0,
-                IsJobGarage = "mechanic",
                 JobNeeded = "mechanic",
                 SpawnPoint = { Coord = vector3(-1112.74, -2016.33, 13.20), Heading = 307.75 },
+                Blip = { Name = "Garage", Sprite = 446, Color = 5 },
             },
         }
     },
@@ -1087,6 +1096,7 @@ Config.Jobs = {
                 IsJobGarage = "government",
                 JobNeeded = "government",
                 SpawnPoint = { Coord = vector3(-580.48, -171.22, 37.86), Heading = 298.75 },
+                Blip = { Name = "Garage entreprise", Sprite = 419, Color = 0 },
             },
             --Player garages
             {
@@ -1098,6 +1108,7 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "government",
                 SpawnPoint = { Coord = vector3(-561.64, -172.14, 38.18), Heading = 31.07 },
+                Blip = { Name = "Garage", Sprite = 419, Color = 0 },
             },
         }
     },
@@ -1266,7 +1277,7 @@ Config.Jobs = {
                 IsJobGarage = "winemaker",
                 JobNeeded = "winemaker",
                 SpawnPoint = { Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0 },
-                Blip = { Name = "Garage", Sprite = 85, Color = 19 },
+                Blip = { Name = "Garage entreprise", Sprite = 85, Color = 19 },
             },
             --Player garages
             {
@@ -1413,6 +1424,7 @@ Config.Jobs = {
                 IsJobGarage = "tailor",
                 JobNeeded = "tailor",
                 SpawnPoint = { Coord = vector3(719.12, -989.25, 24.10), Heading = 272.05 },
+                Blip = { Name = "Garage entreprise", Sprite = 366, Color = 0 },
             },
             --Players Garage
             {
@@ -1424,6 +1436,7 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "tailor",
                 SpawnPoint = { Coord = vector3(691.05, -965.24, 23.61), Heading = 166.25 },
+                Blip = { Name = "Garage", Sprite = 366, Color = 0 },
             },
         },
     },
@@ -1610,6 +1623,7 @@ Config.Jobs = {
                 IsJobGarage = "cluckin",
                 JobNeeded = "cluckin",
                 SpawnPoint = { Coord = vector3(-465.09, -619.23, 31.17), Heading = 88.32 },
+                Blip = { Name = "Garage entreprise", Sprite = 141, Color = 46 },
             },
             --Players Garage
             {
@@ -1621,6 +1635,7 @@ Config.Jobs = {
                 VehicleType = 0,
                 JobNeeded = "cluckin",
                 SpawnPoint = { Coord = vector3(-480.36, -600.63, 31.17), Heading = 182.24 },
+                Blip = { Name = "Garage", Sprite = 141, Color = 46 },
             },
         },
     },
@@ -2035,7 +2050,6 @@ Config.Jobs = {
             },
         },
         Garages = {
-
             {
                 Name = "garage_vagos",
                 Coord = vector3(335.46, -2039.61, 21.13),
@@ -2073,7 +2087,6 @@ Config.Jobs = {
             },
         },
         Garages = {
-
             {
                 Name = "garage_ballas",
                 Coord = vector3(91.82, -1964.06, 20.75),
@@ -2109,22 +2122,8 @@ Config.Jobs = {
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
-            --GangCarGarage = { -- TODO properly add, this do not work
-            --    Name = "Garage gang",
-            --    HelpText = GetString("spawn_veh"),
-            --    Coord = vector3(-109.22, -1599.54, 31.64),
-            --    Size = { x = 2.0, y = 2.0, z = 2.0 },
-            --    Color = { r = 72, g = 171, b = 57 },
-            --    Marker = 36,
-            --    Type = "car",
-            --    IsNonProprietaryGarage = true,
-            --    IsGangGarage = true,
-            --    Identifier = "garage_families",
-            --    SpawnPoint = { Coord = vector3(-109.22, -1599.54, 31.64), Heading = 316.36 },
-            --},
         },
         Garages = {
-
             {
                 Name = "garage_families",
                 Coord = vector3(-109.22, -1599.54, 31.64),
@@ -2162,7 +2161,6 @@ Config.Jobs = {
             },
         },
         Garages = {
-
             {
                 Name = "garage_marabunta",
                 Coord = vector3(1329.94, -1724.45, 56.04),
@@ -2211,7 +2209,6 @@ Config.Jobs = {
             },
         },
         Garages = {
-
             {
                 Name = "garage_lost",
                 Coord = vector3(971.55, -126.71, 74.32),
@@ -2225,7 +2222,6 @@ Config.Jobs = {
                 SpawnPoint = { Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0 },
             },
         },
-
         -- Crate = {
         --     Coord = vector3(987.05, -144.41, 73.29),
         --     Name = "Crate",
@@ -2235,7 +2231,6 @@ Config.Jobs = {
         --         -- TriggerEvent("esx_ava_crate_lost:startMission") -- TODO
         --     end,
         -- },
-
         ProcessMenuZones = {
             -- ammos
             {
@@ -2387,7 +2382,6 @@ Config.Jobs = {
                 Marker = 27,
                 Blip = false,
             },
-
             -- assault rifles
             {
                 Title = "Fabrication de fusils d'assaut",
