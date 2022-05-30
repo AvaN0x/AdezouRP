@@ -127,15 +127,18 @@ end
 ---Get right label from an item and its unit
 ---@param item table
 ---@param unit string
-local function GetElementRightLabel(item, unit)
-    return ("%s %s - %s %s"):format(item.limit
-        and ("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit)
-        or AVA.Utils.FormatNumber(item.quantity),
-        getQuantityUnit(item.type), formatWeight(item.total_weight), unit)
+local function GetElementRightLabel(item, unit, hideItemLimit)
+    if item.limit and not hideItemLimit then
+        return ("%s %s - %s %s"):format(("%s/%s"):format(AVA.Utils.FormatNumber(item.quantity), item.limit),
+            getQuantityUnit(item.type), formatWeight(item.total_weight), unit)
+    else
+        return ("%s %s - %s %s"):format(AVA.Utils.FormatNumber(item.quantity),
+            getQuantityUnit(item.type), formatWeight(item.total_weight), unit)
+    end
 end
 
 ---Get inventory data from server and process it
-local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
+local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title, hideItemLimit)
     local inventory = {
         Top = {},
         Remaining = {},
@@ -155,7 +158,7 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
                 label = item.label,
                 description = GetString("inventory_weight_unit", formatWeight(item.weight), unit,
                     (item.desc and item.desc ~= "") and ("\n%s"):format(item.desc) or ""),
-                RightLabel = GetElementRightLabel(item, unit),
+                RightLabel = GetElementRightLabel(item, unit, hideItemLimit),
                 LeftBadge = not item.noIcon and function()
                     return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
                 end or nil,
@@ -191,10 +194,10 @@ local function SetInventoryMenuSubtitle(menu, actualWeight, maxWeight)
 end
 
 ---Get inventory data and displays it
-local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title)
+local function ReloadInventoryWithData(invItems, maxWeight, actualWeight, title, hideItemLimit)
     if not invItems then return end
 
-    InventoryData = GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title)
+    InventoryData = GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight, title, hideItemLimit)
 
     -- InventoryMenu.Subtitle = ("%s (%s/%skg)"):format(title, formatWeight(actualWeight), formatWeight(maxWeight, 1))
     InventoryMenu.Title = title
@@ -336,7 +339,7 @@ local function SelectItem(item)
                         targetInvElement.item.quantity = 0
                     end
                     targetInvElement.item.total_weight = targetInvElement.item.quantity * item.weight
-                    targetInvElement.RightLabel = GetElementRightLabel(targetInvElement.item, GetItemUnit(targetInvElement.item))
+                    targetInvElement.RightLabel = GetElementRightLabel(targetInvElement.item, GetItemUnit(targetInvElement.item), true)
                 else
                     -- Else remove it
                     table.remove(TargetInventory.Data[_objectName], _index)
@@ -369,7 +372,7 @@ local function SelectItem(item)
                         -- We add the quantity to the target inventory
                         element.item.quantity = element.item.quantity + quantity
                         element.item.total_weight = element.item.quantity * item.weight
-                        element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+                        element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item), true)
                     end
                 else
                     -- Create a copy and add it to target inventory
@@ -383,7 +386,7 @@ local function SelectItem(item)
                     -- Update item data
                     element.item.quantity = quantity
                     element.item.total_weight = element.item.quantity * item.weight
-                    element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item))
+                    element.RightLabel = GetElementRightLabel(element.item, GetItemUnit(element.item), true)
 
                     -- Add to target inventory
                     -- We use the same objectName as the target inventory
@@ -605,7 +608,8 @@ RegisterNetEvent("ava_core:client:openTargetInventory", function(targetId)
     }
     TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_give") } }
 
-    ReloadInventoryWithData(AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", targetId))
+    local trunkItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getTargetInventoryItems", targetId)
+    ReloadInventoryWithData(trunkItems, maxWeight, actualWeight, title, true)
     TargetInventory.Data = InventoryData
     InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
     InventoryMenu:ResetIndex()
@@ -615,7 +619,7 @@ end)
 if AVAConfig.NPWD then
     exports("hasPhoneItem", function()
         -- TODO exports.npwd:setPhoneDisabled
-        return exports.ava_core:TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
+        return AVA.TriggerServerCallback("ava_core:server:getItemQuantity", "phone") > 0
     end)
 end
 
@@ -666,7 +670,7 @@ RegisterCommand("vehicletrunk", function()
         RemoveAnimDict(animDirectory)
 
         -- Get trunk data
-        local invType, invName, trunkItems, maxWeight, actualWeight, title = exports.ava_core:TriggerServerCallback("ava_core:server:getVehicleTrunk", VehToNet(vehicle), trunkSize)
+        local invType, invName, trunkItems, maxWeight, actualWeight, title = AVA.TriggerServerCallback("ava_core:server:getVehicleTrunk", VehToNet(vehicle), trunkSize)
         if not trunkItems then return end
 
         -- Open trunk
@@ -683,7 +687,7 @@ RegisterCommand("vehicletrunk", function()
         }
         TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_put") } }
 
-        ReloadInventoryWithData(trunkItems, maxWeight, actualWeight, title)
+        ReloadInventoryWithData(trunkItems, maxWeight, actualWeight, title, true)
         TargetInventory.Data = InventoryData
         InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
         InventoryMenu:ResetIndex()
@@ -707,7 +711,7 @@ RegisterNetEvent("ava_core:client:openNamedInventory", function(invName)
     }
     TargetInventoryInteractions = { { type = "take", Name = GetString("inventory_take") }, { type = "put", Name = GetString("inventory_put") } }
 
-    ReloadInventoryWithData(inventoryItems, maxWeight, actualWeight, title)
+    ReloadInventoryWithData(inventoryItems, maxWeight, actualWeight, title, true)
     TargetInventory.Data = InventoryData
     InventoryData = GetDisplayableInventoryFromData(AVA.TriggerServerCallback("ava_core:server:getInventoryItems"))
     InventoryMenu:ResetIndex()
