@@ -138,7 +138,7 @@ Config.Stores = {
             { name = "ammo_pistol", price = 8, license = "weapon" },
             { name = "weapon_doubleaction", price = 100000, license = "weapon" },
             { name = "weapon_pistol", price = 40000, license = "weapon" },
-            { name = "weapon_flare", price = 50000, license = "weapon" },
+            { name = "weapon_flare", price = 15000, license = "weapon" },
             { name = "weapon_knife", price = 2200 },
             { name = "weapon_switchblade", price = 1500 },
             { name = "weapon_bat", price = 1000 },
