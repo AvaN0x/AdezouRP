@@ -1033,7 +1033,7 @@
             },
             "cog55": {
                 "category": "sedans",
-                "hidden":true,
+                "hidden": true,
                 "quantity": 5,
                 "price": 52957
             },
@@ -2603,11 +2603,12 @@
             "emsbuffalo": true
         },
         "mechanic": {
-            "flatbed" : true,
-            "slamtruck" : true
+            "flatbed": true,
+            "slamtruck": true
         },
         "government": {
-            "cog552" : true
+            "cog552": true,
+            "vstr": true
         },
         "winemaker": {
             "speedo": true
@@ -2616,17 +2617,11 @@
             "speedo": true
         },
         "cluckin": {
-            "benson" : true,
-            "taco" : true
+            "benson": true,
+            "taco": true
         },
-        "bahama": {
-        
-        },
-        "unicorn": {
-        
-        },
-        "nightclub": {
-        
-        },
+        "bahama": {},
+        "unicorn": {},
+        "nightclub": {}
     }
 }
