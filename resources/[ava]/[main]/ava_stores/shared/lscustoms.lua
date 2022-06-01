@@ -92,7 +92,8 @@ Config.LSCustoms = {
                                 { label = GetString("lscustoms_wheelsHighEnd"), mod = "modFrontWheelsHighEnd" },
                                 { label = GetString("lscustoms_wheelsBennys1"), mod = "modFrontWheelsBennys1" },
                                 { label = GetString("lscustoms_wheelsBennys2"), mod = "modFrontWheelsBennys2" },
-                                { label = GetString("lscustoms_wheelsOpenWheel"), mod = "lscustoms_wheelsOpenWheel" }
+                                { label = GetString("lscustoms_wheelsOpenWheel"), mod = "lscustoms_wheelsOpenWheel" },
+                                { label = GetString("lscustoms_wheelsTuner"), mod = "lscustoms_wheelsTuner" }
                             }
                         },
                         { label = GetString("lscustoms_customTyres"), mod = "modCustomTyresF" },
@@ -246,6 +247,13 @@ Config.LSCustoms = {
             type = "mod",
             mod = 23,
             wheelType = 10
+        },
+        lscustoms_wheelsTuner = {
+            priceMultiplier = 0.022,
+            modName = "modFrontWheels",
+            type = "mod",
+            mod = 23,
+            wheelType = 12
         },
         modFrontBumper = {
             priceMultiplier = 0.015,

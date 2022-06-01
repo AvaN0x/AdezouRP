@@ -1033,12 +1033,12 @@
             },
             "cog55": {
                 "category": "sedans",
-                "hidden": true,
                 "quantity": 5,
                 "price": 52957
             },
             "cog552": {
                 "category": "sedans",
+                "hidden": true,
                 "quantity": 5,
                 "price": 54983
             },

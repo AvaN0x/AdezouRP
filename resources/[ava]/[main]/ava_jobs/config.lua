@@ -600,8 +600,8 @@ Config.Jobs = {
                 Coord = vector3(306.89, -601.61, 42.30),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 139, b = 90 },
-                Name = "Cuisine",
-                InventoryName = "job_ems_fridge", -- TODO add
+                Name = "Réfrigérateur",
+                InventoryName = "job_ems_fridge",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -610,7 +610,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 0, g = 139, b = 90 },
                 Name = "Pharmacie",
-                InventoryName = "job_ems_pharmacy", -- TODO add
+                InventoryName = "job_ems_pharmacy",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -842,7 +842,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
                 Name = "Stockage",
-                InventoryName = "job_mechanic_stock", -- TODO add
+                InventoryName = "job_mechanic_stock",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -850,8 +850,8 @@ Config.Jobs = {
                 Coord = vector3(-1153.45, -2025.06, 12.21),
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 207, g = 169, b = 47 },
-                Name = "Frigo",
-                InventoryName = "job_mechanic_fridge", -- TODO add
+                Name = "Réfrigérateur",
+                InventoryName = "job_mechanic_fridge",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
@@ -2110,7 +2110,7 @@ Config.Jobs = {
                 Size = { x = 1.5, y = 1.5, z = 1.0 },
                 Color = { r = 72, g = 171, b = 57 },
                 Name = "Coffre",
-                InventoryName = "gang_families_stock", -- TODO add
+                InventoryName = "gang_families_stock",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
             },
