@@ -513,7 +513,17 @@ function RageUI.PoolMenus:AvaCoreInventory()
                             local count = tonumber(AVA.KeyboardInput(GetString("inventory_give_enter_quantity",
                                 AVA.Utils.FormatNumber(selectedItem.quantity), getQuantityUnit(selectedItem.type)), "", 10))
                             if type(count) == "number" and math.floor(count) == count and count > 0 then
-                                TriggerServerEvent("ava_core:server:giveItem", targetId, selectedItem.name, count)
+                                if AVA.TriggerServerCallback("ava_core:server:giveItem", targetId, selectedItem.name, count) then
+                                    Citizen.CreateThread(function()
+                                        local playerPed = PlayerPedId()
+                                        exports.ava_core:RequestAnimDict("mp_common")
+                                        TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, -8, 2000, 48, 0, 0, 0, 0)
+                                        RemoveAnimDict("mp_common")
+
+                                        Wait(2000)
+                                        ClearPedSecondaryTask(playerPed)
+                                    end)
+                                end
                             end
                         end
                         OpenMyInventory()
