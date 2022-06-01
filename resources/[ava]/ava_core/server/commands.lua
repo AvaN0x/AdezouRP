@@ -40,10 +40,8 @@ AVA.Commands.RegisterCommand = function(name, group, callback, help, params)
 
         local commandString = callback(source, args, rawCommand, aPlayer)
 
-        if aPlayer then
-            local logString = GetString("used_command", aPlayer and aPlayer.getDiscordTag() or GetPlayerName(source), rawCommand)
-            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 0xF2A53F)
-        end
+        local logString = GetString("used_command", aPlayer and aPlayer.getDiscordTag() or "console", rawCommand)
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_staff_commands", "", ("%s\n\n%s"):format(logString, commandString or ""), 0xF2A53F)
     end, needAce)
 
     if needAce then
