@@ -723,6 +723,20 @@ Config.Stores = {
     -- #endregion vehicleshops
 
     -- #region lscustoms
+    LSCustoms = {
+        Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
+        Name = "Los Santos Customs",
+        Coord = vector3(-336.16, -129.97, 38.08),
+        Size = { x = 2.0, y = 2.0, z = 2.0 },
+        Color = { r = 201, g = 24, b = 30, a = 128 },
+        Marker = 27,
+        Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
+        LSCustoms = {
+            -- DirtyCash = false
+            -- Elements = { ",engine", "colors", "mods" }
+        },
+        HelpText = GetString("press_open_lscustoms"),
+    },
     -- LSCustoms = {
     --     Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
     --     Name = "Los Santos Customs",
