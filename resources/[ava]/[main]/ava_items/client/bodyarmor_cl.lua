@@ -32,12 +32,12 @@ equipBodyArmor = function(playerPed)
 
     SetPedArmour(playerPed, 100)
     local playerSkin = exports.ava_mp_peds:getPlayerCurrentSkin()
-    clothesBodyArmorSave = {bodyarmor = playerSkin.bodyarmor, bodyarmor_txd = playerSkin.bodyarmor_txd}
+    clothesBodyArmorSave = { bodyarmor = playerSkin.bodyarmor, bodyarmor_txd = playerSkin.bodyarmor_txd }
 
     if playerSkin.gender == 0 then -- male
-        exports.ava_mp_peds:setPlayerClothes({bodyarmor = 26, bodyarmor_txd = 9})
+        exports.ava_mp_peds:setPlayerClothes({ bodyarmor = 6, bodyarmor_txd = 1 })
     else
-        exports.ava_mp_peds:setPlayerClothes({bodyarmor = 27, bodyarmor_txd = 9})
+        exports.ava_mp_peds:setPlayerClothes({ bodyarmor = 6, bodyarmor_txd = 1 })
     end
 
     exports.ava_core:ShowNotification(GetString("bodyarmor_equip"))
@@ -70,7 +70,7 @@ removeBodyArmor = function(playerPed, playAnim)
     end
 
     SetPedArmour(playerPed, 0)
-    exports.ava_mp_peds:setPlayerClothes({bodyarmor = clothesBodyArmorSave.bodyarmor, bodyarmor_txd = clothesBodyArmorSave.bodyarmor_txd})
+    exports.ava_mp_peds:setPlayerClothes({ bodyarmor = clothesBodyArmorSave.bodyarmor, bodyarmor_txd = clothesBodyArmorSave.bodyarmor_txd })
     clothesBodyArmorSave = {}
 
     exports.ava_core:ShowNotification(GetString("bodyarmor_unequip"))
