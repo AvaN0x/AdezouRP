@@ -79,3 +79,25 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:payLSCustoms", functi
 
     return true
 end)
+
+exports.ava_core:RegisterServerCallback("ava_stores:server:payRepair", function(source, lscustomName)
+    local src = source
+
+    if not Config.Stores[lscustomName]?.LSCustoms?.AllowRepair then 
+        return false
+    end
+
+    local aPlayer = exports.ava_core:GetPlayer(src)
+    if not aPlayer then return false end
+
+    local inventory = aPlayer.getInventory()
+    if inventory.canRemoveItem("cash", Config.LSCustoms.RepairPrice) then
+        inventory.removeItem("cash", Config.LSCustoms.RepairPrice)
+        TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pay_repair_lscustom", "price:" .. Config.LSCustoms.RepairPrice })
+        return true
+    else
+        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))
+    end
+
+    return false
+end)

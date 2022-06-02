@@ -732,6 +732,7 @@ Config.Stores = {
         Marker = 27,
         Blip = { Sprite = 72, Color = 0, Scale = 0.8 },
         LSCustoms = {
+            AllowRepair = true
             -- DirtyCash = false
             -- Elements = { ",engine", "colors", "mods" }
         },

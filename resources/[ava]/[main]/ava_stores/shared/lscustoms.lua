@@ -4,6 +4,7 @@
 -------------------------------------------
 
 Config.LSCustoms = {
+    RepairPrice = 1000,
     MinimumBodyHealth = 950.0,
     MinimumEngineHealth = 950.0,
 

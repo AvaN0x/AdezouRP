@@ -80,9 +80,18 @@ OpenLSCustomsMenu = function(store, jobToPay)
 
     -- Check vehicle health
     if GetVehicleBodyHealth(vehicle) < Config.LSCustoms.MinimumBodyHealth or GetVehicleEngineHealth(vehicle) < Config.LSCustoms.MinimumEngineHealth then
-        exports.ava_core:ShowNotification(GetString("lscustoms_vehicle_damaged"))
-        CurrentActionEnabled = true
-        return
+        if store and store.LSCustoms.AllowRepair then
+            if exports.ava_core:ShowConfirmationMessage(GetString("lscustoms_repair_vehicle_title"), GetString("lscustoms_repair_vehicle_firstline", Config.LSCustoms.RepairPrice),
+                GetString("lscustoms_repair_vehicle_secondline")) and exports.ava_core:TriggerServerCallback("ava_stores:server:payRepair", CurrentLSCustomsName) then
+                SetVehicleFixed(vehicle)
+            else
+                return
+            end
+        else
+            exports.ava_core:ShowNotification(GetString("lscustoms_vehicle_damaged"))
+            CurrentActionEnabled = true
+            return
+        end
     end
 
     RageUI.CloseAll()

@@ -2,15 +2,15 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local MechanicJobName<const> = "mechanic"
+local MechanicJobName <const> = "mechanic"
 
 ---------------
 -- repairkit --
 ---------------
 
 exports.ava_core:RegisterUsableItem("repairkit", function(source, aPlayer)
-    local hasJob<const> = aPlayer.hasJob(MechanicJobName)
-    if exports.ava_jobs:getCountInService(MechanicJobName) == 0 or hasJob then
+    local hasJob <const> = aPlayer.hasJob(MechanicJobName)
+    if hasJob or exports.ava_jobs:getCountInService(MechanicJobName) == 0 then
         TriggerClientEvent("ava_items:client:useRepairkit", source, hasJob and 1000.0 or 500.0)
     else
         TriggerClientEvent("ava_core:client:ShowNotification", source, GetString("repairkits_cant_use_now"))
@@ -82,4 +82,3 @@ RegisterServerEvent("ava_items:blowtorch:remove", function()
         end
     end
 end)
-
