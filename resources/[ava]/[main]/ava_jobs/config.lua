@@ -1133,6 +1133,7 @@ Config.Jobs = {
                 InventoryName = "job_winemaker_stock",
                 HelpText = GetString("press_to_open"),
                 Marker = 27,
+                Blip = true,
             },
             Cloakroom = {
                 Coord = vector3(-1874.90, 2054.53, 140.09),
