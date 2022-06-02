@@ -29,7 +29,7 @@
     {
         "name": "waterbottle",
         "status": {
-            "thirst": 1000
+            "thirst": 1250
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
@@ -38,7 +38,16 @@
     {
         "name": "ecola",
         "status": {
-            "thirst": 1000
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink"
+        }
+    },
+    {
+        "name": "grapejuice",
+        "status": {
+            "thirst": 1500
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
@@ -48,7 +57,7 @@
         "name": "pisswasser",
         "status": {
             "thirst": -500,
-            "drunk": 1000
+            "drunk": 1300
         },
         "clientEvent": {
             "name": "ava_status:client:drink",
