@@ -28,6 +28,7 @@ client_scripts {
     "@RageUI/src/items/Panels.lua",
 
     "config.lua",
+    "config/**/*.lua",
     "client/main.lua",
     "client/jobmenu_cl.lua",
     "client/bank_managment_cl.lua",
@@ -38,6 +39,7 @@ server_scripts {
     "@oxmysql/lib/MySQL.lua",
 
     "config.lua",
+    "config/**/*.lua",
     "server/main.lua",
     "server/jobmenu_sv.lua",
     "server/bank_managment_sv.lua",
