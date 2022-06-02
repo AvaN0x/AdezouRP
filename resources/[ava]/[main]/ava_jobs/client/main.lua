@@ -578,7 +578,7 @@ end)
 
 AddEventHandler("ava_jobs:hasExitedMarker", function(jobName, zoneName, zoneCategory)
     -- In some cases, we have to close a menu from another script
-    if not CurrentActionEnabled and CurrentZoneValue and CurrentZoneValue.LSCustom then
+    if not CurrentActionEnabled and type(CurrentZoneValue) == "table" and CurrentZoneValue.LSCustom then
         RageUI.CloseAll()
     else
         RageUI.CloseAllInternal()
