@@ -5,7 +5,7 @@
 local CurrentGarage = nil
 local MenuElements = {}
 
-local vehicleListOptions<const> = { { Name = GetString("garage_take_out"), action = "take_out" }, { Name = GetString("garage_rename"), action = "rename" } }
+local vehicleListOptions <const> = { { Name = GetString("garage_take_out"), action = "take_out" }, { Name = GetString("garage_rename"), action = "rename" } }
 local MainGarageMenu = RageUI.CreateMenu(GetString("garage_menu"), GetString("garage_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainGarageMenu.Closed = function()
     CurrentGarage = nil

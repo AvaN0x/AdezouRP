@@ -125,8 +125,8 @@ local AddPlayerVehicle = function(citizenId, vehicleType, vehicleModel, label, p
         modsdata = modsData,
     })
 end
-
 exports("AddPlayerVehicle", AddPlayerVehicle)
+
 ---Add a vehicle to a job
 ---@param jobName string job name
 ---@param vehicleType string vehicle type
@@ -262,7 +262,7 @@ RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleN
         if vehicleData.ownertype == 0 and not IsJobGarage then
             -- Player vehicle
             vehicleParked = true
-        elseif vehicleData.ownertype == 1 and IsJobGarage and not IsCommonGarage then
+        elseif vehicleData.ownertype == 1 and IsJobGarage == vehicleData.job_name and not IsCommonGarage then
             -- Job vehicle
             vehicleParked = true
         end
