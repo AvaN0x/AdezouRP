@@ -7,7 +7,7 @@ Config.Jobs.government = {
     LabelName = "Gouvernement",
     ServiceCounter = true,
     PhoneNumber = "555-1508",
-    Blip = { Name = "Gouvernement", Coord = vector3(-545.17, -204.17, 37.24), Sprite = 419, Colour = 0 },
+    Blip = { Name = "Gouvernement", Coord = vector3(-545.17, -204.17, 37.24), Sprite = 419, Color = 0 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(-536.25, -189.45, 46.76),
@@ -54,25 +54,25 @@ Config.Jobs.government = {
             Name = "jobgarage_government",
             Coord = vector3(-580.48, -171.22, 37.86),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 207, g = 169, b = 47 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "government",
             JobNeeded = "government",
             SpawnPoint = { Coord = vector3(-580.48, -171.22, 37.86), Heading = 298.75 },
-            Blip = { Name = "Garage entreprise", Sprite = 419, Color = 0 },
+            Blip = { Name = "Garage entreprise" },
         },
-        --Player garages
+        -- Player garages
         {
             Name = "garage_government",
             Coord = vector3(-561.64, -172.14, 38.18),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 255, g = 255, b = 255 },
             Marker = 36,
             VehicleType = 0,
             JobNeeded = "government",
             SpawnPoint = { Coord = vector3(-561.64, -172.14, 38.18), Heading = 31.07 },
-            Blip = { Name = "Garage", Sprite = 419, Color = 0 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     }
 }

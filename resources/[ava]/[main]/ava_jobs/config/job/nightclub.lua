@@ -5,7 +5,7 @@
 
 Config.Jobs.nightclub = { --todo when anyone want
     LabelName = "Galaxy",
-    Blip = { Coord = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Colour = 7 },
+    Blip = { Coord = vector3(-676.83, -2458.79, 12.96), Sprite = 614, Color = 7 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(-1583.19, -3014.04, -76.99),

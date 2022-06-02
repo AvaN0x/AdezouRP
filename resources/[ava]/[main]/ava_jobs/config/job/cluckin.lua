@@ -5,7 +5,7 @@
 
 Config.Jobs.cluckin = {
     LabelName = "Cluckin Bell",
-    Blip = { Sprite = 141, Colour = 46 },
+    Blip = { Sprite = 141, Color = 46 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(-513.13, -699.59, 32.19),
@@ -180,25 +180,25 @@ Config.Jobs.cluckin = {
             Name = "jobgarage_cluckin",
             Coord = vector3(-465.09, -619.23, 31.17),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 136, g = 232, b = 9 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "cluckin",
             JobNeeded = "cluckin",
             SpawnPoint = { Coord = vector3(-465.09, -619.23, 31.17), Heading = 88.32 },
-            Blip = { Name = "Garage entreprise", Sprite = 141, Color = 46 },
+            Blip = { Name = "Garage entreprise" },
         },
-        --Players Garage
+        -- Player garages
         {
             Name = "garage_cluckin",
             Coord = vector3(-480.36, -600.63, 31.17),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 255, g = 255, b = 255 },
             Marker = 36,
             VehicleType = 0,
             JobNeeded = "cluckin",
             SpawnPoint = { Coord = vector3(-480.36, -600.63, 31.17), Heading = 182.24 },
-            Blip = { Name = "Garage", Sprite = 141, Color = 46 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
 }

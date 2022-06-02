@@ -5,7 +5,7 @@
 
 Config.Jobs.tailor = {
     LabelName = "Couturier",
-    Blip = { Sprite = 366, Colour = 0 },
+    Blip = { Sprite = 366, Color = 0 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(708.48, -966.69, 29.42),
@@ -19,7 +19,7 @@ Config.Jobs.tailor = {
         MainStock = {
             Coord = vector3(708.73, -963.44, 29.42),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
-            Color = { r = 207, g = 169, b = 47 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "Stockage",
             InventoryName = "job_tailor_stock",
             HelpText = GetString("press_to_open"),
@@ -63,7 +63,7 @@ Config.Jobs.tailor = {
             Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
             Coord = vector3(712.75, -973.78, 29.42),
             Size = { x = 2.5, y = 2.5, z = 1.5 },
-            Color = { r = 252, g = 186, b = 3 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "2. Traitement laine",
             HelpText = GetString("press_traitement"),
             Marker = 27,
@@ -76,7 +76,7 @@ Config.Jobs.tailor = {
             Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
             Coord = vector3(716.5, -961.82, 29.42),
             Size = { x = 2.5, y = 2.5, z = 1.5 },
-            Color = { r = 252, g = 186, b = 3 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "3. Traitement du tissu",
             HelpText = GetString("press_traitement"),
             NoInterim = false,
@@ -90,7 +90,7 @@ Config.Jobs.tailor = {
             Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
             Coord = vector3(718.73, -973.74, 29.42),
             Size = { x = 2.5, y = 2.5, z = 1.5 },
-            Color = { r = 252, g = 186, b = 3 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "5. Mise en caisse des vetements",
             HelpText = GetString("press_traitement"),
             NoInterim = false,
@@ -103,7 +103,7 @@ Config.Jobs.tailor = {
             Items = { { name = "clothebox", price = 1420 } },
             Coord = vector3(71.67, -1390.47, 28.4),
             Size = { x = 1.5, y = 1.5, z = 1.5 },
-            Color = { r = 136, g = 232, b = 9 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "6. Vente des produits",
             HelpText = GetString("press_sell"),
             Marker = 27,
@@ -115,7 +115,7 @@ Config.Jobs.tailor = {
             Items = { { name = "cardboardbox", price = 20 } },
             Coord = vector3(406.5, -350.02, 45.84),
             Size = { x = 1.5, y = 1.5, z = 1.5 },
-            Color = { r = 136, g = 232, b = 9 },
+            Color = { r = 136, g = 243, b = 216 },
             Name = "4. Achat de cartons",
             HelpText = GetString("press_buy"),
             Marker = 27,
@@ -128,25 +128,25 @@ Config.Jobs.tailor = {
             Name = "jobgarage_tailor",
             Coord = vector3(719.12, -989.25, 24.10),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 136, g = 243, b = 216 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "tailor",
             JobNeeded = "tailor",
             SpawnPoint = { Coord = vector3(719.12, -989.25, 24.10), Heading = 272.05 },
-            Blip = { Name = "Garage entreprise", Sprite = 366, Color = 0 },
+            Blip = { Name = "Garage entreprise" },
         },
         --Players Garage
         {
             Name = "garage_tailor",
             Coord = vector3(691.05, -965.24, 23.61),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 255, g = 255, b = 255 },
             Marker = 36,
             VehicleType = 0,
             JobNeeded = "tailor",
             SpawnPoint = { Coord = vector3(691.05, -965.24, 23.61), Heading = 166.25 },
-            Blip = { Name = "Garage", Sprite = 366, Color = 0 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
 }

@@ -34,7 +34,7 @@ Citizen.CreateThread(function()
             SetBlipSprite(blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale(blip, job.Blip.Scale or 1.0)
-            SetBlipColour(blip, job.Blip.Colour)
+            SetBlipColour(blip, job.Blip.Color)
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName("STRING")
@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
     SetBlipSprite(jobCenterBlip, Config.JobCenter.Blip.Sprite)
     SetBlipDisplay(jobCenterBlip, 4)
     SetBlipScale(jobCenterBlip, Config.JobCenter.Blip.Scale or 1.0)
-    SetBlipColour(jobCenterBlip, Config.JobCenter.Blip.Colour)
+    SetBlipColour(jobCenterBlip, Config.JobCenter.Blip.Color)
     SetBlipAsShortRange(jobCenterBlip, true)
 
     BeginTextCommandSetBlipName("STRING")
@@ -66,6 +66,15 @@ Citizen.CreateThread(function()
     for _, job in pairs(Config.Jobs) do
         if job.Garages then
             for _, garage in pairs(job.Garages) do
+                if garage.Blip then
+                    if not garage.Blip.Sprite and job.Blip?.Sprite then
+                        garage.Blip.Sprite = job.Blip.Sprite
+                    end
+                    if not garage.Blip.Color and job.Blip?.Color then
+                        garage.Blip.Color = job.Blip.Color
+                    end
+                end
+
                 exports.ava_garages:addGarage(garage, true)
             end
         end
@@ -103,7 +112,6 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 end)
 
 RegisterNetEvent("ava_core:client:updateAccountData", function(jobName, accountName, accountBalance)
-    print("ava_core:client:updateAccountData", jobName, accountName, accountBalance)
     if accountName == "bank" and playerJobs[jobName] then
         playerJobs[jobName].bankBalance = accountBalance
         playerJobs[jobName].bankBalanceString = exports.ava_core:FormatNumber(playerJobs[jobName].bankBalance)
@@ -283,47 +291,47 @@ function createBlips()
         if job.Zones ~= nil then
             for k, v in pairs(job.Zones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
         if job.Blips ~= nil then
             for k, v in pairs(job.Blips) do
-                addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
             end
         end
         if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
         if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
         if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
         if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
         if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
                 if v.Blip and v.Allowed then
-                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Colour)
+                    addJobBlip(v.Coord, v.Name, job.Blip.Sprite, job.Blip.Color)
                 end
             end
         end
@@ -334,7 +342,7 @@ function createBlips()
         SetBlipSprite(bankManagmentBlip, Config.BankManagment.Blip.Sprite)
         SetBlipDisplay(bankManagmentBlip, 5)
         SetBlipScale(bankManagmentBlip, Config.BankManagment.Blip.Scale or 1.0)
-        SetBlipColour(bankManagmentBlip, Config.BankManagment.Blip.Colour)
+        SetBlipColour(bankManagmentBlip, Config.BankManagment.Blip.Color)
         SetBlipAsShortRange(bankManagmentBlip, true)
 
         BeginTextCommandSetBlipName("STRING")

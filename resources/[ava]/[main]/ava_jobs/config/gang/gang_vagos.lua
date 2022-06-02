@@ -37,6 +37,7 @@ Config.Jobs.gang_vagos = {
             IsCommonGarage = true,
             JobNeeded = "gang_vagos",
             SpawnPoint = { Coord = vector3(335.46, -2039.61, 21.13), Heading = 50.0 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
 }

@@ -7,7 +7,7 @@ Config.Jobs.lspd = {
     LabelName = "LSPD",
     ServiceCounter = true,
     PhoneNumber = "911",
-    Blip = { Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Colour = 3 },
+    Blip = { Name = "~b~Commissariat", Coord = vector3(440.68, -981.63, 30.69), Sprite = 60, Color = 3 },
     JobMenu = {
         Items = {
             -- {
@@ -300,7 +300,7 @@ Config.Jobs.lspd = {
             IsJobGarage = "lspd",
             JobNeeded = "lspd",
             SpawnPoint = { Coord = vector3(455.02, -1017.44, 28.44), Heading = 90.0 },
-            Blip = { Name = "Garage entreprise", Sprite = 60, Color = 3 },
+            Blip = { Name = "Garage entreprise" },
         },
         {
             Name = "jobgarage_lspd",
@@ -313,7 +313,7 @@ Config.Jobs.lspd = {
             IsJobGarage = "lspd",
             JobNeeded = "lspd",
             SpawnPoint = { Coord = vector3(449.57, -981.17, 43.69), Heading = 90.0 },
-            Blip = { Name = "Heliport", Sprite = 60, Color = 3 },
+            Blip = { Name = "Heliport" },
         },
         {
             Name = "jobgarage_lspd",
@@ -326,7 +326,7 @@ Config.Jobs.lspd = {
             IsJobGarage = "lspd",
             JobNeeded = "lspd",
             SpawnPoint = { Coord = vector3(-786.55, -1437.14, 1.40), Heading = 140.0 },
-            Blip = { Name = "Marina", Sprite = 60, Color = 3 }
+            Blip = { Name = "Marina" }
         },
         -- Player garages
         {
@@ -338,7 +338,7 @@ Config.Jobs.lspd = {
             VehicleType = 0,
             JobNeeded = "lspd",
             SpawnPoint = { Coord = vector3(454.79, -1024.43, 28.48), Heading = 5.0 },
-            Blip = { Name = "Garage", Sprite = 60, Color = 3 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
     BuyZones = {

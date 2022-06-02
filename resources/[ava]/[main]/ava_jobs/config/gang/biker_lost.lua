@@ -6,7 +6,7 @@
 Config.Jobs.biker_lost = {
     isGang = true,
     LabelName = "The Lost",
-    Blip = { Sprite = 556, Colour = 31 },
+    Blip = { Sprite = 556, Color = 31 },
     Blips = { { Name = "Bunker", Coord = vector3(2109.59, 3325.00, 45.36) } },
     Zones = {
         Stock = {
@@ -48,6 +48,7 @@ Config.Jobs.biker_lost = {
             IsCommonGarage = true,
             JobNeeded = "biker_lost",
             SpawnPoint = { Coord = vector3(971.55, -126.71, 74.32), Heading = 5.0 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
     -- Crate = {

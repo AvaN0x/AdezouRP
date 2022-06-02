@@ -37,6 +37,7 @@ Config.Jobs.gang_marabunta = {
             IsCommonGarage = true,
             JobNeeded = "gang_marabunta",
             SpawnPoint = { Coord = vector3(1329.94, -1724.45, 56.04), Heading = 10.77 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     },
 }

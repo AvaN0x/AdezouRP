@@ -5,12 +5,12 @@
 
 Config.Jobs.winemaker = {
     LabelName = "Vigneron",
-    Blip = { Sprite = 85, Colour = 19 },
+    Blip = { Sprite = 85, Color = 19 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(-1895.18, 2063.98, 140.03),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
-            Color = { r = 136, g = 243, b = 216 },
+            Color = { r = 252, g = 186, b = 3 },
             Name = "Actions patron",
             HelpText = GetString("press_to_open"),
             Marker = 27,
@@ -19,7 +19,7 @@ Config.Jobs.winemaker = {
         MainStock = {
             Coord = vector3(-1881.15, 2070.18, 140.03),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
-            Color = { r = 207, g = 169, b = 47 },
+            Color = { r = 252, g = 186, b = 3 },
             Name = "Stockage",
             InventoryName = "job_winemaker_stock",
             HelpText = GetString("press_to_open"),
@@ -29,7 +29,7 @@ Config.Jobs.winemaker = {
         Cloakroom = {
             Coord = vector3(-1874.90, 2054.53, 140.09),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
-            Color = { r = 136, g = 243, b = 216 },
+            Color = { r = 252, g = 186, b = 3 },
             Name = "Vestiaire",
             HelpText = GetString("press_to_open"),
             Marker = 27,
@@ -138,7 +138,7 @@ Config.Jobs.winemaker = {
             Items = { { name = "winebox", price = 1600 }, { name = "grapejuicebox", price = 650 } },
             Coord = vector3(-158.737, -54.651, 53.42),
             Size = { x = 1.5, y = 1.5, z = 1.5 },
-            Color = { r = 136, g = 232, b = 9 },
+            Color = { r = 252, g = 186, b = 3 },
             Name = "5. Vente des produits",
             HelpText = GetString("press_sell"),
             Marker = 27,
@@ -150,7 +150,7 @@ Config.Jobs.winemaker = {
             Items = { { name = "woodenbox", price = 20 } },
             Coord = vector3(396.77, -345.88, 45.86),
             Size = { x = 1.5, y = 1.5, z = 1.5 },
-            Color = { r = 136, g = 232, b = 9 },
+            Color = { r = 252, g = 186, b = 3 },
             Name = "3. Achat de caisses",
             HelpText = GetString("press_buy"),
             Marker = 27,
@@ -163,25 +163,25 @@ Config.Jobs.winemaker = {
             Name = "jobgarage_winemaker",
             Coord = vector3(-1888.97, 2045.06, 140.87),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 252, g = 186, b = 3 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "winemaker",
             JobNeeded = "winemaker",
             SpawnPoint = { Coord = vector3(-1898.16, 2048.77, 139.89), Heading = 70.0 },
-            Blip = { Name = "Garage entreprise", Sprite = 85, Color = 19 },
+            Blip = { Name = "Garage entreprise" },
         },
         --Player garages
         {
             Name = "garage_winemaker",
             Coord = vector3(-1911.01, 2031.90, 140.74),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 255, g = 255, b = 255 },
             Marker = 36,
             VehicleType = 0,
             JobNeeded = "winemaker",
             SpawnPoint = { Coord = vector3(-1911.01, 2031.90, 140.74), Heading = 344.98 },
-            Blip = { Name = "Garage", Sprite = 85, Color = 19 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     }
 }

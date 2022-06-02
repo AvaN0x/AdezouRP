@@ -7,7 +7,7 @@ Config.Jobs.ems = {
     LabelName = "EMS",
     ServiceCounter = true,
     PhoneNumber = "912",
-    Blip = { Name = "~b~Hopital", Coord = vector3(298.48, -584.48, 43.28), Sprite = 61, Colour = 26 },
+    Blip = { Name = "~b~Hopital", Coord = vector3(298.48, -584.48, 43.28), Sprite = 61, Color = 26 },
     JobMenu = {
         Items = {
             {
@@ -177,37 +177,37 @@ Config.Jobs.ems = {
             Name = "jobgarage_ems",
             Coord = vector3(337.34, -579.28, 28.80),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 0, g = 139, b = 90 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "ems",
             JobNeeded = "ems",
             SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340 },
-            Blip = { Name = "Garage entreprise", Sprite = 61, Color = 26 },
+            Blip = { Name = "Garage entreprise" },
         },
         {
             Name = "jobgarage_ems",
             Coord = vector3(351.05, -588.07, 74.17),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 0, g = 139, b = 90 },
             Marker = 36,
             VehicleType = 2,
             IsJobGarage = "ems",
             JobNeeded = "ems",
             SpawnPoint = { Coord = vector3(351.05, -588.07, 74.17), Heading = 245.0 },
-            Blip = { Name = "Heliport", Sprite = 61, Color = 26 },
+            Blip = { Name = "Heliport" },
         },
         -- Player garages
         {
             Name = "garage_ems",
             Coord = vector3(323.62, -545.24, 28.74),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 122, b = 204 },
+            Color = { r = 255, g = 255, b = 255 },
             Marker = 36,
             VehicleType = 0,
             JobNeeded = "ems",
             SpawnPoint = { Coord = vector3(323.62, -545.24, 28.74), Heading = 268.32 },
-            Blip = { Name = "Garage", Sprite = 61, Color = 26 },
+            Blip = { Name = "Garage", Sprite = 357, Color = 0, Scale = 0.4 },
         },
     }
 }

@@ -121,7 +121,7 @@ Config.JobMenuElement = {
 Config.Jobs = {}
 
 Config.JobCenter = {
-    Blip = { Sprite = 682, Colour = 27 },
+    Blip = { Sprite = 682, Color = 27 },
     JobList = {
         { JobName = "unemployed", Label = "Chômage", Desc = "Inscrivez vous au chômage pour recevoir des aides" },
         { JobName = "winemaker", Label = "🍇 Intérimaire Vigneron", Desc = "Travail dans les vignes pour la fabrication de jus et de vin" },
@@ -136,7 +136,7 @@ Config.JobCenter = {
 }
 
 Config.BankManagment = {
-    Blip = { Sprite = 525, Colour = 12, Scale = 0.6 },
+    Blip = { Sprite = 525, Color = 12, Scale = 0.6 },
     Coord = vector3(248.23, 222.42, 105.31),
     Size = { x = 1.5, y = 1.5, z = 1.0 },
     Color = { r = 74, g = 159, b = 86 },

@@ -6,7 +6,7 @@
 Config.Jobs.bahama = { --todo when anyone want
     Disabled = true,
     LabelName = "Bahama",
-    Blip = { Sprite = 93, Colour = 0 },
+    Blip = { Sprite = 93, Color = 0 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(-1390.48, -600.57, 29.34),

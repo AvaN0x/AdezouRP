@@ -5,7 +5,7 @@
 
 Config.Jobs.unicorn = {
     LabelName = "Unicorn",
-    Blip = { Sprite = 121, Colour = 0 },
+    Blip = { Sprite = 121, Color = 0 },
     Zones = {
         ManagerMenu = {
             Coord = vector3(95.80, -1294.25, 28.28),
