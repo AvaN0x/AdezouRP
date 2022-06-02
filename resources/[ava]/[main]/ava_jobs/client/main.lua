@@ -624,7 +624,7 @@ Citizen.CreateThread(function()
                         elseif CurrentZoneValue.Action then
                             CurrentZoneValue.Action()
 
-                        elseif CurrentZoneValue.LSCustom then
+                        elseif CurrentZoneValue.LSCustoms then
                             exports.ava_stores:OpenLSCustomsMenu(CurrentZoneValue, CurrentJobName)
                         end
                     elseif CurrentZoneCategory == "field" then
