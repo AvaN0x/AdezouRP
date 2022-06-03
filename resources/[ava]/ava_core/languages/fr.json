@@ -79,6 +79,7 @@
     "tpwaypoint_help": "Se téléporter au waypoint",
     "tpwaypoint_log": "S'est téléporté à son waypoint.",
     "tpwaypoint_no_waypoint_found": "Aucun waypoint trouvé",
+    "debugcoords_help": "Débuguer sa coordonnée ou celle d'un autre joueur",
     "kill_help": "Tuer un joueur",
     "kill_log": "**%s** a été tué par **%s**.",
     "killed_by_staff": "Tué par un staff",

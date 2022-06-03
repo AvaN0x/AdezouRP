@@ -180,9 +180,9 @@ end)
 
 RegisterNetEvent("ava_core:client:getvehicledata", function()
     if AVA.Player.isInVehicle then
-        local data<const> = { mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle) }
+        local data <const> = { mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle) }
         if data then
-            local jsonData<const> = json.encode(data)
+            local jsonData <const> = json.encode(data)
             print(jsonData)
             TriggerEvent("ava_hud:client:copyToClipboard", jsonData)
         end
@@ -204,7 +204,7 @@ end)
 -----------------------------------
 
 RegisterNetEvent("ava_core:client:setped", function(model)
-    local modelHash<const> = GetHashKey(model)
+    local modelHash <const> = GetHashKey(model)
 
     if IsModelValid(modelHash) and IsModelInCdimage(modelHash) then
         AVA.Player.playerPed = PlayerPedId() -- safety
@@ -259,13 +259,13 @@ end)
 ------------------------------------
 
 RegisterNetEvent("ava_core:client:getskin", function()
-    local playerSkin<const> = json.encode(exports.ava_mp_peds:getPlayerCurrentSkin())
+    local playerSkin <const> = json.encode(exports.ava_mp_peds:getPlayerCurrentSkin())
     print(playerSkin)
     TriggerEvent("ava_hud:client:copyToClipboard", playerSkin)
 end)
 
 RegisterNetEvent("ava_core:client:getclothes", function()
-    local playerClothes<const> = json.encode(exports.ava_mp_peds:getPlayerClothes())
+    local playerClothes <const> = json.encode(exports.ava_mp_peds:getPlayerClothes())
     print(playerClothes)
     TriggerEvent("ava_hud:client:copyToClipboard", playerClothes)
 end)

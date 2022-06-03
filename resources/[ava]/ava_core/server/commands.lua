@@ -608,6 +608,24 @@ AVA.Commands.RegisterCommand({ "tpwaypoint", "tpw", "tpmarker", "tpm" }, "admin"
     end
 end, GetString("tpwaypoint_help"))
 
+AVA.Commands.RegisterCommand("debugcoords", "mod", function(source, args)
+    local src = source
+    if type(args[1]) == "string" and args[1] ~= "0" then
+        src = tonumber(args[1])
+    end
+
+    -- Source was target and no args were given
+    if src == 0 then return end
+
+    local targetPed = GetPlayerPed(src)
+    if not targetPed then return end
+
+    local targetCoords = GetEntityCoords(targetPed)
+    if targetCoords ~= vector3(0.0, 0.0, 0.0) then
+        TriggerClientEvent("ava_core:client:teleportToCoords", src, targetCoords.x, targetCoords.y, 0)
+    end
+end, GetString("debugcoords_help"), { { name = "player?", help = GetString("player_id_or_empty") } })
+
 ------------------------------------
 --------------- SKIN ---------------
 ------------------------------------
