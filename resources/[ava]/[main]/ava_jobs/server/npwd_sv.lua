@@ -38,7 +38,7 @@ sendMessageToJob = function(jobName, data)
     if data and job and job.PhoneNumber then
         local msg = nil
         if data.sourcePhoneNumber then
-            msg = ("%s - %s:\n\n%s"):format(job.LabelName, data.sourcePhoneNumber, data.message)
+            msg = ("%s - %s:\n%s"):format(job.LabelName, data.sourcePhoneNumber, data.message)
         else
             msg = ("%s:\n%s"):format(job.LabelName, data.message)
         end
