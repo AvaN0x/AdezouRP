@@ -138,6 +138,8 @@ end)
 -------------
 -- #region Harvest
 exports.ava_core:RegisterServerCallback("ava_jobs:canPickUp", function(source, jobName, zoneName)
+    -- TODO use MinimumGrade
+
     local aPlayer = exports.ava_core:GetPlayer(source)
     local result = false
     local job = Config.Jobs[jobName]
@@ -155,6 +157,8 @@ exports.ava_core:RegisterServerCallback("ava_jobs:canPickUp", function(source, j
 end)
 
 RegisterNetEvent("ava_jobs:server:pickUp", function(jobName, zoneName)
+    -- TODO use MinimumGrade
+
     local aPlayer = exports.ava_core:GetPlayer(source)
     local job = Config.Jobs[jobName]
     local zone = job.FieldZones[zoneName]
@@ -220,6 +224,8 @@ local function hasKey(source, keyName)
 end
 
 exports.ava_core:RegisterServerCallback("ava_jobs:canprocess", function(source, process, jobName)
+    -- TODO use MinimumGrade
+    -- TODO change this process to use a name, because anybody can send whatever they want to the server
     if not playersProcessing[source] then
         local job = Config.Jobs[jobName]
         if job and (job.isIllegal ~= true or not process.NeedKey or hasKey(source, job.KeyName)) and hasEnoughItems(source, process.ItemsGive)
@@ -233,6 +239,9 @@ exports.ava_core:RegisterServerCallback("ava_jobs:canprocess", function(source, 
 end)
 
 RegisterNetEvent("ava_jobs:server:process", function(process)
+    -- TODO use MinimumGrade
+    -- TODO change this process to use a name, because anybody can send whatever they want to the server
+
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     local inventory = aPlayer.getInventory()
@@ -271,6 +280,7 @@ end)
 -------------
 -- #region selling
 RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, count)
+    -- TODO use MinimumGrade
     local src = source
     local aPlayer = exports.ava_core:GetPlayer(src)
     if not aPlayer then return end
@@ -325,6 +335,8 @@ RegisterNetEvent("ava_jobs:server:sellItems", function(jobName, zoneName, item, 
 end)
 
 exports.ava_core:RegisterServerCallback("ava_jobs:getSellElements", function(source, jobName, zoneName)
+    -- TODO use MinimumGrade
+
     local aPlayer = exports.ava_core:GetPlayer(source)
     local inventory = aPlayer.getInventory()
     local job = Config.Jobs[jobName]
@@ -356,6 +368,8 @@ end)
 ------------
 -- #region buying
 RegisterNetEvent("ava_jobs:server:buyItem", function(jobName, zoneName, item, count)
+    -- TODO use MinimumGrade
+
     local src = source
     local job = Config.Jobs[jobName]
     local zone = job and job.BuyZones[zoneName]
@@ -405,6 +419,8 @@ RegisterNetEvent("ava_jobs:server:buyItem", function(jobName, zoneName, item, co
 end)
 
 exports.ava_core:RegisterServerCallback("ava_jobs:GetBuyElements", function(source, jobName, zoneName)
+    -- TODO use MinimumGrade
+
     local aPlayer = exports.ava_core:GetPlayer(source)
     local inventory = aPlayer.getInventory()
     local job = Config.Jobs[jobName]
