@@ -143,48 +143,47 @@ local function Loop(value, vehicle, seat)
         disableAirControl = AVAConfig.DisableAirControl and vehicleClassDisableAirControl[GetVehicleClass(vehicle)]
     end
 
-    if value and inLoop then
-        return
-    end
+    -- Try to enable loop but already in loop
+    if value and inLoop then return end
+
     inLoop = value
 
-    if inLoop then
-        Citizen.CreateThread(function()
-            while inLoop do
-                if playerVehicle ~= 0 then
-                    local vehicle = playerVehicle
+    -- Not in loop, no need to go further
+    if not inLoop then return end
 
-                    if AVAConfig.DisableVehicleJump then
-                        DisableControlAction(0, 350, true)
-                    end
-                    if AVAConfig.DisableVehicleRocketBoost then
-                        DisableControlAction(0, 351, true)
-                    end
-                    if AVAConfig.DisableBikeWings then
-                        DisableControlAction(0, 354, true)
-                    end
-                    if AVAConfig.DisableVehicleTransform then
-                        DisableControlAction(0, 357, true)
-                    end
+    Citizen.CreateThread(function()
+        while inLoop and playerVehicle ~= 0 do
+            local vehicle = playerVehicle
 
-                    if AVAConfig.DisableVehicleWeapons and DoesVehicleHaveWeapons(vehicle) then
-                        local playerPed = PlayerPedId()
-                        local hasWeapon, vehWeaponHash = GetCurrentPedVehicleWeapon(playerPed)
-                        if hasWeapon and WeaponsToDisable[vehWeaponHash] then
-                            DisableVehicleWeapon(true, vehWeaponHash, vehicle, playerPed)
-                            SetCurrentPedWeapon(playerPed, GetHashKey("weapon_unarmed"))
-                        end
-                    end
-
-                    if disableAirControl and IsEntityInAir(vehicle) then
-                        DisableControlAction(0, 59) -- INPUT_VEH_MOVE_LR
-                        DisableControlAction(0, 60) -- INPUT_VEH_MOVE_UD
-                    end
-                end
-                Wait(0)
+            if AVAConfig.DisableVehicleJump then
+                DisableControlAction(0, 350, true)
             end
-        end)
-    end
+            if AVAConfig.DisableVehicleRocketBoost then
+                DisableControlAction(0, 351, true)
+            end
+            if AVAConfig.DisableBikeWings then
+                DisableControlAction(0, 354, true)
+            end
+            if AVAConfig.DisableVehicleTransform then
+                DisableControlAction(0, 357, true)
+            end
+
+            if AVAConfig.DisableVehicleWeapons and DoesVehicleHaveWeapons(vehicle) then
+                local playerPed = PlayerPedId()
+                local hasWeapon, vehWeaponHash = GetCurrentPedVehicleWeapon(playerPed)
+                if hasWeapon and WeaponsToDisable[vehWeaponHash] then
+                    DisableVehicleWeapon(true, vehWeaponHash, vehicle, playerPed)
+                    SetCurrentPedWeapon(playerPed, GetHashKey("weapon_unarmed"))
+                end
+            end
+
+            if disableAirControl and IsEntityInAir(vehicle) then
+                DisableControlAction(0, 59) -- INPUT_VEH_MOVE_LR
+                DisableControlAction(0, 60) -- INPUT_VEH_MOVE_UD
+            end
+            Wait(0)
+        end
+    end)
 end
 
 Citizen.CreateThread(function()
