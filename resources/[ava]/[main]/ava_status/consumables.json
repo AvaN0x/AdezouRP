@@ -47,7 +47,7 @@
     {
         "name": "grapejuice",
         "status": {
-            "thirst": 1500
+            "thirst": 3000
         },
         "clientEvent": {
             "name": "ava_status:client:drink"
