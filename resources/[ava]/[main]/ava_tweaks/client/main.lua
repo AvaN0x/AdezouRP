@@ -133,7 +133,9 @@ local vehicleClassDisableAirControl = {
     [16] = false, -- plane
     [17] = true, -- service
     [18] = true, -- emergency
-    [19] = false, -- military
+    [19] = true, -- military
+    [20] = true, -- commercial
+    [21] = true, -- trains
 }
 
 local function Loop(value, vehicle, seat)
