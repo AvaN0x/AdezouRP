@@ -74,7 +74,7 @@ exports.ava_core:RegisterUsableItem("blowtorch", function(source, aPlayer)
 end)
 
 RegisterServerEvent("ava_items:blowtorch:remove", function()
-    if math.random(0, 100) < 5 then
+    if math.random(0, 100) < 10 then
         local aPlayer = exports.ava_core:GetPlayer(source)
         if aPlayer then
             local inventory = aPlayer.getInventory()
