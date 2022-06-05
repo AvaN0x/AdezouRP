@@ -259,6 +259,28 @@
             }
         ]
     },
+    "lumberjack": {
+        "label": "Bûcheron",
+        "grades": [
+            {
+                "name": "employee",
+                "label": "Employé",
+                "salary": 100
+            },
+            {
+                "name": "chief",
+                "label": "Chef",
+                "manage": true,
+                "salary": 150
+            },
+            {
+                "name": "boss",
+                "label": "Patron",
+                "salary": 200,
+                "manage": true
+            }
+        ]
+    },
     "gang_vagos": {
         "isGang": true,
         "label": "Vagos",

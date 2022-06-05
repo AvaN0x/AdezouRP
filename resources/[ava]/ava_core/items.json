@@ -288,7 +288,7 @@
     },
     "dolizou": {
         "label": "Dolizou",
-        "type": "medicine",
+        "type": "medical",
         "weight": 10,
         "description": "Sous prescription du médecin",
         "noIcon": true
@@ -873,6 +873,16 @@
         "type": "ammo",
         "description": "",
         "weight": 10,
+        "noIcon": true
+    },
+    "woodpile": {
+        "label": "Pile de bois",
+        "weight": 500,
+        "noIcon": true
+    },
+    "woodchipsbag": {
+        "label": "Sac de copeaux",
+        "weight": 100,
         "noIcon": true
     }
 }
