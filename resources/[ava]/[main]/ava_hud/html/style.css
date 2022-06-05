@@ -3,6 +3,7 @@
 
 :root {
     font-size: 1.65vh;
+    --fuel-color: #ff9d00;
 }
 
 * {
@@ -255,6 +256,10 @@
     -webkit-transform: translate(16px, 13px);
     -ms-transform: translate(16px, 13px);
     transform: translate(16px, 13px);
+}
+
+.hud .progress-fuel.electric {
+    --fuel-color: #51b3ec;
 }
 
 

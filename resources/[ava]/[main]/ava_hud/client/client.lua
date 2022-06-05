@@ -218,13 +218,25 @@ local function setTankSize(vehicle)
     SendNUIMessage({ action = "setTankSize", value = value })
 end
 
-AddEventHandler("ava_core:client:enteredVehicle", setTankSize)
+local function setIsElectric(vehicle)
+    local value = 100
+    if GetResourceState("ava_fuel") == "started" then
+        value = exports.ava_fuel:IsVehicleElectric(vehicle)
+    end
+    SendNUIMessage({ action = "setIsElectric", value = value })
+end
+
+AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
+    setTankSize(vehicle)
+    setIsElectric(vehicle)
+end)
 
 Citizen.CreateThread(function()
     local isInVehicle, vehicle = exports.ava_core:IsPlayerInVehicle()
     if isInVehicle then
-        Wait(100) -- Mandatory wait!
+        Wait(500) -- Mandatory wait!
         setTankSize(vehicle)
+        setIsElectric(vehicle)
     end
 end)
 

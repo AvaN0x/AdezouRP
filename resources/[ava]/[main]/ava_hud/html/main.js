@@ -70,6 +70,8 @@ $(function () {
             }
         } else if (event.data.action == "setTankSize") {
             tankSize = event.data.value;
+        } else if (event.data.action == "setIsElectric") {
+            $('.progress-fuel').toggleClass('electric', event.data.value);
         } else if (event.data.action == "setbelt") {
             if (!event.data.isAccepted || event.data.belt) {
                 $('.belt').fadeOut();
