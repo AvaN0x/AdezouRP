@@ -53,7 +53,7 @@ Config.Jobs.lumberjack = {
             MinGroundHeight = 78,
             MaxGroundHeight = 80,
             Name = "1. Récolte",
-            Radius = 2.5 ,
+            Radius = 2 ,
             Blip = true,
         },
     },
