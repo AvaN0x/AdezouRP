@@ -877,12 +877,12 @@
     },
     "woodpile": {
         "label": "Pile de bois",
-        "weight": 500,
+        "weight": 5000,
         "noIcon": true
     },
     "woodchipsbag": {
         "label": "Sac de copeaux",
-        "weight": 100,
+        "weight": 500,
         "noIcon": true
     }
 }
