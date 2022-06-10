@@ -4,7 +4,10 @@
 -------------------------------------------
 AVAConfig = {}
 
+AVAConfig.MinimumToRefuel = 3
+
 -- In seconds, no floating point
+AVAConfig.LiterPrice = 4
 AVAConfig.ReplicateDelay = 30
 
 AVAConfig.GlobalMultiplier = 1.0

@@ -13,7 +13,7 @@ exports("IsVehicleElectric", IsVehicleElectric)
 
 local function createVehicleFuelStateBag(vehicle, vehState)
     TriggerServerEvent('ava_fuel:server:setStateBag', VehToNet(vehicle), GetVehicleFuelLevel(vehicle))
-    -- We can check "not" because lua do not consider 0 as false
+    -- We can check "not  vehState.fuel" because lua do not consider 0 as false
     while not vehState.fuel do Wait(0) end
 end
 
@@ -34,7 +34,9 @@ exports("GetVehicleFuel", GetVehicleFuel)
 ---@param vehicle entity
 ---@return number
 local GetVehicleTankSize = function(vehicle)
-    return GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume') or 60.0
+    -- TODO this would require to check a lot of gta vehicles, some vehicles like the issi3 have 100.0 of petrolTankVolume while a lot of other have 65.0
+    -- return GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fPetrolTankVolume') or 60.0
+    return 65.0
 end
 exports("GetVehicleTankSize", GetVehicleTankSize)
 
@@ -67,7 +69,8 @@ local function Loop(vehicle)
     -- No need to handle fuel if class usage is 0
     if classUsage <= 0.0 then return end
 
-    local multiplier <const> = (classUsage * (IsVehicleElectric(vehicle) and AVAConfig.ElectricMultiplier or 1.0)) * 0.05 * AVAConfig.GlobalMultiplier
+    local multiplier <const> = (classUsage * (IsVehicleElectric(vehicle) and AVAConfig.ElectricMultiplier or 1.0)) * 0.02
+        * AVAConfig.GlobalMultiplier
 
     local vehState <const> = Entity(vehicle).state
 
@@ -83,10 +86,11 @@ local function Loop(vehicle)
         while playerVehicle == vehicle do
             if GetIsVehicleEngineRunning(vehicle) then -- Engine is not running if fuel is 0
                 local rpm <const> = GetVehicleCurrentRpm(vehicle)
-                local newFuel <const> = vehState.fuel - (multiplier * (rpm * rpm + rpm * 0.8))
-                print(("fuel: %.3f (removed %.3f)"):format(vehState.fuel, (multiplier * (rpm * rpm + rpm * 0.8))))
+                local newFuel = vehState.fuel - (multiplier * (rpm * rpm + rpm * 0.8))
+                if newFuel < 0 then newFuel = 0 end
+                print(("fuel: %.3f (removed %.3f)"):format(newFuel, (multiplier * (rpm * rpm + rpm * 0.8))))
 
-                if newFuel >= 0 then
+                if newFuel ~= vehState.fuel then
                     replicateCounter = (replicateCounter + 1) % AVAConfig.ReplicateDelay
 
                     -- Only replicate if replicateCounter == 0
@@ -116,3 +120,181 @@ end)
 AddEventHandler("ava_core:client:leftDriverSeat", function(vehicle)
     Loop(0)
 end)
+
+RegisterNetEvent("ava_fuel:client:refuel", function(fuel)
+    local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
+    if not isInVehicle then return end
+
+    SetVehicleFuel(vehicle, tonumber(fuel) or GetVehicleTankSize(vehicle))
+end)
+
+--#region Pumps
+-- TODO better way of getting props
+local IsDead = false
+local pump = nil
+local isFueling = false
+Citizen.CreateThread(function()
+    while true do
+        Wait(1000)
+        pump = getPump()
+    end
+end)
+
+AddEventHandler("ava_core:client:playerDeath", function()
+    IsDead = true
+end)
+
+AddEventHandler("playerSpawned", function(spawn)
+    IsDead = false
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        local wait = 1000
+        if not IsDead and pump and not isFueling then
+            wait = 0
+            DrawText3D(pump.x, pump.y, pump.z, GetString("fuel_price", AVAConfig.LiterPrice))
+            BeginTextCommandDisplayHelp("STRING")
+            AddTextComponentSubstringPlayerName(GetString("press_to_fuel_vehicle"))
+            EndTextCommandDisplayHelp(0, false, true, -1)
+
+            if IsControlJustPressed(0, 38) then
+                InteractWithPump()
+            end
+        end
+        Wait(wait)
+    end
+end)
+
+function getPump()
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed)
+    for _, hash in ipairs(AVAConfig.GasPumps) do
+        local closestProp = GetClosestObjectOfType(coords, 1.5, hash, false, false, false)
+
+        if DoesEntityExist(closestProp) and GetEntityHealth(closestProp) > 0 then
+            local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, 0.0, 0.0, 0.0)
+
+            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9 }
+        end
+    end
+    return nil
+end
+
+function InteractWithPump()
+    local playerPed = PlayerPedId()
+    if IsPedInAnyVehicle(playerPed, true) then
+        exports.ava_core:ShowNotification(GetString("pump_cant_inside_vehicle"))
+        return
+    end
+    if GetIsVehicleEngineRunning(vehicle) then
+        exports.ava_core:ShowNotification(GetString("pump_cant_with_engine_on"))
+        return
+    end
+
+    local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
+    if vehicle == 0 then return end
+
+    local tankSize <const> = GetVehicleTankSize(vehicle)
+    local toRefuel = tankSize - GetVehicleFuel(vehicle)
+    if toRefuel <= AVAConfig.MinimumToRefuel then
+        exports.ava_core:ShowNotification(GetString("pump_not_enough_to_refuel", AVAConfig.MinimumToRefuel))
+        return
+    end
+
+    -- Setup state if needed
+    local vehState <const> = Entity(vehicle).state
+
+    -- Create state bag if not exists
+    if not vehState.fuel then
+        createVehicleFuelStateBag(vehicle, vehState)
+    end
+
+    -- TODO do we need to get control of vehicle if somebody else is inside of it?
+
+    -- TODO check money, get refuel count player can afford
+    isFueling = true
+    -- Prevent vehicle from starting
+    SetVehicleUndriveable(vehicle, true)
+
+    print(("toRefuel: %.3f"):format(toRefuel))
+
+    TaskTurnPedToFaceEntity(playerPed, vehicle, 1000)
+    Wait(1000)
+
+    -- Start anim
+    exports.ava_core:RequestAnimDict("timetable@gardener@filling_can")
+    TaskPlayAnim(playerPed, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 8.0, -8, -1, 1, 0, 0, 0, 0)
+    RemoveAnimDict("timetable@gardener@filling_can")
+
+    local stopRefuel = false
+    local currentlyRefueled = 0
+    Citizen.CreateThread(function()
+        -- Handle adding of fuel
+        repeat
+            Wait(100)
+            currentlyRefueled += 0.1
+
+            if currentlyRefueled > toRefuel then
+                stopRefuel = true
+            end
+            SetVehicleFuelInternal(vehicle, vehState, vehState.fuel + 0.1, false)
+        until stopRefuel or not isFueling
+
+        -- Replicate the new fuel
+        SetVehicleFuelInternal(vehicle, vehState, vehState.fuel, true)
+    end)
+
+    Citizen.CreateThread(function()
+        -- Handle player input and help text
+        repeat
+            Wait(0)
+
+            BeginTextCommandDisplayHelp("STRING")
+            AddTextComponentSubstringPlayerName(GetString("fueling_vehicle", currentlyRefueled,
+                AVAConfig.LiterPrice * currentlyRefueled))
+            EndTextCommandDisplayHelp(0, false, false, -1)
+
+            if IsDisabledControlJustReleased(0, 202) -- cancel
+                or IsControlPressed(0, 73) -- X
+            then
+                stopRefuel = true
+            end
+        until stopRefuel or not isFueling
+
+
+        -- TODO make player pay AVAConfig.LiterPrice * currentlyRefueled
+
+        -- Clear task
+        ClearPedTasks(playerPed)
+
+        -- Vehicle can now be driven
+        SetVehicleUndriveable(vehicle, false)
+        isFueling = false
+    end)
+end
+
+AddEventHandler("ava_core:client:canOpenMenu", function()
+    if isFueling then
+        CancelEvent()
+    end
+end)
+
+--#endregion Pumps
+
+function DrawText3D(x, y, z, text, size)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+
+    if onScreen then
+        SetTextScale(0.35, size or 0.35)
+        SetTextFont(0)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        SetTextOutline()
+
+        AddTextComponentSubstringPlayerName(text)
+        EndTextCommandDisplayText(_x, _y)
+    end
+end

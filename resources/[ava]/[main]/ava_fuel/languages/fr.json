@@ -1,1 +1,10 @@
-{}
+{
+    "refuel_help": "Faire le plein du véhicule",
+    "refuel_value": "Valeur, vide pour le plein",
+    "press_to_fuel_vehicle": "Appuyez sur ~INPUT_CONTEXT~ pour faire le plein du véhicule",
+    "pump_cant_inside_vehicle": "La pompe ne peut pas être utilisée dans un véhicule",
+    "pump_cant_with_engine_on": "Vous ne pouvez pas faire le plein d'un véhicule démarré",
+    "pump_not_enough_to_refuel": "Vous ne pouvez faire le plein que si vous pouvez prendre au moins %s litres.",
+    "fuel_price": "$%s/L",
+    "fueling_vehicle": "~INPUT_VEH_DUCK~ pour arrêter : %.1fL - $%.0f"
+}
