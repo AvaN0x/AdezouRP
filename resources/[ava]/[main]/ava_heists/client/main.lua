@@ -41,7 +41,8 @@ RegisterNetEvent("ava_heists:client:data:get", function(heists)
                     for stealableName, stolenArray in pairs(stage.Stealables) do
                         -- stealable is array of stolen items
                         for trayIndex, _ in pairs(stolenArray) do
-                            AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].Stolen = true
+                            AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].
+                                Stolen = true
                         end
                     end
                 end
@@ -165,16 +166,18 @@ Citizen.CreateThread(function()
                             if distance < AVAConfig.DrawDistance then
                                 if stealable.Marker then
                                     DrawMarker(stealable.Marker, zone.MarkerCoord or zone.Coord, 0.0, 0.0, 0.0,
-                                        stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0, stealable.Size.y or 1.0,
-                                        stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255, stealable.Color.b or 255, 100,
+                                        stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0,
+                                        stealable.Size.y or 1.0,
+                                        stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255,
+                                        stealable.Color.b or 255, 100,
                                         stealable.BobUpAndDown or false, true, 2, false, false, false, false)
                                 end
 
                                 if not playerIsInAction and distance < (stealable.Distance or stealable.Size.x or 1.0) then
                                     if stealable.HelpText ~= nil then
-                                        SetTextComponentFormat("STRING")
+                                        BeginTextCommandDisplayHelp("STRING")
                                         AddTextComponentSubstringPlayerName(stealable.HelpText)
-                                        DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                                        EndTextCommandDisplayHelp(0, 0, 1, -1)
                                     end
 
                                     if IsControlJustReleased(0, 38) -- E
@@ -207,17 +210,20 @@ Citizen.CreateThread(function()
                         local distance = #(playerCoords - interactable.Coord)
                         if distance < AVAConfig.DrawDistance then
                             if interactable.Marker then
-                                DrawMarker(interactable.Marker, interactable.Coord, 0.0, 0.0, 0.0, interactable.MarkerRotation or vector3(0.0, 0.0, 0.0),
-                                    interactable.Size.x or 1.0, interactable.Size.y or 1.0, interactable.Size.z or 1.0, interactable.Color.r or 255,
-                                    interactable.Color.g or 255, interactable.Color.b or 255, 100, interactable.BobUpAndDown or false, true, 2, false, false,
+                                DrawMarker(interactable.Marker, interactable.Coord, 0.0, 0.0, 0.0,
+                                    interactable.MarkerRotation or vector3(0.0, 0.0, 0.0),
+                                    interactable.Size.x or 1.0, interactable.Size.y or 1.0, interactable.Size.z or 1.0,
+                                    interactable.Color.r or 255,
+                                    interactable.Color.g or 255, interactable.Color.b or 255, 100,
+                                    interactable.BobUpAndDown or false, true, 2, false, false,
                                     false, false)
                             end
 
                             if not playerIsInAction and distance < (interactable.Distance or interactable.Size.x or 1.0) then
                                 if interactable.HelpText ~= nil then
-                                    SetTextComponentFormat("STRING")
+                                    BeginTextCommandDisplayHelp("STRING")
                                     AddTextComponentSubstringPlayerName(interactable.HelpText)
-                                    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                                    EndTextCommandDisplayHelp(0, 0, 1, -1)
                                 end
 
                                 if interactable.Action then

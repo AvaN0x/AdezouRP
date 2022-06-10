@@ -105,7 +105,8 @@ Citizen.CreateThread(function()
                     local distance = #(playerCoords - coord)
                     if distance < v.DrawDistance then
                         if v.Marker ~= nil then
-                            DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                            DrawMarker(v.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x,
+                                v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                                 v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                         end
                         waitTimer = 0
@@ -119,7 +120,8 @@ Citizen.CreateThread(function()
                 local distance = #(playerCoords - v.Coord)
                 if distance < v.DrawDistance then
                     if v.Marker ~= nil then
-                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                        DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x,
+                            v.Size.y, v.Size.z, v.Color.r, v.Color.g,
                             v.Color.b, v.Color.a or 100, false, true, 2, false, false, false, false)
                     end
                     waitTimer = 0
@@ -169,9 +171,9 @@ Citizen.CreateThread(function()
         if CurrentZoneName ~= nil and CurrentActionEnabled then
             wait = 0
             if CurrentHelpText ~= nil then
-                SetTextComponentFormat("STRING")
+                BeginTextCommandDisplayHelp("STRING")
                 AddTextComponentSubstringPlayerName(CurrentHelpText)
-                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                EndTextCommandDisplayHelp(0, 0, 1, -1)
             end
 
             if IsControlJustReleased(0, 38) -- E
@@ -217,7 +219,8 @@ function BuyZone()
         count = count + 1
         elements[count] = {
             label = item.label,
-            rightLabel = GetString("store_item_right_label", item.isDirtyMoney and "~r~" or "", exports.ava_core:FormatNumber(item.price)),
+            rightLabel = GetString("store_item_right_label", item.isDirtyMoney and "~r~" or "",
+                exports.ava_core:FormatNumber(item.price)),
             leftBadge = not item.noIcon and function()
                 return { BadgeDictionary = "ava_items", BadgeTexture = item.name }
             end or nil,
@@ -233,9 +236,11 @@ function BuyZone()
         RageUI.OpenTempMenu(store.Name, function(Items)
             for i = 1, #elements do
                 local element = elements[i]
-                Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel, LeftBadge = element.leftBadge }, function(onSelected)
+                Items:AddButton(element.label, element.desc,
+                    { RightLabel = element.rightLabel, LeftBadge = element.leftBadge }, function(onSelected)
                     if onSelected then
-                        local count = tonumber(exports.ava_core:KeyboardInput(GetString("how_much_max", element.maxCanTake or 0), "", 10))
+                        local count = tonumber(exports.ava_core:KeyboardInput(GetString("how_much_max",
+                            element.maxCanTake or 0), "", 10))
 
                         if type(count) == "number" and math.floor(count) == count and count > 0 then
                             if count > element.maxCanTake then
@@ -301,8 +306,10 @@ function CarWash()
                     end
 
                     local particle = carwash.Carwash.Particles[i]
-                    table.insert(particles, StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0, particle.Heading + 0.0,
-                        0.0, 1.0, 0.0, 0, 0))
+                    table.insert(particles,
+                        StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0,
+                            particle.Heading + 0.0,
+                            0.0, 1.0, 0.0, 0, 0))
                 end
             end
 
