@@ -88,7 +88,6 @@ local function Loop(vehicle)
                 local rpm <const> = GetVehicleCurrentRpm(vehicle)
                 local newFuel = vehState.fuel - (multiplier * (rpm * rpm + rpm * 0.8))
                 if newFuel < 0 then newFuel = 0 end
-                print(("fuel: %.3f (removed %.3f)"):format(newFuel, (multiplier * (rpm * rpm + rpm * 0.8))))
 
                 if newFuel ~= vehState.fuel then
                     replicateCounter = (replicateCounter + 1) % AVAConfig.ReplicateDelay
@@ -159,7 +158,7 @@ Citizen.CreateThread(function()
             EndTextCommandDisplayHelp(0, false, true, -1)
 
             if IsControlJustPressed(0, 38) then
-                InteractWithPump()
+                FuelVehicle()
             end
         end
         Wait(wait)
@@ -181,7 +180,7 @@ function getPump()
     return nil
 end
 
-function InteractWithPump()
+function FuelVehicle(isPetrolCan)
     local playerPed = PlayerPedId()
     if IsPedInAnyVehicle(playerPed, true) then
         exports.ava_core:ShowNotification(GetString("pump_cant_inside_vehicle"))
@@ -203,16 +202,25 @@ function InteractWithPump()
         return
     end
 
-    local fuelPlayerCanAfford <const> = exports.ava_core:TriggerServerCallback("ava_fuel:server:getFuelPlayerCanAfford")
-    if toRefuel > fuelPlayerCanAfford then
-        toRefuel = fuelPlayerCanAfford
+    if not isPetrolCan then
+        local fuelPlayerCanAfford <const> = exports.ava_core:TriggerServerCallback("ava_fuel:server:getFuelPlayerCanAfford")
+        if toRefuel > fuelPlayerCanAfford then
+            toRefuel = fuelPlayerCanAfford
+        end
+
+        -- Check this a second time
+        if toRefuel <= AVAConfig.MinimumToRefuel then
+            exports.ava_core:ShowNotification(GetString("pump_not_enough_to_refuel", AVAConfig.MinimumToRefuel))
+            return
+        end
+
+    else
+
+        if toRefuel > AVAConfig.PetrolCanCapacity then
+            toRefuel = AVAConfig.PetrolCanCapacity
+        end
     end
 
-    -- Check this a second time
-    if toRefuel <= AVAConfig.MinimumToRefuel then
-        exports.ava_core:ShowNotification(GetString("pump_not_enough_to_refuel", AVAConfig.MinimumToRefuel))
-        return
-    end
 
     -- Setup state if needed
     local vehState <const> = Entity(vehicle).state
@@ -234,9 +242,14 @@ function InteractWithPump()
     Wait(1000)
 
     -- Start anim
-    exports.ava_core:RequestAnimDict("timetable@gardener@filling_can")
-    TaskPlayAnim(playerPed, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 8.0, -8, -1, 1, 0, 0, 0, 0)
-    RemoveAnimDict("timetable@gardener@filling_can")
+    local animDict, animName = "timetable@gardener@filling_can", "gar_ig_5_filling_can"
+    if isPetrolCan then
+        animDict, animName = "weapon@w_sp_jerrycan", "fire"
+    end
+
+    exports.ava_core:RequestAnimDict(animDict)
+    TaskPlayAnim(playerPed, animDict, animName, 8.0, -8, -1, 1, 0, 0, 0, 0)
+    RemoveAnimDict(animDict)
 
     local stopRefueling = false
     local currentlyRefueled = 0
@@ -259,8 +272,12 @@ function InteractWithPump()
             Wait(0)
 
             BeginTextCommandDisplayHelp("STRING")
-            AddTextComponentSubstringPlayerName(GetString("fueling_vehicle", currentlyRefueled,
-                AVAConfig.LiterPrice * currentlyRefueled))
+            if isPetrolCan then
+                AddTextComponentSubstringPlayerName(GetString("fueling_vehicle"))
+            else
+                AddTextComponentSubstringPlayerName(GetString("pump_fueling_vehicle", currentlyRefueled,
+                    AVAConfig.LiterPrice * currentlyRefueled))
+            end
             EndTextCommandDisplayHelp(0, false, false, -1)
 
             if IsDisabledControlJustReleased(0, 202) -- cancel
@@ -270,7 +287,12 @@ function InteractWithPump()
             end
         until stopRefueling or not isFueling
 
-        if exports.ava_core:TriggerServerCallback("ava_fuel:server:validateRefuel", currentlyRefueled) then
+        if isPetrolCan then
+            TriggerServerEvent("ava_fuel:server:petrolcan:remove")
+
+            -- Replicate the new fuel
+            SetVehicleFuelInternal(vehicle, vehState, vehState.fuel, true)
+        elseif exports.ava_core:TriggerServerCallback("ava_fuel:server:validateRefuel", currentlyRefueled) then
             -- Player paid the money
 
             -- Replicate the new fuel
@@ -303,8 +325,7 @@ end)
 
 --#region petrol can
 RegisterNetEvent("ava_fuel:client:usePetrolcan", function()
-
-    TriggerServerEvent("ava_fuel:server:petrolcan:remove")
+    FuelVehicle(true)
 end)
 --#endregion petrol can
 

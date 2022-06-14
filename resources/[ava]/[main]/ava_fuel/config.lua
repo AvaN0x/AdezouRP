@@ -5,6 +5,7 @@
 AVAConfig = {}
 
 AVAConfig.MinimumToRefuel = 3
+AVAConfig.PetrolCanCapacity = 20
 
 -- In seconds, no floating point
 AVAConfig.LiterPrice = 4

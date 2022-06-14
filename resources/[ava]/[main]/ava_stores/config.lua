@@ -90,6 +90,39 @@ Config.Stores = {
         Name = "LTD gasoline",
         HelpText = GetString("press_buy"),
     },
+    GasStation = {
+        Title = { textureName = "shopui_title_gasstation", textureDirectory = "shopui_title_gasstation" },
+        Blip = { Name = "Station servic", Sprite = 361, Color = 4, Scale = 0.5 },
+        Coords = {
+            vector3(1167.79, -323.71, 68.30), -- Mirror park
+            vector3(620.85, 268.94, 102.11), -- Clinton Ave
+            vector3(289.15, -1267.34, 28.46), -- Capital blvd
+            vector3(-70.55, -1761.15, 28.55), -- Grove street
+            vector3(-319.74, -1471.59, 29.57), -- Carson Ave
+            vector3(-1107.90, -1983.59, 12.17), -- Greenwish
+            vector3(-531.35, -1221.13, 17.47), -- Calais Ave
+            vector3(-702.92, -916.90, 18.23), -- Little Seoul
+            vector3(-2073.25, -327.02, 12.34), -- Eclipse Blvd
+            vector3(-1815.94, 793.92, 137.09), -- North Rockford drive
+            vector3(-2544.25, 2316.37, 32.24), -- Route 68 W
+            vector3(45.76, 2788.29, 56.90), -- Route 68 Joshua road
+            vector3(265.92, 2598.46, 43.84), -- Route 68 Joshua road 2
+            vector3(1039.44, 2664.25, 38.57), -- Route 68 Center
+            vector3(1200.71, 2655.74, 36.87), -- Route 68 Center 2
+            vector3(2674.22, 3266.72, 54.26), -- Route 13
+            vector3(181.26, 6596.82, 30.87), -- Route 1
+            vector3(2560.05, 373.65, 107.64), -- Route 15
+        },
+        Items = {
+            { name = "petrolcan", price = 100 },
+        },
+        Marker = 27,
+        Size = { x = 1.0, y = 1.0, z = 1.0 },
+        Color = { r = 134, g = 180, b = 84 },
+        Distance = 1.5,
+        Name = "Station service",
+        HelpText = GetString("press_buy"),
+    },
 
     BlackMarket = {
         Title = { textureName = "shopui_title_arenawar", textureDirectory = "shopui_title_arenawar" },
@@ -250,7 +283,8 @@ Config.Stores = {
         Title = { textureName = "shopui_title_highendfashion", textureDirectory = "shopui_title_highendfashion" }, -- PONSONBYS
         Subtitle = "Ponsonbys",
         Blip = { Sprite = 73, Color = 47, Scale = 0.8 },
-        Coords = { vector3(-703.776, -152.258, 36.44), vector3(-167.863, -298.969, 38.75), vector3(-1447.797, -242.461, 48.83) },
+        Coords = { vector3(-703.776, -152.258, 36.44), vector3(-167.863, -298.969, 38.75),
+            vector3(-1447.797, -242.461, 48.83) },
         ClothesStore = true,
         SkinElements = {
             "torso",
@@ -397,7 +431,8 @@ Config.Stores = {
         Title = { textureName = "shopui_title_barber", textureDirectory = "shopui_title_barber" }, -- HERR KUTZ BARBER
         Subtitle = "Herr Kutz Barber",
         Blip = { Sprite = 71, Color = 51, Scale = 0.8 },
-        Coords = { vector3(136.826, -1708.373, 28.31), vector3(1212.840, -473.921, 65.23), vector3(-278.077, 6228.463, 30.72) },
+        Coords = { vector3(136.826, -1708.373, 28.31), vector3(1212.840, -473.921, 65.23),
+            vector3(-278.077, 6228.463, 30.72) },
         ClothesStore = true,
         SkinElements = { "hair", "beard", "eyebrows", "chesthair", "eyes_color", "makeup", "lipstick", "blush" },
         Price = 150,
@@ -594,7 +629,8 @@ Config.Stores = {
     Carwash_Paleto = {
         Blip = { Sprite = 100, Color = 0, Scale = 0.6 },
         Coord = vector3(-75.27, 6424.31, 30.51),
-        Carwash = { Particles = { { Coord = vector3(-70.69, 6423.91, 31.68), Name = "ent_amb_car_wash_jet", Heading = -80.0 } }, Price = 80, Duration = 5000 },
+        Carwash = { Particles = { { Coord = vector3(-70.69, 6423.91, 31.68), Name = "ent_amb_car_wash_jet",
+            Heading = -80.0 } }, Price = 80, Duration = 5000 },
         Marker = 27,
         Size = { x = 3.5, y = 3.5, z = 3.0 },
         Distance = 2,
@@ -802,13 +838,21 @@ Config.ClothesStore = {
         },
         -- All clothes
         [2] = {
-            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61, leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0 },
-            [1] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15, leg_txd = 0, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0 },
+            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61,
+                leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0,
+                bodyarmor_txd = 0 },
+            [1] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15,
+                leg_txd = 0, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0,
+                bodyarmor_txd = 0 },
         },
         -- All clothes and head
         [3] = {
-            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61, leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0, hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 0, glasses_txd = 0 },
-            [1] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15, leg_txd = 0, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0, bodyarmor_txd = 0, hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = -1, glasses_txd = 0 },
+            [0] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 15, undershirt_txd = 0, leg = 61,
+                leg_txd = 1, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0,
+                bodyarmor_txd = 0, hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = 0, glasses_txd = 0 },
+            [1] = { tops = 15, tops_txd = 0, torso = 15, torso_txd = 0, undershirt = 14, undershirt_txd = 0, leg = 15,
+                leg_txd = 0, shoes = 5, shoes_txd = 0, bag = 0, bag_txd = 0, decals = 0, decals_txd = 0, bodyarmor = 0,
+                bodyarmor_txd = 0, hats = -1, hats_txd = 0, mask = 0, mask_txd = 0, glasses = -1, glasses_txd = 0 },
         },
     },
 }

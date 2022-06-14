@@ -574,6 +574,14 @@
         "weight": 5,
         "noIcon": true
     },
+    "petrolcan": {
+        "label": "Jerrycan",
+        "type": "petrolcan",
+        "description": "",
+        "weight": 20000,
+        "noIcon": true,
+        "closeInv": true
+    },
     "ammo_grenadelauncher": {
         "label": "Munition lance grenade",
         "type": "ammo",

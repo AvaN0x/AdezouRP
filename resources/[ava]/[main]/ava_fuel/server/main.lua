@@ -44,3 +44,15 @@ exports.ava_core:RegisterServerCallback("ava_fuel:server:validateRefuel", functi
     return true
 end)
 
+
+exports.ava_core:RegisterUsableItem("petrolcan", function(source)
+    TriggerClientEvent("ava_fuel:client:usePetrolcan", source)
+end)
+
+RegisterNetEvent("ava_fuel:server:petrolcan:remove", function()
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    if aPlayer then
+        local inventory = aPlayer.getInventory()
+        inventory.removeItem("petrolcan", 1)
+    end
+end)
