@@ -263,6 +263,11 @@
         "label": "Bûcheron",
         "grades": [
             {
+                "name": "tempworker",
+                "label": "Intérimaire",
+                "salary": 50
+            },
+            {
                 "name": "employee",
                 "label": "Employé",
                 "salary": 100
