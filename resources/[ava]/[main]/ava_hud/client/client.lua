@@ -5,7 +5,7 @@
 local PlayerData = nil
 local isBigmapOn = false
 
-local vehiclesClasses = {0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 20};
+local vehiclesClasses = { 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 20 };
 -- 0 is on foot
 -- 7 is super
 -- 8 is motorcycle
@@ -22,14 +22,14 @@ Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
     InitHUD()
-    SendNUIMessage({action = "toggleMainStats", show = true})
+    SendNUIMessage({ action = "toggleMainStats", show = true })
 end)
 
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         PlayerData[k] = v
         if k == "jobs" then
-            SendNUIMessage({action = "setJobs", jobs = PlayerData.jobs})
+            SendNUIMessage({ action = "setJobs", jobs = PlayerData.jobs })
         end
     end
 end)
@@ -40,28 +40,29 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 end)
 
 function InitHUD()
-    SendNUIMessage({action = "setJobs", jobs = PlayerData.jobs})
+    SendNUIMessage({ action = "setJobs", jobs = PlayerData.jobs })
 end
 
 AddEventHandler("ava_hud:client:updateStatus", function(name, percent)
-    SendNUIMessage({action = "updateStatus", name = name, percent = percent})
+    SendNUIMessage({ action = "updateStatus", name = name, percent = percent })
 end)
 
 RegisterNetEvent("ava_hud:client:toggle", function(show)
-    SendNUIMessage({action = "toggle", show = show})
+    SendNUIMessage({ action = "toggle", show = show })
 end)
 
 RegisterNetEvent("ava_hud:client:togglePlayerStats", function(show)
-    SendNUIMessage({action = "togglePlayerStats", show = show})
+    SendNUIMessage({ action = "togglePlayerStats", show = show })
 end)
 
 RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    SendNUIMessage({action = "itemNotification", add = isAddition, label = itemLabel, count = editedQuantity})
+    SendNUIMessage({ action = "itemNotification", add = isAddition, label = itemLabel, count = editedQuantity })
 end)
 
 function copyToClipboard(content)
-    SendNUIMessage({action = "copyToClipboard", content = content})
+    SendNUIMessage({ action = "copyToClipboard", content = content })
 end
+
 AddEventHandler("ava_hud:client:copyToClipboard", copyToClipboard)
 
 local lastToggleMainStats = 0
@@ -71,7 +72,7 @@ RegisterCommand("+keyToggleMainStats", function()
     Wait(100)
     -- only show if the key has been pressed for more than 150ms
     if toggleMainStatsKeyPressed then
-        SendNUIMessage({action = "toggleMainStats", show = true})
+        SendNUIMessage({ action = "toggleMainStats", show = true })
     end
 end, false)
 
@@ -81,11 +82,11 @@ RegisterCommand("-keyToggleMainStats", function()
     if math.abs(timer - lastToggleMainStats) < 250 then
         isBigmapOn = not isBigmapOn
         SetBigmapActive(isBigmapOn, false)
-        SendNUIMessage({action = "isBigmapOn", toggle = isBigmapOn})
+        SendNUIMessage({ action = "isBigmapOn", toggle = isBigmapOn })
     end
     lastToggleMainStats = timer
     Wait(300)
-    SendNUIMessage({action = "toggleMainStats", show = false})
+    SendNUIMessage({ action = "toggleMainStats", show = false })
 end, false)
 
 RegisterKeyMapping("+keyToggleMainStats", GetString("hud_details_key"), "keyboard", "Z")
@@ -137,12 +138,12 @@ Citizen.CreateThread(function()
             if not isPauseMenu then
                 isPauseMenu = true
                 SetPauseMenuTitle()
-                SendNUIMessage({action = "toggle", show = false})
+                SendNUIMessage({ action = "toggle", show = false })
             end
         else
             if isPauseMenu then
                 isPauseMenu = false
-                SendNUIMessage({action = "toggle", show = true})
+                SendNUIMessage({ action = "toggle", show = true })
             end
 
             HideHudComponentThisFrame(1) -- Wanted Stars
@@ -198,14 +199,44 @@ Citizen.CreateThread(function()
             -- Speed
             carSpeed = math.ceil(GetEntitySpeed(vehiclePlayerIsIn) * 3.6)
             fuel = GetVehicleFuelLevel(vehiclePlayerIsIn)
-            SendNUIMessage({action = "showcarhud", showhud = true, speed = carSpeed, fuel = fuel})
+            SendNUIMessage({ action = "showcarhud", showhud = true, speed = carSpeed, fuel = fuel })
 
-            SendNUIMessage({action = "setbelt", isAccepted = has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn})
+            SendNUIMessage({ action = "setbelt", isAccepted = has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn })
         else
-            SendNUIMessage({action = "showcarhud", showhud = false})
+            SendNUIMessage({ action = "showcarhud", showhud = false })
             beltOn = false
             Wait(500)
         end
+    end
+end)
+
+local function setTankSize(vehicle)
+    local value = 100
+    if GetResourceState("ava_fuel") == "started" then
+        value = exports.ava_fuel:GetVehicleTankSize(vehicle)
+    end
+    SendNUIMessage({ action = "setTankSize", value = value })
+end
+
+local function setIsElectric(vehicle)
+    local value = 100
+    if GetResourceState("ava_fuel") == "started" then
+        value = exports.ava_fuel:IsVehicleElectric(vehicle)
+    end
+    SendNUIMessage({ action = "setIsElectric", value = value })
+end
+
+AddEventHandler("ava_core:client:enteredVehicle", function(vehicle)
+    setTankSize(vehicle)
+    setIsElectric(vehicle)
+end)
+
+Citizen.CreateThread(function()
+    local isInVehicle, vehicle = exports.ava_core:IsPlayerInVehicle()
+    if isInVehicle then
+        Wait(500) -- Mandatory wait!
+        setTankSize(vehicle)
+        setIsElectric(vehicle)
     end
 end)
 
@@ -262,7 +293,7 @@ RegisterCommand("keyToggleBelt", function()
         local isAccepted = has_value(vehiclesClasses, GetVehicleClass(car))
         if car and isAccepted then
             beltOn = not beltOn
-            SendNUIMessage({action = "setbelt", isAccepted = isAccepted, belt = beltOn})
+            SendNUIMessage({ action = "setbelt", isAccepted = isAccepted, belt = beltOn })
         end
     end
 end, false)

@@ -1,4 +1,5 @@
-﻿
+﻿let tankSize = 0.0;
+
 $(function () {
     $('.mainStats').hide();
     window.addEventListener('message', function (event) {
@@ -67,6 +68,10 @@ $(function () {
             } else {
                 $('.huds').fadeOut();
             }
+        } else if (event.data.action == "setTankSize") {
+            tankSize = event.data.value;
+        } else if (event.data.action == "setIsElectric") {
+            $('.progress-fuel').toggleClass('electric', event.data.value);
         } else if (event.data.action == "setbelt") {
             if (!event.data.isAccepted || event.data.belt) {
                 $('.belt').fadeOut();
@@ -93,11 +98,11 @@ $(function () {
 
 
 function updateStatus(status) {
-    var hunger = status[0]
-    var thirst = status[1]
-    var drunk = status[2]
-    var drugged = status[3]
-    var injured = status[4]
+    const hunger = status[0]
+    const thirst = status[1]
+    const drunk = status[2]
+    const drugged = status[3]
+    const injured = status[4]
     $('#hunger .bg').css('height', hunger.percent + '%')
     $('#water .bg').css('height', thirst.percent + '%')
     $('#drunk .bg').css('height', drunk.percent + '%');
@@ -122,11 +127,13 @@ function updateStatus(status) {
 
 
 // Fuel
-function setProgressFuel(percent, element) {
-    var circle = document.querySelector(element);
-    var radius = circle.r.baseVal.value;
-    var circumference = radius * 2 * Math.PI;
-    var html = $(element).parent().parent().find('span');
+function setProgressFuel(value, element) {
+    const percent = value / tankSize * 100;
+
+    const circle = document.querySelector(element);
+    const radius = circle.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+    const html = $(element).parent().parent().find('span');
 
     circle.style.strokeDasharray = `${circumference} ${circumference}`;
     circle.style.strokeDashoffset = `${circumference}`;
@@ -139,11 +146,11 @@ function setProgressFuel(percent, element) {
 
 // Speed
 function setProgressSpeed(value, element) {
-    var circle = document.querySelector(element);
-    var radius = circle.r.baseVal.value;
-    var circumference = radius * 2 * Math.PI;
-    var html = $(element).parent().parent().find('span');
-    var percent = value * 100 / 220;
+    const circle = document.querySelector(element);
+    const radius = circle.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+    const html = $(element).parent().parent().find('span');
+    let percent = value * 100 / 220;
     if (percent > 100) percent = 100;
 
     circle.style.strokeDasharray = `${circumference} ${circumference}`;

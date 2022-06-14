@@ -34,9 +34,9 @@ Citizen.CreateThread(function()
         if not MissionStarted then
             local p = Config.HintLocation
             if #(playerCoords - p.xyz) < Config.DrawTextDist then
-                SetTextComponentFormat("STRING")
+                BeginTextCommandDisplayHelp("STRING")
                 AddTextComponentSubstringPlayerName("Appuyez sur ~INPUT_CONTEXT~ pour frapper à la porte")
-                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                EndTextCommandDisplayHelp(0, 0, 1, -1)
 
                 if IsControlJustPressed(0, 38) then
                     TaskGoStraightToCoord(playerPed, p.x, p.y, p.z, 10.0, 10, p.w, 0.5)
@@ -54,7 +54,8 @@ Citizen.CreateThread(function()
 
                     Wait(1000)
 
-                    TriggerServerEvent('3dme:shareDisplay', "* L'individu remarque un petit morceau de papier glissé sous la porte *")
+                    TriggerServerEvent('3dme:shareDisplay',
+                        "* L'individu remarque un petit morceau de papier glissé sous la porte *")
 
                     ClearPedTasksImmediately(playerPed)
 
@@ -65,7 +66,8 @@ Citizen.CreateThread(function()
                         print(spawnLoc)
                         MissionStarted = spawnLoc
 
-                        zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)), (spawnLoc.y + math.random(-45, 45)), spawnLoc.z, 120.0)
+                        zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)),
+                            (spawnLoc.y + math.random(-45, 45)), spawnLoc.z, 120.0)
                         SetBlipSprite(zoneBlip, 9)
                         SetBlipColour(zoneBlip, 1)
                         SetBlipAlpha(zoneBlip, 95)
@@ -89,11 +91,13 @@ function MissionStart()
     local tPos = MissionStarted
     local prices = {}
     for k, v in pairs(Config.DrugItems) do
-        prices[v] = math.floor(Config.DrugPrices[v] * (math.random(100.0 - Config.MaxPriceVariance, 100.0 + Config.MaxPriceVariance) / 100.0))
+        prices[v] = math.floor(Config.DrugPrices[v] *
+            (math.random(100.0 - Config.MaxPriceVariance, 100.0 + Config.MaxPriceVariance) / 100.0))
     end
     local startTime = GetGameTimer()
     local timer = 600000 -- 10 minutes
-    while ((GetGameTimer() - startTime) < math.floor(timer) and not MissionCompleted) or (MissionCompleted and #(playerCoords - tPos.xyz) < 60) do
+    while ((GetGameTimer() - startTime) < math.floor(timer) and not MissionCompleted) or
+        (MissionCompleted and #(playerCoords - tPos.xyz) < 60) do
         Wait(0)
         if #(playerCoords - tPos.xyz) < 30.0 then
             if not PedSpawned then
@@ -123,7 +127,7 @@ function MissionStart()
                 end
                 SetTextComponentFormat("STRING")
                 AddTextComponentSubstringPlayerName("Appuyez sur ~INPUT_CONTEXT~ pour parler au dealer")
-                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                EndTextCommandDisplayHelp(0, 0, 1, -1)
 
                 if IsControlJustPressed(0, 38) then
                     OpenDealerMenu(prices)
@@ -177,7 +181,8 @@ function OpenDealerMenu(prices)
             local element = elements[i]
             Items:AddButton(element.label, nil, { RightLabel = element.rightLabel }, function(onSelected)
                 if onSelected then
-                    local count = tonumber(exports.ava_core:KeyboardInput("Combien voulez-vous vendre ? [Max : " .. element.count .. "]"))
+                    local count = tonumber(exports.ava_core:KeyboardInput("Combien voulez-vous vendre ? [Max : " ..
+                        element.count .. "]"))
 
                     if type(count) == "number" and math.floor(count) == count and count > 0 then
                         TriggerServerEvent('ava_dealer:serverSold', element.name, element.price, count)

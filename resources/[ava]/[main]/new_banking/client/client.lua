@@ -57,7 +57,8 @@ Citizen.CreateThread(function()
                 atm = nearATM() -- update the nearest ATM to be sure to go at the closest one
 
                 local playerPed = PlayerPedId()
-                local isAtCoord = exports.ava_core:CancelableGoStraightToCoord(playerPed, vector3(atm.x, atm.y, atm.z), 10.0, 10, atm.heading, 0.5)
+                local isAtCoord = exports.ava_core:CancelableGoStraightToCoord(playerPed, vector3(atm.x, atm.y, atm.z),
+                    10.0, 10, atm.heading, 0.5)
 
                 if isAtCoord then
                     ClearPedTasksImmediately(playerPed)
@@ -140,7 +141,8 @@ RegisterNetEvent("currentbalance")
 AddEventHandler("currentbalance", function(balance)
     local character = exports.ava_core:getPlayerCharacterData()
 
-    SendNUIMessage({ type = "balanceHUD", balance = balance, player = ("%s %s"):format(character.firstname, character.lastname), citizenId = character.citizenId })
+    SendNUIMessage({ type = "balanceHUD", balance = balance,
+        player = ("%s %s"):format(character.firstname, character.lastname), citizenId = character.citizenId })
 end)
 
 -- ===============================================
@@ -202,7 +204,8 @@ function nearBank()
     local playerloc = GetEntityCoords(player, 0)
 
     for _, search in pairs(banks) do
-        local distance = GetDistanceBetweenCoords(search.x, search.y, search.z, playerloc["x"], playerloc["y"], playerloc["z"], true)
+        local distance = GetDistanceBetweenCoords(search.x, search.y, search.z, playerloc["x"], playerloc["y"],
+            playerloc["z"], true)
 
         if distance <= 3 then
             return search
@@ -227,7 +230,7 @@ function nearATM()
 end
 
 function DisplayHelpText(str)
-    SetTextComponentFormat("STRING")
+    BeginTextCommandDisplayHelp("STRING")
     AddTextComponentSubstringPlayerName(str)
-    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+    EndTextCommandDisplayHelp(0, 0, 1, -1)
 end

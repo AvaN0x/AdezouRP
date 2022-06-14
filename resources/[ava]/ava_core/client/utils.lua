@@ -849,7 +849,11 @@ AVA.SetVehicleHealthData = function(vehicle, data)
         SetVehiclePetrolTankHealth(vehicle, data.engineHealth + 0.0)
     end
     if data.fuelLevel then
-        SetVehicleFuelLevel(vehicle, data.fuelLevel + 0.0)
+        if GetResourceState("ava_fuel") == "started" then
+            exports.ava_fuel:SetVehicleFuel(vehicle, data.fuelLevel + 0.0)
+        else
+            SetVehicleFuelLevel(vehicle, data.fuelLevel + 0.0)
+        end
     end
     if data.dirtLevel then
         SetVehicleDirtLevel(vehicle, data.dirtLevel + 0.0)

@@ -166,7 +166,8 @@ Citizen.CreateThread(function()
             if distance < AVAConfig.DrawDistance then
                 if v.Marker ~= nil then
                     wait = 0
-                    DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y, v.Size.z, v.Color.r, v.Color.g,
+                    DrawMarker(v.Marker, v.Coord.x, v.Coord.y, v.Coord.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, v.Size.x, v.Size.y
+                        , v.Size.z, v.Color.r, v.Color.g,
                         v.Color.b, 100, false, true, 2, false, false, false, false)
                 end
                 if distance < (v.Distance or v.Size.x or 1.5) then
@@ -208,15 +209,15 @@ Citizen.CreateThread(function()
         local wait = 50
         if CurrentGarageIndex ~= nil and CurrentActionEnabled then
             wait = 0
-            SetTextComponentFormat("STRING")
+            BeginTextCommandDisplayHelp("STRING")
             AddTextComponentSubstringPlayerName(GetString("press_open_garage"))
-            DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+            EndTextCommandDisplayHelp(0, 0, 1, -1)
 
             if IsControlJustReleased(0, 38) -- E
                 and (GetGameTimer() - LastActionTimer) > 300 then
                 CurrentActionEnabled = false
                 LastActionTimer = GetGameTimer()
-                local garage<const> = AccessibleGarages[CurrentGarageIndex]
+                local garage <const> = AccessibleGarages[CurrentGarageIndex]
 
                 if garage.Insurance then
                     OpenInsuranceMenu(garage)
@@ -234,7 +235,8 @@ end)
 
 function canTakeOutVehicle(garage)
     if exports.ava_core:IsPlayerInVehicle() then return false end
-    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 0.7, false, true, false, false, false, 0, false) then
+    if IsPositionOccupied(garage.SpawnPoint.Coord.x, garage.SpawnPoint.Coord.y, garage.SpawnPoint.Coord.z, 0.7, false,
+        true, false, false, false, 0, false) then
         exports.ava_core:ShowNotification(GetString("garage_area_is_occupied"))
         return false
     end
@@ -244,7 +246,8 @@ end
 function takeOutVehicle(garage, model, id)
     local vehicle = exports.ava_core:SpawnVehicle(model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
     if vehicle then
-        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.Name)
+        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.
+            Name)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
     end

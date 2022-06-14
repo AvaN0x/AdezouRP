@@ -63,9 +63,12 @@ Citizen.CreateThread(function()
         local distance = #(playerCoords - AVAConfig.DrivingSchool.Coord)
         if distance < AVAConfig.DrawDistance then
             if AVAConfig.DrivingSchool.Marker ~= nil then
-                DrawMarker(AVAConfig.DrivingSchool.Marker, AVAConfig.DrivingSchool.Coord.x, AVAConfig.DrivingSchool.Coord.y, AVAConfig.DrivingSchool.Coord.z,
-                    0.0, 0.0, 0.0, 0, 0.0, 0.0, AVAConfig.DrivingSchool.Size.x, AVAConfig.DrivingSchool.Size.y, AVAConfig.DrivingSchool.Size.z,
-                    AVAConfig.DrivingSchool.Color.r, AVAConfig.DrivingSchool.Color.g, AVAConfig.DrivingSchool.Color.b, 100, false, true, 2, false, false, false,
+                DrawMarker(AVAConfig.DrivingSchool.Marker, AVAConfig.DrivingSchool.Coord.x,
+                    AVAConfig.DrivingSchool.Coord.y, AVAConfig.DrivingSchool.Coord.z,
+                    0.0, 0.0, 0.0, 0, 0.0, 0.0, AVAConfig.DrivingSchool.Size.x, AVAConfig.DrivingSchool.Size.y,
+                    AVAConfig.DrivingSchool.Size.z,
+                    AVAConfig.DrivingSchool.Color.r, AVAConfig.DrivingSchool.Color.g, AVAConfig.DrivingSchool.Color.b,
+                    100, false, true, 2, false, false, false,
                     false)
             end
             waitTimer = 0
@@ -112,9 +115,9 @@ Citizen.CreateThread(function()
 
         if CurrentZoneName ~= nil and CurrentActionEnabled then
             if CurrentHelpText ~= nil then
-                SetTextComponentFormat("STRING")
+                BeginTextCommandDisplayHelp("STRING")
                 AddTextComponentSubstringPlayerName(CurrentHelpText)
-                DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                EndTextCommandDisplayHelp(0, 0, 1, -1)
             end
 
             if IsControlJustReleased(0, 38) -- E
@@ -141,7 +144,8 @@ function OpenDrivingSchoolMenu()
             trafficLawsLicense = playerLicenses[i]
         elseif playerLicenses[i].name == "driver" then
             driverLicense = playerLicenses[i]
-            local maxPoints<const> = exports.ava_core:TriggerServerCallback("ava_core:server:getLicenseMaxPoints", "driver")
+            local maxPoints <const> = exports.ava_core:TriggerServerCallback("ava_core:server:getLicenseMaxPoints",
+                "driver")
             if maxPoints and driverLicense.points >= maxPoints then
                 driverHasEnoughPoints = true
             end
@@ -159,28 +163,32 @@ function OpenDrivingSchoolMenu()
     RageUI.CloseAll()
     RageUI.OpenTempMenu(GetString("driving_school"), function(Items)
         Items:AddButton(GetString("menu_traffic_laws"), GetString("menu_traffic_laws_subtitle"),
-            { RightLabel = GetString("right_label_price", AVAConfig.Prices["trafficLaws"]), IsDisabled = not not trafficLawsLicense }, function(onSelected)
-                if onSelected then
-                    if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "trafficLaws") then
-                        TrafficLawsLicense()
-                    else
-                        exports.ava_core:ShowNotification(GetString("not_enough_money"))
-                    end
+            { RightLabel = GetString("right_label_price", AVAConfig.Prices["trafficLaws"]),
+                IsDisabled = not not trafficLawsLicense }, function(onSelected)
+            if onSelected then
+                if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "trafficLaws") then
+                    TrafficLawsLicense()
+                else
+                    exports.ava_core:ShowNotification(GetString("not_enough_money"))
                 end
-            end)
-        Items:AddButton(GetString("menu_driver"), DriverLicenseDisabled and GetString("menu_driver_subtitle_disabled") or GetString("menu_driver_subtitle"),
-            { RightLabel = GetString("right_label_price", AVAConfig.Prices["driver"]), IsDisabled = DriverLicenseDisabled }, function(onSelected)
-                if onSelected then
-                    if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "driver") then
-                        DriverLicense()
-                    else
-                        exports.ava_core:ShowNotification(GetString("not_enough_money"))
-                    end
+            end
+        end)
+        Items:AddButton(GetString("menu_driver"),
+            DriverLicenseDisabled and GetString("menu_driver_subtitle_disabled") or GetString("menu_driver_subtitle"),
+            { RightLabel = GetString("right_label_price", AVAConfig.Prices["driver"]), IsDisabled = DriverLicenseDisabled }
+            , function(onSelected)
+            if onSelected then
+                if exports.ava_core:TriggerServerCallback("ava_drivingschool:server:payForLicense", "driver") then
+                    DriverLicense()
+                else
+                    exports.ava_core:ShowNotification(GetString("not_enough_money"))
                 end
-            end)
+            end
+        end)
 
     end, function()
         CurrentActionEnabled = true
-    end, AVAConfig.MenuStyle and AVAConfig.MenuStyle.textureName, AVAConfig.MenuStyle and AVAConfig.MenuStyle.textureDirectory)
+    end, AVAConfig.MenuStyle and AVAConfig.MenuStyle.textureName,
+        AVAConfig.MenuStyle and AVAConfig.MenuStyle.textureDirectory)
 
 end
