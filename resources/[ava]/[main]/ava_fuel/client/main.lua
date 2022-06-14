@@ -197,6 +197,18 @@ function InteractWithPump()
 
     local tankSize <const> = GetVehicleTankSize(vehicle)
     local toRefuel = tankSize - GetVehicleFuel(vehicle)
+    -- Check this a first time to avoid triggering a server event if we don't need to refuel
+    if toRefuel <= AVAConfig.MinimumToRefuel then
+        exports.ava_core:ShowNotification(GetString("pump_not_enough_to_refuel", AVAConfig.MinimumToRefuel))
+        return
+    end
+
+    local fuelPlayerCanAfford <const> = exports.ava_core:TriggerServerCallback("ava_fuel:server:getFuelPlayerCanAfford")
+    if toRefuel > fuelPlayerCanAfford then
+        toRefuel = fuelPlayerCanAfford
+    end
+
+    -- Check this a second time
     if toRefuel <= AVAConfig.MinimumToRefuel then
         exports.ava_core:ShowNotification(GetString("pump_not_enough_to_refuel", AVAConfig.MinimumToRefuel))
         return
@@ -212,7 +224,6 @@ function InteractWithPump()
 
     -- TODO do we need to get control of vehicle if somebody else is inside of it?
 
-    -- TODO check money, get refuel count player can afford
     isFueling = true
     -- Prevent vehicle from starting
     SetVehicleUndriveable(vehicle, true)
@@ -227,7 +238,7 @@ function InteractWithPump()
     TaskPlayAnim(playerPed, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 8.0, -8, -1, 1, 0, 0, 0, 0)
     RemoveAnimDict("timetable@gardener@filling_can")
 
-    local stopRefuel = false
+    local stopRefueling = false
     local currentlyRefueled = 0
     Citizen.CreateThread(function()
         -- Handle adding of fuel
@@ -236,13 +247,10 @@ function InteractWithPump()
             currentlyRefueled += 0.1
 
             if currentlyRefueled > toRefuel then
-                stopRefuel = true
+                stopRefueling = true
             end
             SetVehicleFuelInternal(vehicle, vehState, vehState.fuel + 0.1, false)
-        until stopRefuel or not isFueling
-
-        -- Replicate the new fuel
-        SetVehicleFuelInternal(vehicle, vehState, vehState.fuel, true)
+        until stopRefueling or not isFueling
     end)
 
     Citizen.CreateThread(function()
@@ -258,12 +266,22 @@ function InteractWithPump()
             if IsDisabledControlJustReleased(0, 202) -- cancel
                 or IsControlPressed(0, 73) -- X
             then
-                stopRefuel = true
+                stopRefueling = true
             end
-        until stopRefuel or not isFueling
+        until stopRefueling or not isFueling
 
+        if exports.ava_core:TriggerServerCallback("ava_fuel:server:validateRefuel", currentlyRefueled) then
+            -- Player paid the money
 
-        -- TODO make player pay AVAConfig.LiterPrice * currentlyRefueled
+            -- Replicate the new fuel
+            SetVehicleFuelInternal(vehicle, vehState, vehState.fuel, true)
+        else
+            -- Player did not pay the money
+
+            -- Reset the fuel
+            SetVehicleFuelInternal(vehicle, vehState, vehState.fuel - currentlyRefueled, false)
+            exports.ava_core:ShowNotification(GetString("not_enough_money"))
+        end
 
         -- Clear task
         ClearPedTasks(playerPed)
@@ -281,6 +299,14 @@ AddEventHandler("ava_core:client:canOpenMenu", function()
 end)
 
 --#endregion Pumps
+
+
+--#region petrol can
+RegisterNetEvent("ava_fuel:client:usePetrolcan", function()
+
+    TriggerServerEvent("ava_fuel:server:petrolcan:remove")
+end)
+--#endregion petrol can
 
 function DrawText3D(x, y, z, text, size)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)

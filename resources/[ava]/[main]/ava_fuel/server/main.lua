@@ -19,3 +19,28 @@ exports.ava_core:RegisterCommand("refuel", "admin", function(source, args)
         TriggerClientEvent("ava_fuel:client:refuel", source, tonumber(args[1]) and args[1])
     end
 end, GetString("refuel_help"), {{name = "?value", help = GetString("refuel_value")}})
+
+exports.ava_core:RegisterServerCallback("ava_fuel:server:getFuelPlayerCanAfford", function(source)
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    if not aPlayer then return 0 end
+
+    local inventory = aPlayer.getInventory()
+    return math.floor((inventory.getItemQuantity("cash") / AVAConfig.LiterPrice) * 10) / 10
+end)
+
+exports.ava_core:RegisterServerCallback("ava_fuel:server:validateRefuel", function(source, refueled)
+    if refueled <= 0 or refueled > 65 then return false end
+
+    local aPlayer = exports.ava_core:GetPlayer(source)
+    if not aPlayer then return false end
+
+    local inventory = aPlayer.getInventory()
+    local price<const> = tonumber(("%.0f"):format(refueled * AVAConfig.LiterPrice))
+    if not inventory.canRemoveItem("cash", price) then
+        return false
+    end
+
+    inventory.removeItem("cash", price)
+    return true
+end)
+
