@@ -873,7 +873,23 @@ HardcodedLists["metal"] = {
     { value = 158, label = GetLabelText("GOLD_P") },
     { value = 159, label = GetLabelText("GOLD_S") },
 
-    { value = 120, label = GetLabelText("CHROME") }
+    { value = 120, label = GetLabelText("CHROME") },
+    { value = 223, label = GetString("G9_PAINT01") },
+    { value = 224, label = GetString("G9_PAINT02") },
+    { value = 225, label = GetString("G9_PAINT03") },
+    { value = 226, label = GetString("G9_PAINT04") },
+    { value = 227, label = GetString("G9_PAINT05") },
+    { value = 228, label = GetString("G9_PAINT06") },
+    { value = 229, label = GetString("G9_PAINT07") },
+    { value = 230, label = GetString("G9_PAINT08") },
+    { value = 231, label = GetString("G9_PAINT09") },
+    { value = 232, label = GetString("G9_PAINT10") },
+    { value = 233, label = GetString("G9_PAINT11") },
+    { value = 234, label = GetString("G9_PAINT12") },
+    { value = 235, label = GetString("G9_PAINT13") },
+    { value = 236, label = GetString("G9_PAINT14") },
+    { value = 237, label = GetString("G9_PAINT15") },
+    { value = 238, label = GetString("G9_PAINT16") },
 }
 
 HardcodedLists["util"] = {

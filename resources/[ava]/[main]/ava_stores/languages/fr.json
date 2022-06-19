@@ -430,5 +430,21 @@
     "rental_price_format": "$%s",
     "rental_already_in_vehicle": "Vous êtes déjà dans un véhicule.",
     "rental_not_enough_money": "Vous n'avez pas assez d'argent pour louer ce véhicule.",
-    "rental_area_is_occupied": "La zone est occupée."
+    "rental_area_is_occupied": "La zone est occupée.",
+    "G9_PAINT01": "Monochrome",
+    "G9_PAINT02": "Nuit et jour",
+    "G9_PAINT03": "Le Verlierer",
+    "G9_PAINT04": "Sprunk Extreme",
+    "G9_PAINT05": "Vice City",
+    "G9_PAINT06": "Nuits Synthwave",
+    "G9_PAINT07": "Quatre saisons",
+    "G9_PAINT08": "Maisonnette 9 Retour",
+    "G9_PAINT09": "Chewing-gum",
+    "G9_PAINT10": "Plein arc-en-ciel",
+    "G9_PAINT11": "Coucher de soleil",
+    "G9_PAINT12": "Les Sept Dieux",
+    "G9_PAINT13": "Kamen Rider",
+    "G9_PAINT14": "Aberration chromatique",
+    "G9_PAINT15": "C'est Noël !",
+    "G9_PAINT16": "Température"
 }
