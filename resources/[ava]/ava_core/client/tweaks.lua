@@ -17,10 +17,10 @@ local function SetWeaponDrops()
 end
 
 Citizen.CreateThread(function()
-    local playerId<const> = PlayerId()
+    local playerId <const> = PlayerId()
 
     -- calm all IA
-    local hashKeyPlayer<const> = GetHashKey("PLAYER")
+    local hashKeyPlayer <const> = GetHashKey("PLAYER")
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_HILLBILLY"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_BALLAS"), hashKeyPlayer)
     SetRelationshipBetweenGroups(1, GetHashKey("AMBIENT_GANG_MEXICAN"), hashKeyPlayer)
@@ -63,6 +63,8 @@ Citizen.CreateThread(function()
     SetMaxWantedLevel(0)
     SetPoliceIgnorePlayer(playerId, true)
     SetDispatchCopsForPlayer(playerId, false)
+    SetAudioFlag("OnlyAllowScriptTriggerPoliceScanner", true)
+    SetAudioFlag("PoliceScannerDisabled", true)
 
     -- * set some stats
     StatSetInt(GetHashKey("MP0_STAMINA"), 30, true)
