@@ -2195,6 +2195,12 @@
                 "quantity": 5,
                 "price": 43728
             },
+            "taco": {
+                "category": "vans",
+                "hidden": true,
+                "quantity": 20,
+                "price": 62140
+            },
             "flatbed": {
                 "category": "industrial",
                 "hidden": true,
@@ -2338,6 +2344,18 @@
                 "hidden": true,
                 "quantity": 20,
                 "price": 61166
+            },
+            "benson": {
+                "category": "commercials",
+                "hidden": true,
+                "quantity": 20,
+                "price": 51348
+            },
+            "mule": {
+                "category": "commercials",
+                "hidden": true,
+                "quantity": 20,
+                "price": 47348
             }
         },
         "1": {
@@ -2614,6 +2632,9 @@
         "cluckin": {
             "benson": true,
             "taco": true
+        },
+        "lumberjack": {
+            "mule": true
         },
         "bahama": {},
         "unicorn": {},
