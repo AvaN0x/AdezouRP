@@ -143,7 +143,7 @@ AddEventHandler("ava_core:client:playerDeath", function()
     IsDead = true
 end)
 
-AddEventHandler("playerSpawned", function(spawn)
+AddEventHandler("ava_core:client:playerSpawned", function(spawn)
     IsDead = false
 end)
 

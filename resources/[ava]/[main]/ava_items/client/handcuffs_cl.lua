@@ -9,8 +9,7 @@ local isHandcuffed = false
 local dragStatus = {}
 dragStatus.isDragged = false
 
-
-AddEventHandler('playerSpawned', function(spawn)
+AddEventHandler('ava_core:client:playerSpawned', function(spawn)
     TriggerEvent('ava_items:handcuffs:unrestrain')
 end)
 

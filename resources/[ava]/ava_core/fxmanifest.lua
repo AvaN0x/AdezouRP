@@ -67,7 +67,7 @@ server_scripts {
     "server/licenses.lua",
 }
 
-dependencies { "oxmysql", "RageUI", "ava_base64toruntime", "MugShotBase64", "ava_mp_peds" }
+dependencies { "spawnmanager", "oxmysql", "RageUI", "ava_base64toruntime", "ava_mp_peds" }
 
 file 'chat/style.css'
 chat_theme 'ava_chat' {

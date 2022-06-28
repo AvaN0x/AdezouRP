@@ -45,7 +45,8 @@ function getChair()
         if DoesEntityExist(closestProp) then
             local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
 
-            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9, heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type }
+            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9,
+                heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type }
         end
     end
     return nil
@@ -112,7 +113,7 @@ AddEventHandler("ava_core:client:playerDeath", function()
     IsDead = true
 end)
 
-AddEventHandler("playerSpawned", function(spawn)
+AddEventHandler("ava_core:client:playerSpawned", function(spawn)
     IsDead = false
 end)
 

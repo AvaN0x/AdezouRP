@@ -3,11 +3,13 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-local isShutdown = false
+if GetConvar("ava_loadingscreen_manual_shutdown", "false") ~= "false" then
+    local isShutdown = false
 
-AddEventHandler("playerSpawned", function()
-	if not isShutdown then
-		ShutdownLoadingScreenNui()
-		isShutdown = true
-	end
-end)
+    AddEventHandler("playerSpawned", function()
+        if not isShutdown then
+            ShutdownLoadingScreenNui()
+            isShutdown = true
+        end
+    end)
+end

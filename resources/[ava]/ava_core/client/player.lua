@@ -2,34 +2,19 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local SpawnPlayer
-
 AVA.Player = {}
 AVA.Player.Loaded = false
 AVA.Player.HasSpawned = false
-AVA.Player.FirstSpawn = true
 AVA.Player.IsDead = false
 
 -- * replaced with event playerJoining
 -- Citizen.CreateThread(function()
--- 	while true do
--- 		Citizen.Wait(5)
--- 		if NetworkIsSessionStarted() then
--- 			TriggerServerEvent("ava_core:server:playerJoined")
--- 			return
--- 		end
--- 	end
--- end)
+--     repeat
+--         Wait(5)
+--     until NetworkIsSessionStarted()
 
--- Log the player in case of restarted script
-RegisterCommand("login", function()
-    if not AVA.Player.HasSpawned and AVA.Player.FirstSpawn then
-        print("^5[AVA] Log the user manually^0")
-        SpawnPlayer()
-    else
-        print("^1[ERROR] User is already logged^0")
-    end
-end)
+--     TriggerServerEvent("ava_core:server:playerJoined")
+-- end)
 
 Citizen.CreateThread(function()
     while true do
@@ -63,39 +48,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-SpawnPlayer = function()
-    AVA.Player.IsDead = false
-    AVA.Player.HasSpawned = true
-
-    while not AVA.Player.Loaded do
-        Wait(10)
-    end
-    AVA.Player.playerPed = PlayerPedId()
-
-    -- dprint(AVA.Player.Data.position)
-    if AVA.Player.FirstSpawn then
-        if AVA.Player.Data.position then
-            RequestCollisionAtCoord(AVA.Player.Data.position)
-            SetEntityCoords(AVA.Player.playerPed, AVA.Player.Data.position)
-            SetEntityHeading(AVA.Player.playerPed, 0.0)
-        end
-        SetEntityHealth(AVA.Player.playerPed, AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(AVA.Player.playerPed))
-
-        exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
-
-        AVA.Player.FirstSpawn = false
-        -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
-        -- Use return value to get a valid skin array
-        if AVA.Player.Data.skin then
-            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, AVA.Player.Data.skin)
-        else
-            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, { gender = 0 })
-        end
-    end
-
-    TriggerServerEvent("ava_core:server:reloadLoadout")
-end
-
 RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
     for k, v in pairs(data) do
         dprint("Edit local value of ", k)
@@ -104,28 +56,53 @@ RegisterNetEvent("ava_core:client:playerUpdatedData", function(data)
 end)
 
 RegisterNetEvent("ava_core:client:playerLoaded", function(data)
+    AVA.Player.IsDead = false
+    AVA.Player.HasSpawned = false
     AVA.Player.Data = data
     dprint(AVA.Player.Data.citizenId, json.encode(AVA.Player.Data.character), AVA.Player.Data.position)
     AVA.Player.Loaded = true
-    dprint("AVA.Player.Loaded loaded")
 
-    if AVA.Player.HasSpawned then
-        AVA.Player.HasSpawned = false
-        AVA.Player.FirstSpawn = true
-        -- print('TriggerEvent("playerSpawned")')
-        -- -- TriggerEvent("playerSpawned")
-        -- exports.spawnmanager:spawnPlayer()
-        SpawnPlayer()
-    end
+    exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
+    exports.spawnmanager:spawnPlayer({
+        x = AVA.Player.Data.position.x,
+        y = AVA.Player.Data.position.y,
+        z = AVA.Player.Data.position.z,
+        heading = 0.0,
+        model = GetHashKey('mp_m_freemode_01'),
+        skipFade = false
+    }, function()
+        AVA.Player.playerPed = PlayerPedId()
+
+        if AVAConfig.EnablePVP then
+            SetCanAttackFriendly(PlayerPedId(), true, false)
+            NetworkSetFriendlyFireOption(true)
+        end
+
+        SetEntityHealth(AVA.Player.playerPed,
+            AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(AVA.Player.playerPed))
+
+        -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
+        -- Use return value to get a valid skin array
+        if AVA.Player.Data.skin then
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, AVA.Player.Data.skin)
+        else
+            AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, { gender = 0 })
+        end
+
+        TriggerServerEvent("ava_core:server:reloadLoadout")
+
+        TriggerServerEvent("ava_core:server:playerSpawned")
+        TriggerEvent("ava_core:client:playerSpawned")
+
+        ShutdownLoadingScreen()
+        ShutdownLoadingScreenNui()
+    end)
+    dprint("AVA.Player.Loaded loaded")
 end)
 
-AddEventHandler("playerSpawned", function()
-    dprint("playerSpawned", AVAConfig.EnablePVP)
-    if AVAConfig.EnablePVP then
-        SetCanAttackFriendly(PlayerPedId(), true, false)
-        NetworkSetFriendlyFireOption(true)
-    end
-    SpawnPlayer()
+AddEventHandler("playerSpawned", function(data)
+    AVA.Player.HasSpawned = true
+    print("playerSpawned", json.encode(data, { indent = true }))
 end)
 
 AddEventHandler("ava_core:client:playerDeath", function()
@@ -138,6 +115,8 @@ AddEventHandler("ava_core:client:playerDeath", function()
 end)
 AddEventHandler("ava_core:client:playerRevived", function()
     AVA.Player.IsDead = false
+    TriggerServerEvent("ava_core:server:reloadLoadout")
+
     -- TODO enable phone if it should
 end)
 
@@ -185,7 +164,8 @@ function RageUI.PoolMenus:AvaCoreSelectChar()
     SelectCharMenu:IsVisible(function(Items)
         for i = 1, #playerChars, 1 do
             local char = playerChars[i]
-            Items:AddButton(char.label, char.subtitle, { RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled },
+            Items:AddButton(char.label, char.subtitle,
+                { RightBadge = char.RightBadge, LeftBadge = char.LeftBadge, IsDisabled = char.disabled },
                 function(onSelected, onEntered)
                     if onSelected then
                         if char.id == -1 then
@@ -218,7 +198,8 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
                 subtitle = GetString("select_char_menu_subtitle", tostring(char.id),
                     char.last_played and GetString("select_char_menu_subtitle_actual_char") or ""),
                 RightBadge = function()
-                    return { BadgeDictionary = "mpleaderboard", BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon" }
+                    return { BadgeDictionary = "mpleaderboard",
+                        BadgeTexture = char.character.sex == 1 and "leaderboard_female_icon" or "leaderboard_male_icon" }
                 end,
             })
         end
@@ -237,7 +218,8 @@ RegisterNetEvent("ava_core:client:selectChar", function(chars, maxChars)
     if #playerChars > 1 then
         RageUI.Visible(SelectCharMenu, true)
     else
-        AVA.ShowNotification(GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo", "Sélection de personnage", nil, nil, "ava_core_logo")
+        AVA.ShowNotification(GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo",
+            "Sélection de personnage", nil, nil, "ava_core_logo")
     end
 end)
 

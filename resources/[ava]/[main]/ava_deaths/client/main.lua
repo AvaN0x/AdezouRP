@@ -10,7 +10,8 @@ local function RespawnPlayer(coords, heading)
     NetworkResurrectLocalPlayer(coords, heading + 0.0, true, false)
     SetPlayerInvincible(playerPed, false)
     ClearPedBloodDamage(playerPed)
-    TriggerEvent("playerSpawned", { x = coords.x, y = coords.y, z = coords.z, heading = heading + 0.0 })
+    TriggerServerEvent("ava_core:server:playerSpawned")
+    TriggerEvent("ava_core:client:playerSpawned")
     TriggerEvent("ava_core:client:playerRevived")
 
     SetEntityHealth(playerPed, 105)
@@ -22,10 +23,11 @@ end)
 
 AddEventHandler("ava_core:client:playerDeath", function()
     -- Prevent the onDeath screen from showing when you're already dead
-    if not IsDead then
-        IsDead = true
-        onDeath()
+    if IsDead then
+        return
     end
+    IsDead = true
+    onDeath()
 end)
 
 AddEventHandler("onResourceStop", function(resource)
@@ -56,7 +58,8 @@ local function setCamAbove()
     local playerPed = PlayerPedId()
     local coord = GetEntityCoords(playerPed)
     local rotation = GetEntityRotation(playerPed)
-    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", coord.x, coord.y, coord.z + 7.5, -90.0, 0.0, rotation.z + 180.0, 25.0)
+    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", coord.x, coord.y, coord.z + 7.5, -90.0, 0.0,
+        rotation.z + 180.0, 25.0)
     AttachCamToEntity(cam, playerPed, 0.0, 0.0, 7.5, false)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 2000, true, true)
@@ -64,7 +67,8 @@ end
 
 function onDeath()
     TriggerEvent("RageUI.CloseAll")
-    local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({ { control = "~INPUT_DETONATE~", label = GetString("button_call_ems") } })
+    local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({ { control = "~INPUT_DETONATE~",
+        label = GetString("button_call_ems") } })
 
     local secondsLeft = AVAConfig.DeadScreenMaxDuration
     local canAskForRespawn = false
@@ -104,7 +108,8 @@ function onDeath()
 
     Citizen.CreateThread(function()
         -- Freemode message
-        local scaleform = exports.ava_core:ShowFreemodeMessage(GetString("dead_message_title"), GetString("dead_message_subtitle"), true)
+        local scaleform = exports.ava_core:ShowFreemodeMessage(GetString("dead_message_title"),
+            GetString("dead_message_subtitle"), true)
         -- INPUT_PICKUP 38
         -- INPUT_DETONATE 47
         while secondsLeft > 0 and IsDead do
@@ -122,11 +127,14 @@ function onDeath()
             SetTextOutline()
             SetTextEntry("STRING")
             if canAskForRespawn then
-                AddTextComponentSubstringPlayerName(GetString("dead_time_left", math.floor(secondsLeft / 60), secondsLeft % 60))
+                AddTextComponentSubstringPlayerName(GetString("dead_time_left", math.floor(secondsLeft / 60),
+                    secondsLeft % 60))
                 DrawText(0.80, 0.92)
             else
-                AddTextComponentSubstringPlayerName(GetString("dead_time_left_before_ask_for_respawn", math.floor(secondsLeft / 60), secondsLeft % 60,
-                    math.floor((secondsLeft - AVAConfig.AskRespawnDuration) / 60), (secondsLeft - AVAConfig.AskRespawnDuration) % 60))
+                AddTextComponentSubstringPlayerName(GetString("dead_time_left_before_ask_for_respawn",
+                    math.floor(secondsLeft / 60), secondsLeft % 60,
+                    math.floor((secondsLeft - AVAConfig.AskRespawnDuration) / 60),
+                    (secondsLeft - AVAConfig.AskRespawnDuration) % 60))
                 DrawText(0.80, 0.90)
             end
 
@@ -135,7 +143,9 @@ function onDeath()
             EnableControlAction(0, 213, true) -- HOME
 
             if canAskForRespawn and IsDisabledControlJustPressed(0, 38)
-                and exports.ava_core:ShowConfirmationMessage(GetString("confirm_respawn_title"), GetString("confirm_respawn_firstline"),
+                and
+                exports.ava_core:ShowConfirmationMessage(GetString("confirm_respawn_title"),
+                    GetString("confirm_respawn_firstline"),
                     GetString("confirm_respawn_secondline")) then
                 RevivePlayer(true)
                 break
