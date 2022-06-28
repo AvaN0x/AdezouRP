@@ -31,19 +31,22 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    Citizen.Wait(1000)
+    Wait(1000)
     while true do
         local waitTime = 500
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, tpID in ipairs(ConfigTeleports.TeleportersList) do
-            for k2, tpID2 in ipairs({ { from = tpID.tpEnter, to = tpID.tpExit }, { from = tpID.tpExit, to = tpID.tpEnter } }) do
+            for k2, tpID2 in ipairs({ { from = tpID.tpEnter, to = tpID.tpExit },
+                { from = tpID.tpExit, to = tpID.tpEnter } }) do
                 local distance = #(playerCoords - tpID2.from.pos)
 
                 if distance < tpID2.from.distance then
                     waitTime = 0
                     if not tpID2.from.noMarker then
-                        DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, tpID2.from.size.x, tpID2.from.size.y,
-                            tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false, true, 2, false, false, false, false)
+                        DrawMarker(27, tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0,
+                            tpID2.from.size.x, tpID2.from.size.y,
+                            tpID2.from.size.z, tpID2.from.color.r, tpID2.from.color.g, tpID2.from.color.b, 100, false,
+                            true, 2, false, false, false, false)
                     end
 
                     if distance < tpID2.from.size.x then
@@ -57,7 +60,8 @@ Citizen.CreateThread(function()
                             helpText = GetString("teleports_press_button", helpText)
                         end
 
-                        DrawText3D(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2, label .. tpID2.from.label, 0.40) -- draw label
+                        DrawText3D(tpID2.from.pos.x, tpID2.from.pos.y, tpID2.from.pos.z + 0.2, label .. tpID2.from.label
+                            , 0.40) -- draw label
                         ShowHelpNotification(helpText)
 
                         if IsControlJustReleased(0, 38) then -- E
@@ -75,7 +79,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        Citizen.Wait(waitTime)
+        Wait(waitTime)
     end
 end)
 
@@ -112,24 +116,31 @@ end)
 
 function Teleport(coords, allowVehicles, heading)
     local playerPed = PlayerPedId()
-    local vehicle = nil
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+
+    if vehicle > 0 and not allowVehicles then
+        exports.ava_core:ShowNotification(GetString("teleports_can_t_in_vehicles"))
+        return
+    end
+
     RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
     DoScreenFadeOut(100)
-    Citizen.Wait(250)
-    if IsPedSittingInAnyVehicle(playerPed) then
-        vehicle = GetVehiclePedIsIn(playerPed, false)
-        FreezeEntityPosition(vehicle, true)
-    end
+    Wait(250)
     FreezeEntityPosition(playerPed, true)
+    if vehicle > 0 then
+        FreezeEntityPosition(vehicle, true)
+        SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)
+    else
+        SetEntityCoords(playerPed, coords.x, coords.y, coords.z)
+    end
 
-    SetPedCoordsKeepVehicle(playerPed, coords.x, coords.y, coords.z)
     if heading then
         SetEntityHeading(playerPed, heading)
     end
 
-    Citizen.Wait(1000)
-    if vehicle then
+    Wait(1000)
+    if vehicle > 0 then
         FreezeEntityPosition(vehicle, false)
     end
     FreezeEntityPosition(playerPed, false)

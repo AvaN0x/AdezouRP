@@ -293,7 +293,7 @@ ConfigTeleports = {
                 heading = 294.02, size = { x = 1.2, y = 1.2, z = 1.0 },
                 label = "Sortir"
             },
-        },         
+        },
         -- Go fast
         {
             tpEnter = {
