@@ -38,7 +38,8 @@ function OpenCuffsMenu()
                 local playerheading = GetEntityHeading(playerPed)
                 local playerlocation = GetEntityForwardVector(playerPed)
                 local playerCoords = GetEntityCoords(playerPed)
-                TriggerServerEvent('ava_items:handcuffs:requestarrest', targetId, playerheading, playerCoords, playerlocation)
+                TriggerServerEvent('ava_items:handcuffs:requestarrest', targetId, playerheading, playerCoords,
+                    playerlocation)
                 Wait(5000)
                 TriggerServerEvent('ava_items:handcuffs:handcuffs', targetId)
             end
@@ -52,7 +53,8 @@ function OpenCuffsMenu()
                 local playerheading = GetEntityHeading(playerPed)
                 local playerlocation = GetEntityForwardVector(playerPed)
                 local playerCoords = GetEntityCoords(playerPed)
-                TriggerServerEvent('ava_items:handcuffs:requestrelease', targetId, playerheading, playerCoords, playerlocation)
+                TriggerServerEvent('ava_items:handcuffs:requestrelease', targetId, playerheading, playerCoords,
+                    playerlocation)
                 Wait(5000)
                 TriggerServerEvent('ava_items:handcuffs:unhandcuff', targetId)
             end
@@ -99,7 +101,7 @@ RegisterNetEvent('ava_items:handcuffs:handcuffs', function()
 
         TaskPlayAnim(playerPed, 'mp_arresting', 'idle', 8.0, -8, -1, 49, 0, 0, 0, 0)
 
-        SetEnableHandcuff(playerPed, true)
+        SetEnableHandcuffs(playerPed, true)
         DisablePlayerFiring(playerPed, true)
         SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
         SetPedCanPlayGestureAnims(playerPed, false)
@@ -112,9 +114,13 @@ RegisterNetEvent('ava_items:handcuffs:unrestrain', function()
     if isHandcuffed then
         local playerPed = PlayerPedId()
         isHandcuffed = false
+        if dragStatus.isDragged then
+            dragStatus.isDragged = false
+            DetachEntity(playerPed, true, false)
+        end
 
         ClearPedSecondaryTask(playerPed)
-        SetEnableHandcuff(playerPed, false)
+        SetEnableHandcuffs(playerPed, false)
         DisablePlayerFiring(playerPed, false)
         SetPedCanPlayGestureAnims(playerPed, true)
         FreezeEntityPosition(playerPed, false)
@@ -147,7 +153,8 @@ Citizen.CreateThread(function()
 
                 -- undrag if target is in an vehicle
                 if not IsPedSittingInAnyVehicle(targetPed) then
-                    AttachEntityToEntity(playerPed, targetPed, 11816, 0.54, 0.54, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+                    AttachEntityToEntity(playerPed, targetPed, 11816, 0.54, 0.54, 0.0, 0.0, 0.0, 0.0, false, false, false
+                        , false, 2, true)
                 else
                     dragStatus.isDragged = false
                     DetachEntity(playerPed, true, false)
