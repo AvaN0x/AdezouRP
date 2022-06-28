@@ -5,9 +5,28 @@
 IsAnimated = false
 IsLongAnimated = false
 
-function SetLongAnimated(prop)
+local function StartAnim(playerPed, animDict, animName, flag)
+    exports.ava_core:RequestAnimDict(animDict)
+    TaskPlayAnim(playerPed, animDict, animName, 8.0, 8.0, -1, flag or 49, 0, 0, 0, 0)
+    RemoveAnimDict(animDict)
+end
+
+function SetLongAnimated(animDict, animName, flag, prop)
+    IsLongAnimated = true
+
     Citizen.CreateThread(function()
-        IsLongAnimated = true
+        -- Handle animation
+        StartAnim(PlayerPedId(), animDict, animName, flag)
+        repeat
+            Wait(500)
+            if not IsEntityPlayingAnim(PlayerPedId(), animDict, animName, 3) then
+                StartAnim(PlayerPedId(), animDict, animName, flag)
+            end
+        until not IsLongAnimated
+        ClearPedSecondaryTask(PlayerPedId())
+    end)
+    Citizen.CreateThread(function()
+        -- Handle player controls
         local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({ { control = "~INPUT_VEH_DUCK~",
             label = GetString("cancel_animation") } })
 
@@ -18,7 +37,6 @@ function SetLongAnimated(prop)
                 IsLongAnimated = false
             end
         end
-        ClearPedSecondaryTask(PlayerPedId())
 
         if prop then
             exports.ava_core:DeleteObject(prop)
@@ -51,9 +69,7 @@ RegisterNetEvent("ava_status:client:eat", function(prop_name)
             AttachEntityToEntity(prop, playerPed, boneIndex, 0.13, 0.052, 0.031, -70.0, 175.0, 90.0, true, true, false,
                 true, 1, true)
 
-            exports.ava_core:RequestAnimDict("mp_player_inteat@burger")
-            TaskPlayAnim(playerPed, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 8.0, -8, -1, 49, 0, 0, 0, 0)
-            RemoveAnimDict("mp_player_inteat@burger")
+            StartAnim(playerPed, "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 49)
 
             Wait(3000)
             IsAnimated = false
@@ -77,9 +93,7 @@ RegisterNetEvent("ava_status:client:drink", function(prop_name)
             AttachEntityToEntity(prop, playerPed, boneIndex, 0.15, 0.018, 0.031, -100.0, 55.0, 350.0, true, true, false,
                 true, 1, true)
 
-            exports.ava_core:RequestAnimDict("mp_player_intdrink")
-            TaskPlayAnim(playerPed, "mp_player_intdrink", "loop_bottle", 8.0, -8, -1, 49, 0, 0, 0, 0)
-            RemoveAnimDict("mp_player_intdrink")
+            StartAnim(playerPed, "mp_player_intdrink", "loop_bottle", 49)
 
             Wait(3000)
             IsAnimated = false
@@ -103,11 +117,7 @@ RegisterNetEvent("ava_status:client:smoke", function()
             AttachEntityToEntity(prop, playerPed, boneIndex, 0.145, 0.038, 0.045, 0.0, 0.0, 80.0, true, true, false, true
                 , 1, true)
 
-            exports.ava_core:RequestAnimDict("amb@world_human_smoking_pot@male@base")
-            TaskPlayAnim(playerPed, "amb@world_human_smoking_pot@male@base", "base", 8.0, -8, -1, 49, 0, 0, 0, 0)
-            RemoveAnimDict("amb@world_human_smoking_pot@male@base")
-
-            SetLongAnimated(prop)
+            SetLongAnimated("amb@world_human_smoking_pot@male@base", "base", 49, prop)
 
             IsAnimated = false
         end)
@@ -122,11 +132,9 @@ RegisterNetEvent("ava_status:client:takePill", function()
         Citizen.CreateThread(function()
             local playerPed = PlayerPedId()
 
-            exports.ava_core:RequestAnimDict("mp_player_intdrink")
-            TaskPlayAnim(playerPed, "mp_player_intdrink", "loop_bottle", 8.0, -8, -1, 49, 0, 0, 0, 0)
-            RemoveAnimDict("mp_player_intdrink")
+            StartAnim(playerPed, "mp_player_intdrink", "loop_bottle", 49)
 
-            Citizen.Wait(1000)
+            Wait(1000)
 
             IsAnimated = false
             ClearPedSecondaryTask(playerPed)
