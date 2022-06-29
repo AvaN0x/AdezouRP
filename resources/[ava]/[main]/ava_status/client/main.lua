@@ -169,7 +169,7 @@ AddEventHandler("ava_core:client:playerDeath", function()
     IsDead = true
 end)
 
-AddEventHandler("ava_core:client:playerSpawned", function()
+AddEventHandler("ava_deaths:client:playerRevived", function()
     if IsDead then
         -- Add some to values when respawning
         for name, cfgStatus in pairs(AVAConfig.Status) do

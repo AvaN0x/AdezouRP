@@ -25,26 +25,30 @@ end
 
 local function GetDiscordGuildUser(discordId)
     if not discordId or type(discordId) ~= "string" then
-        print("^1[GetDiscordGuildUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId) .. "^1).^0")
+        print("^1[GetDiscordGuildUser] An error occured, the discord identifier is not valid (^3" ..
+            tostring(discordId) .. "^1).^0")
         return
     elseif not AVAConfig.Discord.GuildId then
         print("^1[GetDiscordGuildUser] An error occured, AVAConfig.Discord.GuildId is not set.^0")
         return
     end
 
-    local member = AVA.Utils.DiscordRequest("GET", ("guilds/%s/members/%s"):format(AVAConfig.Discord.GuildId, string.gsub(discordId, "discord:", "")), {})
+    local member = AVA.Utils.DiscordRequest("GET",
+        ("guilds/%s/members/%s"):format(AVAConfig.Discord.GuildId, string.gsub(discordId, "discord:", "")), {})
     if member.code == 200 then
         local data = json.decode(member.data)
 
         return data
     end
-    print("^1[GetDiscordGuildUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" .. member.code .. "^0")
+    print("^1[GetDiscordGuildUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" ..
+        member.code .. "^0")
     return
 end
 
 local function GetDiscordUser(discordId)
     if not discordId or type(discordId) ~= "string" then
-        print("^1[GetDiscordUser] An error occured, the discord identifier is not valid (^3" .. tostring(discordId) .. "^1).^0")
+        print("^1[GetDiscordUser] An error occured, the discord identifier is not valid (^3" ..
+            tostring(discordId) .. "^1).^0")
         return
     elseif not AVAConfig.Discord.GuildId then
         print("^1[GetDiscordUser] An error occured, AVAConfig.Discord.GuildId is not set.^0")
@@ -57,7 +61,8 @@ local function GetDiscordUser(discordId)
 
         return data
     end
-    print("^1[GetDiscordUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" .. member.code .. "^0")
+    print("^1[GetDiscordUser] An error occured, we did not get a success code of ^2200^1, instead we got : ^8" ..
+        member.code .. "^0")
     return
 end
 
@@ -110,7 +115,8 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
                         end
                     end
                     deferrals.presentCard(
-                        [==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==],
+                        [==[{"type":"AdaptiveCard","body":[{"type":"TextBlock","size":"ExtraLarge","weight":"Bolder","text":"Discord introuvable ?"},{"type":"TextBlock","text":"Rejoignez le discord et complétez le formulaire pour nous rejoindre ! A très vite !","wrap":true},{"type":"Image","url":"https://cdn.discordapp.com/attachments/756841114589331457/757211539014156318/banniere_animee.gif","altText":""},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Nous rejoindre ! discord.gg/KRTKC6b","url":"https://discord.gg/KRTKC6b"}]}],"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","version":"1.0"}]==]
+                        ,
                         function(data, rawData)
                             deferrals.done("discord.gg/KRTKC6b")
                         end)
@@ -133,7 +139,8 @@ local function retrievePlayerData(id)
         return
     end
     local players = MySQL.query.await(
-        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `phone_number`, `metadata` FROM `ava_players` WHERE `id` = :id",
+        "SELECT `position`, `character`, `skin`, `loadout`, `accounts`, `status`, `jobs`, `inventory`, `phone_number`, `metadata` FROM `ava_players` WHERE `id` = :id"
+        ,
         { id = id })
     return players[1]
 end
@@ -222,7 +229,8 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     AVA.Players.List[tostring(src)] = aPlayer
 
     -- we check if the player character is valid
-    if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and aPlayer.character.sex
+    if type(aPlayer.character) == "table" and aPlayer.character.firstname and aPlayer.character.lastname and
+        aPlayer.character.sex
         and aPlayer.character.birthdate and aPlayer.character.mugshot then
         -- player char is valid
         loadPlayer(tostring(src))
@@ -270,18 +278,22 @@ local function setupPlayer(src, oldSource)
 
         -- check if the player already exist on database, we get the most last played and most recent found
         local citizenId = MySQL.scalar.await(
-            "SELECT id FROM `ava_players` WHERE `license` = :license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1", { license = license })
+            "SELECT id FROM `ava_players` WHERE `license` = :license ORDER BY `last_played` DESC, `last_updated` DESC LIMIT 0, 1"
+            , { license = license })
         if citizenId then
             -- we found a character, so we update its discord and name
             -- we also edit the last_played value of all other characters this player have
-            MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
+            MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id"
+                ,
                 { license = license, discord = discord, name = playerName, id = citizenId })
             -- we edit the last_played value of all other characters this player have
-            MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
+            MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0"
+                ,
                 { license = license, id = citizenId })
         else
             -- we haven't found a character, so we create a new one
-            citizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
+            citizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)"
+                ,
                 { license = license, discord = discord, name = playerName })
         end
 
@@ -297,16 +309,20 @@ local function setupPlayer(src, oldSource)
         for i = 1, #AVA.Commands.SuggestionList, 1 do
             local command = AVA.Commands.SuggestionList[i]
             if IsPlayerAceAllowed(src, ("command.%s"):format(command.name)) then
-                table.insert(suggestions, { name = "/" .. command.name, help = command.help or "", params = command.params })
+                table.insert(suggestions,
+                    { name = "/" .. command.name, help = command.help or "", params = command.params })
             end
         end
         TriggerClientEvent("chat:addSuggestions", src, suggestions)
         suggestions = nil
 
-        AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout", "~g~" .. playerName .. "~s~ se connecte.")
+        AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout",
+            "~g~" .. playerName .. "~s~ se connecte.")
 
         print("^5" .. discordTag .. "^0 (^3" .. playerName .. "^0) se connecte. (" .. citizenId .. ")")
-        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "", "<@" .. string.gsub(discord, "discord:", "") .. ">" .. " (`" .. (discordTag or "") .. "` `" .. playerName .. "`)"
+        AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
+            "<@" ..
+            string.gsub(discord, "discord:", "") .. ">" .. " (`" .. (discordTag or "") .. "` `" .. playerName .. "`)"
             .. " se connecte. (citizenId: `" .. citizenId .. "`, id: `" .. src .. "`)", 0x4C253)
 
         logPlayerCharacter(src, license, discord, group, playerName, discordTag, citizenId)
@@ -339,13 +355,19 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
     local src = source
 
     local aPlayer = AVA.Players.List[tostring(src)]
-    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.character.firstname) == "string" and type(aPlayer.skin) == "table" then
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
+    if aPlayer and type(aPlayer.character) == "table" and type(aPlayer.character.firstname) == "string" and
+        type(aPlayer.skin) == "table" then
+        print("^5" ..
+            aPlayer.discordTag ..
+            "^0 (^3" ..
+            aPlayer.name .. "^0)^9 already have a char but tried to create one.^0(" .. aPlayer.citizenId .. ")")
         return
 
         -- we check if the player character is valid
-    elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and character.lastname ~= "" and character.sex
-        ~= nil and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and skin.gender and character.mugshot
+    elseif type(character) == "table" and character.firstname and character.firstname ~= "" and character.lastname and
+        character.lastname ~= "" and character.sex
+        ~= nil and character.birthdate and AVA.Utils.IsDateValid(character.birthdate) and type(skin) == "table" and
+        skin.gender and character.mugshot
         and character.mugshot ~= "" then
         aPlayer.position = json.decode(json.encode(AVAConfig.DefaultPlayerData.position))
         aPlayer.character = {
@@ -356,7 +378,8 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
             mugshot = character.mugshot,
         }
         aPlayer.skin = skin
-        aPlayer.inventory = CreateInventory(0, tostring(src), json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
+        aPlayer.inventory = CreateInventory(0, tostring(src),
+            json.decode(json.encode(AVAConfig.DefaultPlayerData.inventory)), AVAConfig.InventoryMaxWeight)
         aPlayer.accounts = json.decode(json.encode(AVAConfig.DefaultPlayerData.accounts)) or {}
         aPlayer.status = json.decode(json.encode(AVAConfig.DefaultPlayerData.status)) or {}
         aPlayer.jobs = json.decode(json.encode(AVAConfig.DefaultPlayerData.jobs)) or {}
@@ -369,7 +392,8 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
         end
 
         dprint(json.encode(aPlayer.character, { indent = true }))
-        MySQL.update.await("UPDATE `ava_players` SET `character` = :character WHERE `license` = :license AND `id` = :id",
+        MySQL.update.await("UPDATE `ava_players` SET `character` = :character WHERE `license` = :license AND `id` = :id"
+            ,
             { character = json.encode(aPlayer.character), license = aPlayer.identifiers.license, id = aPlayer.citizenId })
         print("^2[SAVE CHARACTER] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
         aPlayer.save()
@@ -380,7 +404,10 @@ RegisterNetEvent("ava_core:server:createdPlayer", function(character, skin)
 
     else
         -- for some reason, player managed to have unvalid data, we send him back to creating a char
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
+        print("^5" ..
+            aPlayer.discordTag ..
+            "^0 (^3" ..
+            aPlayer.name .. "^0)^9 needs to create a character again because we received uncomplete values.^0("
             .. aPlayer.citizenId .. ")")
         print("\tCharacter", json.encode(character))
         print("\tBirthdate valid", character and AVA.Utils.IsDateValid(character.birthdate) or "false")
@@ -399,10 +426,15 @@ AddEventHandler("playerDropped", function(reason)
     -- dprint(src, "playerDropped", reason)
     local aPlayer = AVA.Players.List[tostring(src)]
     if aPlayer then
-        AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout", "~r~" .. aPlayer.name .. "~s~ se déconnecte.")
-        print("^5" .. aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
+        AVA.Utils.TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "loginout",
+            "~r~" .. aPlayer.name .. "~s~ se déconnecte.")
+        print("^5" ..
+            aPlayer.discordTag .. "^0 (^3" .. aPlayer.name .. "^0) se déconnecte. (" .. aPlayer.citizenId .. ")")
         AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_connections", "",
-            "<@" .. string.gsub(aPlayer.identifiers.discord, "discord:", "") .. ">" .. " (`" .. (aPlayer.discordTag or "") .. "` `" .. aPlayer.name .. "`)" .. " se déconnecte. (citizenId: `"
+            "<@" ..
+            string.gsub(aPlayer.identifiers.discord, "discord:", "") ..
+            ">" ..
+            " (`" .. (aPlayer.discordTag or "") .. "` `" .. aPlayer.name .. "`)" .. " se déconnecte. (citizenId: `"
             .. aPlayer.citizenId .. "`, id: `" .. src .. "`)\n**Raison :** " .. reason, 0xFF5455)
 
         aPlayer.logout(true)
@@ -495,7 +527,8 @@ AVA.Players.UseItem = function(src, itemName)
             local cfgItem = AVAConfig.Items[itemName]
             if cfgItem then
                 AVA.UsableItems[itemName](aPlayer.src, aPlayer, cfgItem)
-                TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "use_item", "item:" .. itemName })
+                TriggerEvent("ava_logs:server:log",
+                    { "citizenid:" .. aPlayer.citizenId, "use_item", "item:" .. itemName })
             end
         end
     end
@@ -516,7 +549,8 @@ end)
 
 local function UpdateBanList()
     MySQL.query(
-        "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC",
+        "SELECT ban_list.steam, ban_list.license, ban_list.discord, ban_list.ip, ban_list.xbl, ban_list.live, ban_list.name, ban_list.reason, ban_list.staff, ban_list.date_ban AS date_ban FROM ban_list ORDER BY date_ban DESC"
+        ,
         {}, function(data)
         AVA.Players.BanList = (data and data[1]) and data or {}
     end)
@@ -532,7 +566,8 @@ AVA.Players.IsBanned = function(license, discord, steam, ip, live, xbl)
     end
 
     for k, v in ipairs(AVA.Players.BanList) do
-        if v.license == license or v.discord == discord or v.steam == steam or v.ip == ip or v.live == live or v.xbl == xbl then
+        if v.license == license or v.discord == discord or v.steam == steam or v.ip == ip or v.live == live or
+            v.xbl == xbl then
             -- return true, v.reason .. " (" .. v.staff_name .. ")"
             return true, v.reason
         end
@@ -568,7 +603,8 @@ AVA.Commands.RegisterCommand("ban", "mod", function(source, args, rawCommand, aP
         end
 
         MySQL.insert(
-            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (:license, :discord, :steam, :ip, :xbl, :live, :name, :reason, :staff)",
+            "INSERT INTO `ban_list`(`license`, `discord`, `steam`, `ip`, `xbl`, `live`, `name`, `reason`, `staff`) VALUES (:license, :discord, :steam, :ip, :xbl, :live, :name, :reason, :staff)"
+            ,
             {
                 license = license or "not_found",
                 discord = discord or "not_found",
@@ -666,7 +702,8 @@ AVA.Players.Save = function(aPlayer)
         TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
         MySQL.update(
-            "UPDATE `ava_players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id",
+            "UPDATE `ava_players` SET `position` = :position, `skin` = :skin, `loadout` = :loadout, `accounts` = :accounts, `status` = :status, `jobs` = :jobs, `inventory` = :inventory, `phone_number` = :phone_number, `metadata` = :metadata WHERE `license` = :license AND `id` = :id"
+            ,
             {
                 position = json.encode(aPlayer.position),
                 skin = json.encode(aPlayer.skin),
@@ -698,11 +735,12 @@ AVA.Players.SavePlayerJobs = function(aPlayer)
         TriggerClientEvent("ava_core:client:startSave", aPlayer.src)
         local p = promise.new()
         MySQL.update("UPDATE `ava_players` SET `jobs` = :jobs WHERE `license` = :license AND `id` = :id",
-            { jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId }, function(result)
-            print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
-            TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
-            p:resolve()
-        end)
+            { jobs = json.encode(aPlayer.jobs), license = aPlayer.identifiers.license, id = aPlayer.citizenId },
+            function(result)
+                print("^2[SAVE JOBS] ^0" .. aPlayer.getDiscordTag() .. " (" .. aPlayer.citizenId .. ")")
+                TriggerClientEvent("ava_core:client:endSave", aPlayer.src)
+                p:resolve()
+            end)
         return p
     elseif aPlayer then
         error("^1[AVA.Players.SavePlayerJobs]^0 aPlayer is not valid for src ^3" .. aPlayer.src .. "^0.")
@@ -733,7 +771,8 @@ end)
 ---@param citizenId number
 ---@return table|nil
 AVA.Players.GetCitizenIdCharacter = function(citizenId)
-    local res = MySQL.single.await("SELECT `character` FROM `ava_players` WHERE `id` = :citizenid", { citizenid = citizenId })
+    local res = MySQL.single.await("SELECT `character` FROM `ava_players` WHERE `id` = :citizenid",
+        { citizenid = citizenId })
     return res and json.decode(res.character)
 end
 exports("GetCitizenIdCharacter", AVA.Players.GetCitizenIdCharacter)
@@ -755,7 +794,8 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         end
 
         -- we check if the citizenId is owned by the license
-        local citizenExist = MySQL.scalar.await("SELECT 1 FROM `ava_players` WHERE `license` = :license AND `id` = :id LIMIT 0, 1",
+        local citizenExist = MySQL.scalar.await("SELECT 1 FROM `ava_players` WHERE `license` = :license AND `id` = :id LIMIT 0, 1"
+            ,
             { license = license, id = newCitizenId })
 
         if not citizenExist then
@@ -764,14 +804,17 @@ AVA.Commands.RegisterCommand("changechar", "admin", function(source, args)
         end
 
         -- local license, discord, group, playerName, discordTag, citizenId = aPlayer.license, aPlayer.discord, aPlayer.group, aPlayer.playerName, aPlayer.discordTag, aPlayer.citizenId
-        local discord, group, playerName, discordTag = aPlayer.identifiers.discord, aPlayer.group, aPlayer.name, aPlayer.discordTag
+        local discord, group, playerName, discordTag = aPlayer.identifiers.discord, aPlayer.group, aPlayer.name,
+            aPlayer.discordTag
         dprint("citizen " .. newCitizenId .. " does exist for " .. license)
 
         -- we update the discord id and name of the new character
         -- and we also edit the last_played value of all other characters this player have
-        MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id",
+        MySQL.update.await("UPDATE `ava_players` SET `name` = :name, `discord` = :discord, `last_played` = 1 WHERE `license` = :license AND `id` = :id"
+            ,
             { license = license, discord = discord, name = playerName, id = newCitizenId })
-        MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0",
+        MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` <> :id AND `last_played` <> 0"
+            ,
             { license = license, id = newCitizenId })
 
         -- local playerData = retrievePlayerData(newCitizenId)
@@ -785,23 +828,28 @@ AVA.Commands.RegisterCommand("newchar", "admin", function(source, args)
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
         -- check if player can create a new char
-        local charsCount = MySQL.scalar.await("SELECT COUNT(1) FROM `ava_players` WHERE `license` = :license", { license = aPlayer.identifiers.license })
+        local charsCount = MySQL.scalar.await("SELECT COUNT(1) FROM `ava_players` WHERE `license` = :license",
+            { license = aPlayer.identifiers.license })
         if charsCount >= AVAConfig.MaxChars then
-            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil, "ava_core_logo", GetString("chars"), nil, nil,
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_no_more_chars"), nil,
+                "ava_core_logo", GetString("chars"), nil, nil,
                 "ava_core_logo")
             return
         end
 
-        local license, discord, group, playerName, discordTag, citizenId = aPlayer.identifiers.license, aPlayer.identifiers.discord, aPlayer.group,
+        local license, discord, group, playerName, discordTag, citizenId = aPlayer.identifiers.license,
+            aPlayer.identifiers.discord, aPlayer.group,
             aPlayer.name, aPlayer.discordTag, aPlayer.citizenId
 
         -- we edit the last_played value of the character that the player was using
-        MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` = :id AND `last_played` <> 0",
+        MySQL.update.await("UPDATE `ava_players` SET `last_played` = 0 WHERE `license` = :license AND `id` = :id AND `last_played` <> 0"
+            ,
             { license = license, id = citizenId })
 
         dprint("insert a new char", license, discord, playerName, citizenId)
         -- we insert a new chaacter for the player
-        local newCitizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)",
+        local newCitizenId = MySQL.insert.await("INSERT INTO `ava_players` (`license`, `discord`, `name`) VALUES (:license, :discord, :name)"
+            ,
             { license = license, discord = discord, name = playerName })
 
         if not newCitizenId then
@@ -819,12 +867,14 @@ AVA.Commands.RegisterCommand("chars", "admin", function(source, args)
     local src = source
     local aPlayer = AVA.Players.GetPlayer(src)
     if aPlayer then
-        local chars = MySQL.query.await("SELECT `id`, `character`, `last_played` FROM `ava_players` WHERE `license` = :license ORDER BY `id` DESC",
+        local chars = MySQL.query.await("SELECT `id`, `character`, `last_played` FROM `ava_players` WHERE `license` = :license ORDER BY `id` DESC"
+            ,
             { license = aPlayer.identifiers.license })
         if chars[1] then
             TriggerClientEvent("ava_core:client:selectChar", src, chars, AVAConfig.MaxChars)
         else
-            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo",
+            TriggerClientEvent("ava_core:client:ShowNotification", src,
+                GetString("chars_need_at_least_one_char_to_change"), nil, "ava_core_logo",
                 GetString("chars"), nil, nil, "ava_core_logo")
         end
     end
@@ -880,24 +930,25 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
     end
 end)
 
-AddEventHandler("ava_core:server:editPlayerItemInventoryCount", function(src, itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    local cfgWeapon <const> = AVAConfig.Weapons[itemName]
-    if cfgWeapon then
-        local aPlayer = AVA.Players.GetPlayer(src)
-        if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
-            -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
-            aPlayer.addWeapon(itemName)
-        elseif not isAddition and (newQuantity == 0 or cfgWeapon.type == "throwable") then
-            -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
-            aPlayer.removeWeapon(itemName, newQuantity)
+AddEventHandler("ava_core:server:editPlayerItemInventoryCount",
+    function(src, itemName, itemLabel, isAddition, editedQuantity, newQuantity)
+        local cfgWeapon <const> = AVAConfig.Weapons[itemName]
+        if cfgWeapon then
+            local aPlayer = AVA.Players.GetPlayer(src)
+            if isAddition and (editedQuantity == newQuantity or cfgWeapon.type == "throwable") then
+                -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. itemName .. "^0")
+                aPlayer.addWeapon(itemName)
+            elseif not isAddition and (newQuantity == 0 or cfgWeapon.type == "throwable") then
+                -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " remove weapon ^8" .. itemName .. "^0")
+                aPlayer.removeWeapon(itemName, newQuantity)
+            end
+            return
         end
-        return
-    end
-    local cfgItem <const> = AVAConfig.Items[itemName]
-    if cfgItem and cfgItem.type == "ammo" then
-        TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(itemName), newQuantity)
-    end
-end)
+        local cfgItem <const> = AVAConfig.Items[itemName]
+        if cfgItem and cfgItem.type == "ammo" then
+            TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(itemName), newQuantity)
+        end
+    end)
 
 RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRemoved)
     local src = source
@@ -907,16 +958,20 @@ RegisterNetEvent("ava_core:server:playerShotAmmoType", function(ammoType, ammoRe
         local itemQuantity = inventory.getItemQuantity(ammoType)
 
         if not itemQuantity then
-            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "", ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
+            AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
+                ("**%s** used an unknown type of ammo `%s`"):format(aPlayer.getDiscordTag(), ammoType),
                 0xEF5859)
 
         elseif ammoRemoved < 0 then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
-                ("**%s** removed a negative number of ammo `%s` : `%d`"):format(aPlayer.getDiscordTag(), ammoType, ammoRemoved), 0xEF5859)
+                ("**%s** removed a negative number of ammo `%s` : `%d`"):format(aPlayer.getDiscordTag(), ammoType,
+                    ammoRemoved), 0xEF5859)
 
         elseif ammoRemoved > itemQuantity then
             AVA.Utils.SendWebhookEmbedMessage("avan0x_wh_dev", "",
-                ("**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"):format(
+                (
+                "**%s** has removed more ammo on client side than items in inventory (`%s` : %d ammo in inventory and %d ammo removed client side)"
+                ):format(
                     aPlayer.getDiscordTag(), ammoType, itemQuantity, ammoRemoved), 0xEF5859)
             TriggerClientEvent("ava_core:client:updateAmmoTypeCount", src, GetHashKey(ammoType), itemQuantity)
 

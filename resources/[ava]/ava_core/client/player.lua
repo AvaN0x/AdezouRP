@@ -59,7 +59,8 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
     AVA.Player.IsDead = false
     AVA.Player.HasSpawned = false
     AVA.Player.Data = data
-    dprint(AVA.Player.Data.citizenId, json.encode(AVA.Player.Data.character), AVA.Player.Data.position)
+    dprint("citizenId", AVA.Player.Data.citizenId, "character", json.encode(AVA.Player.Data.character), "position",
+        AVA.Player.Data.position, "health", AVA.Player.Data.health)
     AVA.Player.Loaded = true
 
     exports.spawnmanager:setAutoSpawn(false) -- disable auto respawn
@@ -78,8 +79,8 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
             NetworkSetFriendlyFireOption(true)
         end
 
-        SetEntityHealth(AVA.Player.playerPed,
-            AVA.Player.Data.health ~= nil and AVA.Player.Data.health or GetEntityMaxHealth(AVA.Player.playerPed))
+        -- Player is not dead at this time
+        TriggerEvent("ava_core:client:playerIsDead", false)
 
         -- Use setPedSkin and not setPlayerSkin because we already got the playerPed
         -- Use return value to get a valid skin array
@@ -88,6 +89,13 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
         else
             AVA.Player.Data.skin = exports.ava_mp_peds:setPedSkin(AVA.Player.playerPed, { gender = 0 })
         end
+        -- If gender changed with setPedSkin, then we have to get playerped again
+        AVA.Player.playerPed = PlayerPedId()
+
+        -- Player can die if data.health is 0
+        -- We use data and not AVA.Player.Data for health because the thread which save the player health could already be running
+        SetEntityHealth(AVA.Player.playerPed,
+            data.health ~= nil and data.health or GetEntityMaxHealth(AVA.Player.playerPed))
 
         TriggerServerEvent("ava_core:server:reloadLoadout")
 
@@ -102,19 +110,22 @@ end)
 
 AddEventHandler("playerSpawned", function(data)
     AVA.Player.HasSpawned = true
-    print("playerSpawned", json.encode(data, { indent = true }))
 end)
 
 AddEventHandler("ava_core:client:playerDeath", function()
     AVA.Player.IsDead = true
+    TriggerEvent("ava_core:client:playerIsDead", true)
 
     if AVAConfig.NPWD then
         -- TODO disable phone
         exports.npwd:setPhoneVisible(false)
     end
 end)
-AddEventHandler("ava_core:client:playerRevived", function()
+
+AddEventHandler("ava_deaths:client:playerRevived", function()
     AVA.Player.IsDead = false
+    TriggerEvent("ava_core:client:playerIsDead", false)
+
     TriggerServerEvent("ava_core:server:reloadLoadout")
 
     -- TODO enable phone if it should

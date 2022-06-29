@@ -139,12 +139,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-AddEventHandler("ava_core:client:playerDeath", function()
-    IsDead = true
-end)
-
-AddEventHandler("ava_core:client:playerSpawned", function(spawn)
-    IsDead = false
+AddEventHandler("ava_core:client:playerIsDead", function(isDead)
+    IsDead = isDead
 end)
 
 Citizen.CreateThread(function()

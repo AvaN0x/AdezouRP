@@ -12,12 +12,12 @@ local function RespawnPlayer(coords, heading)
     ClearPedBloodDamage(playerPed)
     TriggerServerEvent("ava_core:server:playerSpawned")
     TriggerEvent("ava_core:client:playerSpawned")
-    TriggerEvent("ava_core:client:playerRevived")
+    TriggerEvent("ava_deaths:client:playerRevived")
 
     SetEntityHealth(playerPed, 105)
 end
 
-AddEventHandler("ava_core:client:playerRevived", function()
+AddEventHandler("ava_deaths:client:playerRevived", function()
     IsDead = false
 end)
 
