@@ -55,9 +55,10 @@ RegisterNetEvent("ava_hud:client:togglePlayerStats", function(show)
     SendNUIMessage({ action = "togglePlayerStats", show = show })
 end)
 
-RegisterNetEvent("ava_core:client:editItemInventoryCount", function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
-    SendNUIMessage({ action = "itemNotification", add = isAddition, label = itemLabel, count = editedQuantity })
-end)
+RegisterNetEvent("ava_core:client:editItemInventoryCount",
+    function(itemName, itemLabel, isAddition, editedQuantity, newQuantity)
+        SendNUIMessage({ action = "itemNotification", add = isAddition, label = itemLabel, count = editedQuantity })
+    end)
 
 function copyToClipboard(content)
     SendNUIMessage({ action = "copyToClipboard", content = content })
@@ -201,7 +202,8 @@ Citizen.CreateThread(function()
             fuel = GetVehicleFuelLevel(vehiclePlayerIsIn)
             SendNUIMessage({ action = "showcarhud", showhud = true, speed = carSpeed, fuel = fuel })
 
-            SendNUIMessage({ action = "setbelt", isAccepted = has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn })
+            SendNUIMessage({ action = "setbelt",
+                isAccepted = has_value(vehiclesClasses, GetVehicleClass(vehiclePlayerIsIn)), belt = beltOn })
         else
             SendNUIMessage({ action = "showcarhud", showhud = false })
             beltOn = false
@@ -251,14 +253,17 @@ Citizen.CreateThread(function()
             speedBuffer[2] = speedBuffer[1]
             speedBuffer[1] = GetEntitySpeed(vehiclePlayerIsIn)
 
-            if speedBuffer[2] ~= nil and speedBuffer[2] > (MinSpeed / 3.5) and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
-                if not beltOn and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0 and not IsScreenFadingOut() and not IsScreenFadedOut() then
+            if speedBuffer[2] ~= nil and speedBuffer[2] > (MinSpeed / 3.5) and
+                (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * DiffTrigger) then
+                if not beltOn and GetEntitySpeedVector(vehiclePlayerIsIn, true).y > 1.0 and not IsScreenFadingOut() and
+                    not IsScreenFadedOut() then
                     local co = GetEntityCoords(ped)
                     SetEntityCoords(ped, co.x, co.y, co.z - 0.47, true, true, true)
                     SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
+                    -- Break windshield
+                    SmashVehicleWindow(vehiclePlayerIsIn, 6)
                     Wait(1)
                     SetPedToRagdoll(ped, 1000, 1000, 0, 0, 0, 0)
-                    -- TODO break windshield
                 elseif GetPedInVehicleSeat(vehiclePlayerIsIn, -1) == ped then
                     SetShockScreen(5000)
                 end
