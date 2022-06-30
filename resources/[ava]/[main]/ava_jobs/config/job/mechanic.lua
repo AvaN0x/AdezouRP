@@ -73,7 +73,8 @@ Config.Jobs.mechanic = {
                     return GetVehiclePedIsIn(playerPed, false) == 0
                 end,
                 Action = function(jobName)
-                    local vehicle = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_vehicle"), 6, {}, { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                    local vehicle = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_vehicle"), 6, {}
+                        , { GetHashKey('flatbed'), GetHashKey('slamtruck') })
                     if vehicle == 0 then return end
 
                     -- Vehicle is already towed
@@ -82,13 +83,15 @@ Config.Jobs.mechanic = {
                         local flatbed = GetEntityAttachedTo(vehicle)
 
                         local offsetLocation = vector3(0.0, -6.5 + vehicleDimMin.y, 0.0)
-                        AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"), offsetLocation, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+                        AttachEntityToEntity(vehicle, flatbed, GetEntityBoneIndexByName(flatbed, "bodyshell"),
+                            offsetLocation, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
                         DetachEntity(vehicle)
                         SetVehicleOnGroundProperly(vehicle)
 
                         exports.ava_core:ShowNotification(GetString("tow_vehicle_detached_with_success"))
                     else
-                        local flatbed = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_flatbed"), 10, { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                        local flatbed = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_flatbed"), 10
+                            , { GetHashKey('flatbed'), GetHashKey('slamtruck') })
                         if flatbed == 0 then return end
 
                         -- should never happen
@@ -97,7 +100,8 @@ Config.Jobs.mechanic = {
                         -- flatbed can be a flatbed or slamtruck
                         local isSlamTruck = GetEntityModel(flatbed) == GetHashKey('slamtruck')
                         local towOffset = GetOffsetFromEntityInWorldCoords(flatbed, 0.0, -2.2, 0.4)
-                        local closestVehicleOnTopOfFlatbed = GetClosestVehicle(towOffset.x, towOffset.y, towOffset.z + 1.0, 4.0, 0, 71)
+                        local closestVehicleOnTopOfFlatbed = GetClosestVehicle(towOffset.x, towOffset.y,
+                            towOffset.z + 1.0, 4.0, 0, 71)
                         local vehicleDimMin, vehicleDimMax = GetModelDimensions(GetEntityModel(vehicle))
 
                         if GetEntityModel(closestVehicleOnTopOfFlatbed) ~= GetEntityModel(flatbed) then
@@ -115,7 +119,8 @@ Config.Jobs.mechanic = {
                         local boneIndex = GetEntityBoneIndexByName(flatbed, "bodyshell")
                         -- we attach the vehicle on the flatbed
                         local offsetLocation = vector3(0, -2.2, 0.4 - vehicleDimMin.z)
-                        AttachEntityToEntity(vehicle, flatbed, boneIndex, offsetLocation, 0, 0, 0, false, false, false, false, 20, true)
+                        AttachEntityToEntity(vehicle, flatbed, boneIndex, offsetLocation, 0, 0, 0, false, false, false,
+                            false, 20, true)
 
                         -- We drop the vehicle for 500ms to get a valid rotation
                         DetachEntity(vehicle)
@@ -126,7 +131,9 @@ Config.Jobs.mechanic = {
 
                         -- we attach the vehicle on the flatbed
                         local attachPos = GetOffsetFromEntityGivenWorldCoords(flatbed, newPos.x, newPos.y, newPos.z)
-                        AttachEntityToEntity(vehicle, flatbed, boneIndex, attachPos.x, attachPos.y, attachPos.z, vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y, vehRotation.z - flatbedRotation.z, false, false, false, false, 20, true)
+                        AttachEntityToEntity(vehicle, flatbed, boneIndex, attachPos.x, attachPos.y, attachPos.z,
+                            vehRotation.x - flatbedRotation.x, vehRotation.y - flatbedRotation.y,
+                            vehRotation.z - flatbedRotation.z, false, false, false, false, 20, true)
 
                         exports.ava_core:ShowNotification(GetString("tow_vehicle_attached_with_success"))
                     end
@@ -196,6 +203,7 @@ Config.Jobs.mechanic = {
             LSCustoms = true,
             HelpText = GetString("press_to_open_lscustom"),
             Marker = 27,
+            MinimumGrade = "employee",
         },
         LSCustomBooth2 = {
             Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
@@ -206,6 +214,7 @@ Config.Jobs.mechanic = {
             LSCustoms = true,
             HelpText = GetString("press_to_open_lscustom"),
             Marker = 27,
+            MinimumGrade = "employee",
         },
         LSCustomPaintingChamber = {
             Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
@@ -216,6 +225,7 @@ Config.Jobs.mechanic = {
             LSCustoms = true,
             HelpText = GetString("press_to_open_lscustom"),
             Marker = 27,
+            MinimumGrade = "employee",
         },
         LSCustomCenter = {
             Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
@@ -226,6 +236,7 @@ Config.Jobs.mechanic = {
             LSCustoms = true,
             HelpText = GetString("press_to_open_lscustom"),
             Marker = 27,
+            MinimumGrade = "employee",
         },
         LSCustomOutside = {
             Title = { textureName = "shopui_title_carmod", textureDirectory = "shopui_title_carmod" }, -- Los Santos Customs
@@ -236,6 +247,7 @@ Config.Jobs.mechanic = {
             LSCustoms = true,
             HelpText = GetString("press_to_open_lscustom"),
             Marker = 27,
+            MinimumGrade = "employee",
         },
     },
     FieldZones = {

@@ -14,9 +14,14 @@
         "label": "Mécanicien",
         "grades": [
             {
+                "name": "mechanician",
+                "label": "Mécanicien",
+                "salary": 100
+            },
+            {
                 "name": "employee",
                 "label": "Employé",
-                "salary": 100
+                "salary": 110
             },
             {
                 "name": "chief",
