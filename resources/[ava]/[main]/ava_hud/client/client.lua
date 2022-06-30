@@ -21,6 +21,8 @@ local wasInCar = false
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
+    -- Mandatory wait!
+    Wait(0)
     InitHUD()
     SendNUIMessage({ action = "toggleMainStats", show = true })
 end)
