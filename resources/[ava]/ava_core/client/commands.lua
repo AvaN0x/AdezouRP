@@ -15,7 +15,8 @@ end)
 
 RegisterNetEvent("ava_core:client:deleteVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or
+        AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
         AVA.DeleteVehicle(vehicle)
@@ -24,7 +25,8 @@ end)
 
 RegisterNetEvent("ava_core:client:repairVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or
+        AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
         SetVehicleFixed(vehicle)
@@ -34,7 +36,8 @@ end)
 
 RegisterNetEvent("ava_core:client:flipVehicle", function()
     local playerPed = PlayerPedId()
-    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or AVA.GetVehicleInFront(5)
+    local vehicle = IsPedInAnyVehicle(playerPed, true) and GetVehiclePedIsIn(playerPed, false) or
+        AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
         SetEntityCoords(vehicle, GetEntityCoords(vehicle, true))
@@ -82,7 +85,7 @@ RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
 
     SetVehicleModKit(vehicle, 0)
 
-    SetVehicleColours(vehicle, 135, 135)
+    SetVehicleColours(vehicle, 232, 232)
 
     -- print(Citizen.InvokeNative(0x2F5A72430E78C8D3, vehicle)) -- _GET_DRIFT_TYRES_ENABLED
     -- Citizen.InvokeNative(0x5AC79C98C5C17F05, vehicle, true) -- _SET_DRIFT_TYRES_ENABLED
@@ -153,7 +156,7 @@ RegisterNetEvent("ava_core:client:tuneVehiclePink", function(vehicleName)
 
     SetVehicleHeadlightsColour(vehicle, 9)
 
-    SetVehicleExtraColours(vehicle, 135, 135) -- pearlescent, wheel color
+    SetVehicleExtraColours(vehicle, 0, 232) -- pearlescent, wheel color
 
     Citizen.CreateThread(function()
         local r, g, b = 255, 0, 0
@@ -180,7 +183,8 @@ end)
 
 RegisterNetEvent("ava_core:client:getvehicledata", function()
     if AVA.Player.isInVehicle then
-        local data <const> = { mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle), health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle) }
+        local data <const> = { mods = AVA.GetVehicleModsData(AVA.Player.currentVehicle),
+            health = AVA.GetVehicleHealthData(AVA.Player.currentVehicle) }
         if data then
             local jsonData <const> = json.encode(data)
             print(jsonData)
@@ -250,7 +254,8 @@ RegisterNetEvent("ava_core:client:teleportToWaypoint", function()
         local blipCoords = GetBlipInfoIdCoord(waypoint)
         AVA.TeleportPlayerToCoords(blipCoords.x, blipCoords.y, 0, true)
     else
-        AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("tpwaypoint_no_waypoint_found"), nil, nil, "ava_core_logo")
+        AVA.ShowNotification(nil, nil, "ava_core_logo", GetString("tpwaypoint_no_waypoint_found"), nil, nil,
+            "ava_core_logo")
     end
 end)
 
@@ -280,11 +285,14 @@ RegisterNetEvent("ava_core:client:kill", function()
 end)
 
 RegisterNetEvent("ava_core:client:announce", function(message)
-    TriggerEvent("chat:addMessage", { color = { 255, 60, 60 }, multiline = false, args = { GetString("announce_chat_prefix"), message } })
+    TriggerEvent("chat:addMessage",
+        { color = { 255, 60, 60 }, multiline = false, args = { GetString("announce_chat_prefix"), message } })
     PlaySoundFrontend(-1, "Boss_Message_Orange", "GTAO_Biker_FM_Soundset", false)
     AVA.ShowFreemodeMessage(GetString("announce_freemode_message_title"), message, false, 10000)
 end)
 
 RegisterNetEvent("ava_core:client:staff_report", function(playerName, playerId, message)
-    TriggerEvent("chat:addMessage", { color = { 255, 60, 60 }, multiline = false, args = { GetString("report_staff_chat_prefix", playerName, playerId), message } })
+    TriggerEvent("chat:addMessage",
+        { color = { 255, 60, 60 }, multiline = false,
+            args = { GetString("report_staff_chat_prefix", playerName, playerId), message } })
 end)
