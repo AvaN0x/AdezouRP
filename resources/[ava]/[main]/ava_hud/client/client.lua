@@ -223,7 +223,7 @@ local function setTankSize(vehicle)
 end
 
 local function setIsElectric(vehicle)
-    local value = 100
+    local value = false
     if GetResourceState("ava_fuel") == "started" then
         value = exports.ava_fuel:IsVehicleElectric(vehicle)
     end
