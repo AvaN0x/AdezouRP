@@ -41,8 +41,7 @@ RegisterNetEvent("ava_heists:client:data:get", function(heists)
                     for stealableName, stolenArray in pairs(stage.Stealables) do
                         -- stealable is array of stolen items
                         for trayIndex, _ in pairs(stolenArray) do
-                            AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].
-                                Stolen = true
+                            AVAConfig.Heists[heistName].Stages[stageIndex].Stealables[stealableName].Zones[trayIndex].Stolen = true
                         end
                     end
                 end
@@ -165,7 +164,8 @@ Citizen.CreateThread(function()
                             local distance = #(playerCoords - zone.Coord)
                             if distance < AVAConfig.DrawDistance then
                                 if stealable.Marker then
-                                    DrawMarker(stealable.Marker, zone.MarkerCoord or zone.Coord, 0.0, 0.0, 0.0,
+                                    local coord <const> = zone.MarkerCoord or zone.Coord
+                                    DrawMarker(stealable.Marker, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0,
                                         stealable.MarkerRotation or vector3(0.0, 0.0, 0.0), stealable.Size.x or 1.0,
                                         stealable.Size.y or 1.0,
                                         stealable.Size.z or 1.0, stealable.Color.r or 255, stealable.Color.g or 255,

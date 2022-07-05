@@ -96,7 +96,8 @@ reloadAccessibleGarages = function()
     -- #region blips
     for _, v in ipairs(AccessibleGarages) do
         if v.Blip then
-            local blip = AddBlipForCoord(v.Blip.Coord or v.Coord)
+            local coord <const> = v.Blip.Coord or v.Coord
+            local blip = AddBlipForCoord(coord.x, coord.y, coord.z)
 
             SetBlipSprite(blip, v.Blip.Sprite)
             SetBlipDisplay(blip, 4)
@@ -246,8 +247,7 @@ end
 function takeOutVehicle(garage, model, id)
     local vehicle = exports.ava_core:SpawnVehicle(model, garage.SpawnPoint.Coord, garage.SpawnPoint.Heading)
     if vehicle then
-        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.
-            Name)
+        TriggerServerEvent("ava_garages:server:spawnedVehicle", VehToNet(vehicle), id, garage.IsCommonGarage, garage.Name)
         SetVehRadioStation(vehicle, "OFF")
         TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
     end

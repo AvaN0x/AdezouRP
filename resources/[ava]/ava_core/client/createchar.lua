@@ -68,9 +68,9 @@ local function StartCharCreator()
     Wait(1000)
     FreezeEntityPosition(playerPed, true)
 
-    lookAtCoordLeft, lookAtCoordRight, lookAtCoordFront = GetOffsetFromEntityInWorldCoords(playerPed, 1.2, 0.5, 0.7),
-        GetOffsetFromEntityInWorldCoords(playerPed, -1.2, 0.5, 0.7),
-        GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7)
+    lookAtCoordLeft = GetOffsetFromEntityInWorldCoords(playerPed, 1.2, 0.5, 0.7)
+    lookAtCoordRight = GetOffsetFromEntityInWorldCoords(playerPed, -1.2, 0.5, 0.7)
+    lookAtCoordFront = GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7)
 end
 
 local function ToggleCamOnFace(value)
@@ -463,11 +463,11 @@ end
 
 local function TurnHead()
     if (IsDisabledControlPressed(0, 205)) then -- INPUT_FRONTEND_LB
-        TaskLookAtCoord(playerPed, lookAtCoordLeft, 2000, 0, 2)
+        TaskLookAtCoord(playerPed, lookAtCoordLeft.x, lookAtCoordLeft.y, lookAtCoordLeft.z, 2000, 0, 2)
     elseif (IsDisabledControlPressed(0, 206)) then -- INPUT_FRONTEND_RB
-        TaskLookAtCoord(playerPed, lookAtCoordRight, 2000, 0, 2)
+        TaskLookAtCoord(playerPed, lookAtCoordRight.x, lookAtCoordRight.y, lookAtCoordRight.z, 2000, 0, 2)
     else
-        TaskLookAtCoord(playerPed, lookAtCoordFront, 2000, 0, 2)
+        TaskLookAtCoord(playerPed, lookAtCoordFront.x, lookAtCoordFront.y, lookAtCoordFront.z, 2000, 0, 2)
     end
 end
 
@@ -1308,7 +1308,7 @@ RegisterNetEvent("ava_core:client:joinCutScene", function()
     -- Teleport player back to its position
     AVA.Player.CreatingChar = false
     if AVA.Player.Data.position then
-        SetEntityCoords(playerPed, AVA.Player.Data.position)
+        SetEntityCoords(playerPed, AVA.Player.Data.position.x, AVA.Player.Data.position.y, AVA.Player.Data.position.z)
         SetEntityHeading(playerPed, 0.0)
     end
 end)

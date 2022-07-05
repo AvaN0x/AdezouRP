@@ -1,5 +1,5 @@
 fx_version "cerulean"
-games {"gta5"}
+games { "gta5" }
 
 version "1.0.0"
 author "github.com/AvaN0x"
@@ -7,10 +7,11 @@ description "Driving school"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
+use_fxv2_oal "yes"
 
-files {"languages/**.json", "questions.json"}
+files { "languages/**.json", "questions.json" }
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts { "@ava_core/shared/language.lua" }
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -32,6 +33,6 @@ client_scripts {
     "client/*_cl.lua",
 }
 
-server_scripts {"config.lua", "server/main.lua", "server/*_sv.lua"}
+server_scripts { "config.lua", "server/main.lua", "server/*_sv.lua" }
 
-dependencies {"ava_core", "RageUI"}
+dependencies { "ava_core", "RageUI" }

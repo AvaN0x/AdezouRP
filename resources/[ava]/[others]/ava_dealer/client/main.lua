@@ -60,10 +60,9 @@ Citizen.CreateThread(function()
                     ClearPedTasksImmediately(playerPed)
 
                     if exports.ava_core:TriggerServerCallback('ava_dealer:serveraskCanStart') then
-
                         local randNum = math.random(1, #Config.SalesLocations)
                         local spawnLoc = Config.SalesLocations[randNum]
-                        print(spawnLoc)
+
                         MissionStarted = spawnLoc
 
                         zoneBlip = AddBlipForRadius((spawnLoc.x + math.random(-45, 45)),

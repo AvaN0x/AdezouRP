@@ -28,7 +28,7 @@ Citizen.CreateThread(function()
         end
 
         local function CreateBlip(coord)
-            local blip = AddBlipForCoord(coord)
+            local blip = AddBlipForCoord(coord.x, coord.y, coord.z)
 
             SetBlipSprite(blip, v.Blip.Sprite)
             SetBlipDisplay(blip, 4)
@@ -307,9 +307,8 @@ function CarWash()
 
                     local particle = carwash.Carwash.Particles[i]
                     table.insert(particles,
-                        StartParticleFxLoopedAtCoord(particle.Name, particle.Coord, (particle.RotX or 270) + 0.0,
-                            particle.Heading + 0.0,
-                            0.0, 1.0, 0.0, 0, 0))
+                        StartParticleFxLoopedAtCoord(particle.Name, particle.Coord.x, particle.Coord.y, particle.Coord.z
+                            , (particle.RotX or 270) + 0.0, particle.Heading + 0.0, 0.0, 1.0, 0.0, 0, 0))
                 end
             end
 

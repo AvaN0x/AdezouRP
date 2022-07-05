@@ -3,8 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 -- local functions
-local setCurrentTattoosDlc, prepareTattoosMenu, InsideOfClothesMenuControls, CloseClothesMenu, OpenClothesMenu, AddMenuCam, SetCamCoords, RemoveMenuCam,
-    HideSkinElementsOnItem
+local setCurrentTattoosDlc, prepareTattoosMenu, InsideOfClothesMenuControls, CloseClothesMenu, OpenClothesMenu, AddMenuCam, SetCamCoords, RemoveMenuCam, HideSkinElementsOnItem
 
 function ClothesStore()
     local store = Config.Stores[CurrentZoneName]
@@ -12,7 +11,8 @@ function ClothesStore()
         return
     end
 
-    local hasEnoughMoney<const> = exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:checkMoney", CurrentZoneName)
+    local hasEnoughMoney <const> = exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:checkMoney",
+        CurrentZoneName)
     if not hasEnoughMoney then
         exports.ava_core:ShowNotification(GetString("cant_afford_amount", exports.ava_core:FormatNumber(store.Price)))
         CurrentActionEnabled = true
@@ -46,13 +46,15 @@ local SkinMinVals = nil
 
 local MainClothesMenu = RageUI.CreateMenu("", GetString("clothes_menu"), 0, 0, "avaui", "avaui_title_adezou")
 MainClothesMenu.Closable = false
-MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min")})
-MainClothesMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
+MainClothesMenu:AddInstructionButton({ GetControlInstructionalButton(0, 140, true), GetString("cm_reset_to_min") })
+MainClothesMenu:AddInstructionButton({ GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam") })
 MainClothesMenu.Closed = function()
     CloseClothesMenu()
 
     -- If did not validate, or do not have enough money, revert changes
-    if not validateChanges or not exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:payClothes", CurrentZoneName, PlayerSkin) then
+    if not validateChanges or
+        not
+        exports.ava_core:TriggerServerCallback("ava_stores:server:clothesStore:payClothes", CurrentZoneName, PlayerSkin) then
         -- Reset player skin to original
         exports.ava_mp_peds:setPlayerSkin(SavePlayerSkin)
     end
@@ -67,9 +69,10 @@ MainClothesMenu.Closed = function()
     end
 end
 
-local TattoosMenu = RageUI.CreateSubMenu(MainClothesMenu, "", GetString("tattoos_menu"), 0, 0, "avaui", "avaui_title_adezou")
+local TattoosMenu = RageUI.CreateSubMenu(MainClothesMenu, "", GetString("tattoos_menu"), 0, 0, "avaui",
+    "avaui_title_adezou")
 -- TattoosMenu.Closable = false
-TattoosMenu:AddInstructionButton({GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam")})
+TattoosMenu:AddInstructionButton({ GetControlInstructionalButton(0, 26, true), GetString("cm_toggle_cam") })
 TattoosMenu.Closed = function()
     lastTattooToApply = nil
     exports.ava_mp_peds:reloadPedOverlays(playerPed)
@@ -82,13 +85,14 @@ local function RemovePlayerMovementFromMenu(menu)
         -- Copy table to avoid modifying the original
         menu.Controls = json.decode(json.encode(RageUI.Settings.Controls))
         for i = #menu.Controls.Enabled.Keyboard, 1, -1 do
-            local control<const> = menu.Controls.Enabled.Keyboard[i]
+            local control <const> = menu.Controls.Enabled.Keyboard[i]
             if control[2] == 30 or control[2] == 31 then
                 table.remove(menu.Controls.Enabled.Keyboard, i)
             end
         end
     end
 end
+
 RemovePlayerMovementFromMenu(MainClothesMenu)
 RemovePlayerMovementFromMenu(TattoosMenu)
 -- #endregion cancel player movement inside of menus
@@ -130,7 +134,7 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     if type(elements) == "table" then
         menuElements = {}
         for i = 1, #elements do
-            menuElements[elements[i]] = true
+            menuElements[ elements[i] ] = true
         end
     else
         menuElements = nil
@@ -159,13 +163,16 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     if CurrentZoneName then
         local store = Config.Stores[CurrentZoneName]
 
-        if type(store.MaxCamVerticalOffset) == "number" and store.MaxCamVerticalOffset > camMinVertical and store.MaxCamVerticalOffset < camMaxVertical then
+        if type(store.MaxCamVerticalOffset) == "number" and store.MaxCamVerticalOffset > camMinVertical and
+            store.MaxCamVerticalOffset < camMaxVertical then
             camMaxVertical = store.MaxCamVerticalOffset + 0.0
         end
-        if type(store.MinCamVerticalOffset) == "number" and store.MinCamVerticalOffset > camMinVertical and store.MinCamVerticalOffset < camMaxVertical then
+        if type(store.MinCamVerticalOffset) == "number" and store.MinCamVerticalOffset > camMinVertical and
+            store.MinCamVerticalOffset < camMaxVertical then
             camMinVertical = store.MinCamVerticalOffset + 0.0
         end
-        if type(store.DefaultCamVerticalOffset) == "number" and store.DefaultCamVerticalOffset > camMinVertical and store.DefaultCamVerticalOffset
+        if type(store.DefaultCamVerticalOffset) == "number" and store.DefaultCamVerticalOffset > camMinVertical and
+            store.DefaultCamVerticalOffset
             < camMaxVertical then
             camVerticalOffset = store.DefaultCamVerticalOffset + 0.0
         end
@@ -186,11 +193,12 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     AddMenuCam()
     RageUI.Visible(MainClothesMenu, true)
 end
+
 RegisterNetEvent("ava_stores:client:OpenClothesMenu", OpenClothesMenu)
 
 -- #region cam stuff
 local cam = nil
-local camInstructionalButton<const> = {GetControlGroupInstructionalButton(0, 0, 0), GetString("cm_move_cam")}
+local camInstructionalButton <const> = { GetControlGroupInstructionalButton(0, 0, 0), GetString("cm_move_cam") }
 function AddMenuCam()
     MainClothesMenu:AddInstructionButton(camInstructionalButton)
     MainClothesMenu.EnableMouse = true
@@ -205,16 +213,19 @@ end
 local cos = math.cos
 local sin = math.sin
 function SetCamCoords()
-    local playerCoords<const> = GetEntityCoords(playerPed)
-    local offsetCoords<const> = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0.7, 0.0)
-    local coordX<const> = playerCoords.x + (offsetCoords.x - playerCoords.x) * cos(camHorizontalOffset) - (offsetCoords.y - playerCoords.y)
-                              * sin(camHorizontalOffset)
+    local playerCoords <const> = GetEntityCoords(playerPed)
+    local offsetCoords <const> = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 0.7, 0.0)
+    local coordX <const> = playerCoords.x + (offsetCoords.x - playerCoords.x) * cos(camHorizontalOffset) -
+        (offsetCoords.y - playerCoords.y)
+        * sin(camHorizontalOffset)
 
-    local coordY<const> = playerCoords.y + (offsetCoords.x - playerCoords.x) * sin(camHorizontalOffset) + (offsetCoords.y - playerCoords.y)
-                              * cos(camHorizontalOffset)
+    local coordY <const> = playerCoords.y + (offsetCoords.x - playerCoords.x) * sin(camHorizontalOffset) +
+        (offsetCoords.y - playerCoords.y)
+        * cos(camHorizontalOffset)
 
     SetCamCoord(cam, coordX, coordY, playerCoords.z + (camVerticalOffset < -0.7 and -0.7 or camVerticalOffset))
-    PointCamAtCoord(cam, playerCoords.x, playerCoords.y, playerCoords.z + (camVerticalOffset > 0.7 and 0.7 or camVerticalOffset) - 0.05)
+    PointCamAtCoord(cam, playerCoords.x, playerCoords.y,
+        playerCoords.z + (camVerticalOffset > 0.7 and 0.7 or camVerticalOffset) - 0.05)
 end
 
 function RemoveMenuCam()
@@ -224,6 +235,7 @@ function RemoveMenuCam()
     RenderScriptCams(false, true, 500, true, true)
     cam = nil
 end
+
 -- #endregion cam stuff
 
 -- #region skin modification based on current element
@@ -245,14 +257,16 @@ function HideSkinElementsOnItem(index)
         for elementName, _ in pairs(Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender]) do
             savedSkinElements[elementName] = PlayerSkin[elementName]
         end
-        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender])
+        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+            Config.ClothesStore.ElementsHiddenOnItems[index][PlayerSkin.gender])
         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
     end
 end
+
 -- #endregion skin modification based on current element
 
 -- #region menu list stuff
-local gendersList<const> = {GetString("cm_male"), GetString("cm_female")}
+local gendersList <const> = { GetString("cm_male"), GetString("cm_female") }
 local tattoosDLCList = nil
 local tattoosZonesList = nil
 -- #endregion menu list stuff
@@ -263,7 +277,7 @@ function setCurrentTattoosDlc(index)
     local count = 0
     for zoneName, _ in pairs(MenuNeededValues.currentTattooCollection.Zones) do
         count = count + 1
-        tattoosZonesList[count] = {Name = GetString("cm_t_" .. zoneName), zoneName = zoneName}
+        tattoosZonesList[count] = { Name = GetString("cm_t_" .. zoneName), zoneName = zoneName }
     end
     table.sort(tattoosZonesList, function(a, b)
         return a.zoneName < b.zoneName
@@ -285,7 +299,7 @@ function prepareTattoosMenu()
     for i = 1, #tattoos do
         if tattoos[i].name then
             count = count + 1
-            tattoosDLCList[count] = {Name = GetString("cm_t_" .. tattoos[i].name), index = i}
+            tattoosDLCList[count] = { Name = GetString("cm_t_" .. tattoos[i].name), index = i }
         end
     end
 
@@ -296,7 +310,8 @@ end
 function InsideOfClothesMenuControls()
     ClearPedTasks(playerPed)
 
-    TaskLookAtCoord(playerPed, GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7), 2000, 0, 2)
+    local coordsToLookAt = GetOffsetFromEntityInWorldCoords(playerPed, 0, 0.5, 0.7)
+    TaskLookAtCoord(playerPed, coordsToLookAt.x, coordsToLookAt.y, coordsToLookAt.z, 2000, 0, 2)
 
     -- Prevent player from moving too far
 
@@ -362,14 +377,16 @@ function RageUI.PoolMenus:ClothesMenu()
         local elementsIndexToHide = nil
         InsideOfClothesMenuControls()
 
-        local resetElement<const> = IsDisabledControlJustReleased(0, 140)
+        local resetElement <const> = IsDisabledControlJustReleased(0, 140)
 
         -- #region elements
         if not menuElements or menuElements.gender then
-            Items:AddList(GetString("cm_gender"), gendersList, PlayerSkin.gender + 1, GetString("cm_gender_subtitle"), {},
+            Items:AddList(GetString("cm_gender"), gendersList, PlayerSkin.gender + 1, GetString("cm_gender_subtitle"), {}
+                ,
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {gender = resetElement and SkinMinVals.gender or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { gender = resetElement and SkinMinVals.gender or (Index - 1) })
                         playerPed = PlayerPedId()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
 
@@ -378,120 +395,145 @@ function RageUI.PoolMenus:ClothesMenu()
                     end
                 end)
 
-            Items:AddList(GetString("cm_mother"), SkinMaxVals.mother + 1, PlayerSkin.mother + 1, GetString("cm_mother_subtitle"), {},
+            Items:AddList(GetString("cm_mother"), SkinMaxVals.mother + 1, PlayerSkin.mother + 1,
+                GetString("cm_mother_subtitle"), {},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {mother = resetElement and SkinMinVals.mother or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { mother = resetElement and SkinMinVals.mother or (Index - 1) })
                     end
                 end)
-            Items:AddList(GetString("cm_father"), SkinMaxVals.father + 1, PlayerSkin.father + 1, GetString("cm_father_subtitle"), {},
+            Items:AddList(GetString("cm_father"), SkinMaxVals.father + 1, PlayerSkin.father + 1,
+                GetString("cm_father_subtitle"), {},
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {father = resetElement and SkinMinVals.father or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { father = resetElement and SkinMinVals.father or (Index - 1) })
                     end
                 end)
-            Items:SliderHeritage(GetString("cm_resemblance"), PlayerSkin.shape_mix / 5, GetString("cm_resemblance_subtitle"),
+            Items:SliderHeritage(GetString("cm_resemblance"), PlayerSkin.shape_mix / 5,
+                GetString("cm_resemblance_subtitle"),
                 function(Selected, Active, onListChange, SliderIndex, Percent)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {shape_mix = resetElement and SkinMinVals.shape_mix or Percent})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { shape_mix = resetElement and SkinMinVals.shape_mix or Percent })
                     end
                 end)
             Items:SliderHeritage(GetString("cm_skin_tone"), PlayerSkin.skin_mix / 5, GetString("cm_skin_tone_subtitle"),
                 function(Selected, Active, onListChange, SliderIndex, Percent)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {skin_mix = resetElement and SkinMinVals.skin_mix or Percent})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { skin_mix = resetElement and SkinMinVals.skin_mix or Percent })
                     end
                 end)
         end
 
         if not menuElements or menuElements.nose then
-            MenuItemIndices.nose = Items:AddButton(GetString("cm_nose"), GetString("cm_nose_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
-            MenuItemIndices.nosebone = Items:AddButton(GetString("cm_nosebone"), GetString("cm_nosebone_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
-            MenuItemIndices.nosepeak = Items:AddButton(GetString("cm_nosepeak"), GetString("cm_nosepeak_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.nose = Items:AddButton(GetString("cm_nose"), GetString("cm_nose_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
+            MenuItemIndices.nosebone = Items:AddButton(GetString("cm_nosebone"), GetString("cm_nosebone_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
+            MenuItemIndices.nosepeak = Items:AddButton(GetString("cm_nosepeak"), GetString("cm_nosepeak_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
 
         end
         if not menuElements or menuElements.eyebrow then
-            MenuItemIndices.eyebrow = Items:AddButton(GetString("cm_eyebrow"), GetString("cm_eyebrow_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.eyebrow = Items:AddButton(GetString("cm_eyebrow"), GetString("cm_eyebrow_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
         if not menuElements or menuElements.cheeks then
-            MenuItemIndices.cheekbone = Items:AddButton(GetString("cm_cheekbone"), GetString("cm_cheekbone_subtitle"), {}, function(onSelected)
+            MenuItemIndices.cheekbone = Items:AddButton(GetString("cm_cheekbone"), GetString("cm_cheekbone_subtitle"), {}
+                , function(onSelected)
                 elementsIndexToHide = 1 -- Head
             end)
-            MenuItemIndices.cheek = Items:AddButton(GetString("cm_cheek"), GetString("cm_cheek_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.cheek = Items:AddButton(GetString("cm_cheek"), GetString("cm_cheek_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
         if not menuElements or menuElements.eyes then
-            MenuItemIndices.eyes = Items:AddButton(GetString("cm_eyes"), GetString("cm_eyes_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.eyes = Items:AddButton(GetString("cm_eyes"), GetString("cm_eyes_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
         if not menuElements or menuElements.lips then
-            MenuItemIndices.lips = Items:AddButton(GetString("cm_lips"), GetString("cm_lips_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.lips = Items:AddButton(GetString("cm_lips"), GetString("cm_lips_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
         if not menuElements or menuElements.jaw then
-            MenuItemIndices.jaw = Items:AddButton(GetString("cm_jaw"), GetString("cm_jaw_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.jaw = Items:AddButton(GetString("cm_jaw"), GetString("cm_jaw_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
         if not menuElements or menuElements.chin then
-            MenuItemIndices.chin = Items:AddButton(GetString("cm_chin"), GetString("cm_chin_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
-            MenuItemIndices.chinshape = Items:AddButton(GetString("cm_chinshape"), GetString("cm_chinshape_subtitle"), {}, function(onSelected)
+            MenuItemIndices.chin = Items:AddButton(GetString("cm_chin"), GetString("cm_chin_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
+            MenuItemIndices.chinshape = Items:AddButton(GetString("cm_chinshape"), GetString("cm_chinshape_subtitle"), {}
+                , function(onSelected)
                 elementsIndexToHide = 1 -- Head
             end)
         end
         if not menuElements or menuElements.neck then
-            MenuItemIndices.neck = Items:AddButton(GetString("cm_neck"), GetString("cm_neck_subtitle"), {}, function(onSelected)
-                elementsIndexToHide = 1 -- Head
-            end)
+            MenuItemIndices.neck = Items:AddButton(GetString("cm_neck"), GetString("cm_neck_subtitle"), {},
+                function(onSelected)
+                    elementsIndexToHide = 1 -- Head
+                end)
         end
 
         if not menuElements or menuElements.hair then
-            MenuItemIndices.hair = Items:AddList(GetString("cm_hair"), SkinMaxVals.hair + 1, PlayerSkin.hair + 1, GetString("cm_hair_subtitle"),
-                {Min = SkinMinVals.hair + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
-                            {hair = resetElement and SkinMinVals.hair or (Index - 1), hair_txd = SkinMinVals.hair_txd})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_hair_txd"), SkinMaxVals.hair_txd + 1, PlayerSkin.hair_txd + 1, GetString("cm_hair_txd_subtitle"),
-                {Min = SkinMinVals.hair_txd + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1)})
-                    end
-                end)
+            MenuItemIndices.hair = Items:AddList(GetString("cm_hair"), SkinMaxVals.hair + 1, PlayerSkin.hair + 1,
+                GetString("cm_hair_subtitle"),
+                { Min = SkinMinVals.hair + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                        { hair = resetElement and SkinMinVals.hair or (Index - 1), hair_txd = SkinMinVals.hair_txd })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_hair_txd"), SkinMaxVals.hair_txd + 1, PlayerSkin.hair_txd + 1,
+                GetString("cm_hair_txd_subtitle"),
+                { Min = SkinMinVals.hair_txd + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                        { hair_txd = resetElement and SkinMinVals.hair_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.beard then
-            MenuItemIndices.beard = Items:AddList(GetString("cm_beard"), SkinMaxVals.beard + 1, PlayerSkin.beard + 1, GetString("cm_beard_subtitle"),
-                {Min = SkinMinVals.beard + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
-                            beard = resetElement and SkinMinVals.beard or (Index - 1),
-                            beard_txd = SkinMinVals.beard_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            MenuItemIndices.beard = Items:AddList(GetString("cm_beard"), SkinMaxVals.beard + 1, PlayerSkin.beard + 1,
+                GetString("cm_beard_subtitle"),
+                { Min = SkinMinVals.beard + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
+                        beard = resetElement and SkinMinVals.beard or (Index - 1),
+                        beard_txd = SkinMinVals.beard_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
         end
         if not menuElements or menuElements.eyebrows then
-            MenuItemIndices.eyebrows = Items:AddList(GetString("cm_eyebrows"), SkinMaxVals.eyebrows + 1, PlayerSkin.eyebrows + 1,
-                GetString("cm_eyebrows_subtitle"), {Min = SkinMinVals.eyebrows + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.eyebrows = Items:AddList(GetString("cm_eyebrows"), SkinMaxVals.eyebrows + 1,
+                PlayerSkin.eyebrows + 1,
+                GetString("cm_eyebrows_subtitle"), { Min = SkinMinVals.eyebrows + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
@@ -503,40 +545,47 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
         end
         if not menuElements or menuElements.eyes_color then
-            Items:AddList(GetString("cm_eyes_color_txd"), SkinMaxVals.eyes_color + 1, PlayerSkin.eyes_color + 1, GetString("cm_eyes_color_subtitle"),
-                {Min = SkinMinVals.eyes_color + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyes_color = resetElement and SkinMinVals.eyes_color or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_eyes_color_txd"), SkinMaxVals.eyes_color + 1, PlayerSkin.eyes_color + 1,
+                GetString("cm_eyes_color_subtitle"),
+                { Min = SkinMinVals.eyes_color + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                        { eyes_color = resetElement and SkinMinVals.eyes_color or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.ageing then
-            MenuItemIndices.ageing = Items:AddList(GetString("cm_ageing"), SkinMaxVals.ageing + 1, PlayerSkin.ageing + 1, GetString("cm_ageing_subtitle"),
-                {Min = SkinMinVals.ageing + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {ageing = resetElement and SkinMinVals.ageing or (Index - 1)})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            MenuItemIndices.ageing = Items:AddList(GetString("cm_ageing"), SkinMaxVals.ageing + 1, PlayerSkin.ageing + 1
+                , GetString("cm_ageing_subtitle"),
+                { Min = SkinMinVals.ageing + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                        { ageing = resetElement and SkinMinVals.ageing or (Index - 1) })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
         end
         if not menuElements or menuElements.makeup then
-            MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1, GetString("cm_makeup_subtitle"),
-                {Min = SkinMinVals.makeup + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
-                            makeup = resetElement and SkinMinVals.makeup or (Index - 1),
-                            makeup_txd = SkinMinVals.makeup_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            MenuItemIndices.makeup = Items:AddList(GetString("cm_makeup"), SkinMaxVals.makeup + 1, PlayerSkin.makeup + 1
+                , GetString("cm_makeup_subtitle"),
+                { Min = SkinMinVals.makeup + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
+                        makeup = resetElement and SkinMinVals.makeup or (Index - 1),
+                        makeup_txd = SkinMinVals.makeup_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
         end
         if not menuElements or menuElements.lipstick then
-            MenuItemIndices.lipstick = Items:AddList(GetString("cm_lipstick"), SkinMaxVals.lipstick + 1, PlayerSkin.lipstick + 1,
-                GetString("cm_lipstick_subtitle"), {Min = SkinMinVals.lipstick + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.lipstick = Items:AddList(GetString("cm_lipstick"), SkinMaxVals.lipstick + 1,
+                PlayerSkin.lipstick + 1,
+                GetString("cm_lipstick_subtitle"), { Min = SkinMinVals.lipstick + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
@@ -548,21 +597,24 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
         end
         if not menuElements or menuElements.blush then
-            MenuItemIndices.blush = Items:AddList(GetString("cm_blush"), SkinMaxVals.blush + 1, PlayerSkin.blush + 1, GetString("cm_blush_subtitle"),
-                {Min = SkinMinVals.blush + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
-                            blush = resetElement and SkinMinVals.blush or (Index - 1),
-                            blush_txd = SkinMinVals.blush_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            MenuItemIndices.blush = Items:AddList(GetString("cm_blush"), SkinMaxVals.blush + 1, PlayerSkin.blush + 1,
+                GetString("cm_blush_subtitle"),
+                { Min = SkinMinVals.blush + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
+                        blush = resetElement and SkinMinVals.blush or (Index - 1),
+                        blush_txd = SkinMinVals.blush_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
         end
         if not menuElements or menuElements.chesthair then
-            MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1, PlayerSkin.chesthair + 1,
-                GetString("cm_chesthair_subtitle"), {Min = SkinMinVals.chesthair + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.chesthair = Items:AddList(GetString("cm_chesthair"), SkinMaxVals.chesthair + 1,
+                PlayerSkin.chesthair + 1,
+                GetString("cm_chesthair_subtitle"), { Min = SkinMinVals.chesthair + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 2 -- Clothes
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {
@@ -574,60 +626,74 @@ function RageUI.PoolMenus:ClothesMenu()
                 end)
         end
         if not menuElements or menuElements.complexion then
-            MenuItemIndices.complexion = Items:AddList(GetString("cm_complexion"), SkinMaxVals.complexion + 1, PlayerSkin.complexion + 1,
-                GetString("cm_complexion_subtitle"), {Min = SkinMinVals.complexion + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.complexion = Items:AddList(GetString("cm_complexion"), SkinMaxVals.complexion + 1,
+                PlayerSkin.complexion + 1,
+                GetString("cm_complexion_subtitle"), { Min = SkinMinVals.complexion + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {complexion = resetElement and SkinMinVals.complexion or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { complexion = resetElement and SkinMinVals.complexion or (Index - 1) })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
         if not menuElements or menuElements.sundamage then
-            MenuItemIndices.sundamage = Items:AddList(GetString("cm_sundamage"), SkinMaxVals.sundamage + 1, PlayerSkin.sundamage + 1,
-                GetString("cm_sundamage_subtitle"), {Min = SkinMinVals.sundamage + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.sundamage = Items:AddList(GetString("cm_sundamage"), SkinMaxVals.sundamage + 1,
+                PlayerSkin.sundamage + 1,
+                GetString("cm_sundamage_subtitle"), { Min = SkinMinVals.sundamage + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 1 -- Head
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {sundamage = resetElement and SkinMinVals.sundamage or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { sundamage = resetElement and SkinMinVals.sundamage or (Index - 1) })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
         if not menuElements or menuElements.moles then
-            MenuItemIndices.moles = Items:AddList(GetString("cm_moles"), SkinMaxVals.moles + 1, PlayerSkin.moles + 1, GetString("cm_moles_subtitle"),
-                {Min = SkinMinVals.moles + 1}, function(Index, onSelected, onListChange)
-                    elementsIndexToHide = 1 -- Head
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {moles = resetElement and SkinMinVals.moles or (Index - 1)})
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            MenuItemIndices.moles = Items:AddList(GetString("cm_moles"), SkinMaxVals.moles + 1, PlayerSkin.moles + 1,
+                GetString("cm_moles_subtitle"),
+                { Min = SkinMinVals.moles + 1 }, function(Index, onSelected, onListChange)
+                elementsIndexToHide = 1 -- Head
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                        { moles = resetElement and SkinMinVals.moles or (Index - 1) })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
         end
         if not menuElements or menuElements.bodyblemishes then
-            MenuItemIndices.bodyblemishes = Items:AddList(GetString("cm_bodyblemishes"), SkinMaxVals.bodyblemishes + 1, PlayerSkin.bodyblemishes + 1,
-                GetString("cm_bodyblemishes_subtitle"), {Min = SkinMinVals.bodyblemishes + 1}, function(Index, onSelected, onListChange)
+            MenuItemIndices.bodyblemishes = Items:AddList(GetString("cm_bodyblemishes"), SkinMaxVals.bodyblemishes + 1,
+                PlayerSkin.bodyblemishes + 1,
+                GetString("cm_bodyblemishes_subtitle"), { Min = SkinMinVals.bodyblemishes + 1 },
+                function(Index, onSelected, onListChange)
                     elementsIndexToHide = 2 -- Clothes
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {bodyblemishes = resetElement and SkinMinVals.bodyblemishes or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { bodyblemishes = resetElement and SkinMinVals.bodyblemishes or (Index - 1) })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
         if not menuElements or menuElements.addbodyblemishes then
-            MenuItemIndices.addbodyblemishes = Items:AddList(GetString("cm_addbodyblemishes"), SkinMaxVals.addbodyblemishes + 1,
-                PlayerSkin.addbodyblemishes + 1, GetString("cm_addbodyblemishes_subtitle"), {Min = SkinMinVals.addbodyblemishes + 1},
+            MenuItemIndices.addbodyblemishes = Items:AddList(GetString("cm_addbodyblemishes"),
+                SkinMaxVals.addbodyblemishes + 1,
+                PlayerSkin.addbodyblemishes + 1, GetString("cm_addbodyblemishes_subtitle"),
+                { Min = SkinMinVals.addbodyblemishes + 1 },
                 function(Index, onSelected, onListChange)
                     elementsIndexToHide = 2 -- Clothes
                     if onListChange or resetElement then
-                        PlayerSkin =
-                            exports.ava_mp_peds:setPedSkin(playerPed, {addbodyblemishes = resetElement and SkinMinVals.addbodyblemishes or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed,
+                            { addbodyblemishes = resetElement and SkinMinVals.addbodyblemishes or (Index - 1) })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
         end
 
         if not menuElements or menuElements.torso then
-            Items:AddList(GetString("cm_torso"), SkinMaxVals.torso + 1, PlayerSkin.torso + 1, GetString("cm_torso_subtitle"), {Min = SkinMinVals.torso + 1},
+            Items:AddList(GetString("cm_torso"), SkinMaxVals.torso + 1, PlayerSkin.torso + 1,
+                GetString("cm_torso_subtitle"), { Min = SkinMinVals.torso + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -637,15 +703,18 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_torso_txd"), SkinMaxVals.torso_txd + 1, PlayerSkin.torso_txd + 1, GetString("cm_torso_txd_subtitle"),
-                {Min = SkinMinVals.torso_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {torso_txd = resetElement and SkinMinVals.torso_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_torso_txd"), SkinMaxVals.torso_txd + 1, PlayerSkin.torso_txd + 1,
+                GetString("cm_torso_txd_subtitle"),
+                { Min = SkinMinVals.torso_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { torso_txd = resetElement and SkinMinVals.torso_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.tops then
-            Items:AddList(GetString("cm_tops"), SkinMaxVals.tops + 1, PlayerSkin.tops + 1, GetString("cm_tops_subtitle"), {Min = SkinMinVals.tops + 1},
+            Items:AddList(GetString("cm_tops"), SkinMaxVals.tops + 1, PlayerSkin.tops + 1, GetString("cm_tops_subtitle")
+                , { Min = SkinMinVals.tops + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -655,85 +724,100 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_tops_txd"), SkinMaxVals.tops_txd + 1, PlayerSkin.tops_txd + 1, GetString("cm_tops_txd_subtitle"),
-                {Min = SkinMinVals.tops_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {tops_txd = resetElement and SkinMinVals.tops_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_tops_txd"), SkinMaxVals.tops_txd + 1, PlayerSkin.tops_txd + 1,
+                GetString("cm_tops_txd_subtitle"),
+                { Min = SkinMinVals.tops_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { tops_txd = resetElement and SkinMinVals.tops_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.undershirt then
-            Items:AddList(GetString("cm_undershirt"), SkinMaxVals.undershirt + 1, PlayerSkin.undershirt + 1, GetString("cm_undershirt_subtitle"),
-                {Min = SkinMinVals.undershirt + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            undershirt = resetElement and SkinMinVals.undershirt or (Index - 1),
-                            undershirt_txd = SkinMinVals.undershirt_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
+            Items:AddList(GetString("cm_undershirt"), SkinMaxVals.undershirt + 1, PlayerSkin.undershirt + 1,
+                GetString("cm_undershirt_subtitle"),
+                { Min = SkinMinVals.undershirt + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        undershirt = resetElement and SkinMinVals.undershirt or (Index - 1),
+                        undershirt_txd = SkinMinVals.undershirt_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
             Items:AddList(GetString("cm_undershirt_txd"), SkinMaxVals.undershirt_txd + 1, PlayerSkin.undershirt_txd + 1,
-                GetString("cm_undershirt_txd_subtitle"), {Min = SkinMinVals.undershirt_txd + 1}, function(Index, onSelected, onListChange)
+                GetString("cm_undershirt_txd_subtitle"), { Min = SkinMinVals.undershirt_txd + 1 },
+                function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {undershirt_txd = resetElement and SkinMinVals.undershirt_txd or (Index - 1)})
+                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                            { undershirt_txd = resetElement and SkinMinVals.undershirt_txd or (Index - 1) })
                     end
                 end)
         end
         if not menuElements or menuElements.bodyarmor then
-            Items:AddList(GetString("cm_bodyarmor"), SkinMaxVals.bodyarmor + 1, PlayerSkin.bodyarmor + 1, GetString("cm_bodyarmor_subtitle"),
-                {Min = SkinMinVals.bodyarmor + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            bodyarmor = resetElement and SkinMinVals.bodyarmor or (Index - 1),
-                            bodyarmor_txd = SkinMinVals.bodyarmor_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_bodyarmor_txd"), SkinMaxVals.bodyarmor_txd + 1, PlayerSkin.bodyarmor_txd + 1, GetString("cm_bodyarmor_txd_subtitle"),
-                {Min = SkinMinVals.bodyarmor_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bodyarmor_txd = resetElement and SkinMinVals.bodyarmor_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_bodyarmor"), SkinMaxVals.bodyarmor + 1, PlayerSkin.bodyarmor + 1,
+                GetString("cm_bodyarmor_subtitle"),
+                { Min = SkinMinVals.bodyarmor + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        bodyarmor = resetElement and SkinMinVals.bodyarmor or (Index - 1),
+                        bodyarmor_txd = SkinMinVals.bodyarmor_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_bodyarmor_txd"), SkinMaxVals.bodyarmor_txd + 1, PlayerSkin.bodyarmor_txd + 1,
+                GetString("cm_bodyarmor_txd_subtitle"),
+                { Min = SkinMinVals.bodyarmor_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { bodyarmor_txd = resetElement and SkinMinVals.bodyarmor_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.decals then
-            Items:AddList(GetString("cm_decals"), SkinMaxVals.decals + 1, PlayerSkin.decals + 1, GetString("cm_decals_subtitle"),
-                {Min = SkinMinVals.decals + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            decals = resetElement and SkinMinVals.decals or (Index - 1),
-                            decals_txd = SkinMinVals.decals_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_decals_txd"), SkinMaxVals.decals_txd + 1, PlayerSkin.decals_txd + 1, GetString("cm_decals_txd_subtitle"),
-                {Min = SkinMinVals.decals_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {decals_txd = resetElement and SkinMinVals.decals_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_decals"), SkinMaxVals.decals + 1, PlayerSkin.decals + 1,
+                GetString("cm_decals_subtitle"),
+                { Min = SkinMinVals.decals + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        decals = resetElement and SkinMinVals.decals or (Index - 1),
+                        decals_txd = SkinMinVals.decals_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_decals_txd"), SkinMaxVals.decals_txd + 1, PlayerSkin.decals_txd + 1,
+                GetString("cm_decals_txd_subtitle"),
+                { Min = SkinMinVals.decals_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { decals_txd = resetElement and SkinMinVals.decals_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.leg then
-            Items:AddList(GetString("cm_leg"), SkinMaxVals.leg + 1, PlayerSkin.leg + 1, GetString("cm_leg_subtitle"), {Min = SkinMinVals.leg + 1},
+            Items:AddList(GetString("cm_leg"), SkinMaxVals.leg + 1, PlayerSkin.leg + 1, GetString("cm_leg_subtitle"),
+                { Min = SkinMinVals.leg + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
-                            {leg = resetElement and SkinMinVals.leg or (Index - 1), leg_txd = SkinMinVals.leg_txd})
+                            { leg = resetElement and SkinMinVals.leg or (Index - 1), leg_txd = SkinMinVals.leg_txd })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_leg_txd"), SkinMaxVals.leg_txd + 1, PlayerSkin.leg_txd + 1, GetString("cm_leg_txd_subtitle"),
-                {Min = SkinMinVals.leg_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {leg_txd = resetElement and SkinMinVals.leg_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_leg_txd"), SkinMaxVals.leg_txd + 1, PlayerSkin.leg_txd + 1,
+                GetString("cm_leg_txd_subtitle"),
+                { Min = SkinMinVals.leg_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { leg_txd = resetElement and SkinMinVals.leg_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.shoes then
-            Items:AddList(GetString("cm_shoes"), SkinMaxVals.shoes + 1, PlayerSkin.shoes + 1, GetString("cm_shoes_subtitle"), {Min = SkinMinVals.shoes + 1},
+            Items:AddList(GetString("cm_shoes"), SkinMaxVals.shoes + 1, PlayerSkin.shoes + 1,
+                GetString("cm_shoes_subtitle"), { Min = SkinMinVals.shoes + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -743,49 +827,58 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_shoes_txd"), SkinMaxVals.shoes_txd + 1, PlayerSkin.shoes_txd + 1, GetString("cm_shoes_txd_subtitle"),
-                {Min = SkinMinVals.shoes_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {shoes_txd = resetElement and SkinMinVals.shoes_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_shoes_txd"), SkinMaxVals.shoes_txd + 1, PlayerSkin.shoes_txd + 1,
+                GetString("cm_shoes_txd_subtitle"),
+                { Min = SkinMinVals.shoes_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { shoes_txd = resetElement and SkinMinVals.shoes_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.bag then
-            Items:AddList(GetString("cm_bag"), SkinMaxVals.bag + 1, PlayerSkin.bag + 1, GetString("cm_bag_subtitle"), {Min = SkinMinVals.bag + 1},
+            Items:AddList(GetString("cm_bag"), SkinMaxVals.bag + 1, PlayerSkin.bag + 1, GetString("cm_bag_subtitle"),
+                { Min = SkinMinVals.bag + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
-                            {bag = resetElement and SkinMinVals.bag or (Index - 1), bag_txd = SkinMinVals.bag_txd})
+                            { bag = resetElement and SkinMinVals.bag or (Index - 1), bag_txd = SkinMinVals.bag_txd })
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_bag_txd"), SkinMaxVals.bag_txd + 1, PlayerSkin.bag_txd + 1, GetString("cm_bag_txd_subtitle"),
-                {Min = SkinMinVals.bag_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bag_txd = resetElement and SkinMinVals.bag_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_bag_txd"), SkinMaxVals.bag_txd + 1, PlayerSkin.bag_txd + 1,
+                GetString("cm_bag_txd_subtitle"),
+                { Min = SkinMinVals.bag_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { bag_txd = resetElement and SkinMinVals.bag_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.accessory then
-            Items:AddList(GetString("cm_accessory"), SkinMaxVals.accessory + 1, PlayerSkin.accessory + 1, GetString("cm_accessory_subtitle"),
-                {Min = SkinMinVals.accessory + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            accessory = resetElement and SkinMinVals.accessory or (Index - 1),
-                            accessory_txd = SkinMinVals.accessory_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_accessory_txd"), SkinMaxVals.accessory_txd + 1, PlayerSkin.accessory_txd + 1, GetString("cm_accessory_txd_subtitle"),
-                {Min = SkinMinVals.accessory_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {accessory_txd = resetElement and SkinMinVals.accessory_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_accessory"), SkinMaxVals.accessory + 1, PlayerSkin.accessory + 1,
+                GetString("cm_accessory_subtitle"),
+                { Min = SkinMinVals.accessory + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        accessory = resetElement and SkinMinVals.accessory or (Index - 1),
+                        accessory_txd = SkinMinVals.accessory_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_accessory_txd"), SkinMaxVals.accessory_txd + 1, PlayerSkin.accessory_txd + 1,
+                GetString("cm_accessory_txd_subtitle"),
+                { Min = SkinMinVals.accessory_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { accessory_txd = resetElement and SkinMinVals.accessory_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.mask then
-            Items:AddList(GetString("cm_mask"), SkinMaxVals.mask + 1, PlayerSkin.mask + 1, GetString("cm_mask_subtitle"), {Min = SkinMinVals.mask + 1},
+            Items:AddList(GetString("cm_mask"), SkinMaxVals.mask + 1, PlayerSkin.mask + 1, GetString("cm_mask_subtitle")
+                , { Min = SkinMinVals.mask + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -795,16 +888,19 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_mask_txd"), SkinMaxVals.mask_txd + 1, PlayerSkin.mask_txd + 1, GetString("cm_mask_txd_subtitle"),
-                {Min = SkinMinVals.mask_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {mask_txd = resetElement and SkinMinVals.mask_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_mask_txd"), SkinMaxVals.mask_txd + 1, PlayerSkin.mask_txd + 1,
+                GetString("cm_mask_txd_subtitle"),
+                { Min = SkinMinVals.mask_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { mask_txd = resetElement and SkinMinVals.mask_txd or (Index - 1) })
+                end
+            end)
         end
 
         if not menuElements or menuElements.hats then
-            Items:AddList(GetString("cm_hats"), SkinMaxVals.hats + 1, PlayerSkin.hats + 1, GetString("cm_hats_subtitle"), {Min = SkinMinVals.hats + 1},
+            Items:AddList(GetString("cm_hats"), SkinMaxVals.hats + 1, PlayerSkin.hats + 1, GetString("cm_hats_subtitle")
+                , { Min = SkinMinVals.hats + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -814,33 +910,39 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_hats_txd"), SkinMaxVals.hats_txd + 1, PlayerSkin.hats_txd + 1, GetString("cm_hats_txd_subtitle"),
-                {Min = SkinMinVals.hats_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {hats_txd = resetElement and SkinMinVals.hats_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_hats_txd"), SkinMaxVals.hats_txd + 1, PlayerSkin.hats_txd + 1,
+                GetString("cm_hats_txd_subtitle"),
+                { Min = SkinMinVals.hats_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { hats_txd = resetElement and SkinMinVals.hats_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.glasses then
-            Items:AddList(GetString("cm_glasses"), SkinMaxVals.glasses + 1, PlayerSkin.glasses + 1, GetString("cm_glasses_subtitle"),
-                {Min = SkinMinVals.glasses + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            glasses = resetElement and SkinMinVals.glasses or (Index - 1),
-                            glasses_txd = SkinMinVals.glasses_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_glasses_txd"), SkinMaxVals.glasses_txd + 1, PlayerSkin.glasses_txd + 1, GetString("cm_glasses_txd_subtitle"),
-                {Min = SkinMinVals.glasses_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {glasses_txd = resetElement and SkinMinVals.glasses_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_glasses"), SkinMaxVals.glasses + 1, PlayerSkin.glasses + 1,
+                GetString("cm_glasses_subtitle"),
+                { Min = SkinMinVals.glasses + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        glasses = resetElement and SkinMinVals.glasses or (Index - 1),
+                        glasses_txd = SkinMinVals.glasses_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_glasses_txd"), SkinMaxVals.glasses_txd + 1, PlayerSkin.glasses_txd + 1,
+                GetString("cm_glasses_txd_subtitle"),
+                { Min = SkinMinVals.glasses_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { glasses_txd = resetElement and SkinMinVals.glasses_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.ears then
-            Items:AddList(GetString("cm_ears"), SkinMaxVals.ears + 1, PlayerSkin.ears + 1, GetString("cm_ears_subtitle"), {Min = SkinMinVals.ears + 1},
+            Items:AddList(GetString("cm_ears"), SkinMaxVals.ears + 1, PlayerSkin.ears + 1, GetString("cm_ears_subtitle")
+                , { Min = SkinMinVals.ears + 1 },
                 function(Index, onSelected, onListChange)
                     if onListChange or resetElement then
                         PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
@@ -850,66 +952,77 @@ function RageUI.PoolMenus:ClothesMenu()
                         SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
                     end
                 end)
-            Items:AddList(GetString("cm_ears_txd"), SkinMaxVals.ears_txd + 1, PlayerSkin.ears_txd + 1, GetString("cm_ears_txd_subtitle"),
-                {Min = SkinMinVals.ears_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {ears_txd = resetElement and SkinMinVals.ears_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_ears_txd"), SkinMaxVals.ears_txd + 1, PlayerSkin.ears_txd + 1,
+                GetString("cm_ears_txd_subtitle"),
+                { Min = SkinMinVals.ears_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { ears_txd = resetElement and SkinMinVals.ears_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.watches then
-            Items:AddList(GetString("cm_watches"), SkinMaxVals.watches + 1, PlayerSkin.watches + 1, GetString("cm_watches_subtitle"),
-                {Min = SkinMinVals.watches + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            watches = resetElement and SkinMinVals.watches or (Index - 1),
-                            watches_txd = SkinMinVals.watches_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_watches_txd"), SkinMaxVals.watches_txd + 1, PlayerSkin.watches_txd + 1, GetString("cm_watches_txd_subtitle"),
-                {Min = SkinMinVals.watches_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {watches_txd = resetElement and SkinMinVals.watches_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_watches"), SkinMaxVals.watches + 1, PlayerSkin.watches + 1,
+                GetString("cm_watches_subtitle"),
+                { Min = SkinMinVals.watches + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        watches = resetElement and SkinMinVals.watches or (Index - 1),
+                        watches_txd = SkinMinVals.watches_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_watches_txd"), SkinMaxVals.watches_txd + 1, PlayerSkin.watches_txd + 1,
+                GetString("cm_watches_txd_subtitle"),
+                { Min = SkinMinVals.watches_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { watches_txd = resetElement and SkinMinVals.watches_txd or (Index - 1) })
+                end
+            end)
         end
         if not menuElements or menuElements.bracelets then
-            Items:AddList(GetString("cm_bracelets"), SkinMaxVals.bracelets + 1, PlayerSkin.bracelets + 1, GetString("cm_bracelets_subtitle"),
-                {Min = SkinMinVals.bracelets + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
-                            bracelets = resetElement and SkinMinVals.bracelets or (Index - 1),
-                            bracelets_txd = SkinMinVals.bracelets_txd,
-                        })
-                        SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
-                    end
-                end)
-            Items:AddList(GetString("cm_bracelets_txd"), SkinMaxVals.bracelets_txd + 1, PlayerSkin.bracelets_txd + 1, GetString("cm_bracelets_txd_subtitle"),
-                {Min = SkinMinVals.bracelets_txd + 1}, function(Index, onSelected, onListChange)
-                    if onListChange or resetElement then
-                        PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {bracelets_txd = resetElement and SkinMinVals.bracelets_txd or (Index - 1)})
-                    end
-                end)
+            Items:AddList(GetString("cm_bracelets"), SkinMaxVals.bracelets + 1, PlayerSkin.bracelets + 1,
+                GetString("cm_bracelets_subtitle"),
+                { Min = SkinMinVals.bracelets + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed, {
+                        bracelets = resetElement and SkinMinVals.bracelets or (Index - 1),
+                        bracelets_txd = SkinMinVals.bracelets_txd,
+                    })
+                    SkinMaxVals = exports.ava_mp_peds:getMaxValues(playerPed)
+                end
+            end)
+            Items:AddList(GetString("cm_bracelets_txd"), SkinMaxVals.bracelets_txd + 1, PlayerSkin.bracelets_txd + 1,
+                GetString("cm_bracelets_txd_subtitle"),
+                { Min = SkinMinVals.bracelets_txd + 1 }, function(Index, onSelected, onListChange)
+                if onListChange or resetElement then
+                    PlayerSkin = exports.ava_mp_peds:setPedClothes(playerPed,
+                        { bracelets_txd = resetElement and SkinMinVals.bracelets_txd or (Index - 1) })
+                end
+            end)
         end
 
         if not menuElements or menuElements.tattoos then
-            Items:AddButton(GetString("cm_tattoos"), GetString("cm_tattoos_subtitle"), {RightBadge = RageUI.BadgeStyle.Tattoo}, function(onSelected)
-                if onSelected then
-                    elementsIndexToHide = 3 -- All elements
-                end
-            end, TattoosMenu)
+            Items:AddButton(GetString("cm_tattoos"), GetString("cm_tattoos_subtitle"),
+                { RightBadge = RageUI.BadgeStyle.Tattoo }, function(onSelected)
+                    if onSelected then
+                        elementsIndexToHide = 3 -- All elements
+                    end
+                end, TattoosMenu)
         end
 
-        Items:AddButton(GetString("clothes_menu_cancel"), GetString("clothes_menu_cancel_subtitle"), {}, function(onSelected)
-            if onSelected then
-                -- Timeout 0 because there would be an error inside of panels
-                Citizen.SetTimeout(0, RageUI.CloseAllInternal)
-            end
-        end)
+        Items:AddButton(GetString("clothes_menu_cancel"), GetString("clothes_menu_cancel_subtitle"), {},
+            function(onSelected)
+                if onSelected then
+                    -- Timeout 0 because there would be an error inside of panels
+                    Citizen.SetTimeout(0, RageUI.CloseAllInternal)
+                end
+            end)
         Items:AddButton(GetString("clothes_menu_validate"), GetString("clothes_menu_validate_subtitle"), {
-            Color = {BackgroundColor = RageUI.ItemsColour.MenuYellow, HighLightColor = RageUI.ItemsColour.PmMitemHighlight},
+            Color = { BackgroundColor = RageUI.ItemsColour.MenuYellow,
+                HighLightColor = RageUI.ItemsColour.PmMitemHighlight },
             RightLabel = validateButtonRightLabel,
         }, function(onSelected)
             if onSelected then
@@ -927,215 +1040,264 @@ function RageUI.PoolMenus:ClothesMenu()
     end, function(Panels)
         -- #region panels
         if (not menuElements or menuElements.eyebrow) and MenuItemIndices.eyebrow then
-            Panels:Grid(((PlayerSkin.eyebrow_forward / 100) + 1) / 2, ((PlayerSkin.eyebrow_high / 100) + 1) / 2, GetString("cm_top"), GetString("cm_bottom"),
+            Panels:Grid(((PlayerSkin.eyebrow_forward / 100) + 1) / 2, ((PlayerSkin.eyebrow_high / 100) + 1) / 2,
+                GetString("cm_top"), GetString("cm_bottom"),
                 GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyebrow_forward = CharacterX * 100, eyebrow_high = CharacterY * 100})
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ eyebrow_forward = CharacterX * 100,
+                        eyebrow_high = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 7, PlayerSkin.eyebrow_forward / 100) -- eyebrow_forward
                     SetPedFaceFeature(playerPed, 6, PlayerSkin.eyebrow_high / 100) -- eyebrow_high
                 end, MenuItemIndices.eyebrow)
         end
         if (not menuElements or menuElements.jaw) and MenuItemIndices.jaw then
-            Panels:Grid(((PlayerSkin.jaw_bone_width / 100) + 1) / 2, ((PlayerSkin.jaw_bone_back_lenght / 100) + 1) / 2, GetString("cm_jaw_top"),
-                GetString("cm_jaw_bottom"), GetString("cm_jaw_right"), GetString("cm_jaw_left"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({jaw_bone_width = CharacterX * 100, jaw_bone_back_lenght = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.jaw_bone_width / 100) + 1) / 2, ((PlayerSkin.jaw_bone_back_lenght / 100) + 1) / 2,
+                GetString("cm_jaw_top"),
+                GetString("cm_jaw_bottom"), GetString("cm_jaw_right"), GetString("cm_jaw_left"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ jaw_bone_width = CharacterX * 100,
+                        jaw_bone_back_lenght = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 13, PlayerSkin.jaw_bone_width / 100) -- jaw_bone_width
                     SetPedFaceFeature(playerPed, 14, PlayerSkin.jaw_bone_back_lenght / 100) -- jaw_bone_back_lenght
                 end, MenuItemIndices.jaw)
         end
         if (not menuElements or menuElements.nose) and MenuItemIndices.nose then
-            Panels:Grid(((PlayerSkin.nose_width / 100) + 1) / 2, ((PlayerSkin.nose_peak_hight / 100) + 1) / 2, GetString("cm_top"), GetString("cm_bottom"),
+            Panels:Grid(((PlayerSkin.nose_width / 100) + 1) / 2, ((PlayerSkin.nose_peak_hight / 100) + 1) / 2,
+                GetString("cm_top"), GetString("cm_bottom"),
                 GetString("cm_thin"), GetString("cm_thick"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_width = CharacterX * 100, nose_peak_hight = CharacterY * 100})
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ nose_width = CharacterX * 100,
+                        nose_peak_hight = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 0, PlayerSkin.nose_width / 100) -- nose_width
                     SetPedFaceFeature(playerPed, 1, PlayerSkin.nose_peak_hight / 100) -- nose_peak_hight
                 end, MenuItemIndices.nose)
-            Panels:Grid(((PlayerSkin.nose_peak_lenght / 100) + 1) / 2, ((PlayerSkin.nose_bone_high / 100) + 1) / 2, GetString("cm_nosebone_top"),
-                GetString("cm_nosebone_bottom"), GetString("cm_nosebone_right"), GetString("cm_nosebone_left"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_peak_lenght = CharacterX * 100, nose_bone_high = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.nose_peak_lenght / 100) + 1) / 2, ((PlayerSkin.nose_bone_high / 100) + 1) / 2,
+                GetString("cm_nosebone_top"),
+                GetString("cm_nosebone_bottom"), GetString("cm_nosebone_right"), GetString("cm_nosebone_left"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ nose_peak_lenght = CharacterX * 100,
+                        nose_bone_high = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 2, PlayerSkin.nose_peak_lenght / 100) -- nose_peak_lenght
                     SetPedFaceFeature(playerPed, 3, PlayerSkin.nose_bone_high / 100) -- nose_bone_high
                 end, MenuItemIndices.nosebone)
-            Panels:Grid(((PlayerSkin.nose_bone_twist / -100) + 1) / 2, ((PlayerSkin.nose_peak_lowering / 100) + 1) / 2, GetString("cm_nosepeak_top"),
-                GetString("cm_nosepeak_bottom"), GetString("cm_nosepeak_right"), GetString("cm_nosepeak_left"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({nose_bone_twist = CharacterX * -100, nose_peak_lowering = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.nose_bone_twist / -100) + 1) / 2, ((PlayerSkin.nose_peak_lowering / 100) + 1) / 2,
+                GetString("cm_nosepeak_top"),
+                GetString("cm_nosepeak_bottom"), GetString("cm_nosepeak_right"), GetString("cm_nosepeak_left"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ nose_bone_twist = CharacterX * -100,
+                        nose_peak_lowering = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 5, PlayerSkin.nose_bone_twist / 100) -- nose_bone_twist
                     SetPedFaceFeature(playerPed, 4, PlayerSkin.nose_peak_lowering / 100) -- nose_peak_lowering
                 end, MenuItemIndices.nosepeak)
         end
         if (not menuElements or menuElements.cheek) and MenuItemIndices.cheek then
-            Panels:Grid(((PlayerSkin.cheeks_bone_width / 100) + 1) / 2, ((PlayerSkin.cheeks_bone_high / 100) + 1) / 2, GetString("cm_top"),
-                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_bone_width = CharacterX * 100, cheeks_bone_high = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.cheeks_bone_width / 100) + 1) / 2, ((PlayerSkin.cheeks_bone_high / 100) + 1) / 2,
+                GetString("cm_top"),
+                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ cheeks_bone_width = CharacterX * 100,
+                        cheeks_bone_high = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 9, PlayerSkin.cheeks_bone_width / 100) -- cheeks_bone_width
                     SetPedFaceFeature(playerPed, 8, PlayerSkin.cheeks_bone_high / 100) -- cheeks_bone_high
                 end, MenuItemIndices.cheekbone)
-            Panels:GridHorizontal(((PlayerSkin.cheeks_width / -100) + 1) / 2, GetString("cm_cheek_left"), GetString("cm_cheek_right"),
+            Panels:GridHorizontal(((PlayerSkin.cheeks_width / -100) + 1) / 2, GetString("cm_cheek_left"),
+                GetString("cm_cheek_right"),
                 function(X, _, CharacterX)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({cheeks_width = CharacterX * -100})
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ cheeks_width = CharacterX * -100 })
                     SetPedFaceFeature(playerPed, 10, PlayerSkin.cheeks_width / 100) -- cheeks_width
                 end, MenuItemIndices.cheek)
         end
         if (not menuElements or menuElements.chin) and MenuItemIndices.chin then
-            Panels:Grid(((PlayerSkin.chin_bone_lenght / 100) + 1) / 2, ((PlayerSkin.chin_bone_lowering / 100) + 1) / 2, GetString("cm_top"),
-                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_lenght = CharacterX * 100, chin_bone_lowering = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.chin_bone_lenght / 100) + 1) / 2, ((PlayerSkin.chin_bone_lowering / 100) + 1) / 2,
+                GetString("cm_top"),
+                GetString("cm_bottom"), GetString("cm_inside"), GetString("cm_outside"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ chin_bone_lenght = CharacterX * 100,
+                        chin_bone_lowering = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 16, PlayerSkin.chin_bone_lenght / 100) -- chin_bone_lenght
                     SetPedFaceFeature(playerPed, 15, PlayerSkin.chin_bone_lowering / 100) -- chin_bone_lowering
                 end, MenuItemIndices.chin)
-            Panels:Grid(((PlayerSkin.chin_bone_width / -100) + 1) / 2, ((PlayerSkin.chin_hole / 100) + 1) / 2, GetString("cm_chinshape_top"),
-                GetString("cm_chinshape_bottom"), GetString("cm_chinshape_right"), GetString("cm_chinshape_left"), function(X, Y, CharacterX, CharacterY)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({chin_bone_width = CharacterX * -100, chin_hole = CharacterY * 100})
+            Panels:Grid(((PlayerSkin.chin_bone_width / -100) + 1) / 2, ((PlayerSkin.chin_hole / 100) + 1) / 2,
+                GetString("cm_chinshape_top"),
+                GetString("cm_chinshape_bottom"), GetString("cm_chinshape_right"), GetString("cm_chinshape_left"),
+                function(X, Y, CharacterX, CharacterY)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ chin_bone_width = CharacterX * -100,
+                        chin_hole = CharacterY * 100 })
                     SetPedFaceFeature(playerPed, 17, PlayerSkin.chin_bone_width / 100) -- chin_bone_width
                     SetPedFaceFeature(playerPed, 18, PlayerSkin.chin_hole / 100) -- chin_hole
                 end, MenuItemIndices.chinshape)
         end
         if (not menuElements or menuElements.eyes) and MenuItemIndices.eyes then
-            Panels:GridHorizontal(((PlayerSkin.eyes_openning / -100) + 1) / 2, GetString("cm_eyes_pleated"), GetString("cm_eyes_open"),
+            Panels:GridHorizontal(((PlayerSkin.eyes_openning / -100) + 1) / 2, GetString("cm_eyes_pleated"),
+                GetString("cm_eyes_open"),
                 function(X, _, CharacterX)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({eyes_openning = CharacterX * -100})
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ eyes_openning = CharacterX * -100 })
                     SetPedFaceFeature(playerPed, 11, PlayerSkin.eyes_openning / 100) -- eyes_openning
                 end, MenuItemIndices.eyes)
         end
         if (not menuElements or menuElements.lips) and MenuItemIndices.lips then
-            Panels:GridHorizontal(((PlayerSkin.lips_thickness / -100) + 1) / 2, GetString("cm_lips_left"), GetString("cm_lips_right"),
+            Panels:GridHorizontal(((PlayerSkin.lips_thickness / -100) + 1) / 2, GetString("cm_lips_left"),
+                GetString("cm_lips_right"),
                 function(X, _, CharacterX)
-                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({lips_thickness = CharacterX * -100})
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ lips_thickness = CharacterX * -100 })
                     SetPedFaceFeature(playerPed, 12, PlayerSkin.lips_thickness / 100) -- lips_thickness
                 end, MenuItemIndices.lips)
         end
         if (not menuElements or menuElements.neck) and MenuItemIndices.neck then
-            Panels:GridHorizontal(((PlayerSkin.neck_thickness / 100) + 1) / 2, GetString("cm_thin"), GetString("cm_thick"), function(X, _, CharacterX)
-                PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({neck_thickness = CharacterX * 100})
-                SetPedFaceFeature(playerPed, 19, PlayerSkin.neck_thickness / 100) -- neck_thickness
-            end, MenuItemIndices.neck)
+            Panels:GridHorizontal(((PlayerSkin.neck_thickness / 100) + 1) / 2, GetString("cm_thin"),
+                GetString("cm_thick"), function(X, _, CharacterX)
+                    PlayerSkin = exports.ava_mp_peds:editPlayerSkinWithoutApplying({ neck_thickness = CharacterX * 100 })
+                    SetPedFaceFeature(playerPed, 19, PlayerSkin.neck_thickness / 100) -- neck_thickness
+                end, MenuItemIndices.neck)
         end
 
         if (not menuElements or menuElements.hair) and MenuItemIndices.hair then
-            Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_main_color
-                or (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)), PlayerSkin.hair_main_color + 1,
+            Panels:ColourPanel(GetString("cm_hair_main_color"), RageUI.PanelColour.HairCut,
+                MenuNeededValues.hair_main_color
+                or
+                (PlayerSkin.hair_main_color > 9 and (PlayerSkin.hair_main_color - 7) or (PlayerSkin.hair_main_color + 1)
+                ), PlayerSkin.hair_main_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.hair_main_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_main_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { hair_main_color = CurrentIndex - 1 })
                 end, MenuItemIndices.hair)
-            Panels:ColourPanel(GetString("cm_hair_scnd_color"), RageUI.PanelColour.HairCut, MenuNeededValues.hair_scnd_color
-                or (PlayerSkin.hair_scnd_color > 9 and (PlayerSkin.hair_scnd_color - 7) or (PlayerSkin.hair_scnd_color + 1)), PlayerSkin.hair_scnd_color + 1,
+            Panels:ColourPanel(GetString("cm_hair_scnd_color"), RageUI.PanelColour.HairCut,
+                MenuNeededValues.hair_scnd_color
+                or
+                (PlayerSkin.hair_scnd_color > 9 and (PlayerSkin.hair_scnd_color - 7) or (PlayerSkin.hair_scnd_color + 1)
+                ), PlayerSkin.hair_scnd_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.hair_scnd_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {hair_scnd_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { hair_scnd_color = CurrentIndex - 1 })
                 end, MenuItemIndices.hair)
         end
 
         if (not menuElements or menuElements.beard) and MenuItemIndices.beard then
             Panels:PercentagePanel(PlayerSkin.beard_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {beard_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { beard_op = Percent * 100 })
             end, MenuItemIndices.beard)
 
             Panels:ColourPanel(GetString("cm_beard_color"), RageUI.PanelColour.HairCut,
-                MenuNeededValues.beard_color or (PlayerSkin.beard_color > 9 and (PlayerSkin.beard_color - 7) or (PlayerSkin.beard_color + 1)),
+                MenuNeededValues.beard_color or
+                (PlayerSkin.beard_color > 9 and (PlayerSkin.beard_color - 7) or (PlayerSkin.beard_color + 1)),
                 PlayerSkin.beard_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.beard_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {beard_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { beard_color = CurrentIndex - 1 })
                 end, MenuItemIndices.beard)
         end
 
         if (not menuElements or menuElements.eyebrows) and MenuItemIndices.eyebrows then
             Panels:PercentagePanel(PlayerSkin.eyebrows_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyebrows_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { eyebrows_op = Percent * 100 })
             end, MenuItemIndices.eyebrows)
 
-            Panels:ColourPanel(GetString("cm_eyebrows_color"), RageUI.PanelColour.HairCut, MenuNeededValues.eyebrows_color
-                or (PlayerSkin.eyebrows_color > 9 and (PlayerSkin.eyebrows_color - 7) or (PlayerSkin.eyebrows_color + 1)), PlayerSkin.eyebrows_color + 1,
+            Panels:ColourPanel(GetString("cm_eyebrows_color"), RageUI.PanelColour.HairCut,
+                MenuNeededValues.eyebrows_color
+                or (PlayerSkin.eyebrows_color > 9 and (PlayerSkin.eyebrows_color - 7) or (PlayerSkin.eyebrows_color + 1)
+                ), PlayerSkin.eyebrows_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.eyebrows_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {eyebrows_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { eyebrows_color = CurrentIndex - 1 })
                 end, MenuItemIndices.eyebrows)
         end
 
         if (not menuElements or menuElements.chesthair) and MenuItemIndices.chesthair then
             Panels:PercentagePanel(PlayerSkin.chesthair_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {chesthair_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { chesthair_op = Percent * 100 })
             end, MenuItemIndices.chesthair)
 
-            Panels:ColourPanel(GetString("cm_chesthair_color"), RageUI.PanelColour.HairCut, MenuNeededValues.chesthair_color
-                or (PlayerSkin.chesthair_color > 9 and (PlayerSkin.chesthair_color - 7) or (PlayerSkin.chesthair_color + 1)), PlayerSkin.chesthair_color + 1,
+            Panels:ColourPanel(GetString("cm_chesthair_color"), RageUI.PanelColour.HairCut,
+                MenuNeededValues.chesthair_color
+                or
+                (PlayerSkin.chesthair_color > 9 and (PlayerSkin.chesthair_color - 7) or (PlayerSkin.chesthair_color + 1)
+                ), PlayerSkin.chesthair_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.chesthair_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {chesthair_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { chesthair_color = CurrentIndex - 1 })
                 end, MenuItemIndices.chesthair)
         end
 
         if (not menuElements or menuElements.blush) and MenuItemIndices.blush then
             Panels:PercentagePanel(PlayerSkin.blush_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {blush_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { blush_op = Percent * 100 })
             end, MenuItemIndices.blush)
 
             Panels:ColourPanel(GetString("cm_blush_color"), RageUI.PanelColour.Makeup,
-                MenuNeededValues.blush_color or (PlayerSkin.blush_color > 9 and (PlayerSkin.blush_color - 7) or (PlayerSkin.blush_color + 1)),
+                MenuNeededValues.blush_color or
+                (PlayerSkin.blush_color > 9 and (PlayerSkin.blush_color - 7) or (PlayerSkin.blush_color + 1)),
                 PlayerSkin.blush_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.blush_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {blush_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { blush_color = CurrentIndex - 1 })
                 end, MenuItemIndices.blush)
         end
 
         if (not menuElements or menuElements.ageing) and MenuItemIndices.ageing then
             Panels:PercentagePanel(PlayerSkin.ageing_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {ageing_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { ageing_op = Percent * 100 })
             end, MenuItemIndices.ageing)
         end
         if (not menuElements or menuElements.complexion) and MenuItemIndices.complexion then
             Panels:PercentagePanel(PlayerSkin.complexion_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {complexion_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { complexion_op = Percent * 100 })
             end, MenuItemIndices.complexion)
         end
         if (not menuElements or menuElements.sundamage) and MenuItemIndices.sundamage then
             Panels:PercentagePanel(PlayerSkin.sundamage_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {sundamage_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { sundamage_op = Percent * 100 })
             end, MenuItemIndices.sundamage)
         end
         if (not menuElements or menuElements.moles) and MenuItemIndices.moles then
             Panels:PercentagePanel(PlayerSkin.moles_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {moles_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { moles_op = Percent * 100 })
             end, MenuItemIndices.moles)
         end
         if (not menuElements or menuElements.bodyblemishes) and MenuItemIndices.bodyblemishes then
             Panels:PercentagePanel(PlayerSkin.bodyblemishes_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {bodyblemishes_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { bodyblemishes_op = Percent * 100 })
             end, MenuItemIndices.bodyblemishes)
         end
         if (not menuElements or menuElements.addbodyblemishes) and MenuItemIndices.addbodyblemishes then
             Panels:PercentagePanel(PlayerSkin.addbodyblemishes_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {addbodyblemishes_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { addbodyblemishes_op = Percent * 100 })
             end, MenuItemIndices.addbodyblemishes)
         end
 
         if (not menuElements or menuElements.makeup) and MenuItemIndices.makeup then
             Panels:PercentagePanel(PlayerSkin.makeup_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { makeup_op = Percent * 100 })
             end, MenuItemIndices.makeup)
 
-            Panels:ColourPanel(GetString("cm_makeup_main_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_main_color
-                or (PlayerSkin.makeup_main_color > 9 and (PlayerSkin.makeup_main_color - 7) or (PlayerSkin.makeup_main_color + 1)),
+            Panels:ColourPanel(GetString("cm_makeup_main_color"), RageUI.PanelColour.Makeup,
+                MenuNeededValues.makeup_main_color
+                or
+                (
+                PlayerSkin.makeup_main_color > 9 and (PlayerSkin.makeup_main_color - 7) or
+                    (PlayerSkin.makeup_main_color + 1)),
                 PlayerSkin.makeup_main_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.makeup_main_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_main_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { makeup_main_color = CurrentIndex - 1 })
                 end, MenuItemIndices.makeup)
-            Panels:ColourPanel(GetString("cm_makeup_scnd_color"), RageUI.PanelColour.Makeup, MenuNeededValues.makeup_scnd_color
-                or (PlayerSkin.makeup_scnd_color > 9 and (PlayerSkin.makeup_scnd_color - 7) or (PlayerSkin.makeup_scnd_color + 1)),
+            Panels:ColourPanel(GetString("cm_makeup_scnd_color"), RageUI.PanelColour.Makeup,
+                MenuNeededValues.makeup_scnd_color
+                or
+                (
+                PlayerSkin.makeup_scnd_color > 9 and (PlayerSkin.makeup_scnd_color - 7) or
+                    (PlayerSkin.makeup_scnd_color + 1)),
                 PlayerSkin.makeup_scnd_color + 1, function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.makeup_scnd_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {makeup_scnd_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { makeup_scnd_color = CurrentIndex - 1 })
                 end, MenuItemIndices.makeup)
         end
         if (not menuElements or menuElements.lipstick) and MenuItemIndices.lipstick then
             Panels:PercentagePanel(PlayerSkin.lipstick_op / 100, nil, nil, nil, function(Percent)
-                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {lipstick_op = Percent * 100})
+                PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { lipstick_op = Percent * 100 })
             end, MenuItemIndices.lipstick)
 
-            Panels:ColourPanel(GetString("cm_lipstick_color"), RageUI.PanelColour.Makeup, MenuNeededValues.lipstick_color
-                or (PlayerSkin.lipstick_color > 9 and (PlayerSkin.lipstick_color - 7) or (PlayerSkin.lipstick_color + 1)), PlayerSkin.lipstick_color + 1,
+            Panels:ColourPanel(GetString("cm_lipstick_color"), RageUI.PanelColour.Makeup,
+                MenuNeededValues.lipstick_color
+                or (PlayerSkin.lipstick_color > 9 and (PlayerSkin.lipstick_color - 7) or (PlayerSkin.lipstick_color + 1)
+                ), PlayerSkin.lipstick_color + 1,
                 function(MinimumIndex, CurrentIndex)
                     MenuNeededValues.lipstick_color = MinimumIndex
-                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, {lipstick_color = CurrentIndex - 1})
+                    PlayerSkin = exports.ava_mp_peds:setPedSkin(playerPed, { lipstick_color = CurrentIndex - 1 })
                 end, MenuItemIndices.lipstick)
         end
         -- #endregion panels
@@ -1145,7 +1307,8 @@ function RageUI.PoolMenus:ClothesMenu()
         local tattooToApply = nil
         InsideOfClothesMenuControls()
 
-        Items:AddList(GetString("cm_t_dlclist"), tattoosDLCList, MenuNeededValues.tattooDLCIndex or 1, GetString("cm_t_dlclist_subtitle"), nil,
+        Items:AddList(GetString("cm_t_dlclist"), tattoosDLCList, MenuNeededValues.tattooDLCIndex or 1,
+            GetString("cm_t_dlclist_subtitle"), nil,
             function(Index, onSelected, onListChange)
                 if onListChange then
                     MenuNeededValues.tattooDLCIndex = Index
@@ -1153,32 +1316,35 @@ function RageUI.PoolMenus:ClothesMenu()
                 end
             end)
 
-        Items:AddList(GetString("cm_t_zonelist"), tattoosZonesList, MenuNeededValues.tattooZoneIndex or 1, GetString("cm_t_zonelist_subtitle"), nil,
+        Items:AddList(GetString("cm_t_zonelist"), tattoosZonesList, MenuNeededValues.tattooZoneIndex or 1,
+            GetString("cm_t_zonelist_subtitle"), nil,
             function(Index, onSelected, onListChange)
                 if onListChange then
                     MenuNeededValues.tattooZoneIndex = Index
                 end
             end)
 
-        local tattoos<const> = MenuNeededValues.currentTattooCollection.Zones[tattoosZonesList[MenuNeededValues.tattooZoneIndex].zoneName]
+        local tattoos <const> = MenuNeededValues.currentTattooCollection.Zones[
+            tattoosZonesList[MenuNeededValues.tattooZoneIndex].zoneName]
         if tattoos then
             for i = 1, #tattoos do
-                local tattoo<const> = tattoos[i]
-                local isApplied<const> = MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name]
+                local tattoo <const> = tattoos[i]
+                local isApplied <const> = MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name]
                 Items:AddButton(GetString("cm_t_tattoo_number", i), GetString("cm_t_enter_to_apply_tattoo"),
-                    {RightBadge = isApplied and RageUI.BadgeStyle.Tattoo}, function(onSelected)
-                        if not isApplied then
-                            tattooToApply = tattoo.name
-                            if onSelected then
-                                lastTattooToApply = nil
-                                tattooToApply = nil
+                    { RightBadge = isApplied and RageUI.BadgeStyle.Tattoo }, function(onSelected)
+                    if not isApplied then
+                        tattooToApply = tattoo.name
+                        if onSelected then
+                            lastTattooToApply = nil
+                            tattooToApply = nil
 
-                                MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name] = true
-                                table.insert(PlayerSkin.tattoos, {collection = MenuNeededValues.currentTattooCollection.name, overlay = tattoo.name})
-                                PlayerSkin = exports.ava_mp_peds:setPedSkin(PlayerPedId(), {tattoos = PlayerSkin.tattoos})
-                            end
+                            MenuNeededValues.currentCollectionAppliedTattoos[tattoo.name] = true
+                            table.insert(PlayerSkin.tattoos,
+                                { collection = MenuNeededValues.currentTattooCollection.name, overlay = tattoo.name })
+                            PlayerSkin = exports.ava_mp_peds:setPedSkin(PlayerPedId(), { tattoos = PlayerSkin.tattoos })
                         end
-                    end)
+                    end
+                end)
             end
         end
 
@@ -1186,7 +1352,8 @@ function RageUI.PoolMenus:ClothesMenu()
             lastTattooToApply = tattooToApply
             exports.ava_mp_peds:reloadPedOverlays(playerPed)
             if lastTattooToApply then
-                AddPedDecorationFromHashes(PlayerPedId(), MenuNeededValues.currentTattooCollection.name, lastTattooToApply)
+                AddPedDecorationFromHashes(PlayerPedId(), MenuNeededValues.currentTattooCollection.name,
+                    lastTattooToApply)
             end
         end
     end)

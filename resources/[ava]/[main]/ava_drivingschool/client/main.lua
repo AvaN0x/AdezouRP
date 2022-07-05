@@ -13,7 +13,8 @@ CurrentActionEnabled = false
 local mainBlips = {}
 
 Citizen.CreateThread(function()
-    local blip = AddBlipForCoord(AVAConfig.DrivingSchool.Coord)
+    local blip = AddBlipForCoord(AVAConfig.DrivingSchool.Coord.x, AVAConfig.DrivingSchool.Coord.y,
+        AVAConfig.DrivingSchool.Coord.z)
 
     SetBlipSprite(blip, AVAConfig.DrivingSchool.Blip.Sprite)
     SetBlipDisplay(blip, 4)

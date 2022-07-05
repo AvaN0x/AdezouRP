@@ -11,7 +11,8 @@ local placedBlips = {}
 Citizen.CreateThread(function()
     for _, v in pairs(ConfigBlips) do
         local function CreateBlip(coord)
-            local blip = AddBlipForCoord(coord or vector3(0.0, 0.0, 0.0))
+            if not coord then return end
+            local blip = AddBlipForCoord(coord.x, coord.y, coord.z)
 
             SetBlipSprite(blip, v.Sprite or 1)
             SetBlipDisplay(blip, 4)

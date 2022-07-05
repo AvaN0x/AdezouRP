@@ -33,9 +33,9 @@ AddEventHandler("onResourceStop", function(resource)
         if isIn then
             TriggerServerEvent("ava_burglaries:server:leaveHouse", houseID)
             local coords = house and house.coord or vector3(296.81, -769.55, 28.35)
-            RequestCollisionAtCoord(coords)
+            RequestCollisionAtCoord(coords.x, coords.y, coords.z)
 
-            SetEntityCoords(playerPed, coords)
+            SetEntityCoords(playerPed, coords.x, coords.y, coords.z)
         end
     end
 end)
@@ -154,7 +154,8 @@ function LoopExit()
         while isInside do
             Wait(0)
             if #(AVAConfig.Appartment.coord - playerCoords) <= 2.0 then
-                DrawText3D(AVAConfig.Appartment.coord.x, AVAConfig.Appartment.coord.y, AVAConfig.Appartment.coord.z, GetString("press_exit"), 0.3)
+                DrawText3D(AVAConfig.Appartment.coord.x, AVAConfig.Appartment.coord.y, AVAConfig.Appartment.coord.z,
+                    GetString("press_exit"), 0.3)
 
                 if IsControlJustReleased(0, 38) then
                     TriggerServerEvent("ava_burglaries:server:leaveHouse", thisHouseID)

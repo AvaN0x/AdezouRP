@@ -40,7 +40,8 @@ RegisterNetEvent("ava_core:client:flipVehicle", function()
         AVA.GetVehicleInFront(5)
 
     if vehicle ~= 0 then
-        SetEntityCoords(vehicle, GetEntityCoords(vehicle, true))
+        local coords = GetEntityCoords(vehicle, true)
+        SetEntityCoords(vehicle, coords.x, coords.y, coords.z)
     end
 end)
 

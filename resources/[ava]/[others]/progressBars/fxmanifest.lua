@@ -5,6 +5,6 @@ lua54 "yes"
 
 ui_page "index.html"
 
-client_scripts {"client.lua"}
+client_scripts { "client.lua" }
 
-files {"index.html"}
+files { "index.html" }

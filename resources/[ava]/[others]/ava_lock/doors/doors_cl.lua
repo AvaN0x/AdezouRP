@@ -104,7 +104,8 @@ Citizen.CreateThread(function()
                 if doorID.doors then
                     for _, v in ipairs(doorID.doors) do
                         if not v.object or not DoesEntityExist(v.object) then
-                            v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
+                            v.object = GetClosestObjectOfType(v.objCoords.x, v.objCoords.y, v.objCoords.z, 1.0, v.objHash
+                                , false, false, false)
                         end
                         if distance < doorID.distance then
                             DrawEntityBox(v.object, 255, 255, 255)
@@ -114,7 +115,8 @@ Citizen.CreateThread(function()
                     end
                 else
                     if not doorID.object or not DoesEntityExist(doorID.object) then
-                        doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
+                        doorID.object = GetClosestObjectOfType(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z
+                            , 1.0, doorID.objHash, false, false, false)
                     end
                     if distance < doorID.distance then
                         DrawEntityBox(doorID.object, 255, 255, 255)
@@ -124,7 +126,8 @@ Citizen.CreateThread(function()
                 end
                 if not doorID.textCoords then
                     local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
-                    doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x, 0.0, 0.0)
+                    doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x,
+                        0.0, 0.0)
                     print(k .. " new text coords : " .. doorID.textCoords)
                 end
 
@@ -134,7 +137,9 @@ Citizen.CreateThread(function()
                 SetTextWrap(0.0, 1.0)
                 SetTextOutline()
                 SetTextEntry("STRING")
-                AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", doorID.textCoords.x) .. "\nY\t" .. string.format("%.2f", doorID.textCoords.y) .. "\nZ\t"
+                AddTextComponentSubstringPlayerName("X\t" ..
+                    string.format("%.2f", doorID.textCoords.x) ..
+                    "\nY\t" .. string.format("%.2f", doorID.textCoords.y) .. "\nZ\t"
                     .. string.format("%.2f", doorID.textCoords.z))
                 DrawText(0.8, 0.88)
 
@@ -142,9 +147,13 @@ Citizen.CreateThread(function()
                     local offset = tonumber(exports.ava_core:KeyboardInput(_("enter_x_offset"), 0, 10))
                     if type(offset) == "number" or type(offset) == "float" then
                         local min, max = GetModelDimensions(GetEntityModel(doorID.object or doorID.doors[1].object))
-                        doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object, min.x + offset, 0.0, 0.0)
-                        exports.ava_hud:copyToClipboard("vector3(" .. string.format("%.2f", doorID.textCoords.x) .. ", "
-                            .. string.format("%.2f", doorID.textCoords.y) .. ", " .. string.format("%.2f", doorID.textCoords.z)
+                        doorID.textCoords = GetOffsetFromEntityInWorldCoords(doorID.object or doorID.doors[1].object,
+                            min.x + offset, 0.0, 0.0)
+                        exports.ava_hud:copyToClipboard("vector3(" ..
+                            string.format("%.2f", doorID.textCoords.x) .. ", "
+                            ..
+                            string.format("%.2f", doorID.textCoords.y) ..
+                            ", " .. string.format("%.2f", doorID.textCoords.z)
                             .. ")")
                     end
                 end
@@ -168,7 +177,8 @@ Citizen.CreateThread(function()
                     if doorID.doors then
                         for _, v in ipairs(doorID.doors) do
                             if not v.object or not DoesEntityExist(v.object) then
-                                v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
+                                v.object = GetClosestObjectOfType(v.objCoords.x, v.objCoords.y, v.objCoords.z, 1.0,
+                                    v.objHash, false, false, false)
                             end
                             FreezeEntityPosition(v.object, doorID.locked)
 
@@ -181,13 +191,16 @@ Citizen.CreateThread(function()
                         end
                     else
                         if not doorID.object or not DoesEntityExist(doorID.object) then
-                            doorID.object = GetClosestObjectOfType(doorID.objCoords, 1.0, doorID.objHash, false, false, false)
+                            doorID.object = GetClosestObjectOfType(doorID.objCoords.x, doorID.objCoords.y,
+                                doorID.objCoords.z, 1.0, doorID.objHash, false, false,
+                                false)
                         end
                         FreezeEntityPosition(doorID.object, doorID.locked)
 
                         if doorID.locked and doorID.objYaw and GetEntityRotation(doorID.object).z ~= doorID.objYaw then
                             SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objYaw, 2, true)
-                        elseif not doorID.locked and doorID.objOpenYaw and GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
+                        elseif not doorID.locked and doorID.objOpenYaw and
+                            GetEntityRotation(doorID.object).z ~= doorID.objOpenYaw then
                             FreezeEntityPosition(doorID.object, not doorID.locked)
                             SetEntityRotation(doorID.object, 0.0, 0.0, doorID.objOpenYaw, 2, true)
                         end
@@ -195,8 +208,10 @@ Citizen.CreateThread(function()
 
                     if distance < doorID.distance then
                         if doorID.authorized then
-                            local displayText = GetString("doors_press_button", doorID.locked and GetString("doors_locked") or GetString("doors_unlocked"))
-                            DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText, doorID.size)
+                            local displayText = GetString("doors_press_button",
+                                doorID.locked and GetString("doors_locked") or GetString("doors_unlocked"))
+                            DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, displayText,
+                                doorID.size)
                             if IsControlJustReleased(0, 38) then
                                 doorID.locked = not doorID.locked
                                 TriggerEvent("ava_lock:client:dooranim")
@@ -272,7 +287,7 @@ RegisterNetEvent("ava_items:client:useLockpick", function()
 
     local playerPed = PlayerPedId()
     TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
-    local minigameSuccess<const> = exports.ava_lockpicking:StartMinigame()
+    local minigameSuccess <const> = exports.ava_lockpicking:StartMinigame()
     ClearPedTasksImmediately(playerPed)
 
     if minigameSuccess then

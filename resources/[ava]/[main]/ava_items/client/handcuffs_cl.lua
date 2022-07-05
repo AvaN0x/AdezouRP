@@ -180,8 +180,8 @@ RegisterNetEvent('ava_items:handcuffs:putInVehicle', function()
         return
     end
 
-    if IsAnyVehicleNearPoint(coords, 5.0) then
-        local vehicle = GetClosestVehicle(coords, 5.0, 0, 71)
+    if IsAnyVehicleNearPoint(coords.x, coords.y, coords.z, 5.0) then
+        local vehicle = GetClosestVehicle(coords.x, coords.y, coords.z, 5.0, 0, 71)
 
         if DoesEntityExist(vehicle) then
             local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)

@@ -7,6 +7,7 @@ description "Most of Jobs"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
+use_fxv2_oal "yes"
 
 files { "languages/**.json" }
 

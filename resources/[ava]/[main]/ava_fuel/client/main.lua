@@ -165,7 +165,7 @@ function getPump()
     local playerPed = PlayerPedId()
     local coords = GetEntityCoords(playerPed)
     for _, hash in ipairs(AVAConfig.GasPumps) do
-        local closestProp = GetClosestObjectOfType(coords, 1.5, hash, false, false, false)
+        local closestProp = GetClosestObjectOfType(coords.x, coords.y, coords.z, 1.5, hash, false, false, false)
 
         if DoesEntityExist(closestProp) and GetEntityHealth(closestProp) > 0 then
             local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, 0.0, 0.0, 0.0)

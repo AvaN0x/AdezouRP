@@ -6,8 +6,8 @@ IsDead = false
 
 local function RespawnPlayer(coords, heading)
     local playerPed = PlayerPedId()
-    SetEntityCoordsNoOffset(playerPed, coords, false, false, false, true)
-    NetworkResurrectLocalPlayer(coords, heading + 0.0, true, false)
+    SetEntityCoordsNoOffset(playerPed, coords.x, coords.y, coords.z, false, false, false, true)
+    NetworkResurrectLocalPlayer(coords.x, coords.y, coords.z, heading + 0.0, true, false)
     SetPlayerInvincible(playerPed, false)
     ClearPedBloodDamage(playerPed)
     TriggerServerEvent("ava_core:server:playerSpawned")

@@ -7,6 +7,7 @@ description "Illegal dealer"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
+use_fxv2_oal "yes"
 
 client_scripts {
     "@RageUI/src/RageUI.lua",

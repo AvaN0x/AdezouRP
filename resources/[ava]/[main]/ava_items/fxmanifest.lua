@@ -7,8 +7,9 @@ description "Items"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
+use_fxv2_oal "yes"
 
-files {"languages/**.json"}
+files { "languages/**.json" }
 
 client_scripts {
     "@RageUI/src/RageUI.lua",
@@ -30,9 +31,8 @@ client_scripts {
     "client/**/*_cl.lua",
 }
 
-server_scripts {"config.lua", "server/main.lua", "server/**/*_sv.lua"}
+server_scripts { "config.lua", "server/main.lua", "server/**/*_sv.lua" }
 
-shared_scripts {"@ava_core/shared/language.lua"}
+shared_scripts { "@ava_core/shared/language.lua" }
 
-dependencies {"ava_core"}
-
+dependencies { "ava_core" }

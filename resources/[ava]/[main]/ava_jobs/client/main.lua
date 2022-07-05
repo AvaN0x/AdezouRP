@@ -30,7 +30,8 @@ Citizen.CreateThread(function()
     local countMainBlips = 0
     for _, job in pairs(Config.Jobs) do
         if not job.isIllegal and not job.isGang and not job.Disabled then
-            local blip = AddBlipForCoord(job.Blip.Coord or job.Zones.ManagerMenu.Coord)
+            local coords = job.Blip.Coord or job.Zones.ManagerMenu.Coord
+            local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
             SetBlipSprite(blip, job.Blip.Sprite)
             SetBlipDisplay(blip, 4)
             SetBlipScale(blip, job.Blip.Scale or 1.0)
@@ -46,7 +47,7 @@ Citizen.CreateThread(function()
         end
     end
 
-    local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Coord)
+    local jobCenterBlip = AddBlipForCoord(Config.JobCenter.Coord.x, Config.JobCenter.Coord.y, Config.JobCenter.Coord.z)
     SetBlipSprite(jobCenterBlip, Config.JobCenter.Blip.Sprite)
     SetBlipDisplay(jobCenterBlip, 4)
     SetBlipScale(jobCenterBlip, Config.JobCenter.Blip.Scale or 1.0)
@@ -271,7 +272,7 @@ function createBlips()
     clearJobBlips()
     local countJobBlips = 0
     local function addJobBlip(coords, label, sprite, colour)
-        local blip = AddBlipForCoord(coords)
+        local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
 
         SetBlipSprite(blip, sprite)
         SetBlipDisplay(blip, 4)
@@ -338,7 +339,7 @@ function createBlips()
     end
 
     if Config.BankManagment and Config.BankManagment.Blip and playerIsAManager then
-        local bankManagmentBlip = AddBlipForCoord(Config.BankManagment.Coord)
+        local bankManagmentBlip = AddBlipForCoord(Config.BankManagment.Coord.x, Config.BankManagment.Coord.y, Config.BankManagment.Coord.z)
         SetBlipSprite(bankManagmentBlip, Config.BankManagment.Blip.Sprite)
         SetBlipDisplay(bankManagmentBlip, 5)
         SetBlipScale(bankManagmentBlip, Config.BankManagment.Blip.Scale or 1.0)
@@ -727,7 +728,7 @@ function OpenCloakroomMenu()
     end)
 end
 
-function Process(process, pos)
+function Process(process, coord)
     local canProcess = exports.ava_core:TriggerServerCallback("ava_jobs:canprocess", process, CurrentJobName)
     if canProcess then
         TriggerServerEvent("ava_jobs:server:process", process)
@@ -739,7 +740,7 @@ function Process(process, pos)
             Wait(1000)
             timeLeft = timeLeft - 1
 
-            if #(playerCoords - (process.Coord or pos)) > 2 then
+            if #(playerCoords - (process.Coord or coord)) > 2 then
                 TriggerServerEvent("ava_jobs:server:cancelProcessing")
                 break
             end
