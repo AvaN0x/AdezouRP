@@ -29,15 +29,15 @@ Citizen.CreateThread(function()
             local object = GetObjectIndexFromEntityIndex(v)
             local entity = Entity(object)
             if entity.state.pickup then
-                local propCoords = GetEntityCoords(object)
-                local distance = #(AVA.Player.playerCoords - propCoords)
+                local objectCoords = GetEntityCoords(object)
+                local distance = #(AVA.Player.playerCoords - objectCoords)
                 if distance < 15.0 then
                     count = count + 1
                     local _, max = GetModelDimensions(GetEntityModel(object))
 
                     newPickups[count] = {
                         id = entity.state.id,
-                        coords = vector3(propCoords.x, propCoords.y, propCoords.z + max.z + 0.1),
+                        coords = vector3(objectCoords.x, objectCoords.y, objectCoords.z + max.z + 0.1),
                         label = entity.state.label,
                         object = object,
                     }
@@ -48,33 +48,59 @@ Citizen.CreateThread(function()
     end
 end)
 
+AddStateBagChangeHandler('pickup', nil, function(bagName, key, value, _unused, replicated)
+    -- The value should never be something else than true
+    if not value then return end
+    local object = NetToEnt(tonumber(bagName:gsub('entity:', ''), 10))
+    -- Only allow objects
+    if GetEntityType(object) ~= 3 then return end
+
+    local objectCoords = GetEntityCoords(object)
+    local distance = #(AVA.Player.playerCoords - objectCoords)
+
+    if distance < 15.0 then
+        local entity = Entity(object)
+        local _, max = GetModelDimensions(GetEntityModel(object))
+
+        pickups[#pickups + 1] = {
+            id = entity.state.id,
+            coords = vector3(objectCoords.x, objectCoords.y, objectCoords.z + max.z + 0.1),
+            label = entity.state.label,
+            object = object,
+        }
+    end
+end)
+
 local closestPickupIndex = nil
 Citizen.CreateThread(function()
-    local r<const>, g<const>, b<const> = 115, 173, 93
-    local closestR<const>, closestG<const>, closestB<const> = 255, 133, 85
+    local r <const>, g <const>, b <const> = 115, 173, 93
+    local closestR <const>, closestG <const>, closestB <const> = 255, 133, 85
     while true do
         local wait = 500
 
         local newClosestPickupIndex = nil
         local closestDistance = nil
         for i = 1, #pickups do
-            local pickup<const> = pickups[i]
+            local pickup <const> = pickups[i]
             if pickup and not pickup.hidden then
                 if not DoesEntityExist(pickup.object) then
                     pickup.hidden = true
                 end
-                local coords<const> = pickup.coords
-                local distance<const> = #(AVA.Player.playerCoords - coords)
+                local coords <const> = pickup.coords
+                local distance <const> = #(AVA.Player.playerCoords - coords)
                 if distance < 3.0 then
                     wait = 0
                     -- If is the actual closest
                     if i == closestPickupIndex then
-                        AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, "[E] " .. pickup.label, nil, closestR, closestG, closestB)
-                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, closestR, closestG, closestB, 155, false,
+                        AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, "[E] " .. pickup.label, nil, closestR,
+                            closestG, closestB)
+                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10,
+                            closestR, closestG, closestB, 155, false,
                             false, 2, true, false, false, false)
                     else
                         AVA.Utils.DrawText3D(coords.x, coords.y, coords.z + 0.2, pickup.label, nil, r, g, b, 196)
-                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, r, g, b, 155, false, false, 2, true,
+                        DrawMarker(2, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 0.10, 0.10, 0.10, r,
+                            g, b, 155, false, false, 2, true,
                             false, false, false)
                     end
 
@@ -98,7 +124,8 @@ Citizen.CreateThread(function()
                     RemoveAnimDict("pickup_object")
 
                     Wait(500)
-                    if pickups[closestPickupIndex] and AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
+                    if pickups[closestPickupIndex] and
+                        AVA.TriggerServerCallback("ava_core:server:pickup", pickups[closestPickupIndex].id) then
                         PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
                     end
 

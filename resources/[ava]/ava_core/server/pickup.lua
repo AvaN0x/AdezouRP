@@ -26,11 +26,14 @@ AVA.CreatePickup = function(coords, itemName, quantity)
         if DoesEntityExist(object) and not pickups[object] then
             dprint("Created pickup (" .. tostring(object) .. ") : " .. itemName .. " x" .. quantity)
             SetEntityHeading(coords.w)
-            pickups[tostring(object)] = { itemName = itemName, itemLabel = cfgItem.label, quantity = quantity, coords = coords.xyz, beeingPickedUp = false }
+            pickups[tostring(object)] = { itemName = itemName, itemLabel = cfgItem.label, quantity = quantity,
+                coords = coords.xyz, beeingPickedUp = false }
             local entity = Entity(object)
-            entity.state:set("pickup", true, true)
             entity.state:set("label", cfgItem.label .. " x" .. AVA.Utils.FormatNumber(quantity), true)
             entity.state:set("id", tostring(object), true)
+
+            -- Pickup statebag have to be added at the end, so the handler client side can detect it when label and id are set and not before
+            entity.state:set("pickup", true, true)
             Wait(2000)
             FreezeEntityPosition(object, true)
         end
@@ -59,7 +62,9 @@ AVA.RegisterServerCallback("ava_core:server:pickup", function(source, id)
                         hasPickedUp = true
                         if canTake >= pickup.quantity then
                             inventory.addItem(pickup.itemName, pickup.quantity)
-                            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName, pickup.quantity })
+                            TriggerEvent("ava_logs:server:log",
+                                { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName,
+                                    pickup.quantity })
 
                             -- Remove prop
                             DeleteEntity(tonumber(id))
@@ -67,10 +72,12 @@ AVA.RegisterServerCallback("ava_core:server:pickup", function(source, id)
                             pickups[id] = nil
                         else
                             inventory.addItem(pickup.itemName, canTake)
-                            TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName, canTake })
+                            TriggerEvent("ava_logs:server:log",
+                                { "citizenid:" .. aPlayer.citizenId, "pickup", "item:" .. pickup.itemName, canTake })
 
                             pickups[id].quantity = pickup.quantity - canTake
-                            Entity(tonumber(id)).state:set("label", pickup.itemLabel .. " x" .. AVA.Utils.FormatNumber(pickups[id].quantity), true)
+                            Entity(tonumber(id)).state:set("label",
+                                pickup.itemLabel .. " x" .. AVA.Utils.FormatNumber(pickups[id].quantity), true)
                         end
                     end
                 end
