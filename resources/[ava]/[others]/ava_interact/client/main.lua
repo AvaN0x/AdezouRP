@@ -134,7 +134,7 @@ Citizen.CreateThread(function()
                     local isClosest <const> = i == closestIndex
 
                     if data.marker then
-                        local markerData = closestIndex and ClosestMarkerData or MarkerData
+                        local markerData = isClosest and ClosestMarkerData or MarkerData
                         DrawMarker(data.marker, coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0,
                             markerData.size, markerData.size, markerData.size, markerData.r, markerData.g, markerData.b,
                             markerData.a, false, false, 2, true, false, false, false)
