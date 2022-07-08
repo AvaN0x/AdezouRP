@@ -39,7 +39,7 @@ AVA.ShowNotification = function(text, color, textureName, title, subtitle, iconT
     BeginTextCommandThefeedPost("AVA_NOTF_TE")
     if color then
         -- color :
-        -- https://pastebin.com/d9aHPbXN
+        -- https://docs.fivem.net/docs/game-references/hud-colors/
         SetNotificationBackgroundColor(color)
     end
     if textureName then
@@ -94,7 +94,8 @@ AVA.ShowConfirmationMessage = function(title, firstLine, secondLine, background,
         displayConfirmationMessage = true
         while displayConfirmationMessage do
             Wait(0)
-            SetWarningMessageWithHeaderAndSubstringFlags("AVA_SCM_TITLE", "AVA_SCM_FIRST_LINE", instructionalKey or 36, "AVA_SCM_SECOND_LINE", false, 0, 0,
+            SetWarningMessageWithHeaderAndSubstringFlags("AVA_SCM_TITLE", "AVA_SCM_FIRST_LINE", instructionalKey or 36,
+                "AVA_SCM_SECOND_LINE", false, 0, 0,
                 background)
 
             DisableAllControlActions(2)
@@ -143,7 +144,8 @@ AVA.ShowFreemodeMessage = function(title, subtitle, onTop, duration)
         Wait(0)
     end
 
-    BeginScaleformMovieMethod(scaleform, onTop and "SHOW_SHARD_CENTERED_TOP_MP_MESSAGE" or "SHOW_SHARD_CENTERED_MP_MESSAGE")
+    BeginScaleformMovieMethod(scaleform,
+        onTop and "SHOW_SHARD_CENTERED_TOP_MP_MESSAGE" or "SHOW_SHARD_CENTERED_MP_MESSAGE")
     PushScaleformMovieMethodParameterString(title)
     PushScaleformMovieMethodParameterString(subtitle)
     -- PushScaleformMovieMethodParameterInt(1)
@@ -600,7 +602,8 @@ AVA.SetVehicleModsData = function(vehicle, data)
     end
     if data.colorSecondary then
         if type(data.colorSecondary) == "table" then
-            SetVehicleCustomSecondaryColour(vehicle, data.colorSecondary[1], data.colorSecondary[2], data.colorSecondary[3])
+            SetVehicleCustomSecondaryColour(vehicle, data.colorSecondary[1], data.colorSecondary[2],
+                data.colorSecondary[3])
         else
             SetVehicleColours(vehicle, data.colorPrimary or colorPrimary, data.colorSecondary)
         end
@@ -894,7 +897,8 @@ AVA.GetVehicleInFront = function(distance)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local offsetCoords = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, yOffset + 0.0, 0.0)
-    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z, offsetCoords.x, offsetCoords.y, offsetCoords.z,
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(playerCoords.x, playerCoords.y, playerCoords.z,
+        offsetCoords.x, offsetCoords.y, offsetCoords.z,
         10, playerPed, 0)
     local _, _, _, _, vehicle = GetShapeTestResult(rayHandle)
 
@@ -1019,7 +1023,7 @@ AVA.Utils.DrawBubbleText3D = function(x, y, z, text, backgroundColor, bubbleStyl
         EndTextCommandDisplayHelp(2, false, false, -1)
         SetFloatingHelpTextWorldPosition(1, x, y, z)
 
-        local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+        local backgroundColor = backgroundColor or 15 -- see https://docs.fivem.net/docs/game-references/hud-colors/
         local bubbleStyle = bubbleStyle or 3
         -- -1 centered, no triangles
         -- 0 left, no triangles
@@ -1047,7 +1051,8 @@ AVA.Utils.CancelableGoStraightToCoord = function(ped, coords, speed, timeout, ta
     -- 0x7D8F4411 is TaskGoStraightToCoord
     while GetScriptTaskStatus(ped, 0x7D8F4411) ~= 7 do
         if checkControls then
-            if IsControlJustPressed(0, 32) or IsControlJustPressed(0, 33) or IsControlJustPressed(0, 34) or IsControlJustPressed(0, 35) then
+            if IsControlJustPressed(0, 32) or IsControlJustPressed(0, 33) or IsControlJustPressed(0, 34) or
+                IsControlJustPressed(0, 35) then
                 ClearPedTasks(ped)
                 return false
             end
@@ -1083,8 +1088,10 @@ local function SelectEntity(title, entitiesToSelect, cb)
                     end)
 
                     local targetCoords = GetEntityCoords(entity.entity)
-                    DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.15, targetCoords.x, targetCoords.y, targetCoords.z + 0.15, 255, 128, 0, 196)
-                    AVA.Utils.DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 0.3, entity.text3d or entity.label, 0.35, nil, nil, nil, 255)
+                    DrawLine(playerCoords.x, playerCoords.y, playerCoords.z + 0.15, targetCoords.x, targetCoords.y,
+                        targetCoords.z + 0.15, 255, 128, 0, 196)
+                    AVA.Utils.DrawText3D(targetCoords.x, targetCoords.y, targetCoords.z + 0.3,
+                        entity.text3d or entity.label, 0.35, nil, nil, nil, 255)
                 end
             end)
             if not menuVisible then
@@ -1139,7 +1146,8 @@ AVA.Utils.ChooseClosestPlayer = function(title, distance, allowMyself)
                     localId = player,
                     serverId = GetPlayerServerId(player),
                     label = player ~= playerId and GetString("person_number", entityCount) or GetString("me"),
-                    text3d = player ~= playerId and GetString("text3d_person_number", entityCount) or GetString("text3d_me"),
+                    text3d = player ~= playerId and GetString("text3d_person_number", entityCount) or
+                        GetString("text3d_me"),
                 }
             end
         end
@@ -1187,7 +1195,8 @@ AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
         local veh = GetObjectIndexFromEntityIndex(v)
         local vehCoords = GetEntityCoords(veh)
         local vehModel = GetEntityModel(veh)
-        if #(playerCoords - vehCoords) < distance + 0.0 and (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
+        if #(playerCoords - vehCoords) < distance + 0.0 and
+            (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
             and (blacklist == nil or #blacklist == 0 or not AVA.Utils.TableHasValue(blacklist, vehModel)) then
             entityCount = entityCount + 1
             entitiesToSelect[entityCount] = { label = GetString("vehicle_number", entityCount), entity = veh }

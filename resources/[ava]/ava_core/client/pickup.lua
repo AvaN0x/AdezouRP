@@ -56,9 +56,7 @@ AddStateBagChangeHandler('pickup', nil, function(bagName, key, value, _unused, r
     if GetEntityType(object) ~= 3 then return end
 
     local objectCoords = GetEntityCoords(object)
-    local distance = #(AVA.Player.playerCoords - objectCoords)
-
-    if distance < 15.0 then
+    if #(AVA.Player.playerCoords - objectCoords) < 15.0 then
         local entity = Entity(object)
         local _, max = GetModelDimensions(GetEntityModel(object))
 

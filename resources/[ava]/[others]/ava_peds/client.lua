@@ -24,7 +24,8 @@ Citizen.CreateThread(function()
 
         if v.variations then
             for _, variation in ipairs(v.variations) do
-                SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0, variation.paletteId or 0)
+                SetPedComponentVariation(ped, variation.componentId, variation.drawableId or 0, variation.textureId or 0
+                    , variation.paletteId or 0)
             end
         end
         if v.props then
@@ -46,7 +47,8 @@ Citizen.CreateThread(function()
         end
 
         if v.name or v.bubble then
-            table.insert(pedNames, { pos = v.pos, entity = ped, name = v.name, bubble = v.bubble, offsetZ = v.offsetZ or 0.2 })
+            table.insert(pedNames,
+                { pos = v.pos, entity = ped, name = v.name, bubble = v.bubble, offsetZ = v.offsetZ or 0.2 })
         end
 
         table.insert(peds, ped)
@@ -138,7 +140,7 @@ function DrawBubbleText3D(x, y, z, text, backgroundColor, bubbleStyle)
         EndTextCommandDisplayHelp(2, false, false, -1)
         SetFloatingHelpTextWorldPosition(1, x, y, z)
 
-        local backgroundColor = backgroundColor or 15 -- see https://pastebin.com/d9aHPbXN
+        local backgroundColor = backgroundColor or 15 -- see https://docs.fivem.net/docs/game-references/hud-colors/
         local bubbleStyle = bubbleStyle or 3
         -- -1 centered, no triangles
         -- 0 left, no triangles
