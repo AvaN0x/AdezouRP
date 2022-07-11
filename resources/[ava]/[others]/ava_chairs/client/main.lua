@@ -2,125 +2,135 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-local chair = nil
-local isSitting = false
+local isSettled = false
 local IsDead = false
-local oldCoords = nil
+local lastCoords = nil
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(1000)
-        chair = getChair()
+AddEventHandler("ava_core:client:playerDeath", function()
+    if isSettled then
+        StandUp()
     end
+    IsDead = true
+end)
+AddEventHandler("ava_deaths:client:playerRevived", function(spawn)
+    IsDead = false
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(0)
-        if not IsDead then
-            if chair and not isSitting then
-                DrawText3D(chair.x, chair.y, chair.z, GetString("sit_down"))
-
-                if IsControlJustPressed(0, Config.Key) then
-                    -- Animation(Config.Anims[chair.type])
-                    TriggerServerEvent("ava_chairs:sitDown", chair)
+local function LoadInteracts()
+    for model, data in pairs(AVAConfig.Props) do
+        if data.offset then
+            exports.ava_interact:addModel(model, {
+                label = GetString("sit_down"),
+                offset = data.offset.xyz,
+                event = "ava_chairs:client:sitDown",
+                control = "F",
+                canInteract = function(entity)
+                    return not Entity(entity).state["occupied"]
+                    --  and not isSettled
                 end
-            elseif chair and isSitting then
-                DrawText3D(chair.x, chair.y, chair.z, GetString("stand_up"))
-
-                if IsControlJustPressed(0, Config.Key) then
-                    StandUp()
-                end
+            })
+        elseif data.offsets then
+            for i = 1, #data.offsets do
+                exports.ava_interact:addModel(model, {
+                    label = GetString("sit_down"),
+                    offset = data.offsets[i].xyz,
+                    metadata = i,
+                    event = "ava_chairs:client:sitDown",
+                    control = "F",
+                    canInteract = function(entity)
+                        return not Entity(entity).state["occupied_" .. i]
+                        --  and not isSettled
+                    end
+                })
             end
         end
     end
-end)
-
-function getChair()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    for _, v in ipairs(Config.Props) do
-        local closestProp = GetClosestObjectOfType(coords, 0.7, v.hash, false, false, false)
-
-        if DoesEntityExist(closestProp) then
-            local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, v.offX, v.offY, v.offZ)
-
-            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9,
-                heading = GetEntityHeading(closestProp) + v.offHeading, type = v.type }
-        end
-    end
-    return nil
 end
 
-function DrawText3D(x, y, z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-
-    if onScreen then
-        SetTextScale(0.35, 0.35)
-        SetTextFont(4)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 215)
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        SetTextOutline()
-
-        AddTextComponentSubstringPlayerName(text)
-        EndTextCommandDisplayText(_x, _y)
+Citizen.CreateThread(function()
+    LoadInteracts()
+end)
+AddEventHandler("onResourceStart", function(resource)
+    if resource == "ava_interact" then
+        LoadInteracts()
     end
-end
-
-RegisterNetEvent("ava_chairs:sitDown", function()
-    Animation()
 end)
 
-function Animation()
-    isSitting = true
+local function StandUp()
+    TriggerServerEvent("ava_chairs:standUp", chair)
     local playerPed = PlayerPedId()
-    oldCoords = GetEntityCoords(playerPed)
 
-    local anim = Config.Anims[chair.type][IsPedMale(playerPed) and "Male" or "Female"]
+    ClearPedTasksImmediately(playerPed)
+    FreezeEntityPosition(playerPed, false)
+    if lastCoords then
+        SetEntityCoords(playerPed, lastCoords.x, lastCoords.y, lastCoords.z - 0.98)
+    end
+    lastCoords = nil
+    isSettled = false
+end
+
+local function SettleDown(playerPed, coords, anim)
+    if isSettled then return end
+
+    isSettled = true
     if anim.dict ~= nil then
-        SetEntityCoords(playerPed, chair.x, chair.y, chair.z)
-        SetEntityHeading(playerPed, chair.heading)
+        SetEntityCoords(playerPed, coords.x, coords.y, coords.z)
+        SetEntityHeading(playerPed, coords.w or 0.0)
 
-        RequestAnimDict(anim.dict)
-        while not HasAnimDictLoaded(anim.dict) do
-            Citizen.Wait(0)
-        end
+        exports.ava_core:RequestAnimDict(anim.dict)
         TaskPlayAnim(playerPed, anim.dict, anim.anim, 8.0, 1.0, -1, 1, 0, 0, 0, 0)
         RemoveAnimDict(anim.dict)
 
         FreezeEntityPosition(playerPed, true)
     else
-        TaskStartScenarioAtPosition(playerPed, anim.scenario, chair.x, chair.y, chair.z, chair.heading, 0, true, true)
+        TaskStartScenarioAtPosition(playerPed, anim.scenario, coords.x, coords.y, coords.z, coords.w, 0, true, true)
     end
+
+    Citizen.CreateThread(function()
+        while isSettled do
+            Wait(0)
+            BeginTextCommandDisplayHelp("STRING")
+            AddTextComponentSubstringPlayerName(GetString("stand_up"))
+            EndTextCommandDisplayHelp(0, false, true, -1)
+
+            DisableControlAction(0, 23, true) -- INPUT_ENTER
+            if IsDisabledControlJustPressed(0, 23) then -- INPUT_ENTER
+                StandUp()
+            end
+        end
+    end)
 end
 
-function StandUp()
-    TriggerServerEvent("ava_chairs:standUp", chair)
-    isSitting = false
-    local playerPed = PlayerPedId()
+AddEventHandler("ava_chairs:client:sitDown", function(entity, data, model)
+    -- TODO server check en set statebag
+    if not IsDead and not isSettled then
+        if AVAConfig.Props[model] then
+            local propData <const> = AVAConfig.Props[model]
+            local offset = propData.offset
+            if not offset then
+                offset = propData.offsets[data.metadata]
+                if not offset then return end
+            end
 
-    ClearPedTasksImmediately(playerPed)
-    FreezeEntityPosition(playerPed, false)
-    SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z - 0.98)
-end
+            local offsetCoords = GetOffsetFromEntityInWorldCoords(entity, offset.x, offset.y,
+                offset.z)
+            local coords = vector4(offsetCoords.x, offsetCoords.y, offsetCoords.z,
+                GetEntityHeading(entity) + (offset.w or 0.0))
 
-AddEventHandler("ava_core:client:playerDeath", function()
-    if isSitting then
-        StandUp()
+            local playerPed = PlayerPedId()
+            lastCoords = GetEntityCoords(playerPed)
+            if propData.isChair then
+                SettleDown(playerPed, coords, AVAConfig.SitAnims[IsPedMale(playerPed) and "Male" or "Female"])
+            elseif propData.isBed then
+                SettleDown(playerPed, coords, AVAConfig.LayAnims[IsPedMale(playerPed) and "Male" or "Female"])
+            end
+        end
     end
-    IsDead = true
 end)
 
-AddEventHandler("ava_deaths:client:playerRevived", function(spawn)
-    IsDead = false
-end)
 
 AddEventHandler("onResourceStop", function(resource)
-    if resource == GetCurrentResourceName() then
-        if isSitting then
-            StandUp()
-        end
+    if resource == GetCurrentResourceName() and isSettled then
+        StandUp()
     end
 end)

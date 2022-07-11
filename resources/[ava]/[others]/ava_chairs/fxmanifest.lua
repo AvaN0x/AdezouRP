@@ -17,4 +17,4 @@ client_scripts { "config.lua", "client/main.lua" }
 
 server_scripts { "config.lua", "server/main.lua" }
 
-dependencies { "ava_core" }
+dependencies { "ava_core", "ava_interact" }

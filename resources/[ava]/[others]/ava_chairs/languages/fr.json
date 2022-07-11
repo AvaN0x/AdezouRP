@@ -1,4 +1,4 @@
 {
-    "sit_down": "[F] Pour s'installer",
-    "stand_up": "[F] Pour se lever"
+    "sit_down": "Pour s'installer",
+    "stand_up": "~INPUT_ENTER~ Pour se lever"
 }
