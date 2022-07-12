@@ -25,8 +25,7 @@ local function LoadInteracts()
                 event = "ava_chairs:client:sitDown",
                 control = "F",
                 canInteract = function(entity)
-                    return not Entity(entity).state["occupied"]
-                    --  and not isSettled
+                    return not isSettled
                 end
             })
         elseif data.offsets then
@@ -38,8 +37,7 @@ local function LoadInteracts()
                     event = "ava_chairs:client:sitDown",
                     control = "F",
                     canInteract = function(entity)
-                        return not Entity(entity).state["occupied_" .. i]
-                        --  and not isSettled
+                        return not isSettled
                     end
                 })
             end
@@ -57,7 +55,7 @@ AddEventHandler("onResourceStart", function(resource)
 end)
 
 local function StandUp()
-    TriggerServerEvent("ava_chairs:standUp", chair)
+    TriggerServerEvent("ava_chairs:server:standUp")
     local playerPed = PlayerPedId()
 
     ClearPedTasksImmediately(playerPed)
@@ -102,7 +100,6 @@ local function SettleDown(playerPed, coords, anim)
 end
 
 AddEventHandler("ava_chairs:client:sitDown", function(entity, data, model)
-    -- TODO server check en set statebag
     if not IsDead and not isSettled then
         if AVAConfig.Props[model] then
             local propData <const> = AVAConfig.Props[model]
@@ -116,6 +113,13 @@ AddEventHandler("ava_chairs:client:sitDown", function(entity, data, model)
                 offset.z)
             local coords = vector4(offsetCoords.x, offsetCoords.y, offsetCoords.z,
                 GetEntityHeading(entity) + (offset.w or 0.0))
+
+            if not
+                exports.ava_core:TriggerServerCallback("ava_chairs:server:settle", coords.x, coords.y, coords.z,
+                    data.metadata) then
+                return
+            end
+
 
             local playerPed = PlayerPedId()
             lastCoords = GetEntityCoords(playerPed)

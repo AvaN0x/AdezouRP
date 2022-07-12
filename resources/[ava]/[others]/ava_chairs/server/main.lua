@@ -2,32 +2,31 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
--- local UsedProps = {}
--- local PlayerUsing = {}
+local UsedSpots = {}
+local PlayerUsing = {}
 
--- AddEventHandler("playerDropped", function()
---     local _source = source
---     if PlayerUsing[_source] ~= nil then
---         UsedProps[PlayerUsing[_source]] = nil
---         PlayerUsing[_source] = nil
---     end
--- end)
+local function standPlayerUp(src)
+    if PlayerUsing[src] ~= nil then
+        UsedSpots[PlayerUsing[src]] = nil
+        PlayerUsing[src] = nil
+    end
+end
 
--- RegisterNetEvent("ava_chairs:sitDown", function(chair)
---     local _source = source
---     local coord = vector3(chair.x, chair.y, chair.z)
+exports.ava_core:RegisterServerCallback("ava_chairs:server:settle", function(source, x, y, z, index)
+    local src = source
+    local coord = vector3(x, y, z)
 
---     if UsedProps[coord] == nil then
---         PlayerUsing[_source] = coord
---         UsedProps[coord] = true
---         TriggerClientEvent("ava_chairs:sitDown", _source)
---     end
--- end)
+    if UsedSpots[coord] == nil then
+        PlayerUsing[src] = coord
+        UsedSpots[coord] = true
+        return true
+    end
+    return false
+end)
 
--- RegisterNetEvent("ava_chairs:standUp", function(chair)
---     local _source = source
---     local coord = vector3(chair.x, chair.y, chair.z)
-
---     PlayerUsing[_source] = nil
---     UsedProps[coord] = nil
--- end)
+RegisterNetEvent("ava_chairs:server:standUp", function(chair)
+    standPlayerUp(source)
+end)
+AddEventHandler("playerDropped", function()
+    standPlayerUp(source)
+end)
