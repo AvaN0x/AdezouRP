@@ -76,13 +76,14 @@ Citizen.CreateThread(function()
                             checkCanInteract(interactions[count])
                         end
 
-                        -- Wait a frame if needed to lighten the CPU usage
-                        checkCount += 1
-                        if checkCount % 500 == 0 then
-                            Wait(0)
-                        end
                     end
                 end
+            end
+
+            -- Wait a frame if needed to lighten the CPU usage
+            checkCount += 1
+            if checkCount % 500 == 0 then
+                Wait(0)
             end
         end
 
@@ -303,7 +304,6 @@ AddEventHandler("onResourceStop", function(resource)
                 end
             end
             if #Models[model] == 0 then
-                print("[AVA] Removed model " .. model)
                 Models[model] = nil
             end
         end
@@ -318,6 +318,9 @@ AddEventHandler("onResourceStop", function(resource)
             local interaction = Interactions[i]
             if interaction and interaction.data.resource == resource then
                 table.remove(Interactions, i)
+                if i == closestIndex then
+                    closestIndex = nil
+                end
             end
         end
     end
