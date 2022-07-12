@@ -6,15 +6,23 @@ Emotes / Animations for FiveM with human, animal and prop support 🐩
 
 * Brazilian Portuguese 🇧🇷
 
+* Czech 🇨🇿
+
+* Danish 🇩🇰
+
 * Dutch 🇳🇱
 
-* English 🇺🇲
+* English 🇬🇧
+
+* Finnish 🇫🇮
 
 * French 🇫🇷
 
 * German 🇩🇪
 
 * Italian 🇮🇹
+
+* Polish 🇵🇱
 
 * Spanish 🇪🇸
 
@@ -26,7 +34,7 @@ If you happen to find any incorrect translations or would like to add more langu
 
 Languages can be selected and/or added in config.lua.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Ragdoll 🥴
 
@@ -36,17 +44,29 @@ Languages can be selected and/or added in config.lua.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Menu Keybind
+# Menu Keybind 🎛️
 
-* Menu key has been changed to F5 as for some reason, F3 and F4 clash with [Menyoo](https://github.com/MAFINS/MenyooSP) and controllers 🎮
+**Important Note:**
 
-You can change this in the `config.lua`;
+The keybind uses RegisterKeyMapping. By default, the server owner configured keybind in the *initial* config.lua will be the default key, however once the keybind is set for a user, it'll stay with this new value. Editing the config keybind will change it for new players only.
+
+* Menu key:* F5
+
+F3 and F4 clash with [Menyoo](https://github.com/MAFINS/MenyooSP) and controllers 🎮
+
+Server owners can change this in the `config.lua`;
 
 ```lua
 MenuKeybind = 'F5', -- Get the button string here https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
 ```
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Alternatively, the player base can set their own menu keybind to open DpEmotes
+
+```lua
+Esc > settings > keybinds > fivem > dpemotes
+```
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Keybinds and SQL 🎛️
 
@@ -55,10 +75,28 @@ The original dpemotes uses mysql-async which was then changed to ghmattimysql. U
 To use the SQL features, install the [oxmysql](https://github.com/overextended/oxmysql) resource. If you do not want to use the SQL features, comment out the `oxmysql` region in fxmanifest.lua.
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Screenshots 📸
 
 
-# Installation Instructions:
+
+| | | |
+|-|-|-|
+| <img src="screenshots/menu.jpg" width="250"> | <img src="screenshots/umbrella.jpg" width="250"> | <img src="screenshots/flag1.jpg" width="250"> |
+| <img src="screenshots/flag2.jpg" width="250"> | <img src="screenshots/flag3.jpg" width="250"> | <img src="screenshots/flag4.jpg" width="250"> |
+| <img src="screenshots/flag5.jpg" width="250"> | <img src="screenshots/flag6.jpg" width="250"> | <img src="screenshots/flag7.jpg" width="250"> |
+| <img src="screenshots/flag8.jpg" width="250"> | <img src="screenshots/flag9.jpg" width="250"> | <img src="screenshots/carry1.jpg" width="250">|
+| <img src="screenshots/carry2.jpg" width="250"> | <img src="screenshots/carrybig.jpg" width="250"> | <img src="screenshots/carrysmall.jpg" width="250"> |
+| <img src="screenshots/hostage.jpg" width="250">| <img src="screenshots/pigback.jpg" width="250">| <img src="screenshots/cb_before.jpg" width="250"> | 
+| <img src="screenshots/cp_after.jpg" width="250"> 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Installation Instructions ⚙️:
 
 * add DpEmotes to your `server.cfg`
 
@@ -67,16 +105,43 @@ To use the SQL features, install the [oxmysql](https://github.com/overextended/o
 * start dpemotes
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Shared emotes 👩🏻‍❤️‍💋‍👨🏼
+
+Emotes will work with either `SyncOffset` or `Attachto`.
+
+- If it is with `SyncOffsetFront` or `SyncOffsetSide`, then the offset used is the one of the emote the player started.<br/>
+For example, if player one starts the emote `handshake` which has `SyncOffsetFront`, then player one will have the `SyncOffsetFront` but not the other player.
+
+
+- If it is with `Attachto`, then it'll either be player one's data used for attaching, or the player two's data.<br/>
+For example, if player one start the emote carry, then the other player will be attached but not the player one because Attachto is set in `carry2` and not `carry`.<br/>
+- If player one starts the emote `carry2`, then player one will be attached and not the other player.
+it's the player who start the animation who will in most cases be moved
+
+
+*Special case, if both emote have the `Attachto` then only the player who started the emote will be attached.*
+
+You can find a list of ped bones to attach the other player here: [Ped Bones](https://wiki.rage.mp/index.php?title=Bones)
+
+Using the website provided above, enter the bone ID, ie `1356` and not 111, which is the Bone Index.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Add-Ons 🛠️
+
+* Fixed an issue with the clipboard and adds textures to paper (/e clipboard)
+
+* Changes umbrella texture to black (/e umbrella)
 
 # Optional Add-Ons 🛠️
 
-* Fixes an issue with the clipboard and adds textures to paper (/e clipboard)
-
 * Adds textures to the mugshot prop (/e mugshot)
-
-* Changes umbrella texture to black (/e umbrella)
 
 * Retextured protest sign (can be changed using Texture Toolkit: https://www.gta5-mods.com/tools/texture-toolkit)
 
@@ -85,9 +150,14 @@ To use the SQL features, install the [oxmysql](https://github.com/overextended/o
 [Add-Ons For DpEmotes](https://github.com/TayMcKenzieNZ/addonsfordpemotes)
 
 
-# Additional Instructions 
+--------------------------------------------------------
 
-[Please check the fivem forum thread](https://forum.fivem.net/t/dpemotes-356ish-emotes-usable-while-walking-props-and-more/843105)
+
+# Additional Instructions ⚙️
+
+- [Please check the fivem forum thread](https://forum.fivem.net/t/dpemotes-356ish-emotes-usable-while-walking-props-and-more/843105)
+
+- [Read my Menyoo To DpEmotes Tutorial](https://forum.cfx.re/t/how-to-menyoo-to-dpemotes-conversion-streaming-custom-add-on-props/4775018)
 
 
 
@@ -102,7 +172,7 @@ To use the SQL features, install the [oxmysql](https://github.com/overextended/o
 
 ----------------------
 
-# FAQs
+# FAQs 🗨️
 
 **Q: Why do some emotes not work with females?**
 
@@ -140,6 +210,8 @@ You may sell ***custom made*** animations, however the menu must remain free.
 
 **A:** Usually the person who created them will provide code snippets for adding animations to dpemotes. If for whatever reason they haven't, you should contact them.
 
+We have however added code to hopefully make it a lot easier to add shared emotes.
+
 ----------------------
 
 **Q: How do I reset the SQL keybinds?**
@@ -147,5 +219,30 @@ You may sell ***custom made*** animations, however the menu must remain free.
 **A:** No idea, but apparently only the server owner can 🤷🏻‍♂️ Google exist; Maybe contact the creator.
 
 ----------------------
+
+**Q: How do Shared Emotes work?**
+
+**A:** Please see the Shared Emotes section of this ReadMe for more information.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Credits 🤝
+
+This script is where it is today because of the amazing contributions made by the following people: 
+
+- Thank you to [Tigerle](https://forum.cfx.re/u/tigerle_studios) for providing the additional code required to make Shared Emotes work
+
+- Thank you to [SMGMissy](https://forum.cfx.re/u/smgmissy/) for assisting with custom pride flags and how to stream them
+
+- Thank you to [MissSnowie](https://www.gta5-mods.com/users/MissySnowie) for the custom poses and emotes
+
+- A huge thank you to [Kibook](https://github.com/kibook) for the addition of the Animal Emotes sub menu
+
+- Thank you to [AvaN0x](https://github.com/AvaN0x) for reformatting and assisting with code and additional features
+
+- Thank you to you, the community for being patient, showing love and appreciation, and for providing translations.
+
+You pay a big role in keeping this script alive and we could not do it without you 🙏
+
 
 

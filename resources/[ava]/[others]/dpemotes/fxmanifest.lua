@@ -6,10 +6,10 @@ fx_version 'adamant'
 
 game 'gta5'
 
--- Comment the following linnes if you don't want to use the SQL keybinds
+-- Comment the following lines if you don't want to use the SQL keybinds
 --#region oxmysql
-dependency 'oxmysql'
-server_script "@oxmysql/lib/MySQL.lua"
+-- dependency 'oxmysql'
+-- server_script "@oxmysql/lib/MySQL.lua"
 --#endregion oxmysql
 
 shared_scripts {
@@ -17,15 +17,21 @@ shared_scripts {
 }
 
 server_scripts {
+    'printer.lua',
     'server/*.lua'
 }
 
 client_scripts {
     'NativeUI.lua',
-    'client/*.lua'
+    'client/*.lua',
+    'client/frameworks/*.lua'
 }
 
 
 data_file "DLC_ITYP_REQUEST" "badge1.ytyp"
 
 data_file "DLC_ITYP_REQUEST" "copbadge.ytyp"
+
+data_file "DLC_ITYP_REQUEST" "prideprops_ytyp"
+
+data_file "DLC_ITYP_REQUEST" "lilflags_ytyp"

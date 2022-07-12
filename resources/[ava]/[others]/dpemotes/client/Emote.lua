@@ -49,15 +49,20 @@ end
 -----------------------------------------------------------------------------------------------------
 
 Citizen.CreateThread(function()
-    TriggerEvent('chat:addSuggestion', '/e', 'Play an emote', { { name = "emotename", help = "dance, camera, sit or any valid emote." } })
-    TriggerEvent('chat:addSuggestion', '/emote', 'Play an emote', { { name = "emotename", help = "dance, camera, sit or any valid emote." } })
+    TriggerEvent('chat:addSuggestion', '/e', 'Play an emote',
+        { { name = "emotename", help = "dance, camera, sit or any valid emote." } })
+    TriggerEvent('chat:addSuggestion', '/emote', 'Play an emote',
+        { { name = "emotename", help = "dance, camera, sit or any valid emote." } })
     if Config.SqlKeybinding then
-        TriggerEvent('chat:addSuggestion', '/emotebind', 'Bind an emote', { { name = "key", help = "num4, num5, num6, num7. num8, num9. Numpad 4-9!" }, { name = "emotename", help = "dance, camera, sit or any valid emote." } })
+        TriggerEvent('chat:addSuggestion', '/emotebind', 'Bind an emote',
+            { { name = "key", help = "num4, num5, num6, num7. num8, num9. Numpad 4-9!" },
+                { name = "emotename", help = "dance, camera, sit or any valid emote." } })
         TriggerEvent('chat:addSuggestion', '/emotebinds', 'Check your currently bound emotes.')
     end
     TriggerEvent('chat:addSuggestion', '/emotemenu', 'Open dpemotes menu (F5) by default.')
     TriggerEvent('chat:addSuggestion', '/emotes', 'List available emotes.')
-    TriggerEvent('chat:addSuggestion', '/walk', 'Set your walkingstyle.', { { name = "style", help = "/walks for a list of valid styles" } })
+    TriggerEvent('chat:addSuggestion', '/walk', 'Set your walkingstyle.',
+        { { name = "style", help = "/walks for a list of valid styles" } })
     TriggerEvent('chat:addSuggestion', '/walks', 'List available walking styles.')
 end)
 
@@ -74,9 +79,11 @@ RegisterCommand('walks', function(source, args, raw) WalksOnCommand() end)
 
 AddEventHandler('onResourceStop', function(resource)
     if resource == GetCurrentResourceName() then
+        local ply = PlayerPedId()
         DestroyAllProps()
-        ClearPedTasksImmediately(PlayerPedId())
-        ResetPedMovementClipset(PlayerPedId())
+        ClearPedTasksImmediately(ply)
+        DetachEntity(ply, true, false)
+        ResetPedMovementClipset(ply)
     end
 end)
 
@@ -85,12 +92,13 @@ end)
 -----------------------------------------------------------------------------------------------------
 
 function EmoteCancel()
+    local ply = PlayerPedId()
     if ChosenDict == "MaleScenario" and IsInAnimation then
-        ClearPedTasksImmediately(PlayerPedId())
+        ClearPedTasksImmediately(ply)
         IsInAnimation = false
         DebugPrint("Forced scenario exit")
     elseif ChosenDict == "Scenario" and IsInAnimation then
-        ClearPedTasksImmediately(PlayerPedId())
+        ClearPedTasksImmediately(ply)
         IsInAnimation = false
         DebugPrint("Forced scenario exit")
     end
@@ -100,7 +108,9 @@ function EmoteCancel()
 
     if IsInAnimation then
         PtfxStop()
-        ClearPedTasks(PlayerPedId())
+        ClearPedTasks(ply)
+        DetachEntity(ply, true, false)
+        CancelSharedEmote(ply)
         DestroyAllProps()
         IsInAnimation = false
     end
@@ -127,7 +137,8 @@ function PtfxStart()
         PtfxAt = prop
     end
     UseParticleFxAssetNextCall(PtfxAsset)
-    Ptfx = StartNetworkedParticleFxLoopedOnEntityBone(PtfxName, PtfxAt, Ptfx1, Ptfx2, Ptfx3, Ptfx4, Ptfx5, Ptfx6, GetEntityBoneIndexByName(PtfxName, "VFX"), 1065353216, 0, 0, 0, 1065353216, 1065353216, 1065353216, 0)
+    Ptfx = StartNetworkedParticleFxLoopedOnEntityBone(PtfxName, PtfxAt, Ptfx1, Ptfx2, Ptfx3, Ptfx4, Ptfx5, Ptfx6,
+        GetEntityBoneIndexByName(PtfxName, "VFX"), 1065353216, 0, 0, 0, 1065353216, 1065353216, 1065353216, 0)
     SetParticleFxLoopedColour(Ptfx, 1.0, 1.0, 1.0)
     table.insert(PlayerParticles, Ptfx)
 end
@@ -274,7 +285,8 @@ function AddPropToPlayer(prop1, bone, off1, off2, off3, rot1, rot2, rot3)
     end
 
     prop = CreateObject(GetHashKey(prop1), x, y, z + 0.2, true, true, true)
-    AttachEntityToEntity(prop, Player, GetPedBoneIndex(Player, bone), off1, off2, off3, rot1, rot2, rot3, true, true, false, true, 1, true)
+    AttachEntityToEntity(prop, Player, GetPedBoneIndex(Player, bone), off1, off2, off3, rot1, rot2, rot3, true, true,
+        false, true, 1, true)
     table.insert(PlayerProps, prop)
     PlayerHasProp = true
     SetModelAsNoLongerNeeded(prop1)
@@ -346,7 +358,8 @@ function OnEmotePlay(EmoteName)
         elseif ChosenDict == "ScenarioObject" then if InVehicle then return end
             BehindPlayer = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0 - 0.5, -0.5);
             ClearPedTasks(PlayerPedId())
-            TaskStartScenarioAtPosition(PlayerPedId(), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(PlayerPedId()), 0, 1, false)
+            TaskStartScenarioAtPosition(PlayerPedId(), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'],
+                BehindPlayer['z'], GetEntityHeading(PlayerPedId()), 0, 1, false)
             DebugPrint("Playing scenario = (" .. ChosenAnimation .. ")")
             IsInAnimation = true
             return
@@ -357,6 +370,11 @@ function OnEmotePlay(EmoteName)
             IsInAnimation = true
             return
         end
+    end
+
+    -- Small delay at the start
+    if EmoteName.AnimationOptions and EmoteName.AnimationOptions.StartDelay then
+        Wait(EmoteName.AnimationOptions.StartDelay)
     end
 
     if not LoadAnim(ChosenDict) then
@@ -416,7 +434,8 @@ function OnEmotePlay(EmoteName)
         end
     end
 
-    TaskPlayAnim(PlayerPedId(), ChosenDict, ChosenAnimation, 2.0, 2.0, AnimationDuration, MovementType, 0, false, false, false)
+    TaskPlayAnim(PlayerPedId(), ChosenDict, ChosenAnimation, 2.0, 2.0, AnimationDuration, MovementType, 0, false, false,
+        false)
     RemoveAnimDict(ChosenDict)
     IsInAnimation = true
     MostRecentDict = ChosenDict
@@ -430,7 +449,8 @@ function OnEmotePlay(EmoteName)
             if EmoteName.AnimationOptions.SecondProp then
                 SecondPropName = EmoteName.AnimationOptions.SecondProp
                 SecondPropBone = EmoteName.AnimationOptions.SecondPropBone
-                SecondPropPl1, SecondPropPl2, SecondPropPl3, SecondPropPl4, SecondPropPl5, SecondPropPl6 = table.unpack(EmoteName.AnimationOptions.SecondPropPlacement)
+                SecondPropPl1, SecondPropPl2, SecondPropPl3, SecondPropPl4, SecondPropPl5, SecondPropPl6 = table.unpack(EmoteName
+                    .AnimationOptions.SecondPropPlacement)
                 SecondPropEmote = true
             else
                 SecondPropEmote = false
@@ -438,7 +458,8 @@ function OnEmotePlay(EmoteName)
             Wait(AttachWait)
             AddPropToPlayer(PropName, PropBone, PropPl1, PropPl2, PropPl3, PropPl4, PropPl5, PropPl6)
             if SecondPropEmote then
-                AddPropToPlayer(SecondPropName, SecondPropBone, SecondPropPl1, SecondPropPl2, SecondPropPl3, SecondPropPl4, SecondPropPl5, SecondPropPl6)
+                AddPropToPlayer(SecondPropName, SecondPropBone, SecondPropPl1, SecondPropPl2, SecondPropPl3,
+                    SecondPropPl4, SecondPropPl5, SecondPropPl6)
             end
         end
     end
