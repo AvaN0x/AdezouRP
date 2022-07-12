@@ -2,86 +2,125 @@
 ------- EDITED BY GITHUB.COM/AVAN0X -------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-inMenu = false
-local showblips = true
-local atbank = false
+local ShowBlips = true
 
-local bank = nil
-local atm = nil
-
-local banks = {
-    { name = "Banque", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286 },
-    -- {name = "Pacific Standard", id = 108, colour = 18, x = 242.04, y = 224.45, z = 106.286},
-    { name = "Banque", id = 108, colour = 4, x = -1212.980, y = -330.841, z = 37.787 },
-    { name = "Banque", id = 108, colour = 4, x = -2962.582, y = 482.627, z = 15.703 },
-    { name = "Banque", id = 108, colour = 4, x = -112.202, y = 6469.295, z = 31.626 },
-    { name = "Banque", id = 108, colour = 4, x = 314.187, y = -278.621, z = 54.170 },
-    { name = "Banque", id = 108, colour = 4, x = -351.534, y = -49.529, z = 49.042 },
-    { name = "Banque", id = 108, colour = 4, x = 1175.06, y = 2706.64, z = 38.09 },
-    { name = "Banque", id = 108, colour = 4, x = 149.4551, y = -1038.95, z = 29.366 },
+local Banks = {
+    { name = "Banque", id = 108, color = 18, coords = vector3(243.26, 225.15, 106.39) },
+    -- { name = "Pacific Standard", id = 108, color = 18, coords = vector3(243.26, 225.15, 106.39) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(-1212.50, -331.19, 38.11) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(-2962.04, 483.04, 16.00) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(-111.79, 6469.36, 31.97) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(314.05, -279.62, 54.47) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(-351.02, -50.40, 49.36) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(1175.02, 2707.34, 38.39) },
+    { name = "Banque", id = 108, color = 4, coords = vector3(149.69, -1041.19, 29.69) },
 }
 
-local atmsProps = {
-    { hash = -1126237515, offX = 0.0, offY = -0.5, offZ = 0.8 },
-    { hash = 506770882, offX = 0.0, offY = -0.5, offZ = 0.8 },
-    { hash = -1364697528, offX = 0.0, offY = -0.5, offZ = 0.8 },
-    { hash = -870868698, offX = 0.0, offY = -0.5, offZ = 0.8 },
+local Models = {
+    [`prop_fleeca_atm`] = { offset = vector3(-0.13, -0.1, 1.0), playerOffset = vector3( 0.0, -0.5, 0.8) },
+    [`prop_atm_02`] = { offset = vector3(-0.13, -0.1, 1.0), playerOffset = vector3( 0.0, -0.5, 0.8) },
+    [`prop_atm_03`] = { offset = vector3(-0.13, -0.1, 1.0), playerOffset = vector3( 0.0, -0.5, 0.8) },
+    [`prop_atm_01`] = { offset = vector3(-0.05, -0.23, 1.0), playerOffset = vector3( 0.0, -0.5, 0.8) },
 }
+local inMenu = false
+local atATM = false
 
--- ===============================================
--- ==             Core Threading                ==
--- ===============================================
+local function LoadInteracts()
+    for _, bank in ipairs(Banks) do
+        if ShowBlips then
+            local blip = AddBlipForCoord(bank.coords.x, bank.coords.y, bank.coords.z)
+            SetBlipSprite(blip, bank.id)
+            SetBlipColour(blip, bank.color)
+            SetBlipScale(blip, 0.7)
+            SetBlipAsShortRange(blip, true)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentSubstringPlayerName(tostring(bank.name))
+            EndTextCommandSetBlipName(blip)
+        end
+
+        exports.ava_interact:addZone(bank.coords, {
+            label = "Accèder à mon compte",
+            event = "new_banking:client:openBank",
+            distance = 2,
+            drawDistance = 4,
+            canInteract = function() return not inMenu end
+        })
+    end
+
+    for model, atm in pairs(Models) do
+        exports.ava_interact:addModel(model, {
+            label = "Accèder à mon compte",
+            offset = atm.offset,
+            event = "new_banking:client:openATM",
+            canInteract = function() return not inMenu and not atATM end
+        })
+    end
+end
+
 Citizen.CreateThread(function()
-    while true do
-        Wait(500)
-        if not inMenu then
-            bank = nearBank()
-            atm = nearATM()
+    if ShowBlips then
+        for _, bank in ipairs(Banks) do
+            local blip = AddBlipForCoord(bank.coords.x, bank.coords.y, bank.coords.z)
+            SetBlipSprite(blip, bank.id)
+            SetBlipColour(blip, bank.colour)
+            SetBlipScale(blip, 0.7)
+            SetBlipAsShortRange(blip, true)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentSubstringPlayerName(tostring(bank.name))
+            EndTextCommandSetBlipName(blip)
+        end
+    end
+
+    LoadInteracts()
+end)
+
+AddEventHandler("onResourceStart", function(resource)
+    if resource == "ava_interact" then
+        LoadInteracts()
+    end
+end)
+
+AddEventHandler("new_banking:client:openBank", function()
+    OpenBank()
+end)
+
+AddEventHandler("new_banking:client:openATM", function(entity, data, model)
+    if not Models[model] then return end
+
+    atATM = true
+    local playerPed = PlayerPedId()
+    local offset = Models[model].playerOffset
+    local coords = GetOffsetFromEntityInWorldCoords(entity, offset.x, offset.y, offset.z)
+    local isAtCoord = exports.ava_core:CancelableGoStraightToCoord(playerPed, coords, 10.0, 10, GetEntityHeading(entity), 0.5)
+
+    if not isAtCoord then
+        atATM = false
+        return
+    end
+
+    ClearPedTasksImmediately(playerPed)
+    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@enter")
+    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@enter", "enter", 8.0, -8, 4000, 0, 0, 0, 0, 0)
+    RemoveAnimDict("amb@prop_human_atm@male@enter")
+    Wait(4000)
+
+    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@base")
+    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@base", "base", 8.0, 8, -1, 1, 0, 0, 0, 0)
+    RemoveAnimDict("amb@prop_human_atm@male@base")
+    Wait(1000)
+
+    OpenBank()
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        SetNuiFocus(false, false)
+        if atATM then
+            ClearPedTasksImmediately(PlayerPedId())
         end
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(0)
-        if bank and not inMenu then
-            DisplayHelpText("Appuie sur ~INPUT_PICKUP~ pour accèder à compte ~b~")
-
-            if IsControlJustPressed(1, 38) then
-                OpenBank()
-            end
-        elseif atm and not inMenu then
-            DisplayHelpText("Appuie sur ~INPUT_PICKUP~ pour accèder à compte ~b~")
-
-            if IsControlJustPressed(1, 38) then
-                atm = nearATM() -- update the nearest ATM to be sure to go at the closest one
-
-                local playerPed = PlayerPedId()
-                local isAtCoord = exports.ava_core:CancelableGoStraightToCoord(playerPed, vector3(atm.x, atm.y, atm.z),
-                    10.0, 10, atm.heading, 0.5)
-
-                if isAtCoord then
-                    ClearPedTasksImmediately(playerPed)
-                    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@enter")
-                    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@enter", "enter", 8.0, -8, 4000, 0, 0, 0, 0, 0)
-                    RemoveAnimDict("amb@prop_human_atm@male@enter")
-                    Citizen.Wait(4000)
-
-                    exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@base")
-                    TaskPlayAnim(playerPed, "amb@prop_human_atm@male@base", "base", 8.0, 8, -1, 1, 0, 0, 0, 0)
-                    RemoveAnimDict("amb@prop_human_atm@male@base")
-                    Citizen.Wait(1000)
-
-                    OpenBank()
-                end
-            end
-        end
-
-        if IsControlJustPressed(1, 322) and inMenu then
-            CloseBank()
-        end
-    end
-end)
 
 function OpenBank()
     inMenu = true
@@ -94,45 +133,19 @@ function CloseBank()
     SetNuiFocus(false, false)
     SendNUIMessage({ type = "closeAll" })
     Wait(500)
-    if atm then
+    if atATM then
         local playerPed = PlayerPedId()
         exports.ava_core:RequestAnimDict("amb@prop_human_atm@male@exit")
         TaskPlayAnim(playerPed, "amb@prop_human_atm@male@exit", "exit", 8.0, -8, 7000, 0, 0, 0, 0, 0)
         RemoveAnimDict("amb@prop_human_atm@male@exit")
 
-        Citizen.Wait(7000)
+        Wait(7000)
 
         ClearPedTasksImmediately(playerPed)
     end
     inMenu = false
+    atATM = false
 end
-
-AddEventHandler("onResourceStop", function(resource)
-    if resource == GetCurrentResourceName() then
-        SetNuiFocus(false, false)
-        if atm then
-            ClearPedTasksImmediately(PlayerPedId())
-        end
-    end
-end)
-
--- ===============================================
--- ==             Map Blips	                   ==
--- ===============================================
-Citizen.CreateThread(function()
-    if showblips then
-        for k, v in ipairs(banks) do
-            local blip = AddBlipForCoord(v.x, v.y, v.z)
-            SetBlipSprite(blip, v.id)
-            SetBlipColour(blip, v.colour)
-            SetBlipScale(blip, 0.7)
-            SetBlipAsShortRange(blip, true)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentSubstringPlayerName(tostring(v.name))
-            EndTextCommandSetBlipName(blip)
-        end
-    end
-end)
 
 -- ===============================================
 -- ==           Deposit Event                   ==
@@ -195,42 +208,3 @@ end)
 RegisterNUICallback("NUIFocusOff", function()
     CloseBank()
 end)
-
--- ===============================================
--- ==            Capture Bank Distance          ==
--- ===============================================
-function nearBank()
-    local player = PlayerPedId()
-    local playerloc = GetEntityCoords(player, 0)
-
-    for _, search in pairs(banks) do
-        local distance = GetDistanceBetweenCoords(search.x, search.y, search.z, playerloc["x"], playerloc["y"],
-            playerloc["z"], true)
-
-        if distance <= 3 then
-            return search
-        end
-    end
-    return nil
-end
-
-function nearATM()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    for _, v in ipairs(atmsProps) do
-        local closestATM = GetClosestObjectOfType(coords, 1.0, v.hash, false, false, false)
-
-        if DoesEntityExist(closestATM) then
-            local markerCoords = GetOffsetFromEntityInWorldCoords(closestATM, v.offX, v.offY, v.offZ)
-
-            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z, heading = GetEntityHeading(closestATM) }
-        end
-    end
-    return nil
-end
-
-function DisplayHelpText(str)
-    BeginTextCommandDisplayHelp("STRING")
-    AddTextComponentSubstringPlayerName(str)
-    EndTextCommandDisplayHelp(0, 0, 1, -1)
-end
