@@ -22,7 +22,7 @@ local ammoTypesToItem = {
     [GetHashKey("ammo_rpg")] = "ammo_rpg",
     [GetHashKey("ammo_minigun")] = "ammo_minigun",
     [GetHashKey("ammo_fireextinguisher")] = "ammo_fireextinguisher",
-    [GetHashKey("ammo_petrolcan")] = "ammo_petrolcan",
+    [GetHashKey("ammo_petrolcan")] = "ammo_petrolcan", -- TODO Figure a way to deal with this
     [GetHashKey("ammo_hominglauncher")] = "ammo_hominglauncher",
     [GetHashKey("ammo_rifle")] = "ammo_rifle",
     [GetHashKey("ammo_rifle_tracer")] = "ammo_rifle_tracer",
@@ -56,10 +56,10 @@ local ammoTypesToItem = {
     [GetHashKey("ammo_mg_armorpiercing")] = "ammo_mg_armorpiercing",
     [GetHashKey("ammo_mg_fmj")] = "ammo_mg_fmj",
     [GetHashKey("ammo_flaregun")] = "ammo_flaregun",
-    [GetHashKey("ammo_hazardcan")] = "ammo_hazardcan",
+    [GetHashKey("ammo_hazardcan")] = "ammo_hazardcan", -- TODO Figure a way to deal with this
     [GetHashKey("ammo_firework")] = "ammo_firework",
     [GetHashKey("ammo_railgun")] = "ammo_railgun",
-    [GetHashKey("ammo_fertilizercan")] = "ammo_fertilizercan",
+    [GetHashKey("ammo_fertilizercan")] = "ammo_fertilizercan", -- TODO Figure a way to deal with this
     [GetHashKey("ammo_emplauncher")] = "ammo_emplauncher",
 }
 
@@ -86,6 +86,7 @@ local function shotAmmo(ammoItemName)
         end)
     end
 end
+
 Citizen.CreateThread(function()
     while true do
         Wait(0)
@@ -102,7 +103,7 @@ end)
 
 RegisterNetEvent("ava_core:client:weaponCheckAmmos", function(weaponHash)
     if IsWeaponValid(weaponHash) then
-        local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weaponHash)
+        local ammoTypeHash <const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weaponHash)
         local ammoItemName = ammoTypesToItem[ammoTypeHash]
 
         if ammoItemName and ammoItemName ~= "infinite" then
@@ -142,7 +143,7 @@ RegisterNetEvent("ava_core:client:setLoadoutAmmos", function(weapons, ammos)
             if tryGetPedWeaponCount > 50 then
                 dprint("Failed to get ped weapon", weapons[i])
             else
-                local ammoTypeHash<const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
+                local ammoTypeHash <const> = GetPedAmmoTypeFromWeapon(AVA.Player.playerPed, weapons[i])
                 local ammoItemName = ammoTypesToItem[ammoTypeHash]
 
                 if ammoItemName and ammoItemName ~= "infinite" then

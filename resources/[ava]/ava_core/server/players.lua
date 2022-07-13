@@ -214,7 +214,7 @@ local function logPlayerCharacter(src, license, discord, group, playerName, disc
     -- dprint(json.encode(playerData, {indent = true}))
 
     -- if for any reason, we could not get player datas, then we drop the player
-    -- /!\ this should not happen, but it's better to prevent than cure
+    -- ! this should not happen, but it's better to prevent than cure
     if not playerData then
         DropPlayer(src, GetString("log_player_error"))
         print("^1[DISCORD ERROR] ^5" .. (discord or license or "") .. "^0 (^3" .. playerName

@@ -102,6 +102,3 @@ AddEventHandler("onResourceStop", function(resource)
         pickups = {}
     end
 end)
-
--- NetworkGetEntityFromNetworkId
--- NetworkGetNetworkIdFromEntity
