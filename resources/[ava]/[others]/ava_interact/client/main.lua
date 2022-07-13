@@ -139,14 +139,14 @@ Citizen.CreateThread(function()
         r = 115,
         g = 173,
         b = 93,
-        a = 155,
+        a = 185,
         size = 0.10,
     }
     local ClosestMarkerData <const> = {
         r = 255,
         g = 133,
         b = 85,
-        a = 155,
+        a = 185,
         size = 0.15,
     }
     while true do

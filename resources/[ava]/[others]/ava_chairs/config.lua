@@ -40,12 +40,37 @@ AVAConfig.Props = {
             vector4(-0.6, 0.0, 0.5, 180.0),
         }
     },
+    [`prop_bench_02`] = {
+        isChair = true,
+        offsets = {
+            vector4(0.82, 0.0, 0.5, 180.0),
+            vector4(0.0, 0.0, 0.5, 180.0),
+            vector4(-0.82, 0.0, 0.5, 180.0),
+        }
+    },
+    [`prop_bench_06`] = {
+        isChair = true,
+        offsets = {
+            vector4(0.82, 0.0, 0.5, 180.0),
+            vector4(0.0, 0.0, 0.5, 180.0),
+            vector4(-0.82, 0.0, 0.5, 180.0),
+        }
+    },
     [`prop_bench_09`] = {
         isChair = true,
         offsets = {
             vector4(0.82, 0.0, 0.32, 180.0),
             vector4(0.0, 0.0, 0.32, 180.0),
             vector4(-0.82, 0.0, 0.32, 180.0),
+        }
+    },
+    [`prop_picnictable_01`] = {
+        isChair = true,
+        offsets = {
+            vector4(0.5, 0.5, 0.5, 180.0),
+            vector4(0.5, -0.5, 0.5, 0.0),
+            vector4(-0.5, 0.5, 0.5, 180.0),
+            vector4(-0.5, -0.5, 0.5, 0.0),
         }
     },
     [`prop_busstop_02`] = {
