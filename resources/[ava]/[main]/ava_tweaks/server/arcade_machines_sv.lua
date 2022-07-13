@@ -205,16 +205,16 @@ local function spawnProp(hash, x, y, z, h)
 end
 
 Citizen.CreateThread(function()
-    spawnProp(GetHashKey("ch_prop_arcade_fortune_door_01a"), 2727.911, -371.9659, -48.3982, 90.0)
+    spawnProp(`ch_prop_arcade_fortune_door_01a`, 2727.911, -371.9659, -48.3982, 90.0)
 
     for index, coord in ipairs(Slots) do
         local prop = props[math.random(1, #props)]
         if coord.Coord then
-            spawnProp(GetHashKey(prop), coord.Coord.x, coord.Coord.y, coord.Coord.z, coord.Heading)
+            spawnProp(joaat(prop), coord.Coord.x, coord.Coord.y, coord.Coord.z, coord.Heading)
         else
             -- for _, coord2 in ipairs(coord) do
             local coord2 = coord[1]
-            spawnProp(GetHashKey(prop), coord2.Coord.x, coord2.Coord.y, coord2.Coord.z, coord2.Heading)
+            spawnProp(joaat(prop), coord2.Coord.x, coord2.Coord.y, coord2.Coord.z, coord2.Heading)
             -- end
         end
     end

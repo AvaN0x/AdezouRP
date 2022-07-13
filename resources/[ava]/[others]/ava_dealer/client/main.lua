@@ -100,7 +100,7 @@ function MissionStart()
         Wait(0)
         if #(playerCoords - tPos.xyz) < 30.0 then
             if not PedSpawned then
-                local hash = GetHashKey(Config.DealerPed)
+                local hash = joaat(Config.DealerPed)
                 while not HasModelLoaded(hash) do
                     RequestModel(hash)
                     Wait(0)

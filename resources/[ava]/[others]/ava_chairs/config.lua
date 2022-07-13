@@ -6,11 +6,6 @@ AVAConfig = {}
 
 AVAConfig.Key = 23 -- F (38 is E)
 
--- AVAConfig.Props = {
---     { hash = GetHashKey("v_med_bed1"), offX = 0.0, offY = 0.0, offZ = -0.8, offHeading = 180.0, type = "Bed" },
---     { hash = GetHashKey("v_med_bed2"), offX = 0.0, offY = 0.0, offZ = -0.8, offHeading = 0.0, type = "Bed" },
--- }
-
 AVAConfig.Props = {
     [`v_corp_offchair`] = {
         isChair = true,

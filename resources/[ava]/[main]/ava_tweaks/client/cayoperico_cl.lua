@@ -432,7 +432,7 @@ CreateThread(function()
             end
             -- We force load the cayo perico minimap
             SetRadarAsExteriorThisFrame()
-            SetRadarAsInteriorThisFrame(GetHashKey("h4_fake_islandx"), 4700.0, -5145.0, 0, 0)
+            SetRadarAsInteriorThisFrame(`h4_fake_islandx`, 4700.0, -5145.0, 0, 0)
             wait = 0
 
         elseif not isCayoMinimapLoaded and isCayoLoaded then

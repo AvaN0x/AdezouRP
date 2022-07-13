@@ -188,7 +188,7 @@ function OpenClothesMenu(elements, menuName, titleTexture, titleTextureDirectory
     validateChanges = false
     playerChangedGender = false
     if IsPedArmed(playerPed, 7) then -- 7 == 4 | 2 | 1
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
     end
     AddMenuCam()
     RageUI.Visible(MainClothesMenu, true)

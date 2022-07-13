@@ -80,7 +80,7 @@ Config.Jobs.unicorn = {
     FieldZones = {
         OrangesField = {
             Items = { { name = "orange", quantity = 8 } },
-            PropHash = GetHashKey("ex_mp_h_acc_fruitbowl_01"),
+            PropHash = `ex_mp_h_acc_fruitbowl_01`,
             Coord = vector3(373.23, 6511.44, 28.31),
             MinGroundHeight = 27,
             MaxGroundHeight = 29,

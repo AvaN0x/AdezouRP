@@ -9,7 +9,7 @@ Config.Jobs.exta = {
     FieldZones = {
         MdmaField = {
             Items = { { name = "extamdma", quantity = 10 } },
-            PropHash = GetHashKey("prop_drug_package_02"),
+            PropHash = `prop_drug_package_02`,
             Coord = vector3(-1063.23, -1113.14, 2.16),
             MinGroundHeight = 2,
             MaxGroundHeight = 2,
@@ -17,7 +17,7 @@ Config.Jobs.exta = {
         },
         AmphetField = {
             Items = { { name = "extaamphetamine", quantity = 10 } },
-            PropHash = GetHashKey("ex_office_swag_pills2"),
+            PropHash = `ex_office_swag_pills2`,
             Coord = vector3(177.98, 306.6, 105.37),
             MinGroundHeightght = 105,
             MaxGroundHeight = 106,

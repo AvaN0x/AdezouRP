@@ -47,7 +47,7 @@ Config.Jobs.tailor = {
     FieldZones = {
         WoolField = {
             Items = { { name = "wool", quantity = 8 } },
-            PropHash = GetHashKey("prop_mk_race_chevron_02"),
+            PropHash = `prop_mk_race_chevron_02`,
             Coord = vector3(1887.45, 4630.05, 37.12),
             MinGroundHeight = 36,
             MaxGroundHeight = 41,

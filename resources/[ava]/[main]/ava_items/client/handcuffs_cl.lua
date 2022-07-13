@@ -102,7 +102,7 @@ RegisterNetEvent('ava_items:handcuffs:handcuffs', function()
 
         SetEnableHandcuffs(playerPed, true)
         DisablePlayerFiring(playerPed, true)
-        SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true) -- unarm player
         SetPedCanPlayGestureAnims(playerPed, false)
         FreezeEntityPosition(playerPed, false)
         DisplayRadar(false) -- TODO use state bag saved value or something
@@ -276,7 +276,7 @@ end)
 
 RegisterNetEvent('ava_items:handcuffs:getarrested', function(playerheading, playercoords, playerlocation)
     local playerPed = PlayerPedId()
-    SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
+    SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true) -- unarm player
     local x, y, z = table.unpack(playercoords + playerlocation * 1.0)
     SetEntityCoords(playerPed, x, y, z)
     SetEntityHeading(playerPed, playerheading)

@@ -51,7 +51,7 @@ RegisterNetEvent("ava_items:client:useRepairkit", function(engineHealth)
         isWorking = false
         Wait(1000)
         ClearPedTasksImmediately(playerPed)
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
     end)
 end)
 
@@ -104,7 +104,7 @@ RegisterNetEvent("ava_items:client:useBodykit", function()
         isWorking = false
         Wait(1000)
         ClearPedTasksImmediately(playerPed)
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
     end)
 
 end)
@@ -143,7 +143,7 @@ RegisterNetEvent("ava_items:client:useRag", function()
 
         Wait(1000)
         ClearPedTasksImmediately(playerPed)
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
     end)
 
 end)
@@ -196,7 +196,7 @@ RegisterNetEvent("ava_items:client:useBlowtorch", function()
         isWorking = false
         Wait(1000)
         ClearPedTasksImmediately(playerPed)
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
     end)
 
 end)

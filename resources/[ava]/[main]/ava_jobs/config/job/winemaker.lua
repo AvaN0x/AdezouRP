@@ -48,7 +48,7 @@ Config.Jobs.winemaker = {
     FieldZones = {
         GrapeField = {
             Items = { { name = "grape", quantity = 8 } },
-            PropHash = GetHashKey("prop_mk_race_chevron_02"),
+            PropHash = `prop_mk_race_chevron_02`,
             Coord = vector3(-1809.662, 2210.119, 90.681),
             MinGroundHeight = 88,
             MaxGroundHeight = 100,

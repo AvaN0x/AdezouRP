@@ -9,7 +9,7 @@ Config.Jobs.weed = {
     FieldZones = {
         CannaField = {
             Items = { { name = "weed", quantity = 5 } },
-            PropHash = GetHashKey("bkr_prop_weed_lrg_01b"),
+            PropHash = `bkr_prop_weed_lrg_01b`,
             Coord = vector3(173.44, -1004.21, -99.98),
             MinGroundHeight = -100,
             MaxGroundHeight = 98,

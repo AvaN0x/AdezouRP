@@ -12,7 +12,7 @@ function OpenInsuranceMenu(insurance)
     CurrentInsurance = insurance
 
 
-    local vehicles<const> = exports.ava_core:TriggerServerCallback("ava_garages:server:getVehiclesAtInsurance") or {}
+    local vehicles <const> = exports.ava_core:TriggerServerCallback("ava_garages:server:getVehiclesAtInsurance") or {}
     table.sort(vehicles, function(a, b)
         return not a.job_name and b.job_name
     end)
@@ -25,7 +25,7 @@ function OpenInsuranceMenu(insurance)
     }
 
     for i = 1, #vehicles do
-        local vehicle<const> = vehicles[i]
+        local vehicle <const> = vehicles[i]
 
         local vehiclePrice = exports.ava_stores:GetVehiclePrice(vehicle.model)
         if vehiclePrice then
@@ -47,12 +47,13 @@ function OpenInsuranceMenu(insurance)
             end
 
             -- Add the vehicle to the menu
-            local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetHashKey(vehicle.model)))
+            local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(joaat(vehicle.model)))
             if vehicleLabel == "NULL" then vehicleLabel = vehicle.model end
 
             if vehicle.insurance_left > 0 then
                 -- Get vehicle price with min of AVAConfig.InsurancePriceMinimum and max of AVAConfig.InsurancePriceMaximum
-                local price = min(max(floor(vehiclePrice * AVAConfig.InsurancePriceMultiplier + 0.5), AVAConfig.InsurancePriceMinimum), AVAConfig.InsurancePriceMaximum)
+                local price = min(max(floor(vehiclePrice * AVAConfig.InsurancePriceMultiplier + 0.5),
+                    AVAConfig.InsurancePriceMinimum), AVAConfig.InsurancePriceMaximum)
 
                 table.insert(elements, {
                     label = vehicle.label,
@@ -81,7 +82,8 @@ function OpenInsuranceMenu(insurance)
             if element.separator then
                 Items:AddSeparator(element.label)
             else
-                Items:AddButton(element.label, element.desc, { RightLabel = element.rightLabel, IsDisabled = element.disabled }, function(onSelected)
+                Items:AddButton(element.label, element.desc,
+                    { RightLabel = element.rightLabel, IsDisabled = element.disabled }, function(onSelected)
                     if onSelected then
                         if exports.ava_core:TriggerServerCallback("ava_garages:server:payVehicleInsurance", element.id) then
                             exports.ava_core:ShowNotification(GetString("insurance_vehicle_back_to_last_garage"))

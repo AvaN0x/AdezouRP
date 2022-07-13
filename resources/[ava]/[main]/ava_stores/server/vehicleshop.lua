@@ -152,7 +152,7 @@ RegisterNetEvent("ava_stores:server:vehicleshop:purchasedVehicle", function(vehi
 
     local purchaseData<const> = playerPurchasingVehicle[tostring(src)]
 
-    if GetEntityModel(NetworkGetEntityFromNetworkId(vehicleNet)) ~= GetHashKey(purchaseData.vehicleModel) then
+    if GetEntityModel(NetworkGetEntityFromNetworkId(vehicleNet)) ~= joaat(purchaseData.vehicleModel) then
         playerPurchasingVehicle[tostring(src)] = nil
         print("^1[AVA_STORES]^0Vehicle purchase failed, model mismatch.")
         return

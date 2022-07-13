@@ -30,9 +30,11 @@ AVAConfig.Heists.vangelico = {
     Stages = {
         [0] = {
             Function = function(playerPed)
-                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
-                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
-                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico", { TriggerHeist = true, TriggerAlarm = true, Stage = 1 })
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= joaat("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and
+                        exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico",
+                            { TriggerHeist = true, TriggerAlarm = true, Stage = 1 })
                     else
                         LastActionTimer = GetGameTimer()
                         exports.ava_core:ShowNotification(GetString("not_enough_cops"))
@@ -276,9 +278,11 @@ AVAConfig.Heists.vangelico_paleto = {
     Stages = {
         [0] = {
             Function = function(playerPed)
-                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
-                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
-                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_paleto", { TriggerHeist = true, Stage = 1 })
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= joaat("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and
+                        exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_paleto",
+                            { TriggerHeist = true, Stage = 1 })
                     else
                         LastActionTimer = GetGameTimer()
                         exports.ava_core:ShowNotification(GetString("not_enough_cops"))
@@ -415,9 +419,11 @@ AVAConfig.Heists.vangelico_grapeseed = {
     Stages = {
         [0] = {
             Function = function(playerPed)
-                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= GetHashKey("weapon_stungun") then
-                    if (GetGameTimer() - LastActionTimer) > 300 and exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
-                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_grapeseed", { TriggerHeist = true, Stage = 1 })
+                if IsPedShooting(playerPed) and GetSelectedPedWeapon(playerPed) ~= joaat("weapon_stungun") then
+                    if (GetGameTimer() - LastActionTimer) > 300 and
+                        exports.ava_core:TriggerServerCallback("ava_heists:server:canStartHeist", "vangelico") then
+                        TriggerServerEvent("ava_heists:server:triggerAction", "vangelico_grapeseed",
+                            { TriggerHeist = true, Stage = 1 })
                     else
                         LastActionTimer = GetGameTimer()
                         exports.ava_core:ShowNotification(GetString("not_enough_cops"))

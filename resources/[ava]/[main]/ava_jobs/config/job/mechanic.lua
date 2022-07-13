@@ -74,7 +74,7 @@ Config.Jobs.mechanic = {
                 end,
                 Action = function(jobName)
                     local vehicle = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_vehicle"), 6, {}
-                        , { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                        , { `flatbed`, `slamtruck` })
                     if vehicle == 0 then return end
 
                     -- Vehicle is already towed
@@ -91,14 +91,14 @@ Config.Jobs.mechanic = {
                         exports.ava_core:ShowNotification(GetString("tow_vehicle_detached_with_success"))
                     else
                         local flatbed = exports.ava_core:ChooseClosestVehicle(GetString("tow_vehicle_choose_flatbed"), 10
-                            , { GetHashKey('flatbed'), GetHashKey('slamtruck') })
+                            , { `flatbed`, `slamtruck` })
                         if flatbed == 0 then return end
 
                         -- should never happen
                         if vehicle == flatbed then return end
 
                         -- flatbed can be a flatbed or slamtruck
-                        local isSlamTruck = GetEntityModel(flatbed) == GetHashKey('slamtruck')
+                        local isSlamTruck = GetEntityModel(flatbed) == `slamtruck`
                         local towOffset = GetOffsetFromEntityInWorldCoords(flatbed, 0.0, -2.2, 0.4)
                         local closestVehicleOnTopOfFlatbed = GetClosestVehicle(towOffset.x, towOffset.y,
                             towOffset.z + 1.0, 4.0, 0, 71)
@@ -253,7 +253,7 @@ Config.Jobs.mechanic = {
     FieldZones = {
         BumperField = {
             Items = { { name = "bumber_part_worn", quantity = 1 } },
-            PropHash = GetHashKey("prop_mk_race_chevron_02"),
+            PropHash = `prop_mk_race_chevron_02`,
             Coord = vector3(2364.53, 3074.66, 47.21),
             MinGroundHeight = 46,
             MaxGroundHeight = 49,

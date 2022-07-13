@@ -57,10 +57,10 @@ RegisterNetEvent("ava_stores:server:vehicleRental:spawnedVehicle", function(vehi
     end
     -- #endregion wait for entity to exist or abort
 
-    local rentingData<const> = playerRentingVehicle[tostring(src)]
+    local rentingData <const> = playerRentingVehicle[tostring(src)]
 
     -- Check if vehicle is still has the right model
-    if GetEntityModel(NetworkGetEntityFromNetworkId(vehicleNet)) ~= GetHashKey(rentingData.vehicleName) then
+    if GetEntityModel(NetworkGetEntityFromNetworkId(vehicleNet)) ~= joaat(rentingData.vehicleName) then
         playerRentingVehicle[tostring(src)] = nil
         print("^1[AVA_STORES]^0Vehicle renting failed, model mismatch.")
         return

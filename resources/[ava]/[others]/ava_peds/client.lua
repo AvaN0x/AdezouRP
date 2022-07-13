@@ -9,7 +9,7 @@ local pedNames = {}
 
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Peds) do
-        local hash = GetHashKey(v.PedName)
+        local hash = joaat(v.PedName)
         RequestModel(hash)
 
         while not HasModelLoaded(hash) do

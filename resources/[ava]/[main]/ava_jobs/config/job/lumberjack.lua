@@ -48,8 +48,8 @@ Config.Jobs.lumberjack = {
     FieldZones = {
         WoodField = {
             Items = { { name = "woodpile", quantity = 1 } },
-            -- PropHash = GetHashKey("prop_logpile_03"), -- TODO: TOO BIG
-            PropHash = GetHashKey("prop_mk_race_chevron_02"),
+            -- PropHash = `prop_logpile_03`, -- TODO: TOO BIG
+            PropHash = `prop_mk_race_chevron_02`,
             Coord = vector3(-513.54, 5242.46, 79.32),
             MinGroundHeight = 78,
             MaxGroundHeight = 80,

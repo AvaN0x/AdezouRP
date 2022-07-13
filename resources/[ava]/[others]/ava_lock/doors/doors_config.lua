@@ -17,12 +17,12 @@ ConfigDoors = {
             authorizedJobs = { "lspd", "state" },
             locked = false,
             doors = {
-                { objHash = GetHashKey("v_ilev_ph_door01"), objYaw = -90.0, objCoords = vector3(434.7, -980.6, 30.8) },
-                { objHash = GetHashKey("v_ilev_ph_door002"), objYaw = -90.0, objCoords = vector3(434.7, -983.2, 30.8) },
+                { objHash = `v_ilev_ph_door01`, objYaw = -90.0, objCoords = vector3(434.7, -980.6, 30.8) },
+                { objHash = `v_ilev_ph_door002`, objYaw = -90.0, objCoords = vector3(434.7, -983.2, 30.8) },
             },
         },
         { -- To locker room & roof
-            objHash = GetHashKey("v_ilev_ph_gendoor004"),
+            objHash = `v_ilev_ph_gendoor004`,
             objYaw = 90.0,
             objCoords = vector3(449.6, -986.4, 30.6),
             textCoords = vector3(450.10, -986.94, 30.80),
@@ -30,7 +30,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Rooftop
-            objHash = GetHashKey("v_ilev_gtdoor02"),
+            objHash = `v_ilev_gtdoor02`,
             objYaw = 90.0,
             objCoords = vector3(464.3, -984.6, 43.69),
             textCoords = vector3(464.36, -983.58, 43.83),
@@ -38,7 +38,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Captain Office
-            objHash = GetHashKey("v_ilev_ph_gendoor002"),
+            objHash = `v_ilev_ph_gendoor002`,
             objYaw = -180.0,
             objCoords = vector3(447.2, -980.6, 30.6),
             textCoords = vector3(447.79, -980.01, 30.75),
@@ -50,12 +50,12 @@ ConfigDoors = {
             authorizedJobs = { "lspd", "state" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("v_ilev_ph_gendoor005"), objYaw = 180.0, objCoords = vector3(443.9, -989.0, 30.6) },
-                { objHash = GetHashKey("v_ilev_ph_gendoor005"), objYaw = 0.0, objCoords = vector3(445.3, -988.7, 30.6) },
+                { objHash = `v_ilev_ph_gendoor005`, objYaw = 180.0, objCoords = vector3(443.9, -989.0, 30.6) },
+                { objHash = `v_ilev_ph_gendoor005`, objYaw = 0.0, objCoords = vector3(445.3, -988.7, 30.6) },
             },
         },
         { -- Armory
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 90.0,
             objCoords = vector3(452.67, -982.97, 30.6),
             textCoords = vector3(453.09, -982.13, 30.80),
@@ -63,7 +63,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Main Cells
-            objHash = GetHashKey("v_ilev_ph_cellgate"),
+            objHash = `v_ilev_ph_cellgate`,
             objYaw = 0.0,
             objCoords = vector3(463.8, -992.6, 24.9),
             textCoords = vector3(463.27, -992.66, 25.06),
@@ -71,7 +71,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Cell 1
-            objHash = GetHashKey("v_ilev_ph_cellgate"),
+            objHash = `v_ilev_ph_cellgate`,
             objYaw = -90.0,
             objCoords = vector3(462.3, -993.6, 24.9),
             textCoords = vector3(461.81, -993.11, 25.06),
@@ -79,7 +79,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Cell 2
-            objHash = GetHashKey("v_ilev_ph_cellgate"),
+            objHash = `v_ilev_ph_cellgate`,
             objYaw = 90.0,
             objCoords = vector3(462.3, -998.1, 24.9),
             textCoords = vector3(461.81, -998.96, 25.06),
@@ -87,7 +87,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Cell 3
-            objHash = GetHashKey("v_ilev_ph_cellgate"),
+            objHash = `v_ilev_ph_cellgate`,
             objYaw = 90.0,
             objCoords = vector3(462.704, -1001.92, 24.9149),
             textCoords = vector3(461.81, -1002.60, 25.06),
@@ -95,7 +95,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- To Back
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(463.4, -1003.5, 25.0),
             textCoords = vector3(464.68, -1003.54, 25.01),
@@ -107,13 +107,13 @@ ConfigDoors = {
             authorizedJobs = { "lspd", "state" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("v_ilev_ph_gendoor006"), objYaw = 90.0, objCoords = vector3(443.02980, -991.941, 30.83931) },
-                { objHash = GetHashKey("v_ilev_ph_gendoor006"), objYaw = 270.511, objCoords = vector3(443.02980, -994.54120, 30.83931) },
+                { objHash = `v_ilev_ph_gendoor006`, objYaw = 90.0, objCoords = vector3(443.02980, -991.941, 30.83931) },
+                { objHash = `v_ilev_ph_gendoor006`, objYaw = 270.511, objCoords = vector3(443.02980, -994.54120, 30.83931) },
             },
         },
 
         { -- Cellule Mapping
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(467.19220, -996.45940, 25.00599),
             textCoords = vector3(468.23, -996.51, 25.00599),
@@ -121,7 +121,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(471.47550, -996.45940, 25.00599),
             textCoords = vector3(472.52, -996.35, 25.00599),
@@ -129,7 +129,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(475.75430, -996.45940, 25.00599),
             textCoords = vector3(476.8, -996.33, 25.00599),
@@ -137,7 +137,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(480.03010, -996.45940, 25.00599),
             textCoords = vector3(481.08, -996.39, 25.00599),
@@ -145,7 +145,7 @@ ConfigDoors = {
             locked = true,
         },
         { -- Salle interview
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 360.0,
             objCoords = vector3(480.03010, -1003.53800, 25.00599),
             textCoords = vector3(481.08, -1003.48, 25.00599),
@@ -153,7 +153,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 180.0,
             objCoords = vector3(477.04970, -1003.55300, 25.01203),
             textCoords = vector3(476.02, -1003.55, 25.01203),
@@ -161,7 +161,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 0.0,
             objCoords = vector3(471.47470, -1003.53800, 25.01223),
             textCoords = vector3(472.53, -1003.62, 25.01223),
@@ -169,7 +169,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("v_ilev_gtdoor"),
+            objHash = `v_ilev_gtdoor`,
             objYaw = 180.0,
             objCoords = vector3(467.82, -1003.51, 25.01203),
             textCoords = vector3(467.43, -1003.61, 25.01203),
@@ -181,12 +181,12 @@ ConfigDoors = {
             authorizedJobs = { "lspd", "state" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("v_ilev_gtdoor"), objYaw = 180.0, objCoords = vector3(447.21840, -999.00230, 30.78942) },
-                { objHash = GetHashKey("v_ilev_gtdoor"), objYaw = 360.0, objCoords = vector3(444.62120, -999.00100, 30.78866) },
+                { objHash = `v_ilev_gtdoor`, objYaw = 180.0, objCoords = vector3(447.21840, -999.00230, 30.78942) },
+                { objHash = `v_ilev_gtdoor`, objYaw = 360.0, objCoords = vector3(444.62120, -999.00100, 30.78866) },
             },
         },
         { -- Parking
-            objHash = GetHashKey("prop_gate_airport_01"),
+            objHash = `prop_gate_airport_01`,
             objCoords = vector3(416.58, -1024.52, 29.11),
             textCoords = vector3(416.85, -1021.52, 29.56),
             authorizedJobs = { "lspd", "state" },
@@ -199,12 +199,12 @@ ConfigDoors = {
             authorizedJobs = { "lspd" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("v_ilev_rc_door2"), objYaw = 0.0, objCoords = vector3(467.3, -1014.4, 26.5) },
-                { objHash = GetHashKey("v_ilev_rc_door2"), objYaw = 180.0, objCoords = vector3(469.9, -1014.4, 26.5) },
+                { objHash = `v_ilev_rc_door2`, objYaw = 0.0, objCoords = vector3(467.3, -1014.4, 26.5) },
+                { objHash = `v_ilev_rc_door2`, objYaw = 180.0, objCoords = vector3(469.9, -1014.4, 26.5) },
             },
         },
         { -- Back Gate
-            objHash = GetHashKey("hei_prop_station_gate"),
+            objHash = `hei_prop_station_gate`,
             objYaw = 90.0,
             objCoords = vector3(488.8, -1017.2, 27.1),
             textCoords = vector3(488.89, -1022.81, 29.15),
@@ -213,7 +213,7 @@ ConfigDoors = {
             distance = 12,
         },
         { -- Saisi
-            objHash = GetHashKey("prop_fnclink_02gate7"),
+            objHash = `prop_fnclink_02gate7`,
             objYaw = 90.0,
             objCoords = vector3(475.42, -985.93, 24.10),
             textCoords = vector3(475.42, -985.93, 25.12),
@@ -231,7 +231,7 @@ ConfigDoors = {
 
         -- PACIFIC STANDARD
         {
-            objHash = GetHashKey("v_ilev_bk_vaultdoor"),
+            objHash = `v_ilev_bk_vaultdoor`,
             objYaw = 160.0,
             objOpenYaw = 30.0,
             objCoords = vector3(255.59, 224.03, 101.88),
@@ -246,7 +246,7 @@ ConfigDoors = {
 
         -- Entrance (Two big gates)
         {
-            objHash = GetHashKey("prop_gate_prison_01"),
+            objHash = `prop_gate_prison_01`,
             objCoords = vector3(1844.9, 2604.8, 44.6),
             textCoords = vector3(1844.9, 2608.5, 48.0),
             authorizedJobs = { "lspd" },
@@ -255,7 +255,7 @@ ConfigDoors = {
             size = 0.4,
         },
         {
-            objHash = GetHashKey("prop_gate_prison_01"),
+            objHash = `prop_gate_prison_01`,
             objCoords = vector3(1818.5, 2604.8, 44.6),
             textCoords = vector3(1818.5, 2608.4, 48.0),
             authorizedJobs = { "lspd" },
@@ -266,7 +266,7 @@ ConfigDoors = {
 
         -- Unicorn
         {
-            objHash = GetHashKey("prop_strip_door_01"), -- Main door
+            objHash = `prop_strip_door_01`, -- Main door
             objYaw = 30.0,
             objCoords = vector3(127.9552, -1298.503, 29.41962),
             textCoords = vector3(128.99, -1297.90, 29.32),
@@ -274,7 +274,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("ba_prop_door_club_edgy_generic"), -- Dressing
+            objHash = `ba_prop_door_club_edgy_generic`, -- Dressing
             objYaw = -60.0,
             objCoords = vector3(113.9822, -1297.43, 29.41868),
             textCoords = vector3(114.00, -1297.33, 29.35),
@@ -282,7 +282,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- DJ booth
+            objHash = `ba_prop_door_club_glam_generic`, -- DJ booth
             objYaw = 210.0,
             objCoords = vector3(128.0708, -1279.346, 29.43696),
             textCoords = vector3(127.05, -1279.97, 29.43),
@@ -290,7 +290,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- Opposite door to the dj booth
+            objHash = `ba_prop_door_club_glam_generic`, -- Opposite door to the dj booth
             objYaw = 30.0,
             objCoords = vector3(133.26, -1287.69, 29.43),
             textCoords = vector3(133.26, -1287.69, 29.43),
@@ -298,7 +298,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("ba_prop_door_club_edgy_generic"), -- Office
+            objHash = `ba_prop_door_club_edgy_generic`, -- Office
             objYaw = 30.0,
             objCoords = vector3(99.08321, -1293.701, 29.41868),
             textCoords = vector3(100.12, -1293.10, 29.35),
@@ -306,7 +306,7 @@ ConfigDoors = {
             locked = true,
         },
         {
-            objHash = GetHashKey("ba_prop_door_club_glam_generic"), -- Backdoor
+            objHash = `ba_prop_door_club_glam_generic`, -- Backdoor
             objYaw = -150.0,
             objCoords = vector3(96.09197, -1284.854, 29.43878),
             textCoords = vector3(95.05, -1285.45, 29.44),
@@ -320,14 +320,14 @@ ConfigDoors = {
             authorizedJobs = { "bahama" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("v_ilev_ph_gendoor006"), objYaw = 33.5, objCoords = vector3(-1387.026, -586.6138, 30.49563) },
-                { objHash = GetHashKey("v_ilev_ph_gendoor006"), objYaw = -147.5, objCoords = vector3(-1389.212, -588.0406, 30.49132) },
+                { objHash = `v_ilev_ph_gendoor006`, objYaw = 33.5, objCoords = vector3(-1387.026, -586.6138, 30.49563) },
+                { objHash = `v_ilev_ph_gendoor006`, objYaw = -147.5, objCoords = vector3(-1389.212, -588.0406, 30.49132) },
             },
         },
 
         -- mechanic : center city
         -- {
-        --     objHash = GetHashKey("prop_com_ls_door_01"),
+        --     objHash = `prop_com_ls_door_01`,
         --     objCoords = vector3(-356.09, -134.81, 39.01),
         --     textCoords = vector3(-356.09, -134.81, 39.01),
         --     authorizedJobs = {"mechanic"},
@@ -361,7 +361,7 @@ ConfigDoors = {
 
         -- mechanic : airport
         {
-            objHash = GetHashKey("prop_com_ls_door_01"),
+            objHash = `prop_com_ls_door_01`,
             objCoords = vector3(-1146.15, -1991.06, 13.19),
             textCoords = vector3(-1145.90, -1991.14, 12.25),
             authorizedJobs = { "mechanic" },
@@ -400,13 +400,13 @@ ConfigDoors = {
             locked = true,
             doors = {
                 {
-                    -- Hash = GetHashKey('ball_prop_citydoor'),
+                    -- Hash = `ball_prop_citydoor`,
                     objHash = 2537604,
                     objYaw = -150.0,
                     objCoords = vector3(-545.97, -203.69, 38.22),
                 },
                 {
-                    -- Hash = GetHashKey('ball_prop_citydoor'),
+                    -- Hash = `ball_prop_citydoor`,
                     objHash = 2537604,
                     objYaw = 30.0,
                     objCoords = vector3(-544.96, -203.13, 38.22),
@@ -418,8 +418,8 @@ ConfigDoors = {
             authorizedJobs = { "state" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("ball_prop_citydoor2"), objYaw = -150.0, objCoords = vector3(-583.11, -195.59, 38.22) },
-                { objHash = GetHashKey("ball_prop_citydoor2"), objYaw = 30.0, objCoords = vector3(-582.15, -195.02, 38.22) },
+                { objHash = `ball_prop_citydoor2`, objYaw = -150.0, objCoords = vector3(-583.11, -195.59, 38.22) },
+                { objHash = `ball_prop_citydoor2`, objYaw = 30.0, objCoords = vector3(-582.15, -195.02, 38.22) },
             },
         },
         { -- porte du bureau du gouverneur
@@ -427,8 +427,8 @@ ConfigDoors = {
             authorizedJobs = { "state" },
             locked = true,
             doors = {
-                { objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = -150.0, objCoords = vector3(-548.72, -196.32, 47.41) },
-                { objHash = GetHashKey("hei_prop_hei_bankdoor_new"), objYaw = 30.0, objCoords = vector3(-549.88, -196.99, 47.41) },
+                { objHash = `hei_prop_hei_bankdoor_new`, objYaw = -150.0, objCoords = vector3(-548.72, -196.32, 47.41) },
+                { objHash = `hei_prop_hei_bankdoor_new`, objYaw = 30.0, objCoords = vector3(-549.88, -196.99, 47.41) },
             },
         },
 

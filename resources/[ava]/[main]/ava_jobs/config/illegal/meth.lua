@@ -9,7 +9,7 @@ Config.Jobs.meth = {
     FieldZones = {
         MethyField = {
             Items = { { name = "methylamine", quantity = 15 } },
-            PropHash = GetHashKey("prop_barrel_exp_01c"),
+            PropHash = `prop_barrel_exp_01c`,
             Coord = vector3(1595.49, -1702.09, 88.12),
             MinGroundHeight = 88,
             MaxGroundHeight = 89,
@@ -17,7 +17,7 @@ Config.Jobs.meth = {
         },
         PseudoField = {
             Items = { { name = "methpseudophedrine", quantity = 15 } },
-            PropHash = GetHashKey("prop_barrel_01a"),
+            PropHash = `prop_barrel_01a`,
             Coord = vector3(584.86, -491.21, 24.75),
             MinGroundHeight = 23,
             MaxGroundHeight = 24,
@@ -25,7 +25,7 @@ Config.Jobs.meth = {
         },
         MethaField = {
             Items = { { name = "methacide", quantity = 15 } },
-            PropHash = GetHashKey("prop_barrel_exp_01c"),
+            PropHash = `prop_barrel_exp_01c`,
             Coord = vector3(1112.49, -2299.49, 30.5),
             MinGroundHeight = 30,
             MaxGroundHeight = 31,

@@ -11,7 +11,8 @@ function OpenPoundMenu(pound)
     if not exports.ava_core:canOpenMenu() then return end
     CurrentPound = pound
 
-    local vehicles<const> = exports.ava_core:TriggerServerCallback("ava_garages:server:getVehiclesInPound", CurrentPound.Name, CurrentPound.VehicleType) or {}
+    local vehicles <const> = exports.ava_core:TriggerServerCallback("ava_garages:server:getVehiclesInPound",
+        CurrentPound.Name, CurrentPound.VehicleType) or {}
     table.sort(vehicles, function(a, b)
         return not a.job_name and b.job_name
     end)
@@ -24,7 +25,7 @@ function OpenPoundMenu(pound)
     }
 
     for i = 1, #vehicles do
-        local vehicle<const> = vehicles[i]
+        local vehicle <const> = vehicles[i]
 
         local vehiclePrice = exports.ava_stores:GetVehiclePrice(vehicle.model, CurrentPound.VehicleType)
         if vehiclePrice then
@@ -46,11 +47,12 @@ function OpenPoundMenu(pound)
             end
 
             -- Add the vehicle to the menu
-            local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(GetHashKey(vehicle.model)))
+            local vehicleLabel = GetLabelText(GetDisplayNameFromVehicleModel(joaat(vehicle.model)))
             if vehicleLabel == "NULL" then vehicleLabel = vehicle.model end
 
             -- Get vehicle price with min of AVAConfig.PoundPriceMinimum and max of AVAConfig.PoundPriceMaximum
-            local price = min(max(floor(vehiclePrice * AVAConfig.PoundPriceMultiplier + 0.5), AVAConfig.PoundPriceMinimum), AVAConfig.PoundPriceMaximum)
+            local price = min(max(floor(vehiclePrice * AVAConfig.PoundPriceMultiplier + 0.5), AVAConfig.PoundPriceMinimum)
+                , AVAConfig.PoundPriceMaximum)
 
             table.insert(elements, {
                 label = vehicle.label,
@@ -75,7 +77,8 @@ function OpenPoundMenu(pound)
                     if onSelected then
                         if not canTakeOutVehicle(CurrentPound) then return end
 
-                        if exports.ava_core:TriggerServerCallback("ava_garages:server:takeVehicleOutOfPound", element.id, CurrentPound.Name, CurrentPound.VehicleType) then
+                        if exports.ava_core:TriggerServerCallback("ava_garages:server:takeVehicleOutOfPound", element.id
+                            , CurrentPound.Name, CurrentPound.VehicleType) then
                             takeOutVehicle(CurrentPound, element.model, element.id)
                             RageUI.CloseAllInternal()
                         end

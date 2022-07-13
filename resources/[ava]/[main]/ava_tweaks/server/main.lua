@@ -12,8 +12,9 @@ end, GetString("vehweaphash_help"))
 
 -- * death verification
 local deathCauses = {
-    Suicide = {Label = GetString("suicide"), Hash = {0}},
-    Melee = {Label = GetString("melee"), Hash = {-1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184}},
+    Suicide = { Label = GetString("suicide"), Hash = { 0 } },
+    Melee = { Label = GetString("melee"),
+        Hash = { -1569615261, 1737195953, 1317494643, -1786099057, 1141786504, -2067956739, -868994466, -538741184 } },
     Bullet = {
         Label = GetString("bullet"),
         Hash = {
@@ -41,10 +42,10 @@ local deathCauses = {
             -1045183535,
         },
     },
-    Knife = {Label = GetString("knife"), Hash = {-1716189206, 1223143800, -1955384325, -1833087301, 910830060}},
-    Car = {Label = GetString("car"), Hash = {133987706, -1553120962}},
-    Animal = {Label = GetString("animal"), Hash = {-100946242, 148160082}},
-    FallDamage = {Label = GetString("fallDamage"), Hash = {-842959696}},
+    Knife = { Label = GetString("knife"), Hash = { -1716189206, 1223143800, -1955384325, -1833087301, 910830060 } },
+    Car = { Label = GetString("car"), Hash = { 133987706, -1553120962 } },
+    Animal = { Label = GetString("animal"), Hash = { -100946242, 148160082 } },
+    FallDamage = { Label = GetString("fallDamage"), Hash = { -842959696 } },
     Explosion = {
         Label = GetString("explosion"),
         Hash = {
@@ -63,9 +64,9 @@ local deathCauses = {
             -1355376991,
         },
     },
-    Gas = {Label = GetString("gas"), Hash = {-1600701090}},
-    Burn = {Label = GetString("burn"), Hash = {615608432, 883325847, -544306709}},
-    Drown = {Label = GetString("drown"), Hash = {-10959621, 1936677264}},
+    Gas = { Label = GetString("gas"), Hash = { -1600701090 } },
+    Burn = { Label = GetString("burn"), Hash = { 615608432, 883325847, -544306709 } },
+    Drown = { Label = GetString("drown"), Hash = { -10959621, 1936677264 } },
 }
 
 local function GetDeathCauseLabel(deathCause)
@@ -90,12 +91,14 @@ RegisterNetEvent("ava_core:server:playerDeath", function(data)
             GetString("killey_by_notification", srcName, killerName, deathCauseLabel))
 
         exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "",
-            GetString("killey_by_embed", srcName, killerName, deathCauseLabel, tostring(data.weapon), tonumber(distance)), 0xFF0000)
+            GetString("killey_by_embed", srcName, killerName, deathCauseLabel, tostring(data.weapon), tonumber(distance))
+            , 0xFF0000)
     else
         local deathCauseLabel = GetDeathCauseLabel(data.cause)
         exports.ava_core:TriggerClientWithAceEvent("ava_personalmenu:client:notifAdmins", "ace.group.mod", "death",
             GetString("killey_notification", srcName, deathCauseLabel))
-        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "", GetString("killey_embed", srcName, deathCauseLabel, tostring(data.cause)), 0xFF0000)
+        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_deaths", "",
+            GetString("killey_embed", srcName, deathCauseLabel, tostring(data.cause)), 0xFF0000)
     end
 end)
 
@@ -107,7 +110,7 @@ if AVAConfig.LockNPCVehicles then
     -- #region init AVAConfig.AlwaysLockedVehicles
     local alwaysLocked = {}
     for i = 1, #AVAConfig.AlwaysLockedVehicles do
-        alwaysLocked[GetHashKey(AVAConfig.AlwaysLockedVehicles[i])] = true
+        alwaysLocked[joaat(AVAConfig.AlwaysLockedVehicles[i])] = true
     end
     AVAConfig.AlwaysLockedVehicles = alwaysLocked
     alwaysLocked = nil
@@ -115,7 +118,7 @@ if AVAConfig.LockNPCVehicles then
     -- #region init AVAConfig.AlwaysUnlockedVehicles
     local alwaysUnlocked = {}
     for i = 1, #AVAConfig.AlwaysUnlockedVehicles do
-        alwaysUnlocked[GetHashKey(AVAConfig.AlwaysUnlockedVehicles[i])] = true
+        alwaysUnlocked[joaat(AVAConfig.AlwaysUnlockedVehicles[i])] = true
     end
     AVAConfig.AlwaysUnlockedVehicles = alwaysUnlocked
     alwaysUnlocked = nil
@@ -127,9 +130,10 @@ if AVAConfig.LockNPCVehicles then
             return
         end
 
-        local vModel<const> = GetEntityModel(entity)
+        local vModel <const> = GetEntityModel(entity)
         -- if random is under LockPercentage or vehicle should always be locked and vehicle is not a bike
-        if not AVAConfig.AlwaysUnlockedVehicles[vModel] and (math.random() < AVAConfig.LockPercentage or AVAConfig.AlwaysLockedVehicles[vModel]) then
+        if not AVAConfig.AlwaysUnlockedVehicles[vModel] and
+            (math.random() < AVAConfig.LockPercentage or AVAConfig.AlwaysLockedVehicles[vModel]) then
             -- lock vehicle
             SetVehicleDoorsLocked(entity, 2)
         end
@@ -140,7 +144,7 @@ end
 --------------- EXPLOSION EVENTS ---------------
 ------------------------------------------------
 
-local BlockedExplosions<const> = {1, 2, 4, 5, 25, 32, 33, 35, 36, 37, 38}
+local BlockedExplosions <const> = { 1, 2, 4, 5, 25, 32, 33, 35, 36, 37, 38 }
 
 AddEventHandler("explosionEvent", function(sender, event)
     for i = 1, #BlockedExplosions do
@@ -151,5 +155,6 @@ AddEventHandler("explosionEvent", function(sender, event)
             return
         end
     end
-    exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_dev", "", GetPlayerName(sender) .. " made an explosionEvent, value : " .. event.explosionType, 0xFF0000)
+    exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_dev", "",
+        GetPlayerName(sender) .. " made an explosionEvent, value : " .. event.explosionType, 0xFF0000)
 end)

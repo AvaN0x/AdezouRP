@@ -747,7 +747,7 @@ function Process(process, coord)
         end
         Wait(1500)
         ClearPedTasks(playerPed)
-        SetCurrentPedWeapon(playerPed, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
 
         if process.Scenario == "WORLD_HUMAN_CLIPBOARD" then
             ClearAreaOfObjects(playerCoords.x, playerCoords.y, playerCoords.z, 0.5, 0)

@@ -9,7 +9,7 @@ Config.Jobs.coke = {
     FieldZones = {
         CokeField = {
             Items = { { name = "cokeleaf", quantity = 5 } },
-            PropHash = GetHashKey("prop_plant_fern_02a"),
+            PropHash = `prop_plant_fern_02a`,
             Coord = vector3(-294.48, 2524.97, 74.62),
             MinGroundHeight = 74,
             MaxGroundHeight = 75,
