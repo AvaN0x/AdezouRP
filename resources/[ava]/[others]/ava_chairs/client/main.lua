@@ -26,7 +26,8 @@ local function LoadInteracts()
                 control = "F",
                 canInteract = function(entity)
                     return not isSettled
-                end
+                end,
+                distance = data.isBed and 2.0
             })
         elseif data.offsets then
             for i = 1, #data.offsets do
