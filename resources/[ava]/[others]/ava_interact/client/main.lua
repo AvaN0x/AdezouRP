@@ -25,10 +25,12 @@ Citizen.CreateThread(function()
         for i = 1, #Interactions do
             local interaction = Interactions[i]
             if interaction then
-                checkCanInteract(interaction)
                 if interaction.entity then
                     interaction.coords = GetOffsetFromEntityInWorldCoords(interaction.entity, interaction.data.offset.x,
                         interaction.data.offset.y, interaction.data.offset.z)
+                end
+                if #(playerCoords - interaction.coords) < interaction.data.drawDistance then
+                    checkCanInteract(interaction)
                 end
             end
         end
@@ -53,9 +55,9 @@ Citizen.CreateThread(function()
         local count = 0
         local checkCount = 0
 
-        local gamePool <const> = GetGamePool("CObject")
-        for i = 1, #gamePool do
-            local entity = GetObjectIndexFromEntityIndex(gamePool[i])
+        local handle, entity = FindFirstObject()
+        local finished = false
+        repeat
             local model = GetEntityModel(entity)
 
             if Models[model] then
@@ -75,7 +77,6 @@ Citizen.CreateThread(function()
                             }
                             checkCanInteract(interactions[count])
                         end
-
                     end
                 end
             end
@@ -85,7 +86,10 @@ Citizen.CreateThread(function()
             if checkCount % 500 == 0 then
                 Wait(0)
             end
-        end
+
+            finished, entity = FindNextObject(handle)
+        until not finished
+        EndFindObject(handle)
 
         for i = 1, #Zones do
             local data = Zones[i]
