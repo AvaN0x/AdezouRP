@@ -9,6 +9,7 @@ AVAConfig.PetrolCanCapacity = 20
 
 -- In seconds, no floating point
 AVAConfig.LiterPrice = 4
+AVAConfig.ElectricPrice = 2
 AVAConfig.ReplicateDelay = 30
 
 AVAConfig.GlobalMultiplier = 1.0
@@ -75,13 +76,15 @@ AVAConfig.ElectricCars = {
 }
 
 AVAConfig.GasPumps = {
-    `prop_gas_pump_1a`,
-    `prop_gas_pump_1b`,
-    `prop_gas_pump_1c`,
-    `prop_gas_pump_1d`,
-    `prop_gas_pump_old2`,
-    `prop_gas_pump_old3`,
-    `prop_vintage_pump`,
+    [`prop_gas_pump_1a`] = {offset = vector3(0.0, 0.0, 1.54)},
+    [`prop_gas_pump_1b`] = {offset = vector3(0.0, 0.0, 1.54)},
+    [`prop_gas_pump_1c`] = {offset = vector3(0.0, 0.0, 1.93)},
+    [`prop_gas_pump_1d`] = {offset = vector3(0.0, 0.0, 1.54)},
+    [`prop_gas_pump_old2`] = {offset = vector3(0.0, 0.0, 1.68)},
+    [`prop_gas_pump_old3`] = {offset = vector3(0.0, 0.0, 1.68)},
+    [`prop_vintage_pump`] = {offset = vector3(0.0, 0.0, 1.93)},
 }
--- TODO somehow
--- AVAConfig.ElectricPumps = {}
+
+AVAConfig.ElectricPumps = {
+    [`bzzz_electro_charger001`] = {offset = vector3(0.0, 0.0, 1.57)},
+}

@@ -28,14 +28,17 @@ exports.ava_core:RegisterServerCallback("ava_fuel:server:getFuelPlayerCanAfford"
     return math.floor((inventory.getItemQuantity("cash") / AVAConfig.LiterPrice) * 10) / 10
 end)
 
-exports.ava_core:RegisterServerCallback("ava_fuel:server:validateRefuel", function(source, refueled)
+exports.ava_core:RegisterServerCallback("ava_fuel:server:validateRefuel", function(source, vehicleNet, refueled)
     if refueled <= 0 or refueled > 65 then return false end
+
+    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+    if not DoesEntityExist(vehicle) then return false end
 
     local aPlayer = exports.ava_core:GetPlayer(source)
     if not aPlayer then return false end
 
     local inventory = aPlayer.getInventory()
-    local price<const> = tonumber(("%.0f"):format(refueled * AVAConfig.LiterPrice))
+    local price<const> = tonumber(("%.0f"):format(refueled * (IsVehicleElectric(vehicle) and AVAConfig.ElectricPrice or AVAConfig.LiterPrice)))
     if not inventory.canRemoveItem("cash", price) then
         return false
     end

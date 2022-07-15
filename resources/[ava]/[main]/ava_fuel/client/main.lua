@@ -6,11 +6,6 @@
 local inLoop = false
 local playerVehicle = 0
 
-local IsVehicleElectric = function(vehicle)
-    return not not AVAConfig.ElectricCars[GetEntityModel(vehicle)]
-end
-exports("IsVehicleElectric", IsVehicleElectric)
-
 local function createVehicleFuelStateBag(vehicle, vehState)
     TriggerServerEvent('ava_fuel:server:setStateBag', VehToNet(vehicle), GetVehicleFuelLevel(vehicle))
     -- We can check "not  vehState.fuel" because lua do not consider 0 as false
@@ -106,10 +101,41 @@ local function Loop(vehicle)
     end)
 end
 
+local function LoadInteracts()
+    for model, pump in pairs(AVAConfig.GasPumps) do
+        exports.ava_interact:addModel(model, {
+            label = GetString("fuel_price", AVAConfig.LiterPrice),
+            offset = pump.offset,
+            event = "ava_fuel:client:FuelVehicle",
+            distance = 2,
+            drawDistance = 4,
+            canInteract = function() return not isFueling end,
+        })
+    end
+    for model, pump in pairs(AVAConfig.ElectricPumps) do
+        exports.ava_interact:addModel(model, {
+            label = GetString("fuel_electric_price", AVAConfig.ElectricPrice),
+            offset = pump.offset,
+            event = "ava_fuel:client:FuelElectricVehicle",
+            distance = 2,
+            drawDistance = 4,
+            canInteract = function() return not isFueling end,
+        })
+    end
+end
+
 Citizen.CreateThread(function()
+    LoadInteracts()
+
     local isInVehicle, vehicle, seat = exports.ava_core:IsPlayerInVehicle()
     if isInVehicle and seat == -1 then
         Loop(vehicle)
+    end
+end)
+
+AddEventHandler("onResourceStart", function(resource)
+    if resource == "ava_interact" then
+        LoadInteracts()
     end
 end)
 
@@ -128,55 +154,16 @@ RegisterNetEvent("ava_fuel:client:refuel", function(fuel)
 end)
 
 --#region Pumps
--- TODO better way of getting props
 local IsDead = false
-local pump = nil
 local isFueling = false
-Citizen.CreateThread(function()
-    while true do
-        Wait(1000)
-        pump = getPump()
-    end
-end)
 
 AddEventHandler("ava_core:client:playerIsDead", function(isDead)
     IsDead = isDead
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        local wait = 1000
-        if not IsDead and pump and not isFueling then
-            wait = 0
-            DrawText3D(pump.x, pump.y, pump.z, GetString("fuel_price", AVAConfig.LiterPrice))
-            BeginTextCommandDisplayHelp("STRING")
-            AddTextComponentSubstringPlayerName(GetString("press_to_fuel_vehicle"))
-            EndTextCommandDisplayHelp(0, false, true, -1)
 
-            if IsControlJustPressed(0, 38) then
-                FuelVehicle()
-            end
-        end
-        Wait(wait)
-    end
-end)
 
-function getPump()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    for _, hash in ipairs(AVAConfig.GasPumps) do
-        local closestProp = GetClosestObjectOfType(coords.x, coords.y, coords.z, 1.5, hash, false, false, false)
-
-        if DoesEntityExist(closestProp) and GetEntityHealth(closestProp) > 0 then
-            local markerCoords = GetOffsetFromEntityInWorldCoords(closestProp, 0.0, 0.0, 0.0)
-
-            return { x = markerCoords.x, y = markerCoords.y, z = markerCoords.z + 0.9 }
-        end
-    end
-    return nil
-end
-
-function FuelVehicle(isPetrolCan)
+function FuelVehicle(electricVehicle, isPetrolCan)
     local playerPed = PlayerPedId()
     if IsPedInAnyVehicle(playerPed, true) then
         exports.ava_core:ShowNotification(GetString("pump_cant_inside_vehicle"))
@@ -189,6 +176,16 @@ function FuelVehicle(isPetrolCan)
 
     local vehicle = exports.ava_core:GetVehicleInFrontOrChooseClosest()
     if vehicle == 0 then return end
+
+    local isElectric = IsVehicleElectric(vehicle)
+
+    if isElectric and not electricVehicle then
+        exports.ava_core:ShowNotification(GetString("pump_cant_with_electric_vehicle"))
+        return
+    elseif not isElectric and electricVehicle then
+        exports.ava_core:ShowNotification(GetString("pump_cant_with_petrol_vehicle"))
+        return
+    end
 
     local tankSize <const> = GetVehicleTankSize(vehicle)
     local toRefuel = tankSize - GetVehicleFuel(vehicle)
@@ -264,6 +261,11 @@ function FuelVehicle(isPetrolCan)
 
     Citizen.CreateThread(function()
         -- Handle player input and help text
+
+        local helpText <const> = electricVehicle and "pump_fueling_electric_vehicle" or
+            "pump_fueling_vehicle"
+        local unitPrice <const> = electricVehicle and AVAConfig.ElectricPrice or AVAConfig.LiterPrice
+
         repeat
             Wait(0)
 
@@ -271,8 +273,7 @@ function FuelVehicle(isPetrolCan)
             if isPetrolCan then
                 AddTextComponentSubstringPlayerName(GetString("fueling_vehicle"))
             else
-                AddTextComponentSubstringPlayerName(GetString("pump_fueling_vehicle", currentlyRefueled,
-                    AVAConfig.LiterPrice * currentlyRefueled))
+                AddTextComponentSubstringPlayerName(GetString(helpText, currentlyRefueled, unitPrice * currentlyRefueled))
             end
             EndTextCommandDisplayHelp(0, false, false, -1)
 
@@ -288,7 +289,8 @@ function FuelVehicle(isPetrolCan)
 
             -- Replicate the new fuel
             SetVehicleFuelInternal(vehicle, vehState, vehState.fuel, true)
-        elseif exports.ava_core:TriggerServerCallback("ava_fuel:server:validateRefuel", currentlyRefueled) then
+        elseif exports.ava_core:TriggerServerCallback("ava_fuel:server:validateRefuel", VehToNet(vehicle),
+            currentlyRefueled) then
             -- Player paid the money
 
             -- Replicate the new fuel
@@ -310,6 +312,15 @@ function FuelVehicle(isPetrolCan)
     end)
 end
 
+AddEventHandler("ava_fuel:client:FuelVehicle", function()
+    FuelVehicle(false)
+end)
+
+AddEventHandler("ava_fuel:client:FuelElectricVehicle", function()
+    FuelVehicle(true)
+end)
+
+
 AddEventHandler("ava_core:client:canOpenMenu", function()
     if isFueling then
         CancelEvent()
@@ -321,7 +332,7 @@ end)
 
 --#region petrol can
 RegisterNetEvent("ava_fuel:client:usePetrolcan", function()
-    FuelVehicle(true)
+    FuelVehicle(false, true)
 end)
 --#endregion petrol can
 
