@@ -92,7 +92,7 @@ Config.Stores = {
     },
     GasStation = {
         Title = { textureName = "shopui_title_gasstation", textureDirectory = "shopui_title_gasstation" },
-        Blip = { Name = "Station servic", Sprite = 361, Color = 4, Scale = 0.5 },
+        Blip = { Name = "Station service", Sprite = 361, Color = 4, Scale = 0.5 },
         Coords = {
             vector3(1167.79, -323.71, 68.30), -- Mirror park
             vector3(620.85, 268.94, 102.11), -- Clinton Ave
@@ -112,6 +112,9 @@ Config.Stores = {
             vector3(2674.22, 3266.72, 54.26), -- Route 13
             vector3(181.26, 6596.82, 30.87), -- Route 1
             vector3(2560.05, 373.65, 107.64), -- Route 15
+            vector3(1211.25, -1389.44, 34.40), -- Capital Boulevard St Fiacre
+            vector3(818.10, -1040.58, 25.77), -- Vespucci Boulevard Tailor
+            vector3(1694.61, 4924.13, 41.25), -- Grapseed Ave
         },
         Items = {
             { name = "petrolcan", price = 100 },
