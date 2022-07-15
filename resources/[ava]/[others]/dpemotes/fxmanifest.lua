@@ -8,8 +8,8 @@ game 'gta5'
 
 -- Comment the following lines if you don't want to use the SQL keybinds
 --#region oxmysql
--- dependency 'oxmysql'
--- server_script "@oxmysql/lib/MySQL.lua"
+dependency 'oxmysql'
+server_script "@oxmysql/lib/MySQL.lua"
 --#endregion oxmysql
 
 shared_scripts {
