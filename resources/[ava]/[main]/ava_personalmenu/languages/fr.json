@@ -139,6 +139,8 @@
     "vehicles_flipvehicle_subtitle": "Remettre le véhicule sur ses roues",
     "vehicles_tunevehiclepink": "<font color='#FF4798'>Custom le véhicule en rose</font>",
     "vehicles_tunevehiclepink_subtitle": "",
+    "vehicles_lscustoms": "LS Customs",
+    "vehicles_lscustoms_subtitle": "",
     "vehicles_deletevehicle": "~r~Supprimer véhicule",
     "vehicles_deletevehicle_subtitle": "",
     "vehicles_tpnearestvehicle": "TP véhicule le plus proche",

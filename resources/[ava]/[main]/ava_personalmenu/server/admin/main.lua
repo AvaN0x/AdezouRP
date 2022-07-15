@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 ---@class adminmenu_perms
-local requiredPerms<const> = {
+local requiredPerms <const> = {
     playerlist = {
         spec = true,
         ["goto"] = true,
@@ -17,14 +17,22 @@ local requiredPerms<const> = {
         revive = true,
         spectate = true,
     },
-    playersoptions = {playerblips = true, playertags = true},
+    playersoptions = { playerblips = true, playertags = true },
     tpcoords = true,
     tpwaypoint = true,
     cleararea = true,
     chars = true,
-    dev = {showhash = true, showcoordshelper = true, showcoords = true},
+    dev = { showhash = true, showcoordshelper = true, showcoords = true },
     noclip = true,
-    vehicles = {spawnvehicle = true, deletevehicle = true, flipvehicle = true, repairvehicle = true, tpnearestvehicle = true, tunevehiclepink = true},
+    vehicles = {
+        spawnvehicle = true,
+        deletevehicle = true,
+        flipvehicle = true,
+        repairvehicle = true,
+        tpnearestvehicle = true,
+        tunevehiclepink = true,
+        lscustoms = true,
+    },
     adminmode = true,
 }
 
@@ -96,7 +104,8 @@ CreateThread(function()
             data.c = coords
             data.rb = rb
 
-            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or "not found"
+            data.n = avaPlayerData[playerSrc] and avaPlayerData[playerSrc].name or GetPlayerName(playerSrc) or
+                "not found"
 
             count = count + 1
             newData[count] = data
@@ -109,7 +118,8 @@ CreateThread(function()
         -- TODO only registered admins that asked about it
         for _, playerSrc in pairs(players) do
             if IsPlayerAceAllowed(playerSrc, "ace.group.mod") then
-                TriggerClientEvent("ava_personalmenu:client:playersData", playerSrc, playersData, GetPlayerRoutingBucket(playerSrc))
+                TriggerClientEvent("ava_personalmenu:client:playersData", playerSrc, playersData,
+                    GetPlayerRoutingBucket(playerSrc))
             end
         end
         Wait(dataLoopInterval)
@@ -120,4 +130,3 @@ AddEventHandler("playerDropped", function()
     local src = source
     avaPlayerData[tostring(src)] = nil
 end)
-
