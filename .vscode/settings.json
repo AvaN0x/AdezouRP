@@ -8,6 +8,7 @@
         "personalmenu",
         "personalmenu/admin",
         "personalmenu/dev",
+        "lib",
         "core",
         "core/createchar",
         "core/inventory",
