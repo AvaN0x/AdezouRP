@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+importGlobal("DrawText3D")
+
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
 
@@ -34,24 +36,6 @@ AddEventHandler("ava_lock:client:dooranim", function()
     end
 end)
 
-function DrawText3D(x, y, z, text, size)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-
-    if onScreen then
-        SetTextScale(0.35, size or 0.35)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 215)
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        SetTextOutline()
-
-        AddTextComponentSubstringPlayerName(text)
-        EndTextCommandDisplayText(_x, _y)
-        -- local factor = (string.len(text)) / 350
-        -- DrawRect(_x, _y + 0.0125, factor + 0.015, 0.03, 35, 35, 35, 150)
-    end
-end
 
 ---Check if a given table has a condition
 ---@param table table

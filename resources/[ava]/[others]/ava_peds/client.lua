@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+local DrawText3D = import("DrawText3D")
+
 local loopsRequired = true
 
 local peds = {}
@@ -98,32 +100,6 @@ AddEventHandler("onResourceStop", function(resource)
         peds = {}
     end
 end)
-
----Draw a text on screen
----@param x number
----@param y number
----@param z number
----@param text string
----@param size? number
----@param r? number
----@param g? number
----@param b? number
-function DrawText3D(x, y, z, text, size, r, g, b)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-
-    if onScreen then
-        SetTextScale(0.35, size or 0.35)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(r or 255, g or 255, b or 255, 215)
-        SetTextEntry("STRING")
-        AddTextComponentSubstringPlayerName(text)
-        SetTextCentre(1)
-        SetTextOutline()
-
-        EndTextCommandDisplayText(_x, _y)
-    end
-end
 
 ---Draw a "bubble" like text, only one can be displayed at a time
 ---@param x nulber

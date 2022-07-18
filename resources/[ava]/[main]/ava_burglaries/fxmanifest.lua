@@ -11,7 +11,7 @@ use_fxv2_oal "yes"
 
 files { "languages/**.json" }
 
-shared_scripts { "@ava_lib/shared/language.lua" }
+shared_scripts { "@ava_lib/import.lua", "@ava_lib/shared/language.lua" }
 
 client_scripts { "config.lua", "burglaries_cl.lua" }
 

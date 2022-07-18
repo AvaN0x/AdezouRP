@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+-- local DrawText3D = import("DrawText3D")
+
 local TimeLastAction = 0
 local checkCanInteract
 ---Models that the player can interact with
@@ -329,21 +331,3 @@ AddEventHandler("onResourceStop", function(resource)
         end
     end
 end)
-
-
--- function DrawText3D(x, y, z, text, size, r, g, b, a)
---     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-
---     if onScreen then
---         SetTextScale(0.35, size or 0.35)
---         SetTextFont(0)
---         SetTextProportional(1)
---         SetTextColour(r or 255, g or 255, b or 255, a or 215)
---         SetTextEntry("STRING")
---         AddTextComponentSubstringPlayerName(text)
---         SetTextCentre(1)
---         SetTextOutline()
-
---         EndTextCommandDisplayText(_x, _y)
---     end
--- end

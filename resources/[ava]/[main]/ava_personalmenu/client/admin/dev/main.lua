@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+local DrawText3D = import("DrawText3D")
+
 DevAdminMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("dev_menu"), GetString("dev_menu"))
 DevAdminMenu.Display.Glare = true
 
@@ -15,19 +17,21 @@ function PoolDevMenu()
     DevAdminMenu:IsVisible(function(Items)
         if perms and perms.dev then
             if perms.dev.showhash then
-                Items:CheckBox(GetString("dev_menu_showhash"), GetString("dev_menu_showhash_subtitle"), showhash, nil, function(onSelected, IsChecked)
-                    if (onSelected) then
-                        if not showhash_object and not showhash_vehicle and not showhash_ped then
-                            showhash_object, showhash_vehicle, showhash_ped = true, true, true
-                            SetResourceKvpInt("showhash_object", 0)
-                            SetResourceKvpInt("showhash_vehicle", 0)
-                            SetResourceKvpInt("showhash_ped", 0)
+                Items:CheckBox(GetString("dev_menu_showhash"), GetString("dev_menu_showhash_subtitle"), showhash, nil,
+                    function(onSelected, IsChecked)
+                        if (onSelected) then
+                            if not showhash_object and not showhash_vehicle and not showhash_ped then
+                                showhash_object, showhash_vehicle, showhash_ped = true, true, true
+                                SetResourceKvpInt("showhash_object", 0)
+                                SetResourceKvpInt("showhash_vehicle", 0)
+                                SetResourceKvpInt("showhash_ped", 0)
+                            end
+                            ExecuteCommand("showhash")
                         end
-                        ExecuteCommand("showhash")
-                    end
-                end)
+                    end)
                 local style <const> = { IsDisabled = not showhash, Style = not showhash and 2 }
-                Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"), showhash_object, style,
+                Items:CheckBox(GetString("dev_menu_showhash_object"), GetString("dev_menu_showhash_object_subtitle"),
+                    showhash_object, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_object = not showhash_object
@@ -38,7 +42,8 @@ function PoolDevMenu()
                             end
                         end
                     end)
-                Items:CheckBox(GetString("dev_menu_showhash_vehicle"), GetString("dev_menu_showhash_vehicle_subtitle"), showhash_vehicle, style,
+                Items:CheckBox(GetString("dev_menu_showhash_vehicle"), GetString("dev_menu_showhash_vehicle_subtitle"),
+                    showhash_vehicle, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_vehicle = not showhash_vehicle
@@ -49,7 +54,8 @@ function PoolDevMenu()
                             end
                         end
                     end)
-                Items:CheckBox(GetString("dev_menu_showhash_ped"), GetString("dev_menu_showhash_ped_subtitle"), showhash_ped, style,
+                Items:CheckBox(GetString("dev_menu_showhash_ped"), GetString("dev_menu_showhash_ped_subtitle"),
+                    showhash_ped, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_ped = not showhash_ped
@@ -60,7 +66,8 @@ function PoolDevMenu()
                             end
                         end
                     end)
-                Items:CheckBox(GetString("dev_menu_showhash_dimensions"), GetString("dev_menu_showhash_dimensions_subtitle"), showhash_dimensions, style,
+                Items:CheckBox(GetString("dev_menu_showhash_dimensions"),
+                    GetString("dev_menu_showhash_dimensions_subtitle"), showhash_dimensions, style,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             showhash_dimensions = not showhash_dimensions
@@ -70,7 +77,8 @@ function PoolDevMenu()
 
             end
             if perms.dev.showcoordshelper then
-                Items:CheckBox(GetString("dev_menu_showcoordshelper"), GetString("dev_menu_showcoordshelper_subtitle"), showcoordshelper, nil,
+                Items:CheckBox(GetString("dev_menu_showcoordshelper"), GetString("dev_menu_showcoordshelper_subtitle"),
+                    showcoordshelper, nil,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             ExecuteCommand("showcoordshelper")
@@ -78,7 +86,8 @@ function PoolDevMenu()
                     end)
             end
             if perms.dev.showcoords then
-                Items:CheckBox(GetString("dev_menu_showcoords"), GetString("dev_menu_showcoords_subtitle"), showcoords, nil, function(onSelected, IsChecked)
+                Items:CheckBox(GetString("dev_menu_showcoords"), GetString("dev_menu_showcoords_subtitle"), showcoords,
+                    nil, function(onSelected, IsChecked)
                     if (onSelected) then
                         ExecuteCommand("showcoords")
                     end
@@ -107,7 +116,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoords", function()
             SetTextWrap(0.0, 1.0)
             SetTextOutline()
             SetTextEntry("STRING")
-            AddTextComponentSubstringPlayerName("~o~X~s~\t\t" .. string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
+            AddTextComponentSubstringPlayerName("~o~X~s~\t\t" ..
+                string.format("%.2f", playerCoords.x) .. "\n~o~Y~s~\t\t" .. string.format("%.2f", playerCoords.y)
                 .. "\n~o~Z~s~\t\t" .. string.format("%.2f", playerCoords.z) .. "\n~o~Heading~s~\t"
                 .. string.format("%.2f", GetEntityHeading(playerPed)))
             EndTextCommandDisplayText(0.9, 0.88)
@@ -174,7 +184,8 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
             SetTextWrap(0.0, 1.0)
             SetTextOutline()
             SetTextEntry("STRING")
-            AddTextComponentSubstringPlayerName("X\t" .. string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
+            AddTextComponentSubstringPlayerName("X\t" ..
+                string.format("%.2f", pointerCoords.x) .. "\nY\t" .. string.format("%.2f", pointerCoords.y) .. "\nZ\t"
                 .. string.format("%.2f", pointerCoords.z))
             DrawText(0.8, 0.88)
 
@@ -182,28 +193,34 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowCoordsHelper", function()
 
             if IsControlPressed(0, 21) then -- shift
                 -- Y axis
-                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y + 0.2, pointerCoords.z, 0, 255, 0, 256)
+                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y + 0.2,
+                    pointerCoords.z, 0, 255, 0, 256)
                 DrawText3D(pointerCoords.x, pointerCoords.y + 0.2, pointerCoords.z + 0.1, "y", 0.3, 0, 255, 0)
 
                 -- X axis
-                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x + 0.2, pointerCoords.y, pointerCoords.z, 255, 0, 0, 256)
+                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x + 0.2, pointerCoords.y,
+                    pointerCoords.z, 255, 0, 0, 256)
                 DrawText3D(pointerCoords.x + 0.2, pointerCoords.y, pointerCoords.z + 0.1, "x", 0.3, 255, 0, 0)
 
                 -- Z axis
-                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y, pointerCoords.z + 0.2, 0, 0, 255, 256)
+                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z, pointerCoords.x, pointerCoords.y,
+                    pointerCoords.z + 0.2, 0, 0, 255, 256)
                 DrawText3D(pointerCoords.x, pointerCoords.y, pointerCoords.z + 0.3, "z", 0.3, 0, 0, 255)
             else
                 -- vertical line on Z axis for better a better view of the position
-                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z - 1, pointerCoords.x, pointerCoords.y, pointerCoords.z + 1, 255, 99, 219, 256)
+                DrawLine(pointerCoords.x, pointerCoords.y, pointerCoords.z - 1, pointerCoords.x, pointerCoords.y,
+                    pointerCoords.z + 1, 255, 99, 219, 256)
             end
 
             if zAxis == -0.98 then
-                DrawMarker(27, pointerCoords.x, pointerCoords.y, pointerCoords.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5, 1.5, 255, 99, 219, 100, false, true, 2,
+                DrawMarker(27, pointerCoords.x, pointerCoords.y, pointerCoords.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.5, 1.5,
+                    1.5, 255, 99, 219, 100, false, true, 2,
                     false, false, false, false)
             end
 
             if IsControlJustReleased(0, 79) then -- c
-                local coordString = "vector3(" .. string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", "
+                local coordString = "vector3(" ..
+                    string.format("%.2f", pointerCoords.x) .. ", " .. string.format("%.2f", pointerCoords.y) .. ", "
                     .. string.format("%.2f", pointerCoords.z) .. ")"
                 exports.ava_hud:copyToClipboard(coordString)
             elseif IsControlPressed(0, 25) then -- right mouse button

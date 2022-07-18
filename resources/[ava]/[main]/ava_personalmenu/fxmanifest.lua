@@ -46,6 +46,6 @@ client_scripts {
 
 server_scripts { "server/main.lua", "server/admin/main.lua", "server/admin/commands.lua", "server/admin/spectate.lua" }
 
-shared_scripts { "@ava_lib/shared/language.lua" }
+shared_scripts { "@ava_lib/import.lua", "@ava_lib/shared/language.lua" }
 
 dependencies { "ava_core" }

@@ -8,4 +8,4 @@ description "Ped spawner"
 lua54 "yes"
 use_fxv2_oal "yes"
 
-client_scripts { "config.lua", "client.lua" }
+client_scripts { "@ava_lib/import.lua", "config.lua", "client.lua" }
