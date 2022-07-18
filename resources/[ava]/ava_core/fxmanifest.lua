@@ -12,7 +12,8 @@ use_fxv2_oal "yes"
 files { "shared/import.lua", "languages/**.json" }
 
 shared_scripts {
-    "shared/language.lua",
+    "@ava_lib/import.lua",
+    "@ava_lib/shared/language.lua",
     "chat/chat.lua"
 }
 
@@ -75,10 +76,6 @@ chat_theme 'ava_chat' {
     styleSheet = 'chat/style.css',
 }
 
-
-
--- comment this line to disable debug prints
-ava_config "debug_prints" "yes"
 
 ava_config "npwd" "yes"
 

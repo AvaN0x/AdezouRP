@@ -11,7 +11,7 @@ use_fxv2_oal "yes"
 
 files { "languages/**.json" }
 
-shared_scripts { "@ava_core/shared/language.lua" }
+shared_scripts { "@ava_lib/shared/language.lua" }
 
 client_scripts { "config.lua", "client/main.lua" }
 client_script "client/test.lua"

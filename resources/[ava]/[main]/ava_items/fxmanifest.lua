@@ -33,6 +33,6 @@ client_scripts {
 
 server_scripts { "config.lua", "server/main.lua", "server/**/*_sv.lua" }
 
-shared_scripts { "@ava_core/shared/language.lua" }
+shared_scripts { "@ava_lib/shared/language.lua" }
 
 dependencies { "ava_core" }

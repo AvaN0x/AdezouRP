@@ -12,7 +12,7 @@ use_fxv2_oal "yes"
 
 files { "languages/**.json" }
 
-client_scripts { "@ava_core/shared/language.lua", "client/client.lua", "client/discord.lua" }
+client_scripts { "@ava_lib/shared/language.lua", "client/client.lua", "client/discord.lua" }
 
 server_scripts { "server/server.lua" }
 

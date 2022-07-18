@@ -11,7 +11,7 @@ use_fxv2_oal "yes"
 
 files { "languages/**.json", "questions.json" }
 
-shared_scripts { "@ava_core/shared/language.lua" }
+shared_scripts { "@ava_lib/shared/language.lua" }
 
 client_scripts {
     "@RageUI/src/RageUI.lua",

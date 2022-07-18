@@ -10,7 +10,7 @@ local strings = file and json.decode(file) or {}
 ---@param str string "string name"
 ---@param ... any "format arguments"
 ---@return string
-function GetString(str, ...)
+local function GetString(str, ...)
     if not strings then
         print("^1[strings missing]^0 strings have not already loaded.")
         return str
@@ -21,3 +21,5 @@ function GetString(str, ...)
         return str
     end
 end
+
+return GetString

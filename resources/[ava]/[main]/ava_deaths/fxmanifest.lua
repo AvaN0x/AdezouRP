@@ -15,6 +15,6 @@ client_scripts { "config.lua", "client/main.lua", "client/items.lua" }
 
 server_scripts { "config.lua", "server/main.lua", "server/items.lua" }
 
-shared_scripts { "@ava_core/shared/language.lua" }
+shared_scripts { "@ava_lib/shared/language.lua" }
 
 dependencies { "ava_core" }

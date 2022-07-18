@@ -10,8 +10,11 @@ lua54 "yes"
 use_fxv2_oal "yes"
 
 files {
+    'import.lua',
     'packages/client/**.lua',
     'packages/server/**.lua',
     'packages/shared/**.lua',
-    'import.lua',
+    'client/**.lua',
+    'server/**.lua',
+    'shared/**.lua',
 }

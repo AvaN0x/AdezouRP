@@ -14,7 +14,7 @@ files {
 }
 
 shared_scripts {
-    "@ava_core/shared/language.lua"
+    "@ava_lib/shared/language.lua"
 }
 
 client_scripts {

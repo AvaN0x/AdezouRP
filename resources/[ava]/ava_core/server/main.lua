@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+importGlobal("dprint")
+
 AVA = {}
 
 exports("GetSharedObject", function()
@@ -17,9 +19,6 @@ for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
     local dataName = GetResourceMetadata(resourceName, "ava_config", i - 1)
     if dataName == "discord_config" then
         AVAConfig.Discord = json.decode(GetResourceMetadata(resourceName, "ava_config_extra", i - 1))
-
-    elseif dataName == "debug_prints" then
-        AVAConfig.Debug = true
 
     elseif dataName == "npwd" then
         AVAConfig.NPWD = true
@@ -47,13 +46,6 @@ for i = 1, GetNumResourceMetadata(resourceName, "ava_config"), 1 do
         else
             print("^3[WARN] max_gangs_count was not valid, value must be a number > 0^0")
         end
-    end
-end
-
----Print only if AVAConfig.Debug is true
-function dprint(...)
-    if AVAConfig.Debug then
-        print("^3[DEBUG] ^0", ...)
     end
 end
 

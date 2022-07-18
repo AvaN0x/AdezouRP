@@ -15,6 +15,6 @@ files { "languages/**.json" }
 
 server_scripts { "@oxmysql/lib/MySQL.lua", "server/main.lua" }
 
-shared_scripts { "@ava_core/shared/language.lua" }
+shared_scripts { "@ava_lib/shared/language.lua" }
 
 dependencies { "ava_core", "oxmysql" }
