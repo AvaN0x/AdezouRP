@@ -263,7 +263,10 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local propCoords = GetEntityCoords(prop)
                     if #(playerCoords - propCoords) < 5.0 then
                         count = count + 1
-                        visibleHash[count] = { hash = GetEntityModel(prop), entity = prop }
+                        local model = GetEntityModel(prop)
+                        local archetypeName = GetEntityArchetypeName(prop)
+                        visibleHash[count] = { model = model, entity = prop,
+                            name = archetypeName ~= "" and archetypeName or model }
                         SetEntityDrawOutline(prop, true)
                     end
                 end
@@ -274,7 +277,10 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local vehCoords = GetEntityCoords(veh)
                     if #(playerCoords - vehCoords) < 10.0 then
                         count = count + 1
-                        visibleHash[count] = { hash = GetEntityModel(veh), entity = veh }
+                        local model = GetEntityModel(veh)
+                        local archetypeName = GetEntityArchetypeName(veh)
+                        visibleHash[count] = { model = model, entity = veh,
+                            name = archetypeName ~= "" and archetypeName or model }
                         SetEntityDrawOutline(veh, true)
                     end
                 end
@@ -285,7 +291,10 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                     local pedCoords = GetEntityCoords(ped)
                     if #(playerCoords - pedCoords) < 10.0 then
                         count = count + 1
-                        visibleHash[count] = { hash = GetEntityModel(ped), entity = ped, dimensions = true }
+                        local model = GetEntityModel(ped)
+                        local archetypeName = GetEntityArchetypeName(ped)
+                        visibleHash[count] = { model = model, entity = ped,
+                            name = archetypeName ~= "" and archetypeName or model, dimensions = true }
                     end
                 end
             end
@@ -301,10 +310,10 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
             Wait(0)
             for _, entity in ipairs(visibleHash) do
                 local coords = GetEntityCoords(entity.entity)
-                DrawText3D(coords.x, coords.y, coords.z, entity.hash, 0.3)
+                DrawText3D(coords.x, coords.y, coords.z, entity.name, 0.3)
 
                 if showhash_dimensions or entity.dimensions then
-                    local min, max = GetModelDimensions(GetEntityModel(entity.entity))
+                    local min, max = GetModelDimensions(entity.model)
                     local pad = 0.001;
 
                     -- Bottom
