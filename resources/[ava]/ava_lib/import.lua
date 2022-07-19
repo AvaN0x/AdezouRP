@@ -43,7 +43,7 @@ function import(name)
     end
 
     -- Try to load the file
-    local f, err = load(file, ('@@ava_lib/packages/%s/%s.lua'):format(side, name)) -- TODO useful?
+    local f, err = load(file)
     if err then
         return error(("import: failed, could not load `%s`"):format(path))
     end
