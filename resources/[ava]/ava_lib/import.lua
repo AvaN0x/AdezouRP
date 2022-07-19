@@ -9,7 +9,7 @@ local type = type
 local load = load
 local side <const> = IsDuplicityVersion() and 'server' or 'client'
 
-local resourceName <const> = "ava_lib"
+local libName <const> = "ava_lib"
 
 ---Import a file or more from the library and return it.
 ---@param name string|string[] "name or names"
@@ -29,12 +29,12 @@ function import(name)
     end
 
     local path = ("packages/%s/%s.lua"):format(side, name)
-    local file = LoadResourceFile(resourceName, path)
+    local file = LoadResourceFile(libName, path)
 
     -- If file is not found, try to load the file from the shared folder
     if not file then
         local path = ("packages/shared/%s.lua"):format(name)
-        file = LoadResourceFile(resourceName, path)
+        file = LoadResourceFile(libName, path)
     end
 
     -- If file is still not found, error
@@ -43,9 +43,9 @@ function import(name)
     end
 
     -- Try to load the file
-    local f, err = load(file)
+    local f, err = load(file, ("@@%s/packages/%s"):format(libName, path))
     if err then
-        return error(("import: failed, could not load `%s`"):format(path))
+        return error(("import: failed, could not load `%s`:\n%s"):format(path, err))
     end
 
     -- Return the function if it is a function
