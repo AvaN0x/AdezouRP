@@ -14,7 +14,6 @@ exports.ava_core.GetSharedObject = function()
 end
 
 -- #region shared utils
-exports.ava_core.Trim = AVA.Utils.Trim
 exports.ava_core.FormatNumber = AVA.Utils.FormatNumber
 exports.ava_core.Vector3ToString = AVA.Utils.Vector3ToString
 -- #endregion

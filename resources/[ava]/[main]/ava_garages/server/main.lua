@@ -2,78 +2,93 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+import("string:trim")
+
 -- #region get vehicles in garage
-exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInGarage", function(source, garageName, vehicleType)
-    -- Player personal vehicles garage
-    local src = source
-    if type(garageName) ~= "string" then
-        return
-    end
-    local aPlayer = exports.ava_core:GetPlayer(src)
-    if not aPlayer then
-        return
-    end
-    -- TODO Only show vehicles from this garage?
-    if type(vehicleType) == "number" then
-        return MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid AND `vehicletype` = :vehicletype",
-            { citizenid = aPlayer.citizenId, vehicletype = vehicleType })
-    else
-        return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid",
-            { citizenid = aPlayer.citizenId })
-    end
-end)
+exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInGarage",
+    function(source, garageName, vehicleType)
+        -- Player personal vehicles garage
+        local src = source
+        if type(garageName) ~= "string" then
+            return
+        end
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then
+            return
+        end
+        -- TODO Only show vehicles from this garage?
+        if type(vehicleType) == "number" then
+            return MySQL.query.await(
+                "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid AND `vehicletype` = :vehicletype"
+                , { citizenid = aPlayer.citizenId, vehicletype = vehicleType })
+        else
+            return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `citizenid` = :citizenid"
+                , { citizenid = aPlayer.citizenId })
+        end
+    end)
 
-exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInJobGarage", function(source, garageName, jobName, vehicleType)
-    -- Garage where every vehicle inside of it is accessible to the player
-    local src = source
-    if type(garageName) ~= "string" or type(jobName) ~= "string" or not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".main") then
-        return
-    end
-    -- Get all vehicles from the job
-    -- TODO Only show vehicles from this garage?
-    if type(vehicleType) == "number" then
-        return MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name AND `vehicletype` = :vehicletype",
-            { job_name = jobName, vehicletype = vehicleType })
-    else
-        return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name",
-            { job_name = jobName })
-    end
-end)
+exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInJobGarage",
+    function(source, garageName, jobName, vehicleType)
+        -- Garage where every vehicle inside of it is accessible to the player
+        local src = source
+        if type(garageName) ~= "string" or type(jobName) ~= "string" or
+            not IsPlayerAceAllowed(src, "ace.job." .. jobName .. ".main") then
+            return
+        end
+        -- Get all vehicles from the job
+        -- TODO Only show vehicles from this garage?
+        if type(vehicleType) == "number" then
+            return MySQL.query.await(
+                "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name AND `vehicletype` = :vehicletype"
+                ,
+                { job_name = jobName, vehicletype = vehicleType })
+        else
+            return MySQL.query.await("SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype` FROM `ava_vehicles` WHERE `job_name` = :job_name"
+                ,
+                { job_name = jobName })
+        end
+    end)
 
-exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInCommonGarage", function(source, garageName, vehicleType)
-    -- Garage where every vehicle inside of it is accessible to everyone, and everyone can put his vehicle in it
-    local src = source
-    if type(garageName) ~= "string" then
-        return
-    end
-    local aPlayer = exports.ava_core:GetPlayer(src)
-    if not aPlayer then
-        return
-    end
-    -- Get all vehicles in the garage
-    if type(vehicleType) == "number" then
-        return MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage AND `vehicletype` = :vehicletype",
-            { citizenid = aPlayer.citizenId, garage = garageName, vehicletype = vehicleType })
-    else
-        return MySQL.query.await(
-            "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage",
-            { citizenid = aPlayer.citizenId, garage = garageName })
-    end
-end)
+exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInCommonGarage",
+    function(source, garageName, vehicleType)
+        -- Garage where every vehicle inside of it is accessible to everyone, and everyone can put his vehicle in it
+        local src = source
+        if type(garageName) ~= "string" then
+            return
+        end
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then
+            return
+        end
+        -- Get all vehicles in the garage
+        if type(vehicleType) == "number" then
+            return MySQL.query.await(
+                "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage AND `vehicletype` = :vehicletype"
+                ,
+                { citizenid = aPlayer.citizenId, garage = garageName, vehicletype = vehicleType })
+        else
+            return MySQL.query.await(
+                "SELECT `id`, `label`, `model`, `plate`, `parked`, `garage`, `vehicletype`, citizenid = :citizenid AS `can_rename` FROM `ava_vehicles` WHERE `garage` = :garage"
+                ,
+                { citizenid = aPlayer.citizenId, garage = garageName })
+        end
+    end)
 -- #endregion get vehicles in garage
 
 IsAllowedToInteractWithVehicle = function(vehicleId, aPlayer, checkCanManage, IsCommonGarage, garageName)
     if not vehicleId or not aPlayer then
         return false
     end
-    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `model`, `parked`, `insurance_left` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name`, `garage`, `model`, `parked`, `insurance_left` FROM `ava_vehicles` WHERE `id` = :id"
+        , { id = vehicleId })
     if not vehicle then
         return false
     end
-    if (vehicle.ownertype == 0 and (tonumber(vehicle.citizenid) == tonumber(aPlayer.citizenId) or (IsCommonGarage and garageName == vehicle.garage)))
+    if (
+        vehicle.ownertype == 0 and
+            (
+            tonumber(vehicle.citizenid) == tonumber(aPlayer.citizenId) or
+                (IsCommonGarage and garageName == vehicle.garage)))
         or (vehicle.ownertype == 1 and IsPlayerAceAllowed(aPlayer.src, "ace.job." .. vehicle.job_name .. ".main")
             and (not checkCanManage or IsPlayerAceAllowed(aPlayer.src, "job." .. vehicle.job_name .. ".manage"))) then
         return true, vehicle
@@ -116,7 +131,8 @@ exports("GenerateValidPlate", GenerateValidPlate)
 ---@param plate string vehicle plate
 ---@param modsData string mods data as json
 local AddPlayerVehicle = function(citizenId, vehicleType, vehicleModel, label, plate, modsData)
-    return MySQL.insert.await("INSERT INTO `ava_vehicles` (`ownertype`, `citizenid`, `vehicletype`, `model`, `label`, `plate`, `modsdata`, `healthdata`) VALUES (0, :citizenid, :vehicletype, :model, :label, :plate, :modsdata, '{}')", {
+    return MySQL.insert.await("INSERT INTO `ava_vehicles` (`ownertype`, `citizenid`, `vehicletype`, `model`, `label`, `plate`, `modsdata`, `healthdata`) VALUES (0, :citizenid, :vehicletype, :model, :label, :plate, :modsdata, '{}')"
+        , {
         citizenid = citizenId,
         vehicletype = vehicleType,
         model = vehicleModel,
@@ -135,7 +151,8 @@ exports("AddPlayerVehicle", AddPlayerVehicle)
 ---@param plate string vehicle plate
 ---@param modsData string mods data as json
 local AddJobVehicle = function(jobName, vehicleType, vehicleModel, label, plate, modsData)
-    return MySQL.insert.await("INSERT INTO `ava_vehicles` (`ownertype`, `job_name`, `vehicletype`, `model`, `label`, `plate`, `modsdata`, `healthdata`, `garage`) VALUES (1, :job_name, :vehicletype, :model, :label, :plate, :modsdata, '{}', :garage)", {
+    return MySQL.insert.await("INSERT INTO `ava_vehicles` (`ownertype`, `job_name`, `vehicletype`, `model`, `label`, `plate`, `modsdata`, `healthdata`, `garage`) VALUES (1, :job_name, :vehicletype, :model, :label, :plate, :modsdata, '{}', :garage)"
+        , {
         job_name = jobName,
         vehicletype = vehicleType,
         model = vehicleModel,
@@ -152,10 +169,14 @@ exports("AddJobVehicle", AddJobVehicle)
 ---@param aPlayer aPlayer player who is removing the vehicle
 local RemoveVehicle = function(vehicleId, aPlayer)
     -- Log informations to discord
-    local vehicleData = MySQL.single.await("SELECT COALESCE(`citizenid`, `job_name`) AS `owner`, `label`, `model`, `plate`, `modsdata`, `vehicletype` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    local vehicleData = MySQL.single.await("SELECT COALESCE(`citizenid`, `job_name`) AS `owner`, `label`, `model`, `plate`, `modsdata`, `vehicletype` FROM `ava_vehicles` WHERE `id` = :id"
+        , { id = vehicleId })
     if vehicleData then
-        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions", GetString("log_remove_vehicle_title", aPlayer and (aPlayer.citizenId .. " " .. aPlayer.getDiscordTag()) or "console"),
-            GetString("log_remove_vehicle_description", vehicleData.label, vehicleData.owner, vehicleData.plate, vehicleData.model, vehicleData.vehicletype, vehicleData.modsdata), 0x007acc)
+        exports.ava_core:SendWebhookEmbedMessage("avan0x_wh_rp_actions",
+            GetString("log_remove_vehicle_title",
+                aPlayer and (aPlayer.citizenId .. " " .. aPlayer.getDiscordTag()) or "console"),
+            GetString("log_remove_vehicle_description", vehicleData.label, vehicleData.owner, vehicleData.plate,
+                vehicleData.model, vehicleData.vehicletype, vehicleData.modsdata), 0x007acc)
     end
 
     MySQL.update.await("DELETE FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
@@ -170,12 +191,13 @@ exports.ava_core:RegisterServerCallback("ava_garages:server:renameVehicle", func
     if not aPlayer then
         return false
     end
-    label = exports.ava_core:Trim(label)
+    label = label:trim()
     if label:len() < 2 or label:len() > 50 then
         return false
     end
     if IsAllowedToInteractWithVehicle(vehicleId, aPlayer, true) then
-        MySQL.update.await("UPDATE `ava_vehicles` SET `label` = :label WHERE `id` = :id", { id = vehicleId, label = label })
+        MySQL.update.await("UPDATE `ava_vehicles` SET `label` = :label WHERE `id` = :id",
+            { id = vehicleId, label = label })
         return true
     end
     return false
@@ -192,9 +214,11 @@ local SetupSpawnedVehicle = function(src, vehicleNet, vehicle, vehicleId)
     entityState.state:set("id", vehicleId, false)
     -- TODO Maybe save the entity net idea to an array, listen to entityRemoved event and remove it from the array, used to see if the vehicle should be able to be spawned again?
 
-    local vehicleData = MySQL.single.await("SELECT `modsdata`, `healthdata` FROM `ava_vehicles` WHERE `id` = :id", { id = vehicleId })
+    local vehicleData = MySQL.single.await("SELECT `modsdata`, `healthdata` FROM `ava_vehicles` WHERE `id` = :id",
+        { id = vehicleId })
     if vehicleData then
-        TriggerClientEvent("ava_garages:client:setVehicleData", src, vehicleNet, vehicleData.modsdata, vehicleData.healthdata)
+        TriggerClientEvent("ava_garages:client:setVehicleData", src, vehicleNet, vehicleData.modsdata,
+            vehicleData.healthdata)
     end
 end
 exports("SetupSpawnedVehicle", SetupSpawnedVehicle)
@@ -241,56 +265,60 @@ end)
 -- #endregion take out vehicle
 
 -- #region park vehicle
-RegisterNetEvent("ava_garages:server:parkVehicle", function(garageName, vehicleNet, healthData, IsJobGarage, IsCommonGarage)
-    local src = source
-    local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
-    if not DoesEntityExist(vehicle) then return end
+RegisterNetEvent("ava_garages:server:parkVehicle",
+    function(garageName, vehicleNet, healthData, IsJobGarage, IsCommonGarage)
+        local src = source
+        local vehicle = NetworkGetEntityFromNetworkId(vehicleNet)
+        if not DoesEntityExist(vehicle) then return end
 
-    local aPlayer = exports.ava_core:GetPlayer(src)
-    if not aPlayer then return false end
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if not aPlayer then return false end
 
-    local entityState = Entity(vehicle)
-    local vehicleId = entityState.state.id
-    if not vehicleId then
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
-        return
-    end
-
-    local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage, garageName)
-    local vehicleParked = false
-    if allowed then
-        if vehicleData.ownertype == 0 and not IsJobGarage then
-            -- Player vehicle
-            vehicleParked = true
-        elseif vehicleData.ownertype == 1 and IsJobGarage == vehicleData.job_name and not IsCommonGarage then
-            -- Job vehicle
-            vehicleParked = true
+        local entityState = Entity(vehicle)
+        local vehicleId = entityState.state.id
+        if not vehicleId then
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
+            return
         end
-    end
 
-    if vehicleParked then
-        MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage, `healthdata` = :healthdata WHERE `id` = :id",
-            { id = vehicleId, garage = garageName, parked = true, healthdata = healthData })
-        TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "park_vehicle", "vehicleid:" .. vehicleId })
-
-        for i = -1, 6 do
-            local ped = GetPedInVehicleSeat(vehicle, i)
-            if ped > 0 then
-                TaskLeaveVehicle(ped, vehicle, 1)
+        local allowed, vehicleData = IsAllowedToInteractWithVehicle(vehicleId, aPlayer, false, IsCommonGarage, garageName)
+        local vehicleParked = false
+        if allowed then
+            if vehicleData.ownertype == 0 and not IsJobGarage then
+                -- Player vehicle
+                vehicleParked = true
+            elseif vehicleData.ownertype == 1 and IsJobGarage == vehicleData.job_name and not IsCommonGarage then
+                -- Job vehicle
+                vehicleParked = true
             end
         end
-        Wait(1500)
 
-        DeleteEntity(vehicle)
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_vehicle_parked"))
-    else
-        TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
-    end
-end)
+        if vehicleParked then
+            MySQL.update("UPDATE `ava_vehicles` SET `parked` = :parked, `garage` = :garage, `healthdata` = :healthdata WHERE `id` = :id"
+                ,
+                { id = vehicleId, garage = garageName, parked = true, healthdata = healthData })
+            TriggerEvent("ava_logs:server:log",
+                { "citizenid:" .. aPlayer.citizenId, "park_vehicle", "vehicleid:" .. vehicleId })
+
+            for i = -1, 6 do
+                local ped = GetPedInVehicleSeat(vehicle, i)
+                if ped > 0 then
+                    TaskLeaveVehicle(ped, vehicle, 1)
+                end
+            end
+            Wait(1500)
+
+            DeleteEntity(vehicle)
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_vehicle_parked"))
+        else
+            TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("garage_park_cant_park_this_vehicle"))
+        end
+    end)
 -- #endregion park vehicle
 
 local GetVehicleOwnerLabel = function(plate)
-    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name` FROM `ava_vehicles` WHERE `plate` = :plate", { plate = exports.ava_core:Trim(plate) })
+    local vehicle = MySQL.single.await("SELECT `ownertype`, `citizenid`, `job_name` FROM `ava_vehicles` WHERE `plate` = :plate"
+        , { plate = plate:trim() })
     if vehicle then
         if vehicle.ownertype == 0 then
             -- Player owned

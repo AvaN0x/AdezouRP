@@ -4,14 +4,6 @@
 -------------------------------------------
 AVA.Utils = {}
 
----Trim
----@param string string
----@return string
-AVA.Utils.Trim = function(string)
-    return (string.gsub(string, "^%s*(.-)%s*$", "%1"))
-end
-exports("Trim", AVA.Utils.Trim)
-
 ---Format a number from "123456789" to "123 456 789"
 ---@param number any
 ---@return string

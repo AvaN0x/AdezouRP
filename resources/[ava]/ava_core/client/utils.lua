@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-importGlobal({ "table:has" })
+import({ "table:has", "string:trim" })
 
 ---Prompt the user a text
 ---@param titleText string
@@ -22,7 +22,7 @@ AVA.KeyboardInput = function(titleText, defaultText, maxLength)
         result = tostring(GetOnscreenKeyboardResult())
     end
     Citizen.Wait(100)
-    return AVA.Utils.Trim(result) or ""
+    return result:trim() or ""
 end
 exports("KeyboardInput", AVA.KeyboardInput)
 

@@ -2,7 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-importGlobal({ "DrawText3D", "table:has" })
+importGlobal("DrawText3D")
+import("table:has")
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()

@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-importGlobal("table:has")
+import("table:has")
 
 
 local TimeLastAction = 0
