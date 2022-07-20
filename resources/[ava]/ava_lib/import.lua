@@ -43,7 +43,7 @@ function import(name)
     end
 
     -- Try to load the file
-    local f, err = load(file, ("@@%s/packages/%s"):format(libName, path))
+    local f, err = load(file, ("@@%s/packages/%s"):format(libName, path)) -- Second arg is used for the error
     if err then
         return error(("import: failed, could not load `%s`:\n%s"):format(path, err))
     end
