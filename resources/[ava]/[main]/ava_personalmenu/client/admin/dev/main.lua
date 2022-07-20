@@ -12,6 +12,7 @@ local showhash_object = GetResourceKvpInt("showhash_object") == 0
 local showhash_vehicle = GetResourceKvpInt("showhash_vehicle") == 0
 local showhash_ped = GetResourceKvpInt("showhash_ped") == 0
 local showhash_dimensions = GetResourceKvpInt("showhash_dimensions") == 0
+local showhash_distance = 5
 
 function PoolDevMenu()
     DevAdminMenu:IsVisible(function(Items)
@@ -72,6 +73,13 @@ function PoolDevMenu()
                         if (onSelected) then
                             showhash_dimensions = not showhash_dimensions
                             SetResourceKvpInt("showhash_dimensions", showhash_dimensions and 0 or 1)
+                        end
+                    end)
+                Items:AddList(GetString("dev_menu_showhash_distance"), 16, showhash_distance,
+                    GetString("dev_menu_showhash_distance_subtitle"), { Min = 4, IsDisabled = not showhash },
+                    function(Index, onSelected, onListChange)
+                        if (onListChange) then
+                            showhash_distance = Index;
                         end
                     end)
 
@@ -261,7 +269,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                 for _, v in ipairs(GetGamePool("CObject")) do
                     local prop = GetObjectIndexFromEntityIndex(v)
                     local propCoords = GetEntityCoords(prop)
-                    if #(playerCoords - propCoords) < 5.0 then
+                    if #(playerCoords - propCoords) < showhash_distance then
                         count = count + 1
                         local model = GetEntityModel(prop)
                         local archetypeName = GetEntityArchetypeName(prop)
@@ -275,7 +283,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                 for _, v in ipairs(GetGamePool("CVehicle")) do
                     local veh = GetObjectIndexFromEntityIndex(v)
                     local vehCoords = GetEntityCoords(veh)
-                    if #(playerCoords - vehCoords) < 10.0 then
+                    if #(playerCoords - vehCoords) < (showhash_distance * 2) then
                         count = count + 1
                         local model = GetEntityModel(veh)
                         local archetypeName = GetEntityArchetypeName(veh)
@@ -289,7 +297,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                 for _, v in ipairs(GetGamePool("CPed")) do
                     local ped = GetObjectIndexFromEntityIndex(v)
                     local pedCoords = GetEntityCoords(ped)
-                    if #(playerCoords - pedCoords) < 10.0 then
+                    if #(playerCoords - pedCoords) < (showhash_distance * 2) then
                         count = count + 1
                         local model = GetEntityModel(ped)
                         local archetypeName = GetEntityArchetypeName(ped)
