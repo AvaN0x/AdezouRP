@@ -97,7 +97,7 @@ function IsAuthorized(tpID)
 
     if tpID.authorizedJobs then
         for _, jobName in pairs(tpID.authorizedJobs) do
-            if TableHasCondition(playerJobs, function(i, job)
+            if table.has(playerJobs, function(i, job)
                 return job.name == jobName
             end) then
                 return true

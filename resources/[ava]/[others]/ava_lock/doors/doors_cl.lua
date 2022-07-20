@@ -246,7 +246,7 @@ function IsDoorAuthorized(doorID)
 
     if doorID.authorizedJobs then
         for _, jobName in pairs(doorID.authorizedJobs) do
-            if TableHasCondition(playerJobs, function(i, job)
+            if table.has(playerJobs, function(i, job)
                 return job.name == jobName
             end) then
                 return true

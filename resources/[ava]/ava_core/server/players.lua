@@ -104,7 +104,7 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason, deferral
                     if member then
                         local gotRole
                         for k, v in ipairs(AVAConfig.Discord.Whitelist) do
-                            if AVA.Utils.TableHasValue(member.roles, v) then
+                            if table.has(member.roles, v) then
                                 gotRole = true
                                 break
                             end
@@ -266,7 +266,7 @@ local function setupPlayer(src, oldSource)
         local group, discordTag = nil, ""
         if AVAConfig.DiscordWhitelist then
             for i = 1, #AVAConfig.Discord.Ace, 1 do
-                if AVA.Utils.TableHasValue(member.roles, AVAConfig.Discord.Ace[i].role) then
+                if table.has(member.roles, AVAConfig.Discord.Ace[i].role) then
                     group = AVAConfig.Discord.Ace[i].ace
                     break
                 end
@@ -893,7 +893,6 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
             return
         end
         local playerItems = aPlayer.getInventory().items
-        local TabHasValue <const> = AVA.Utils.TableHasValue
         local Items <const> = AVAConfig.Items
         local WeaponsTypes <const> = AVAConfig.WeaponsTypes
 
@@ -909,7 +908,7 @@ RegisterNetEvent("ava_core:server:reloadLoadout", function()
             if item and item.quantity > 0 then
                 local cfgItem = Items[item.name]
                 if cfgItem then
-                    if TabHasValue(WeaponsTypes, cfgItem.type) then
+                    if table.has(WeaponsTypes, cfgItem.type) then
                         -- dprint("^9[WEAPONS] ^0" .. aPlayer.getDiscordTag() .. " add weapon ^2" .. item.name .. "^0")
                         if aPlayer.addWeapon(item.name, true) then
                             weaponCount = weaponCount + 1

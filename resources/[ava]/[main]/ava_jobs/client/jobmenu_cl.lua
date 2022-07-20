@@ -21,7 +21,8 @@ local function updateJobsToSelect()
     for jobName, job in pairs(playerJobs) do
         if not job.isIllegal and (job.canManage or job.JobMenu) then
             jobCount = jobCount + 1
-            JobsToSelect[jobCount] = { label = job.LabelName, name = jobName, isGang = job.isGang and 1 or 0, LeftBadge = job.isGang and RageUI.BadgeStyle.Gun }
+            JobsToSelect[jobCount] = { label = job.LabelName, name = jobName, isGang = job.isGang and 1 or 0,
+                LeftBadge = job.isGang and RageUI.BadgeStyle.Gun }
         end
     end
 
@@ -32,7 +33,8 @@ local function updateJobsToSelect()
     end
 end
 
-local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, GetString("job_menu"), GetString("job_menu_title", ""), 0, 0, "avaui", "avaui_title_adezou")
+local MainJobMenu = RageUI.CreateSubMenu(SelectJobMenu, GetString("job_menu"), GetString("job_menu_title", ""), 0, 0,
+    "avaui", "avaui_title_adezou")
 local JobMenuElements = {}
 local openedMenuJobName = nil
 MainJobMenu.Closed = function()
@@ -51,13 +53,17 @@ local function JobMenu(jobName)
     end
     openedMenuJobName = jobName
 
-    local jobGrade<const> = playerJobsJobName.grade
+    local jobGrade <const> = playerJobsJobName.grade
 
     JobMenuElements = {}
     if playerJobsJobName.JobMenu and playerJobsJobName.JobMenu.Items then
         local elementCount = 0
         for k, v in pairs(playerJobsJobName.JobMenu.Items) do
-            if (not v.MinimumGrade or (playerJobsJobName.grade == v.MinimumGrade or tableHasValue(playerJobsJobName.underGrades, v.MinimumGrade)))
+            if (
+                not v.MinimumGrade or
+                    (
+                    playerJobsJobName.grade == v.MinimumGrade or table.has(playerJobsJobName.underGrades, v.MinimumGrade)
+                    ))
                 and (not v.Condition or v.Condition(jobName, playerPed)) then
                 elementCount = elementCount + 1
                 JobMenuElements[elementCount] = { label = v.Label, index = k, desc = v.Desc, RightLabel = v.RightLabel }
@@ -65,7 +71,8 @@ local function JobMenu(jobName)
         end
     end
 
-    MainJobMenu.Subtitle = GetString(playerJobsJobName.isGang and "job_menu_title_gang" or "job_menu_title", playerJobsJobName.LabelName)
+    MainJobMenu.Subtitle = GetString(playerJobsJobName.isGang and "job_menu_title_gang" or "job_menu_title",
+        playerJobsJobName.LabelName)
     MainJobMenu:ResetIndex()
     if not RageUI.Visible(MainJobMenu) then
         RageUI.Visible(MainJobMenu, true)
@@ -93,11 +100,12 @@ function RageUI.PoolMenus:JobMenu()
 
         for i = 1, #JobsToSelect do
             local element = JobsToSelect[i]
-            Items:AddButton(element.label, nil, { RightLabel = "→→→", LeftBadge = element.LeftBadge }, function(onSelected)
-                if onSelected then
-                    JobMenu(element.name)
-                end
-            end, MainJobMenu)
+            Items:AddButton(element.label, nil, { RightLabel = "→→→", LeftBadge = element.LeftBadge },
+                function(onSelected)
+                    if onSelected then
+                        JobMenu(element.name)
+                    end
+                end, MainJobMenu)
         end
     end)
 
@@ -113,7 +121,9 @@ function RageUI.PoolMenus:JobMenu()
             for i = 1, #JobMenuElements do
                 local element = JobMenuElements[i]
                 if element then
-                    Items:AddButton(element.label, (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc, { IsDisabled = isDisabled },
+                    Items:AddButton(element.label,
+                        (isDisabled and GetString("need_in_service_subtitle") or "") .. element.desc,
+                        { IsDisabled = isDisabled },
                         function(onSelected)
                             if onSelected then
                                 if playerJobsJobName.JobMenu.Items[element.index]
@@ -128,61 +138,70 @@ function RageUI.PoolMenus:JobMenu()
         end
         if playerJobsJobName.canManage then
             if playerJobsJobName.bankBalance ~= nil then
-                Items:AddButton(GetString("job_menu_bank_balance", playerJobsJobName.bankBalanceString), GetString("job_menu_bank_balance_subtitle"))
+                Items:AddButton(GetString("job_menu_bank_balance", playerJobsJobName.bankBalanceString),
+                    GetString("job_menu_bank_balance_subtitle"))
             end
             if playerJobsJobName.isGang then
-                Items:AddButton(GetString("job_menu_manage_gang"), GetString("job_menu_manage_gang_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        JobMenuManage.Subtitle = GetString("job_menu_manage_gang")
-                    end
-                end, JobMenuManage)
+                Items:AddButton(GetString("job_menu_manage_gang"), GetString("job_menu_manage_gang_subtitle"), nil,
+                    function(onSelected)
+                        if onSelected then
+                            JobMenuManage.Subtitle = GetString("job_menu_manage_gang")
+                        end
+                    end, JobMenuManage)
 
             else
-                Items:AddButton(GetString("job_menu_write_bills"), GetString("job_menu_write_bills_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
-                        if targetId then
-                            local amount = tonumber(exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_amount"), "", 10))
+                Items:AddButton(GetString("job_menu_write_bills"), GetString("job_menu_write_bills_subtitle"), nil,
+                    function(onSelected)
+                        if onSelected then
+                            local targetId, localId = exports.ava_core:ChooseClosestPlayer(nil, nil, true)
+                            if targetId then
+                                local amount = tonumber(exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_amount")
+                                    , "", 10))
 
-                            if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
-                                local content = exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_content"), "", 256)
-                                if content and content ~= "" then
-                                    local playerPed = PlayerPedId()
-                                    TaskStartScenarioInPlace(playerPed, "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 0, true)
-                                    Wait(5000)
-                                    TriggerServerEvent("ava_bills:server:sendJobBillToPlayer", openedMenuJobName, targetId, amount, content)
-                                    ClearPedTasks(playerPed)
+                                if type(amount) == "number" and math.floor(amount) == amount and amount > 0 then
+                                    local content = exports.ava_core:KeyboardInput(GetString("job_menu_write_bills_input_content")
+                                        , "", 256)
+                                    if content and content ~= "" then
+                                        local playerPed = PlayerPedId()
+                                        TaskStartScenarioInPlace(playerPed, "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 0, true)
+                                        Wait(5000)
+                                        TriggerServerEvent("ava_bills:server:sendJobBillToPlayer", openedMenuJobName,
+                                            targetId, amount, content)
+                                        ClearPedTasks(playerPed)
+                                    end
+                                else
+                                    exports.ava_core:ShowNotification(GetString("amount_invalid"))
                                 end
-                            else
-                                exports.ava_core:ShowNotification(GetString("amount_invalid"))
                             end
                         end
-                    end
-                end)
-                Items:AddButton(GetString("job_menu_bills"), GetString("job_menu_bills_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        jobBills = {}
-                        local count = 0
-                        local bills = exports.ava_core:TriggerServerCallback("ava_bills:server:getJobBills", openedMenuJobName) or {}
-                        for i = 1, #bills do
-                            local bill = bills[i]
-                            count = count + 1
-                            jobBills[count] = {
-                                label = bill.content:len() > 36 and bill.content:sub(0, 33) .. "..." or bill.content,
-                                desc = GetString("bill_description", bill.date, bill.content),
-                                rightLabel = GetString("bill_amount", exports.ava_core:FormatNumber(bill.amount)),
-                                id = bill.id,
-                            }
+                    end)
+                Items:AddButton(GetString("job_menu_bills"), GetString("job_menu_bills_subtitle"), nil,
+                    function(onSelected)
+                        if onSelected then
+                            jobBills = {}
+                            local count = 0
+                            local bills = exports.ava_core:TriggerServerCallback("ava_bills:server:getJobBills",
+                                openedMenuJobName) or {}
+                            for i = 1, #bills do
+                                local bill = bills[i]
+                                count = count + 1
+                                jobBills[count] = {
+                                    label = bill.content:len() > 36 and bill.content:sub(0, 33) .. "..." or bill.content,
+                                    desc = GetString("bill_description", bill.date, bill.content),
+                                    rightLabel = GetString("bill_amount", exports.ava_core:FormatNumber(bill.amount)),
+                                    id = bill.id,
+                                }
+                            end
+                            JobMenuBills.Description = nil
                         end
-                        JobMenuBills.Description = nil
-                    end
-                end, JobMenuBills)
+                    end, JobMenuBills)
 
-                Items:AddButton(GetString("job_menu_manage_job"), GetString("job_menu_manage_job_subtitle"), nil, function(onSelected)
-                    if onSelected then
-                        JobMenuManage.Subtitle = GetString("job_menu_manage_job")
-                    end
-                end, JobMenuManage)
+                Items:AddButton(GetString("job_menu_manage_job"), GetString("job_menu_manage_job_subtitle"), nil,
+                    function(onSelected)
+                        if onSelected then
+                            JobMenuManage.Subtitle = GetString("job_menu_manage_job")
+                        end
+                    end, JobMenuManage)
             end
         end
     end)
@@ -210,45 +229,54 @@ function RageUI.PoolMenus:JobMenu()
                 end
             end
         end)
-        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"), nil, function(onSelected)
-            if onSelected then
-                local targetId, localId = exports.ava_core:ChooseClosestPlayer()
-                if targetId then
-                    local jobIsGang<const> = playerJobsJobName.isGang
-                    local grades, targetHasJob = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades", openedMenuJobName, targetId)
-                    if not targetHasJob then
-                        if playerJobsJobName.isGang then
-                            exports.ava_core:ShowNotification(GetString("player_do_not_have_this_gang"), nil, "ava_core_logo", playerJobsJobName.LabelName)
-                        else
-                            exports.ava_core:ShowNotification(GetString("player_do_not_have_this_job"), nil, "ava_core_logo", playerJobsJobName.LabelName)
+        Items:AddButton(GetString("job_menu_change_grade"), GetString("job_menu_change_grade_subtitle"), nil,
+            function(onSelected)
+                if onSelected then
+                    local targetId, localId = exports.ava_core:ChooseClosestPlayer()
+                    if targetId then
+                        local jobIsGang <const> = playerJobsJobName.isGang
+                        local grades, targetHasJob = exports.ava_core:TriggerServerCallback("ava_jobs:getAllGrades",
+                            openedMenuJobName, targetId)
+                        if not targetHasJob then
+                            if playerJobsJobName.isGang then
+                                exports.ava_core:ShowNotification(GetString("player_do_not_have_this_gang"), nil,
+                                    "ava_core_logo", playerJobsJobName.LabelName)
+                            else
+                                exports.ava_core:ShowNotification(GetString("player_do_not_have_this_job"), nil,
+                                    "ava_core_logo", playerJobsJobName.LabelName)
+                            end
+                            return
                         end
-                        return
-                    end
-                    if grades then
-                        for i = 1, #grades do
-                            local grade = grades[i]
-                            grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
-                                or (grade.canManage
-                                    and GetString(jobIsGang and "job_menu_grade_can_manage_members" or "job_menu_grade_can_manage_employees"))
-                        end
-
-                        RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
+                        if grades then
                             for i = 1, #grades do
                                 local grade = grades[i]
-
-                                Items:AddButton(grade.label, grade.desc, { LeftBadge = grade.canManage and RageUI.BadgeStyle.Star, IsDisabled = grade.actual },
-                                    function(onSelected)
-                                        if onSelected then
-                                            TriggerServerEvent("ava_jobs:server:job_menu_change_grade", targetId, openedMenuJobName, grade.name)
-                                            RageUI.GoBack()
-                                        end
-                                    end)
+                                grade.desc = grade.actual and GetString("job_menu_player_actual_grade")
+                                    or (grade.canManage
+                                        and
+                                        GetString(jobIsGang and "job_menu_grade_can_manage_members" or
+                                            "job_menu_grade_can_manage_employees"))
                             end
-                        end, nil, JobMenuManage.Sprite.Texture, JobMenuManage.Sprite.Dictionary)
+
+                            RageUI.OpenTempMenu(GetString("job_menu_select_grade"), function(Items)
+                                for i = 1, #grades do
+                                    local grade = grades[i]
+
+                                    Items:AddButton(grade.label, grade.desc,
+                                        { LeftBadge = grade.canManage and RageUI.BadgeStyle.Star,
+                                            IsDisabled = grade.actual },
+                                        function(onSelected)
+                                            if onSelected then
+                                                TriggerServerEvent("ava_jobs:server:job_menu_change_grade", targetId,
+                                                    openedMenuJobName, grade.name)
+                                                RageUI.GoBack()
+                                            end
+                                        end)
+                                end
+                            end, nil, JobMenuManage.Sprite.Texture, JobMenuManage.Sprite.Dictionary)
+                        end
                     end
                 end
-            end
-        end)
+            end)
     end)
 
     JobMenuBills:IsVisible(function(Items)

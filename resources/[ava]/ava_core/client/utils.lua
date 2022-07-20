@@ -2,6 +2,8 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+importGlobal({ "table:has" })
+
 ---Prompt the user a text
 ---@param titleText string
 ---@param defaultText? string
@@ -1196,8 +1198,8 @@ AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
         local vehCoords = GetEntityCoords(veh)
         local vehModel = GetEntityModel(veh)
         if #(playerCoords - vehCoords) < distance + 0.0 and
-            (whitelist == nil or #whitelist == 0 or AVA.Utils.TableHasValue(whitelist, vehModel))
-            and (blacklist == nil or #blacklist == 0 or not AVA.Utils.TableHasValue(blacklist, vehModel)) then
+            (whitelist == nil or #whitelist == 0 or table.has(whitelist, vehModel))
+            and (blacklist == nil or #blacklist == 0 or not table.has(blacklist, vehModel)) then
             entityCount = entityCount + 1
             entitiesToSelect[entityCount] = { label = GetString("vehicle_number", entityCount), entity = veh }
         end

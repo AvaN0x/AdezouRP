@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-importGlobal("DrawText3D")
+importGlobal({ "DrawText3D", "table:has" })
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()
@@ -35,23 +35,6 @@ AddEventHandler("ava_lock:client:dooranim", function()
         ClearPedSecondaryTask(playerPed)
     end
 end)
-
-
----Check if a given table has a condition
----@param table table
----@param condition fun(i: index, element: any)
----@return boolean
-function TableHasCondition(table, condition)
-    if type(table) == "table" and condition then
-        for i = 1, #table do
-            local element = table[i]
-            if condition(i, element) then
-                return true
-            end
-        end
-    end
-    return false
-end
 
 function ShowHelpNotification(text)
     AddTextEntry("AVA_NOTF_HELP", text)

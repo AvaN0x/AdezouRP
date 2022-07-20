@@ -2,6 +2,9 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
+importGlobal("table:has")
+
+
 local TimeLastAction = 0
 PlayerData = {}
 playerJobs = {}
@@ -218,38 +221,38 @@ function checkAuthorizations()
                 elseif k == "ManagerMenu" then
                     job.Zones[k].Allowed = job.canManage
                 else
-                    job.Zones[k].Allowed = not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade))
+                    job.Zones[k].Allowed = not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade))
                 end
             end
         end
         if job.FieldZones ~= nil then
             for k, v in pairs(job.FieldZones) do
                 job.FieldZones[k].Allowed = job.isIllegal
-                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.ProcessZones ~= nil then
             for k, v in pairs(job.ProcessZones) do
                 job.ProcessZones[k].Allowed = job.isIllegal
-                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.ProcessMenuZones ~= nil then
             for k, v in pairs(job.ProcessMenuZones) do
                 job.ProcessMenuZones[k].Allowed = job.isIllegal
-                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.SellZones ~= nil then
             for k, v in pairs(job.SellZones) do
                 job.SellZones[k].Allowed = job.isIllegal
-                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade)))
             end
         end
         if job.BuyZones ~= nil then
             for k, v in pairs(job.BuyZones) do
                 job.BuyZones[k].Allowed = job.isIllegal
-                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or tableHasValue(job.underGrades, v.MinimumGrade)))
+                    or (not v.MinimumGrade or (job.grade == v.MinimumGrade or table.has(job.underGrades, v.MinimumGrade)))
             end
         end
     end
@@ -683,7 +686,7 @@ function OpenCloakroomMenu()
         for i = 1, #zoneOutfits do
             local outfit = zoneOutfits[i]
             if outfit[playerSkin.gender == 0 and "Male" or "Female"] then
-                outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not tableHasValue(job.underGrades, outfit.MinimumGrade)
+                outfit.IsDisabled = outfit.MinimumGrade and job.grade ~= outfit.MinimumGrade and not table.has(job.underGrades, outfit.MinimumGrade)
                 count = count + 1
                 outfits[count] = outfit
             end
@@ -1037,18 +1040,4 @@ function JobCenterMenu()
     end, function()
         CurrentActionEnabled = true
     end)
-end
-
------------
--- Utils --
------------
-
-function tableHasValue(table, val)
-    for k, value in ipairs(table) do
-        if value == val then
-            return true
-        end
-    end
-
-    return false
 end
