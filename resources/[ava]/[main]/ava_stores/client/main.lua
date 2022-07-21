@@ -210,7 +210,7 @@ function BuyZone()
     if not exports.ava_core:canOpenMenu() then return end
     local store = Config.Stores[CurrentZoneName]
 
-    local items = exports.ava_core:TriggerServerCallback("ava_stores:getStoreItems", CurrentZoneName)
+    local items = exports.ava_core:TriggerServerCallback("ava_stores:getStoreItems", 0, CurrentZoneName)
 
     local elements = {}
     local count = 0
@@ -261,8 +261,8 @@ function BuyZone()
 
     else
         exports.ava_core:ShowNotification(GetString("nothing_can_buy"))
+        CurrentActionEnabled = true
     end
-
 end
 
 function CarWash()

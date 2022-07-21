@@ -4,8 +4,6 @@
 -------------------------------------------
 local Items = exports.ava_core:GetItemsData()
 
--- TODO loop through each stores in config and remove useless data for server
-
 RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
     local src = source
     local store = Config.Stores[storeName]
@@ -36,7 +34,9 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
                 if inventory.canRemoveItem("dirtycash", totalprice) then
                     inventory.removeItem("dirtycash", totalprice)
                     inventory.addItem(item, count)
-                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count, "price:" .. price, "(dirtycash)" })
+                    TriggerEvent("ava_logs:server:log",
+                        { "citizenid:" .. aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count,
+                            "price:" .. price, "(dirtycash)" })
                 else
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford_dirty"))
                 end
@@ -45,15 +45,15 @@ RegisterNetEvent("ava_stores:server:buyItem", function(storeName, item, count)
                     inventory.removeItem("cash", totalprice)
                     inventory.addItem(item, count)
                     exports.ava_jobs:applyTaxes(totalPrice, storeName .. ":citizenid:" .. aPlayer.citizenId)
-                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count, "price:" .. price })
+                    TriggerEvent("ava_logs:server:log",
+                        { "citizenid:" .. aPlayer.citizenId, "buy_item", "item:" .. item, "count:" .. count,
+                            "price:" .. price })
                 else
                     TriggerClientEvent("ava_core:client:ShowNotification", src, GetString("cant_afford"))
                 end
 
             end
         end
-    else
-        print(("%s attempted to exploit buying!"):format(GetPlayerIdentifiers(src)[1]))
     end
 end)
 
@@ -68,9 +68,17 @@ local function has_license(table, licenseName)
     return false
 end
 
-exports.ava_core:RegisterServerCallback("ava_stores:getStoreItems", function(source, storeName)
+exports.ava_core:RegisterServerCallback("ava_stores:getStoreItems", function(source, storeType, storeName)
+    -- Store type is:
+    -- 0 for stores
+    -- 1 for vending machines
     local src = source
-    local store = Config.Stores[storeName]
+    local store = nil
+    if storeType == 0 then
+        store = Config.Stores[storeName]
+    elseif storeType == 1 then
+        store = Config.VendingMachines[storeName]
+    end
 
     if store and store.Items then
         local aPlayer = exports.ava_core:GetPlayer(src)
@@ -136,7 +144,7 @@ exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:checkMon
         local aPlayer = exports.ava_core:GetPlayer(src)
         if aPlayer then
             local inventory = aPlayer.getInventory()
-            local price<const> = store.Price
+            local price <const> = store.Price
             if price and inventory.canRemoveItem("cash", price) then
                 return true
             end
@@ -153,29 +161,31 @@ exports.ava_core:RegisterCommand({ "outfitsmenu", "om" }, "admin", function(sour
     TriggerClientEvent("ava_stores:client:OpenPlayerOutfitsMenu", source)
 end, GetString("outfitsmenu_help"))
 
-exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payClothes", function(source, storeName, playerSkin)
-    local src = source
+exports.ava_core:RegisterServerCallback("ava_stores:server:clothesStore:payClothes",
+    function(source, storeName, playerSkin)
+        local src = source
 
-    local aPlayer = exports.ava_core:GetPlayer(src)
-    if aPlayer then
-        if storeName == nil and IsPlayerAceAllowed(source, "command.clothesmenu") then
-            aPlayer.setSkin(playerSkin)
-            return true
-        else
-            local store = Config.Stores[storeName]
-            if store and store.ClothesStore then
-                local inventory = aPlayer.getInventory()
-                local price<const> = store.Price
+        local aPlayer = exports.ava_core:GetPlayer(src)
+        if aPlayer then
+            if storeName == nil and IsPlayerAceAllowed(source, "command.clothesmenu") then
+                aPlayer.setSkin(playerSkin)
+                return true
+            else
+                local store = Config.Stores[storeName]
+                if store and store.ClothesStore then
+                    local inventory = aPlayer.getInventory()
+                    local price <const> = store.Price
 
-                if inventory.canRemoveItem("cash", price) then
-                    inventory.removeItem("cash", price)
-                    aPlayer.setSkin(playerSkin)
-                    exports.ava_jobs:applyTaxes(price, storeName .. ":citizenid:" .. aPlayer.citizenId)
-                    TriggerEvent("ava_logs:server:log", { "citizenid:" .. aPlayer.citizenId, "payClothes", "price:" .. price })
-                    return true
+                    if inventory.canRemoveItem("cash", price) then
+                        inventory.removeItem("cash", price)
+                        aPlayer.setSkin(playerSkin)
+                        exports.ava_jobs:applyTaxes(price, storeName .. ":citizenid:" .. aPlayer.citizenId)
+                        TriggerEvent("ava_logs:server:log",
+                            { "citizenid:" .. aPlayer.citizenId, "payClothes", "price:" .. price })
+                        return true
+                    end
                 end
             end
         end
-    end
-    return false
-end)
+        return false
+    end)

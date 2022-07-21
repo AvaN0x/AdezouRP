@@ -11,6 +11,7 @@
     "cant_afford_amount": "Vous n'avez pas assez d'argent ($%s)",
     "cant_afford_dirty": "Vous n'avez pas assez d'argent sale",
     "cant_afford_dirty_amount": "Vous n'avez pas assez d'argent sale ($%s)",
+    "vending_machine": "Distributeur",
     "press_wash_car": "Appuyez sur ~INPUT_CONTEXT~ pour laver votre véhicule pour ~g~$%s~s~",
     "carwash_not_in_vehicle": "Vous n'êtes pas dans un véhicule",
     "carwash_driving_too_fast": "Vous conduisez trop vite",
