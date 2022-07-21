@@ -58,6 +58,10 @@ Config.Jobs.bahama = { --todo when anyone want
         BuyBox = {
             Items = {
                 { name = "ecola", price = 15 },
+                { name = "sprunk", price = 15 },
+                { name = "orangotang", price = 15 },
+                { name = "munkyjuice", price = 15 },
+                { name = "junkenergy", price = 15 },
                 { name = "coffee", price = 13 },
                 { name = "pisswasser", price = 20 },
             },

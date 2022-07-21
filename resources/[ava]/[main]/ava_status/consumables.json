@@ -27,6 +27,81 @@
         }
     },
     {
+        "name": "pqs",
+        "status": {
+            "hunger": 500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat",
+            "args": [
+                "prop_candy_pqs"
+            ]
+        }
+    },
+    {
+        "name": "potatoes",
+        "status": {
+            "hunger": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "fries",
+        "status": {
+            "hunger": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "chickenburger",
+        "status": {
+            "hunger": 5000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "doublechickenburger",
+        "status": {
+            "hunger": 4000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "chickenwrap",
+        "status": {
+            "hunger": 2750
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "nuggets",
+        "status": {
+            "hunger": 2500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
+        "name": "tenders",
+        "status": {
+            "hunger": 2500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat"
+        }
+    },
+    {
         "name": "waterbottle",
         "status": {
             "thirst": 1250
@@ -37,6 +112,51 @@
     },
     {
         "name": "ecola",
+        "status": {
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_ecola_can"
+            ]
+        }
+    },
+    {
+        "name": "sprunk",
+        "status": {
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_ld_can_01"
+            ]
+        }
+    },
+    {
+        "name": "orangotang",
+        "status": {
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_orang_can_01"
+            ]
+        }
+    },
+    {
+        "name": "munkyjuice",
+        "status": {
+            "thirst": 2000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink"
+        }
+    },
+    {
+        "name": "junkenergy",
         "status": {
             "thirst": 2000
         },

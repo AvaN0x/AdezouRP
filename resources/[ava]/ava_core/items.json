@@ -64,6 +64,14 @@
         "weight": 50,
         "noIcon": true
     },
+    "pqs": {
+        "label": "P's & Q's",
+        "type": "food",
+        "description": "Mettez un fruit dans votre bouche!",
+        "weight": 50,
+        "model": "prop_candy_pqs",
+        "noIcon": true
+    },
     "orange": {
         "label": "Orange",
         "type": "food",
@@ -73,20 +81,53 @@
     },
     "waterbottle": {
         "label": "Bouteille d'eau",
-        "type": "liquid",
+        "type": "drink",
         "weight": 330
     },
     "ecola": {
         "label": "eCola",
-        "type": "liquid",
+        "type": "drink",
         "description": "Un soda délicieusement infect.",
         "weight": 330,
+        "model": "prop_ecola_can",
+        "noIcon": true
+    },
+    "sprunk": {
+        "label": "Sprunk",
+        "type": "drink",
+        "description": "Contient 10 fois la caféine et le sucre.",
+        "weight": 330,
+        "model": "prop_ld_can_01",
+        "noIcon": true
+    },
+    "orangotang": {
+        "label": "Orang-O-Tang",
+        "type": "drink",
+        "description": "Un soda délicieusement infect.",
+        "weight": 330,
+        "model": "prop_orang_can_01",
+        "noIcon": true
+    },
+    "munkyjuice": {
+        "label": "Munky Juice",
+        "type": "drink",
+        "description": "Goût de parasites.",
+        "weight": 330,
+        "noIcon": true
+    },
+    "junkenergy": {
+        "label": "Junk Energy Drink",
+        "type": "drink",
+        "description": "Un soda délicieusement infect.",
+        "weight": 330,
+        "model": "sf_prop_sf_can_01a",
         "noIcon": true
     },
     "coffee": {
         "label": "Café",
-        "type": "liquid",
+        "type": "drink",
         "weight": 330,
+        "model": "v_club_vu_coffeecup",
         "noIcon": true
     },
     "pisswasser": {
@@ -138,6 +179,56 @@
         "limit": 180,
         "noIcon": true
     },
+    "caged_chicken": {
+        "label": "Poule en cage",
+        "weight": 3200,
+        "noIcon": true
+    },
+    "plucked_chicken": {
+        "label": "Poulet déplumé",
+        "weight": 1000,
+        "noIcon": true
+    },
+    "raw_chicken": {
+        "label": "Poulet cru",
+        "weight": 500,
+        "noIcon": true
+    },
+    "chickenburger": {
+        "label": "Chicken Burger",
+        "type": "food",
+        "weight": 400,
+        "model": "prop_food_cb_bag_01",
+        "noIcon": true
+    },
+    "doublechickenburger": {
+        "label": "Double Chicken Burger",
+        "type": "food",
+        "weight": 600,
+        "model": "prop_food_cb_bag_01",
+        "noIcon": true
+    },
+    "chickenwrap": {
+        "label": "Wrap au poulet",
+        "type": "food",
+        "weight": 400,
+        "model": "prop_food_cb_bag_01",
+        "noIcon": true
+    },
+    "nuggets": {
+        "label": "Boite de nuggets",
+        "type": "food",
+        "weight": 500,
+        "model": "prop_food_cb_bag_01",
+        "noIcon": true
+    },
+    "tenders": {
+        "label": "Boite de tenders",
+        "type": "food",
+        "weight": 500,
+        "model": "prop_food_cb_bag_01",
+        "noIcon": true
+    },
     "woodenbox": {
         "label": "Caisse en bois",
         "weight": 500,
@@ -179,7 +270,7 @@
     },
     "grapejuice": {
         "label": "Jus de raisin",
-        "type": "liquid",
+        "type": "drink",
         "weight": 300,
         "limit": 200,
         "noIcon": true

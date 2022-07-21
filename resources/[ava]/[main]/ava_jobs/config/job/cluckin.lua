@@ -46,7 +46,7 @@ Config.Jobs.cluckin = {
     },
     FieldZones = {
         ChickenField = {
-            Items = { { name = "alive_chicken", quantity = 2 } },
+            Items = { { name = "caged_chicken", quantity = 2 } },
             PropHash = 610857585,
             Coord = vector3(85.95, 6331.61, 30.25),
             MinGroundHeight = 29,
@@ -57,7 +57,7 @@ Config.Jobs.cluckin = {
     },
     ProcessZones = {
         PluckProcess = {
-            ItemsGive = { { name = "alive_chicken", quantity = 2 } },
+            ItemsGive = { { name = "caged_chicken", quantity = 2 } },
             ItemsGet = { { name = "plucked_chicken", quantity = 2 } },
             Delay = 8000,
             Scenario = "WORLD_HUMAN_CLIPBOARD", -- https://pastebin.com/6mrYTdQv
@@ -164,6 +164,10 @@ Config.Jobs.cluckin = {
             Items = {
                 { name = "potato", price = 10 },
                 { name = "ecola", price = 15 },
+                { name = "sprunk", price = 15 },
+                { name = "orangotang", price = 15 },
+                { name = "munkyjuice", price = 15 },
+                { name = "junkenergy", price = 15 },
             },
             Coord = vector3(406.5, -350.02, 45.84),
             Size = { x = 1.5, y = 1.5, z = 1.5 },
