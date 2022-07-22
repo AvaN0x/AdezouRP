@@ -39,6 +39,54 @@
         }
     },
     {
+        "name": "phatchips",
+        "status": {
+            "hunger": 800
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat",
+            "args": [
+                "v_ret_ml_chips1"
+            ]
+        }
+    },
+    {
+        "name": "phatchips2",
+        "status": {
+            "hunger": 800
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat",
+            "args": [
+                "v_ret_ml_chips2"
+            ]
+        }
+    },
+    {
+        "name": "phatchips3",
+        "status": {
+            "hunger": 800
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat",
+            "args": [
+                "v_ret_ml_chips3"
+            ]
+        }
+    },
+    {
+        "name": "phatchips4",
+        "status": {
+            "hunger": 800
+        },
+        "clientEvent": {
+            "name": "ava_status:client:eat",
+            "args": [
+                "v_ret_ml_chips4"
+            ]
+        }
+    },
+    {
         "name": "potatoes",
         "status": {
             "hunger": 2000
@@ -104,10 +152,49 @@
     {
         "name": "waterbottle",
         "status": {
-            "thirst": 1250
+            "thirst": 1500
         },
         "clientEvent": {
-            "name": "ava_status:client:drink"
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_ld_flow_bottle"
+            ]
+        }
+    },
+    {
+        "name": "waterbottle_raine",
+        "status": {
+            "thirst": 1650
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "h4_prop_club_water_bottle"
+            ]
+        }
+    },
+    {
+        "name": "watercup_raine",
+        "status": {
+            "thirst": 500
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "prop_cs_paper_cup"
+            ]
+        }
+    },
+    {
+        "name": "coffee",
+        "status": {
+            "thirst": 1000
+        },
+        "clientEvent": {
+            "name": "ava_status:client:drink",
+            "args": [
+                "v_club_vu_coffeecup"
+            ]
         }
     },
     {

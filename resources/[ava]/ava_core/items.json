@@ -64,6 +64,38 @@
         "weight": 50,
         "noIcon": true
     },
+    "phatchips": {
+        "label": "Phat chips Sticky ribs",
+        "type": "food",
+        "description": "The Nation Loves Getting Phat.",
+        "weight": 250,
+        "model": "v_ret_ml_chips1",
+        "noIcon": true
+    },
+    "phatchips2": {
+        "label": "Phat chips Habanero",
+        "type": "food",
+        "description": "The Nation Loves Getting Phat.",
+        "weight": 250,
+        "model": "v_ret_ml_chips2",
+        "noIcon": true
+    },
+    "phatchips3": {
+        "label": "Phat chips Supersalt",
+        "type": "food",
+        "description": "The Nation Loves Getting Phat.",
+        "weight": 250,
+        "model": "v_ret_ml_chips3",
+        "noIcon": true
+    },
+    "phatchips4": {
+        "label": "Phat chips Big cheese",
+        "type": "food",
+        "description": "The Nation Loves Getting Phat.",
+        "weight": 250,
+        "model": "v_ret_ml_chips4",
+        "noIcon": true
+    },
     "pqs": {
         "label": "P's & Q's",
         "type": "food",
@@ -80,9 +112,24 @@
         "noIcon": true
     },
     "waterbottle": {
-        "label": "Bouteille d'eau",
+        "label": "Bouteille d'eau FLOW",
         "type": "drink",
+        "model": "prop_ld_flow_bottle",
         "weight": 330
+    },
+    "waterbottle_raine": {
+        "label": "Bouteille d'eau Rainé",
+        "type": "drink",
+        "model": "h4_prop_club_water_bottle",
+        "weight": 330,
+        "noIcon": true
+    },
+    "watercup_raine": {
+        "label": "Gobelet d'eau Rainé",
+        "type": "drink",
+        "model": "prop_cs_paper_cup",
+        "weight": 330,
+        "noIcon": true
     },
     "ecola": {
         "label": "eCola",
