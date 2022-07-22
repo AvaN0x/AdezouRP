@@ -71,13 +71,13 @@ end
 exports.ava_core:RegisterServerCallback("ava_stores:getStoreItems", function(source, storeType, storeName)
     -- Store type is:
     -- 0 for stores
-    -- 1 for vending machines
+    -- 1 for prop stores
     local src = source
     local store = nil
     if storeType == 0 then
         store = Config.Stores[storeName]
     elseif storeType == 1 then
-        store = Config.VendingMachines[storeName]
+        store = Config.PropStores[storeName]
     end
 
     if store and store.Items then

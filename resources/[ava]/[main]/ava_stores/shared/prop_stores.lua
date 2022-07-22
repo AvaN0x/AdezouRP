@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 
-Config.VendingMachines = {
+Config.PropStores = {
     [`prop_vend_soda_01`] = {
         offset = vector3(0.40, -0.45, 0.35),
         Items = {
@@ -13,6 +13,7 @@ Config.VendingMachines = {
             { name = "munkyjuice", price = 15 },
             { name = "junkenergy", price = 15, prop = `sf_prop_sf_can_01a` },
         },
+        type = "vending",
     },
     [`prop_vend_soda_02`] = {
         offset = vector3(0.40, -0.45, 0.35),
@@ -23,6 +24,7 @@ Config.VendingMachines = {
             { name = "munkyjuice", price = 15 },
             { name = "junkenergy", price = 15, prop = `sf_prop_sf_can_01a` },
         },
+        type = "vending",
     },
     [`sf_prop_sf_vend_drink_01a`] = {
         offset = vector3(0.40, -0.45, 1.25),
@@ -33,6 +35,7 @@ Config.VendingMachines = {
             { name = "munkyjuice", price = 15 },
             { name = "junkenergy", price = 15, prop = `sf_prop_sf_can_01a` },
         },
+        type = "vending",
     },
     [`prop_vend_snak_01`] = {
         offset = vector3(0.40, -0.56, 0.35),
@@ -45,18 +48,21 @@ Config.VendingMachines = {
             { name = "phatchips3", price = 12, prop = `v_ret_ml_chips3` },
             { name = "phatchips4", price = 12, prop = `v_ret_ml_chips4` },
         },
+        type = "vending",
     },
     [`prop_vend_coffe_01`] = {
         offset = vector3(0.24, -0.35, 1.3),
         Items = {
             { name = "coffee", price = 15, useItem = true },
         },
+        type = "dispenser",
     },
     [`prop_watercooler`] = {
         offset = vector3(0.0, -0.2, 0.85),
         Items = {
             { name = "watercup_raine", price = 15, prop = `prop_cs_paper_cup`, useItem = true },
         },
+        type = "dispenser",
     },
     [`prop_vend_water_01`] = {
         offset = vector3(0.18, -0.4, 0.85),
@@ -64,5 +70,6 @@ Config.VendingMachines = {
             { name = "waterbottle", price = 15, prop = `prop_ld_flow_bottle` },
             { name = "waterbottle_raine", price = 15, prop = `h4_prop_club_water_bottle` },
         },
+        type = "vending",
     },
 }

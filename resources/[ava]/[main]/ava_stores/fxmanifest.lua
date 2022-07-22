@@ -20,7 +20,7 @@ shared_scripts {
     "config.lua",
     "shared/vehicleshop.lua",
     "shared/lscustoms.lua",
-    "shared/vending_machines.lua",
+    "shared/prop_stores.lua",
 }
 
 client_scripts {
@@ -44,7 +44,7 @@ client_scripts {
     "client/vehicleshop.lua",
     "client/lscustoms.lua",
     "client/vehicle_rental.lua",
-    "client/vending_machines.lua",
+    "client/prop_stores.lua",
 }
 
 server_scripts {
@@ -54,7 +54,7 @@ server_scripts {
     "server/vehicleshop.lua",
     "server/lscustoms.lua",
     "server/vehicle_rental.lua",
-    "server/vending_machines.lua",
+    "server/prop_stores.lua",
 }
 
 dependencies {
