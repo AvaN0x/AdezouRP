@@ -118,6 +118,7 @@ local function InteractWithPropStore(entity, model)
         RageUI.CloseAll()
         local hasValidatedPurchase = false
 
+        FreezeEntityPosition(PlayerPedId(), true)
         RageUI.OpenTempMenu(GetString("prop_store"), function(Items)
             for i = 1, #elements do
                 local element = elements[i]
@@ -151,6 +152,7 @@ local function InteractWithPropStore(entity, model)
             if not hasValidatedPurchase then
                 isUsingPropStore = false
             end
+            FreezeEntityPosition(PlayerPedId(), false)
         end)
 
     else
