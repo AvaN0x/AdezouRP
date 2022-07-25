@@ -10,9 +10,9 @@
 function table.has(self, val)
     if self then
         if type(val) == "function" then
-            for i = 1, #table do
-                local element = table[i]
-                if condition(i, element) then
+            for i = 1, #self do
+                local element = self[i]
+                if val(i, element) then
                     return true
                 end
             end
