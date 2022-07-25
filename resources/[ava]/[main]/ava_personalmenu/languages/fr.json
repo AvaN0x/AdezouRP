@@ -173,7 +173,7 @@
     "dev_menu_showcoordshelper_subtitle": "",
     "dev_menu_showcoords": "Toggle coordonnées",
     "dev_menu_showcoords_subtitle": "",
-    "dev_show_coord_helper_display_text": "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_SPRINT~ pour voir les axes~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aides aux coordonnées",
+    "dev_show_coord_helper_display_text": "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_SPRINT~ pour voir les axes~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aide aux coordonnées",
     "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
     "cancel_spectate": "Arrêter de spectate",
     "admin_menu_spectate_subtitle": "Spectate un joueur"

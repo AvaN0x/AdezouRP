@@ -107,11 +107,19 @@ Config.Peds = {
     {
         PedName = "s_m_m_doctor_01",
         PedType = "PED_TYPE_MEDIC",
-        pos = vector3(309.28, -594.70, 41.80),
-        heading = 45.0,
+        pos = vector3(312.88, -581.05, 41.8),
+        heading = 70.0,
         scenario = "PROP_HUMAN_SEAT_ARMCHAIR",
         name = "Baker",
         variations = { { componentId = 8, drawableId = 2 } },
+    },
+    {
+        PedName = "s_m_m_doctor_01",
+        PedType = "PED_TYPE_MEDIC",
+        pos = vector3(310.75, -585.75, 42.29),
+        heading = 95.0,
+        scenario = "WORLD_HUMAN_STAND_MOBILE",
+        variations = { { componentId = 0, drawableId = 1 } },
     },
 
     -- mechanic
@@ -142,7 +150,8 @@ Config.Peds = {
         scenario = "PROP_HUMAN_SEAT_BENCH",
         name = "Robert",
         bubble = "Ici pour un retrait ?",
-        variations = { { componentId = 0, drawableId = 1, textureId = 1 }, { componentId = 2, drawableId = 1 }, { componentId = 8, drawableId = 0, textureId = 4 } },
+        variations = { { componentId = 0, drawableId = 1, textureId = 1 }, { componentId = 2, drawableId = 1 },
+            { componentId = 8, drawableId = 0, textureId = 4 } },
     },
 
     -- insurance office

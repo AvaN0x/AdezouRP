@@ -108,7 +108,8 @@ ConfigDoors = {
             locked = true,
             doors = {
                 { objHash = `v_ilev_ph_gendoor006`, objYaw = 90.0, objCoords = vector3(443.02980, -991.941, 30.83931) },
-                { objHash = `v_ilev_ph_gendoor006`, objYaw = 270.511, objCoords = vector3(443.02980, -994.54120, 30.83931) },
+                { objHash = `v_ilev_ph_gendoor006`, objYaw = 270.511,
+                    objCoords = vector3(443.02980, -994.54120, 30.83931) },
             },
         },
 
@@ -493,38 +494,29 @@ ConfigDoors = {
             authorizedJobs = { "ems" },
             locked = false,
             distance = 2.0,
-            doors = { { objHash = -487908756, objCoords = vector3(299.5, -584.9, 43.28) }, { objHash = 661758796, objCoords = vector3(299.5, -584.9, 43.28) } },
+            doors = {
+                { objHash = `hedwig_pillbox_door03a`, objCoords = vector3(300.09, -583.80, 43.27) },
+                { objHash = `hedwig_pillbox_door03b`, objCoords = vector3(299.24, -585.93, 43.27) }
+            },
         },
         { -- entrance front bottom
             textCoords = vector3(356.93, -590.49, 30.22),
             authorizedJobs = { "ems" },
             locked = false,
             distance = 2.0,
-            doors = { { objHash = -487908756, objCoords = vector3(357.06, -590.44, 28.79) }, { objHash = 661758796, objCoords = vector3(357.06, -590.44, 28.79) } },
-        },
-        {
-            objHash = 854291622,
-            objCoords = vector3(308.31, -597.51, 43.28),
-            textCoords = vector3(307.91, -597.31, 43.38),
-            authorizedJobs = { "ems" },
-            objYaw = 160.0,
-            locked = true,
-        },
-        { -- entrance back bottom
-            textCoords = vector3(319.84, -560.44, 28.95),
-            authorizedJobs = { "ems" },
-            locked = true,
             doors = {
-                { objHash = 1248599813, objYaw = 205.0, objCoords = vector3(319.95, -560.82, 28.80) },
-                { objHash = -1421582160, objYaw = 25.0, objCoords = vector3(319.95, -560.82, 28.80) },
+                { objHash = `hedwig_pillbox_door03a`, objCoords = vector3(356.61, -591.49, 28.79) },
+                { objHash = `hedwig_pillbox_door03b`, objCoords = vector3(357.40, -589.27, 28.79) }
             },
         },
+        -- garage door
         {
-            textCoords = vector3(333.71, -563.12, 28.82),
+            textCoords = vector3(347.01, -562.11, 27.94),
             authorizedJobs = { "ems" },
             locked = true,
             distance = 12,
-            doors = { { objHash = -820650556, objCoords = vector3(330.21, -561.80, 30.80) }, { objHash = -820650556, objCoords = vector3(337.49, -564.44, 30.80) } },
+            objHash = `hedwig_pillbox_garagedoor`,
+            objCoords = vector3(347.23, -562.16, 29.96),
         },
 
         -- -- ORGA CELTIC

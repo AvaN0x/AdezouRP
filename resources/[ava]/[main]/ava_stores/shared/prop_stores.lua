@@ -53,14 +53,21 @@ Config.PropStores = {
     [`prop_vend_coffe_01`] = {
         offset = vector3(0.24, -0.35, 1.3),
         Items = {
-            { name = "coffee", price = 15, useItem = true },
+            { name = "coffee", price = 5, useItem = true },
         },
         type = "dispenser",
     },
     [`prop_watercooler`] = {
         offset = vector3(0.0, -0.2, 0.85),
         Items = {
-            { name = "watercup_raine", price = 15, prop = `prop_cs_paper_cup`, useItem = true },
+            { name = "watercup_raine", price = 0, prop = `prop_cs_paper_cup`, useItem = true },
+        },
+        type = "dispenser",
+    },
+    [`prop_watercooler_dark`] = {
+        offset = vector3(0.0, -0.2, 0.85),
+        Items = {
+            { name = "watercup_raine", price = 0, prop = `prop_cs_paper_cup`, useItem = true },
         },
         type = "dispenser",
     },

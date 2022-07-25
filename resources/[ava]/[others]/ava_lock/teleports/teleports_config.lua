@@ -12,7 +12,7 @@ ConfigTeleports = {
         -- hospital elevator
         {
             tpEnter = {
-                pos = vector3(329.78, -600.99, 42.3),
+                pos = vector3(336.92, -589.34, 42.29),
                 heading = 64.0,
                 -- size  = {x = 1.5, y = 1.5, z = 1.0},
                 -- color = {r = 255, g = 0, b = 255},
@@ -29,14 +29,14 @@ ConfigTeleports = {
         -- hospital elevator
         {
             tpEnter = {
-                pos = vector3(331.75, -595.42, 42.3),
+                pos = vector3(335.78, -592.50, 42.29),
                 heading = 64.0,
                 -- size  = {x = 1.5, y = 1.5, z = 1.0},
                 -- color = {r = 255, g = 0, b = 255},
                 label = "Descendre",
             },
             tpExit = {
-                pos = vector3(342.46, -585.49, 27.82),
+                pos = vector3(323.50, -583.24, 27.87),
                 heading = 250.0,
                 label = "Monter à l'étage"
             },

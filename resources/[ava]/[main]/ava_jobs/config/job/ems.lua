@@ -17,7 +17,8 @@ Config.Jobs.ems = {
                     local targetId, localId = exports.ava_core:ChooseClosestPlayer()
                     if not targetId then return end
 
-                    local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:ems:getPlayerData", targetId)
+                    local playerData = exports.ava_core:TriggerServerCallback("ava_jobs:server:ems:getPlayerData",
+                        targetId)
                     if not playerData then return end
 
                     local targetPed = GetPlayerPed(localId)
@@ -71,7 +72,7 @@ Config.Jobs.ems = {
     },
     Zones = {
         ManagerMenu = {
-            Coord = vector3(339.21, -595.63, 42.30),
+            Coord = vector3(327.22, -601.81, 42.29),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
             Color = { r = 0, g = 139, b = 90 },
             Name = "Actions patron",
@@ -81,7 +82,7 @@ Config.Jobs.ems = {
             MinimumGrade = "boss",
         },
         Cloakroom = {
-            Coord = vector3(299.03, -598.51, 42.30),
+            Coord = vector3(306.89, -601.61, 42.30),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
             Color = { r = 0, g = 139, b = 90 },
             Name = "Vestiaire",
@@ -103,7 +104,7 @@ Config.Jobs.ems = {
                         "{\"ears_txd\":0,\"bag_txd\":0,\"torso\":90,\"decals\":57,\"bodyarmor_txd\":0,\"glasses\":-1,\"shoes_txd\":0,\"bag\":0,\"undershirt_txd\":0,\"accessory\":126,\"shoes\":25,\"accessory_txd\":0,\"tops\":249,\"bracelets_txd\":0,\"hats_txd\":0,\"bodyarmor\":0,\"leg\":96,\"glasses_txd\":0,\"mask_txd\":0,\"hats\":122,\"undershirt\":15,\"ears\":-1,\"torso_txd\":0,\"mask\":0,\"watches\":-1,\"bracelets\":-1,\"decals_txd\":0,\"leg_txd\":0,\"watches_txd\":0,\"tops_txd\":0}"),
                 },
                 {
-                    Label = "Tenue chirurgie",
+                    Label = "Tenue chirurgien",
                     Female = json.decode(
                         "{\"decals\":0,\"torso\":109,\"leg\":133,\"hats\":-1,\"mask\":0,\"glasses\":-1,\"accessory\":0,\"shoes\":27,\"bracelets_txd\":0,\"watches_txd\":0,\"undershirt\":15,\"tops\":141,\"accessory_txd\":0,\"bag_txd\":0,\"shoes_txd\":0,\"ears_txd\":0,\"bodyarmor_txd\":0,\"ears\":-1,\"glasses_txd\":0,\"decals_txd\":0,\"undershirt_txd\":0,\"bodyarmor\":0,\"leg_txd\":6,\"bag\":0,\"tops_txd\":1,\"mask_txd\":0,\"hats_txd\":0,\"torso_txd\":0,\"bracelets\":-1,\"watches\":-1}"),
                     Male = json.decode(
@@ -112,33 +113,24 @@ Config.Jobs.ems = {
             },
         },
         FridgeInventory = {
-            Coord = vector3(306.89, -601.61, 42.30),
+            Coord = vector3(312.24, -596.59, 42.29),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
             Color = { r = 0, g = 139, b = 90 },
             Name = "Réfrigérateur",
             InventoryName = "job_ems_fridge",
             HelpText = GetString("press_to_open"),
+            Blip = true,
             Marker = 27,
         },
         PharmacyStock = {
-            Coord = vector3(309.77, -568.66, 42.30),
+            Coord = vector3(300.45, -577.95, 27.87),
             Size = { x = 1.5, y = 1.5, z = 1.0 },
             Color = { r = 0, g = 139, b = 90 },
             Name = "Pharmacie",
             InventoryName = "job_ems_pharmacy",
             HelpText = GetString("press_to_open"),
+            Blip = true,
             Marker = 27,
-        },
-        HeliGarage = { -- TODO properly add, this do not work
-            Name = "Héliport",
-            HelpText = GetString("spawn_veh"),
-            Coord = vector3(351.05, -588.07, 74.17),
-            Size = { x = 2.0, y = 2.0, z = 2.0 },
-            Color = { r = 0, g = 139, b = 90 },
-            Distance = 3,
-            Marker = 34,
-            Type = "heli",
-            SpawnPoint = { Coord = vector3(351.05, -588.07, 74.17), Heading = 245.0 },
         },
     },
     BuyZones = {
@@ -175,14 +167,14 @@ Config.Jobs.ems = {
         -- Job garages
         {
             Name = "jobgarage_ems",
-            Coord = vector3(337.34, -579.28, 28.80),
+            Coord = vector3(360.60, -559.97, 28.85),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
             Color = { r = 0, g = 139, b = 90 },
             Marker = 36,
             VehicleType = 0,
             IsJobGarage = "ems",
             JobNeeded = "ems",
-            SpawnPoint = { Coord = vector3(337.34, -579.28, 28.80), Heading = 340 },
+            SpawnPoint = { Coord = vector3(360.12, -561.02, 28.85), Heading = 160.0 },
             Blip = { Name = "Garage entreprise" },
         },
         {
@@ -190,7 +182,7 @@ Config.Jobs.ems = {
             Coord = vector3(351.05, -588.07, 74.17),
             Size = { x = 2.0, y = 2.0, z = 2.0 },
             Color = { r = 0, g = 139, b = 90 },
-            Marker = 36,
+            Marker = 34,
             VehicleType = 2,
             IsJobGarage = "ems",
             JobNeeded = "ems",
