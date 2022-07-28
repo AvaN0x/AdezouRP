@@ -61,6 +61,11 @@
                 "quantity": 5,
                 "price": 5613
             },
+            "brioso3": {
+                "category": "compacts",
+                "quantity": 5,
+                "price": 6526
+            },
             "weevil": {
                 "category": "compacts",
                 "quantity": 5,
@@ -140,6 +145,16 @@
                 "category": "coupes",
                 "quantity": 5,
                 "price": 20601
+            },
+            "kanjosj": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 21932
+            },
+            "postlude": {
+                "category": "coupes",
+                "quantity": 5,
+                "price": 18104
             },
             "akuma": {
                 "category": "motorcycles",
@@ -691,6 +706,26 @@
                 "quantity": 5,
                 "price": 49677
             },
+            "weevil2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 53161
+            },
+            "ruiner4": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 33924
+            },
+            "vigero2": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 41777
+            },
+            "greenwood": {
+                "category": "muscles",
+                "quantity": 5,
+                "price": 44332
+            },
             "bfinjection": {
                 "category": "offroads",
                 "quantity": 5,
@@ -845,6 +880,11 @@
                 "category": "offroads",
                 "quantity": 5,
                 "price": 26826
+            },
+            "draugur": {
+                "category": "offroads",
+                "quantity": 5,
+                "price": 54345
             },
             "vigout": {
                 "category": "offroads",
@@ -1151,6 +1191,11 @@
                 "category": "sedans",
                 "quantity": 5,
                 "price": 61826
+            },
+            "rhinehart": {
+                "category": "sedans",
+                "quantity": 5,
+                "price": 55436
             },
             "alpha": {
                 "category": "sports",
@@ -1582,6 +1627,36 @@
                 "quantity": 5,
                 "price": 211380
             },
+            "corsita": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 192903
+            },
+            "omnisegt": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 165995
+            },
+            "sm722": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 208997
+            },
+            "tenf": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 250208
+            },
+            "tenf2": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 270555
+            },
+            "sentinel4": {
+                "category": "sports",
+                "quantity": 5,
+                "price": 242278
+            },
             "btype": {
                 "category": "sportsclassics",
                 "quantity": 5,
@@ -1789,243 +1864,253 @@
             },
             "adder": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 565793
             },
             "autarch": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 528881
             },
             "banshee2": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 871652
             },
             "bullet": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 556263
             },
             "champion": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 623657
             },
             "cheetah": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 844275
             },
             "cyclone": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 741818
             },
             "entity2": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 603842
             },
             "entityxf": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 572310
             },
             "emerus": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 699186
             },
             "fmj": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 617368
             },
             "furia": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 991013
             },
             "gp1": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 550811
             },
             "ignus": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 727150
             },
             "infernus": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 554967
             },
             "italigtb": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 590890
             },
             "italigtb2": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 620322
             },
             "italirsx": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 1199250
             },
             "krieger": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 946788
             },
             "le7b": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 539570
             },
             "nero": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 792221
             },
             "nero2": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 833917
             },
             "osiris": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 569157
             },
             "penetrator": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 496991
             },
             "pfister811": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 602265
             },
             "prototipo": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 973895
             },
             "reaper": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 572310
             },
             "s80": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 537716
             },
             "sc1": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 558120
             },
             "sheava": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 625404
             },
             "sultanrs": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 3,
                 "price": 740835
             },
             "t20": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 775549
             },
             "taipan": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 624006
             },
             "tempesta": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 644525
             },
             "tezeract": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 547309
             },
             "thrax": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 805618
             },
             "tigon": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 505211
             },
             "turismor": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 908626
             },
             "tyrant": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 541975
             },
             "tyrus": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 492898
             },
             "vacca": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 537266
             },
             "vagner": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 648505
             },
             "visione": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 1053508
             },
             "voltic": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 471091
             },
             "xa21": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 785223
             },
             "zeno": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 704662
             },
             "zentorno": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 657672
             },
             "zorrusso": {
                 "category": "super",
-                "quantity": 5,
+                "quantity": 2,
                 "price": 638073
+            },
+            "lm87": {
+                "category": "super",
+                "quantity": 2,
+                "price": 859032
+            },
+            "torero2": {
+                "category": "super",
+                "quantity": 2,
+                "price": 791193
             },
             "bison": {
                 "category": "vans",

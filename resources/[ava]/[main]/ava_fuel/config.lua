@@ -67,6 +67,7 @@ AVAConfig.ElectricCars = {
     [`iwagen`] = true,
     [`khamelion`] = true,
     [`neon`] = true,
+    [`omnisegt`] = true,
     [`raiden`] = true,
     [`rcbandito`] = true,
     [`surge`] = true,
@@ -76,15 +77,15 @@ AVAConfig.ElectricCars = {
 }
 
 AVAConfig.GasPumps = {
-    [`prop_gas_pump_1a`] = {offset = vector3(0.0, 0.0, 1.54)},
-    [`prop_gas_pump_1b`] = {offset = vector3(0.0, 0.0, 1.54)},
-    [`prop_gas_pump_1c`] = {offset = vector3(0.0, 0.0, 1.93)},
-    [`prop_gas_pump_1d`] = {offset = vector3(0.0, 0.0, 1.54)},
-    [`prop_gas_pump_old2`] = {offset = vector3(0.0, 0.0, 1.68)},
-    [`prop_gas_pump_old3`] = {offset = vector3(0.0, 0.0, 1.68)},
-    [`prop_vintage_pump`] = {offset = vector3(0.0, 0.0, 1.93)},
+    [`prop_gas_pump_1a`] = { offset = vector3(0.0, 0.0, 1.54) },
+    [`prop_gas_pump_1b`] = { offset = vector3(0.0, 0.0, 1.54) },
+    [`prop_gas_pump_1c`] = { offset = vector3(0.0, 0.0, 1.93) },
+    [`prop_gas_pump_1d`] = { offset = vector3(0.0, 0.0, 1.54) },
+    [`prop_gas_pump_old2`] = { offset = vector3(0.0, 0.0, 1.68) },
+    [`prop_gas_pump_old3`] = { offset = vector3(0.0, 0.0, 1.68) },
+    [`prop_vintage_pump`] = { offset = vector3(0.0, 0.0, 1.93) },
 }
 
 AVAConfig.ElectricPumps = {
-    [`bzzz_electro_charger001`] = {offset = vector3(0.0, 0.0, 1.57)},
+    [`bzzz_electro_charger001`] = { offset = vector3(0.0, 0.0, 1.57) },
 }

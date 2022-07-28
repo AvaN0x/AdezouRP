@@ -553,6 +553,13 @@
             "weight": 6000,
             "noIcon": true
         },
+        "weapon_tacticalrifle": {
+            "label": "Carabine de service",
+            "type": "rifle",
+            "description": "",
+            "weight": 6000,
+            "noIcon": true
+        },
         "weapon_mg": {
             "label": "Mitrailleuse",
             "type": "lmg",
@@ -597,6 +604,13 @@
         },
         "weapon_heavysniper_mk2": {
             "label": "Sniper lourd MK2",
+            "type": "sniper",
+            "description": "",
+            "weight": 6000,
+            "noIcon": true
+        },
+        "weapon_precisionrifle": {
+            "label": "Fusil d'élite",
             "type": "sniper",
             "description": "",
             "weight": 6000,

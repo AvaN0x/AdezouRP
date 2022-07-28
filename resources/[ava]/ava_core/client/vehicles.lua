@@ -36,7 +36,8 @@ Citizen.CreateThread(function()
     while true do
         local vehicle = GetVehiclePedIsUsing(AVA.Player.playerPed, false)
         -- check if player is not in a vehicle, or if the vehicle the player is using is different from the last one
-        if (not AVA.Player.isInVehicle or vehicle ~= AVA.Player.currentVehicle) and not AVA.Player.IsDead and vehicle ~= 0 then
+        if (not AVA.Player.isInVehicle or vehicle ~= AVA.Player.currentVehicle) and not AVA.Player.IsDead and
+            vehicle ~= 0 then
             -- Handle entering a vehicle
             if vehicle == GetVehiclePedIsIn(AVA.Player.playerPed) then
                 AVA.Player.isEnteringVehicle = false
@@ -45,7 +46,7 @@ Citizen.CreateThread(function()
 
                 if AVA.Player.currentVehicle ~= 0 then
                     if AVA.Player.currentSeat == -1 then
-                        onStateChange("leftDriverSeat", vehicle)
+                        onStateChange("leftDriverSeat", AVA.Player.currentVehicle)
                     end
                     onStateChange("leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
                 end
@@ -79,7 +80,7 @@ Citizen.CreateThread(function()
                 -- Handle leaving a vehicle
 
                 if AVA.Player.currentSeat == -1 then
-                    onStateChange("leftDriverSeat", vehicle)
+                    onStateChange("leftDriverSeat", AVA.Player.currentVehicle)
                 end
                 onStateChange("leftVehicle", AVA.Player.currentVehicle, AVA.Player.currentSeat)
 
@@ -112,3 +113,7 @@ AVA.Player.IsPlayerInVehicle = function()
     return AVA.Player.isInVehicle, AVA.Player.currentVehicle, AVA.Player.currentSeat
 end
 exports("IsPlayerInVehicle", AVA.Player.IsPlayerInVehicle)
+
+AddEventHandler("ava_core:client:leftVehicle", function()
+    ResetPedLastVehicle(AVA.Player.playerPed)
+end)

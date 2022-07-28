@@ -50,14 +50,14 @@ end)
 
 -- -- used to know new blips
 -- Citizen.CreateThread(function()
---     local lastKnownBlipId = 802
+--     local lastKnownBlipId = 826
 --     for i = lastKnownBlipId, lastKnownBlipId + 25, 1 do
 --         local blip = AddBlipForCoord(vector3(-1000.0 + ((i % 775) * 25), -3500.0, 0.0))
 
---         SetBlipSprite (blip, i)
+--         SetBlipSprite(blip, i)
 --         SetBlipDisplay(blip, 4)
---         SetBlipScale  (blip, 0.8)
---         SetBlipColour (blip, 0)
+--         SetBlipScale(blip, 0.8)
+--         SetBlipColour(blip, 0)
 --         SetBlipAsShortRange(blip, true)
 
 --         BeginTextCommandSetBlipName("STRING")
