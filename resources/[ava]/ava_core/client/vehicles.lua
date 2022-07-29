@@ -113,7 +113,3 @@ AVA.Player.IsPlayerInVehicle = function()
     return AVA.Player.isInVehicle, AVA.Player.currentVehicle, AVA.Player.currentSeat
 end
 exports("IsPlayerInVehicle", AVA.Player.IsPlayerInVehicle)
-
-AddEventHandler("ava_core:client:leftVehicle", function()
-    ResetPedLastVehicle(AVA.Player.playerPed)
-end)
