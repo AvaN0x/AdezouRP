@@ -734,6 +734,13 @@
             "description": "",
             "weight": 2000,
             "noIcon": true
+        },
+        "weapon_metaldetector": {
+            "label": "Detecteur de métaux",
+            "type": "miscweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
         }
     }
 }
