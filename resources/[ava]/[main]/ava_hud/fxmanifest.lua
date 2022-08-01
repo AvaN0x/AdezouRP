@@ -8,7 +8,7 @@ description "AvaN0x HUD and speedometer"
 ui_page "html/ui.html"
 
 lua54 "yes"
-use_fxv2_oal "yes"
+use_experimental_fxv2_oalntal_fxv2_oal "yes"
 
 files { "languages/**.json" }
 

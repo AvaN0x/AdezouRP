@@ -7,7 +7,7 @@ description "Small tweaks"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
-use_fxv2_oal "yes"
+use_experimental_fxv2_oal "yes"
 
 files { "languages/**.json" }
 

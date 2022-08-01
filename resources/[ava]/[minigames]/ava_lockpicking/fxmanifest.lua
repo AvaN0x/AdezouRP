@@ -7,7 +7,7 @@ description "Lockpicking minigame"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
-use_fxv2_oal "yes"
+use_experimental_fxv2_oalntal_fxv2_oal "yes"
 
 files { "html/ui.html", "html/style.css" }
 ui_page "html/ui.html"

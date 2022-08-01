@@ -7,7 +7,7 @@ description "Status handler"
 repository "https://github.com/AvaN0x/AdezouRP"
 
 lua54 "yes"
-use_fxv2_oal "yes"
+use_experimental_fxv2_oalntal_fxv2_oal "yes"
 
 files { "languages/**.json", "status.json" }
 

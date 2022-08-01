@@ -7,7 +7,7 @@ description "new_banking edited by AvaN0x for ava_core"
 -- https://github.com/NewWayRP/new_banking
 
 lua54 "yes"
-use_fxv2_oal "yes"
+use_experimental_fxv2_oalntal_fxv2_oal "yes"
 
 server_script "@mysql-async/lib/MySQL.lua"
 server_script "server.lua"
