@@ -181,7 +181,7 @@ local function GetDisplayableInventoryFromData(invItems, maxWeight, actualWeight
             return a.item.name < b.item.name
         end)
     end
-    SortInventory(inventory)
+    SortInventory(inventory.Remaining)
 
     return inventory
 end
