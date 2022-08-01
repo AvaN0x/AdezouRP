@@ -48,10 +48,11 @@ function import(name)
         return error(("import: failed, could not load `%s`:\n%s"):format(path, err))
     end
 
-    -- Return the function if it is a function
+    -- Return the result of the file
     local success, res = pcall(f)
     if not success then
-        return error(("import: failed, could not get content from `%s`"):format(path))
+        -- if not success, res is the error message
+        return error(("import: failed, could not get content from `%s`:\n%s"):format(path, res))
     end
     return res
 end
