@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 importGlobal("dprint")
-import("table:has")
+import("table.has")
 
 AVA = {}
 

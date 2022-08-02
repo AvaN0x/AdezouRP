@@ -3,7 +3,7 @@
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
 importGlobal("DrawText3D")
-import("table:has")
+import("table.has")
 
 Citizen.CreateThread(function()
     PlayerData = exports.ava_core:getPlayerData()

@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-import("string:trim")
+import("string.trim")
 
 -- #region get vehicles in garage
 exports.ava_core:RegisterServerCallback("ava_garages:server:getAccessibleVehiclesInGarage",

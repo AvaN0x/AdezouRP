@@ -2,7 +2,7 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-import({ "table:has", "string:trim" })
+import({ "table.has", "string.trim" })
 
 ---Prompt the user a text
 ---@param titleText string
