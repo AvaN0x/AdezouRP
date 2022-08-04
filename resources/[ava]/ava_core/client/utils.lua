@@ -926,8 +926,7 @@ AVA.GetClosestVehicle = function(maxDistance, notPlayerVehicle)
     local playerVeh = notPlayerVehicle and GetVehiclePedIsIn(playerPed, false) or 0
     local closestVeh, closestDistance = 0, nil
 
-    for _, v in ipairs(GetGamePool("CVehicle")) do
-        local veh = GetObjectIndexFromEntityIndex(v)
+    for _, veh in ipairs(GetGamePool("CVehicle")) do
         if veh ~= playerVeh then
             local vehCoords = GetEntityCoords(veh)
             local distance = #(playerCoords - vehCoords)
@@ -1193,8 +1192,7 @@ AVA.ChooseClosestVehicle = function(title, distance, whitelist, blacklist)
     local entitiesToSelect = {}
     local entityCount = 0
 
-    for _, v in ipairs(GetGamePool("CVehicle")) do
-        local veh = GetObjectIndexFromEntityIndex(v)
+    for _, veh in ipairs(GetGamePool("CVehicle")) do
         local vehCoords = GetEntityCoords(veh)
         local vehModel = GetEntityModel(veh)
         if #(playerCoords - vehCoords) < distance + 0.0 and

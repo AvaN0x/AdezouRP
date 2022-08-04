@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
 
         local gamePool <const> = GetGamePool("CObject")
         for i = 1, #gamePool do
-            local entity = GetObjectIndexFromEntityIndex(gamePool[i])
+            local entity = gamePool[i]
             local model = GetEntityModel(entity)
 
             if Models[model] then

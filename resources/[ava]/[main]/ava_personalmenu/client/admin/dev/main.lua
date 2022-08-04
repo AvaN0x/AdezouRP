@@ -266,8 +266,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
             visibleHash = {}
             local count = 0
             if showhash_object then
-                for _, v in ipairs(GetGamePool("CObject")) do
-                    local prop = GetObjectIndexFromEntityIndex(v)
+                for _, prop in ipairs(GetGamePool("CObject")) do
                     local propCoords = GetEntityCoords(prop)
                     if #(playerCoords - propCoords) < showhash_distance then
                         count = count + 1
@@ -280,8 +279,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                 end
             end
             if showhash_vehicle then
-                for _, v in ipairs(GetGamePool("CVehicle")) do
-                    local veh = GetObjectIndexFromEntityIndex(v)
+                for _, veh in ipairs(GetGamePool("CVehicle")) do
                     local vehCoords = GetEntityCoords(veh)
                     if #(playerCoords - vehCoords) < (showhash_distance * 2) then
                         count = count + 1
@@ -294,8 +292,7 @@ RegisterNetEvent("ava_personalmenu:client:toggleShowHash", function()
                 end
             end
             if showhash_ped then
-                for _, v in ipairs(GetGamePool("CPed")) do
-                    local ped = GetObjectIndexFromEntityIndex(v)
+                for _, ped in ipairs(GetGamePool("CPed")) do
                     local pedCoords = GetEntityCoords(ped)
                     if #(playerCoords - pedCoords) < (showhash_distance * 2) then
                         count = count + 1

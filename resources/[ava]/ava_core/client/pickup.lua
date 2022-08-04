@@ -25,8 +25,7 @@ Citizen.CreateThread(function()
         Wait(5000)
         local newPickups = {}
         local count = 0
-        for _, v in ipairs(GetGamePool("CObject")) do
-            local object = GetObjectIndexFromEntityIndex(v)
+        for _, object in ipairs(GetGamePool("CObject")) do
             local entity = Entity(object)
             if entity.state.pickup then
                 local objectCoords = GetEntityCoords(object)
