@@ -19,11 +19,13 @@ end)
 function PoolAdminSettings()
     AdminSettingsSubMenu:IsVisible(function(Items)
         for notifName, v in pairs(AdminSettings.Notifications) do
-            Items:CheckBox(GetString("admin_notifications_" .. notifName), GetString("admin_notifications_" .. notifName .. "_subtitle"), v, nil,
+            Items:CheckBox(GetString("admin_settings_notifications_" .. notifName),
+                GetString("admin_settings_notifications_" .. notifName .. "_subtitle"), v, nil,
                 function(onSelected, IsChecked)
                     if (onSelected) then
                         AdminSettings.Notifications[notifName] = not AdminSettings.Notifications[notifName]
-                        SetResourceKvpInt("admin_notifications_disabled_" .. notifName, AdminSettings.Notifications[notifName] and 0 or 1) -- 1 is disabled
+                        SetResourceKvpInt("admin_notifications_disabled_" .. notifName,
+                            AdminSettings.Notifications[notifName] and 0 or 1) -- 1 is disabled
                         print(GetResourceKvpInt("admin_notifications_disabled_" .. notifName))
                     end
                 end)
@@ -36,7 +38,8 @@ RegisterNetEvent("ava_personalmenu:client:notifAdmins", function(notifType, ...)
     if isAdmin then
         -- * type can be : "death", "loginout"
         print(notifType, AdminSettings.Notifications[notifType])
-        if not AdminSettings.Notifications or AdminSettings.Notifications[notifType] == nil or AdminSettings.Notifications[notifType] == true then
+        if not AdminSettings.Notifications or AdminSettings.Notifications[notifType] == nil or
+            AdminSettings.Notifications[notifType] == true then
             exports.ava_core:ShowNotification(...)
         end
     end

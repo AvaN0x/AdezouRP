@@ -1,180 +1,330 @@
 {
-    "personal_menu": "Menu personnel",
-    "personal_menu_emotes": "Emotes",
-    "personal_menu_vehicle_management": "Gestion du véhicule",
-    "vehicle_management": "Gestion du véhicule",
-    "personal_menu_enable_shuffle": "Passer conducteur",
-    "personal_menu_enable_shuffle_subtitle": "Le passage conducteur est nécessaire lorsque l'ancien conducteur quitte le véhicule",
+    "personal_menu": {
+        "": "Menu personnel",
+        "emotes": "Emotes",
+        "vehicle_management": "Gestion du véhicule",
+        "enable_shuffle": {
+            "": "Passer conducteur",
+            "subtitle": "Le passage conducteur est nécessaire lorsque l'ancien conducteur quitte le véhicule"
+        },
+        "wallet": "Porte feuille",
+        "bills": "Factures",
+        "keys": "Clés",
+        "miscs": "Divers",
+        "save_player": "Sauvegarde du personnage",
+        "admin_menu": "Menu administrateur"
+    },
     "disabled": "Désactivé",
-    "personal_menu_wallet": "Porte feuille",
-    "wallet_menu": "Porte feuille",
-    "wallet_card_identity": "Carte d'identité",
-    "wallet_card_identity_subtitle": "",
-    "wallet_card_driver": "Permis de conduire",
-    "wallet_card_driver_subtitle": "",
-    "wallet_card_weapon": "Permis de port d'armes",
-    "wallet_card_weapon_subtitle": "",
-    "wallet_see_card": "Voir",
-    "wallet_show_card": "Montrer",
-    "personal_menu_bills": "Factures",
+    "wallet": {
+        "menu": "Porte feuille",
+        "card_identity": {
+            "": "Carte d'identité",
+            "subtitle": ""
+        },
+        "card_driver": {
+            "": "Permis de conduire",
+            "subtitle": ""
+        },
+        "card_weapon": {
+            "": "Permis de port d'armes",
+            "subtitle": ""
+        },
+        "see_card": "Voir",
+        "show_card": "Montrer"
+    },
     "bills_menu": "Factures",
     "bill_description": "Date : %s~n~%s",
     "bill_amount": "$%s",
     "keys_menu": "Clés",
-    "personal_menu_keys": "Clés",
-    "key_label_0": "Clé : %s",
-    "key_label_1": "Clé entreprise : %s",
-    "key_label_2": "Double : %s",
-    "key_give_ownership": "Donner la clé",
-    "key_give_double": "Créer un double",
-    "key_destroy_key": "Supprimer la clé",
-    "personal_menu_miscs": "Divers",
-    "miscs_menu": "Divers",
-    "miscs_menu_toggle_hud": "Activer/Désactiver le HUD",
-    "miscs_menu_toggle_hud_subtitle": "",
-    "miscs_menu_toggle_disable_idle_cam": "Désactiver la caméra d'inactivité",
-    "miscs_menu_toggle_disable_idle_cam_subtitle": "",
-    "miscs_menu_toggle_cinematic_mode": "Activer/Désactiver le mode cinématique",
-    "miscs_menu_toggle_cinematic_mode_subtitle": "",
-    "miscs_menu_toggle_drift_mode": "Mode de drift",
-    "miscs_menu_toggle_drift_mode_subtitle": "Activation du drift lors de la pression de la touche LSHIFT (par défaut)",
-    "miscs_menu_toggle_drift_mode_key": "Mode de drift",
-    "vehicle_management_speed_limit": "Limiteur de vitesse",
-    "vehicle_management_speed_limit_subtitle": "Valider le nouveau limiteur de vitesse",
-    "vehicle_management_doors": "Portes",
-    "door_open": "Ouvrir",
-    "door_close": "Fermer",
-    "vehicle_management_doors_hood": "Capot",
-    "vehicle_management_doors_hood_subtitle": "",
-    "vehicle_management_doors_trunk": "Coffre",
-    "vehicle_management_doors_trunk_subtitle": "",
-    "vehicle_management_doors_front_left": "Porte avant gauche",
-    "vehicle_management_doors_front_left_subtitle": "",
-    "vehicle_management_doors_front_right": "Porte avant droite",
-    "vehicle_management_doors_front_right_subtitle": "",
-    "vehicle_management_doors_back_left": "Porte arrière gauche",
-    "vehicle_management_doors_back_left_subtitle": "",
-    "vehicle_management_doors_back_right": "Porte arrière droite",
-    "vehicle_management_doors_back_right_subtitle": "",
-    "vehicle_management_windows": "Vitres",
-    "vehicle_management_is_engine_on": "Moteur démarré",
-    "vehicle_management_is_engine_on_subtitle": "La case est cochée lorsque le moteur est complètement démarré",
-    "vehicle_management_windows_front_left": "Vitres avant gauche",
-    "vehicle_management_windows_front_left_subtitle": "",
-    "vehicle_management_windows_front_right": "Vitres avant droite",
-    "vehicle_management_windows_front_right_subtitle": "",
-    "vehicle_management_windows_back_left": "Vitres arrière gauche",
-    "vehicle_management_windows_back_left_subtitle": "",
-    "vehicle_management_windows_back_right": "Vitres arrière droite",
-    "vehicle_management_windows_back_right_subtitle": "",
-    "window_roll_down": "Descendre",
-    "window_roll_up": "Monter",
-    "personal_menu_save_player": "Sauvegarde du personnage",
-    "personal_menu_admin_menu": "Menu administrateur",
-    "admin_menu": "Menu admin",
-    "admin_menu_title": "Administration",
-    "admin_menu_player_list": "Liste des joueurs",
-    "admin_menu_player_list_subtitle": "Accéder à la liste des joueurs",
-    "admin_menu_players_options": "Options des joueurs",
-    "admin_menu_players_options_subtitle": "Options concernant la totalité des joueurs",
+    "key": {
+        "label": {
+            "0": "Clé : %s",
+            "1": "Clé entreprise : %s",
+            "2": "Double : %s"
+        },
+        "give_ownership": "Donner la clé",
+        "give_double": "Créer un double",
+        "destroy_key": "Supprimer la clé"
+    },
+    "miscs_menu": {
+        "": "Divers",
+        "toggle_hud": {
+            "": "Activer/Désactiver le HUD",
+            "subtitle": ""
+        },
+        "toggle_disable_idle_cam": {
+            "": "Désactiver la caméra d'inactivité",
+            "subtitle": ""
+        },
+        "toggle_cinematic_mode": {
+            "": "Activer/Désactiver le mode cinématique",
+            "subtitle": ""
+        },
+        "toggle_drift_mode": {
+            "": "Mode de drift",
+            "subtitle": "Activation du drift lors de la pression de la touche LSHIFT (par défaut)"
+        },
+        "toggle_drift_mode_key": "Mode de drift"
+    },
+    "vehicle_management": {
+        "": "Gestion du véhicule",
+        "speed_limit": {
+            "": "Limiteur de vitesse",
+            "subtitle": "Valider le nouveau limiteur de vitesse"
+        },
+        "door_open": "Ouvrir",
+        "door_close": "Fermer",
+        "doors": {
+            "": "Portes",
+            "hood": {
+                "": "Capot",
+                "subtitle": ""
+            },
+            "trunk": {
+                "": "Coffre",
+                "subtitle": ""
+            },
+            "front_left": {
+                "": "Porte avant gauche",
+                "subtitle": ""
+            },
+            "front_right": {
+                "": "Porte avant droite",
+                "subtitle": ""
+            },
+            "back_left": {
+                "": "Porte arrière gauche",
+                "subtitle": ""
+            },
+            "back_right": {
+                "": "Porte arrière droite",
+                "subtitle": ""
+            }
+        },
+        "is_engine_on": {
+            "": "Moteur démarré",
+            "subtitle": "La case est cochée lorsque le moteur est complètement démarré"
+        },
+        "windows": {
+            "": "Vitres",
+            "front_left": {
+                "": "Vitres avant gauche",
+                "subtitle": ""
+            },
+            "front_right": {
+                "": "Vitres avant droite",
+                "subtitle": ""
+            },
+            "back_left": {
+                "": "Vitres arrière gauche",
+                "subtitle": ""
+            },
+            "back_right": {
+                "": "Vitres arrière droite",
+                "subtitle": ""
+            },
+            "roll_down": "Descendre",
+            "roll_up": "Monter"
+        }
+    },
+    "admin_menu": {
+        "": "Menu admin",
+        "title": "Administration",
+        "player_list": {
+            "": "Liste des joueurs",
+            "subtitle": "Accéder à la liste des joueurs"
+        },
+        "players_options": {
+            "": "Options des joueurs",
+            "subtitle": "Options concernant la totalité des joueurs"
+        },
+        "chars": {
+            "": "Changement de personnage",
+            "subtitle": "Ouvrir le menu pour changer de personnage"
+        },
+        "players_options_blips": {
+            "": "Blips des joueurs",
+            "subtitle": "Afficher les joueurs sur la map"
+        },
+        "noclip": {
+            "": "NoClip",
+            "subtitle": "Activer/désactiver le noclip",
+            "leave": "Quitter",
+            "accelerate": "Accélerer",
+            "up_down": "Monter / Descendre",
+            "move": "Se déplacer"
+        },
+        "cleararea": {
+            "": "Clear area",
+            "subtitle": "Clear la zone"
+        },
+        "vehicles": {
+            "": "Véhicules",
+            "subtitle": "Gestion de véhicules"
+        },
+        "tpcoords": {
+            "": "Se téléporter aux coordonnées",
+            "subtitle": "",
+            "input": "Entrez des coordonnées (x[,] y[,] z[,])"
+        },
+        "tpwaypoint": {
+            "": "Se téléporter au waypoint",
+            "subtitle": ""
+        },
+        "players_options_gamertags": {
+            "": "Afficher les noms des joueurs",
+            "subtitle": "Afficher les noms des joueurs"
+        },
+        "spectate_subtitle": "Spectate un joueur",
+        "admin_settings": {
+            "": "Paramètres",
+            "subtitle": ""
+        },
+        "dev_menu": {
+            "": "Menu développeur",
+            "subtitle": ""
+        }
+    },
     "player_list": "Liste des joueurs",
-    "player_manage": "Gérer",
-    "player_spectate": "Spectate",
-    "player_spectate_subtitle": "Spectate le joueur",
-    "player_manage_message": "Envoyer un message",
-    "player_manage_message_subtitle": "Envoyer un message au joueur",
-    "player_manage_message_input": "Entrez le contenu du message",
-    "player_manage_openinventory": "Ouvrir inventaire",
-    "player_manage_openinventory_subtitle": "Ouvrir l'inventaire du joueur",
-    "player_manage_goto": "Goto",
-    "player_manage_goto_subtitle": "Se téléporter au joueur",
-    "player_manage_bring": "Bring",
-    "player_manage_bring_subtitle": "Téléporter le joueur à moi",
-    "player_manage_kill": "Kill",
-    "player_manage_kill_subtitle": "Tuer le joueur",
-    "player_manage_heal": "Heal",
-    "player_manage_heal_subtitle": "Heal le joueur",
-    "player_manage_revive": "Revive",
-    "player_manage_revive_subtitle": "Revive le joueur",
-    "player_manage_kick": "~o~Kick~s~",
-    "player_manage_kick_subtitle": "Expulser le joueur",
-    "player_manage_kick_input": "Entrez une raison pour le kick",
-    "player_manage_kick_confirm_title": "~o~Kick~s~",
-    "player_manage_kick_confirm_firstline": "Voulez-vous vraiment kick <b>%s</b> pour la raison suivante :",
-    "player_manage_kick_confirm_reason": "<i>%s</i>",
-    "player_manage_ban": "~r~Bannir~s~",
-    "player_manage_ban_subtitle": "Bannir le joueur",
-    "player_manage_ban_input": "Entrez une raison pour le ban",
-    "player_manage_ban_confirm_title": "~r~Ban~s~",
-    "player_manage_ban_confirm_firstline": "Voulez-vous vraiment bannir <b>%s</b> pour la raison suivante :",
-    "player_manage_ban_confirm_reason": "<i>%s</i>",
-    "admin_menu_chars": "Changement de personnage",
-    "admin_menu_chars_subtitle": "Ouvrir le menu pour changer de personnage",
     "players_options": "Options des joueurs",
-    "admin_menu_players_options_blips": "Blips des joueurs",
-    "admin_menu_players_options_blips_subtitle": "Afficher les joueurs sur la map",
-    "admin_menu_noclip": "NoClip",
-    "admin_menu_noclip_subtitle": "Activer/désactiver le noclip",
-    "admin_menu_noclip_leave": "Quitter",
-    "admin_menu_noclip_accelerate": "Accélerer",
-    "admin_menu_noclip_up_down": "Monter / Descendre",
-    "admin_menu_noclip_move": "Se déplacer",
-    "admin_menu_cleararea": "Clear area",
-    "admin_menu_cleararea_subtitle": "Clear la zone",
-    "admin_menu_vehicles": "Véhicules",
-    "admin_menu_vehicles_subtitle": "Gestion de véhicules",
+    "player_spectate": {
+        "": "Spectate",
+        "subtitle": "Spectate le joueur",
+        "cancel": "Arrêter de spectate"
+    },
+    "player_manage": {
+        "": "Gérer",
+        "message": {
+            "": "Envoyer un message",
+            "subtitle": "Envoyer un message au joueur",
+            "input": "Entrez le contenu du message"
+        },
+        "openinventory": {
+            "": "Ouvrir inventaire",
+            "subtitle": "Ouvrir l'inventaire du joueur"
+        },
+        "goto": {
+            "": "Goto",
+            "subtitle": "Se téléporter au joueur"
+        },
+        "bring": {
+            "": "Bring",
+            "subtitle": "Téléporter le joueur à moi"
+        },
+        "kill": {
+            "": "Kill",
+            "subtitle": "Tuer le joueur"
+        },
+        "heal": {
+            "": "Heal",
+            "subtitle": "Heal le joueur"
+        },
+        "revive": {
+            "": "Revive",
+            "subtitle": "Revive le joueur"
+        },
+        "kick": {
+            "": "~o~Kick~s~",
+            "subtitle": "Expulser le joueur",
+            "input": "Entrez une raison pour le kick",
+            "confirm": {
+                "title": "~o~Kick~s~",
+                "firstline": "Voulez-vous vraiment kick <b>%s</b> pour la raison suivante :",
+                "reason": "<i>%s</i>"
+            }
+        },
+        "ban": {
+            "": "~r~Bannir~s~",
+            "subtitle": "Bannir le joueur",
+            "input": "Entrez une raison pour le ban",
+            "confirm": {
+                "title": "~r~Ban~s~",
+                "firstline": "Voulez-vous vraiment bannir <b>%s</b> pour la raison suivante :",
+                "reason": "<i>%s</i>"
+            }
+        }
+    },
     "routing_bucket_different": "Routing Bucket différent.",
-    "admin_menu_tpcoords": "Se téléporter aux coordonnées",
-    "admin_menu_tpcoords_subtitle": "",
-    "admin_menu_tpcoords_input": "Entrez des coordonnées (x[,] y[,] z[,])",
-    "admin_menu_tpwaypoint": "Se téléporter au waypoint",
-    "admin_menu_tpwaypoint_subtitle": "",
-    "vehicles": "Véhicules",
-    "vehicles_spawnvehicle": "~g~Spawn véhicule",
-    "vehicles_spawnvehicle_subtitle": "",
-    "vehicles_spawnvehicle_input": "Entrez un nom de véhicule",
-    "vehicles_repairvehicle": "Réparer véhicule",
-    "vehicles_repairvehicle_subtitle": "",
-    "vehicles_flipvehicle": "Retourner véhicule",
-    "vehicles_flipvehicle_subtitle": "Remettre le véhicule sur ses roues",
-    "vehicles_tunevehiclepink": "<font color='#FF4798'>Custom le véhicule en rose</font>",
-    "vehicles_tunevehiclepink_subtitle": "",
-    "vehicles_lscustoms": "LS Customs",
-    "vehicles_lscustoms_subtitle": "",
-    "vehicles_deletevehicle": "~r~Supprimer véhicule",
-    "vehicles_deletevehicle_subtitle": "",
-    "vehicles_tpnearestvehicle": "TP véhicule le plus proche",
-    "vehicles_tpnearestvehicle_subtitle": "Se téléporter dans le véhicule le plus proche",
-    "admin_menu_players_options_gamertags": "Afficher les noms des joueurs",
-    "admin_menu_players_options_gamertags_subtitle": "Afficher les noms des joueurs",
-    "admin_menu_admin_settings": "Paramètres",
-    "admin_menu_admin_settings_subtitle": "",
-    "admin_settings": "Paramètres",
-    "admin_notifications_death": "Notifications de morts",
-    "admin_notifications_death_subtitle": "",
-    "admin_notifications_loginout": "Notifications de connexions",
-    "admin_notifications_loginout_subtitle": "",
-    "admin_menu_dev_menu": "Menu développeur",
-    "admin_menu_dev_menu_subtitle": "",
-    "dev_menu": "Menu développeur",
-    "dev_menu_showhash": "Toggle hash",
-    "dev_menu_showhash_subtitle": "",
-    "dev_menu_showhash_object": "→ Hash des props",
-    "dev_menu_showhash_object_subtitle": "",
-    "dev_menu_showhash_vehicle": "→ Hash des véhicules",
-    "dev_menu_showhash_vehicle_subtitle": "",
-    "dev_menu_showhash_ped": "→ Hash des peds",
-    "dev_menu_showhash_ped_subtitle": "",
-    "dev_menu_showhash_dimensions": "→ Dimensions des entités",
-    "dev_menu_showhash_dimensions_subtitle": "Afficher ou non la dimension des entités\nN'affecte pas les peds",
-    "dev_menu_showhash_distance": "→ Distance de détection",
-    "dev_menu_showhash_distance_subtitle": "Régler la distance de détection des entités",
-    "dev_menu_showcoordshelper": "Toggle aide coordonnées",
-    "dev_menu_showcoordshelper_subtitle": "",
-    "dev_menu_showcoords": "Toggle coordonnées",
-    "dev_menu_showcoords_subtitle": "",
+    "vehicles": {
+        "": "Véhicules",
+        "spawnvehicle": {
+            "": "~g~Spawn véhicule",
+            "subtitle": "",
+            "input": "Entrez un nom de véhicule"
+        },
+        "repairvehicle": {
+            "": "Réparer véhicule",
+            "subtitle": ""
+        },
+        "flipvehicle": {
+            "": "Retourner véhicule",
+            "subtitle": "Remettre le véhicule sur ses roues"
+        },
+        "tunevehiclepink": {
+            "": "<font color='#FF4798'>Custom le véhicule en rose</font>",
+            "subtitle": ""
+        },
+        "lscustoms": {
+            "": "LS Customs",
+            "subtitle": ""
+        },
+        "deletevehicle": {
+            "": "~r~Supprimer véhicule",
+            "subtitle": ""
+        },
+        "tpnearestvehicle": {
+            "": "TP véhicule le plus proche",
+            "subtitle": "Se téléporter dans le véhicule le plus proche"
+        }
+    },
+    "admin_settings": {
+        "": "Paramètres",
+        "notifications": {
+            "death": {
+                "": "Notifications de morts",
+                "subtitle": ""
+            },
+            "loginout": {
+                "": "Notifications de connexions",
+                "subtitle": ""
+            }
+        }
+    },
+    "dev_menu": {
+        "": "Menu développeur",
+        "showhash": {
+            "": "Toggle hash",
+            "subtitle": "",
+            "object": {
+                "": "→ Hash des props",
+                "subtitle": ""
+            },
+            "vehicle": {
+                "": "→ Hash des véhicules",
+                "subtitle": ""
+            },
+            "ped": {
+                "": "→ Hash des peds",
+                "subtitle": ""
+            },
+            "dimensions": {
+                "": "→ Dimensions des entités",
+                "subtitle": "Afficher ou non la dimension des entités\nN'affecte pas les peds"
+            },
+            "distance": {
+                "": "→ Distance de détection",
+                "subtitle": "Régler la distance de détection des entités"
+            }
+        },
+        "showcoordshelper": {
+            "": "Toggle aide coordonnées",
+            "subtitle": ""
+        },
+        "showcoords": {
+            "": "Toggle coordonnées",
+            "subtitle": ""
+        }
+    },
     "dev_show_coord_helper_display_text": "~INPUT_CELLPHONE_LEFT~, ~INPUT_CELLPHONE_UP~, ~INPUT_CELLPHONE_RIGHT~, ~INPUT_CELLPHONE_DOWN~, ~INPUT_WEAPON_WHEEL_PREV~ ou ~INPUT_WEAPON_WHEEL_NEXT~ pour déplacer le pointeur~n~~INPUT_MAP_POI~ pour mettre le pointeur au sol~n~~INPUT_RELOAD~ pour réinitialiser la position du pointeur~n~~INPUT_SPRINT~ pour voir les axes~n~~INPUT_VEH_LOOK_BEHIND~ pour copier les coordonnées~n~~n~~INPUT_AIM~ pour quitter le mode d'aide aux coordonnées",
-    "player_id_or_empty": "Player id, 0 ou vide pour soi-même",
-    "cancel_spectate": "Arrêter de spectate",
-    "admin_menu_spectate_subtitle": "Spectate un joueur"
+    "player_id_or_empty": "Player id, 0 ou vide pour soi-même"
 }

@@ -88,7 +88,7 @@ RegisterNetEvent("ava_personalmenu:client:spectate", function(targetServerId, ta
         return
     end
 
-    local targetPed<const> = GetPlayerPed(targetLocalId)
+    local targetPed <const> = GetPlayerPed(targetLocalId)
     -- #endregion Get target ped or abort
 
     print("targetPed", targetPed)
@@ -122,7 +122,7 @@ end)
 setSpectateThread = function()
     print("start spectate thread")
     local instructionalButtons = exports.ava_core:GetScaleformInstructionalButtons({
-        {control = "~INPUT_CELLPHONE_CANCEL~", label = GetString("cancel_spectate")},
+        { control = "~INPUT_CELLPHONE_CANCEL~", label = GetString("player_spectate_cancel") },
     })
 
     while isSpectating do

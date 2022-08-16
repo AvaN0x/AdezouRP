@@ -2,12 +2,15 @@
 -------- MADE BY GITHUB.COM/AVAN0X --------
 --------------- AvaN0x#6348 ---------------
 -------------------------------------------
-VehiclesManagementSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"), GetString("vehicle_management"))
-local Speeds<const> = { { speed = -1, Name = GetString("disabled") }, { speed = 50, Name = 50 }, { speed = 90, Name = 90 }, { speed = 130, Name = 130 } }
+VehiclesManagementSubMenu = RageUI.CreateSubMenu(MainPersonalMenu, GetString("personal_menu"),
+    GetString("vehicle_management"))
+local Speeds <const> = { { speed = -1, Name = GetString("disabled") }, { speed = 50, Name = 50 },
+    { speed = 90, Name = 90 }, { speed = 130, Name = 130 } }
 local speedLimitIndex = 1
 
-local WindowsList<const> = { { 0, "front_left" }, { 1, "front_right" }, { 2, "back_left" }, { 3, "back_right" } }
-local WindowsRollList<const> = { { type = "down", Name = GetString("window_roll_down") }, { type = "up", Name = GetString("window_roll_up") } }
+local WindowsList <const> = { { 0, "front_left" }, { 1, "front_right" }, { 2, "back_left" }, { 3, "back_right" } }
+local WindowsRollList <const> = { { type = "down", Name = GetString("vehicle_management_windows_roll_down") },
+    { type = "up", Name = GetString("vehicle_management_windows_roll_up") } }
 local windowsRollIndex = 1
 local function ListWindowHandler(Index, onSelected, onListChange, windowIndex)
     if onListChange then
@@ -23,7 +26,8 @@ local function ListWindowHandler(Index, onSelected, onListChange, windowIndex)
     end
 end
 
-local DoorsToggleList<const> = { { type = "open", Name = GetString("door_open") }, { type = "close", Name = GetString("door_close") } }
+local DoorsToggleList <const> = { { type = "open", Name = GetString("vehicle_management_door_open") },
+    { type = "close", Name = GetString("vehicle_management_door_close") } }
 local doorsToggleIndex = 1
 local function ListDoorHandler(Index, onSelected, onListChange, doorIndex)
     if onListChange then
@@ -55,20 +59,22 @@ function PoolVehicleManagement()
                 if data.playerSeat == -1 then
                     -- ped is driver
 
-                    Items:AddList(GetString("vehicle_management_speed_limit"), Speeds, speedLimitIndex, GetString("vehicle_management_speed_limit_subtitle"),
+                    Items:AddList(GetString("vehicle_management_speed_limit"), Speeds, speedLimitIndex,
+                        GetString("vehicle_management_speed_limit_subtitle"),
                         nil, function(Index, onSelected, onListChange)
-                            if onListChange then
-                                speedLimitIndex = Index
+                        if onListChange then
+                            speedLimitIndex = Index
+                        end
+                        if onSelected then
+                            local speed = Speeds[speedLimitIndex] and Speeds[speedLimitIndex].speed
+                            if speed then
+                                TriggerEvent("teb_speed_control:setSpeedLimiter", speed)
                             end
-                            if onSelected then
-                                local speed = Speeds[speedLimitIndex] and Speeds[speedLimitIndex].speed
-                                if speed then
-                                    TriggerEvent("teb_speed_control:setSpeedLimiter", speed)
-                                end
-                            end
-                        end)
+                        end
+                    end)
 
-                    Items:CheckBox(GetString("vehicle_management_is_engine_on"), GetString("vehicle_management_is_engine_on_subtitle"), data.isEngineOn, nil,
+                    Items:CheckBox(GetString("vehicle_management_is_engine_on"),
+                        GetString("vehicle_management_is_engine_on_subtitle"), data.isEngineOn, nil,
                         function(onSelected, IsChecked)
                             if (onSelected) then
                                 SetVehicleEngineOn(playerVehicle, IsChecked, false, true)
@@ -83,8 +89,10 @@ function PoolVehicleManagement()
                             Items:AddSeparator(GetString("vehicle_management_doors"))
                             for i = 1, #playerVehicleData.doors do
                                 local door = playerVehicleData.doors[i]
-                                Items:AddList(GetString("vehicle_management_doors_" .. door[2]), DoorsToggleList, doorsToggleIndex,
-                                    GetString("vehicle_management_doors_" .. door[2] .. "_subtitle"), nil, function(Index, onSelected, onListChange)
+                                Items:AddList(GetString("vehicle_management_doors_" .. door[2]), DoorsToggleList,
+                                    doorsToggleIndex,
+                                    GetString("vehicle_management_doors_" .. door[2] .. "_subtitle"), nil,
+                                    function(Index, onSelected, onListChange)
                                         ListDoorHandler(Index, onSelected, onListChange, door[1])
                                     end)
 
@@ -94,8 +102,10 @@ function PoolVehicleManagement()
                         Items:AddSeparator(GetString("vehicle_management_windows"))
                         for i = 1, #WindowsList do
                             local window = WindowsList[i]
-                            Items:AddList(GetString("vehicle_management_windows_" .. window[2]), WindowsRollList, windowsRollIndex,
-                                GetString("vehicle_management_windows_" .. window[2] .. "_subtitle"), nil, function(Index, onSelected, onListChange)
+                            Items:AddList(GetString("vehicle_management_windows_" .. window[2]), WindowsRollList,
+                                windowsRollIndex,
+                                GetString("vehicle_management_windows_" .. window[2] .. "_subtitle"), nil,
+                                function(Index, onSelected, onListChange)
                                     ListWindowHandler(Index, onSelected, onListChange, window[1])
                                 end)
 
@@ -105,9 +115,10 @@ function PoolVehicleManagement()
                 elseif data.playerSeat == 0 then
                     -- ped is in passenger seat
 
-                    Items:AddButton(GetString("personal_menu_enable_shuffle"), GetString("personal_menu_enable_shuffle_subtitle"), {}, function(onSelected)
+                    Items:AddButton(GetString("personal_menu_enable_shuffle"),
+                        GetString("personal_menu_enable_shuffle_subtitle"), {}, function(onSelected)
                         if onSelected then
-                            SetPedConfigFlag(PlayerPedId(), 184, false) -- CPED_CONFIG_FLAG_PreventAutoShuffleToDriversSeat 
+                            SetPedConfigFlag(PlayerPedId(), 184, false) -- CPED_CONFIG_FLAG_PreventAutoShuffleToDriversSeat
                         end
                     end)
                 end

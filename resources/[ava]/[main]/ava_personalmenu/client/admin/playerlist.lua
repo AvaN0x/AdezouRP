@@ -5,7 +5,8 @@
 PlayerListSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("player_list"))
 PlayersOptionsSubMenu = RageUI.CreateSubMenu(MainAdminMenu, GetString("admin_menu_title"), GetString("players_options"))
 local PlayersManageSubMenu = RageUI.CreateSubMenu(PlayerListSubMenu, GetString("admin_menu_title"), "player_name")
-local playersOptions = { { Name = GetString("player_manage"), task = "manage" }, { Name = GetString("player_spectate"), task = "spectate" } }
+local playersOptions = { { Name = GetString("player_manage"), task = "manage" },
+    { Name = GetString("player_spectate"), task = "spectate" } }
 local playerlistTaskIndex = 1
 PlayerListSubMenu.Closed = function()
     playerlistTaskIndex = 1
@@ -179,7 +180,8 @@ function PoolPlayerList()
             for i = 1, #playersData do
                 local playerData = playersData[i]
                 Items:AddList(playerData.id .. " - " .. playerData.n, playersOptions, playerlistTaskIndex,
-                    not playerData.sameRB and GetString("routing_bucket_different"), nil, function(Index, onSelected, onListChange)
+                    not playerData.sameRB and GetString("routing_bucket_different"), nil,
+                    function(Index, onSelected, onListChange)
                         if onListChange then
                             playerlistTaskIndex = Index
                         end
@@ -187,7 +189,8 @@ function PoolPlayerList()
                             local task = playersOptions[playerlistTaskIndex].task
                             if task == "manage" then
                                 selectedPlayerData = playerData
-                                selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(playerData.id)) == PlayerId()
+                                selectedPlayerData.isMyself = GetPlayerFromServerId(tonumber(playerData.id)) ==
+                                    PlayerId()
                                 PlayersManageSubMenu.Subtitle = playerData.n
                             elseif task == "spectate" then
                                 ExecuteCommand("spectate " .. playerData.id)
@@ -203,10 +206,12 @@ function PoolPlayerList()
             else
                 local playerData = selectedPlayerData
                 if perms.playerlist.message then
-                    Items:AddButton(GetString("player_manage_message"), GetString("player_manage_message_subtitle"), { IsDisabled = playerData.isMyself },
+                    Items:AddButton(GetString("player_manage_message"), GetString("player_manage_message_subtitle"),
+                        { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
-                                local message = exports.ava_core:KeyboardInput(GetString("player_manage_message_input"), "" or "", 100)
+                                local message = exports.ava_core:KeyboardInput(GetString("player_manage_message_input"),
+                                    "" or "", 100)
                                 if message and message ~= "" then
                                     ExecuteCommand("message " .. playerData.id .. " " .. message)
                                 end
@@ -214,15 +219,17 @@ function PoolPlayerList()
                         end)
                 end
                 if perms.playerlist.openinventory then
-                    Items:AddButton(GetString("player_manage_openinventory"), GetString("player_manage_openinventory_subtitle"),
+                    Items:AddButton(GetString("player_manage_openinventory"),
+                        GetString("player_manage_openinventory_subtitle"),
                         { IsDisabled = playerData.isMyself }, function(onSelected)
-                            if onSelected then
-                                ExecuteCommand("openinventory " .. playerData.id)
-                            end
-                        end)
+                        if onSelected then
+                            ExecuteCommand("openinventory " .. playerData.id)
+                        end
+                    end)
                 end
                 if perms.playerlist["goto"] then
-                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"), { IsDisabled = playerData.isMyself },
+                    Items:AddButton(GetString("player_manage_goto"), GetString("player_manage_goto_subtitle"),
+                        { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
                                 ExecuteCommand("goto " .. playerData.id)
@@ -230,7 +237,8 @@ function PoolPlayerList()
                         end)
                 end
                 if perms.playerlist.bring then
-                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"), { IsDisabled = playerData.isMyself },
+                    Items:AddButton(GetString("player_manage_bring"), GetString("player_manage_bring_subtitle"),
+                        { IsDisabled = playerData.isMyself },
                         function(onSelected)
                             if onSelected then
                                 ExecuteCommand("bring " .. playerData.id)
@@ -238,54 +246,68 @@ function PoolPlayerList()
                         end)
                 end
                 if perms.playerlist.kill then
-                    Items:AddButton(GetString("player_manage_kill"), GetString("player_manage_kill_subtitle"), nil, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("kill " .. playerData.id)
-                        end
-                    end)
-                end
-                if perms.playerlist.heal then
-                    Items:AddButton(GetString("player_manage_heal"), GetString("player_manage_heal_subtitle"), nil, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("heal " .. playerData.id)
-                        end
-                    end)
-                end
-                if perms.playerlist.revive then
-                    Items:AddButton(GetString("player_manage_revive"), GetString("player_manage_revive_subtitle"), nil, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("revive " .. playerData.id)
-                        end
-                    end)
-                end
-                if perms.playerlist.spectate then
-                    Items:AddButton(GetString("player_spectate"), GetString("player_spectate_subtitle"), nil, function(onSelected)
-                        if onSelected then
-                            ExecuteCommand("spectate " .. playerData.id)
-                        end
-                    end)
-                end
-                if perms.playerlist.kick then
-                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"), { RightBadge = RageUI.BadgeStyle.Alert },
+                    Items:AddButton(GetString("player_manage_kill"), GetString("player_manage_kill_subtitle"), nil,
                         function(onSelected)
                             if onSelected then
-                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"), "" or "", 50)
+                                ExecuteCommand("kill " .. playerData.id)
+                            end
+                        end)
+                end
+                if perms.playerlist.heal then
+                    Items:AddButton(GetString("player_manage_heal"), GetString("player_manage_heal_subtitle"), nil,
+                        function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("heal " .. playerData.id)
+                            end
+                        end)
+                end
+                if perms.playerlist.revive then
+                    Items:AddButton(GetString("player_manage_revive"), GetString("player_manage_revive_subtitle"), nil,
+                        function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("revive " .. playerData.id)
+                            end
+                        end)
+                end
+                if perms.playerlist.spectate then
+                    Items:AddButton(GetString("player_spectate"), GetString("player_spectate_subtitle"), nil,
+                        function(onSelected)
+                            if onSelected then
+                                ExecuteCommand("spectate " .. playerData.id)
+                            end
+                        end)
+                end
+                if perms.playerlist.kick then
+                    Items:AddButton(GetString("player_manage_kick"), GetString("player_manage_kick_subtitle"),
+                        { RightBadge = RageUI.BadgeStyle.Alert },
+                        function(onSelected)
+                            if onSelected then
+                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_kick_input"),
+                                    "" or "", 50)
                                 if reason and reason ~= ""
-                                    and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_kick_confirm_title"),
-                                        GetString("player_manage_kick_confirm_firstline", playerData.n), GetString("player_manage_kick_confirm_reason", reason)) then
+                                    and
+                                    exports.ava_core:ShowConfirmationMessage(GetString("player_manage_kick_confirm_title")
+                                        ,
+                                        GetString("player_manage_kick_confirm_firstline", playerData.n),
+                                        GetString("player_manage_kick_confirm_reason", reason)) then
                                     ExecuteCommand("kick " .. playerData.id .. " " .. reason)
                                 end
                             end
                         end)
                 end
                 if perms.playerlist.ban then
-                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"), { RightBadge = RageUI.BadgeStyle.Alert },
+                    Items:AddButton(GetString("player_manage_ban"), GetString("player_manage_ban_subtitle"),
+                        { RightBadge = RageUI.BadgeStyle.Alert },
                         function(onSelected)
                             if onSelected then
-                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"), "" or "", 50)
+                                local reason = exports.ava_core:KeyboardInput(GetString("player_manage_ban_input"),
+                                    "" or "", 50)
                                 if reason and reason ~= ""
-                                    and exports.ava_core:ShowConfirmationMessage(GetString("player_manage_ban_confirm_title"),
-                                        GetString("player_manage_ban_confirm_firstline", playerData.n), GetString("player_manage_ban_confirm_reason", reason)) then
+                                    and
+                                    exports.ava_core:ShowConfirmationMessage(GetString("player_manage_ban_confirm_title")
+                                        ,
+                                        GetString("player_manage_ban_confirm_firstline", playerData.n),
+                                        GetString("player_manage_ban_confirm_reason", reason)) then
                                     ExecuteCommand("ban " .. playerData.id .. " " .. reason)
                                 end
                             end
@@ -298,7 +320,8 @@ function PoolPlayerList()
     if perms.playersoptions then
         PlayersOptionsSubMenu:IsVisible(function(Items)
             if perms.playersoptions.playerblips then
-                Items:CheckBox(GetString("admin_menu_players_options_blips"), GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil,
+                Items:CheckBox(GetString("admin_menu_players_options_blips"),
+                    GetString("admin_menu_players_options_blips_subtitle"), displayPlayerBlips, nil,
                     function(onSelected, IsChecked)
                         if (onSelected) then
                             ExecuteCommand("playerblips")
@@ -306,12 +329,13 @@ function PoolPlayerList()
                     end)
             end
             if perms.playersoptions.playertags then
-                Items:CheckBox(GetString("admin_menu_players_options_gamertags"), GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags,
+                Items:CheckBox(GetString("admin_menu_players_options_gamertags"),
+                    GetString("admin_menu_players_options_gamertags_subtitle"), displayPlayerTags,
                     nil, function(onSelected, IsChecked)
-                        if (onSelected) then
-                            ExecuteCommand("playertags")
-                        end
-                    end)
+                    if (onSelected) then
+                        ExecuteCommand("playertags")
+                    end
+                end)
             end
         end)
     end
