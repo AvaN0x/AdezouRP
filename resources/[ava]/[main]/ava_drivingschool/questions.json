@@ -42,7 +42,7 @@
         ]
     },
     {
-        "question": "Quand vous arrivez en ville, quelle doit-être votre vitesse maximum ?",
+        "question": "Quand vous arrivez en ville, quelle doit-être votre vitesse maximale ?",
         "answers": [
             {
                 "label": "30"
@@ -79,7 +79,7 @@
         ]
     },
     {
-        "question": "Vous vous rendez dans les quartiers résidentiels, quelle est la vitesse maximum autorisée ?",
+        "question": "Vous vous rendez dans les quartiers résidentiels, quelle est la vitesse maximale autorisée ?",
         "answers": [
             {
                 "label": "30",
@@ -137,7 +137,7 @@
         ]
     },
     {
-        "question": "Que pouvez-vous faire lorsque vous effectuez un dépassement ?",
+        "question": "Que pouvez-vous faire lorsque vous effectuez un dépassement de véhicule motorisé ?",
         "answers": [
             {
                 "label": "Le suivre de près pour le doubler plus vite"
