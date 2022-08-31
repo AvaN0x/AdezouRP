@@ -94,8 +94,11 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
 
         -- Player can die if data.health is 0
         -- We use data and not AVA.Player.Data for health because the thread which save the player health could already be running
-        SetEntityHealth(AVA.Player.playerPed,
-            data.health ~= nil and data.health or GetEntityMaxHealth(AVA.Player.playerPed))
+        local health = GetEntityMaxHealth(AVA.Player.playerPed)
+        if type(data.health) == "number" and data.health >= 0 then
+            health = data.health
+        end
+        SetEntityHealth(AVA.Player.playerPed, health)
 
         TriggerServerEvent("ava_core:server:reloadLoadout")
 
