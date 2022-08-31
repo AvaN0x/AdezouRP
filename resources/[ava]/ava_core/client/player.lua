@@ -98,6 +98,12 @@ RegisterNetEvent("ava_core:client:playerLoaded", function(data)
         if type(data.health) == "number" and data.health >= 0 then
             health = data.health
         end
+
+        -- Mandatory wait!
+        -- For some the native SetEntityHealth would cause an error if it happened synchronously with the spawn in some cases
+        Wait(100)
+
+        dprint("ped", AVA.Player.playerPed, "health", health)
         SetEntityHealth(AVA.Player.playerPed, health)
 
         TriggerServerEvent("ava_core:server:reloadLoadout")
