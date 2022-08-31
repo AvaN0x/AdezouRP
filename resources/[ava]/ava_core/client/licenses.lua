@@ -4,8 +4,11 @@
 -------------------------------------------
 local ExpirationDate = "15/08/2072"
 
-local ava_mugshots_directory = CreateRuntimeTxd("ava_mugshots")
-local current_texture = CreateRuntimeTexture(ava_mugshots_directory, "ava_mugshot", 64, 64)
+local ava_mugshots_directory, current_texture
+Citizen.CreateThread(function()
+    ava_mugshots_directory = CreateRuntimeTxd("ava_mugshots")
+    current_texture = CreateRuntimeTexture(ava_mugshots_directory, "ava_mugshot", 64, 64)
+end)
 local lastId = -1
 
 local function PrepareMugshotTexture(citizenId, base64)
@@ -34,13 +37,16 @@ RegisterNetEvent("ava_core:client:showCard", function(cardType, citizenId, chara
 
     local subtitle = ("~h~%s %s~s~"):format(character.lastname:upper(), character.firstname:gsub("%a", string.upper, 1))
     if cardType == "identity" then
-        AVA.ShowNotification(GetString("card_identity_text", character.sex == 0 and "H" or "F", character.birthdate, ExpirationDate), 117, "ava_mugshot",
+        AVA.ShowNotification(GetString("card_identity_text", character.sex == 0 and "H" or "F", character.birthdate,
+            ExpirationDate), 117, "ava_mugshot",
             GetString("card_" .. cardType), subtitle, nil, "ava_mugshots")
     elseif cardType == "driver" then
         -- Get number of points on driver license
-        AVA.ShowNotification(GetString("card_driver_text", license.points or 0, ExpirationDate), 11, "ava_mugshot", GetString("card_" .. cardType), subtitle,
+        AVA.ShowNotification(GetString("card_driver_text", license.points or 0, ExpirationDate), 11, "ava_mugshot",
+            GetString("card_" .. cardType), subtitle,
             nil, "ava_mugshots")
     elseif cardType == "weapon" then
-        AVA.ShowNotification(GetString("card_weapon_text", ExpirationDate), 90, "ava_mugshot", GetString("card_" .. cardType), subtitle, nil, "ava_mugshots")
+        AVA.ShowNotification(GetString("card_weapon_text", ExpirationDate), 90, "ava_mugshot",
+            GetString("card_" .. cardType), subtitle, nil, "ava_mugshots")
     end
 end)
