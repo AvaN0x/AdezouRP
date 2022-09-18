@@ -266,7 +266,7 @@ AVAConfig.Heists.vangelico = {
 
 AVAConfig.Heists.vangelico_paleto = {
     Started = false,
-    InteriorId = 122626,
+    InteriorId = 122882,
     CopsCount = 6,
     CurrentStage = 0,
     ServerTriggerAlarm = function()
@@ -407,7 +407,7 @@ AVAConfig.Heists.vangelico_paleto = {
 
 AVAConfig.Heists.vangelico_grapeseed = {
     Started = false,
-    InteriorId = 122882,
+    InteriorId = 123138,
     CopsCount = 6,
     CurrentStage = 0,
     ServerTriggerAlarm = function()
