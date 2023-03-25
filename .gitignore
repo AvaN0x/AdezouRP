@@ -16,3 +16,5 @@ server.cfg
 !.vscode/settings.json
 
 imgui.ini
+
+vmenu.log
