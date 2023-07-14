@@ -152,6 +152,13 @@
             "weight": 3100,
             "noIcon": true
         },
+        "weapon_pistolxm3": {
+            "label": "Pistolet XM3",
+            "type": "handgun",
+            "description": "",
+            "weight": 3000,
+            "noIcon": true
+        },
         "weapon_grenade": {
             "label": "Grenade",
             "ammoType": "ammo_grenade",
@@ -338,6 +345,13 @@
         },
         "weapon_stone_hatche": {
             "label": "Hachette en pierre",
+            "type": "melee",
+            "description": "",
+            "weight": 500,
+            "noIcon": true
+        },
+        "weapon_candycane": {
+            "label": "Sucre d'orge",
             "type": "melee",
             "description": "",
             "weight": 500,
@@ -674,6 +688,13 @@
         },
         "weapon_railgun": {
             "label": "Fusil à impulsion",
+            "type": "heavyweapon",
+            "description": "",
+            "weight": 2000,
+            "noIcon": true
+        },
+        "weapon_railgunxm3": {
+            "label": "Fusil à impulsion XM3",
             "type": "heavyweapon",
             "description": "",
             "weight": 2000,

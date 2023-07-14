@@ -59,6 +59,7 @@ local ammoTypesToItem = {
     [`ammo_hazardcan`] = "ammo_hazardcan", -- TODO Figure a way to deal with this
     [`ammo_firework`] = "ammo_firework",
     [`ammo_railgun`] = "ammo_railgun",
+    [`ammo_railgunxm3`] = "ammo_railgunxm3",
     [`ammo_fertilizercan`] = "ammo_fertilizercan", -- TODO Figure a way to deal with this
     [`ammo_emplauncher`] = "ammo_emplauncher",
 }

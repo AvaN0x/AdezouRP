@@ -1007,6 +1007,13 @@
         "weight": 10,
         "noIcon": true
     },
+    "ammo_railgunxm3": {
+        "label": "Munition railgun XM3",
+        "type": "ammo",
+        "description": "",
+        "weight": 10,
+        "noIcon": true
+    },
     "ammo_fertilizercan": {
         "label": "Munition ferlizant",
         "type": "ammo",
